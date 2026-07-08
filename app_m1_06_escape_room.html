@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>방탈출: 고대 태양 신전의 거울 미궁</title>
+    <style>
+        :root {
+            --primary: #b45309; /* 짙은 구릿빛/주황빛 */
+            --secondary: #78350f; /* 매우 짙은 갈색 */
+            --accent: #fbbf24; /* 황금색 */
+            --text-main: #fef3c7;
+            --glass-bg: rgba(69, 26, 3, 0.7);
+            --glass-border: rgba(251, 191, 36, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', sans-serif;
+            background: url('assets/s12_intro.png') center/cover no-repeat fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* 다크 오버레이 (신전의 어두운 분위기) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(69, 26, 3, 0.95) 100%), rgba(20, 10, 0, 0.75);
+            z-index: 1;
+        }
+
+        /* 공기 중의 모래/먼지 입자 느낌 텍스처 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 프리미엄 Glassmorphism 패널 */
+        .glass-panel {
+            background: rgba(30, 10, 0, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(251, 191, 36, 0.1);
+            display: none; /* JS로 제어 */
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .panel-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        h1, h2, h3 {
+            color: var(--accent);
+            text-align: center;
+            margin-top: 0;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8), 0 0 30px rgba(251, 191, 36, 0.4), 0 2px 5px rgba(0,0,0,0.9);
+        }
+
+        h1 { font-size: 2.8rem; letter-spacing: 4px; font-weight: 900; }
+        h2 { font-size: 1.8rem; border-bottom: 2px solid rgba(251, 191, 36, 0.5); padding-bottom: 10px; display: inline-block; margin-bottom: 2rem; box-shadow: 0 10px 10px -10px rgba(251, 191, 36, 0.4);}
+
+        .story-box {
+            background: linear-gradient(90deg, rgba(180, 83, 9, 0.4) 0%, rgba(0,0,0,0.3) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 12px 12px 0;
+            line-height: 1.7;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        }
+
+        .question-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-box::before {
+            content: 'Q';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 6rem;
+            font-weight: 900;
+            color: rgba(251, 191, 36, 0.05);
+            z-index: 0;
+        }
+
+        .question-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-group {
+            margin-top: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #FDE68A;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(20, 10, 0, 0.8);
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            color: #FCD34D;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: inherit;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #F59E0B;
+            background: rgba(40, 20, 0, 0.9);
+            color: white;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #F59E0B, #B45309);
+            color: white;
+            border: 1px solid #FCD34D;
+            padding: 1.2rem 2rem;
+            font-size: 1.3rem;
+            font-weight: 900;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            width: 100%;
+            margin-top: 2rem;
+            box-shadow: 0 10px 25px rgba(180, 83, 9, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(180, 83, 9, 0.7), inset 0 2px 5px rgba(255,255,255,0.6);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        .error-msg {
+            color: #EF4444;
+            font-weight: bold;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            display: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* 소리 끄기 버튼 */
+        .sound-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 100;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .sound-toggle:hover {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* 빛줄기 애니메이션 */
+        .sunbeam {
+            position: absolute;
+            background: linear-gradient(to bottom, rgba(251, 191, 36, 0.8), transparent);
+            width: 2px;
+            height: 100px;
+            border-radius: 50%;
+            animation: beam 3s infinite linear;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        @keyframes beam {
+            0% { transform: translateY(-50vh) rotate(15deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(15deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 배경 장식 (빛줄기) -->
+    <div class="sunbeam" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="sunbeam" style="left: 50%; animation-delay: 1.5s; width: 3px;"></div>
+    <div class="sunbeam" style="left: 80%; animation-delay: 0.7s;"></div>
+
+    <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔊 소리 켜짐</button>
+
+    <div class="container">
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- 0. 인트로 -->
+        <div id="intro" class="glass-panel active">
+            <h1>고대 태양 신전</h1>
+            <h2>거울 미궁 탈출</h2>
+            <div class="story-box">
+                "여러분은 이집트 사막 지하에서 새로 발견된 고대 '태양의 신전'을 조사하는 탐사대원입니다. 무심코 제단의 황금 버튼을 누르자, 쿠르릉 소리와 함께 출입구가 무너져 내리고 거울로 가득 찬 비밀 미궁 속에 갇히게 되었습니다!"<br><br>
+                "천장의 돋보기를 통해 뜨거운 태양 빛이 모이기 시작합니다. 40분 뒤면 빛의 열기가 임계점을 넘어 신전 전체가 불타오르게 됩니다! 거울 미궁의 수학적 수수께끼를 풀어내십시오!"
+            </div>
+            <button class="btn" onclick="nextStage('intro', 'stage1', 25)">미궁으로 진입하기</button>
+        </div>
+
+        <!-- 1. 1구역 -->
+        <div id="stage1" class="glass-panel">
+            <img src="assets/s12_polygon.png" alt="거울 미궁 다각형" class="panel-image">
+            <h2>1구역: 빛의 반사각 조율</h2>
+            <div class="story-box">
+                🚨 <strong>[대원의 비명]</strong> "앗 뜨거워! 천장에서 빛줄기가 내려오고 있습니다. 거울로 된 십각형 기둥들을 교차시켜 빛을 분산시켜야 합니다! 서둘러 설치할 대각선 거울의 총 개수를 파악하세요!"
+            </div>
+            
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q1. [대각선의 총 개수]</strong><br>
+                    십각형 모양의 기둥 배치에서 모든 기둥끼리 서로 빛을 교차 연결하려고 한다. 이웃하지 않은 기둥끼리 설치해야 하는 총 대각선 반사광의 개수를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans1" placeholder="개수 입력 (숫자만)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-box">
+                🔥 <strong>[시스템 경고]</strong> "열기가 식지 않습니다! 꺾인 거울 틈새로 빛이 새어나가고 있어요! 삼각형 반사판의 외각을 계산해 빛의 궤도를 수정해야 합니다."
+            </div>
+
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q2. [삼각형의 외각]</strong><br>
+                    삼각형 모양 반사판에서 두 내각이 각각 45°, 60°일 때, 빛이 반사되어 나가는 반대쪽 외각 x의 크기를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="각도 입력 (도 제외, 숫자만)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-box">
+                🧩 <strong>[비밀통로 발견]</strong> "좋습니다, 빛이 꺾였습니다! 바닥에 회전 다이얼이 보입니다. 칠각형 모양 석판의 내각의 합을 알아내면 지하로 가는 통로가 열릴 겁니다!"
+            </div>
+
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q3. [다각형의 내각의 합]</strong><br>
+                    중앙 제단을 회전시키기 위해 바닥에 깔린 칠각형 모양 석판의 모든 내각의 크기의 합을 구하여 회전 다이얼에 입력하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="각도 합 입력 (도 제외, 숫자만)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="error-msg" id="error1">암호가 일치하지 않습니다. (힌트: n각형 대각선 개수는 n(n-3)/2, 외각은 이웃하지 않은 두 내각의 합)</div>
+            <button class="btn" onclick="checkStage1()">다이얼 돌리기</button>
+        </div>
+
+        <!-- 2. 2구역 -->
+        <div id="stage2" class="glass-panel">
+            <img src="assets/s12_key.png" alt="정다각형 석판과 호" class="panel-image">
+            <h2>2구역: 태양 신의 석판 봉인 해제</h2>
+            <div class="story-box">
+                ☀️ <strong>[태양의 상징]</strong> "지하 통로 끝에는 정다각형 문양의 거대한 금속 문이 있습니다. 완벽한 대칭을 이루는 이 문의 정체를 밝혀내고 파라오의 각도기를 조작하세요!"
+            </div>
+
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q4. [정다각형의 내각과 외각]</strong><br>
+                    '한 외각의 크기가 36°인 정다각형'의 이름을 찾고, 이 정다각형의 한 내각의 크기를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans4_1" placeholder="정다각형 이름 (예: 정오각형)">
+                        <input type="text" id="ans4_2" placeholder="한 내각의 크기 (숫자만)" style="margin-top: 10px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-box">
+                ⚙️ <strong>[거대 톱니바퀴]</strong> "문이 아주 조금 열렸습니다! 완전히 열려면 테두리의 석판을 정비례 원리를 이용해 24cm 지점까지 밀어 올려야 합니다!"
+            </div>
+
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q5. [중심각과 호의 길이]</strong><br>
+                    중심각이 40°일 때 석판 테두리 호의 길이가 6cm라면, 호의 길이를 24cm 지점까지 돌리기 위해 맞춰야 할 중심각의 크기는 얼마인가?
+                    <div class="input-group">
+                        <input type="text" id="ans5" placeholder="중심각 크기 (숫자만)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="error-msg" id="error2">수치가 잘못되었습니다. (힌트: 360/외각 = n, 호의 길이는 중심각에 정비례)</div>
+            <button class="btn" onclick="checkStage2()">금속 문 개방하기</button>
+        </div>
+
+        <!-- 3. 3구역 -->
+        <div id="stage3" class="glass-panel">
+            <h2>3구역: 원형 부채꼴 열쇠 조립</h2>
+            <div class="story-box">
+                🔑 <strong>[마지막 관문]</strong> "드디어 수조 앞입니다! 하지만 수조의 덮개가 잠겨있습니다. 부채꼴 모양 조각들을 찾아 테두리에 금실을 메워 조립해야 합니다!"<br><br>
+                <small style="color: #FCD34D;">※ 파이(π)는 한글로 '파이' 혹은 영어로 'pi' 라고 입력하세요. (예: 10파이, 10pi)</small>
+            </div>
+
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q6. [부채꼴의 호의 길이]</strong><br>
+                    반지름의 길이가 9cm이고 중심각의 크기가 120°인 부채꼴의 호의 길이를 구하시오. 
+                    <div class="input-group">
+                        <input type="text" id="ans6" placeholder="정답 입력 (예: 5파이)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-box">
+                💧 <strong>[수조 제어판]</strong> "열쇠가 완성되었습니다! 이제 빛이 들어갈 구멍의 면적을 구해야 덮개가 완전히 개방됩니다."
+            </div>
+
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q7. [부채꼴의 넓이]</strong><br>
+                    반지름의 길이가 6cm이고 중심각의 크기가 60°인 부채꼴 모양 홈의 넓이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans7" placeholder="정답 입력 (예: 5파이)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-box">
+                ⏱️ <strong>[임계점 도달]</strong> "5분 남았습니다! 최종 탈출 게이트 수치 오류 발생! 호의 길이를 이용해 재빨리 부채꼴 넓이를 역산해 입력하세요!"
+            </div>
+
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q8. [부채꼴의 넓이 응용]</strong><br>
+                    반지름의 길이가 10cm이고 호의 길이가 5π cm인 부채꼴 모양 석문의 넓이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="정답 입력 (예: 5파이)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="error-msg" id="error3">수조 덮개가 열리지 않습니다! 다시 계산하세요.</div>
+            <button class="btn" onclick="checkStage3()">최종 다이얼 입력</button>
+        </div>
+
+        <!-- 4. 엔딩 -->
+        <div id="outro" class="glass-panel">
+            <img src="assets/s12_ending.png" alt="사막으로의 탈출" class="panel-image">
+            <h1>탈출 성공!</h1>
+            <div class="story-box" style="text-align: center;">
+                "부채꼴의 넓이 '25π'를 석문에 입력하자 굉음과 함께 탈출용 거대 돌벽이 땅속으로 스르륵 내려앉습니다.<br><br>
+                눈을 뜰 수 없이 밝은 사막의 태양과 시원한 모래바람이 밀려옵니다. 태양 신전의 거울 미궁 탈출에 성공하셨습니다!"<br><br>
+                <strong>미션 클리어!</strong>
+            </div>
+            <button class="btn" onclick="location.reload()">다시 도전하기</button>
+        </div>
+
+    </div>
+
+    <!-- 로직 및 Audio 스크립트 -->
+    <script>
+        // Web Audio API 설정
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+        let bgmOscillators = [];
+        let lfo = null;
+        let bgmGain = null;
+        let isMuted = false;
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            const btn = document.getElementById('soundToggle');
+            if(isMuted) {
+                btn.innerHTML = '🔇 소리 꺼짐';
+                stopBGM(); 
+            } else {
+                btn.innerHTML = '🔊 소리 켜짐';
+                if(document.getElementById('intro').classList.contains('active') === false && document.getElementById('outro').classList.contains('active') === false) {
+                    startBGM();
+                }
+            }
+        }
+
+        // 고대 이집트 신전 테마 BGM (하모닉 마이너스케일의 웅장한 드론)
+        function startBGM() {
+            if (isMuted) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (bgmOscillators.length > 0) return; 
+            
+            bgmGain = audioCtx.createGain();
+            bgmGain.gain.value = 0.35;
+            
+            // C3, G3, Db4 (이집트/아라비안 신비로운 느낌의 화음)
+            const freqs = [130.81, 196.00, 277.18]; 
+            
+            freqs.forEach(freq => {
+                const osc = audioCtx.createOscillator();
+                osc.type = 'sawtooth'; // 거칠고 웅장한 소리
+                
+                // 로우패스 필터로 부드럽게 깎음
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 400;
+                
+                osc.frequency.value = freq;
+                osc.connect(filter);
+                filter.connect(bgmGain);
+                osc.start();
+                bgmOscillators.push(osc);
+            });
+            
+            // LFO로 울렁거리는 느낌
+            lfo = audioCtx.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.value = 0.2; 
+            
+            const lfoGain = audioCtx.createGain();
+            lfoGain.gain.value = 0.15;
+            
+            lfo.connect(lfoGain);
+            lfoGain.connect(bgmGain.gain);
+            
+            bgmGain.connect(audioCtx.destination);
+            lfo.start();
+        }
+
+        function stopBGM() {
+            if(bgmOscillators.length > 0) {
+                bgmGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2);
+                setTimeout(() => {
+                    bgmOscillators.forEach(osc => osc.stop());
+                    lfo.stop();
+                    bgmOscillators = [];
+                }, 2000);
+            }
+        }
+
+        // 효과음 함수들
+        function playClick() {
+            if (isMuted) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        function playSuccess() {
+            if (isMuted) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            [523.25, 659.25, 783.99].forEach((freq, i) => { 
+                setTimeout(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.5);
+                }, i * 150);
+            });
+        }
+
+        function playError() {
+            if (isMuted) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.4);
+            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.4);
+        }
+
+        function playVictory() {
+            if (isMuted) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            stopBGM();
+            const chords = [
+                { f: 523.25, t: 0 },   // C5
+                { f: 659.25, t: 0.2 }, // E5
+                { f: 783.99, t: 0.4 }, // G5
+                { f: 1046.50, t: 0.6 } // C6
+            ];
+            chords.forEach(note => {
+                setTimeout(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.value = note.f;
+                    gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.0);
+                }, note.t * 1000);
+            });
+        }
+
+        // 화면 전환 
+        function nextStage(currentId, nextId, progressPercent) {
+            playClick(); 
+            if(currentId === 'intro') {
+                startBGM(); 
+            }
+
+            const currentEl = document.getElementById(currentId);
+            const nextEl = document.getElementById(nextId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            currentEl.classList.remove('active');
+            
+            setTimeout(() => {
+                if(nextId !== 'intro') progContainer.style.display = 'block';
+                progBar.style.width = progressPercent + '%';
+                nextEl.classList.add('active');
+            }, 300);
+        }
+
+        function showError(panelId, errorId) {
+            playError(); 
+            const panel = document.getElementById(panelId);
+            const errMsg = document.getElementById(errorId);
+            
+            panel.classList.remove('shake');
+            void panel.offsetWidth; 
+            panel.classList.add('shake');
+            
+            errMsg.style.display = 'block';
+            setTimeout(() => { errMsg.style.display = 'none'; }, 3000);
+        }
+
+        function cleanString(str) {
+            return str.replace(/\s+/g, '').toLowerCase();
+        }
+
+        function cleanPi(str) {
+            let s = cleanString(str);
+            return s.replace('파이', 'pi').replace('π', 'pi');
+        }
+
+        // 1구역 검사
+        function checkStage1() {
+            // Q1: 대각선 개수 (10*7/2 = 35)
+            const ans1 = cleanString(document.getElementById('ans1').value).replace('개','');
+            // Q2: 외각 (45+60 = 105)
+            const ans2 = cleanString(document.getElementById('ans2').value).replace('도','').replace('°','');
+            // Q3: 칠각형 내각 합 (180*5 = 900)
+            const ans3 = cleanString(document.getElementById('ans3').value).replace('도','').replace('°','');
+
+            if (ans1 === '35' && ans2 === '105' && ans3 === '900') {
+                playSuccess(); 
+                nextStage('stage1', 'stage2', 50);
+            } else {
+                showError('stage1', 'error1');
+            }
+        }
+
+        // 2구역 검사
+        function checkStage2() {
+            // Q4: 정십각형, 144
+            const ans4_1 = cleanString(document.getElementById('ans4_1').value);
+            const ans4_2 = cleanString(document.getElementById('ans4_2').value).replace('도','').replace('°','');
+            // Q5: 40도 6cm -> 24cm(4배) 중심각 160
+            const ans5 = cleanString(document.getElementById('ans5').value).replace('도','').replace('°','');
+
+            if ((ans4_1 === '정십각형' || ans4_1 === '십각형') && ans4_2 === '144' && ans5 === '160') {
+                playSuccess(); 
+                nextStage('stage2', 'stage3', 75);
+            } else {
+                showError('stage2', 'error2');
+            }
+        }
+
+        // 3구역 검사
+        function checkStage3() {
+            // Q6: 호의 길이 -> 2*pi*9*(120/360) = 6pi
+            const ans6 = cleanPi(document.getElementById('ans6').value).replace('cm','');
+            // Q7: 부채꼴 넓이 -> pi*36*(60/360) = 6pi
+            const ans7 = cleanPi(document.getElementById('ans7').value).replace('cm2','').replace('제곱센티미터','');
+            // Q8: 응용 -> 1/2*10*5pi = 25pi
+            const ans8 = cleanPi(document.getElementById('ans8').value).replace('cm2','').replace('제곱센티미터','');
+
+            if (ans6 === '6pi' && ans7 === '6pi' && ans8 === '25pi') {
+                playVictory(); 
+                nextStage('stage3', 'outro', 100);
+            } else {
+                showError('stage3', 'error3');
+            }
+        }
+    </script>
+</body>
+</html>
