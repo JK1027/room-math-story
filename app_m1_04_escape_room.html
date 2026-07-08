@@ -215,6 +215,29 @@
             transition: width 0.5s ease;
         }
 
+        /* 소리 끄기 버튼 */
+        .sound-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            z-index: 100;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .sound-toggle:hover {
+            background: rgba(0, 0, 0, 0.8);
+            border-color: var(--accent);
+        }
+
     </style>
 </head>
 <body>
@@ -225,6 +248,8 @@
     <div class="bubble" style="left: 50%; width: 15px; height: 15px; animation-duration: 6s; animation-delay: 2s;"></div>
     <div class="bubble" style="left: 70%; width: 35px; height: 35px; animation-duration: 10s; animation-delay: 4s;"></div>
     <div class="bubble" style="left: 90%; width: 25px; height: 25px; animation-duration: 9s; animation-delay: 1.5s;"></div>
+
+    <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔊 소리 켜짐</button>
 
     <div class="container">
         
@@ -408,9 +433,27 @@
         let bgmOscillators = [];
         let lfo = null;
         let bgmGain = null;
+        let isMuted = false;
+
+        // 소리 끄기/켜기 토글
+        function toggleSound() {
+            isMuted = !isMuted;
+            const btn = document.getElementById('soundToggle');
+            if(isMuted) {
+                btn.innerHTML = '🔇 소리 꺼짐';
+                stopBGM(); // 즉시 BGM 정지
+            } else {
+                btn.innerHTML = '🔊 소리 켜짐';
+                // 인트로 화면이 아닐 때만 BGM 다시 재생
+                if(document.getElementById('intro').classList.contains('active') === false && document.getElementById('outro').classList.contains('active') === false) {
+                    startBGM();
+                }
+            }
+        }
 
         // 1. 심해 느낌의 BGM 재생
         function startBGM() {
+            if (isMuted) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             if (bgmOscillators.length > 0) return; 
             
@@ -459,6 +502,7 @@
 
         // 2. 효과음: 버튼 클릭 (짧은 블립 사운드)
         function playClick() {
+            if (isMuted) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
@@ -475,6 +519,7 @@
 
         // 3. 효과음: 정답 성공 (맑은 차임벨 연음)
         function playSuccess() {
+            if (isMuted) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             [523.25, 783.99].forEach((freq, i) => { // C5, G5
                 setTimeout(() => {
@@ -494,6 +539,7 @@
 
         // 4. 효과음: 오답 에러 (낮고 둔탁한 버저)
         function playError() {
+            if (isMuted) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
@@ -510,6 +556,7 @@
 
         // 5. 효과음: 엔딩 성공 (승리의 팡파르)
         function playVictory() {
+            if (isMuted) return;
             if (audioCtx.state === 'suspended') audioCtx.resume();
             stopBGM();
             const chords = [
