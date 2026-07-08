@@ -581,6 +581,7 @@
         let lfo = null;
         let bgmGain = null;
         let isMuted = false;
+        let typeWriterTimeout = null;
 
         function toggleSound() {
             isMuted = !isMuted;
@@ -728,6 +729,76 @@
             });
         }
 
+        let lastTickTime = 0;
+        function playTick() {
+            if (isMuted) return;
+            if (audioCtx.state === 'suspended') return;
+            const now = audioCtx.currentTime;
+            if (now - lastTickTime < 0.05) return; 
+            lastTickTime = now;
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(400, now);
+            osc.frequency.exponentialRampToValueAtTime(200, now + 0.03);
+            gain.gain.setValueAtTime(0.015, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.03);
+        }
+
+        // 타자기 효과
+        function typeWriterHTML(element, speed = 25) {
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            
+            const htmlContent = element.getAttribute('data-raw-html') || element.innerHTML;
+            if (!element.hasAttribute('data-raw-html')) {
+                element.setAttribute('data-raw-html', htmlContent);
+            }
+            
+            element.innerHTML = '';
+            let i = 0;
+            let textStr = '';
+            
+            element.onclick = () => {
+                if (i < htmlContent.length) {
+                    clearTimeout(typeWriterTimeout);
+                    i = htmlContent.length;
+                    element.innerHTML = htmlContent;
+                }
+            };
+            element.style.cursor = 'pointer'; 
+            
+            function type() {
+                if (i < htmlContent.length) {
+                    if (htmlContent.charAt(i) === '<') {
+                        while (htmlContent.charAt(i) !== '>' && i < htmlContent.length) {
+                            textStr += htmlContent.charAt(i);
+                            i++;
+                        }
+                        textStr += '>';
+                        i++;
+                        element.innerHTML = textStr;
+                        type(); 
+                    } else {
+                        textStr += htmlContent.charAt(i);
+                        element.innerHTML = textStr;
+                        i++;
+                        
+                        if (htmlContent.charAt(i-1) !== ' ' && htmlContent.charAt(i-1) !== '\n') {
+                            playTick();
+                        }
+                        
+                        typeWriterTimeout = setTimeout(type, speed);
+                    }
+                }
+            }
+            type();
+        }
+
         // 화면 전환 
         function nextStage(currentId, nextId, progressPercent) {
             playClick(); 
@@ -746,6 +817,9 @@
                 if(nextId !== 'intro') progContainer.style.display = 'block';
                 progBar.style.width = progressPercent + '%';
                 nextEl.classList.add('active');
+                
+                const storyBox = nextEl.querySelector('.story-box');
+                if(storyBox) typeWriterHTML(storyBox);
             }, 300);
         }
 
@@ -765,6 +839,9 @@
                 }
                 progBar.style.width = progressPercent + '%';
                 prevEl.classList.add('active');
+
+                const storyBox = prevEl.querySelector('.story-box');
+                if(storyBox) typeWriterHTML(storyBox);
             }, 300);
         }
 
@@ -878,6 +955,16 @@
                 showError('panel_q8', 'error8');
             }
         }
+
+        // 시작 시 인트로 타자기 효과
+        window.onload = () => {
+            const introBox = document.querySelector('#intro .story-box');
+            if(introBox) {
+                setTimeout(() => {
+                    typeWriterHTML(introBox, 25);
+                }, 500);
+            }
+        };
     </script>
 </body>
 </html>
