@@ -163,6 +163,12 @@
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 2px 10px rgba(0,0,0,0.8);
         }
 
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
         .btn {
             background: linear-gradient(135deg, #F59E0B, #B45309);
             color: white;
@@ -176,11 +182,28 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             width: 100%;
-            margin-top: 2rem;
             box-shadow: 0 10px 25px rgba(180, 83, 9, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
+        }
+
+        .btn-secondary {
+            background: rgba(30, 10, 0, 0.8);
+            border: 1px solid #F59E0B;
+            color: #FCD34D;
+            box-shadow: none;
+            background-image: none;
+        }
+
+        .btn-secondary::after {
+            display: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(60, 20, 0, 0.9);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            transform: translateY(-2px);
         }
 
         .btn::after {
@@ -330,7 +353,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error1">암호가 일치하지 않습니다. (힌트: n각형 대각선 개수는 n(n-3)/2)</div>
-            <button class="btn" onclick="checkQ1()">입력 확인</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q1', 'intro', 0)">이전 단서</button>
+                <button class="btn" onclick="checkQ1()">입력 확인</button>
+            </div>
         </div>
 
         <!-- Q2 -->
@@ -349,7 +375,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error2">반사판 각도가 어긋났습니다! (힌트: 외각은 이웃하지 않은 두 내각의 합)</div>
-            <button class="btn" onclick="checkQ2()">각도 조절</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q2', 'panel_q1', 12.5)">이전 단서</button>
+                <button class="btn" onclick="checkQ2()">각도 조절</button>
+            </div>
         </div>
 
         <!-- Q3 -->
@@ -368,7 +397,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error3">통로가 열리지 않습니다! 다시 계산하세요.</div>
-            <button class="btn" onclick="checkQ3()">다이얼 돌리기</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q3', 'panel_q2', 25)">이전 단서</button>
+                <button class="btn" onclick="checkQ3()">다이얼 돌리기</button>
+            </div>
         </div>
 
         <!-- Q4 -->
@@ -389,7 +421,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error4">정다각형 암호가 틀렸습니다. (힌트: 360/외각 = n)</div>
-            <button class="btn" onclick="checkQ4()">각도기 조작</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q4', 'panel_q3', 37.5)">이전 단서</button>
+                <button class="btn" onclick="checkQ4()">각도기 조작</button>
+            </div>
         </div>
 
         <!-- Q5 -->
@@ -408,7 +443,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error5">톱니바퀴가 헛돕니다! (힌트: 호의 길이는 중심각에 정비례)</div>
-            <button class="btn" onclick="checkQ5()">톱니바퀴 밀어올리기</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q5', 'panel_q4', 50)">이전 단서</button>
+                <button class="btn" onclick="checkQ5()">톱니바퀴 조작</button>
+            </div>
         </div>
 
         <!-- Q6 -->
@@ -428,7 +466,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error6">금실의 길이가 맞지 않습니다!</div>
-            <button class="btn" onclick="checkQ6()">조각 맞추기</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q6', 'panel_q5', 62.5)">이전 단서</button>
+                <button class="btn" onclick="checkQ6()">조각 맞추기</button>
+            </div>
         </div>
 
         <!-- Q7 -->
@@ -447,7 +488,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error7">입력한 면적이 잘못되었습니다!</div>
-            <button class="btn" onclick="checkQ7()">덮개 열기</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q7', 'panel_q6', 75)">이전 단서</button>
+                <button class="btn" onclick="checkQ7()">덮개 열기</button>
+            </div>
         </div>
 
         <!-- Q8 -->
@@ -466,7 +510,10 @@
                 </div>
             </div>
             <div class="error-msg" id="error8">수조 덮개가 열리지 않습니다! 폭발 직전입니다!</div>
-            <button class="btn" onclick="checkQ8()">최종 다이얼 입력</button>
+            <div class="btn-group">
+                <button class="btn btn-secondary" onclick="prevStage('panel_q8', 'panel_q7', 87.5)">이전 단서</button>
+                <button class="btn" onclick="checkQ8()">다이얼 입력</button>
+            </div>
         </div>
 
 
@@ -658,6 +705,25 @@
                 if(nextId !== 'intro') progContainer.style.display = 'block';
                 progBar.style.width = progressPercent + '%';
                 nextEl.classList.add('active');
+            }, 300);
+        }
+
+        // 뒤로 가기 (이전 스테이지)
+        function prevStage(currentId, prevId, progressPercent) {
+            playClick();
+            const currentEl = document.getElementById(currentId);
+            const prevEl = document.getElementById(prevId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            currentEl.classList.remove('active');
+            
+            setTimeout(() => {
+                if(prevId === 'intro') {
+                    progContainer.style.display = 'none';
+                }
+                progBar.style.width = progressPercent + '%';
+                prevEl.classList.add('active');
             }, 300);
         }
 
