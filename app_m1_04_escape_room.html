@@ -23,14 +23,34 @@
             margin: 0;
             padding: 0;
             font-family: 'Pretendard', sans-serif;
-            background: linear-gradient(135deg, #020617 0%, var(--primary) 50%, var(--secondary) 100%);
+            background: url('https://images.unsplash.com/photo-1551244072-5dd924d8ddbd?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            background-attachment: fixed;
+        }
+
+        /* 다크 오버레이 및 비네팅 효과 (배경을 어둡고 심해처럼 만듦) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(2, 6, 23, 0.95) 100%), rgba(15, 23, 42, 0.75);
+            z-index: 1;
+        }
+
+        /* 홀로그램 스캔라인 효과 */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.2) 51%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.5;
         }
 
         /* 배경 물거품 애니메이션 장식 */
@@ -57,15 +77,17 @@
             z-index: 10;
         }
 
-        /* Glassmorphism 패널 */
+        /* 프리미엄 Glassmorphism 패널 */
         .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
             padding: 3rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.05);
             display: none; /* JS로 제어 */
             opacity: 0;
             transform: translateY(20px);
@@ -82,20 +104,22 @@
             color: var(--accent);
             text-align: center;
             margin-top: 0;
-            text-shadow: 0 2px 10px rgba(251, 191, 36, 0.3);
+            /* 빛나는 네온 텍스트 효과 */
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.8), 0 0 20px rgba(251, 191, 36, 0.4), 0 2px 5px rgba(0,0,0,0.8);
         }
 
-        h1 { font-size: 2.5rem; letter-spacing: 2px; }
-        h2 { font-size: 1.8rem; border-bottom: 2px solid var(--accent); padding-bottom: 10px; display: inline-block; margin-bottom: 2rem;}
+        h1 { font-size: 2.8rem; letter-spacing: 3px; font-weight: 800; }
+        h2 { font-size: 1.8rem; border-bottom: 2px solid rgba(251, 191, 36, 0.5); padding-bottom: 10px; display: inline-block; margin-bottom: 2rem; box-shadow: 0 10px 10px -10px rgba(251, 191, 36, 0.3);}
 
         .story-box {
-            background: rgba(0, 0, 0, 0.3);
+            background: linear-gradient(90deg, rgba(30, 58, 138, 0.4) 0%, rgba(0,0,0,0.2) 100%);
             border-left: 4px solid var(--accent);
             padding: 1.5rem;
             margin-bottom: 2rem;
-            border-radius: 0 10px 10px 0;
-            line-height: 1.6;
-            font-size: 1.1rem;
+            border-radius: 0 12px 12px 0;
+            line-height: 1.7;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .question-box {
@@ -127,55 +151,78 @@
 
         input[type="text"] {
             width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 10px;
-            font-size: 1.1rem;
+            padding: 1.2rem;
+            background: rgba(2, 6, 23, 0.7);
+            border: 2px solid rgba(96, 165, 250, 0.4);
+            color: #60A5FA;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
             font-family: inherit;
             transition: all 0.3s;
             box-sizing: border-box;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
         }
 
         input[type="text"]:focus {
             outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+            border-color: #60A5FA;
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.4), inset 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .btn {
             background: linear-gradient(135deg, #F59E0B, #D97706);
             color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 10px;
+            border: 1px solid #FCD34D;
+            padding: 1.2rem 2rem;
+            font-size: 1.3rem;
+            font-weight: 800;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             width: 100%;
             margin-top: 2rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4), inset 0 2px 5px rgba(255,255,255,0.3);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.6);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.6), inset 0 2px 5px rgba(255,255,255,0.5);
         }
 
         .btn:active {
             transform: translateY(1px);
         }
 
-        /* SVG 그래프 컨테이너 */
+        /* SVG 그래프 컨테이너 개선 */
         .graph-container {
-            background: white;
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            box-shadow: 0 0 30px rgba(96, 165, 250, 0.5), inset 0 0 10px rgba(0,0,0,0.1);
+            border: 2px solid #60A5FA;
         }
 
         .error-msg {
@@ -242,12 +289,12 @@
 </head>
 <body>
 
-    <!-- 배경 물거품 -->
-    <div class="bubble" style="left: 10%; width: 20px; height: 20px; animation-duration: 8s; animation-delay: 1s;"></div>
-    <div class="bubble" style="left: 30%; width: 40px; height: 40px; animation-duration: 12s; animation-delay: 0s;"></div>
-    <div class="bubble" style="left: 50%; width: 15px; height: 15px; animation-duration: 6s; animation-delay: 2s;"></div>
-    <div class="bubble" style="left: 70%; width: 35px; height: 35px; animation-duration: 10s; animation-delay: 4s;"></div>
-    <div class="bubble" style="left: 90%; width: 25px; height: 25px; animation-duration: 9s; animation-delay: 1.5s;"></div>
+    <!-- 떠다니는 황금빛 파티클 -->
+    <div class="bubble" style="left: 15%; width: 10px; height: 10px; background:var(--accent); box-shadow:0 0 10px var(--accent); animation-duration: 8s; animation-delay: 1s;"></div>
+    <div class="bubble" style="left: 35%; width: 15px; height: 15px; background:var(--accent); box-shadow:0 0 15px var(--accent); animation-duration: 12s; animation-delay: 0s;"></div>
+    <div class="bubble" style="left: 55%; width: 8px; height: 8px; background:var(--accent); box-shadow:0 0 8px var(--accent); animation-duration: 6s; animation-delay: 2s;"></div>
+    <div class="bubble" style="left: 75%; width: 12px; height: 12px; background:var(--accent); box-shadow:0 0 12px var(--accent); animation-duration: 10s; animation-delay: 4s;"></div>
+    <div class="bubble" style="left: 90%; width: 20px; height: 20px; background:var(--accent); box-shadow:0 0 20px var(--accent); animation-duration: 9s; animation-delay: 1.5s;"></div>
 
     <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔊 소리 켜짐</button>
 
