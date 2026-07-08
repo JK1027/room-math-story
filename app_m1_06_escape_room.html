@@ -139,14 +139,6 @@
             margin-top: 1rem;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #FDE68A;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
         input[type="text"] {
             width: 100%;
             padding: 1.2rem;
@@ -318,17 +310,16 @@
                 "여러분은 이집트 사막 지하에서 새로 발견된 고대 '태양의 신전'을 조사하는 탐사대원입니다. 무심코 제단의 황금 버튼을 누르자, 쿠르릉 소리와 함께 출입구가 무너져 내리고 거울로 가득 찬 비밀 미궁 속에 갇히게 되었습니다!"<br><br>
                 "천장의 돋보기를 통해 뜨거운 태양 빛이 모이기 시작합니다. 40분 뒤면 빛의 열기가 임계점을 넘어 신전 전체가 불타오르게 됩니다! 거울 미궁의 수학적 수수께끼를 풀어내십시오!"
             </div>
-            <button class="btn" onclick="nextStage('intro', 'stage1', 25)">미궁으로 진입하기</button>
+            <button class="btn" onclick="nextStage('intro', 'panel_q1', 12.5)">미궁으로 진입하기</button>
         </div>
 
-        <!-- 1. 1구역 -->
-        <div id="stage1" class="glass-panel">
+        <!-- Q1 -->
+        <div id="panel_q1" class="glass-panel">
             <img src="assets/s12_polygon.png" alt="거울 미궁 다각형" class="panel-image">
             <h2>1구역: 빛의 반사각 조율</h2>
             <div class="story-box">
                 🚨 <strong>[대원의 비명]</strong> "앗 뜨거워! 천장에서 빛줄기가 내려오고 있습니다. 거울로 된 십각형 기둥들을 교차시켜 빛을 분산시켜야 합니다! 서둘러 설치할 대각선 거울의 총 개수를 파악하세요!"
             </div>
-            
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q1. [대각선의 총 개수]</strong><br>
@@ -338,11 +329,16 @@
                     </div>
                 </div>
             </div>
+            <div class="error-msg" id="error1">암호가 일치하지 않습니다. (힌트: n각형 대각선 개수는 n(n-3)/2)</div>
+            <button class="btn" onclick="checkQ1()">입력 확인</button>
+        </div>
 
+        <!-- Q2 -->
+        <div id="panel_q2" class="glass-panel">
+            <h2>1구역: 궤도 수정</h2>
             <div class="story-box">
                 🔥 <strong>[시스템 경고]</strong> "열기가 식지 않습니다! 꺾인 거울 틈새로 빛이 새어나가고 있어요! 삼각형 반사판의 외각을 계산해 빛의 궤도를 수정해야 합니다."
             </div>
-
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q2. [삼각형의 외각]</strong><br>
@@ -352,11 +348,16 @@
                     </div>
                 </div>
             </div>
+            <div class="error-msg" id="error2">반사판 각도가 어긋났습니다! (힌트: 외각은 이웃하지 않은 두 내각의 합)</div>
+            <button class="btn" onclick="checkQ2()">각도 조절</button>
+        </div>
 
+        <!-- Q3 -->
+        <div id="panel_q3" class="glass-panel">
+            <h2>1구역: 비밀통로 개방</h2>
             <div class="story-box">
                 🧩 <strong>[비밀통로 발견]</strong> "좋습니다, 빛이 꺾였습니다! 바닥에 회전 다이얼이 보입니다. 칠각형 모양 석판의 내각의 합을 알아내면 지하로 가는 통로가 열릴 겁니다!"
             </div>
-
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q3. [다각형의 내각의 합]</strong><br>
@@ -366,19 +367,17 @@
                     </div>
                 </div>
             </div>
-
-            <div class="error-msg" id="error1">암호가 일치하지 않습니다. (힌트: n각형 대각선 개수는 n(n-3)/2, 외각은 이웃하지 않은 두 내각의 합)</div>
-            <button class="btn" onclick="checkStage1()">다이얼 돌리기</button>
+            <div class="error-msg" id="error3">통로가 열리지 않습니다! 다시 계산하세요.</div>
+            <button class="btn" onclick="checkQ3()">다이얼 돌리기</button>
         </div>
 
-        <!-- 2. 2구역 -->
-        <div id="stage2" class="glass-panel">
+        <!-- Q4 -->
+        <div id="panel_q4" class="glass-panel">
             <img src="assets/s12_key.png" alt="정다각형 석판과 호" class="panel-image">
-            <h2>2구역: 태양 신의 석판 봉인 해제</h2>
+            <h2>2구역: 봉인된 석판</h2>
             <div class="story-box">
                 ☀️ <strong>[태양의 상징]</strong> "지하 통로 끝에는 정다각형 문양의 거대한 금속 문이 있습니다. 완벽한 대칭을 이루는 이 문의 정체를 밝혀내고 파라오의 각도기를 조작하세요!"
             </div>
-
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q4. [정다각형의 내각과 외각]</strong><br>
@@ -389,11 +388,16 @@
                     </div>
                 </div>
             </div>
+            <div class="error-msg" id="error4">정다각형 암호가 틀렸습니다. (힌트: 360/외각 = n)</div>
+            <button class="btn" onclick="checkQ4()">각도기 조작</button>
+        </div>
 
+        <!-- Q5 -->
+        <div id="panel_q5" class="glass-panel">
+            <h2>2구역: 거대 톱니바퀴 조작</h2>
             <div class="story-box">
                 ⚙️ <strong>[거대 톱니바퀴]</strong> "문이 아주 조금 열렸습니다! 완전히 열려면 테두리의 석판을 정비례 원리를 이용해 24cm 지점까지 밀어 올려야 합니다!"
             </div>
-
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q5. [중심각과 호의 길이]</strong><br>
@@ -403,19 +407,17 @@
                     </div>
                 </div>
             </div>
-
-            <div class="error-msg" id="error2">수치가 잘못되었습니다. (힌트: 360/외각 = n, 호의 길이는 중심각에 정비례)</div>
-            <button class="btn" onclick="checkStage2()">금속 문 개방하기</button>
+            <div class="error-msg" id="error5">톱니바퀴가 헛돕니다! (힌트: 호의 길이는 중심각에 정비례)</div>
+            <button class="btn" onclick="checkQ5()">톱니바퀴 밀어올리기</button>
         </div>
 
-        <!-- 3. 3구역 -->
-        <div id="stage3" class="glass-panel">
-            <h2>3구역: 원형 부채꼴 열쇠 조립</h2>
+        <!-- Q6 -->
+        <div id="panel_q6" class="glass-panel">
+            <h2>3구역: 원형 부채꼴 조각</h2>
             <div class="story-box">
                 🔑 <strong>[마지막 관문]</strong> "드디어 수조 앞입니다! 하지만 수조의 덮개가 잠겨있습니다. 부채꼴 모양 조각들을 찾아 테두리에 금실을 메워 조립해야 합니다!"<br><br>
                 <small style="color: #FCD34D;">※ 파이(π)는 한글로 '파이' 혹은 영어로 'pi' 라고 입력하세요. (예: 10파이, 10pi)</small>
             </div>
-
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q6. [부채꼴의 호의 길이]</strong><br>
@@ -425,11 +427,16 @@
                     </div>
                 </div>
             </div>
+            <div class="error-msg" id="error6">금실의 길이가 맞지 않습니다!</div>
+            <button class="btn" onclick="checkQ6()">조각 맞추기</button>
+        </div>
 
+        <!-- Q7 -->
+        <div id="panel_q7" class="glass-panel">
+            <h2>3구역: 수조 제어판 개방</h2>
             <div class="story-box">
                 💧 <strong>[수조 제어판]</strong> "열쇠가 완성되었습니다! 이제 빛이 들어갈 구멍의 면적을 구해야 덮개가 완전히 개방됩니다."
             </div>
-
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q7. [부채꼴의 넓이]</strong><br>
@@ -439,11 +446,16 @@
                     </div>
                 </div>
             </div>
+            <div class="error-msg" id="error7">입력한 면적이 잘못되었습니다!</div>
+            <button class="btn" onclick="checkQ7()">덮개 열기</button>
+        </div>
 
+        <!-- Q8 -->
+        <div id="panel_q8" class="glass-panel">
+            <h2>최종 국면: 임계점 도달</h2>
             <div class="story-box">
                 ⏱️ <strong>[임계점 도달]</strong> "5분 남았습니다! 최종 탈출 게이트 수치 오류 발생! 호의 길이를 이용해 재빨리 부채꼴 넓이를 역산해 입력하세요!"
             </div>
-
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q8. [부채꼴의 넓이 응용]</strong><br>
@@ -453,10 +465,10 @@
                     </div>
                 </div>
             </div>
-
-            <div class="error-msg" id="error3">수조 덮개가 열리지 않습니다! 다시 계산하세요.</div>
-            <button class="btn" onclick="checkStage3()">최종 다이얼 입력</button>
+            <div class="error-msg" id="error8">수조 덮개가 열리지 않습니다! 폭발 직전입니다!</div>
+            <button class="btn" onclick="checkQ8()">최종 다이얼 입력</button>
         </div>
+
 
         <!-- 4. 엔딩 -->
         <div id="outro" class="glass-panel">
@@ -671,53 +683,92 @@
             return s.replace('파이', 'pi').replace('π', 'pi');
         }
 
-        // 1구역 검사
-        function checkStage1() {
-            // Q1: 대각선 개수 (10*7/2 = 35)
-            const ans1 = cleanString(document.getElementById('ans1').value).replace('개','');
-            // Q2: 외각 (45+60 = 105)
-            const ans2 = cleanString(document.getElementById('ans2').value).replace('도','').replace('°','');
-            // Q3: 칠각형 내각 합 (180*5 = 900)
-            const ans3 = cleanString(document.getElementById('ans3').value).replace('도','').replace('°','');
-
-            if (ans1 === '35' && ans2 === '105' && ans3 === '900') {
+        // Q1 검사
+        function checkQ1() {
+            const ans = cleanString(document.getElementById('ans1').value).replace('개','');
+            if (ans === '35') {
                 playSuccess(); 
-                nextStage('stage1', 'stage2', 50);
+                nextStage('panel_q1', 'panel_q2', 25);
             } else {
-                showError('stage1', 'error1');
+                showError('panel_q1', 'error1');
             }
         }
 
-        // 2구역 검사
-        function checkStage2() {
-            // Q4: 정십각형, 144
-            const ans4_1 = cleanString(document.getElementById('ans4_1').value);
-            const ans4_2 = cleanString(document.getElementById('ans4_2').value).replace('도','').replace('°','');
-            // Q5: 40도 6cm -> 24cm(4배) 중심각 160
-            const ans5 = cleanString(document.getElementById('ans5').value).replace('도','').replace('°','');
-
-            if ((ans4_1 === '정십각형' || ans4_1 === '십각형') && ans4_2 === '144' && ans5 === '160') {
+        // Q2 검사
+        function checkQ2() {
+            const ans = cleanString(document.getElementById('ans2').value).replace('도','').replace('°','');
+            if (ans === '105') {
                 playSuccess(); 
-                nextStage('stage2', 'stage3', 75);
+                nextStage('panel_q2', 'panel_q3', 37.5);
             } else {
-                showError('stage2', 'error2');
+                showError('panel_q2', 'error2');
             }
         }
 
-        // 3구역 검사
-        function checkStage3() {
-            // Q6: 호의 길이 -> 2*pi*9*(120/360) = 6pi
-            const ans6 = cleanPi(document.getElementById('ans6').value).replace('cm','');
-            // Q7: 부채꼴 넓이 -> pi*36*(60/360) = 6pi
-            const ans7 = cleanPi(document.getElementById('ans7').value).replace('cm2','').replace('제곱센티미터','');
-            // Q8: 응용 -> 1/2*10*5pi = 25pi
-            const ans8 = cleanPi(document.getElementById('ans8').value).replace('cm2','').replace('제곱센티미터','');
+        // Q3 검사
+        function checkQ3() {
+            const ans = cleanString(document.getElementById('ans3').value).replace('도','').replace('°','');
+            if (ans === '900') {
+                playSuccess(); 
+                nextStage('panel_q3', 'panel_q4', 50);
+            } else {
+                showError('panel_q3', 'error3');
+            }
+        }
 
-            if (ans6 === '6pi' && ans7 === '6pi' && ans8 === '25pi') {
+        // Q4 검사
+        function checkQ4() {
+            const ans_1 = cleanString(document.getElementById('ans4_1').value);
+            const ans_2 = cleanString(document.getElementById('ans4_2').value).replace('도','').replace('°','');
+            if ((ans_1 === '정십각형' || ans_1 === '십각형') && ans_2 === '144') {
+                playSuccess(); 
+                nextStage('panel_q4', 'panel_q5', 62.5);
+            } else {
+                showError('panel_q4', 'error4');
+            }
+        }
+
+        // Q5 검사
+        function checkQ5() {
+            const ans = cleanString(document.getElementById('ans5').value).replace('도','').replace('°','');
+            if (ans === '160') {
+                playSuccess(); 
+                nextStage('panel_q5', 'panel_q6', 75);
+            } else {
+                showError('panel_q5', 'error5');
+            }
+        }
+
+        // Q6 검사
+        function checkQ6() {
+            const ans = cleanPi(document.getElementById('ans6').value).replace('cm','');
+            if (ans === '6pi') {
+                playSuccess(); 
+                nextStage('panel_q6', 'panel_q7', 87.5);
+            } else {
+                showError('panel_q6', 'error6');
+            }
+        }
+
+        // Q7 검사
+        function checkQ7() {
+            const ans = cleanPi(document.getElementById('ans7').value).replace('cm2','').replace('제곱센티미터','');
+            if (ans === '6pi') {
+                playSuccess(); 
+                nextStage('panel_q7', 'panel_q8', 95);
+            } else {
+                showError('panel_q7', 'error7');
+            }
+        }
+
+        // Q8 검사
+        function checkQ8() {
+            const ans = cleanPi(document.getElementById('ans8').value).replace('cm2','').replace('제곱센티미터','');
+            if (ans === '25pi') {
                 playVictory(); 
-                nextStage('stage3', 'outro', 100);
+                nextStage('panel_q8', 'outro', 100);
             } else {
-                showError('stage3', 'error3');
+                showError('panel_q8', 'error8');
             }
         }
     </script>
