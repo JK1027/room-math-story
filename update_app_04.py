@@ -108,23 +108,11 @@ for q in qs:
     js_checks += js
 
 
-# Replace in content
-# We will find the start of <!-- Q1 --> and end of <!-- 아웃트로 --> or similar to replace panels
-start_panel_idx = content.find('<!-- Q1 -->')
-end_panel_idx = content.find('        <script>', start_panel_idx)
+import re
+new_content = re.sub(r'<!-- Q1.*?(?=<script>)', lambda m: '<!-- Q1 -->\n' + panels_html + '\n    ', content, flags=re.DOTALL)
 
-if start_panel_idx != -1 and end_panel_idx != -1:
-    content = content[:start_panel_idx] + panels_html + content[end_panel_idx:]
-
-# Now replace JS checks
-start_js_idx = content.find('        // Q1\n')
-if start_js_idx == -1:
-    start_js_idx = content.find('        // Q1\r\n')
-end_js_idx = content.find('        window.onload = () => {', start_js_idx)
-
-if start_js_idx != -1 and end_js_idx != -1:
-    content = content[:start_js_idx] + js_checks + content[end_js_idx:]
+new_content = re.sub(r'// Q1[\s\S]*?(?=window\.onload = \(\) => \{)', lambda m: '// Q1\n' + js_checks + '\n        ', new_content)
 
 with open(html_file, 'w', encoding='utf-8') as f:
-    f.write(content)
+    f.write(new_content)
 print("Updated successfully.")
