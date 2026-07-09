@@ -322,7 +322,7 @@
     
         .panel-image {
             width: 100%;
-            max-height: 400px;
+            height: 66vh;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
@@ -872,6 +872,31 @@
         </div>
 
     <script>
+
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
+
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         const audioCtx = new AudioContext();
         let bgmOscillators = [];
@@ -1202,57 +1227,7 @@
         }
 
 
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
-
         // Q1
-
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
 
         // Q1
         function checkQ1() {
@@ -1353,31 +1328,6 @@
             }
         }
 
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
-
         // Q10
         function checkQ10() {
             const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
@@ -1388,31 +1338,6 @@
                 showError('panel_q10', 'error10');
             }
         }
-
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
 
         // Q11
         function checkQ11() {
@@ -1425,31 +1350,6 @@
             }
         }
 
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
-
         // Q12
         function checkQ12() {
             const ans = cleanString(document.getElementById('ans12').value).replace('(','').replace(')','');
@@ -1460,31 +1360,6 @@
                 showError('panel_q12', 'error12');
             }
         }
-
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
 
         // Q13
         function checkQ13() {
@@ -1497,31 +1372,6 @@
             }
         }
 
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
-
         // Q14
         function checkQ14() {
             const ans = cleanString(document.getElementById('ans14').value).replace('(','').replace(')','');
@@ -1532,31 +1382,6 @@
                 showError('panel_q14', 'error14');
             }
         }
-
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
 
         // Q15
         function checkQ15() {
@@ -1569,31 +1394,6 @@
             }
         }
 
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
-
         // Q16
         function checkQ16() {
             const ans = cleanString(document.getElementById('ans16').value).replace('(','').replace(')','');
@@ -1604,31 +1404,6 @@
                 showError('panel_q16', 'error16');
             }
         }
-
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
 
         // Q17
         function checkQ17() {
@@ -1641,31 +1416,6 @@
             }
         }
 
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
-
         // Q18
         function checkQ18() {
             const ans = cleanString(document.getElementById('ans18').value).replace('(','').replace(')','');
@@ -1676,31 +1426,6 @@
                 showError('panel_q18', 'error18');
             }
         }
-
-        
-        let storyHistory = [];
-        function openLog() {
-            document.getElementById('storyLogModal').classList.add('active');
-            const container = document.getElementById('logContainer');
-            if (storyHistory.length === 0) {
-                container.innerHTML = '기록이 없습니다.';
-            } else {
-                container.innerHTML = storyHistory.join('<hr>');
-            }
-        }
-        function closeLog() {
-            document.getElementById('storyLogModal').classList.remove('active');
-        }
-
-        // Add current intro to history on load
-        window.addEventListener('DOMContentLoaded', () => {
-            const introPanel = document.getElementById('intro');
-            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
-            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
-            if (introStory) {
-                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
-            }
-        });
 
         // Q19
         function checkQ19() {
