@@ -305,145 +305,73 @@
 
         @media (max-width: 600px) {
             body {
-                height: 100vh;
-                height: 100dvh;
-                overflow: hidden;
-            }
-            .container {
-                height: 100%;
-                padding: 5px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-sizing: border-box;
-            }
-            .glass-panel {
-                width: 100%;
-                height: 98vh;
-                height: 98dvh;
-                padding: 0.8rem;
-                border-radius: 16px;
-                box-sizing: border-box;
-                display: none;
-                flex-direction: column;
-                justify-content: flex-start;
-                overflow: hidden;
-            }
-            .glass-panel.active {
-                display: flex;
-            }
-            h1 { font-size: 1.5rem; letter-spacing: 1px; margin-top: 0; margin-bottom: 0.3rem; }
-            h2 { font-size: 1.1rem; margin-top: 0; margin-bottom: 0.3rem; padding-bottom: 3px; }
-            .panel-image {
-                height: 0;
-                flex: 1 1 25vh; /* Lower the basis slightly to ensure everything fits */
-                min-height: 0;
-                object-fit: cover;
-                margin-bottom: 0.4rem;
-                width: 100%;
-            }
-            .story-box {
-                cursor: pointer;
-                font-size: 0.85rem;
-                padding: 0.6rem 0.8rem;
-                margin-bottom: 0.4rem;
-                max-height: 80px;
                 overflow-y: auto;
-                flex: 0 0 auto;
             }
-            .question-box {
-                padding: 0.6rem 0.8rem;
-                margin-bottom: 0.4rem;
-                font-size: 0.85rem;
-                flex: 0 0 auto;
-            }
-            .question-box::before { font-size: 2.5rem; top: -5px; right: -5px; }
-            .input-group { margin-top: 0.4rem; }
-            input[type="text"] { font-size: 0.95rem; padding: 0.6rem; }
-            .btn { font-size: 0.95rem; padding: 0.6rem; letter-spacing: 1px; }
-            .btn-group { flex-direction: row; gap: 0.4rem; margin-top: 0.4rem; flex: 0 0 auto; }
-            .sound-toggle { top: 3px; right: 3px; font-size: 0.65rem; padding: 3px 6px; }
-            .graph-container { padding: 0.6rem; margin: 0.4rem 0; flex: 1 1 auto; max-height: 20vh; }
-        }
             .container {
-                height: 100%;
                 padding: 10px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 box-sizing: border-box;
+                min-height: 100vh;
             }
             .glass-panel {
                 width: 100%;
-                height: 96vh;
-                height: 96dvh;
-                padding: 1rem;
+                max-height: 94vh;
+                max-height: 94dvh;
+                height: auto;
+                padding: 1.2rem;
                 border-radius: 16px;
                 box-sizing: border-box;
                 display: none;
                 flex-direction: column;
-                justify-content: space-between;
-                overflow: hidden;
+                justify-content: flex-start;
+                overflow-y: auto;
             }
             .glass-panel.active {
                 display: flex;
             }
-            h1 { font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 0.5rem; }
-            h2 { font-size: 1.2rem; margin-bottom: 0.5rem; padding-bottom: 5px; }
+            h1 { font-size: 1.6rem; letter-spacing: 1px; margin-top: 0; margin-bottom: 0.5rem; }
+            h2 { font-size: 1.2rem; margin-top: 0; margin-bottom: 0.5rem; padding-bottom: 5px; }
             .panel-image {
                 height: auto;
-                max-height: 38vh; /* Scale down image on mobile to fit screen */
-                flex: 1 1 auto;
+                max-height: 25vh;
                 object-fit: cover;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.6rem;
+                width: 100%;
+                flex: 0 0 auto;
             }
             .story-box {
                 cursor: pointer;
                 font-size: 0.9rem;
                 padding: 0.8rem;
-                margin-bottom: 0.5rem;
-                max-height: 85px;
+                margin-bottom: 0.6rem;
+                max-height: 100px;
                 overflow-y: auto;
                 flex: 0 0 auto;
             }
             .question-box {
                 padding: 0.8rem;
-                margin-bottom: 0.5rem;
+                margin-bottom: 0.6rem;
                 font-size: 0.9rem;
                 flex: 0 0 auto;
             }
             .question-box::before { font-size: 3rem; top: -5px; right: -5px; }
             .input-group { margin-top: 0.5rem; }
             input[type="text"] { font-size: 1rem; padding: 0.8rem; }
-            .btn { font-size: 1rem; padding: 0.8rem; letter-spacing: 1px; }
-            .btn-group { flex-direction: row; gap: 0.5rem; margin-top: 0.5rem; flex: 0 0 auto; }
-            .sound-toggle { top: 5px; right: 5px; font-size: 0.7rem; padding: 4px 8px; }
-            .graph-container { padding: 0.8rem; margin: 0.5rem 0; flex: 1 1 auto; max-height: 25vh; }
-        }
-            .glass-panel { padding: 1.5rem; border-radius: 16px; }
-            h1 { font-size: 2rem; letter-spacing: 1px; }
-            h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
-            .story-box {
-            cursor: pointer; /* Click to advance text */ font-size: 1rem; padding: 1rem; margin-bottom: 1.5rem; 
-            max-height: 150px;
-            overflow-y: auto;
-        }
-            .question-box { padding: 1.2rem; }
-            .question-box::before { font-size: 4rem; top: -10px; right: -5px; }
-            input[type="text"] { font-size: 1.1rem; padding: 1rem; }
-            .btn { font-size: 1.1rem; padding: 1rem 1.2rem; letter-spacing: 1px; }
-            .btn-group { flex-direction: column; gap: 0.8rem; }
+            .btn { font-size: 1.1rem; padding: 0.9rem 1.2rem; letter-spacing: 1px; }
+            .btn-group { flex-direction: column; gap: 0.6rem; margin-top: 0.6rem; }
             .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
-            .graph-container { padding: 1rem; }
+            .graph-container { padding: 0.8rem; margin: 0.5rem 0; flex: 1 1 auto; max-height: 25vh; }
         }
     
         .panel-image {
             width: 100%;
-            height: 66vh;
+            height: auto;
+            max-height: 250px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
         /* Story Log Modal CSS */
