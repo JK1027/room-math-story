@@ -115,6 +115,9 @@
             font-size: 1.15rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             text-align: justify;
+        
+            max-height: 150px;
+            overflow-y: auto;
         }
 
         .question-box {
@@ -304,7 +307,10 @@
             .glass-panel { padding: 1.5rem; border-radius: 16px; }
             h1 { font-size: 2rem; letter-spacing: 1px; }
             h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
-            .story-box { font-size: 1rem; padding: 1rem; margin-bottom: 1.5rem; }
+            .story-box { font-size: 1rem; padding: 1rem; margin-bottom: 1.5rem; 
+            max-height: 150px;
+            overflow-y: auto;
+        }
             .question-box { padding: 1.2rem; }
             .question-box::before { font-size: 4rem; top: -10px; right: -5px; }
             input[type="text"] { font-size: 1.1rem; padding: 1rem; }
@@ -316,11 +322,67 @@
     
         .panel-image {
             width: 100%;
-            max-height: 250px;
+            max-height: 400px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        /* Story Log Modal CSS */
+        .log-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        .log-btn:hover {
+            background: rgba(16, 185, 129, 1);
+            transform: scale(1.05);
+        }
+        .log-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .log-modal.active {
+            display: flex;
+        }
+        .log-content {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: var(--text-main);
+        }
+        .log-content h2 { margin-top: 0; color: var(--accent-blue); }
+        .log-content hr { border-color: rgba(255,255,255,0.1); margin: 15px 0; }
+        .close-log {
+            float: right;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 </style>
 </head>
@@ -424,7 +486,7 @@
 
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
-            <img src="assets/m1_04/img1_radar.png" alt="Background" class="panel-image">
+            <img src="assets/m1_04/img11_deep_cave.png" alt="Background" class="panel-image">
             <h2>제 4구역: 심해로 가는 좌표</h2>
             <div class="story-box">
                 🌊 <strong>[추가 기준점]</strong><br><br>y축 방향의 해저 동굴 입구 좌표를 입력하세요.
@@ -490,7 +552,7 @@
 
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
-            <img src="assets/m1_04/img3_atlantis.png" alt="Background" class="panel-image">
+            <img src="assets/m1_04/img12_compass.png" alt="Background" class="panel-image">
             <h2>제 7구역: 아틀란티스의 사분면 결계</h2>
             <div class="story-box">
                 🧭 <strong>[추가 결계]</strong><br><br>두 번째 사분면 문을 엽니다.
@@ -600,7 +662,7 @@
 
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
-            <img src="assets/m1_04/img5_descend.png" alt="Background" class="panel-image">
+            <img src="assets/m1_04/img13_graph_speed.png" alt="Background" class="panel-image">
             <h2>제 12구역: 해저 수압의 변화</h2>
             <div class="story-box">
                 🌊 <strong>[깊이 예측]</strong><br><br>일정한 속력으로 내려가는 잠수정의 깊이를 구합니다.
@@ -666,7 +728,7 @@
 
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
-            <img src="assets/m1_04/img6_oxygen.png" alt="Background" class="panel-image">
+            <img src="assets/m1_04/img14_oxygen_leak.png" alt="Background" class="panel-image">
             <h2>제 15구역: 해저 수압의 변화</h2>
             <div class="story-box">
                 🌊 <strong>[산소 잔량]</strong><br><br>남은 산소의 양을 그래프로 나타낼 때의 개형을 맞춥니다.
@@ -754,7 +816,7 @@
 
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
-            <img src="assets/m1_04/img8_buoyancy.png" alt="Background" class="panel-image">
+            <img src="assets/m1_04/img15_golden_door.png" alt="Background" class="panel-image">
             <h2>제 19구역: 황금 문 톱니바퀴</h2>
             <div class="story-box">
                 💎 <strong>[반비례 상수]</strong><br><br>반비례 관계식을 알아냅니다.
@@ -1140,7 +1202,57 @@
         }
 
 
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
+
         // Q1
+
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
 
         // Q1
         function checkQ1() {
@@ -1241,6 +1353,31 @@
             }
         }
 
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
+
         // Q10
         function checkQ10() {
             const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
@@ -1251,6 +1388,31 @@
                 showError('panel_q10', 'error10');
             }
         }
+
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
 
         // Q11
         function checkQ11() {
@@ -1263,6 +1425,31 @@
             }
         }
 
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
+
         // Q12
         function checkQ12() {
             const ans = cleanString(document.getElementById('ans12').value).replace('(','').replace(')','');
@@ -1273,6 +1460,31 @@
                 showError('panel_q12', 'error12');
             }
         }
+
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
 
         // Q13
         function checkQ13() {
@@ -1285,6 +1497,31 @@
             }
         }
 
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
+
         // Q14
         function checkQ14() {
             const ans = cleanString(document.getElementById('ans14').value).replace('(','').replace(')','');
@@ -1295,6 +1532,31 @@
                 showError('panel_q14', 'error14');
             }
         }
+
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
 
         // Q15
         function checkQ15() {
@@ -1307,6 +1569,31 @@
             }
         }
 
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
+
         // Q16
         function checkQ16() {
             const ans = cleanString(document.getElementById('ans16').value).replace('(','').replace(')','');
@@ -1317,6 +1604,31 @@
                 showError('panel_q16', 'error16');
             }
         }
+
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
 
         // Q17
         function checkQ17() {
@@ -1329,6 +1641,31 @@
             }
         }
 
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
+
         // Q18
         function checkQ18() {
             const ans = cleanString(document.getElementById('ans18').value).replace('(','').replace(')','');
@@ -1339,6 +1676,31 @@
                 showError('panel_q18', 'error18');
             }
         }
+
+        
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
 
         // Q19
         function checkQ19() {
@@ -1384,5 +1746,16 @@
             }
         };
     </script>
+
+    <!-- Story Log UI -->
+    <button class="log-btn" onclick="openLog()">📜 이전 대사 보기</button>
+    <div id="storyLogModal" class="log-modal">
+        <div class="log-content">
+            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
+            <h2>📜 지나온 해저 탐사 기록</h2>
+            <div id="logContainer">기록이 없습니다.</div>
+        </div>
+    </div>
+
 </body>
 </html>
