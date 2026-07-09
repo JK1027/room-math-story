@@ -1,6 +1,6 @@
 import re
 
-html_file = r'c:\Coding_Notebook\Projects\school\room-math-story\app_m1_06_escape_room.html'
+html_file = 'app_m1_06_escape_room.html'
 
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
