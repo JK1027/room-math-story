@@ -1037,12 +1037,13 @@
             return str.replace(/\s+/g, '').toLowerCase();
         }
 
+
         // Q1
         function checkQ1() {
             const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
             if (ans === '-5,8') {
                 playSuccess(); 
-                nextStage('panel_q1', 'panel_q2', 16.6);
+                nextStage('panel_q1', 'panel_q2', 5);
             } else {
                 showError('panel_q1', 'error1');
             }
@@ -1050,10 +1051,10 @@
 
         // Q2
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value);
-            if (ans === '48') {
+            const ans = cleanString(document.getElementById('ans2').value).replace('(','').replace(')','');
+            if (ans === '7,0') {
                 playSuccess(); 
-                nextStage('panel_q2', 'panel_q3', 25);
+                nextStage('panel_q2', 'panel_q3', 10);
             } else {
                 showError('panel_q2', 'error2');
             }
@@ -1061,10 +1062,10 @@
 
         // Q3
         function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value).replace('사분면', '').replace('제', '');
-            if (ans === '4') {
+            const ans = cleanString(document.getElementById('ans3').value).replace('(','').replace(')','');
+            if (ans === '0,0') {
                 playSuccess(); 
-                nextStage('panel_q3', 'panel_q4', 33.3);
+                nextStage('panel_q3', 'panel_q4', 15);
             } else {
                 showError('panel_q3', 'error3');
             }
@@ -1073,9 +1074,9 @@
         // Q4
         function checkQ4() {
             const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
-            if (ans === '5,0') {
+            if (ans === '0,-3') {
                 playSuccess(); 
-                nextStage('panel_q4', 'panel_q5', 41.6);
+                nextStage('panel_q4', 'panel_q5', 20);
             } else {
                 showError('panel_q4', 'error4');
             }
@@ -1084,9 +1085,9 @@
         // Q5
         function checkQ5() {
             const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
-            if (ans === '0,-4') {
+            if (ans === '48') {
                 playSuccess(); 
-                nextStage('panel_q5', 'panel_q6', 50);
+                nextStage('panel_q5', 'panel_q6', 25);
             } else {
                 showError('panel_q5', 'error5');
             }
@@ -1094,10 +1095,10 @@
 
         // Q6
         function checkQ6() {
-            const ans = cleanString(document.getElementById('ans6').value).replace('m','');
-            if (ans === '100') {
+            const ans = cleanString(document.getElementById('ans6').value).replace('(','').replace(')','');
+            if (ans === '4') {
                 playSuccess(); 
-                nextStage('panel_q6', 'panel_q7', 58.3);
+                nextStage('panel_q6', 'panel_q7', 30);
             } else {
                 showError('panel_q6', 'error6');
             }
@@ -1105,10 +1106,10 @@
 
         // Q7
         function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value).replace('분','');
-            if (ans === '10') {
+            const ans = cleanString(document.getElementById('ans7').value).replace('(','').replace(')','');
+            if (ans === '3') {
                 playSuccess(); 
-                nextStage('panel_q7', 'panel_q8', 66.6);
+                nextStage('panel_q7', 'panel_q8', 35);
             } else {
                 showError('panel_q7', 'error7');
             }
@@ -1116,10 +1117,10 @@
 
         // Q8
         function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value);
-            if (ans === 'y=5x' || ans === '5x') {
+            const ans = cleanString(document.getElementById('ans8').value).replace('(','').replace(')','');
+            if (ans === '4') {
                 playSuccess(); 
-                nextStage('panel_q8', 'panel_q9', 75);
+                nextStage('panel_q8', 'panel_q9', 40);
             } else {
                 showError('panel_q8', 'error8');
             }
@@ -1127,10 +1128,10 @@
 
         // Q9
         function checkQ9() {
-            const ans = cleanString(document.getElementById('ans9').value).replace('번','').replace('회','');
-            if (ans === '50') {
+            const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
+            if (ans === '-2') {
                 playSuccess(); 
-                nextStage('panel_q9', 'panel_q10', 83.3);
+                nextStage('panel_q9', 'panel_q10', 45);
             } else {
                 showError('panel_q9', 'error9');
             }
@@ -1138,10 +1139,10 @@
 
         // Q10
         function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value).replace('kg','');
-            if (ans === '40') {
+            const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
+            if (ans === '1') {
                 playSuccess(); 
-                nextStage('panel_q10', 'panel_q11', 91.6);
+                nextStage('panel_q10', 'panel_q11', 50);
             } else {
                 showError('panel_q10', 'error10');
             }
@@ -1149,10 +1150,10 @@
 
         // Q11
         function checkQ11() {
-            const ans = cleanString(document.getElementById('ans11').value);
-            if (ans === '12') {
+            const ans = cleanString(document.getElementById('ans11').value).replace('(','').replace(')','');
+            if (ans === '정지') {
                 playSuccess(); 
-                nextStage('panel_q11', 'panel_q12', 96);
+                nextStage('panel_q11', 'panel_q12', 55);
             } else {
                 showError('panel_q11', 'error11');
             }
@@ -1160,15 +1161,102 @@
 
         // Q12
         function checkQ12() {
-            const ans = cleanString(document.getElementById('ans12').value);
-            if (ans === '4') {
-                playVictory(); 
-                nextStage('panel_q12', 'outro', 100);
+            const ans = cleanString(document.getElementById('ans12').value).replace('(','').replace(')','');
+            if (ans === '50') {
+                playSuccess(); 
+                nextStage('panel_q12', 'panel_q13', 60);
             } else {
                 showError('panel_q12', 'error12');
             }
         }
 
+        // Q13
+        function checkQ13() {
+            const ans = cleanString(document.getElementById('ans13').value).replace('(','').replace(')','');
+            if (ans === '증가') {
+                playSuccess(); 
+                nextStage('panel_q13', 'panel_q14', 65);
+            } else {
+                showError('panel_q13', 'error13');
+            }
+        }
+
+        // Q14
+        function checkQ14() {
+            const ans = cleanString(document.getElementById('ans14').value).replace('(','').replace(')','');
+            if (ans === '0') {
+                playSuccess(); 
+                nextStage('panel_q14', 'panel_q15', 70);
+            } else {
+                showError('panel_q14', 'error14');
+            }
+        }
+
+        // Q15
+        function checkQ15() {
+            const ans = cleanString(document.getElementById('ans15').value).replace('(','').replace(')','');
+            if (ans === '우하향') {
+                playSuccess(); 
+                nextStage('panel_q15', 'panel_q16', 75);
+            } else {
+                showError('panel_q15', 'error15');
+            }
+        }
+
+        // Q16
+        function checkQ16() {
+            const ans = cleanString(document.getElementById('ans16').value).replace('(','').replace(')','');
+            if (ans === '25') {
+                playSuccess(); 
+                nextStage('panel_q16', 'panel_q17', 80);
+            } else {
+                showError('panel_q16', 'error16');
+            }
+        }
+
+        // Q17
+        function checkQ17() {
+            const ans = cleanString(document.getElementById('ans17').value).replace('(','').replace(')','');
+            if (ans === '-4') {
+                playSuccess(); 
+                nextStage('panel_q17', 'panel_q18', 85);
+            } else {
+                showError('panel_q17', 'error17');
+            }
+        }
+
+        // Q18
+        function checkQ18() {
+            const ans = cleanString(document.getElementById('ans18').value).replace('(','').replace(')','');
+            if (ans === '40') {
+                playSuccess(); 
+                nextStage('panel_q18', 'panel_q19', 90);
+            } else {
+                showError('panel_q18', 'error18');
+            }
+        }
+
+        // Q19
+        function checkQ19() {
+            const ans = cleanString(document.getElementById('ans19').value).replace('(','').replace(')','');
+            if (ans === '20') {
+                playSuccess(); 
+                nextStage('panel_q19', 'panel_q20', 95);
+            } else {
+                showError('panel_q19', 'error19');
+            }
+        }
+
+        // Q20
+        function checkQ20() {
+            const ans = cleanString(document.getElementById('ans20').value).replace('(','').replace(')','');
+            if (ans === '-4') {
+                playVictory(); 
+                nextStage('panel_q20', 'outro', 100);
+            } else {
+                showError('panel_q20', 'error20');
+            }
+        }
         window.onload = () => {
             const introBox = document.querySelector('#intro .story-box');
             if(introBox) {
