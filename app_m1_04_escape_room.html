@@ -22,7 +22,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Pretendard', sans-serif;
-            background: url('https://images.unsplash.com/photo-1551244072-5dd924d8ddbd?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat fixed;
+            background: url('images/중1/m1_04_intro.png') center/cover no-repeat fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -299,6 +299,20 @@
             border: 2px solid #60A5FA;
         }
 
+        @media (max-width: 600px) {
+            .container { padding: 1rem; }
+            .glass-panel { padding: 1.5rem; border-radius: 16px; }
+            h1 { font-size: 2rem; letter-spacing: 1px; }
+            h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
+            .story-box { font-size: 1rem; padding: 1rem; margin-bottom: 1.5rem; }
+            .question-box { padding: 1.2rem; }
+            .question-box::before { font-size: 4rem; top: -10px; right: -5px; }
+            input[type="text"] { font-size: 1.1rem; padding: 1rem; }
+            .btn { font-size: 1.1rem; padding: 1rem 1.2rem; letter-spacing: 1px; }
+            .btn-group { flex-direction: column; gap: 0.8rem; }
+            .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
+            .graph-container { padding: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -411,15 +425,15 @@
             <div class="story-box">
                 🛡️ <strong>[수압 방어 실드]</strong><br><br>
                 정확한 사분면으로 향하자 바닥에서 찬란한 황금 열쇠를 발견했습니다! 하지만 열쇠를 집어 올리는 순간, 기지 방어 시스템이 가동되며 잠수정으로 레이저 포탑이 조준됩니다.<br><br>
-                "레이저를 튕겨내려면 잠수정의 '반사 실드'를 전개해야 합니다! 실드 발생기 좌표는 현재 조준점 P(2, -3)과 <strong>x축에 대하여 대칭</strong>인 곳에 위치해야만 완벽한 각도로 레이저를 튕겨낼 수 있습니다!"<br><br>
+                "레이저를 튕겨내려면 잠수정의 '반사 실드'를 전개해야 합니다! 실드 발생기 좌표는 현재 위치에서 y좌표를 0으로 맞추어 정확히 <strong>x축 위</strong>에 위치해야만 완벽한 각도로 레이저를 튕겨낼 수 있습니다!"<br><br>
                 레이저 발사까지 5초 남았습니다. 반사 실드의 좌표를 입력하세요!
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4. [x축 대칭 이동]</strong><br>
-                    점 P(2, -3)을 <strong>x축에 대하여 대칭 이동한 점의 좌표</strong>를 괄호를 사용하여 구하시오.
+                    <strong>Q4. [x축 위의 점]</strong><br>
+                    x축 위에 있고 x좌표가 5인 점의 좌표를 괄호를 사용하여 구하시오.
                     <div class="input-group">
-                        <input type="text" id="ans4" placeholder="예: (-1, 5)">
+                        <input type="text" id="ans4" placeholder="예: (5, 0)">
                     </div>
                 </div>
             </div>
@@ -436,15 +450,15 @@
             <div class="story-box">
                 🚪 <strong>[마스터 패스워드]</strong><br><br>
                 레이저를 반사해 부수고 마침내 아틀란티스의 첫 번째 심해 기지 입구에 도착했습니다. 하지만 거대한 철문 앞 패드에는 고대 문자가 빛나고 있습니다.<br><br>
-                <span style="color: #60A5FA;">『입구의 위치는 점 A(-4, -7)에 있다. 진정한 방문자는 만물의 근원인 '원점'을 지나 완벽하게 반대편에 서식하는 쌍둥이 점의 위치를 말하라.』</span><br><br>
-                "이건 원점 대칭 좌표를 묻는 암호입니다! 빨리 암호를 입력하지 않으면 철문이 두 번 다시 열리지 않게 영구 폐쇄될 겁니다!"
+                <span style="color: #60A5FA;">『입구의 위치는 점 A(0, -7) 부근이다. 진정한 방문자는 만물의 근원인 'y축'을 지나 정확히 그 축 위에 서있는 자를 말하라.』</span><br><br>
+                "이건 y축 위로 이동하는 암호입니다! 빨리 암호를 입력하지 않으면 철문이 두 번 다시 열리지 않게 영구 폐쇄될 겁니다!"
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5. [원점 대칭 이동]</strong><br>
-                    점 A(-4, -7)과 <strong>원점에 대하여 대칭인 점의 좌표</strong>를 괄호를 사용하여 구하시오.
+                    <strong>Q5. [y축 위의 점]</strong><br>
+                    y축 위에 있고 y좌표가 -4인 점의 좌표를 괄호를 사용하여 구하시오.
                     <div class="input-group">
-                        <input type="text" id="ans5" placeholder="예: (4, -7)">
+                        <input type="text" id="ans5" placeholder="예: (0, -4)">
                     </div>
                 </div>
             </div>
@@ -465,17 +479,17 @@
             </div>
             <div class="graph-container">
                 <svg viewBox="0 0 400 250" width="100%" height="250px">
-                    <g stroke="#e2e8f0" stroke-width="1">
-                        <line x1="50" y1="20" x2="50" y2="200" stroke="#94a3b8" stroke-width="2"/>
-                        <line x1="50" y1="200" x2="350" y2="200" stroke="#94a3b8" stroke-width="2"/>
+                    <g stroke="#94a3b8" stroke-width="1">
+                        <line x1="50" y1="20" x2="50" y2="200" stroke="#64748b" stroke-width="2"/>
+                        <line x1="50" y1="200" x2="350" y2="200" stroke="#64748b" stroke-width="2"/>
                         <line x1="45" y1="50" x2="350" y2="50" stroke-dasharray="4"/>
-                        <text x="35" y="55" fill="#64748b" font-size="12" text-anchor="end">100</text>
-                        <line x1="150" y1="200" x2="150" y2="205" stroke="#94a3b8"/>
-                        <text x="150" y="220" fill="#64748b" font-size="12" text-anchor="middle">10</text>
-                        <line x1="250" y1="200" x2="250" y2="205" stroke="#94a3b8"/>
-                        <text x="250" y="220" fill="#64748b" font-size="12" text-anchor="middle">20</text>
-                        <line x1="350" y1="200" x2="350" y2="205" stroke="#94a3b8"/>
-                        <text x="350" y="220" fill="#64748b" font-size="12" text-anchor="middle">30</text>
+                        <text x="35" y="55" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="end">100</text>
+                        <line x1="150" y1="200" x2="150" y2="205" stroke="#64748b"/>
+                        <text x="150" y="220" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="middle">10</text>
+                        <line x1="250" y1="200" x2="250" y2="205" stroke="#64748b"/>
+                        <text x="250" y="220" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="middle">20</text>
+                        <line x1="350" y1="200" x2="350" y2="205" stroke="#64748b"/>
+                        <text x="350" y="220" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="middle">30</text>
                     </g>
                     <text x="35" y="15" fill="#1e293b" font-size="12" font-weight="bold">수심(m)</text>
                     <text x="350" y="240" fill="#1e293b" font-size="12" font-weight="bold">시간(분)</text>
@@ -512,17 +526,17 @@
             </div>
             <div class="graph-container">
                 <svg viewBox="0 0 400 250" width="100%" height="250px">
-                    <g stroke="#e2e8f0" stroke-width="1">
-                        <line x1="50" y1="20" x2="50" y2="200" stroke="#94a3b8" stroke-width="2"/>
-                        <line x1="50" y1="200" x2="350" y2="200" stroke="#94a3b8" stroke-width="2"/>
+                    <g stroke="#94a3b8" stroke-width="1">
+                        <line x1="50" y1="20" x2="50" y2="200" stroke="#64748b" stroke-width="2"/>
+                        <line x1="50" y1="200" x2="350" y2="200" stroke="#64748b" stroke-width="2"/>
                         <line x1="45" y1="50" x2="350" y2="50" stroke-dasharray="4"/>
-                        <text x="35" y="55" fill="#64748b" font-size="12" text-anchor="end">100</text>
-                        <line x1="150" y1="200" x2="150" y2="205" stroke="#94a3b8"/>
-                        <text x="150" y="220" fill="#64748b" font-size="12" text-anchor="middle">10</text>
-                        <line x1="250" y1="200" x2="250" y2="205" stroke="#94a3b8"/>
-                        <text x="250" y="220" fill="#64748b" font-size="12" text-anchor="middle">20</text>
-                        <line x1="350" y1="200" x2="350" y2="205" stroke="#94a3b8"/>
-                        <text x="350" y="220" fill="#64748b" font-size="12" text-anchor="middle">30</text>
+                        <text x="35" y="55" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="end">100</text>
+                        <line x1="150" y1="200" x2="150" y2="205" stroke="#64748b"/>
+                        <text x="150" y="220" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="middle">10</text>
+                        <line x1="250" y1="200" x2="250" y2="205" stroke="#64748b"/>
+                        <text x="250" y="220" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="middle">20</text>
+                        <line x1="350" y1="200" x2="350" y2="205" stroke="#64748b"/>
+                        <text x="350" y="220" fill="#0f172a" font-size="14" font-weight="bold" text-anchor="middle">30</text>
                     </g>
                     <text x="35" y="15" fill="#1e293b" font-size="12" font-weight="bold">수심(m)</text>
                     <text x="350" y="240" fill="#1e293b" font-size="12" font-weight="bold">시간(분)</text>
@@ -860,7 +874,14 @@
             osc.stop(now + 0.03);
         }
 
-        function typeWriterHTML(element, speed = 25) {
+        function typeWriterHTML(element, speed = 25, onComplete = null) {
+            let isComplete = false;
+            function triggerComplete() {
+                if(!isComplete) {
+                    isComplete = true;
+                    if(onComplete) onComplete();
+                }
+            }
             if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
             
             const htmlContent = element.getAttribute('data-raw-html') || element.innerHTML;
@@ -877,6 +898,7 @@
                     clearTimeout(typeWriterTimeout);
                     i = htmlContent.length;
                     element.innerHTML = htmlContent;
+                    triggerComplete();
                 }
             };
             element.style.cursor = 'pointer'; 
@@ -903,6 +925,8 @@
                         
                         typeWriterTimeout = setTimeout(type, speed);
                     }
+                } else {
+                    triggerComplete();
                 }
             }
             type();
@@ -926,8 +950,30 @@
                 progBar.style.width = progressPercent + '%';
                 nextEl.classList.add('active');
                 
+                const toHide = nextEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                toHide.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(10px)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    el.style.pointerEvents = 'none';
+                });
+
                 const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) typeWriterHTML(storyBox);
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25, () => {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    });
+                } else {
+                    toHide.forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                        el.style.pointerEvents = 'auto';
+                    });
+                }
             }, 300);
         }
 
@@ -947,8 +993,30 @@
                 progBar.style.width = progressPercent + '%';
                 prevEl.classList.add('active');
 
+                const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                toHide.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(10px)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    el.style.pointerEvents = 'none';
+                });
+
                 const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) typeWriterHTML(storyBox);
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25, () => {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    });
+                } else {
+                    toHide.forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                        el.style.pointerEvents = 'auto';
+                    });
+                }
             }, 300);
         }
 
@@ -1005,7 +1073,7 @@
         // Q4
         function checkQ4() {
             const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
-            if (ans === '2,3') {
+            if (ans === '5,0') {
                 playSuccess(); 
                 nextStage('panel_q4', 'panel_q5', 41.6);
             } else {
@@ -1016,7 +1084,7 @@
         // Q5
         function checkQ5() {
             const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
-            if (ans === '4,7') {
+            if (ans === '0,-4') {
                 playSuccess(); 
                 nextStage('panel_q5', 'panel_q6', 50);
             } else {
@@ -1104,8 +1172,21 @@
         window.onload = () => {
             const introBox = document.querySelector('#intro .story-box');
             if(introBox) {
+                const toHide = document.querySelectorAll('#intro .btn-group');
+                toHide.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(10px)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    el.style.pointerEvents = 'none';
+                });
                 setTimeout(() => {
-                    typeWriterHTML(introBox, 25);
+                    typeWriterHTML(introBox, 25, () => {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    });
                 }, 500);
             }
         };
