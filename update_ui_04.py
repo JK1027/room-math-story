@@ -163,7 +163,7 @@ for q_id, img_name in img_map.items():
     div_id = f'id="{q_id}"' if q_id in ['outro', 'intro'] else f'id="panel_{q_id}"'
     # We find the image tag inside this panel and replace its src
     # Pattern to match the specific panel and its image tag
-    pattern = rf'(<div {div_id}[^>]*>[\s\S]*?<img src="assets/m1_04/)img[^"]*\.png(")'
+    pattern = rf'(<div {div_id}[^>]*>[\s\S]*?<img src="assets/m1_04_coordinates/)img[^"]*\.png(")'
     replacement = rf'\g<1>{img_name}\g<2>'
     content = re.sub(pattern, replacement, content)
 
