@@ -50,7 +50,7 @@ for i, q in enumerate(qs):
             <h2>제 {qnum}구역: {title}</h2>
             <img src="assets/m1_04_coordinates/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
-                {story}
+                <div class="story-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -77,9 +77,9 @@ outro_html = '''
             <h2>아틀란티스의 보물</h2>
             <img src="assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                "패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 소리와 함께 해저 도시의 거대한 황금 문이 갈라집니다. 
+                <div class="story-text">"패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 소리와 함께 해저 도시의 거대한 황금 문이 갈라집니다. 
                 남은 산소는 단 2분. 여러분은 황금 문을 연 성취감을 안고, 잠수정의 부력 장치를 가동하여 보물상자와 함께 해수면을 향해 솟구쳐 오릅니다. 
-                좌표평면과 비례 그래프의 지혜로 전설을 현실로 만들었습니다. 미션 대성공!"
+                좌표평면과 비례 그래프의 지혜로 전설을 현실로 만들었습니다. 미션 대성공!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
