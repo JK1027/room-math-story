@@ -5,6 +5,38 @@ html_file = r'c:\Coding_Notebook\Projects\school\room-math-story\app_m1_07_escap
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
 
+# 스타일 확인 및 주입
+css = """
+        .panel-image {
+            width: 100%;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+"""
+if '.panel-image {' not in content:
+    content = content.replace('</style>', css + '</style>')
+
+# intro 패널을 피라미드 테마로 교체
+intro_pattern = r'<div id="intro" class="glass-panel active">[\s\S]*?</div>\s*</div>\s*<!-- Q1 -->'
+intro_replacement = '''<div id="intro" class="glass-panel active">
+            <h1>피라미드의 비밀</h1>
+            <img src="assets/m1_07_solid_geometry/intro.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                여러분은 이집트 사막 한가운데 숨겨져 있던 미지의 거대 피라미드를 탐사 중입니다. 왕의 무덤에 들어선 순간, 바닥이 꺼지며 깊은 지하 미궁으로 떨어졌습니다!<br><br>
+                이 미궁은 입체도형의 마법으로 보호받고 있습니다. 다면체와 회전체의 성질을 이용해 함정을 피하고, 각종 도형의 겉넓이와 부피를 계산하여 20개의 암호를 풀어야만 지상으로 올라갈 수 있습니다.<br><br>
+                산소는 딱 45분 남았습니다. 수학적 지혜를 발휘하여 피라미드를 탈출하세요!
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">시스템 복구 시작</button>
+            </div>
+        </div>
+        <!-- Q1 -->'''
+
+content = re.sub(intro_pattern, intro_replacement, content)
+
 qs = [
     {"qnum": 1, "title": "다면체의 방", "story": "🚨 <strong>[석상의 저주]</strong><br><br>방의 벽면이 조여옵니다! 다면체의 모서리와 꼭짓점 수를 정확히 세어야 벽이 멈춥니다!", "qtext": "<strong>Q1. [다면체의 이해]</strong><br>옆면이 모두 직사각형인 다면체를 무엇이라 부르는가? (힌트: 기둥)", "placeholder": "예: 각뿔", "error": "도형 이름 오류!", "ans_check": "ans === '각기둥'"},
     {"qnum": 2, "title": "다면체의 방", "story": "🚨 <strong>[꼭짓점 카운트]</strong><br><br>기둥의 꼭짓점을 세어야 합니다.", "qtext": "<strong>Q2. [꼭짓점의 개수]</strong><br>밑면이 오각형인 오각기둥의 꼭짓점의 개수를 구하시오.", "placeholder": "숫자만 입력", "error": "개수 오류!", "ans_check": "ans === '10'"},
@@ -47,6 +79,7 @@ for i, q in enumerate(qs):
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
             <h2>제 {qnum}구역: {title}</h2>
+            <img src="assets/m1_07_solid_geometry/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 {story}
             </div>
@@ -73,6 +106,7 @@ outro_html = '''
         <div id="outro" class="glass-panel">
             <h1>탈출 성공!</h1>
             <h2>피라미드의 비밀</h2>
+            <img src="assets/m1_07_solid_geometry/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
                 여러분들이 마지막 암호 '1:2:3'을 입력하자, 굳게 닫혀 있던 피라미드의 천장이 열리며 쏟아지는 모래 사이로 한 줄기 눈부신 햇살이 들어옵니다! 
                 마법의 모래시계가 멈추고, 여러분은 부피의 비율에 맞춰 차오른 생명의 물기둥을 타고 지상으로 무사히 떠오릅니다. 
@@ -106,7 +140,6 @@ for q in qs:
 '''
     js_checks += js
 
-
 # Replace in content
 start_panel_idx = content.find('<!-- Q1 -->')
 end_panel_idx = content.find('        <script>', start_panel_idx)
@@ -124,4 +157,4 @@ if start_js_idx != -1 and end_js_idx != -1:
 
 with open(html_file, 'w', encoding='utf-8') as f:
     f.write(content)
-print("App 07 updated successfully.")
+print("App 07 updated successfully with images.")

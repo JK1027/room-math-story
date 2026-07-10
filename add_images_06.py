@@ -29,7 +29,7 @@ for i in range(1, 21):
 for q_id, img_name in img_map.items():
     div_id = f'id="panel_{q_id}"' if q_id not in ['outro', 'intro'] else f'id="{q_id}"'
     pattern = rf'(<div {div_id} class="glass-panel(?: active)?">)(\s*<h[12]>)'
-    replacement = rf'\1\n            <img src="assets/m1_06/{img_name}" alt="Background" class="panel-image">\2'
+    replacement = rf'\1\n            <img src="assets/m1_06_plane_geometry/{img_name}" alt="Background" class="panel-image">\2'
     content = re.sub(pattern, replacement, content, count=1)
 
 with open(html_file, 'w', encoding='utf-8') as f:
