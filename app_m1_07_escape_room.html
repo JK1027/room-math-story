@@ -73,6 +73,8 @@
         h2 { font-size: 1.8rem; font-weight: 700; border-bottom: 2px solid var(--glass-border); padding-bottom: 0.5rem; }
 
         .story-box {
+            position: relative;
+        
             background: rgba(0, 0, 0, 0.4);
             border-left: 4px solid var(--accent);
             padding: 1.5rem;
@@ -136,10 +138,10 @@
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
-            font-size: 1.1rem;
+            padding:  0.6rem 1.5rem;
+            font-size:  1.1rem;
             font-weight: 600;
-            border-radius: 8px;
+            border-radius:  8px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
@@ -218,11 +220,13 @@
             .glass-panel { padding: 1.5rem; border-radius: 16px; }
             h1 { font-size: 2rem; letter-spacing: 1px; }
             h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
-            .story-box { font-size: 1rem; padding: 1rem; margin-bottom: 1.5rem; }
+            .story-box {
+            position: relative;
+         font-size: 1rem; padding: 1rem; margin-bottom: 1.5rem; }
             .question-box { padding: 1.2rem; }
             .question-box::before { font-size: 4rem; top: -10px; right: -5px; }
             input[type="text"] { font-size: 1.1rem; padding: 1rem; }
-            .btn { font-size: 1.1rem; padding: 1rem 1.2rem; letter-spacing: 1px; }
+            .btn { font-size: 0.9rem; padding: 0.5rem; letter-spacing: 1px;  border-radius: 6px;}
             .btn-group { flex-direction: column; gap: 0.8rem; }
             .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
             .graph-container { padding: 1rem; }
@@ -236,7 +240,27 @@
             margin-bottom: 1rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
-</style>
+
+        .story-log-trigger {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            z-index: 5;
+        }
+        .story-log-trigger:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="container">

@@ -106,6 +106,8 @@
         h2 { font-size: 1.8rem; border-bottom: 2px solid rgba(251, 191, 36, 0.5); padding-bottom: 10px; display: inline-block; margin-bottom: 2rem; box-shadow: 0 10px 10px -10px rgba(251, 191, 36, 0.3);}
 
         .story-box {
+            position: relative;
+        
             cursor: pointer; /* Click to advance text */
             background: linear-gradient(90deg, rgba(30, 58, 138, 0.5) 0%, rgba(0,0,0,0.3) 100%);
             border-left: 4px solid var(--accent);
@@ -185,10 +187,10 @@
             background: linear-gradient(135deg, #3B82F6, #1D4ED8);
             color: white;
             border: 1px solid #60A5FA;
-            padding: 1.2rem 2rem;
-            font-size: 1.3rem;
+            padding:  0.6rem 1.5rem;
+            font-size:  1.1rem;
             font-weight: 900;
-            border-radius: 12px;
+            border-radius:  8px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
@@ -342,6 +344,8 @@
                 flex: 0 0 auto;
             }
             .story-box {
+            position: relative;
+        
                 cursor: pointer;
                 font-size: 0.9rem;
                 padding: 0.8rem;
@@ -359,7 +363,7 @@
             .question-box::before { font-size: 3rem; top: -5px; right: -5px; }
             .input-group { margin-top: 0.5rem; }
             input[type="text"] { font-size: 1rem; padding: 0.8rem; }
-            .btn { font-size: 1.1rem; padding: 0.9rem 1.2rem; letter-spacing: 1px; }
+            .btn { font-size: 0.9rem; padding: 0.5rem; letter-spacing: 1px;  border-radius: 6px;}
             .btn-group { flex-direction: column; gap: 0.6rem; margin-top: 0.6rem; }
             .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
             .graph-container { padding: 0.8rem; margin: 0.5rem 0; flex: 1 1 auto; max-height: 25vh; }
@@ -375,22 +379,7 @@
         }
 
         /* Story Log Modal CSS */
-        .log-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(16, 185, 129, 0.9);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            z-index: 1000;
-            transition: all 0.3s;
-        }
+        
         .log-btn:hover {
             background: rgba(16, 185, 129, 1);
             transform: scale(1.05);
@@ -435,7 +424,27 @@
             border-radius: 5px;
             cursor: pointer;
         }
-</style>
+
+        .story-log-trigger {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 3px 8px;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: bold;
+            z-index: 5;
+        }
+        .story-log-trigger:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
@@ -463,7 +472,8 @@
                 수년간의 혹독한 해저 탐사 끝에, 수심 8000m 심해에서 마침내 거대한 황금 문앞에 도착했습니다! 하지만 기쁨도 잠시, 문의 잠금장치는 고대 아틀란티스인들이 수천 년 전 설계해 둔 <strong>'좌표평면'</strong>과 <strong>'그래프'</strong> 암호로 굳게 닫혀 있습니다.<br><br>
                 <span style="color: #F87171;">『경고: 심해 잠수정의 동력과 산소는 딱 45분 치만 남아있습니다. 시간이 초과되면 수압을 견디지 못하고 잠수정이 붕괴됩니다.』</span><br><br>
                 산소가 고갈되기 전에, 낡은 보물지도에 적힌 순서쌍을 해독하고 비례 그래프의 숨겨진 규칙을 찾아내어 12개의 방어막을 뚫어야 합니다! 실패하면 영원히 해저의 미아로 남게 됩니다.
-            </div>
+            
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button></div>
             <button class="btn" style="margin-top: 2rem;" onclick="nextStage('intro', 'panel_q1', 8.3)">심해 다이브 시작</button>
         </div>
 
@@ -471,10 +481,11 @@
 
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q1.png" alt="Background" class="panel-image">
             <h2>제 1구역: 심해로 가는 좌표 (순서쌍과 좌표)</h2>
+            <img src="assets/m1_04_coordinates/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[목표 지점 확인]</strong><br><br>잠수정을 투하할 해수면 좌표를 계산해야 합니다. 조금이라도 좌표가 어긋나면 아틀란티스 유적으로 향하는 해류를 타지 못하고 암초에 부딪히게 됩니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -486,17 +497,17 @@
             </div>
             <div class="error-msg" id="error1">투하 좌표가 어긋났습니다! 암초에 부딪힐 위험이 있습니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q1', 'intro', 0)">이전 단서</button>
                 <button class="btn" onclick="checkQ1()">잠항 시작</button>
             </div>
         </div>
 
         <!-- Q2 -->
         <div id="panel_q2" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q2.png" alt="Background" class="panel-image">
             <h2>제 2구역: 심해로 가는 좌표</h2>
+            <img src="assets/m1_04_coordinates/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[투하 지점 갱신]</strong><br><br>좋습니다, 첫 번째 투하 지점을 통과했습니다. 다음 기착지인 해저 화산 입구를 통과하려면 x축 위의 점을 입력해야 합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -508,17 +519,17 @@
             </div>
             <div class="error-msg" id="error2">좌표 입력 오류! 수압 경고!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q2', 'panel_q1', 5)">이전 단서</button>
                 <button class="btn" onclick="checkQ2()">다음으로</button>
             </div>
         </div>
 
         <!-- Q3 -->
         <div id="panel_q3" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q3.png" alt="Background" class="panel-image">
             <h2>제 3구역: 심해로 가는 좌표</h2>
+            <img src="assets/m1_04_coordinates/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[기준점 확인]</strong><br><br>심해 내비게이션의 영점 조준이 필요합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -530,17 +541,17 @@
             </div>
             <div class="error-msg" id="error3">영점 조준 실패!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q3', 'panel_q2', 10)">이전 단서</button>
                 <button class="btn" onclick="checkQ3()">다음으로</button>
             </div>
         </div>
 
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q4.png" alt="Background" class="panel-image">
             <h2>제 4구역: 심해로 가는 좌표</h2>
+            <img src="assets/m1_04_coordinates/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[추가 기준점]</strong><br><br>y축 방향의 해저 동굴 입구 좌표를 입력하세요.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -552,17 +563,17 @@
             </div>
             <div class="error-msg" id="error4">동굴 충돌 위험!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q4', 'panel_q3', 15)">이전 단서</button>
                 <button class="btn" onclick="checkQ4()">다음으로</button>
             </div>
         </div>
 
         <!-- Q5 -->
         <div id="panel_q5" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q5.png" alt="Background" class="panel-image">
             <h2>제 5구역: 심해로 가는 좌표</h2>
+            <img src="assets/m1_04_coordinates/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[소용돌이 결계]</strong><br><br>레이더에 4개의 기둥 좌표가 찍혔습니다. 이 기둥들이 만드는 결계의 넓이를 구하세요.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -574,17 +585,17 @@
             </div>
             <div class="error-msg" id="error5">결계 돌파 실패!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q5', 'panel_q4', 20)">이전 단서</button>
                 <button class="btn" onclick="checkQ5()">다음으로</button>
             </div>
         </div>
 
         <!-- Q6 -->
         <div id="panel_q6" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q6.png" alt="Background" class="panel-image">
             <h2>제 6구역: 아틀란티스의 사분면 결계</h2>
+            <img src="assets/m1_04_coordinates/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🧭 <strong>[사분면 분석]</strong><br><br>해저 유적 내부로 진입했습니다. 이곳은 4개의 구역(사분면)으로 나뉘어 있습니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -596,17 +607,17 @@
             </div>
             <div class="error-msg" id="error6">잘못된 구역입니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q6', 'panel_q5', 25)">이전 단서</button>
                 <button class="btn" onclick="checkQ6()">다음으로</button>
             </div>
         </div>
 
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q7.png" alt="Background" class="panel-image">
             <h2>제 7구역: 아틀란티스의 사분면 결계</h2>
+            <img src="assets/m1_04_coordinates/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🧭 <strong>[추가 결계]</strong><br><br>두 번째 사분면 문을 엽니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -618,17 +629,17 @@
             </div>
             <div class="error-msg" id="error7">잘못된 구역입니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q7', 'panel_q6', 30)">이전 단서</button>
                 <button class="btn" onclick="checkQ7()">다음으로</button>
             </div>
         </div>
 
         <!-- Q8 -->
         <div id="panel_q8" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q8.png" alt="Background" class="panel-image">
             <h2>제 8구역: 아틀란티스의 사분면 결계</h2>
+            <img src="assets/m1_04_coordinates/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🧭 <strong>[고급 사분면]</strong><br><br>조건에 맞는 사분면을 찾아야 합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -640,17 +651,17 @@
             </div>
             <div class="error-msg" id="error8">잘못된 구역입니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q8', 'panel_q7', 35)">이전 단서</button>
                 <button class="btn" onclick="checkQ8()">다음으로</button>
             </div>
         </div>
 
         <!-- Q9 -->
         <div id="panel_q9" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q9.png" alt="Background" class="panel-image">
             <h2>제 9구역: 아틀란티스의 사분면 결계</h2>
+            <img src="assets/m1_04_coordinates/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🧭 <strong>[대칭 이동]</strong><br><br>함정에 빠지지 않으려면 대칭점의 좌표를 알아야 합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -662,17 +673,17 @@
             </div>
             <div class="error-msg" id="error9">함정에 걸렸습니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q9', 'panel_q8', 40)">이전 단서</button>
                 <button class="btn" onclick="checkQ9()">다음으로</button>
             </div>
         </div>
 
         <!-- Q10 -->
         <div id="panel_q10" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q10.png" alt="Background" class="panel-image">
             <h2>제 10구역: 아틀란티스의 사분면 결계</h2>
+            <img src="assets/m1_04_coordinates/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🧭 <strong>[최종 대칭]</strong><br><br>원점 대칭 거울방의 문을 엽니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -684,17 +695,17 @@
             </div>
             <div class="error-msg" id="error10">거울방에 갇혔습니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q10', 'panel_q9', 45)">이전 단서</button>
                 <button class="btn" onclick="checkQ10()">다음으로</button>
             </div>
         </div>
 
         <!-- Q11 -->
         <div id="panel_q11" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q11.png" alt="Background" class="panel-image">
             <h2>제 11구역: 해저 수압의 변화</h2>
+            <img src="assets/m1_04_coordinates/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[수압 경고]</strong><br><br>수압 그래프를 분석합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -706,17 +717,17 @@
             </div>
             <div class="error-msg" id="error11">그래프 해석 오류!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q11', 'panel_q10', 50)">이전 단서</button>
                 <button class="btn" onclick="checkQ11()">다음으로</button>
             </div>
         </div>
 
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q12.png" alt="Background" class="panel-image">
             <h2>제 12구역: 해저 수압의 변화</h2>
+            <img src="assets/m1_04_coordinates/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[깊이 예측]</strong><br><br>일정한 속력으로 내려가는 잠수정의 깊이를 구합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -728,17 +739,17 @@
             </div>
             <div class="error-msg" id="error12">깊이 예측 실패!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q12', 'panel_q11', 55)">이전 단서</button>
                 <button class="btn" onclick="checkQ12()">다음으로</button>
             </div>
         </div>
 
         <!-- Q13 -->
         <div id="panel_q13" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q13.png" alt="Background" class="panel-image">
             <h2>제 13구역: 해저 수압의 변화</h2>
+            <img src="assets/m1_04_coordinates/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[그래프 방향]</strong><br><br>직선의 방향성을 파악합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -750,17 +761,17 @@
             </div>
             <div class="error-msg" id="error13">해석 오류!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q13', 'panel_q12', 60)">이전 단서</button>
                 <button class="btn" onclick="checkQ13()">다음으로</button>
             </div>
         </div>
 
         <!-- Q14 -->
         <div id="panel_q14" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q14.png" alt="Background" class="panel-image">
             <h2>제 14구역: 해저 수압의 변화</h2>
+            <img src="assets/m1_04_coordinates/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[변화량 분석]</strong><br><br>정지 상태에서의 변화량을 확인합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -772,17 +783,17 @@
             </div>
             <div class="error-msg" id="error14">해석 오류!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q14', 'panel_q13', 65)">이전 단서</button>
                 <button class="btn" onclick="checkQ14()">다음으로</button>
             </div>
         </div>
 
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q15.png" alt="Background" class="panel-image">
             <h2>제 15구역: 해저 수압의 변화</h2>
+            <img src="assets/m1_04_coordinates/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🌊 <strong>[산소 잔량]</strong><br><br>남은 산소의 양을 그래프로 나타낼 때의 개형을 맞춥니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -794,17 +805,17 @@
             </div>
             <div class="error-msg" id="error15">산소 예측 실패!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q15', 'panel_q14', 70)">이전 단서</button>
                 <button class="btn" onclick="checkQ15()">다음으로</button>
             </div>
         </div>
 
         <!-- Q16 -->
         <div id="panel_q16" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q16.png" alt="Background" class="panel-image">
             <h2>제 16구역: 황금 문 톱니바퀴</h2>
+            <img src="assets/m1_04_coordinates/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
                 ⚙️ <strong>[정비례 회전]</strong><br><br>황금 문을 여는 톱니바퀴의 회전수 관계를 파악합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -816,17 +827,17 @@
             </div>
             <div class="error-msg" id="error16">톱니바퀴가 멈췄습니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q16', 'panel_q15', 75)">이전 단서</button>
                 <button class="btn" onclick="checkQ16()">다음으로</button>
             </div>
         </div>
 
         <!-- Q17 -->
         <div id="panel_q17" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q17.png" alt="Background" class="panel-image">
             <h2>제 17구역: 황금 문 톱니바퀴</h2>
+            <img src="assets/m1_04_coordinates/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
                 ⚙️ <strong>[비례 상수]</strong><br><br>함수식을 완성해야 다이얼이 돌아갑니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -838,17 +849,17 @@
             </div>
             <div class="error-msg" id="error17">다이얼 번호 오류!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q17', 'panel_q16', 80)">이전 단서</button>
                 <button class="btn" onclick="checkQ17()">다음으로</button>
             </div>
         </div>
 
         <!-- Q18 -->
         <div id="panel_q18" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q18.png" alt="Background" class="panel-image">
             <h2>제 18구역: 황금 문 톱니바퀴</h2>
+            <img src="assets/m1_04_coordinates/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
                 💎 <strong>[보물 적재 경보]</strong><br><br>황금을 챙겨가려면 부력 장치와 무게의 반비례 관계를 알아야 합니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -860,17 +871,17 @@
             </div>
             <div class="error-msg" id="error18">부력 균형 붕괴!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q18', 'panel_q17', 85)">이전 단서</button>
                 <button class="btn" onclick="checkQ18()">다음으로</button>
             </div>
         </div>
 
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q19.png" alt="Background" class="panel-image">
             <h2>제 19구역: 황금 문 톱니바퀴</h2>
+            <img src="assets/m1_04_coordinates/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
                 💎 <strong>[반비례 상수]</strong><br><br>반비례 관계식을 알아냅니다.
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -882,17 +893,17 @@
             </div>
             <div class="error-msg" id="error19">식 계산 오류!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q19', 'panel_q18', 90)">이전 단서</button>
                 <button class="btn" onclick="checkQ19()">다음으로</button>
             </div>
         </div>
 
         <!-- Q20 -->
         <div id="panel_q20" class="glass-panel">
-            <img src="assets/m1_04_coordinates/q20.png" alt="Background" class="panel-image">
             <h2>제 20구역: 황금 문 톱니바퀴</h2>
+            <img src="assets/m1_04_coordinates/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
                 🔴 <strong>[최종 탈출 레이저]</strong><br><br>마지막 탈출구를 엽니다!
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -904,20 +915,20 @@
             </div>
             <div class="error-msg" id="error20">레이저 방어막에 막혔습니다!</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q20', 'panel_q19', 95)">이전 단서</button>
                 <button class="btn" onclick="checkQ20()">탈출하기</button>
             </div>
         </div>
 
         <!-- 아웃트로 -->
         <div id="outro" class="glass-panel">
-            <img src="assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
             <h1>탈출 성공!</h1>
             <h2>아틀란티스의 보물</h2>
+            <img src="assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
                 "패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 소리와 함께 해저 도시의 거대한 황금 문이 갈라집니다. 
                 남은 산소는 단 2분. 여러분은 황금 문을 연 성취감을 안고, 잠수정의 부력 장치를 가동하여 보물상자와 함께 해수면을 향해 솟구쳐 오릅니다. 
                 좌표평면과 비례 그래프의 지혜로 전설을 현실로 만들었습니다. 미션 대성공!"
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
         </div>
@@ -1524,7 +1535,7 @@
     </script>
 
     <!-- Story Log UI -->
-    <button class="log-btn" onclick="openLog()">📜 이전 대사 보기</button>
+    
     <div id="storyLogModal" class="log-modal">
         <div class="log-content">
             <button class="close-log" onclick="closeLog()">닫기 ✕</button>

@@ -47,8 +47,10 @@ for i, q in enumerate(qs):
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
             <h2>제 {qnum}구역: {title}</h2>
+            <img src="assets/m1_06_plane_geometry/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 {story}
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -60,8 +62,7 @@ for i, q in enumerate(qs):
             </div>
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q{qnum}', {prev_stage}, {prev_progress})">이전 단서</button>
-                <button class="btn" onclick="checkQ{qnum}()">{'미궁 진입' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
+                <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 and "update_app_06.py"=="update_app_04.py" else '미궁 진입' if qnum==1 and "update_app_06.py"=="update_app_06.py" else '시스템 복구 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
             </div>
         </div>
 '''
@@ -73,11 +74,13 @@ outro_html = '''
         <div id="outro" class="glass-panel">
             <h1>탈출 성공!</h1>
             <h2>태양 신전의 거울 미궁</h2>
+            <img src="assets/m1_06_plane_geometry/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
                 여러분들이 땀을 흘리며 석문에 정답을 입력하고 다이얼을 돌리는 순간! 
                 천장에서 쏟아지던 뜨겁고 살인적인 빛줄기가 마지막 거울에 반사되어 지하에 있는 깊은 냉각 수조의 중심부로 정확히 꽂힙니다. 
                 쉭-! 하는 굉음과 함께 하얀 수증기가 신전을 가득 채우더니, 이내 굳게 닫혀 있던 탈출용 거대 돌벽이 스르륵 내려앉습니다. 
                 눈을 뜰 수 없이 밝은 사막의 태양과 시원한 모래바람이 밀려옵니다. 거울 미궁 탈출에 성공했습니다!
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
         </div>

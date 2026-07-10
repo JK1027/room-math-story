@@ -82,6 +82,7 @@ for i, q in enumerate(qs):
             <img src="assets/m1_07_solid_geometry/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 {story}
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -93,8 +94,7 @@ for i, q in enumerate(qs):
             </div>
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q{qnum}', {prev_stage}, {prev_progress})">이전 단서</button>
-                <button class="btn" onclick="checkQ{qnum}()">{'미궁 진입' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
+                <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 and "update_app_07.py"=="update_app_04.py" else '미궁 진입' if qnum==1 and "update_app_07.py"=="update_app_06.py" else '시스템 복구 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
             </div>
         </div>
 '''
@@ -111,6 +111,7 @@ outro_html = '''
                 여러분들이 마지막 암호 '1:2:3'을 입력하자, 굳게 닫혀 있던 피라미드의 천장이 열리며 쏟아지는 모래 사이로 한 줄기 눈부신 햇살이 들어옵니다! 
                 마법의 모래시계가 멈추고, 여러분은 부피의 비율에 맞춰 차오른 생명의 물기둥을 타고 지상으로 무사히 떠오릅니다. 
                 다면체와 회전체의 성질, 그리고 겉넓이와 부피의 비밀을 완벽하게 파헤친 여러분, 고대 이집트 미궁 탈출에 대성공했습니다!
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
         </div>

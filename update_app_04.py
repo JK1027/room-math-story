@@ -48,8 +48,10 @@ for i, q in enumerate(qs):
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
             <h2>제 {qnum}구역: {title}</h2>
+            <img src="assets/m1_04_coordinates/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 {story}
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
@@ -61,8 +63,7 @@ for i, q in enumerate(qs):
             </div>
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
-                <button class="btn btn-secondary" onclick="prevStage('panel_q{qnum}', {prev_stage}, {prev_progress})">이전 단서</button>
-                <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
+                <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 and "update_app_04.py"=="update_app_04.py" else '미궁 진입' if qnum==1 and "update_app_04.py"=="update_app_06.py" else '시스템 복구 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
             </div>
         </div>
 '''
@@ -74,10 +75,12 @@ outro_html = '''
         <div id="outro" class="glass-panel">
             <h1>탈출 성공!</h1>
             <h2>아틀란티스의 보물</h2>
+            <img src="assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
                 "패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 소리와 함께 해저 도시의 거대한 황금 문이 갈라집니다. 
                 남은 산소는 단 2분. 여러분은 황금 문을 연 성취감을 안고, 잠수정의 부력 장치를 가동하여 보물상자와 함께 해수면을 향해 솟구쳐 오릅니다. 
                 좌표평면과 비례 그래프의 지혜로 전설을 현실로 만들었습니다. 미션 대성공!"
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
         </div>
