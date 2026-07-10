@@ -103,6 +103,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
 
         .question-box {
             background: rgba(255, 255, 255, 0.05);
@@ -262,6 +271,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
             .question-box { padding: 1.2rem; }
             .question-box::before { font-size: 4rem; top: -10px; right: -5px; }
             input[type="text"] { font-size: 1.1rem; padding: 1rem; }
@@ -294,6 +312,10 @@
             transition: all 0.2s;
             font-weight: bold;
             z-index: 10;
+        }
+        .story-log-trigger:hover {
+            background: rgba(16, 185, 129, 0.5);
+            color: white;
         }
         .story-log-trigger:hover {
             background: rgba(16, 185, 129, 0.5);
@@ -672,173 +694,157 @@
     <script>
         let audioCtx;
         let typeWriterTimeout;
-        let isMuted = false;
-
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        document.body.addEventListener('click', initAudio, { once: true });
-
-        function startBGM() {
-            // Placeholder for BGM
-        }
-
-        function playClick() {
-            if (isMuted) return;
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
-
-        function playSuccess() {
-            if (isMuted) return;
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.1);
-            osc.frequency.setValueAtTime(800, audioCtx.currentTime + 0.2);
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.4);
-        }
         
-        function playVictory() {
-            if (isMuted) return;
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.setValueAtTime(600, audioCtx.currentTime + 0.2);
-            osc.frequency.setValueAtTime(800, audioCtx.currentTime + 0.4);
-            osc.frequency.setValueAtTime(1200, audioCtx.currentTime + 0.6);
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 1.0);
-        }
-
-        function playError() {
-            if (isMuted) return;
-            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            if (!audioCtx) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.3);
-            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
-        }
-
-        let lastTickTime = 0;
-        function playTick() {
-            if (isMuted) return;
-            if (audioCtx && audioCtx.state === 'suspended') return;
-            if (!audioCtx) return;
-            const now = audioCtx.currentTime;
-            if (now - lastTickTime < 0.05) return; 
-            lastTickTime = now;
-            
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(400, now);
-            osc.frequency.exponentialRampToValueAtTime(200, now + 0.03);
-            gain.gain.setValueAtTime(0.015, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.03);
+        // Safe character-by-character sentence splitter (cross-browser compatible)
+        function splitSentences(text) {
+            let result = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                if (char === '.' || char === '!' || char === '?') {
+                    const nextChar = text.charAt(i + 1);
+                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
+                        result.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
+                    }
+                }
+            }
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) {
+                result.push(finalChunk);
+            }
+            return result;
         }
 
         function typeWriterHTML(element, speed = 25, onComplete = null) {
             let isComplete = false;
+            let currentChunkIndex = 0;
+            let chunks = [];
+            
+            const textEl = element.querySelector('.story-text');
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
             function triggerComplete() {
                 if(!isComplete) {
                     isComplete = true;
+                    element.style.cursor = 'default';
                     if(onComplete) onComplete();
                 }
             }
             if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
             
-            const htmlContent = element.getAttribute('data-raw-html') || element.innerHTML;
-            if (!element.hasAttribute('data-raw-html')) {
-                element.setAttribute('data-raw-html', htmlContent);
+            const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
+            if (!textEl.hasAttribute('data-raw-html')) {
+                textEl.setAttribute('data-raw-html', htmlContent);
             }
             
-            element.innerHTML = '';
+            // Split by <br> tags first safely
+            let rawLines = htmlContent.split(/<br\s*\/?>/i);
+            for(let line of rawLines) {
+                let sentences = splitSentences(line);
+                for(let s of sentences) {
+                    if(s.trim()) {
+                        chunks.push(s.trim());
+                    }
+                }
+            }
+
+            if(chunks.length === 0) {
+                triggerComplete();
+                return;
+            }
+            
             let i = 0;
             let textStr = '';
+            let typingFinished = false;
+            element.style.cursor = 'pointer';
             
-            element.onclick = () => {
-                if (i < htmlContent.length) {
-                    clearTimeout(typeWriterTimeout);
-                    i = htmlContent.length;
-                    element.innerHTML = htmlContent;
-                    triggerComplete();
+            function renderChunk() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                i = 0;
+                textStr = '';
+                typingFinished = false;
+                
+                let chunkText = chunks[currentChunkIndex];
+                
+                // Add current chunk to history
+                const currentPanel = element.closest('.glass-panel');
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
+                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                if (!storyHistory.includes(logEntry)) {
+                    storyHistory.push(logEntry);
                 }
-            };
-            element.style.cursor = 'pointer'; 
-            
-            function type() {
-                if (i < htmlContent.length) {
-                    if (htmlContent.charAt(i) === '<') {
-                        while (htmlContent.charAt(i) !== '>' && i < htmlContent.length) {
-                            textStr += htmlContent.charAt(i);
+
+                if(currentChunkIndex < chunks.length - 1) {
+                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                }
+                
+                textEl.innerHTML = '';
+                
+                function type() {
+                    if (i < chunkText.length) {
+                        if (chunkText.charAt(i) === '<') {
+                            const endTag = chunkText.indexOf('>', i);
+                            if (endTag !== -1) {
+                                textStr += chunkText.substring(i, endTag + 1);
+                                i = endTag + 1;
+                            } else {
+                                textStr += chunkText.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            textStr += chunkText.charAt(i);
                             i++;
                         }
-                        textStr += '>';
-                        i++;
-                        element.innerHTML = textStr;
-                        type(); 
-                    } else {
-                        textStr += htmlContent.charAt(i);
-                        element.innerHTML = textStr;
-                        i++;
+                        textEl.innerHTML = textStr;
                         
-                        if (htmlContent.charAt(i-1) !== ' ' && htmlContent.charAt(i-1) !== '\n') {
-                            playTick();
+                        // Tick sound with try-catch wrapper (autoplay safety)
+                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
+                            try { playTick(); } catch(e) {}
                         }
-                        
                         typeWriterTimeout = setTimeout(type, speed);
+                    } else {
+                        textEl.innerHTML = chunkText;
+                        typingFinished = true;
+                        if(currentChunkIndex === chunks.length - 1) {
+                            triggerComplete();
+                        }
+                    }
+                }
+                type();
+            }
+            
+            element.onclick = () => {
+                if (!typingFinished) {
+                    clearTimeout(typeWriterTimeout);
+                    let chunkText = chunks[currentChunkIndex];
+                    if(currentChunkIndex < chunks.length - 1) {
+                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    }
+                    textEl.innerHTML = chunkText;
+                    typingFinished = true;
+                    if(currentChunkIndex === chunks.length - 1) {
+                        triggerComplete();
                     }
                 } else {
-                    triggerComplete();
+                    if (currentChunkIndex < chunks.length - 1) {
+                        currentChunkIndex++;
+                        renderChunk();
+                    }
                 }
-            }
-            type();
+            };
+            
+            renderChunk();
         }
 
         function nextStage(currentId, nextId, progressPercent) {
-            playClick(); 
+            try { playClick(); } catch(e) {}
+            if(currentId === 'intro') {
+                try { startBGM(); } catch(e) {}
+            }
 
             const currentEl = document.getElementById(currentId);
             const nextEl = document.getElementById(nextId);
@@ -852,13 +858,13 @@
                 progBar.style.width = progressPercent + '%';
                 nextEl.classList.add('active');
                 
-                const toHide = nextEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
+                // Keep controls always visible. Just trigger typewriter on the story box
+                const storyBox = nextEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25);
+                }
+            }, 300);
+        });
 
                 const storyBox = nextEl.querySelector('.story-box');
                 if(storyBox) {
@@ -880,7 +886,7 @@
         }
 
         function prevStage(currentId, prevId, progressPercent) {
-            playClick();
+            try { playClick(); } catch(e) {}
             const currentEl = document.getElementById(currentId);
             const prevEl = document.getElementById(prevId);
             const progContainer = document.getElementById('progressContainer');
@@ -892,6 +898,15 @@
                 if(prevId === 'intro') {
                     progContainer.style.display = 'none';
                 }
+                progBar.style.width = progressPercent + '%';
+                prevEl.classList.add('active');
+
+                const storyBox = prevEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25);
+                }
+            }, 300);
+        }
                 progBar.style.width = progressPercent + '%';
                 prevEl.classList.add('active');
 

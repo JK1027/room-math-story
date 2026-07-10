@@ -136,6 +136,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
 
         .question-box {
             background: rgba(0, 0, 0, 0.5);
@@ -381,6 +390,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
             .question-box {
                 padding: 0.8rem;
                 margin-bottom: 0.6rem;
@@ -466,6 +484,10 @@
             transition: all 0.2s;
             font-weight: bold;
             z-index: 10;
+        }
+        .story-log-trigger:hover {
+            background: rgba(16, 185, 129, 0.5);
+            color: white;
         }
         .story-log-trigger:hover {
             background: rgba(16, 185, 129, 0.5);
@@ -1223,10 +1245,30 @@
         }
 
         function nextStage(currentId, nextId, progressPercent) {
-            playClick(); 
+            try { playClick(); } catch(e) {}
             if(currentId === 'intro') {
-                startBGM(); 
+                try { startBGM(); } catch(e) {}
             }
+
+            const currentEl = document.getElementById(currentId);
+            const nextEl = document.getElementById(nextId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            currentEl.classList.remove('active');
+            
+            setTimeout(() => {
+                if(nextId !== 'intro') progContainer.style.display = 'block';
+                progBar.style.width = progressPercent + '%';
+                nextEl.classList.add('active');
+                
+                // Keep controls always visible. Just trigger typewriter on the story box
+                const storyBox = nextEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25);
+                }
+            }, 300);
+        }
 
             const currentEl = document.getElementById(currentId);
             const nextEl = document.getElementById(nextId);
@@ -1268,7 +1310,7 @@
         }
 
         function prevStage(currentId, prevId, progressPercent) {
-            playClick();
+            try { playClick(); } catch(e) {}
             const currentEl = document.getElementById(currentId);
             const prevEl = document.getElementById(prevId);
             const progContainer = document.getElementById('progressContainer');
@@ -1280,6 +1322,15 @@
                 if(prevId === 'intro') {
                     progContainer.style.display = 'none';
                 }
+                progBar.style.width = progressPercent + '%';
+                prevEl.classList.add('active');
+
+                const storyBox = prevEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25);
+                }
+            }, 300);
+        }
                 progBar.style.width = progressPercent + '%';
                 prevEl.classList.add('active');
 
