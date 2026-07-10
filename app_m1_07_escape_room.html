@@ -94,6 +94,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
 
         .question-box {
             background: rgba(255, 255, 255, 0.05);
@@ -244,6 +253,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
             .question-box { padding: 1.2rem; }
             .question-box::before { font-size: 4rem; top: -10px; right: -5px; }
             input[type="text"] { font-size: 1.1rem; padding: 1rem; }
@@ -276,6 +294,10 @@
             transition: all 0.2s;
             font-weight: bold;
             z-index: 10;
+        }
+        .story-log-trigger:hover {
+            background: rgba(16, 185, 129, 0.5);
+            color: white;
         }
         .story-log-trigger:hover {
             background: rgba(16, 185, 129, 0.5);
@@ -1055,6 +1077,27 @@
         }
 
         window.onload = () => {
+            // Hide intro buttons first
+            const introPanel = document.getElementById('intro');
+            const introBtnGroup = introPanel.querySelector('.btn-group');
+            if (introBtnGroup) {
+                introBtnGroup.style.opacity = '0';
+                introBtnGroup.style.transform = 'translateY(10px)';
+                introBtnGroup.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                introBtnGroup.style.pointerEvents = 'none';
+            }
+            
+            // Start intro typing
+            const introStoryBox = introPanel.querySelector('.story-box');
+            if (introStoryBox) {
+                typeWriterHTML(introStoryBox, 25, () => {
+                    if (introBtnGroup) {
+                        introBtnGroup.style.opacity = '1';
+                        introBtnGroup.style.transform = 'translateY(0)';
+                        introBtnGroup.style.pointerEvents = 'auto';
+                    }
+                });
+            }
             const introBox = document.querySelector('#intro .story-box');
             if(introBox) {
                 const toHide = document.querySelectorAll('#intro .btn-group');

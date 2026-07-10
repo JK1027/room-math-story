@@ -127,6 +127,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
 
         .question-box {
             background: rgba(0, 0, 0, 0.5);
@@ -363,6 +372,15 @@
             color: var(--text-main);
             text-align: justify;
         }
+        .story-text {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
             .question-box {
                 padding: 0.8rem;
                 margin-bottom: 0.6rem;
@@ -454,6 +472,10 @@
             color: white;
         }
         .story-log-trigger:hover {
+            background: rgba(16, 185, 129, 0.5);
+            color: white;
+        }
+        .story-log-trigger:hover {
             background: rgba(16, 185, 129, 0.4);
             color: white;
         }
@@ -491,7 +513,7 @@
                 산소가 고갈되기 전에, 낡은 보물지도에 적힌 순서쌍을 해독하고 비례 그래프의 숨겨진 규칙을 찾아내어 12개의 방어막을 뚫어야 합니다! 실패하면 영원히 해저의 미아로 남게 됩니다.
             
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button></div>
-            <button class="btn" style="margin-top: 2rem;" onclick="nextStage('intro', 'panel_q1', 8.3)">심해 다이브 시작</button>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;"><button class="btn"  onclick="nextStage('intro', 'panel_q1', 8.3)">심해 다이브 시작</button></div>
         </div>
 
         <!-- Q1 -->
@@ -1529,6 +1551,27 @@
         }
 
         window.onload = () => {
+            // Hide intro buttons first
+            const introPanel = document.getElementById('intro');
+            const introBtnGroup = introPanel.querySelector('.btn-group');
+            if (introBtnGroup) {
+                introBtnGroup.style.opacity = '0';
+                introBtnGroup.style.transform = 'translateY(10px)';
+                introBtnGroup.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                introBtnGroup.style.pointerEvents = 'none';
+            }
+            
+            // Start intro typing
+            const introStoryBox = introPanel.querySelector('.story-box');
+            if (introStoryBox) {
+                typeWriterHTML(introStoryBox, 25, () => {
+                    if (introBtnGroup) {
+                        introBtnGroup.style.opacity = '1';
+                        introBtnGroup.style.transform = 'translateY(0)';
+                        introBtnGroup.style.pointerEvents = 'auto';
+                    }
+                });
+            }
             const introBox = document.querySelector('#intro .story-box');
             if(introBox) {
                 const toHide = document.querySelectorAll('#intro .btn-group');
