@@ -1484,25 +1484,6 @@
                     }
                 });
             }
-            const introBox = document.querySelector('#intro .story-box');
-            if(introBox) {
-                const toHide = document.querySelectorAll('#intro .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-                setTimeout(() => {
-                    typeWriterHTML(introBox, 25, () => {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
-                    });
-                }, 500);
-            }
         };
     </script>
 </body>
