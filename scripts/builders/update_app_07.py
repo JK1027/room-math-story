@@ -27,7 +27,7 @@ intro_replacement = '''<div id="intro" class="glass-panel active">
             <div class="story-box">
                 여러분은 이집트 사막 한가운데 숨겨져 있던 미지의 거대 피라미드를 탐사 중입니다. 왕의 무덤에 들어선 순간, 바닥이 꺼지며 깊은 지하 미궁으로 떨어졌습니다!<br><br>
                 이 미궁은 입체도형의 마법으로 보호받고 있습니다. 다면체와 회전체의 성질을 이용해 함정을 피하고, 각종 도형의 겉넓이와 부피를 계산하여 20개의 암호를 풀어야만 지상으로 올라갈 수 있습니다.<br><br>
-                산소는 딱 45분 남았습니다. 수학적 지혜를 발휘하여 피라미드를 탈출하세요!
+                산소는 딱 40분 남았습니다. 수학적 지혜를 발휘하여 피라미드를 탈출하세요!
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">시스템 복구 시작</button>
@@ -130,7 +130,7 @@ for i, q in enumerate(qs):
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
-            <h2>제 {qnum}구역: {title}</h2>
+            <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_07_solid_geometry/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 {story}

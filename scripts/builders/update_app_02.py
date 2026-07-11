@@ -453,7 +453,7 @@ base_html = """<!DOCTYPE html>
                 <div class="story-text">
                     세계 최고의 마법 학교 '아르카나'의 최종 입학 시험장에 오신 것을 환영합니다.<br><br>
                     이곳의 마법은 단순한 주문이 아니라 '정수와 유리수'의 수학적 원리를 통해 발동합니다.<br><br>
-                    제한 시간 45분 내에 20개의 수식 결계를 완벽하게 풀어내어 아르카나 수석 입학의 영광을 쟁취하십시오!
+                    제한 시간 40분 내에 20개의 수식 결계를 완벽하게 풀어내어 아르카나 수석 입학의 영광을 쟁취하십시오!
                 </div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
@@ -487,6 +487,33 @@ base_html = """<!DOCTYPE html>
     </audio>
 
     <script>
+
+        let timeLeft = 40 * 60;
+        let timerId = null;
+
+        function updateTimerDisplay() {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            let timeStr = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+            document.querySelectorAll('.game-timer').forEach(el => el.innerText = timeStr);
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            updateTimerDisplay();
+            timerId = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    updateTimerDisplay();
+                    alert("⏰ 제한 시간 40분이 초과되었습니다! 미궁에 영원히 갇혔습니다...");
+                    location.reload();
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
         let isMuted = false;
         const bgm = document.getElementById('bgm');
         const sndClick = document.getElementById('sndClick');
@@ -757,6 +784,8 @@ function cleanString(str) {
         }
 
         function nextStage(currentId, nextId, progressPercent) {
+            if (currentId === 'intro') startTimer();
+            if (nextId === 'outro') clearInterval(timerId);
             try { playClick(); } catch(e) {}
             if(currentId === 'intro') {
                 try { startBGM(); } catch(e) {}
@@ -883,7 +912,7 @@ for q in qs:
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
-            <h2>제 {qnum}구역: {title}</h2>
+            <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_02_rational_numbers/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>

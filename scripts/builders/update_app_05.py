@@ -487,6 +487,33 @@ base_html = """<!DOCTYPE html>
     </audio>
 
     <script>
+
+        let timeLeft = 40 * 60;
+        let timerId = null;
+
+        function updateTimerDisplay() {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            let timeStr = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+            document.querySelectorAll('.game-timer').forEach(el => el.innerText = timeStr);
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            updateTimerDisplay();
+            timerId = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    updateTimerDisplay();
+                    alert("⏰ 제한 시간 40분이 초과되었습니다! 미궁에 영원히 갇혔습니다...");
+                    location.reload();
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
         let isMuted = false;
         const bgm = document.getElementById('bgm');
         const sndClick = document.getElementById('sndClick');
@@ -757,6 +784,8 @@ function cleanString(str) {
         }
 
         function nextStage(currentId, nextId, progressPercent) {
+            if (currentId === 'intro') startTimer();
+            if (nextId === 'outro') clearInterval(timerId);
             try { playClick(); } catch(e) {}
             if(currentId === 'intro') {
                 try { startBGM(); } catch(e) {}
@@ -883,7 +912,7 @@ for q in qs:
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
-            <h2>제 {qnum}구역: {title}</h2>
+            <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_05_basic_geometry/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>

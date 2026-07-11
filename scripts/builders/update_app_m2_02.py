@@ -377,7 +377,7 @@ base_html = """<!DOCTYPE html>
             <h2>지수법칙과 다항식의 연산</h2>
             <img src="assets/m2_02_expressions/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">거대한 기계 도시 '기어즈'를 제어하는 중앙 메인프레임이 폭주하기 시작했습니다! 톱니바퀴들이 무질서하게 맞물려 도시 전체가 붕괴되기까지 남은 시간은 단 45분! 시스템을 안정화하려면 기계어의 기초인 지수법칙과 다항식 연산 20개를 완벽하게 계산해 코드를 덮어씌워야 합니다.</div>
+                <div class="story-text">거대한 기계 도시 '기어즈'를 제어하는 중앙 메인프레임이 폭주하기 시작했습니다! 톱니바퀴들이 무질서하게 맞물려 도시 전체가 붕괴되기까지 남은 시간은 단 40분! 시스템을 안정화하려면 기계어의 기초인 지수법칙과 다항식 연산 20개를 완벽하게 계산해 코드를 덮어씌워야 합니다.</div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">시스템 복구 가동</button>
@@ -759,7 +759,7 @@ for q in qs:
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
-            <h2>제 {qnum}구역: {title}</h2>
+            <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_02_expressions/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
@@ -814,6 +814,32 @@ for q in qs:
 
 # Common JS functions boilerplate
 js_boilerplate = """
+
+        let timeLeft = 40 * 60;
+        let timerId = null;
+
+        function updateTimerDisplay() {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            let timeStr = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+            document.querySelectorAll('.game-timer').forEach(el => el.innerText = timeStr);
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            updateTimerDisplay();
+            timerId = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    updateTimerDisplay();
+                    alert("⏰ 제한 시간 40분이 초과되었습니다! 미궁에 영원히 갇혔습니다...");
+                    location.reload();
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
         let wrongCount = 0;
 function cleanString(str) {
             return str.replace(/\\s+/g, '').toUpperCase();
@@ -966,6 +992,8 @@ function cleanString(str) {
         }
 
         function nextStage(currentId, nextId, progressPercent) {
+            if (currentId === 'intro') startTimer();
+            if (nextId === 'outro') clearInterval(timerId);
             try { playClick(); } catch(e) {}
             if(currentId === 'intro') {
                 try {
