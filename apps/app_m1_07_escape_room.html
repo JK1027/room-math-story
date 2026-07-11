@@ -362,18 +362,17 @@
 
         <!-- Intro Panel -->
         <div id="intro" class="glass-panel active">
-            <h1>괴도 X의 암호 편지</h1>
-            <h2>일차부등식의 해와 성질</h2>
+            <h1>피라미드의 비밀</h1>
             <img src="assets/m1_07_solid_geometry/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!</div>
+                여러분은 이집트 사막 한가운데 숨겨져 있던 미지의 거대 피라미드를 탐사 중입니다. 왕의 무덤에 들어선 순간, 바닥이 꺼지며 깊은 지하 미궁으로 떨어졌습니다!<br><br>
+                이 미궁은 입체도형의 마법으로 보호받고 있습니다. 다면체와 회전체의 성질을 이용해 함정을 피하고, 각종 도형의 겉넓이와 부피를 계산하여 20개의 암호를 풀어야만 지상으로 올라갈 수 있습니다.<br><br>
+                산소는 딱 45분 남았습니다. 수학적 지혜를 발휘하여 피라미드를 탈출하세요!
             </div>
             <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">숲의 저울 가동</button>
+                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">시스템 복구 시작</button>
             </div>
         </div>
-
-        
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
             <h2>제 1구역: 스테이지 1</h2>
@@ -940,560 +939,226 @@
             document.getElementById('storyLogModal').style.display = 'none';
         }
 
+
         // Q1
-
-        let wrongCount = 0;
-function cleanString(str) {
-            return str.replace(/\s+/g, '').toUpperCase();
-        }
-
-        function showError(panelId, errorId) {
-            try { playError(); } catch(e) {}
-            const errEl = document.getElementById(errorId);
-            if (errEl) {
-                errEl.style.display = 'block';
-                setTimeout(() => { errEl.style.display = 'none'; }, 3000);
-            }
-        }
-        
-        // Chunk typewriter definition
-        let typeWriterTimeout = null;
-        
-        function splitSentences(text) {
-            let chunks = [];
-            let current = "";
-            let i = 0;
-            while(i < text.length) {
-                let char = text.charAt(i);
-                current += char;
-                if (char === '.' || char === '!' || char === '?') {
-                    let nextChar = text.charAt(i+1);
-                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
-                        chunks.push(current.trim());
-                        current = "";
-                    }
-                }
-                i++;
-            }
-            if (current.trim()) {
-                chunks.push(current.trim());
-            }
-            return chunks;
-        }
-
-        function typeWriterHTML(element, speed = 25, onComplete = null) {
-            const textEl = element.querySelector('.story-text');
-            if(!textEl) return;
-            
-            let chunks = [];
-            let currentChunkIndex = 0;
-            let typingFinished = false;
-            let isComplete = false;
-            
-            function triggerComplete() {
-                if(!isComplete) {
-                    isComplete = true;
-                    if(onComplete) onComplete();
-                }
-            }
-            
-            const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
-            if (!textEl.hasAttribute('data-raw-html')) {
-                textEl.setAttribute('data-raw-html', htmlContent);
-            }
-            
-            let rawLines = htmlContent.split(/<br\s*\/?>/i);
-            for(let line of rawLines) {
-                let sentences = splitSentences(line);
-                for(let s of sentences) {
-                    if(s.trim()) chunks.push(s.trim());
-                }
-            }
-            
-            if(chunks.length === 0) {
-                triggerComplete();
-                return;
-            }
-            
-            let i = 0;
-            let textStr = '';
-            element.style.cursor = 'pointer';
-            
-            function renderChunk() {
-                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
-                i = 0;
-                textStr = '';
-                typingFinished = false;
-                let chunkText = chunks[currentChunkIndex];
-                
-                const currentPanel = element.closest('.glass-panel');
-                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
-                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
-                
-                if (!storyHistory.includes(logEntry)) {
-                    storyHistory.push(logEntry);
-                }
-                
-                if(currentChunkIndex < chunks.length - 1) {
-                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
-                }
-                textEl.innerHTML = '';
-                
-                function type() {
-                    if (i < chunkText.length) {
-                        if (chunkText.charAt(i) === '<') {
-                            const endTag = chunkText.indexOf('>', i);
-                            if (endTag !== -1) {
-                                textStr += chunkText.substring(i, endTag + 1);
-                                i = endTag + 1;
-                            } else {
-                                textStr += chunkText.charAt(i);
-                                i++;
-                            }
-                        } else {
-                            textStr += chunkText.charAt(i);
-                            i++;
-                        }
-                        textEl.innerHTML = textStr;
-                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
-                            try { playTick(); } catch(e) {}
-                        }
-                        typeWriterTimeout = setTimeout(type, speed);
-                    } else {
-                        textEl.innerHTML = chunkText;
-                        typingFinished = true;
-                        if(currentChunkIndex === chunks.length - 1) {
-                            triggerComplete();
-                        }
-                    }
-                }
-                type();
-            }
-            
-            element.onclick = () => {
-                if (!typingFinished) {
-                    clearTimeout(typeWriterTimeout);
-                    let chunkText = chunks[currentChunkIndex];
-                    if(currentChunkIndex < chunks.length - 1) {
-                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
-                    }
-                    textEl.innerHTML = chunkText;
-                    typingFinished = true;
-                    if(currentChunkIndex === chunks.length - 1) {
-                        triggerComplete();
-                    }
-                } else {
-                    if (currentChunkIndex < chunks.length - 1) {
-                        currentChunkIndex++;
-                        renderChunk();
-                    }
-                }
-            };
-            
-            renderChunk();
-        }
-
-        function nextStage(currentId, nextId, progressPercent) {
-            try { playClick(); } catch(e) {}
-            if(currentId === 'intro') {
-                try {
-                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                } catch(e) {}
-            }
-            const currentEl = document.getElementById(currentId);
-            const nextEl = document.getElementById(nextId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-            currentEl.classList.remove('active');
-            setTimeout(() => {
-                if(nextId !== 'intro') progContainer.style.display = 'block';
-                progBar.style.width = progressPercent + '%';
-                nextEl.classList.add('active');
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) typeWriterHTML(storyBox, 25);
-            }, 300);
-        }
-
         function checkQ1() {
-            const ans = cleanString(document.getElementById('ans1').value);
-            if (ans === '2개') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans1').value).replace(/\s+/g, '');
+            if (ans === '각기둥') {
+                playSuccess(); 
                 nextStage('panel_q1', 'panel_q2', 5);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q1', 'panel_q1', 0);
-                } else {
-                    showError('panel_q1', 'error1');
-                }
+                showError('panel_q1', 'error1');
             }
         }
 
+        // Q2
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value);
-            if (ans === '2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans2').value).replace(/\s+/g, '');
+            if (ans === '10') {
+                playSuccess(); 
                 nextStage('panel_q2', 'panel_q3', 10);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q2', 'panel_q1', 0);
-                } else {
-                    showError('panel_q2', 'error2');
-                }
+                showError('panel_q2', 'error2');
             }
         }
 
+        // Q3
         function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value);
-            if (ans === '1') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans3').value).replace(/\s+/g, '');
+            if (ans === '12') {
+                playSuccess(); 
                 nextStage('panel_q3', 'panel_q4', 15);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q3', 'panel_q1', 0);
-                } else {
-                    showError('panel_q3', 'error3');
-                }
+                showError('panel_q3', 'error3');
             }
         }
 
+        // Q4
         function checkQ4() {
-            const ans = cleanString(document.getElementById('ans4').value);
-            if (ans === '2개') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans4').value).replace(/\s+/g, '');
+            if (ans === '6') {
+                playSuccess(); 
                 nextStage('panel_q4', 'panel_q5', 20);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q4', 'panel_q1', 0);
-                } else {
-                    showError('panel_q4', 'error4');
-                }
+                showError('panel_q4', 'error4');
             }
         }
 
+        // Q5
         function checkQ5() {
-            const ans = cleanString(document.getElementById('ans5').value);
-            if (ans === '2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans5').value).replace(/\s+/g, '');
+            if (ans === '정사면체') {
+                playSuccess(); 
                 nextStage('panel_q5', 'panel_q6', 25);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q5', 'panel_q1', 0);
-                } else {
-                    showError('panel_q5', 'error5');
-                }
+                showError('panel_q5', 'error5');
             }
         }
 
+        // Q6
         function checkQ6() {
-            const ans = cleanString(document.getElementById('ans6').value);
-            if (ans === '연립일차방정식') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans6').value).replace(/\s+/g, '');
+            if (ans === '회전체') {
+                playSuccess(); 
                 nextStage('panel_q6', 'panel_q7', 30);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q6', 'panel_q1', 0);
-                } else {
-                    showError('panel_q6', 'error6');
-                }
+                showError('panel_q6', 'error6');
             }
         }
 
+        // Q7
         function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value);
-            if (ans === '2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans7').value).replace(/\s+/g, '');
+            if (ans === '직사각형') {
+                playSuccess(); 
                 nextStage('panel_q7', 'panel_q8', 35);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q7', 'panel_q1', 0);
-                } else {
-                    showError('panel_q7', 'error7');
-                }
+                showError('panel_q7', 'error7');
             }
         }
 
+        // Q8
         function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value);
-            if (ans === '3') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans8').value).replace(/\s+/g, '');
+            if (ans === '원') {
+                playSuccess(); 
                 nextStage('panel_q8', 'panel_q9', 40);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q8', 'panel_q1', 0);
-                } else {
-                    showError('panel_q8', 'error8');
-                }
+                showError('panel_q8', 'error8');
             }
         }
 
+        // Q9
         function checkQ9() {
-            const ans = cleanString(document.getElementById('ans9').value);
-            if (ans === '교점') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans9').value).replace(/\s+/g, '');
+            if (ans === '원뿔') {
+                playSuccess(); 
                 nextStage('panel_q9', 'panel_q10', 45);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q9', 'panel_q1', 0);
-                } else {
-                    showError('panel_q9', 'error9');
-                }
+                showError('panel_q9', 'error9');
             }
         }
 
+        // Q10
         function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value);
-            if (ans === '대입법') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans10').value).replace(/\s+/g, '');
+            if (ans === '원') {
+                playSuccess(); 
                 nextStage('panel_q10', 'panel_q11', 50);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q10', 'panel_q1', 0);
-                } else {
-                    showError('panel_q10', 'error10');
-                }
+                showError('panel_q10', 'error10');
             }
         }
 
+        // Q11
         function checkQ11() {
-            const ans = cleanString(document.getElementById('ans11').value);
-            if (ans === '가감법') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans11').value).replace(/\s+/g, '');
+            if (ans === '94') {
+                playSuccess(); 
                 nextStage('panel_q11', 'panel_q12', 55);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q11', 'panel_q1', 0);
-                } else {
-                    showError('panel_q11', 'error11');
-                }
+                showError('panel_q11', 'error11');
             }
         }
 
+        // Q12
         function checkQ12() {
-            const ans = cleanString(document.getElementById('ans12').value);
-            if (ans === '2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans12').value).replace(/\s+/g, '');
+            if (ans === '32파이') {
+                playSuccess(); 
                 nextStage('panel_q12', 'panel_q13', 60);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q12', 'panel_q1', 0);
-                } else {
-                    showError('panel_q12', 'error12');
-                }
+                showError('panel_q12', 'error12');
             }
         }
 
+        // Q13
         function checkQ13() {
-            const ans = cleanString(document.getElementById('ans13').value);
-            if (ans === '더해야') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans13').value).replace(/\s+/g, '');
+            if (ans === '56') {
+                playSuccess(); 
                 nextStage('panel_q13', 'panel_q14', 65);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q13', 'panel_q1', 0);
-                } else {
-                    showError('panel_q13', 'error13');
-                }
+                showError('panel_q13', 'error13');
             }
         }
 
+        // Q14
         function checkQ14() {
-            const ans = cleanString(document.getElementById('ans14').value);
-            if (ans === '2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans14').value).replace(/\s+/g, '');
+            if (ans === '24파이') {
+                playSuccess(); 
                 nextStage('panel_q14', 'panel_q15', 70);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q14', 'panel_q1', 0);
-                } else {
-                    showError('panel_q14', 'error14');
-                }
+                showError('panel_q14', 'error14');
             }
         }
 
+        // Q15
         function checkQ15() {
-            const ans = cleanString(document.getElementById('ans15').value);
-            if (ans === '2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans15').value).replace(/\s+/g, '');
+            if (ans === '36파이') {
+                playSuccess(); 
                 nextStage('panel_q15', 'panel_q16', 75);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q15', 'panel_q1', 0);
-                } else {
-                    showError('panel_q15', 'error15');
-                }
+                showError('panel_q15', 'error15');
             }
         }
 
+        // Q16
         function checkQ16() {
-            const ans = cleanString(document.getElementById('ans16').value);
-            if (ans === '4x') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans16').value).replace(/\s+/g, '');
+            if (ans === '160') {
+                playSuccess(); 
                 nextStage('panel_q16', 'panel_q17', 80);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q16', 'panel_q1', 0);
-                } else {
-                    showError('panel_q16', 'error16');
-                }
+                showError('panel_q16', 'error16');
             }
         }
 
+        // Q17
         function checkQ17() {
-            const ans = cleanString(document.getElementById('ans17').value);
-            if (ans === '4마리') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans17').value).replace(/\s+/g, '');
+            if (ans === '80파이') {
+                playSuccess(); 
                 nextStage('panel_q17', 'panel_q18', 85);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q17', 'panel_q1', 0);
-                } else {
-                    showError('panel_q17', 'error17');
-                }
+                showError('panel_q17', 'error17');
             }
         }
 
+        // Q18
         function checkQ18() {
-            const ans = cleanString(document.getElementById('ans18').value);
-            if (ans === 'x') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans18').value).replace(/\s+/g, '');
+            if (ans === '12파이') {
+                playSuccess(); 
                 nextStage('panel_q18', 'panel_q19', 90);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q18', 'panel_q1', 0);
-                } else {
-                    showError('panel_q18', 'error18');
-                }
+                showError('panel_q18', 'error18');
             }
         }
 
+        // Q19
         function checkQ19() {
-            const ans = cleanString(document.getElementById('ans19').value);
-            if (ans === '6개') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans19').value).replace(/\s+/g, '');
+            if (ans === '36파이') {
+                playSuccess(); 
                 nextStage('panel_q19', 'panel_q20', 95);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q19', 'panel_q1', 0);
-                } else {
-                    showError('panel_q19', 'error19');
-                }
+                showError('panel_q19', 'error19');
             }
         }
 
+        // Q20
         function checkQ20() {
-            const ans = cleanString(document.getElementById('ans20').value);
-            if (ans === '10세') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
+            const ans = cleanString(document.getElementById('ans20').value).replace(/\s+/g, '');
+            if (ans === '1:2:3') {
+                playVictory(); 
                 nextStage('panel_q20', 'outro', 100);
             } else {
-                wrongCount++;
-                if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q20', 'panel_q1', 0);
-                } else {
-                    showError('panel_q20', 'error20');
-                }
+                showError('panel_q20', 'error20');
             }
         }
-
         window.onload = () => {
             const introPanel = document.getElementById('intro');
             const introStoryBox = introPanel.querySelector('.story-box');
