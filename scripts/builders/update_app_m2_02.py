@@ -763,8 +763,7 @@ for q in qs:
 # Common JS functions boilerplate
 js_boilerplate = """
         let wrongCount = 0;
-
-        function cleanString(str) {
+function cleanString(str) {
             return str.replace(/\\s+/g, '').toUpperCase();
         }
 

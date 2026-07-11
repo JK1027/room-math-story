@@ -564,8 +564,7 @@ base_html = """<!DOCTYPE html>
         }
 
         let wrongCount = 0;
-
-        function cleanString(str) {
+function cleanString(str) {
             return str.replace(/\\s+/g, '').toLowerCase();
         }
 
@@ -849,7 +848,6 @@ for q in qs:
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ{qnum}()">{'마법 시전 시작' if qnum==1 else '다음으로'}</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error{qnum}').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
                     <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error{qnum}').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
             </div>
         </div>
