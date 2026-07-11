@@ -1,10 +1,10 @@
 # Project Status
 
 ## 대기 중인 작업 (Pending Tasks)
-- [ ] **이미지 재생성 (m1_04_coordinates/q7.png)**: 기존 판타지 이미지(마법사 캐릭터)가 심해 탐사 스토리와 맞지 않아 임시로 `intro.png`로 대체됨.
-- [ ] **이미지 생성 (m1_05_basic_geometry/q18.png ~ q20.png)**: 5단원(다빈치의 비밀 작업실)의 마지막 3개 문제 이미지 생성 필요. (Q16, Q17은 생성 완료하여 반영됨)
-- [ ] **이미지 생성 (m1_08_statistics/intro.png, outro.png, q1.png ~ q20.png)**: 8단원 통계 전체 이미지 생성 필요.
-- [ ] **이미지 생성 (m1_02_rational_numbers/intro.png, outro.png, q1.png ~ q20.png)**: 2단원 유리수 전체 이미지 생성 필요.
+- (없음 - 모든 이미지 생성 및 복구 완료)
 
-> [!NOTE]
-> 이미지 생성 API 일일 할당량(Quota) 제한으로 인해 일시 중단되었습니다. (약 1시간 54분 후인 17시 17분경에 할당량이 초기화될 예정입니다. 초기화 이후 잔여 이미지 생성을 이어서 진행할 수 있습니다.)
+## 완료된 작업 (Completed Tasks)
+- [x] **이미지 재생성 (m1_04_coordinates/q7.png)**: 심해 제어실 테마에 맞추어 mechanical control room 이미지 생성 및 반영 완료.
+- [x] **이미지 생성 (m1_05_basic_geometry/q18.png ~ q20.png)**: 다빈치의 비밀 작업실 테마 삼각형 합동 조건 3개(SAS, ASA, 직각삼각형) 이미지 생성 및 반영 완료.
+- [x] **이미지 생성 (m1_08_statistics/intro.png, outro.png, q1.png ~ q20.png)**: 셜록 홈즈와 통계국 테마 셜록 홈즈 소품, 런던 통계 지도, 스파이 안개 실루엣, 훈장 등 수식 및 도표 연관 이미지 생성 및 매핑 완료.
+- [x] **이미지 생성 (m1_02_rational_numbers/intro.png, outro.png, q1.png ~ q20.png)**: 마법 학교의 비밀 물약 테마 대강당, 올빼미와 가죽 마법서, 석조 미로, 보라색 물약 가득한 가마솥, 무지개 빛 성배 등 이미지 생성 및 매핑 완료.
