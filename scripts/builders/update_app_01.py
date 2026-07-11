@@ -850,6 +850,7 @@ for q in qs:
             <div class="btn-group">
                 <button class="btn" onclick="checkQ{qnum}()">{'시스템 복구 시작' if qnum==1 else '다음으로'}</button>
                     <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error{qnum}').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error{qnum}').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
             </div>
         </div>
 '''
@@ -885,10 +886,19 @@ for q in qs:
         function checkQ{qnum}() {{
             const ans = cleanString(document.getElementById('ans{qnum}').value).replace('(','').replace(')','');
             if ({ans_check}) {{
+                wrongCount = 0;
                 {victory_call} 
                 nextStage('panel_q{qnum}', {next_stage}, {next_progress});
             }} else {{
-                showError('panel_q{qnum}', 'error{qnum}');
+                wrongCount++;
+                if (wrongCount >= 3) {{
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q{qnum}', 'panel_q1', 0);
+                }} else {{
+                    showError('panel_q{qnum}', 'error{qnum}');
+                }}
             }}
         }}
 '''
