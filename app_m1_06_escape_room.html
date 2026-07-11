@@ -103,8 +103,8 @@
             margin-bottom: 1.5rem;
             border-radius: 0 12px 12px 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            height: 90px;
-            max-height: 90px;
+            height: 110px;
+            max-height: 110px;
             overflow: hidden;
             box-sizing: border-box;
         }
@@ -1094,179 +1094,136 @@
             osc.stop(now + 0.03);
         }
 
+        function splitSentences(text) {
+            let result = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                if (char === '.' || char === '!' || char === '?') {
+                    const nextChar = text.charAt(i + 1);
+                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
+                        result.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
+                    }
+                }
+            }
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) {
+                result.push(finalChunk);
+            }
+            return result;
+        }
+
         function typeWriterHTML(element, speed = 25, onComplete = null) {
             let isComplete = false;
+            let currentChunkIndex = 0;
+            let chunks = [];
+
+            const textEl = element.querySelector('.story-text');
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
             function triggerComplete() {
                 if(!isComplete) {
                     isComplete = true;
+                    element.style.cursor = 'default';
                     if(onComplete) onComplete();
                 }
             }
+
             if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
-            
-            const htmlContent = element.getAttribute('data-raw-html') || element.innerHTML;
-            if (!element.hasAttribute('data-raw-html')) {
-                element.setAttribute('data-raw-html', htmlContent);
+            const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
+            if (!textEl.hasAttribute('data-raw-html')) {
+                textEl.setAttribute('data-raw-html', htmlContent);
             }
-            
-            element.innerHTML = '';
+
+            let rawLines = htmlContent.split(/<br\s*\/?>/i);
+            for(let line of rawLines) {
+                let sentences = splitSentences(line);
+                for(let s of sentences) {
+                    if(s.trim()) chunks.push(s.trim());
+                }
+            }
+
+            if(chunks.length === 0) {
+                triggerComplete();
+                return;
+            }
+
             let i = 0;
             let textStr = '';
+            let typingFinished = false;
+            element.style.cursor = 'pointer';
             
-            element.onclick = () => {
-                if (i < htmlContent.length) {
-                    clearTimeout(typeWriterTimeout);
-                    i = htmlContent.length;
-                    element.innerHTML = htmlContent;
-                    triggerComplete();
+            function renderChunk() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                i = 0;
+                textStr = '';
+                typingFinished = false;
+                let chunkText = chunks[currentChunkIndex];
+                const currentPanel = element.closest('.glass-panel');
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '안내문';
+                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                if (!storyHistory.includes(logEntry)) {
+                    storyHistory.push(logEntry);
                 }
-            };
-            element.style.cursor = 'pointer'; 
-            
-            function type() {
-                if (i < htmlContent.length) {
-                    if (htmlContent.charAt(i) === '<') {
-                        while (htmlContent.charAt(i) !== '>' && i < htmlContent.length) {
-                            textStr += htmlContent.charAt(i);
+                if(currentChunkIndex < chunks.length - 1) {
+                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                }
+                textEl.innerHTML = '';
+                
+                function type() {
+                    if (i < chunkText.length) {
+                        if (chunkText.charAt(i) === '<') {
+                            const endTag = chunkText.indexOf('>', i);
+                            if (endTag !== -1) {
+                                textStr += chunkText.substring(i, endTag + 1);
+                                i = endTag + 1;
+                            } else {
+                                textStr += chunkText.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            textStr += chunkText.charAt(i);
                             i++;
                         }
-                        textStr += '>';
-                        i++;
-                        element.innerHTML = textStr;
-                        type(); 
-                    } else {
-                        textStr += htmlContent.charAt(i);
-                        element.innerHTML = textStr;
-                        i++;
-                        
-                        if (htmlContent.charAt(i-1) !== ' ' && htmlContent.charAt(i-1) !== '\n') {
-                            playTick();
+                        textEl.innerHTML = textStr;
+                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
+                            try { playTick(); } catch(e) {}
                         }
-                        
                         typeWriterTimeout = setTimeout(type, speed);
+                    } else {
+                        textEl.innerHTML = chunkText;
+                        typingFinished = true;
+                        if(currentChunkIndex === chunks.length - 1) {
+                            triggerComplete();
+                        }
                     }
-                } else {
-                    triggerComplete();
                 }
-            }
-            type();
-        }
-
-        function nextStage(currentId, nextId, progressPercent) {
-            try { playClick(); } catch(e) {}
-            if(currentId === 'intro') {
-                try { startBGM(); } catch(e) {}
+                type();
             }
 
-            const currentEl = document.getElementById(currentId);
-            const nextEl = document.getElementById(nextId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
-            
-            setTimeout(() => {
-                if(nextId !== 'intro') progContainer.style.display = 'block';
-                progBar.style.width = progressPercent + '%';
-                nextEl.classList.add('active');
-                
-                // Keep controls always visible. Just trigger typewriter on the story box
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25);
-                }
-            }, 300);
-        }
-
-            const currentEl = document.getElementById(currentId);
-            const nextEl = document.getElementById(nextId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
-            
-            setTimeout(() => {
-                if(nextId !== 'intro') progContainer.style.display = 'block';
-                progBar.style.width = progressPercent + '%';
-                nextEl.classList.add('active');
-                
-                const toHide = nextEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
-                    });
+            element.onclick = () => {
+                if (!typingFinished) {
+                    clearTimeout(typeWriterTimeout);
+                    let chunkText = chunks[currentChunkIndex];
+                    if(currentChunkIndex < chunks.length - 1) {
+                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    }
+                    textEl.innerHTML = chunkText;
+                    typingFinished = true;
+                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
                 } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
+                    if (currentChunkIndex < chunks.length - 1) {
+                        currentChunkIndex++;
+                        renderChunk();
+                    }
                 }
-            }, 300);
-        }
-
-        function prevStage(currentId, prevId, progressPercent) {
-            try { playClick(); } catch(e) {}
-            const currentEl = document.getElementById(currentId);
-            const prevEl = document.getElementById(prevId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
+            };
             
-            setTimeout(() => {
-                if(prevId === 'intro') {
-                    progContainer.style.display = 'none';
-                }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25);
-                }
-            }, 300);
-        }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
-                    });
-                } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
-                }
-            }, 300);
+            renderChunk();
         }
 
         function showError(panelId, errorId) {
