@@ -2,7 +2,7 @@ import re
 import os
 
 html_file = 'app_m1_03_escape_room.html'
-base_dir = r"c:\Coding_Notebook\Projects\school\room-math-story"
+base_dir = os.path.dirname(os.path.abspath(__file__))
 html_path = os.path.join(base_dir, html_file)
 
 # 1. Base template of app_m1_03_escape_room.html
