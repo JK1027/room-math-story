@@ -1012,6 +1012,37 @@
             return str.replace(/\s+/g, '').toLowerCase();
         }
 
+        // 엔터키 정답 제출 바인딩
+        document.addEventListener('keydown', function(e) {
+            if (e.target && e.target.id.startsWith('ans') && e.key === 'Enter') {
+                const qnum = e.target.id.replace('ans', '');
+                const activePanel = e.target.closest('.glass-panel');
+                if (activePanel) {
+                    const btn = activePanel.querySelector('.btn-group .btn');
+                    if (btn) btn.click();
+                }
+            }
+        });
+
+        // 오디오 로드 에러 복구/예외 방어선
+        window.addEventListener('DOMContentLoaded', () => {
+            const audios = [
+                document.getElementById('bgm'),
+                document.getElementById('sndClick'),
+                document.getElementById('sndTick'),
+                document.getElementById('sndSuccess'),
+                document.getElementById('sndError'),
+                document.getElementById('sndVictory')
+            ];
+            audios.forEach(audio => {
+                if (audio) {
+                    audio.addEventListener('error', (e) => {
+                        console.warn(`사운드 리소스 로드 실패: ${audio.id}`);
+                    });
+                }
+            });
+        });
+
         function showError(panelId, errorId) {
             try { playError(); } catch(e) {}
             const panel = document.getElementById(panelId);
