@@ -108,6 +108,10 @@
             overflow: hidden;
             box-sizing: border-box;
         }
+        #intro .story-box {
+            height: 80px;
+            max-height: 80px;
+        }
         .story-text {
             width: 100%;
             height: 100%;
@@ -942,7 +946,7 @@
         let lfo = null;
         let bgmGain = null;
         let isMuted = false;
-        let typeWriterTimeout = null;
+        
 
         function toggleSound() {
             isMuted = !isMuted;
@@ -1105,6 +1109,12 @@
             osc.stop(now + 0.03);
         }
 
+                // Visual Novel chunk Typewriter Engine
+        
+        
+                // Visual Novel chunk Typewriter Engine
+        let typeWriterTimeout = null;
+        
         function splitSentences(text) {
             let result = [];
             let start = 0;
@@ -1129,7 +1139,7 @@
             let isComplete = false;
             let currentChunkIndex = 0;
             let chunks = [];
-
+            
             const textEl = element.querySelector('.story-text');
             if(!textEl) {
                 if(onComplete) onComplete();
@@ -1143,18 +1153,20 @@
                     if(onComplete) onComplete();
                 }
             }
-
             if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            
             const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
             if (!textEl.hasAttribute('data-raw-html')) {
                 textEl.setAttribute('data-raw-html', htmlContent);
             }
-
+            
             let rawLines = htmlContent.split(/<br\s*\/?>/i);
             for(let line of rawLines) {
                 let sentences = splitSentences(line);
                 for(let s of sentences) {
-                    if(s.trim()) chunks.push(s.trim());
+                    if(s.trim()) {
+                        chunks.push(s.trim());
+                    }
                 }
             }
 
@@ -1162,7 +1174,7 @@
                 triggerComplete();
                 return;
             }
-
+            
             let i = 0;
             let textStr = '';
             let typingFinished = false;
@@ -1173,16 +1185,20 @@
                 i = 0;
                 textStr = '';
                 typingFinished = false;
+                
                 let chunkText = chunks[currentChunkIndex];
+                
                 const currentPanel = element.closest('.glass-panel');
-                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '안내문';
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
                 const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
                 if (!storyHistory.includes(logEntry)) {
                     storyHistory.push(logEntry);
                 }
+
                 if(currentChunkIndex < chunks.length - 1) {
                     chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
                 }
+                
                 textEl.innerHTML = '';
                 
                 function type() {
@@ -1201,6 +1217,7 @@
                             i++;
                         }
                         textEl.innerHTML = textStr;
+                        
                         if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
                             try { playTick(); } catch(e) {}
                         }
@@ -1215,7 +1232,7 @@
                 }
                 type();
             }
-
+            
             element.onclick = () => {
                 if (!typingFinished) {
                     clearTimeout(typeWriterTimeout);
@@ -1225,7 +1242,9 @@
                     }
                     textEl.innerHTML = chunkText;
                     typingFinished = true;
-                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
+                    if(currentChunkIndex === chunks.length - 1) {
+                        triggerComplete();
+                    }
                 } else {
                     if (currentChunkIndex < chunks.length - 1) {
                         currentChunkIndex++;
@@ -1235,6 +1254,123 @@
             };
             
             renderChunk();
+        }
+
+        function nextStage(currentId, nextId, progressPercent) {
+            try { playClick(); } catch(e) {}
+            if(currentId === 'intro') {
+                try { startBGM(); } catch(e) {}
+            }
+
+            const currentEl = document.getElementById(currentId);
+            const nextEl = document.getElementById(nextId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            currentEl.classList.remove('active');
+            
+            setTimeout(() => {
+                if(nextId !== 'intro') progContainer.style.display = 'block';
+                progBar.style.width = progressPercent + '%';
+                nextEl.classList.add('active');
+                
+                // Keep controls always visible. Just trigger typewriter on the story box
+                const storyBox = nextEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25);
+                }
+            }, 300);
+        }
+
+            const currentEl = document.getElementById(currentId);
+            const nextEl = document.getElementById(nextId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            currentEl.classList.remove('active');
+            
+            setTimeout(() => {
+                if(nextId !== 'intro') progContainer.style.display = 'block';
+                progBar.style.width = progressPercent + '%';
+                nextEl.classList.add('active');
+                
+                const toHide = nextEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                toHide.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(10px)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    el.style.pointerEvents = 'none';
+                });
+
+                const storyBox = nextEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25, () => {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    });
+                } else {
+                    toHide.forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                        el.style.pointerEvents = 'auto';
+                    });
+                }
+            }, 300);
+        }
+
+        function prevStage(currentId, prevId, progressPercent) {
+            try { playClick(); } catch(e) {}
+            const currentEl = document.getElementById(currentId);
+            const prevEl = document.getElementById(prevId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            currentEl.classList.remove('active');
+            
+            setTimeout(() => {
+                if(prevId === 'intro') {
+                    progContainer.style.display = 'none';
+                }
+                progBar.style.width = progressPercent + '%';
+                prevEl.classList.add('active');
+
+                const storyBox = prevEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25);
+                }
+            }, 300);
+        }
+                progBar.style.width = progressPercent + '%';
+                prevEl.classList.add('active');
+
+                const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                toHide.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(10px)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    el.style.pointerEvents = 'none';
+                });
+
+                const storyBox = prevEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25, () => {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    });
+                } else {
+                    toHide.forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                        el.style.pointerEvents = 'auto';
+                    });
+                }
+            }, 300);
         }
 
         function showError(panelId, errorId) {

@@ -770,6 +770,8 @@ base_html = """<!DOCTYPE html>
             }, 300);
         }
 
+        // Q1
+
         window.onload = () => {
             const introPanel = document.getElementById('intro');
             const introStoryBox = introPanel.querySelector('.story-box');

@@ -840,6 +840,8 @@ base_html = """<!DOCTYPE html>
             }, 300);
         }
 
+        // Q1
+
         window.onload = () => {
             // Start intro typing
             const introPanel = document.getElementById('intro');
