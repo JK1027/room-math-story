@@ -724,6 +724,7 @@ for q in qs:
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ{qnum}()">{'시스템 복구 시작' if qnum==1 else '다음으로'}</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error{qnum}').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
             </div>
         </div>
 '''
@@ -742,9 +743,18 @@ for q in qs:
             const ans = cleanString(document.getElementById('ans{qnum}').value);
             if ({ans_check}) {{
                 try {{ playSuccess(); }} catch(e) {{}}
+                wrongCount = 0;
                 nextStage('panel_q{qnum}', {next_stage}, {progress});
             }} else {{
-                showError('panel_q{qnum}', 'error{qnum}');
+                wrongCount++;
+                if (wrongCount >= 3) {{
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q{qnum}', 'panel_q1', 0);
+                }} else {{
+                    showError('panel_q{qnum}', 'error{qnum}');
+                }}
             }}
         }}
 '''
@@ -752,6 +762,8 @@ for q in qs:
 
 # Common JS functions boilerplate
 js_boilerplate = """
+        let wrongCount = 0;
+
         function cleanString(str) {
             return str.replace(/\\s+/g, '').toUpperCase();
         }
