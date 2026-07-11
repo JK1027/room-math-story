@@ -1,9 +1,10 @@
 # Project Status
 
 ## 대기 중인 작업 (Pending Tasks)
-- [ ] **이미지 생성 (m2_01_rational_numbers/intro.png, outro.png, q1.png ~ q20.png)**: 2학년 1단원(무한을 달리는 사이버 스피드웨이)의 사이버 스피드카 레이싱 테마 이미지 생성 필요. (할당량 복구 후 순차적 진행 예정)
+- [ ] **이미지 생성 (중2 다음 단원들)**: 중2 2단원부터 8단원까지의 이미지 순차 생성 필요.
 
 ## 완료된 작업 (Completed Tasks)
+- [x] **이미지 생성 (m2_01_rational_numbers/intro.png, outro.png, q1.png ~ q20.png)**: 2학년 1단원(무한을 달리는 사이버 스피드웨이)의 사이버 스피드카 레이싱 테마 이미지(대그리드 스타팅 라인, 네온 트랙, 인피니티 루프, 방화벽 방어막, 황동 우승 트로피) 생성 및 연동 완료.
 - [x] **이미지 생성 (m1_01_prime_factorization/intro.png, outro.png, q1.png ~ q20.png)**: 1단원(조각난 해시계와 멈춰버린 조선) 테마에 맞춰 장영실의 공방 천문 기구, 소수 자물쇠 목상자, 자격루의 물과 톱니기어 장치, 개기일식 아래 빛나는 앙부일구 해시계 이미지 생성 및 매핑 완료.
 - [x] **이미지 재생성 (m1_04_coordinates/q7.png)**: 심해 제어실 테마에 맞추어 mechanical control room 이미지 생성 및 반영 완료.
 - [x] **이미지 생성 (m1_05_basic_geometry/q18.png ~ q20.png)**: 다빈치의 비밀 작업실 테마 삼각형 합동 조건 3개(SAS, ASA, 직각삼각형) 이미지 생성 및 반영 완료.
