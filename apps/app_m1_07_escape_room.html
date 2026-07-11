@@ -3,343 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>우주 정거장 아르테미스 복구 작전 (입체도형)</title>
+    <title>고대 이집트 피라미드의 비밀: 방탈출 게임</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0ea5e9;
-            --primary-dark: #0284c7;
-            --accent: #38bdf8;
-            --bg-color: #0f172a;
+            --bg-main: #0c101b;
             --glass-bg: rgba(15, 23, 42, 0.75);
-            --glass-border: rgba(56, 189, 248, 0.3);
-            --text-main: #f8fafc;
-            --text-muted: #cbd5e1;
+            --glass-border: rgba(224, 180, 76, 0.25);
+            --accent: #e0b44c;
+            --accent-hover: #f5d06e;
+            --text-main: #f0fbf0;
+            --text-muted: #9abfa0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Pretendard', -apple-system, sans-serif;
-            background: url('assets/bg/m1_07_bg.png') center/cover no-repeat fixed;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(50, 205, 50, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(34, 139, 34, 0.08) 0%, transparent 40%);
+            z-index: -2;
         }
 
         .container {
             width: 100%;
             max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
         }
 
         .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255,255,255,0.1);
-            display: none;
+            border-top: 1px solid rgba(50, 205, 50, 0.4);
+            border-left: 1px solid rgba(50, 205, 50, 0.4);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 0 50px rgba(50, 205, 50, 0.1), inset 0 0 20px rgba(50, 205, 50, 0.02);
+            display: none; 
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-panel.active {
             display: block;
             opacity: 1;
             transform: translateY(0);
-            animation: glow 4s infinite alternate;
         }
 
-        @keyframes glow {
-            0% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(14, 165, 233, 0.1); }
-            100% { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(14, 165, 233, 0.3); }
-        }
-
-        h1, h2 {
+        h1 {
+            font-family: 'Orbit', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
             text-align: center;
-            color: var(--accent);
-            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.5px;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(50, 205, 50, 0.3);
+            letter-spacing: 2px;
         }
 
-        h1 { font-size: 2.5rem; font-weight: 800; }
-        h2 { font-size: 1.8rem; font-weight: 700; border-bottom: 2px solid var(--glass-border); padding-bottom: 0.5rem; }
+        h2 {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(50, 205, 50, 0.15);
+            padding-bottom: 0.75rem;
+        }
+
+        .panel-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(50, 205, 50, 0.15);
+        }
 
         .story-box {
-            position: relative;
-            background: linear-gradient(90deg, rgba(30, 58, 138, 0.5) 0%, rgba(0,0,0,0.3) 100%);
-            border-left: 4px solid var(--accent);
-            padding: 0.8rem 1.2rem;
+            background: rgba(10, 20, 15, 0.5);
+            border: 1px solid rgba(50, 205, 50, 0.15);
+            border-radius: 12px;
+            padding: 1.25rem;
             margin-bottom: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            height: 110px;
-            max-height: 110px;
-            overflow: hidden;
-            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
         }
-        #intro .story-box {
-            height: 80px;
-            max-height: 80px;
+        
+        .story-box:hover {
+            background: rgba(10, 20, 15, 0.7);
         }
+
         .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
+            font-size: 1rem;
+            line-height: 1.7;
             color: var(--text-main);
-            text-align: justify;
+            min-height: 110px;
+            word-break: keep-all;
         }
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
+        
+        #intro .story-text {
+            min-height: 80px;
         }
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
+
+        .story-log-trigger {
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 0.8rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .story-log-trigger:hover {
+            opacity: 1;
         }
 
         .question-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
+            background: rgba(50, 205, 50, 0.05);
+            border: 1px dashed rgba(50, 205, 50, 0.3);
             border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .question-content {
-            font-size: 1.15rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
             font-weight: 500;
-            line-height: 1.5;
         }
 
         .input-group {
-            display: flex;
-            gap: 1rem;
             margin-top: 1rem;
-            flex-wrap: wrap;
+            display: flex;
+            gap: 10px;
         }
 
         input[type="text"] {
             flex: 1;
-            min-width: 200px;
-            padding: 0.8rem 1.2rem;
-            border: 2px solid var(--glass-border);
+            background: rgba(10, 20, 15, 0.8);
+            border: 1px solid rgba(50, 205, 50, 0.3);
             border-radius: 8px;
-            background: rgba(0, 0, 0, 0.5);
-            font-size: 1.1rem;
-            color: white;
-            transition: all 0.3s ease;
+            padding: 0.75rem 1rem;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: 'Share Tech Mono', monospace;
         }
 
         input[type="text"]:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 0 10px rgba(50, 205, 50, 0.3);
         }
 
         .btn-group {
             display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
-            margin-top: 2rem;
+            justify-content: center;
         }
 
         .btn {
-            background: var(--primary);
-            color: white;
+            background: linear-gradient(135deg, var(--accent) 0%, #1e5c1e 100%);
+            color: #fff;
             border: none;
-            padding:  0.6rem 1.5rem;
-            font-size:  1.1rem;
-            font-weight: 600;
-            border-radius:  8px;
+            border-radius: 8px;
+            padding: 0.85rem 2.5rem;
+            font-size: 1.05rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(50, 205, 50, 0.3);
+            letter-spacing: 1px;
         }
 
         .btn:hover {
-            background: var(--accent);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--glass-border);
-            box-shadow: none;
-            color: var(--text-muted);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.1);
-            color: white;
-            border-color: var(--accent);
+            box-shadow: 0 6px 20px rgba(50, 205, 50, 0.5);
+            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
         }
 
         .error-msg {
-            color: #ef4444;
-            font-weight: bold;
+            color: #ff6b6b;
+            font-size: 0.9rem;
             text-align: center;
-            margin-top: 1rem;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
             display: none;
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+            font-weight: 500;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
         }
 
+        /* Progress Bar */
         .progress-container {
             width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            margin: 2rem 0;
+            background: rgba(10, 20, 15, 0.6);
+            border: 1px solid rgba(50, 205, 50, 0.2);
+            border-radius: 50px;
+            height: 10px;
+            margin-bottom: 2rem;
             overflow: hidden;
             display: none;
         }
 
         .progress-bar {
             height: 100%;
-            background: var(--accent);
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
             width: 0%;
             transition: width 0.5s ease;
-            box-shadow: 0 0 10px var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        /* Sound Control */
+        .sound-ctrl {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s;
         }
         
-        .shake {
-            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-        }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
+        .sound-ctrl:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 10px rgba(50, 205, 50, 0.2);
         }
 
-        ul.options {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
+        /* Log Modal */
+        .log-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 12, 8, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
         }
-        ul.options li {
-            padding: 0.5rem 0;
-            color: var(--text-muted);
+        
+        .log-content {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 70vh;
+            padding: 2rem;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 1rem; flex-direction: column;
-            }
-            .glass-panel { padding: 1.5rem; border-radius: 16px; }
-            h1 { font-size: 2rem; letter-spacing: 1px; }
-            h2 { font-size: 1.4rem; margin-bottom: 1.5rem; }
-            .story-box {padding: 0.6rem 1rem;
-                margin-bottom: 0.5rem;
-                height: 80px;
-                max-height: 80px;
-                overflow: hidden;
-                flex: 0 0 auto;}
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
-        }
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
-        }
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
-        }
-            .question-box { padding: 1.2rem; }
-            .question-box::before { font-size: 4rem; top: -10px; right: -5px; }
-            input[type="text"] { font-size: 1.1rem; padding: 1rem; }
-            .btn { font-size: 0.9rem; padding: 0.5rem; letter-spacing: 1px;  border-radius: 6px;}
-            .btn-group { flex-direction: column; gap: 0.8rem; }
-            .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
-            .graph-container { padding: 1rem; }
-        }
-    
-        .panel-image {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
+        
+        .log-content h2 {
+            border-bottom: 1px solid rgba(50, 205, 50, 0.2);
+            padding-bottom: 0.5rem;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        .log-list {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 5px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .log-item {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding: 0.5rem 0.75rem;
+            background: rgba(10, 20, 15, 0.4);
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .close-log {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .close-log:hover {
+            color: #fff;
         }
 
-        .story-log-trigger {
-            position: absolute;
-            bottom: 4px;
-            right: 8px;
-            background: rgba(16, 185, 129, 0.25);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 2px 6px;
-            font-size: 0.7rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: bold;
-            z-index: 10;
-        }
-        .story-log-trigger:hover {
-            background: rgba(16, 185, 129, 0.5);
-            color: white;
-        }
-        .story-log-trigger:hover {
-            background: rgba(16, 185, 129, 0.5);
-            color: white;
-        }
-        .story-log-trigger:hover {
-            background: rgba(16, 185, 129, 0.5);
-            color: white;
-        }
-        .story-log-trigger:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: white;
-        }
-    
         @keyframes blink {
-            0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
     </style>
-
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -352,90 +350,652 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+
+    <button class="sound-ctrl" onclick="toggleSound()">
+        🔊 소리 켜짐
+    </button>
+
     <div class="container">
         <div class="progress-container" id="progressContainer">
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
+        <!-- Intro Panel -->
         <div id="intro" class="glass-panel active">
-            <h1>피라미드의 비밀</h1>
+            <h1>괴도 X의 암호 편지</h1>
+            <h2>일차부등식의 해와 성질</h2>
             <img src="assets/m1_07_solid_geometry/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                여러분은 이집트 사막 한가운데 숨겨져 있던 미지의 거대 피라미드를 탐사 중입니다. 왕의 무덤에 들어선 순간, 바닥이 꺼지며 깊은 지하 미궁으로 떨어졌습니다!<br><br>
-                이 미궁은 입체도형의 마법으로 보호받고 있습니다. 다면체와 회전체의 성질을 이용해 함정을 피하고, 각종 도형의 겉넓이와 부피를 계산하여 20개의 암호를 풀어야만 지상으로 올라갈 수 있습니다.<br><br>
-                산소는 딱 45분 남았습니다. 수학적 지혜를 발휘하여 피라미드를 탈출하세요!
+                <div class="story-text">아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!</div>
             </div>
             <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">시스템 복구 시작</button>
+                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">숲의 저울 가동</button>
             </div>
         </div>
-        <!-- Q1 -->
 
-        <!-- 아웃트로 -->
-        <div id="outro" class="glass-panel">
-            <h1>탈출 성공!</h1>
-            <h2>태양 신전의 거울 미궁</h2>
-            <img src="assets/m1_07_solid_geometry/outro.png" alt="Background" class="panel-image">
+        
+        <!-- Q1 -->
+        <div id="panel_q1" class="glass-panel">
+            <h2>제 1구역: 스테이지 1</h2>
+            <img src="assets/m1_07_solid_geometry/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">여러분들이 땀을 흘리며 석문에 정답을 입력하고 다이얼을 돌리는 순간! 
-                천장에서 쏟아지던 뜨겁고 살인적인 빛줄기가 마지막 거울에 반사되어 지하에 있는 깊은 냉각 수조의 중심부로 정확히 꽂힙니다. 
-                쉭-! 하는 굉음과 함께 하얀 수증기가 신전을 가득 채우더니, 이내 굳게 닫혀 있던 탈출용 거대 돌벽이 스르륵 내려앉습니다. 
-                눈을 뜰 수 없이 밝은 사막의 태양과 시원한 모래바람이 밀려옵니다. 거울 미궁 탈출에 성공했습니다!</div>
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
-            <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q1.</strong> 방정식 $2x + y - 5 = 0$ 은 미지수가 몇 개인 일차방정식인가?
+                    <div class="input-group">
+                        <input type="text" id="ans1" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error1">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ1()">시스템 복구 시작</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error1').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
         </div>
 
-        <script>
-        let audioCtx;
+        <!-- Q2 -->
+        <div id="panel_q2" class="glass-panel">
+            <h2>제 2구역: 스테이지 2</h2>
+            <img src="assets/m1_07_solid_geometry/q2.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q2.</strong> 다음 중 미지수가 2개인 일차방정식은? (1) $x + 2 = 3$ (2) $x + y = 5$ (3) $x^2 + y = 1$
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error2">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ2()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error2').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div id="panel_q3" class="glass-panel">
+            <h2>제 3구역: 스테이지 3</h2>
+            <img src="assets/m1_07_solid_geometry/q3.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q3.</strong> $x, y$가 자연수일 때, $x + y = 3$ 을 만족하는 순서쌍 $(x, y)$를 모두 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error3">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ3()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error3').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div id="panel_q4" class="glass-panel">
+            <h2>제 4구역: 스테이지 4</h2>
+            <img src="assets/m1_07_solid_geometry/q4.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q4.</strong> $x, y$가 자연수일 때, $2x + y = 5$ 를 만족하는 순서쌍 $(x, y)$의 개수는 몇 개인가?
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error4">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ4()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error4').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div id="panel_q5" class="glass-panel">
+            <h2>제 5구역: 스테이지 5</h2>
+            <img src="assets/m1_07_solid_geometry/q5.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q5.</strong> $x=1, y=2$ 가 방정식 $3x - ay = -1$ 의 해일 때, 상수 $a$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans5" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error5">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ5()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error5').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div id="panel_q6" class="glass-panel">
+            <h2>제 6구역: 스테이지 6</h2>
+            <img src="assets/m1_07_solid_geometry/q6.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q6.</strong> 두 일차방정식을 한 쌍으로 묶어 놓은 것을 무엇이라 하는가?
+                    <div class="input-group">
+                        <input type="text" id="ans6" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error6">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ6()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error6').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div id="panel_q7" class="glass-panel">
+            <h2>제 7구역: 스테이지 7</h2>
+            <img src="assets/m1_07_solid_geometry/q7.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q7.</strong> $(x=2, y=1)$ 이 연립방정식 $egin{cases} x+y=3 \ ax-y=3 \end{cases}$ 의 해일 때, $a$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans7" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error7">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ7()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error7').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div id="panel_q8" class="glass-panel">
+            <h2>제 8구역: 스테이지 8</h2>
+            <img src="assets/m1_07_solid_geometry/q8.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q8.</strong> $egin{cases} x+y=5 \ x-y=1 \end{cases}$ 의 해를 직관적으로 구해보시오. (순서쌍으로)
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error8">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ8()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error8').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div id="panel_q9" class="glass-panel">
+            <h2>제 9구역: 스테이지 9</h2>
+            <img src="assets/m1_07_solid_geometry/q9.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q9.</strong> 연립방정식의 해는 두 일차방정식의 그래프가 만나는 ( ? )의 좌표와 같다. ?에 들어갈 말은? (힌트: 두 직선이 만나는 점)
+                    <div class="input-group">
+                        <input type="text" id="ans9" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error9">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ9()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error9').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div id="panel_q10" class="glass-panel">
+            <h2>제 10구역: 스테이지 10</h2>
+            <img src="assets/m1_07_solid_geometry/q10.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q10.</strong> 연립방정식을 풀 때 한 방정식을 다른 방정식에 대입하여 미지수를 없애는 방법을 무엇이라 하는가?
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error10">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ10()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error10').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div id="panel_q11" class="glass-panel">
+            <h2>제 11구역: 스테이지 11</h2>
+            <img src="assets/m1_07_solid_geometry/q11.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q11.</strong> 연립방정식을 풀 때 두 방정식을 더하거나 빼서 미지수를 없애는 방법을 무엇이라 하는가?
+                    <div class="input-group">
+                        <input type="text" id="ans11" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error11">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ11()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error11').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div id="panel_q12" class="glass-panel">
+            <h2>제 12구역: 스테이지 12</h2>
+            <img src="assets/m1_07_solid_geometry/q12.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q12.</strong> $egin{cases} y = 2x \ x + y = 6 \end{cases}$ 을 대입법으로 풀 때, $x$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans12" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error12">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ12()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error12').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div id="panel_q13" class="glass-panel">
+            <h2>제 13구역: 스테이지 13</h2>
+            <img src="assets/m1_07_solid_geometry/q13.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q13.</strong> $egin{cases} 2x + y = 7 \ 2x - y = 1 \end{cases}$ 을 가감법으로 풀기 위해 두 식을 ( 더해야 / 빼야 ) $y$가 없어진다.
+                    <div class="input-group">
+                        <input type="text" id="ans13" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error13">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ13()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error13').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div id="panel_q14" class="glass-panel">
+            <h2>제 14구역: 스테이지 14</h2>
+            <img src="assets/m1_07_solid_geometry/q14.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q14.</strong> Q13의 연립방정식을 풀어 해 $(x, y)$를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans14" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error14">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ14()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error14').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div id="panel_q15" class="glass-panel">
+            <h2>제 15구역: 스테이지 15</h2>
+            <img src="assets/m1_07_solid_geometry/q15.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q15.</strong> $egin{cases} x + 2y = 4 \ 3x + 2y = 8 \end{cases}$ 의 해를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans15" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error15">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ15()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error15').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q16 -->
+        <div id="panel_q16" class="glass-panel">
+            <h2>제 16구역: 스테이지 16</h2>
+            <img src="assets/m1_07_solid_geometry/q16.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q16.</strong> 토끼와 닭이 섞여 있는 우리에 머리가 모두 10개, 다리가 모두 28개이다. 토끼를 $x$마리, 닭을 $y$마리라 할 때, 다리 수에 대한 방정식을 세우시오.
+                    <div class="input-group">
+                        <input type="text" id="ans16" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error16">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ16()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error16').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q17 -->
+        <div id="panel_q17" class="glass-panel">
+            <h2>제 17구역: 스테이지 17</h2>
+            <img src="assets/m1_07_solid_geometry/q17.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q17.</strong> Q16의 연립방정식을 풀어 토끼($x$)는 몇 마리인지 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans17" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error17">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ17()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error17').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q18 -->
+        <div id="panel_q18" class="glass-panel">
+            <h2>제 18구역: 스테이지 18</h2>
+            <img src="assets/m1_07_solid_geometry/q18.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q18.</strong> 100원짜리 동전 $x$개와 500원짜리 동전 $y$개를 합하여 10개, 금액이 2600원일 때, 동전 개수에 대한 방정식을 세우시오.
+                    <div class="input-group">
+                        <input type="text" id="ans18" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error18">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ18()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error18').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q19 -->
+        <div id="panel_q19" class="glass-panel">
+            <h2>제 19구역: 스테이지 19</h2>
+            <img src="assets/m1_07_solid_geometry/q19.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q19.</strong> Q18의 연립방정식을 풀어 100원짜리 동전($x$)은 몇 개인가?
+                    <div class="input-group">
+                        <input type="text" id="ans19" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error19">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ19()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error19').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+        <!-- Q20 -->
+        <div id="panel_q20" class="glass-panel">
+            <h2>제 20구역: 스테이지 20</h2>
+            <img src="assets/m1_07_solid_geometry/q20.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q20.</strong> 현재 아버지와 아들의 나이의 합은 50세이고, 5년 후에는 아버지의 나이가 아들의 나이의 3배가 된다. 현재 아들의 나이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans20" placeholder="정답 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error20">틀렸습니다. 다시 시도해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ20()">다음으로</button>
+                    <button class="btn btn-hint" onclick="alert('💡 힌트: ' + document.getElementById('error20').innerText)" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+            </div>
+        </div>
+
+
+        <!-- Outro Panel -->
+        <div id="outro" class="glass-panel">
+            <h1>미션 완료!</h1>
+            <h2>요정 숲의 균형 회복</h2>
+            <img src="assets/m1_07_solid_geometry/outro.png" alt="Ending" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="location.reload()">다시 하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Web Audio API Sound Generation -->
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let isMuted = false;
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            document.querySelector('.sound-ctrl').innerText = isMuted ? "🔇 소리 꺼짐" : "🔊 소리 켜짐";
+        }
+
+        function playClick() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        function playTick() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.03);
+        }
+
+        function playSuccess() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+            osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+            osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+            
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.25);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.35);
+        }
+
+        function playError() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.25);
+            
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.25);
+        }
+
+        let storyHistory = [];
         
+        function openLog() {
+            const modal = document.getElementById('storyLogModal');
+            const container = document.getElementById('logContainer');
+            container.innerHTML = storyHistory.map(log => `<div class="log-item">${log}</div>`).join('') || '<div class="log-item">기록된 이전 대사가 없습니다.</div>';
+            modal.style.display = 'flex';
+        }
         
-        // Safe character-by-character sentence splitter (cross-browser compatible)
-                // Visual Novel chunk Typewriter Engine
+        function closeLog() {
+            document.getElementById('storyLogModal').style.display = 'none';
+        }
+
+        // Q1
+
+        let wrongCount = 0;
+function cleanString(str) {
+            return str.replace(/\s+/g, '').toUpperCase();
+        }
+
+        function showError(panelId, errorId) {
+            try { playError(); } catch(e) {}
+            const errEl = document.getElementById(errorId);
+            if (errEl) {
+                errEl.style.display = 'block';
+                setTimeout(() => { errEl.style.display = 'none'; }, 3000);
+            }
+        }
         
-        
-                // Visual Novel chunk Typewriter Engine
+        // Chunk typewriter definition
         let typeWriterTimeout = null;
         
         function splitSentences(text) {
-            let result = [];
-            let start = 0;
-            for (let i = 0; i < text.length; i++) {
-                const char = text.charAt(i);
+            let chunks = [];
+            let current = "";
+            let i = 0;
+            while(i < text.length) {
+                let char = text.charAt(i);
+                current += char;
                 if (char === '.' || char === '!' || char === '?') {
-                    const nextChar = text.charAt(i + 1);
+                    let nextChar = text.charAt(i+1);
                     if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
-                        result.push(text.substring(start, i + 1).trim());
-                        start = i + 1;
+                        chunks.push(current.trim());
+                        current = "";
                     }
                 }
+                i++;
             }
-            const finalChunk = text.substring(start).trim();
-            if (finalChunk) {
-                result.push(finalChunk);
+            if (current.trim()) {
+                chunks.push(current.trim());
             }
-            return result;
+            return chunks;
         }
 
         function typeWriterHTML(element, speed = 25, onComplete = null) {
-            let isComplete = false;
-            let currentChunkIndex = 0;
-            let chunks = [];
-            
             const textEl = element.querySelector('.story-text');
-            if(!textEl) {
-                if(onComplete) onComplete();
-                return;
-            }
-
+            if(!textEl) return;
+            
+            let chunks = [];
+            let currentChunkIndex = 0;
+            let typingFinished = false;
+            let isComplete = false;
+            
             function triggerComplete() {
                 if(!isComplete) {
                     isComplete = true;
-                    element.style.cursor = 'default';
                     if(onComplete) onComplete();
                 }
             }
-            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
             
             const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
             if (!textEl.hasAttribute('data-raw-html')) {
@@ -446,12 +1006,10 @@
             for(let line of rawLines) {
                 let sentences = splitSentences(line);
                 for(let s of sentences) {
-                    if(s.trim()) {
-                        chunks.push(s.trim());
-                    }
+                    if(s.trim()) chunks.push(s.trim());
                 }
             }
-
+            
             if(chunks.length === 0) {
                 triggerComplete();
                 return;
@@ -459,7 +1017,6 @@
             
             let i = 0;
             let textStr = '';
-            let typingFinished = false;
             element.style.cursor = 'pointer';
             
             function renderChunk() {
@@ -467,20 +1024,19 @@
                 i = 0;
                 textStr = '';
                 typingFinished = false;
-                
                 let chunkText = chunks[currentChunkIndex];
                 
                 const currentPanel = element.closest('.glass-panel');
                 const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
                 const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                
                 if (!storyHistory.includes(logEntry)) {
                     storyHistory.push(logEntry);
                 }
-
+                
                 if(currentChunkIndex < chunks.length - 1) {
                     chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
                 }
-                
                 textEl.innerHTML = '';
                 
                 function type() {
@@ -499,7 +1055,6 @@
                             i++;
                         }
                         textEl.innerHTML = textStr;
-                        
                         if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
                             try { playTick(); } catch(e) {}
                         }
@@ -541,178 +1096,417 @@
         function nextStage(currentId, nextId, progressPercent) {
             try { playClick(); } catch(e) {}
             if(currentId === 'intro') {
-                try { startBGM(); } catch(e) {}
+                try {
+                    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch(e) {}
             }
-
             const currentEl = document.getElementById(currentId);
             const nextEl = document.getElementById(nextId);
             const progContainer = document.getElementById('progressContainer');
             const progBar = document.getElementById('progressBar');
-
             currentEl.classList.remove('active');
-            
             setTimeout(() => {
                 if(nextId !== 'intro') progContainer.style.display = 'block';
                 progBar.style.width = progressPercent + '%';
                 nextEl.classList.add('active');
-                
-                // Keep controls always visible. Just trigger typewriter on the story box
                 const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25);
-                }
+                if(storyBox) typeWriterHTML(storyBox, 25);
             }, 300);
-        });
+        }
 
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
-                    });
+        function checkQ1() {
+            const ans = cleanString(document.getElementById('ans1').value);
+            if (ans === '2개') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q1', 'panel_q2', 5);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q1', 'panel_q1', 0);
                 } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
-                }
-            }, 300);
-        }
-
-        function prevStage(currentId, prevId, progressPercent) {
-            try { playClick(); } catch(e) {}
-            const currentEl = document.getElementById(currentId);
-            const prevEl = document.getElementById(prevId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
-            
-            setTimeout(() => {
-                if(prevId === 'intro') {
-                    progContainer.style.display = 'none';
-                }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25);
-                }
-            }, 300);
-        }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
-                    });
-                } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
-                }
-            }, 300);
-        }
-
-        function showError(panelId, errorId) {
-            playError(); 
-            const panel = document.getElementById(panelId);
-            const errMsg = document.getElementById(errorId);
-            
-            panel.classList.remove('shake');
-            void panel.offsetWidth; 
-            panel.classList.add('shake');
-            
-            errMsg.style.display = 'block';
-            setTimeout(() => { errMsg.style.display = 'none'; }, 3000);
-        }
-
-        function cleanString(str) {
-            return str.replace(/\s+/g, '').toLowerCase();
-        }
-
-        // 엔터키 정답 제출 바인딩
-        document.addEventListener('keydown', function(e) {
-            if (e.target && e.target.id.startsWith('ans') && e.key === 'Enter') {
-                const qnum = e.target.id.replace('ans', '');
-                const activePanel = e.target.closest('.glass-panel');
-                if (activePanel) {
-                    const btn = activePanel.querySelector('.btn-group .btn');
-                    if (btn) btn.click();
+                    showError('panel_q1', 'error1');
                 }
             }
-        });
-
-        // 오디오 로드 에러 복구/예외 방어선
-        window.addEventListener('DOMContentLoaded', () => {
-            const audios = [
-                document.getElementById('bgm'),
-                document.getElementById('sndClick'),
-                document.getElementById('sndTick'),
-                document.getElementById('sndSuccess'),
-                document.getElementById('sndError'),
-                document.getElementById('sndVictory')
-            ];
-            audios.forEach(audio => {
-                if (audio) {
-                    audio.addEventListener('error', (e) => {
-                        console.warn(`사운드 리소스 로드 실패: ${audio.id}`);
-                    });
-                }
-            });
-        });
-
-        function cleanPi(str) {
-            let s = cleanString(str);
-            return s.replace('파이', 'pi').replace('π', 'pi');
         }
 
-        // Q1
+        function checkQ2() {
+            const ans = cleanString(document.getElementById('ans2').value);
+            if (ans === '2') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q2', 'panel_q3', 10);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q2', 'panel_q1', 0);
+                } else {
+                    showError('panel_q2', 'error2');
+                }
+            }
+        }
+
+        function checkQ3() {
+            const ans = cleanString(document.getElementById('ans3').value);
+            if (ans === '1') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q3', 'panel_q4', 15);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q3', 'panel_q1', 0);
+                } else {
+                    showError('panel_q3', 'error3');
+                }
+            }
+        }
+
+        function checkQ4() {
+            const ans = cleanString(document.getElementById('ans4').value);
+            if (ans === '2개') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q4', 'panel_q5', 20);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q4', 'panel_q1', 0);
+                } else {
+                    showError('panel_q4', 'error4');
+                }
+            }
+        }
+
+        function checkQ5() {
+            const ans = cleanString(document.getElementById('ans5').value);
+            if (ans === '2') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q5', 'panel_q6', 25);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q5', 'panel_q1', 0);
+                } else {
+                    showError('panel_q5', 'error5');
+                }
+            }
+        }
+
+        function checkQ6() {
+            const ans = cleanString(document.getElementById('ans6').value);
+            if (ans === '연립일차방정식') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q6', 'panel_q7', 30);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q6', 'panel_q1', 0);
+                } else {
+                    showError('panel_q6', 'error6');
+                }
+            }
+        }
+
+        function checkQ7() {
+            const ans = cleanString(document.getElementById('ans7').value);
+            if (ans === '2') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q7', 'panel_q8', 35);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q7', 'panel_q1', 0);
+                } else {
+                    showError('panel_q7', 'error7');
+                }
+            }
+        }
+
+        function checkQ8() {
+            const ans = cleanString(document.getElementById('ans8').value);
+            if (ans === '3') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q8', 'panel_q9', 40);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q8', 'panel_q1', 0);
+                } else {
+                    showError('panel_q8', 'error8');
+                }
+            }
+        }
+
+        function checkQ9() {
+            const ans = cleanString(document.getElementById('ans9').value);
+            if (ans === '교점') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q9', 'panel_q10', 45);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q9', 'panel_q1', 0);
+                } else {
+                    showError('panel_q9', 'error9');
+                }
+            }
+        }
+
+        function checkQ10() {
+            const ans = cleanString(document.getElementById('ans10').value);
+            if (ans === '대입법') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q10', 'panel_q11', 50);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q10', 'panel_q1', 0);
+                } else {
+                    showError('panel_q10', 'error10');
+                }
+            }
+        }
+
+        function checkQ11() {
+            const ans = cleanString(document.getElementById('ans11').value);
+            if (ans === '가감법') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q11', 'panel_q12', 55);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q11', 'panel_q1', 0);
+                } else {
+                    showError('panel_q11', 'error11');
+                }
+            }
+        }
+
+        function checkQ12() {
+            const ans = cleanString(document.getElementById('ans12').value);
+            if (ans === '2') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q12', 'panel_q13', 60);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q12', 'panel_q1', 0);
+                } else {
+                    showError('panel_q12', 'error12');
+                }
+            }
+        }
+
+        function checkQ13() {
+            const ans = cleanString(document.getElementById('ans13').value);
+            if (ans === '더해야') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q13', 'panel_q14', 65);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q13', 'panel_q1', 0);
+                } else {
+                    showError('panel_q13', 'error13');
+                }
+            }
+        }
+
+        function checkQ14() {
+            const ans = cleanString(document.getElementById('ans14').value);
+            if (ans === '2') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q14', 'panel_q15', 70);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q14', 'panel_q1', 0);
+                } else {
+                    showError('panel_q14', 'error14');
+                }
+            }
+        }
+
+        function checkQ15() {
+            const ans = cleanString(document.getElementById('ans15').value);
+            if (ans === '2') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q15', 'panel_q16', 75);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q15', 'panel_q1', 0);
+                } else {
+                    showError('panel_q15', 'error15');
+                }
+            }
+        }
+
+        function checkQ16() {
+            const ans = cleanString(document.getElementById('ans16').value);
+            if (ans === '4x') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q16', 'panel_q17', 80);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q16', 'panel_q1', 0);
+                } else {
+                    showError('panel_q16', 'error16');
+                }
+            }
+        }
+
+        function checkQ17() {
+            const ans = cleanString(document.getElementById('ans17').value);
+            if (ans === '4마리') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q17', 'panel_q18', 85);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q17', 'panel_q1', 0);
+                } else {
+                    showError('panel_q17', 'error17');
+                }
+            }
+        }
+
+        function checkQ18() {
+            const ans = cleanString(document.getElementById('ans18').value);
+            if (ans === 'x') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q18', 'panel_q19', 90);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q18', 'panel_q1', 0);
+                } else {
+                    showError('panel_q18', 'error18');
+                }
+            }
+        }
+
+        function checkQ19() {
+            const ans = cleanString(document.getElementById('ans19').value);
+            if (ans === '6개') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q19', 'panel_q20', 95);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q19', 'panel_q1', 0);
+                } else {
+                    showError('panel_q19', 'error19');
+                }
+            }
+        }
+
+        function checkQ20() {
+            const ans = cleanString(document.getElementById('ans20').value);
+            if (ans === '10세') {
+                try { playSuccess(); } catch(e) {}
+                wrongCount = 0;
+                nextStage('panel_q20', 'outro', 100);
+            } else {
+                wrongCount++;
+                if (wrongCount >= 3) {
+                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans1').value = '';
+                    nextStage('panel_q20', 'panel_q1', 0);
+                } else {
+                    showError('panel_q20', 'error20');
+                }
+            }
+        }
 
         window.onload = () => {
-            // Hide intro buttons first
             const introPanel = document.getElementById('intro');
-            const introBtnGroup = introPanel.querySelector('.btn-group');
-            if (introBtnGroup) {
-                introBtnGroup.style.opacity = '0';
-                introBtnGroup.style.transform = 'translateY(10px)';
-                introBtnGroup.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                introBtnGroup.style.pointerEvents = 'none';
-            }
-            
-            // Start intro typing
             const introStoryBox = introPanel.querySelector('.story-box');
-            if (introStoryBox) {
-                typeWriterHTML(introStoryBox, 25, () => {
-                    if (introBtnGroup) {
-                        introBtnGroup.style.opacity = '1';
-                        introBtnGroup.style.transform = 'translateY(0)';
-                        introBtnGroup.style.pointerEvents = 'auto';
-                    }
-                });
-            }
+            if (introStoryBox) typeWriterHTML(introStoryBox, 25);
         };
     </script>
+
+    <div id="storyLogModal" class="log-modal">
+        <div class="log-content">
+            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
+            <h2>📜 지나온 스토리 기록</h2>
+            <div id="logContainer" class="log-list">기록이 없습니다.</div>
+        </div>
+    </div>
 </body>
 </html>
