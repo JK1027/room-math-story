@@ -1035,11 +1035,6 @@
             nextStage('intro', 'panel_q1', 5);
         }
 
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        const audioCtx = new AudioContext();
-        let bgmOscillators = [];
-        let lfo = null;
-        let bgmGain = null;
         let isMuted = false;
         let audioCtx = null;
         let bgmOsc = null;
@@ -1324,7 +1319,6 @@
                 }
             }, 1000);
         }
-
         function nextStage(currentId, nextId, progressPercent) {
             if (currentId === 'intro') startTimer();
             if (nextId === 'outro') clearInterval(timerId);
@@ -1353,93 +1347,45 @@
             }, 300);
         }
 
-            const currentEl = document.getElementById(currentId);
-            const nextEl = document.getElementById(nextId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
-            
-            setTimeout(() => {
-                if(nextId !== 'intro') progContainer.style.display = 'block';
-                progBar.style.width = progressPercent + '%';
-                nextEl.classList.add('active');
-                
-                const toHide = nextEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
-                    });
-                } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
-                }
-            }, 300);
-        }
-
         function prevStage(currentId, prevId, progressPercent) {
             try { playClick(); } catch(e) {}
             const currentEl = document.getElementById(currentId);
             const prevEl = document.getElementById(prevId);
             const progContainer = document.getElementById('progressContainer');
             const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
+            
+            if (currentEl) currentEl.classList.remove('active');
             
             setTimeout(() => {
-                if(prevId === 'intro') {
-                    progContainer.style.display = 'none';
-                }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25);
-                }
-            }, 300);
-        }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
+                if(prevId === 'intro' && progContainer) progContainer.style.display = 'none';
+                if(progBar) progBar.style.width = progressPercent + '%';
+                if(prevEl) {
+                    prevEl.classList.add('active');
+                    
+                    const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                    toHide.forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(10px)';
+                        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                        el.style.pointerEvents = 'none';
+                    });
+                    
+                    const storyBox = prevEl.querySelector('.story-box');
+                    if(storyBox) {
+                        typeWriterHTML(storyBox, 25, () => {
+                            toHide.forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                                el.style.pointerEvents = 'auto';
+                            });
+                        });
+                    } else {
                         toHide.forEach(el => {
                             el.style.opacity = '1';
                             el.style.transform = 'translateY(0)';
                             el.style.pointerEvents = 'auto';
                         });
-                    });
-                } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
+                    }
                 }
             }, 300);
         }
