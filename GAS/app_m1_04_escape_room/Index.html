@@ -569,7 +569,17 @@
                 산소가 고갈되기 전에, 낡은 보물지도에 적힌 순서쌍을 해독하고 비례 그래프의 숨겨진 규칙을 찾아내어 12개의 방어막을 뚫어야 합니다! 실패하면 영원히 해저의 미아로 남게 됩니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
-            <div class="btn-group" style="margin-top: 2rem; width:100%;"><button class="btn"  onclick="nextStage('intro', 'panel_q1', 8.3)">심해 다이브 시작</button></div>
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 10101" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+            </div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;"><button class="btn" onclick="tryStartGame()">심해 다이브 시작</button></div>
         </div>
 
         <!-- Q1 -->
@@ -1374,7 +1384,16 @@
 
         function nextStage(currentId, nextId, progressPercent) {
             if (currentId === 'intro') startTimer();
-            if (nextId === 'outro') clearInterval(timerId);
+            if (nextId === 'outro') {
+                clearInterval(timerId);
+                if (window.userRecordRow) {
+                    try {
+                        google.script.run.recordEnd(window.userRecordRow);
+                    } catch(e) {
+                        console.error("기록 저장 실패: ", e);
+                    }
+                }
+            }
             try { playClick(); } catch(e) {}
             if(currentId === 'intro') {
                 try { startBGM(); } catch(e) {}
@@ -1914,6 +1933,31 @@
                     showError('panel_q20', 'error20');
                 }
             }
+        }
+
+        window.userRecordRow = null;
+
+        function tryStartGame() {
+            const studentId = document.getElementById('studentId').value.trim();
+            const studentName = document.getElementById('studentName').value.trim();
+            
+            if (!studentId || !studentName) {
+                alert("🔒 학번과 이름을 모두 입력해야 잠수정을 가동할 수 있습니다!");
+                return;
+            }
+            
+            // GAS 기록 호출 (비동기, 응답을 기다리지 않고 게임은 즉시 시작)
+            try {
+                if (typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler(function(rowNum) {
+                        window.userRecordRow = rowNum;
+                    }).recordStart(studentId, studentName);
+                }
+            } catch(e) {
+                console.warn("구글 시트 연동 실패(로컬 테스트 모드):", e);
+            }
+            
+            nextStage('intro', 'panel_q1', 8.3);
         }
 
         window.onload = () => {
