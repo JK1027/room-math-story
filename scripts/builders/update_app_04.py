@@ -19,8 +19,8 @@ qs = [
     {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[사분면 분석]</strong><br><br>해저 유적 내부로 진입했습니다. 이곳은 4개의 구역(사분면)으로 나뉘어 있습니다.", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력 (예: 1)", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
     {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[추가 결계]</strong><br><br>두 번째 사분면 문을 엽니다.", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
     {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[고급 사분면]</strong><br><br>조건에 맞는 사분면을 찾아야 합니다.", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
-    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[대칭 이동]</strong><br><br>함정에 빠지지 않으려면 대칭점의 좌표를 알아야 합니다.", "qtext": "<strong>Q9. [축에 대칭인 점]</strong><br>점 (3, 2)와 x축에 대하여 대칭인 점의 y좌표를 구하시오.", "placeholder": "숫자만 입력", "error": "함정에 걸렸습니다!", "ans_check": "ans === '-2'"},
-    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[최종 대칭]</strong><br><br>원점 대칭 거울방의 문을 엽니다.", "qtext": "<strong>Q10. [원점에 대칭인 점]</strong><br>점 (-1, 4)와 원점에 대하여 대칭인 점의 x좌표를 구하시오.", "placeholder": "숫자만 입력", "error": "거울방에 갇혔습니다!", "ans_check": "ans === '1'"},
+    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[사분면 분석]</strong><br><br>결계의 성질을 이용해 새로운 좌표의 사분면을 예측해야 합니다.", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
+    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[결계 돌파]</strong><br><br>마지막 사분면 문을 열기 위해 부호를 반전시킨 좌표의 사분면을 알아내야 합니다.", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
     {"qnum": 11, "title": "해저 수압의 변화", "story": "🌊 <strong>[수압 경고]</strong><br><br>수압 그래프를 분석합니다.", "qtext": "<strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?", "placeholder": "예: 상승, 하강, 정지", "error": "그래프 해석 오류!", "ans_check": "ans === '정지'"},
     {"qnum": 12, "title": "해저 수압의 변화", "story": "🌊 <strong>[깊이 예측]</strong><br><br>일정한 속력으로 내려가는 잠수정의 깊이를 구합니다.", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "깊이 예측 실패!", "ans_check": "ans === '50'"},
     {"qnum": 13, "title": "해저 수압의 변화", "story": "🌊 <strong>[그래프 방향]</strong><br><br>직선의 방향성을 파악합니다.", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "예: 증가, 감소", "error": "해석 오류!", "ans_check": "ans === '증가'"},
@@ -63,6 +63,8 @@ def generate_hint(qtext, ans_check):
     elif '피타고라스' in qtext_clean or '직각삼각형' in qtext_clean: return "직각삼각형에서 빗변의 길이의 제곱은 나머지 두 변의 길이의 제곱의 합과 같습니다. (a² + b² = c²)"
     elif '소수' in qtext_clean and '합' in qtext_clean: return "1과 자기 자신만을 약수로 가지는 수를 소수라고 합니다. (예: 2, 3, 5, 7...)"
     elif '좌표' in qtext_clean: return "x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요."
+    elif '사분면' in qtext_clean:
+        if '응용' in qtext_clean: return "각 사분면의 x, y좌표 부호(제1: +,+, 제2: -,+, 제3: -,-, 제4: +,-)를 기준으로 문자의 부호를 확인해보세요."
 
     if '파이' in ans_check or 'pi' in ans_check: return "계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)"
     if '(' in ans_check and ',' in ans_check: return "순서쌍은 괄호나 띄어쓰기 없이 숫자와 쉼표로만 입력하거나 (x,y) 형태로 정확히 입력해보세요."

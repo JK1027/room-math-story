@@ -755,18 +755,18 @@
             <h2>제 9구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_04_coordinates/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[대칭 이동]</strong><br><br>함정에 빠지지 않으려면 대칭점의 좌표를 알아야 합니다.</div>
+                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br>결계의 성질을 이용해 새로운 좌표의 사분면을 예측해야 합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9. [축에 대칭인 점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>점 (3, 2)와 x축에 대하여 대칭인 점의 y좌표를 구하시오.
+                    <strong>Q9. [사분면의 응용 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 각 사분면의 x, y좌표 부호(제1: +,+, 제2: -,+, 제3: -,-, 제4: +,-)를 기준으로 문자의 부호를 확인해보세요.')">💡 힌트</button><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?
                     <div class="input-group">
                         <input type="text" id="ans9" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error9">함정에 걸렸습니다!</div>
+            <div class="error-msg" id="error9">잘못된 구역입니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ9()">다음으로</button>
             </div>
@@ -777,18 +777,18 @@
             <h2>제 10구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_04_coordinates/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[최종 대칭]</strong><br><br>원점 대칭 거울방의 문을 엽니다.</div>
+                <div class="story-text">🧭 <strong>[결계 돌파]</strong><br><br>마지막 사분면 문을 열기 위해 부호를 반전시킨 좌표의 사분면을 알아내야 합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10. [원점에 대칭인 점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>점 (-1, 4)와 원점에 대하여 대칭인 점의 x좌표를 구하시오.
+                    <strong>Q10. [사분면의 응용 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 각 사분면의 x, y좌표 부호(제1: +,+, 제2: -,+, 제3: -,-, 제4: +,-)를 기준으로 문자의 부호를 확인해보세요.')">💡 힌트</button><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?
                     <div class="input-group">
                         <input type="text" id="ans10" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error10">거울방에 갇혔습니다!</div>
+            <div class="error-msg" id="error10">잘못된 구역입니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ10()">다음으로</button>
             </div>
@@ -1679,7 +1679,7 @@
         // Q9
         function checkQ9() {
             const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
-            if (ans === '-2') {
+            if (ans === '3') {
                 wrongCount = 0;
                 playSuccess(); 
                 nextStage('panel_q9', 'panel_q10', 45);
@@ -1699,7 +1699,7 @@
         // Q10
         function checkQ10() {
             const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
-            if (ans === '1') {
+            if (ans === '4') {
                 wrongCount = 0;
                 playSuccess(); 
                 nextStage('panel_q10', 'panel_q11', 50);
