@@ -381,25 +381,18 @@
                 } catch(e) { console.warn('GAS 연동 안됨:', e); }
             }
             
-            // 브라우저 오디오 정책 해제 (락 풀기) 및 볼륨 100%
+            // 브라우저 오디오 엔진 시작 (외부 링크 의존 없음)
             try {
                 if (!isMuted) {
-                    bgm.volume = 1.0;
-                    bgm.play().catch(e => {});
-                    [sndClick, sndTick, sndSuccess, sndError, sndVictory].forEach(snd => {
-                        if(snd) {
-                            snd.volume = 0;
-                            snd.play().catch(e=>{});
-                            snd.pause();
-                            snd.currentTime = 0;
-                            snd.volume = 1.0; // 복구 (이게 빠져서 소리가 안났음)
-                        }
-                    });
+                    initAudio();
+                    startBGM();
                 }
             } catch(e) {}
             
             nextStage('intro', 'panel_q1', 5);
         }
+
+        
 
         
 
