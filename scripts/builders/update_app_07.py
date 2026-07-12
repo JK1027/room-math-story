@@ -206,7 +206,7 @@ for q in qs:
                 // GAS 기록 종료 호출
                 try {
                     if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
-                        google.script.run.recordEnd(window.userRecordRow);
+                        google.script.run.recordEnd(window.userRecordRow, 'm1_07');
                     }
                 } catch(e) {
                     console.warn("구글 시트 종료 기록 실패(로컬 테스트 모드):", e);

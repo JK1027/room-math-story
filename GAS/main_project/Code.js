@@ -9,12 +9,15 @@ function doGet(e) {
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-function recordStart(studentId, name) {
+function recordStart(studentId, name, unit) {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName("기록");
+  
+  // 시트 이름 결정
+  var sheetName = unit ? ("기록_" + unit) : "기록";
+  var sheet = ss.getSheetByName(sheetName);
   
   if (!sheet) {
-    sheet = ss.insertSheet("기록");
+    sheet = ss.insertSheet(sheetName);
   }
   
   // 헤더가 비어있다면 생성 (완료 열 추가)
@@ -39,11 +42,14 @@ function recordStart(studentId, name) {
   return rowNum;
 }
 
-function recordEnd(rowNum) {
+function recordEnd(rowNum, unit) {
   if (!rowNum) return;
   
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  var sheet = ss.getSheetByName("기록");
+  
+  // 시트 이름 결정
+  var sheetName = unit ? ("기록_" + unit) : "기록";
+  var sheet = ss.getSheetByName(sheetName);
   if (!sheet) return;
   
   var endTime = new Date();
