@@ -7,13 +7,13 @@ with open(html_file, 'r', encoding='utf-8') as f:
 
 # 스타일 확인 및 주입
 css = """
-        .panel-image {
+.panel-image {
             width: 100%;
+            height: auto;
             max-height: 250px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 """
 if '.panel-image {' not in content:
@@ -112,6 +112,11 @@ def generate_hint(qtext, ans_check):
 
 for q in qs:
     q['hint'] = generate_hint(q['qtext'], q.get('ans_check', ''))
+
+for q in qs:
+    if 'hint' in q and '<button class="btn-hint"' not in q['qtext']:
+        hint_text = q['hint'].replace("'", "\\'")
+        q['qtext'] = q['qtext'].replace('</strong>', f'</strong> <button class="btn-hint" onclick="alert(\'💡 힌트: {hint_text}\')">💡 힌트</button>', 1)
 
 panels_html = ""
 for i, q in enumerate(qs):

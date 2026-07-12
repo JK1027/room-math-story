@@ -98,14 +98,13 @@
             padding-bottom: 0.75rem;
         }
 
-        .panel-image {
+.panel-image {
             width: 100%;
-            height: 220px;
+            height: auto;
+            max-height: 250px;
             object-fit: cover;
-            border-radius: 16px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(50, 205, 50, 0.15);
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
 
         .story-box {
@@ -215,6 +214,30 @@
             box-shadow: 0 6px 20px rgba(50, 205, 50, 0.5);
             background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
         }
+
+        .btn-hint {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            text-transform: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .btn-hint:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+        }
+
 
         .error-msg {
             color: #ff6b6b;
@@ -384,7 +407,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1.</strong> 1에서 6까지 있는 주사위 한 개를 던질 때, 짝수의 눈이 나오는 경우의 수를 구하시오.
+                    <strong>Q1.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 1에서 6까지 있는 주사위 한 개를 던질 때, 짝수의 눈이 나오는 경우의 수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans1" placeholder="정답 입력">
                     </div>
@@ -393,7 +416,7 @@
             <div class="error-msg" id="error1">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ1()">시스템 복구 시작</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -407,7 +430,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2.</strong> 서로 다른 두 개의 주사위를 동시에 던질 때, 일어날 수 있는 모든 경우의 수를 구하시오.
+                    <strong>Q2.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 서로 다른 두 개의 주사위를 동시에 던질 때, 일어날 수 있는 모든 경우의 수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans2" placeholder="정답 입력">
                     </div>
@@ -416,7 +439,7 @@
             <div class="error-msg" id="error2">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ2()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -430,7 +453,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3.</strong> 동전 1개와 주사위 1개를 동시에 던질 때 일어나는 모든 경우의 수를 구하시오.
+                    <strong>Q3.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 동전 1개와 주사위 1개를 동시에 던질 때 일어나는 모든 경우의 수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans3" placeholder="정답 입력">
                     </div>
@@ -439,7 +462,7 @@
             <div class="error-msg" id="error3">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ3()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -453,7 +476,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4.</strong> 1에서 10까지 적힌 10장의 카드에서 1장을 뽑을 때, 3의 배수가 나오는 경우의 수를 구하시오.
+                    <strong>Q4.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 1에서 10까지 적힌 10장의 카드에서 1장을 뽑을 때, 3의 배수가 나오는 경우의 수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans4" placeholder="정답 입력">
                     </div>
@@ -462,7 +485,7 @@
             <div class="error-msg" id="error4">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ4()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -476,7 +499,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5.</strong> 두 개의 주사위를 동시에 던질 때, 눈의 합이 4가 되는 경우의 수를 구하시오.
+                    <strong>Q5.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 두 개의 주사위를 동시에 던질 때, 눈의 합이 4가 되는 경우의 수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans5" placeholder="정답 입력">
                     </div>
@@ -485,7 +508,7 @@
             <div class="error-msg" id="error5">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ5()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -499,7 +522,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6.</strong> 상의 3벌, 하의 4벌이 있을 때, 짝을 지어 입는 경우의 수는?
+                    <strong>Q6.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 상의 3벌, 하의 4벌이 있을 때, 짝을 지어 입는 경우의 수는?
                     <div class="input-group">
                         <input type="text" id="ans6" placeholder="정답 입력">
                     </div>
@@ -508,7 +531,7 @@
             <div class="error-msg" id="error6">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ6()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -522,7 +545,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7.</strong> 서울에서 부산으로 가는 버스가 3가지, 기차가 2가지 있을 때, 서울에서 부산으로 가는 경우의 수는?
+                    <strong>Q7.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 서울에서 부산으로 가는 버스가 3가지, 기차가 2가지 있을 때, 서울에서 부산으로 가는 경우의 수는?
                     <div class="input-group">
                         <input type="text" id="ans7" placeholder="정답 입력">
                     </div>
@@ -531,7 +554,7 @@
             <div class="error-msg" id="error7">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ7()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -545,7 +568,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8.</strong> A, B, C 세 명의 학생을 일렬로 세우는 경우의 수는?
+                    <strong>Q8.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> A, B, C 세 명의 학생을 일렬로 세우는 경우의 수는?
                     <div class="input-group">
                         <input type="text" id="ans8" placeholder="정답 입력">
                     </div>
@@ -554,7 +577,7 @@
             <div class="error-msg" id="error8">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ8()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -568,7 +591,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9.</strong> 4명 중 반장 1명, 부반장 1명을 뽑는 경우의 수는?
+                    <strong>Q9.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 4명 중 반장 1명, 부반장 1명을 뽑는 경우의 수는?
                     <div class="input-group">
                         <input type="text" id="ans9" placeholder="정답 입력">
                     </div>
@@ -577,7 +600,7 @@
             <div class="error-msg" id="error9">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ9()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -591,7 +614,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10.</strong> 4명 중 자격이 같은 대표 2명을 뽑는 경우의 수는?
+                    <strong>Q10.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')">💡 힌트</button> 4명 중 자격이 같은 대표 2명을 뽑는 경우의 수는?
                     <div class="input-group">
                         <input type="text" id="ans10" placeholder="정답 입력">
                     </div>
@@ -600,7 +623,7 @@
             <div class="error-msg" id="error10">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ10()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -614,7 +637,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11.</strong> 어떤 사건이 일어날 확률을 $p$라고 할 때, $p$의 범위는 어떻게 되는가? (최소값과 최대값)
+                    <strong>Q11.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 어떤 사건이 일어날 확률을 $p$라고 할 때, $p$의 범위는 어떻게 되는가? (최소값과 최대값)
                     <div class="input-group">
                         <input type="text" id="ans11" placeholder="정답 입력">
                     </div>
@@ -623,7 +646,7 @@
             <div class="error-msg" id="error11">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ11()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -637,7 +660,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12.</strong> 절대로 일어날 수 없는 사건의 확률은 얼마인가?
+                    <strong>Q12.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 절대로 일어날 수 없는 사건의 확률은 얼마인가?
                     <div class="input-group">
                         <input type="text" id="ans12" placeholder="정답 입력">
                     </div>
@@ -646,7 +669,7 @@
             <div class="error-msg" id="error12">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ12()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -660,7 +683,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13.</strong> 동전 한 개를 던질 때 앞면이 나올 확률을 구하시오.
+                    <strong>Q13.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 동전 한 개를 던질 때 앞면이 나올 확률을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans13" placeholder="정답 입력">
                     </div>
@@ -669,7 +692,7 @@
             <div class="error-msg" id="error13">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ13()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -683,7 +706,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14.</strong> 주사위 한 개를 던질 때 소수의 눈이 나올 확률을 구하시오.
+                    <strong>Q14.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 주사위 한 개를 던질 때 소수의 눈이 나올 확률을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans14" placeholder="정답 입력">
                     </div>
@@ -692,7 +715,7 @@
             <div class="error-msg" id="error14">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ14()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -706,7 +729,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15.</strong> 주사위 한 개를 던질 때, 2 이하의 눈이 나올 확률을 구하시오.
+                    <strong>Q15.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 주사위 한 개를 던질 때, 2 이하의 눈이 나올 확률을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans15" placeholder="정답 입력">
                     </div>
@@ -715,7 +738,7 @@
             <div class="error-msg" id="error15">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ15()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -729,7 +752,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16.</strong> 1부터 5까지 적힌 5장의 카드 중 1장을 뽑을 때, 짝수가 아닐 확률을 구하시오.
+                    <strong>Q16.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 1부터 5까지 적힌 5장의 카드 중 1장을 뽑을 때, 짝수가 아닐 확률을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans16" placeholder="정답 입력">
                     </div>
@@ -738,7 +761,7 @@
             <div class="error-msg" id="error16">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ16()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -752,7 +775,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17.</strong> 비가 올 확률이 $rac{3}{5}$ 일 때, 비가 오지 않을 확률을 구하시오.
+                    <strong>Q17.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 비가 올 확률이 $rac{3}{5}$ 일 때, 비가 오지 않을 확률을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans17" placeholder="정답 입력">
                     </div>
@@ -761,7 +784,7 @@
             <div class="error-msg" id="error17">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ17()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -775,7 +798,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18.</strong> A 주머니에는 빨간 공 3개와 파란 공 2개가 있다. 1개를 꺼낼 때 빨간 공이 나올 확률은?
+                    <strong>Q18.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> A 주머니에는 빨간 공 3개와 파란 공 2개가 있다. 1개를 꺼낼 때 빨간 공이 나올 확률은?
                     <div class="input-group">
                         <input type="text" id="ans18" placeholder="정답 입력">
                     </div>
@@ -784,7 +807,7 @@
             <div class="error-msg" id="error18">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ18()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -798,7 +821,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19.</strong> 동전 2개를 동시에 던질 때, 모두 앞면이 나올 확률을 구하시오.
+                    <strong>Q19.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 동전 2개를 동시에 던질 때, 모두 앞면이 나올 확률을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans19" placeholder="정답 입력">
                     </div>
@@ -807,7 +830,7 @@
             <div class="error-msg" id="error19">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ19()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -821,7 +844,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20.</strong> 객관식 5지 선다형 문제 1개를 임의로 찍었을 때, 틀릴 확률을 구하시오.
+                    <strong>Q20.</strong> <button class="btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')">💡 힌트</button> 객관식 5지 선다형 문제 1개를 임의로 찍었을 때, 틀릴 확률을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="정답 입력">
                     </div>
@@ -830,7 +853,7 @@
             <div class="error-msg" id="error20">틀렸습니다. 다시 시도해보세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ20()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: (특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 

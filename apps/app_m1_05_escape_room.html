@@ -96,14 +96,13 @@
             letter-spacing: 1px;
         }
 
-        .panel-image {
+.panel-image {
             width: 100%;
+            height: auto;
             max-height: 250px;
             object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            border: 1px solid rgba(205, 133, 63, 0.2);
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
 
         .story-box {
@@ -280,6 +279,30 @@
             box-shadow: 0 15px 30px rgba(205, 133, 63, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);
             border-color: #F59E0B;
         }
+
+        .btn-hint {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            text-transform: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .btn-hint:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+        }
+
 
         .btn:active {
             transform: translateY(1px);
@@ -463,7 +486,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1. [도형의 기본 요소]</strong><br>도형을 구성하는 가장 기본이 되는 요소 세 가지는 점, 선, 그리고 무엇인가?
+                    <strong>Q1. [도형의 기본 요소]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 1글자입니다.')">💡 힌트</button><br>도형을 구성하는 가장 기본이 되는 요소 세 가지는 점, 선, 그리고 무엇인가?
                     <div class="input-group">
                         <input type="text" id="ans1" placeholder="한글 단어 입력">
                     </div>
@@ -472,7 +495,7 @@
             <div class="error-msg" id="error1">도형이 입체적으로 구성되지 않습니다! 3요소를 다시 쓰십시오.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ1()">작도 활성화 시작</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 1글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -486,7 +509,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2. [직선의 결정]</strong><br>서로 다른 두 점 A, B를 지나는 직선은 모두 몇 개인가?
+                    <strong>Q2. [직선의 결정]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 1글자)')">💡 힌트</button><br>서로 다른 두 점 A, B를 지나는 직선은 모두 몇 개인가?
                     <div class="input-group">
                         <input type="text" id="ans2" placeholder="숫자 또는 개수 입력">
                     </div>
@@ -495,7 +518,7 @@
             <div class="error-msg" id="error2">직선이 어긋납니다! 개수를 확인하세요.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ2()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 1글자)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -509,7 +532,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3. [선분과 반직선]</strong><br>점 A에서 시작하여 점 B 방향으로 끝없이 뻗어 나가는 선분을 기호로 나타낼 때, 이를 무엇이라 부르는가?
+                    <strong>Q3. [선분과 반직선]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>점 A에서 시작하여 점 B 방향으로 끝없이 뻗어 나가는 선분을 기호로 나타낼 때, 이를 무엇이라 부르는가?
                     <div class="input-group">
                         <input type="text" id="ans3" placeholder="한글 단어 입력">
                     </div>
@@ -518,7 +541,7 @@
             <div class="error-msg" id="error3">광선의 방향이나 명칭이 잘못되었습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ3()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -532,7 +555,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4. [평각]</strong><br>180도인 각을 무엇이라 부르는가?
+                    <strong>Q4. [평각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>180도인 각을 무엇이라 부르는가?
                     <div class="input-group">
                         <input type="text" id="ans4" placeholder="한글 단어 입력">
                     </div>
@@ -541,7 +564,7 @@
             <div class="error-msg" id="error4">추가 수평을 유지하지 못하고 떨어집니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ4()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -555,7 +578,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5. [시계 각도]</strong><br>시계가 4시 정각을 가리킬 때, 시침과 분침이 이루는 작은 쪽의 각의 크기를 구하시오. (단위 생략)
+                    <strong>Q5. [시계 각도]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>시계가 4시 정각을 가리킬 때, 시침과 분침이 이루는 작은 쪽의 각의 크기를 구하시오. (단위 생략)
                     <div class="input-group">
                         <input type="text" id="ans5" placeholder="숫자 또는 각도 입력">
                     </div>
@@ -564,7 +587,7 @@
             <div class="error-msg" id="error5">톱니가 제대로 돌지 못합니다! 각도를 확인하십시오.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ5()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -578,7 +601,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6. [교각과 맞꼭지각]</strong><br>두 직선이 교차할 때 생기는 교각 중, 마주 보는 두 각을 무엇이라 하는가?
+                    <strong>Q6. [교각과 맞꼭지각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button><br>두 직선이 교차할 때 생기는 교각 중, 마주 보는 두 각을 무엇이라 하는가?
                     <div class="input-group">
                         <input type="text" id="ans6" placeholder="한글 단어 입력">
                     </div>
@@ -587,7 +610,7 @@
             <div class="error-msg" id="error6">문양의 중심이 어긋납니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ6()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -601,7 +624,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7. [맞꼭지각의 크기]</strong><br>맞꼭지각의 크기는 서로 어떠한가? (같다 / 다르다)
+                    <strong>Q7. [맞꼭지각의 크기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>맞꼭지각의 크기는 서로 어떠한가? (같다 / 다르다)
                     <div class="input-group">
                         <input type="text" id="ans7" placeholder="예: 같다">
                     </div>
@@ -610,7 +633,7 @@
             <div class="error-msg" id="error7">반사 평형이 성립하지 않습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ7()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -624,7 +647,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8. [동위각]</strong><br>직선 l과 m이 평행하고 한 직선 n과 만날 때, 동위각의 크기는 서로 어떠한가? (같다 / 다르다)
+                    <strong>Q8. [동위각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>직선 l과 m이 평행하고 한 직선 n과 만날 때, 동위각의 크기는 서로 어떠한가? (같다 / 다르다)
                     <div class="input-group">
                         <input type="text" id="ans8" placeholder="예: 같다">
                     </div>
@@ -633,7 +656,7 @@
             <div class="error-msg" id="error8">평행 빔이 엇갈려 차단 장벽이 다시 활성화됩니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ8()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -647,7 +670,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9. [엇각]</strong><br>평행한 두 직선 사이를 가로지르는 선이 있을 때, 엇각의 크기는 서로 어떠한가? (같다 / 다르다)
+                    <strong>Q9. [엇각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>평행한 두 직선 사이를 가로지르는 선이 있을 때, 엇각의 크기는 서로 어떠한가? (같다 / 다르다)
                     <div class="input-group">
                         <input type="text" id="ans9" placeholder="예: 같다">
                     </div>
@@ -656,7 +679,7 @@
             <div class="error-msg" id="error9">센서 각도 매칭 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ9()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -670,7 +693,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10. [평행선 조건]</strong><br>두 직선이 평행할 조건 중 하나는 동위각의 크기가 같거나 무엇의 크기가 같은 경우인가?
+                    <strong>Q10. [평행선 조건]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>두 직선이 평행할 조건 중 하나는 동위각의 크기가 같거나 무엇의 크기가 같은 경우인가?
                     <div class="input-group">
                         <input type="text" id="ans10" placeholder="한글 단어 입력">
                     </div>
@@ -679,7 +702,7 @@
             <div class="error-msg" id="error10">문 고리가 고정되지 않고 헛돕니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ10()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -693,7 +716,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11. [작도의 정의]</strong><br>눈금 없는 자와 컴퍼스만을 사용하여 도형을 그리는 것을 무엇이라 하는가?
+                    <strong>Q11. [작도의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>눈금 없는 자와 컴퍼스만을 사용하여 도형을 그리는 것을 무엇이라 하는가?
                     <div class="input-group">
                         <input type="text" id="ans11" placeholder="한글 단어 입력">
                     </div>
@@ -702,7 +725,7 @@
             <div class="error-msg" id="error11">도구 선택법이 기하학 원칙에 어긋납니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ11()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -716,7 +739,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12. [작도 도구]</strong><br>길이가 주어진 선분을 다른 직선 위로 옮길 때 주로 사용하는 도구는 무엇인가?
+                    <strong>Q12. [작도 도구]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>길이가 주어진 선분을 다른 직선 위로 옮길 때 주로 사용하는 도구는 무엇인가?
                     <div class="input-group">
                         <input type="text" id="ans12" placeholder="한글 단어 입력">
                     </div>
@@ -725,7 +748,7 @@
             <div class="error-msg" id="error12">길이가 왜곡되었습니다! 엉뚱한 도구를 썼습니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ12()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -739,7 +762,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13. [삼각형의 결정 조건]</strong><br>삼각형의 세 변의 길이가 a, b, c (c가 가장 긴 변)일 때, c는 a+b보다 ( 커야 / 작아야 ) 하는가?
+                    <strong>Q13. [삼각형의 결정 조건]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>삼각형의 세 변의 길이가 a, b, c (c가 가장 긴 변)일 때, c는 a+b보다 ( 커야 / 작아야 ) 하는가?
                     <div class="input-group">
                         <input type="text" id="ans13" placeholder="커야 또는 작아야 입력">
                     </div>
@@ -748,7 +771,7 @@
             <div class="error-msg" id="error13">프레임이 연결되지 않고 무너집니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ13()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -762,7 +785,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14. [삼각형 조립 판별]</strong><br>다음 세 선분의 길이로 삼각형을 만들 수 있는가? (3cm, 4cm, 7cm) (있다 / 없다)
+                    <strong>Q14. [삼각형 조립 판별]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>다음 세 선분의 길이로 삼각형을 만들 수 있는가? (3cm, 4cm, 7cm) (있다 / 없다)
                     <div class="input-group">
                         <input type="text" id="ans14" placeholder="있다 또는 없다 입력">
                     </div>
@@ -771,7 +794,7 @@
             <div class="error-msg" id="error14">쐐기 길이가 맞물리지 않고 어긋납니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ14()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -785,7 +808,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15. [삼각형의 작도 조건]</strong><br>두 변의 길이와 그 끼인각의 크기가 주어졌을 때, 삼각형을 작도할 수 있는가? (있다 / 없다)
+                    <strong>Q15. [삼각형의 작도 조건]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>두 변의 길이와 그 끼인각의 크기가 주어졌을 때, 삼각형을 작도할 수 있는가? (있다 / 없다)
                     <div class="input-group">
                         <input type="text" id="ans15" placeholder="있다 또는 없다 입력">
                     </div>
@@ -794,7 +817,7 @@
             <div class="error-msg" id="error15">작도식 오류! 모형이 일그러집니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ15()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -808,7 +831,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16. [합동의 정의]</strong><br>모양과 크기가 완전히 같아서 포개었을 때 완전히 겹쳐지는 두 도형을 서로 무엇이라 하는가?
+                    <strong>Q16. [합동의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>모양과 크기가 완전히 같아서 포개었을 때 완전히 겹쳐지는 두 도형을 서로 무엇이라 하는가?
                     <div class="input-group">
                         <input type="text" id="ans16" placeholder="한글 단어 입력">
                     </div>
@@ -817,7 +840,7 @@
             <div class="error-msg" id="error16">포개어지지 않고 테두리가 남습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ16()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -831,7 +854,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17. [SSS 합동]</strong><br>삼각형의 합동 조건 중 세 변의 길이가 각각 같을 때의 합동을 무엇이라 하는가?
+                    <strong>Q17. [SSS 합동]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>삼각형의 합동 조건 중 세 변의 길이가 각각 같을 때의 합동을 무엇이라 하는가?
                     <div class="input-group">
                         <input type="text" id="ans17" placeholder="예: SSS">
                     </div>
@@ -840,7 +863,7 @@
             <div class="error-msg" id="error17">합동 매칭 기호가 틀렸습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ17()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -854,7 +877,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18. [SAS 합동]</strong><br>삼각형의 두 변의 길이와 그 끼인각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?
+                    <strong>Q18. [SAS 합동]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>삼각형의 두 변의 길이와 그 끼인각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?
                     <div class="input-group">
                         <input type="text" id="ans18" placeholder="예: SAS">
                     </div>
@@ -863,7 +886,7 @@
             <div class="error-msg" id="error18">기어가 헛돌며 맞물리지 않습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ18()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -877,7 +900,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19. [ASA 합동]</strong><br>삼각형의 한 변의 길이와 그 양 끝각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?
+                    <strong>Q19. [ASA 합동]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>삼각형의 한 변의 길이와 그 양 끝각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?
                     <div class="input-group">
                         <input type="text" id="ans19" placeholder="예: ASA">
                     </div>
@@ -886,7 +909,7 @@
             <div class="error-msg" id="error19">좌우 날개의 조화가 깨져 문이 다시 잠깁니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ19()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 
@@ -900,7 +923,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20. [합동 판별]</strong><br>직각삼각형에서 빗변의 길이와 한 예각의 크기가 같을 때, 두 삼각형은 합동인 양상을 나타내는가? (합동이다 / 아니다)
+                    <strong>Q20. [합동 판별]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 직각삼각형에서 빗변의 길이의 제곱은 나머지 두 변의 길이의 제곱의 합과 같습니다. (a² + b² = c²)')">💡 힌트</button><br>직각삼각형에서 빗변의 길이와 한 예각의 크기가 같을 때, 두 삼각형은 합동인 양상을 나타내는가? (합동이다 / 아니다)
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="합동이다 또는 아니다 입력">
                     </div>
@@ -909,7 +932,7 @@
             <div class="error-msg" id="error20">걸작 모나리자 스크린의 잠금이 해제되지 않습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ20()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 직각삼각형에서 빗변의 길이의 제곱은 나머지 두 변의 길이의 제곱의 합과 같습니다. (a² + b² = c²)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 

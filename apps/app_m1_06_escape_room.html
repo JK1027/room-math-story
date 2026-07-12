@@ -75,14 +75,13 @@
             transform: translateY(0);
         }
 
-        .panel-image {
+.panel-image {
             width: 100%;
-            height: 250px;
+            height: auto;
+            max-height: 250px;
             object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
 
         h1, h2, h3 {
@@ -254,6 +253,30 @@
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 15px 35px rgba(180, 83, 9, 0.7), inset 0 2px 5px rgba(255,255,255,0.6);
         }
+
+        .btn-hint {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            text-transform: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .btn-hint:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+        }
+
 
         .btn:active {
             transform: translateY(1px);
@@ -494,7 +517,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1. [다각형의 대각선 1]</strong><br>한 꼭짓점에서 그을 수 있는 대각선의 개수가 5개인 다각형의 이름을 구하시오.
+                    <strong>Q1. [다각형의 대각선 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 대각선의 총 개수는 n(n - 3) / 2 입니다.')">💡 힌트</button><br>한 꼭짓점에서 그을 수 있는 대각선의 개수가 5개인 다각형의 이름을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans1" placeholder="예: 육각형">
                     </div>
@@ -503,8 +526,8 @@
             <div class="error-msg" id="error1">기둥 조작 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ1()">미궁 진입</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 대각선의 총 개수는 n(n - 3) / 2 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 대각선의 총 개수는 n(n - 3) / 2 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -518,7 +541,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2. [다각형의 대각선 2]</strong><br>십각형 모양의 기둥 배치에서 모든 기둥끼리 서로 빛을 교차 연결하려고 한다. 총 대각선의 개수를 구하시오.
+                    <strong>Q2. [다각형의 대각선 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 대각선의 총 개수는 n(n - 3) / 2 입니다.')">💡 힌트</button><br>십각형 모양의 기둥 배치에서 모든 기둥끼리 서로 빛을 교차 연결하려고 한다. 총 대각선의 개수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans2" placeholder="숫자만 입력">
                     </div>
@@ -527,8 +550,8 @@
             <div class="error-msg" id="error2">계산 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ2()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 대각선의 총 개수는 n(n - 3) / 2 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 대각선의 총 개수는 n(n - 3) / 2 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -542,7 +565,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3. [삼각형의 외각 1]</strong><br>삼각형 반사판에서 두 내각이 각각 45도, 60도일 때, 나머지 한 내각의 외각의 크기를 구하시오.
+                    <strong>Q3. [삼각형의 외각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')">💡 힌트</button><br>삼각형 반사판에서 두 내각이 각각 45도, 60도일 때, 나머지 한 내각의 외각의 크기를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans3" placeholder="숫자만 입력">
                     </div>
@@ -551,8 +574,8 @@
             <div class="error-msg" id="error3">각도 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ3()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -566,7 +589,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4. [삼각형의 외각 2]</strong><br>삼각형의 세 외각의 비가 2:3:4일 때, 가장 큰 외각의 크기를 구하시오.
+                    <strong>Q4. [삼각형의 외각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')">💡 힌트</button><br>삼각형의 세 외각의 비가 2:3:4일 때, 가장 큰 외각의 크기를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans4" placeholder="숫자만 입력">
                     </div>
@@ -575,8 +598,8 @@
             <div class="error-msg" id="error4">비율 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ4()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -590,7 +613,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5. [다각형의 내각]</strong><br>내각의 크기의 합이 900도인 다각형의 꼭짓점의 개수를 구하시오.
+                    <strong>Q5. [다각형의 내각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')">💡 힌트</button><br>내각의 크기의 합이 900도인 다각형의 꼭짓점의 개수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans5" placeholder="숫자만 입력">
                     </div>
@@ -599,8 +622,8 @@
             <div class="error-msg" id="error5">다각형 모양 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ5()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -614,7 +637,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6. [다각형의 외각의 합]</strong><br>모든 다각형의 외각의 크기의 합은 항상 일정합니다. 그 크기는 몇 도인가?
+                    <strong>Q6. [다각형의 외각의 합]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')">💡 힌트</button><br>모든 다각형의 외각의 크기의 합은 항상 일정합니다. 그 크기는 몇 도인가?
                     <div class="input-group">
                         <input type="text" id="ans6" placeholder="숫자만 입력">
                     </div>
@@ -623,8 +646,8 @@
             <div class="error-msg" id="error6">회전판이 멈췄습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ6()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -638,7 +661,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7. [정다각형의 외각]</strong><br>한 외각의 크기가 36도인 정다각형의 이름을 구하시오.
+                    <strong>Q7. [정다각형의 외각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')">💡 힌트</button><br>한 외각의 크기가 36도인 정다각형의 이름을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans7" placeholder="예: 정오각형">
                     </div>
@@ -647,8 +670,8 @@
             <div class="error-msg" id="error7">다이얼 문양 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ7()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -662,7 +685,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8. [정다각형의 내각 1]</strong><br>정팔각형의 한 내각의 크기를 구하시오.
+                    <strong>Q8. [정다각형의 내각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')">💡 힌트</button><br>정팔각형의 한 내각의 크기를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans8" placeholder="숫자만 입력">
                     </div>
@@ -671,8 +694,8 @@
             <div class="error-msg" id="error8">각도 입력 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ8()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -686,7 +709,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9. [정다각형의 내각 2]</strong><br>한 내각의 크기가 150도인 정다각형의 대각선의 총 개수를 구하시오.
+                    <strong>Q9. [정다각형의 내각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')">💡 힌트</button><br>한 내각의 크기가 150도인 정다각형의 대각선의 총 개수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans9" placeholder="숫자만 입력">
                     </div>
@@ -695,8 +718,8 @@
             <div class="error-msg" id="error9">계산 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ9()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -710,7 +733,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10. [내각과 외각의 비]</strong><br>한 내각과 한 외각의 크기의 비가 4:1인 정다각형의 이름을 구하시오.
+                    <strong>Q10. [내각과 외각의 비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')">💡 힌트</button><br>한 내각과 한 외각의 크기의 비가 4:1인 정다각형의 이름을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans10" placeholder="예: 정육각형">
                     </div>
@@ -719,8 +742,8 @@
             <div class="error-msg" id="error10">암호판 고정 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ10()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: n각형의 내각의 크기의 합은 180° × (n - 2) 입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -734,7 +757,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11. [호의 길이와 중심각 1]</strong><br>한 원에서 부채꼴의 호의 길이는 중심각의 크기에 어떻게 비례하는가?
+                    <strong>Q11. [호의 길이와 중심각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>한 원에서 부채꼴의 호의 길이는 중심각의 크기에 어떻게 비례하는가?
                     <div class="input-group">
                         <input type="text" id="ans11" placeholder="예: 정비례, 반비례">
                     </div>
@@ -743,8 +766,8 @@
             <div class="error-msg" id="error11">비례 원리 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ11()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -758,7 +781,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12. [호의 길이와 중심각 2]</strong><br>중심각이 40도일 때 호의 길이가 6cm라면, 중심각이 160도일 때 호의 길이를 구하시오.
+                    <strong>Q12. [호의 길이와 중심각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>중심각이 40도일 때 호의 길이가 6cm라면, 중심각이 160도일 때 호의 길이를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans12" placeholder="숫자만 입력">
                     </div>
@@ -767,8 +790,8 @@
             <div class="error-msg" id="error12">호의 길이 조절 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ12()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -782,7 +805,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13. [부채꼴의 넓이와 중심각]</strong><br>부채꼴의 넓이가 원의 넓이의 1/6일 때, 이 부채꼴의 중심각의 크기를 구하시오.
+                    <strong>Q13. [부채꼴의 넓이와 중심각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>부채꼴의 넓이가 원의 넓이의 1/6일 때, 이 부채꼴의 중심각의 크기를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans13" placeholder="숫자만 입력">
                     </div>
@@ -791,8 +814,8 @@
             <div class="error-msg" id="error13">각도 조절 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ13()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -806,7 +829,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14. [현의 길이]</strong><br>중심각의 크기가 같은 두 부채꼴의 현의 길이는 서로 같은가?
+                    <strong>Q14. [현의 길이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>중심각의 크기가 같은 두 부채꼴의 현의 길이는 서로 같은가?
                     <div class="input-group">
                         <input type="text" id="ans14" placeholder="예: 같다, 다르다">
                     </div>
@@ -815,8 +838,8 @@
             <div class="error-msg" id="error14">현의 길이 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ14()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -830,7 +853,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15. [현과 중심각의 비례]</strong><br>현의 길이는 중심각의 크기에 정비례하는가?
+                    <strong>Q15. [현과 중심각의 비례]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>현의 길이는 중심각의 크기에 정비례하는가?
                     <div class="input-group">
                         <input type="text" id="ans15" placeholder="예: 그렇다, 아니다">
                     </div>
@@ -839,8 +862,8 @@
             <div class="error-msg" id="error15">비례 관계 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ15()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -854,7 +877,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16. [원주 계산]</strong><br>반지름의 길이가 5cm인 원의 둘레의 길이를 구하시오. (원주율은 π, 입력시 '파이'로 기재)
+                    <strong>Q16. [원주 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 \'파이\'라고 적어주세요. (예: 36파이)')">💡 힌트</button><br>반지름의 길이가 5cm인 원의 둘레의 길이를 구하시오. (원주율은 π, 입력시 '파이'로 기재)
                     <div class="input-group">
                         <input type="text" id="ans16" placeholder="예: 5파이">
                     </div>
@@ -863,8 +886,8 @@
             <div class="error-msg" id="error16">둘레 계산 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ16()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -878,7 +901,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17. [호의 길이 계산]</strong><br>반지름의 길이가 9cm이고 중심각의 크기가 120도인 부채꼴의 호의 길이를 구하시오.
+                    <strong>Q17. [호의 길이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 \'파이\'라고 적어주세요. (예: 36파이)')">💡 힌트</button><br>반지름의 길이가 9cm이고 중심각의 크기가 120도인 부채꼴의 호의 길이를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans17" placeholder="예: 3파이">
                     </div>
@@ -887,8 +910,8 @@
             <div class="error-msg" id="error17">금실 길이 부족!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ17()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -902,7 +925,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18. [부채꼴의 넓이 계산]</strong><br>반지름의 길이가 6cm이고 중심각의 크기가 60도인 부채꼴 모양 홈의 넓이를 구하시오.
+                    <strong>Q18. [부채꼴의 넓이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 \'파이\'라고 적어주세요. (예: 36파이)')">💡 힌트</button><br>반지름의 길이가 6cm이고 중심각의 크기가 60도인 부채꼴 모양 홈의 넓이를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans18" placeholder="예: 2파이">
                     </div>
@@ -911,8 +934,8 @@
             <div class="error-msg" id="error18">면적 계산 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ18()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -926,7 +949,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19. [중심각 없이 넓이 구하기]</strong><br>반지름의 길이가 10cm이고 호의 길이가 5π cm인 부채꼴 모양 석문의 넓이를 계산하시오.
+                    <strong>Q19. [중심각 없이 넓이 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 \'파이\'라고 적어주세요. (예: 36파이)')">💡 힌트</button><br>반지름의 길이가 10cm이고 호의 길이가 5π cm인 부채꼴 모양 석문의 넓이를 계산하시오.
                     <div class="input-group">
                         <input type="text" id="ans19" placeholder="예: 10파이">
                     </div>
@@ -935,8 +958,8 @@
             <div class="error-msg" id="error19">게이트 수치 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ19()">다음으로</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 
@@ -950,7 +973,7 @@
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20. [색칠한 부분의 넓이]</strong><br>반지름이 8cm인 반원에서 반지름이 4cm인 반원 두 개를 뺀 색칠된 부분의 넓이를 구하시오.
+                    <strong>Q20. [색칠한 부분의 넓이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 \'파이\'라고 적어주세요. (예: 36파이)')">💡 힌트</button><br>반지름이 8cm인 반원에서 반지름이 4cm인 반원 두 개를 뺀 색칠된 부분의 넓이를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="예: 12파이">
                     </div>
@@ -959,8 +982,8 @@
             <div class="error-msg" id="error20">다이얼이 잠겼습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ20()">탈출하기</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: 계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 

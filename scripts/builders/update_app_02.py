@@ -107,14 +107,13 @@ base_html = """<!DOCTYPE html>
             letter-spacing: 1px;
         }
 
-        .panel-image {
+.panel-image {
             width: 100%;
+            height: auto;
             max-height: 250px;
             object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
 
         .story-box {
@@ -291,6 +290,30 @@ base_html = """<!DOCTYPE html>
             box-shadow: 0 15px 30px rgba(168, 85, 247, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);
             border-color: #A78BFA;
         }
+
+        .btn-hint {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            text-transform: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .btn-hint:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+        }
+
 
         .btn:active {
             transform: translateY(1px);
@@ -928,6 +951,11 @@ def generate_hint(qtext, ans_check):
 for q in qs:
     q['hint'] = generate_hint(q['qtext'], q.get('ans_check', ''))
 
+for q in qs:
+    if 'hint' in q and '<button class="btn-hint"' not in q['qtext']:
+        hint_text = q['hint'].replace("'", "\\'")
+        q['qtext'] = q['qtext'].replace('</strong>', f'</strong> <button class="btn-hint" onclick="alert(\'💡 힌트: {hint_text}\')">💡 힌트</button>', 1)
+
 panels_html = ""
 for q in qs:
     qnum = q['qnum']
@@ -957,7 +985,7 @@ for q in qs:
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ{qnum}()">{'마법 시전 시작' if qnum==1 else '다음으로'}</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: {q['hint']}')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
             </div>
         </div>
 '''

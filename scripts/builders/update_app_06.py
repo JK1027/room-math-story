@@ -85,6 +85,11 @@ def generate_hint(qtext, ans_check):
 for q in qs:
     q['hint'] = generate_hint(q['qtext'], q.get('ans_check', ''))
 
+for q in qs:
+    if 'hint' in q and '<button class="btn-hint"' not in q['qtext']:
+        hint_text = q['hint'].replace("'", "\\'")
+        q['qtext'] = q['qtext'].replace('</strong>', f'</strong> <button class="btn-hint" onclick="alert(\'💡 힌트: {hint_text}\')">💡 힌트</button>', 1)
+
 panels_html = ""
 for i, q in enumerate(qs):
     qnum = q['qnum']
@@ -119,8 +124,8 @@ for i, q in enumerate(qs):
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 and "update_app_06.py"=="update_app_04.py" else '미궁 진입' if qnum==1 and "update_app_06.py"=="update_app_06.py" else '시스템 복구 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: {q['hint']}')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: {q['hint']}')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
+
+
             </div>
         </div>
 '''
