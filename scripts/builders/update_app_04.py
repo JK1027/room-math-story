@@ -36,57 +36,51 @@ qs = [
 # Generate panels
 
 import re
-def generate_hint(qtext, ans_check):
-    qtext_clean = qtext.lower()
-    
-    if '소인수분해' in qtext_clean: return "주어진 수를 가장 작은 소수부터 차례대로 나누어 소수들의 곱으로 나타내보세요. (거듭제곱 기호 ^ 사용)"
-    elif '최대공약수' in qtext_clean: return "공통된 소인수 중 지수가 같거나 가장 작은 것을 선택하여 모두 곱합니다."
-    elif '최소공배수' in qtext_clean: return "모든 소인수를 선택하고, 공통된 소인수는 지수가 같거나 가장 큰 것을 선택하여 곱합니다."
-    elif '정수' in qtext_clean and '유리수' in qtext_clean: return "양의 부호(+)나 음의 부호(-)를 주의해서 계산하세요. (음수×음수=양수)"
-    elif '절댓값' in qtext_clean: return "절댓값은 수직선에서 원점으로부터의 거리이므로 항상 0보다 크거나 같습니다."
-    elif '일차방정식' in qtext_clean and '해' in qtext_clean: return "미지수 x를 포함한 항은 좌변으로, 상수는 우변으로 이항하여 x = (숫자) 형태로 만드세요."
-    elif '일차함수' in qtext_clean and '기울기' in qtext_clean: return "일차함수 y = ax + b 에서 x의 계수 a가 기울기를 의미합니다."
-    elif '일차함수' in qtext_clean and ('y절편' in qtext_clean or 'x절편' in qtext_clean): return "y절편은 x=0일 때의 y값(b), x절편은 y=0일 때의 x값(-b/a)입니다."
-    elif '연립방정식' in qtext_clean: return "가감법(두 식을 적절히 곱해 더하거나 빼기)이나 대입법을 사용하여 한 미지수를 먼저 없애보세요."
-    elif '부등식' in qtext_clean: return "부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요."
-    elif '경우의 수' in qtext_clean: return "동시에(연달아) 일어나는 사건은 곱의 법칙(×), 따로 일어나는 사건은 합의 법칙(+)을 적용하세요."
-    elif '확률' in qtext_clean: return "(특정 사건이 일어날 경우의 수) / (모든 경우의 수) 로 계산한 분수 형태를 구하세요."
-    elif '부피' in qtext_clean and '구' in qtext_clean: return "구의 부피 공식은 4/3 × 파이 × r³ 입니다."
-    elif '겉넓이' in qtext_clean and '구' in qtext_clean: return "구의 겉넓이 공식은 4 × 파이 × r² 입니다."
-    elif '부피' in qtext_clean and '기둥' in qtext_clean: return "기둥의 부피는 (밑넓이 × 높이) 입니다."
-    elif '부피' in qtext_clean and '뿔' in qtext_clean: return "뿔의 부피는 1/3 × (밑넓이 × 높이) 입니다."
-    elif '겉넓이' in qtext_clean: return "겉넓이는 전개도를 그렸을 때 모든 면의 넓이의 합입니다."
-    elif '다각형' in qtext_clean and '내각' in qtext_clean: return "n각형의 내각의 크기의 합은 180° × (n - 2) 입니다."
-    elif '다각형' in qtext_clean and '대각선' in qtext_clean: return "n각형의 대각선의 총 개수는 n(n - 3) / 2 입니다."
-    elif '외각' in qtext_clean: return "다각형의 모든 외각의 크기의 합은 항상 360° 입니다."
-    elif '닮음비' in qtext_clean: return "닮음비가 m:n 이면, 넓이비는 m²:n², 부피비는 m³:n³ 입니다."
-    elif '피타고라스' in qtext_clean or '직각삼각형' in qtext_clean: return "직각삼각형에서 빗변의 길이의 제곱은 나머지 두 변의 길이의 제곱의 합과 같습니다. (a² + b² = c²)"
-    elif '소수' in qtext_clean and '합' in qtext_clean: return "1과 자기 자신만을 약수로 가지는 수를 소수라고 합니다. (예: 2, 3, 5, 7...)"
-    elif '좌표' in qtext_clean: return "x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요."
-    elif '사분면' in qtext_clean:
-        if '응용' in qtext_clean: return "각 사분면의 x, y좌표 부호(제1: +,+, 제2: -,+, 제3: -,-, 제4: +,-)를 기준으로 문자의 부호를 확인해보세요."
-
-    if '파이' in ans_check or 'pi' in ans_check: return "계산된 원주율은 기호 대신 한글 '파이'라고 적어주세요. (예: 36파이)"
-    if '(' in ans_check and ',' in ans_check: return "순서쌍은 괄호나 띄어쓰기 없이 숫자와 쉼표로만 입력하거나 (x,y) 형태로 정확히 입력해보세요."
-    
-    ans_list = []
-    if '||' in ans_check:
-        ans_list = [a.strip().strip("'\"") for a in ans_check.split('||')]
-        valid_ans = [a for a in ans_list if 'ans ===' in a]
-        if valid_ans:
-            first_ans = valid_ans[0].replace('ans === ', '').strip("'\"")
-            return f"단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 {len(first_ans)}글자)"
-    else:
-        match = re.search(r"ans === '([^']+)'", ans_check)
-        if match:
-            ans = match.group(1)
-            if ans.isdigit(): return f"계산 실수가 없는지 다시 확인해보세요. 정답은 {len(ans)}자리 숫자입니다."
-            else: return f"정답은 기호나 문자를 포함해 총 {len(ans)}글자입니다."
-            
-    return "단위(cm, 개 등)를 생략하거나 기호가 정확히 일치하는지 확인해 보세요."
+def generate_hint(qnum, qtext, ans_check):
+    if qnum == 1:
+        return "순서쌍은 (x좌표, y좌표) 형태로 괄호 안에 쉼표로 구분하여 적습니다. x좌표는 -5이고 y좌표는 8이므로 (-5, 8)로 작성해보세요."
+    elif qnum == 2:
+        return "x축 위에 있는 점들은 y좌표가 항상 0입니다. 따라서 (x좌표, 0)의 형태인 (7, 0)으로 써보세요."
+    elif qnum == 3:
+        return "원점은 x축 and y축이 교차하는 시작점입니다. x좌표와 y좌표가 모두 0이므로 (0, 0)입니다."
+    elif qnum == 4:
+        return "y축 위에 있는 점들은 x좌표가 항상 0입니다. 따라서 (0, y좌표)의 형태인 (0, -3)으로 써보세요."
+    elif qnum == 5:
+        return "직사각형의 가로 길이는 x좌표 사이의 거리인 3 - (-3) = 6이고, 세로 길이는 y좌표 사이의 거리인 4 - (-4) = 8입니다. 직사각형의 넓이(가로 × 세로)를 계산해 보세요."
+    elif qnum == 6:
+        return "x좌표가 양수(+)이고, y좌표가 음수(-)인 점은 오른쪽 아래 영역에 위치합니다. 이 영역은 제몇 사분면인지 숫자로만 입력하세요."
+    elif qnum == 7:
+        return "x좌표가 음수(-)이고, y좌표도 음수(-)인 점은 왼쪽 아래 영역에 위치합니다. 이 영역은 제몇 사분면인지 숫자로만 입력하세요."
+    elif qnum == 8:
+        return "a × b < 0 이므로 a와 b의 부호가 다릅니다. a - b > 0 이므로 a가 b보다 큽니다. 따라서 a는 양수(+), b는 음수(-)가 됩니다. (+, -) 부호를 갖는 사분면은 몇 사분면일까요?"
+    elif qnum == 9:
+        return "점 P가 제2사분면 위의 점이므로 a < 0 (음수), b > 0 (양수)입니다. 이때 점 Q의 x좌표인 a는 음수(-), y좌표인 -b는 음수(-)가 됩니다. (- , -) 부호를 갖는 사분면을 구해보세요."
+    elif qnum == 10:
+        return "점 P가 제3사분면 위의 점이므로 a < 0 (음수), b < 0 (음수)입니다. 이때 점 Q의 x좌표인 -a는 양수(+), y좌표인 b는 음수(-)가 됩니다. (+ , -) 부호를 갖는 사분면을 구해보세요."
+    elif qnum == 11:
+        return "시간(x)이 흘러도 이동한 거리(y)가 변하지 않고 그대로 유지되므로, 잠수정이 움직이지 않고 멈춰 있는 상태를 한글 두 글자로 써보세요."
+    elif qnum == 12:
+        return "일정한 속력으로 내려가므로 시간과 깊이는 정비례 관계입니다. 10분 동안 100m를 내려갔다면, 그 절반인 5분 동안에는 몇 m를 내려갔을까요?"
+    elif qnum == 13:
+        return "우상향 직선이란 오른쪽 위로 향하는 직선을 말합니다. 즉, 오른쪽(x 증가)으로 갈수록 그래프의 높이(y값)가 점점 위로 올라가는 형태이므로 y는 어떻게 변하는지 두 글자로 써보세요."
+    elif qnum == 14:
+        return "수심 100m에서 5분 동안 머물러 정지해 있었으므로 수심(y값)에는 아무런 변화가 없습니다. 따라서 변화량은 얼마일까요?"
+    elif qnum == 15:
+        return "시간(x)이 흐를수록 남은 산소의 양(y)은 점점 줄어들게 됩니다. 즉, x가 증가할 때 y가 감소하는 관계이므로 오른쪽 아래로 내려가는 모양(세 글자)이 됩니다."
+    elif qnum == 16:
+        return "y가 x에 정비례하므로 y = ax 꼴입니다. x=3일 때 y=15이므로 비례상수 a = 5가 됩니다. 즉, 식은 y = 5x입니다. 여기에 x=5를 대입해서 y값을 구해보세요."
+    elif qnum == 17:
+        return "그래프가 점 (2, -8)을 지나므로 x = 2, y = -8 을 식 y = ax 에 대입하여 성립해야 합니다. -8 = 2a 방정식을 풀어 a의 값을 구해보세요."
+    elif qnum == 18:
+        return "두 변수가 반비례하므로 y = a/x (즉, x × y = a) 꼴입니다. 4개일 때 60kg이므로 두 변수의 곱(총 감당 무게)은 4 × 60 = 240으로 일정합니다. 따라서 6개일 때는 6 × y = 240이 되어야 합니다."
+    elif qnum == 19:
+        return "y = a/x 식의 양변에 x를 곱하면 a = x × y 가 됩니다. x=2, y=10일 때의 곱을 구하면 바로 반비례 상수 a의 값이 됩니다."
+    elif qnum == 20:
+        return "점 (-3, k)가 반비례 그래프 y = 12/x 위에 있으므로, x = -3, y = k 를 식에 대입하면 성립합니다. k = 12 / (-3) 을 계산해 보세요."
+    return "단위를 제외하고 입력해 보세요."
 
 for q in qs:
-    q['hint'] = generate_hint(q['qtext'], q.get('ans_check', ''))
+    q['hint'] = generate_hint(q['qnum'], q['qtext'], q.get('ans_check', ''))
 
 panels_html = ""
 for i, q in enumerate(qs):
