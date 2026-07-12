@@ -103,7 +103,7 @@ for i, q in enumerate(qs):
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
-            <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <h2>제 {qnum}구역: {title} <button class="btn-hint" onclick="alert('💡 힌트: {q["hint"]}')">💡 힌트</button> <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_04_coordinates/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
@@ -120,7 +120,6 @@ for i, q in enumerate(qs):
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 and "update_app_04.py"=="update_app_04.py" else '미궁 진입' if qnum==1 and "update_app_04.py"=="update_app_06.py" else '시스템 복구 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
-                    <button class="btn btn-hint" onclick="alert('💡 힌트: {q['hint']}')" style="margin-left:10px; background:rgba(16,185,129,0.2); border:1px solid rgba(16,185,129,0.5); color:#34D399;">💡 힌트</button>
             </div>
         </div>
 '''
