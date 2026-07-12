@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>(중1) 방탈출 게임</title>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #b45309; 
-            --secondary: #78350f; 
-            --accent: #fbbf24; 
-            --text-main: #fef3c7;
-            --glass-bg: rgba(69, 26, 3, 0.7);
-            --glass-border: rgba(251, 191, 36, 0.4);
+            --primary: #0F172A; 
+            --secondary: #1E3A8A; 
+            --accent: #FBBF24; 
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --danger: #EF4444;
+            --success: #10B981;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(96, 165, 250, 0.4);
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Pretendard', sans-serif;
-            background: url('assets/bg/m1_06_bg.png') center/cover no-repeat fixed;
+            background: url('assets/bg/m1_04_bg.png') center/cover no-repeat fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -31,7 +35,7 @@
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at center, transparent 0%, rgba(69, 26, 3, 0.95) 100%), rgba(20, 10, 0, 0.75);
+            background: radial-gradient(circle at center, transparent 0%, rgba(2, 6, 23, 0.95) 100%), rgba(15, 23, 42, 0.85);
             z-index: 1;
         }
 
@@ -39,10 +43,26 @@
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
-            opacity: 0.15;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.25) 51%);
+            background-size: 100% 4px;
             pointer-events: none;
             z-index: 2;
+            opacity: 0.6;
+        }
+
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            bottom: -50px;
+            animation: floatUp 10s infinite linear;
+            z-index: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
 
         .container {
@@ -54,15 +74,15 @@
         }
 
         .glass-panel {
-            background: rgba(30, 10, 0, 0.75);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            border-left: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
             padding: 3rem;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(251, 191, 36, 0.1);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(96, 165, 250, 0.1);
             display: none; 
             opacity: 0;
             transform: translateY(20px);
@@ -75,24 +95,15 @@
             transform: translateY(0);
         }
 
-.panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
         h1, h2, h3 {
             color: var(--accent);
             text-align: center;
             margin-top: 0;
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8), 0 0 30px rgba(251, 191, 36, 0.4), 0 2px 5px rgba(0,0,0,0.9);
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.8), 0 0 20px rgba(251, 191, 36, 0.4), 0 2px 5px rgba(0,0,0,0.8);
         }
 
-        h1 { font-size: 2.8rem; letter-spacing: 4px; font-weight: 900; }
-        h2 { font-size: 1.8rem; border-bottom: 2px solid rgba(251, 191, 36, 0.5); padding-bottom: 10px; display: inline-block; margin-bottom: 2rem; box-shadow: 0 10px 10px -10px rgba(251, 191, 36, 0.4);}
+        h1 { font-size: 2.8rem; letter-spacing: 3px; font-weight: 900; }
+        h2 { font-size: 1.8rem; border-bottom: 2px solid rgba(251, 191, 36, 0.5); padding-bottom: 10px; display: inline-block; margin-bottom: 2rem; box-shadow: 0 10px 10px -10px rgba(251, 191, 36, 0.3);}
 
         .story-box {
             position: relative;
@@ -102,14 +113,9 @@
             margin-bottom: 1.5rem;
             border-radius: 0 12px 12px 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            height: 110px;
-            max-height: 110px;
+            height: 120px;
             overflow: hidden;
             box-sizing: border-box;
-        }
-        #intro .story-box {
-            height: 80px;
-            max-height: 80px;
         }
         .story-text {
             width: 100%;
@@ -156,7 +162,7 @@
             right: -10px;
             font-size: 6rem;
             font-weight: 900;
-            color: rgba(251, 191, 36, 0.05);
+            color: rgba(96, 165, 250, 0.05);
             z-index: 0;
         }
 
@@ -172,9 +178,9 @@
         input[type="text"] {
             width: 100%;
             padding: 1.2rem;
-            background: rgba(20, 10, 0, 0.8);
-            border: 2px solid rgba(251, 191, 36, 0.5);
-            color: #FCD34D;
+            background: rgba(2, 6, 23, 0.8);
+            border: 2px solid rgba(96, 165, 250, 0.5);
+            color: #60A5FA;
             border-radius: 12px;
             font-size: 1.3rem;
             font-weight: bold;
@@ -187,10 +193,10 @@
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #F59E0B;
-            background: rgba(40, 20, 0, 0.9);
+            border-color: #60A5FA;
+            background: rgba(15, 23, 42, 0.9);
             color: white;
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 2px 10px rgba(0,0,0,0.8);
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.5), inset 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .btn-group {
@@ -200,9 +206,9 @@
         }
 
         .btn {
-            background: linear-gradient(135deg, #F59E0B, #B45309);
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
             color: white;
-            border: 1px solid #FCD34D;
+            border: 1px solid #60A5FA;
             padding:  0.6rem 1.5rem;
             font-size:  1.1rem;
             font-weight: 900;
@@ -212,16 +218,16 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             width: 100%;
-            box-shadow: 0 10px 25px rgba(180, 83, 9, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
         }
 
         .btn-secondary {
-            background: rgba(30, 10, 0, 0.8);
-            border: 1px solid #F59E0B;
-            color: #FCD34D;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #3B82F6;
+            color: #60A5FA;
             box-shadow: none;
             background-image: none;
         }
@@ -231,27 +237,9 @@
         }
 
         .btn-secondary:hover {
-            background: rgba(60, 20, 0, 0.9);
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            background: rgba(30, 58, 138, 0.9);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
             transform: translateY(-2px);
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
-            transform: rotate(45deg) translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        .btn:hover::after {
-            transform: rotate(45deg) translateX(100%);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 15px 35px rgba(180, 83, 9, 0.7), inset 0 2px 5px rgba(255,255,255,0.6);
         }
 
         .btn-hint {
@@ -277,9 +265,22 @@
             box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
         }
 
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
 
-        .btn:active {
-            transform: translateY(1px);
+        .btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(29, 78, 216, 0.7), inset 0 2px 5px rgba(255,255,255,0.6);
         }
 
         .error-msg {
@@ -291,14 +292,11 @@
             text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
         }
 
+        .shake { animation: shake 0.5s; }
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
             10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
             20%, 40%, 60%, 80% { transform: translateX(5px); }
-        }
-
-        .shake {
-            animation: shake 0.5s;
         }
 
         .progress-container {
@@ -314,10 +312,10 @@
 
         .progress-bar {
             height: 100%;
-            background: var(--accent);
+            background: #60A5FA;
             width: 0%;
             transition: width 0.5s ease;
-            box-shadow: 0 0 15px var(--accent);
+            box-shadow: 0 0 15px #60A5FA;
         }
 
         .sound-toggle {
@@ -339,26 +337,17 @@
 
         .sound-toggle:hover {
             background: rgba(0, 0, 0, 0.9);
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent);
+            border-color: #60A5FA;
+            box-shadow: 0 0 15px #60A5FA;
         }
 
-        .sunbeam {
-            position: absolute;
-            background: linear-gradient(to bottom, rgba(251, 191, 36, 0.8), transparent);
-            width: 2px;
-            height: 100px;
-            border-radius: 50%;
-            animation: beam 3s infinite linear;
-            opacity: 0;
-            z-index: 5;
-        }
-
-        @keyframes beam {
-            0% { transform: translateY(-50vh) rotate(15deg); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.8; }
-            100% { transform: translateY(100vh) rotate(15deg); opacity: 0; }
+        .graph-container {
+            background: rgba(248, 250, 252, 0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.3), inset 0 0 10px rgba(0,0,0,0.1);
+            border: 2px solid #60A5FA;
         }
 
         @media (max-width: 600px) {
@@ -366,29 +355,46 @@
                 overflow-y: auto;
             }
             .container {
-                padding: 10px; min-height: 100vh; display: flex; align-items: center; justify-content: center; box-sizing: border-box; flex-direction: column;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+                min-height: 100vh; flex-direction: column;
             }
-            .glass-panel { 
-                padding: 1.2rem; 
-                border-radius: 16px; 
-                max-height: 94vh; 
-                max-height: 94dvh; 
-                overflow-y: auto; 
+            .glass-panel {
+                width: 100%;
+                max-height: 94vh;
+                max-height: 94dvh;
+                height: auto;
+                padding: 1.2rem;
+                border-radius: 16px;
+                box-sizing: border-box;
+                display: none;
+                flex-direction: column;
+                justify-content: flex-start;
+                overflow-y: auto;
             }
-            h1 { font-size: 1.6rem; letter-spacing: 1px; }
-            h2 { font-size: 1.2rem; margin-bottom: 1rem; }
+            .glass-panel.active {
+                display: flex;
+            }
+            h1 { font-size: 1.6rem; letter-spacing: 1px; margin-top: 0; margin-bottom: 0.5rem; }
+            h2 { font-size: 1.2rem; margin-top: 0; margin-bottom: 0.5rem; padding-bottom: 5px; }
             .panel-image {
                 height: auto;
                 max-height: 25vh;
                 object-fit: cover;
                 margin-bottom: 0.6rem;
+                width: 100%;
+                flex: 0 0 auto;
             }
-            .story-box {padding: 0.6rem 1rem;
+            .story-box {
+                padding: 0.6rem 1rem;
                 margin-bottom: 0.5rem;
-                height: 80px;
-                max-height: 80px;
+                height: 110px;
                 overflow: hidden;
-                flex: 0 0 auto;}
+                flex: 0 0 auto;
+            }
         .story-text {
             width: 100%;
             height: 100%;
@@ -416,15 +422,77 @@
             color: var(--text-main);
             text-align: justify;
         }
-            .question-box { padding: 0.8rem; margin-bottom: 1rem; }
+            .question-box {
+                padding: 0.8rem;
+                margin-bottom: 0.6rem;
+                font-size: 0.9rem;
+                flex: 0 0 auto;
+            }
             .question-box::before { font-size: 3rem; top: -5px; right: -5px; }
+            .input-group { margin-top: 0.5rem; }
             input[type="text"] { font-size: 1rem; padding: 0.8rem; }
             .btn { font-size: 0.9rem; padding: 0.5rem; letter-spacing: 1px;  border-radius: 6px;}
-            .btn-group { flex-direction: column; gap: 0.6rem; }
+            .btn-group { flex-direction: column; gap: 0.6rem; margin-top: 0.6rem; }
             .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
-            .graph-container { padding: 1rem; }
+            .graph-container { padding: 0.8rem; margin: 0.5rem 0; flex: 1 1 auto; max-height: 25vh; }
         }
     
+        .panel-image {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Story Log Modal CSS */
+        
+        .log-btn:hover {
+            background: rgba(16, 185, 129, 1);
+            transform: scale(1.05);
+        }
+        .log-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; max-height: 50vh;
+            background: rgba(40, 40, 40, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--accent-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+        .log-modal.active {
+            display: flex;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        .log-content {
+            background: transparent;
+            border: none;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            max-height: 50vh;
+            overflow-y: auto;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .log-content h2 { margin-top: 0; color: var(--accent-blue); }
+        .log-content hr { border-color: rgba(255,255,255,0.1); margin: 15px 0; }
+        .close-log {
+            float: right;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
         .story-log-trigger {
             position: absolute;
             bottom: 4px;
@@ -468,9 +536,11 @@
 </head>
 <body>
 
-    <div class="sunbeam" style="left: 20%; animation-delay: 0s;"></div>
-    <div class="sunbeam" style="left: 50%; animation-delay: 1.5s; width: 3px;"></div>
-    <div class="sunbeam" style="left: 80%; animation-delay: 0.7s;"></div>
+    <div class="bubble" style="left: 15%; width: 10px; height: 10px; animation-duration: 8s; animation-delay: 1s;"></div>
+    <div class="bubble" style="left: 35%; width: 15px; height: 15px; animation-duration: 12s; animation-delay: 0s;"></div>
+    <div class="bubble" style="left: 55%; width: 8px; height: 8px; animation-duration: 6s; animation-delay: 2s;"></div>
+    <div class="bubble" style="left: 75%; width: 12px; height: 12px; animation-duration: 10s; animation-delay: 4s;"></div>
+    <div class="bubble" style="left: 90%; width: 20px; height: 20px; animation-duration: 9s; animation-delay: 1.5s;"></div>
 
     <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔊 소리 켜짐</button>
 
@@ -482,19 +552,15 @@
 
         <!-- 0. 인트로 -->
         <div id="intro" class="glass-panel active">
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_06_plane_geometry/intro.png" alt="Background" class="panel-image">
-            <h1>고대 태양 신전</h1>
-            <h2>거울 미궁 탈출</h2>
-            <div class="story-box"><div class="story-text">1924년, 이집트 왕가의 계곡 외곽. 한 달째 몰아치던 기록적인 모래 폭풍이 잦아들자, 깎아지른 절벽 아래로 전설로만 전해지던 <strong>'아문-라의 잊혀진 태양 신전'</strong>의 입구가 웅장한 모습을 드러냈습니다. 이 신전은 고대 이집트 최고의 수학자와 건축가들이 모여 빛의 에너지를 다루기 위해 설계했다고 알려져 있습니다.<br><br>
-                당신은 세계 각국에서 모인 최고의 수학 전문가들로 구성된 비밀 탐사대의 핵심 연구원입니다. 조심스럽게 신전 최하층에 위치한 거대한 '거울 미궁'에 발을 들이는 순간, 앞장서던 대원이 무심코 바닥의 황금 타일을 밟고 말았습니다.<br><br>
-                <em>"쿠르르르릉-!"</em><br><br>
-                섬뜩한 굉음과 함께 육중한 화강암 문이 닫히며 퇴로가 차단되었습니다. 동시에 천장이 기계음과 함께 열리며, 지름이 10미터는 족히 되어 보이는 거대한 돋보기 렌즈를 통해 맹렬한 사막의 태양빛이 직사광선처럼 쏟아져 내리기 시작합니다.<br><br>
-                귀에 꽂힌 무전기를 통해 지상 베이스캠프에 남은 탐사대장의 다급한 외침이 들려옵니다.<br><br>
-                <span style="color: #F87171;">『신전 내부의 온도가 급격히 상승하고 있다! 시뮬레이션 결과, 정확히 45분 뒤면 내부 온도가 1000도를 넘어 모든 대원들이 잿더미가 될 거다! 거울의 반사각을 조절해 태양빛 에너지를 신전 동력으로 전환시켜 탈출구를 열어라!』</span><br><br>
-                생존을 위한 카운트다운이 시작되었습니다. 거울 미궁에 숨겨진 12개의 기하학적 수수께끼를 연속으로 풀어내십시오!
-            
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button></div>
-            
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/intro.png" alt="Background" class="panel-image">
+            <h1>사라진 아틀란티스</h1>
+            <h2>해저 보물지도 암호 해독</h2>
+            <div class="story-box"><div class="story-text">여러분은 전설 속의 잃어버린 해저 도시 <strong>'아틀란티스'</strong>를 찾아 나선 세계 최정예 해양 탐사대입니다.<br><br>
+                수년간의 혹독한 해저 탐사 끝에, 수심 8000m 심해에서 마침내 거대한 황금 문앞에 도착했습니다! 하지만 기쁨도 잠시, 문의 잠금장치는 고대 아틀란티스인들이 수천 년 전 설계해 둔 <strong>'좌표평면'</strong>과 <strong>'그래프'</strong> 암호로 굳게 닫혀 있습니다.<br><br>
+                <span style="color: #F87171;">『경고: 심해 잠수정의 동력과 산소는 딱 45분 치만 남아있습니다. 시간이 초과되면 수압을 견디지 못하고 잠수정이 붕괴됩니다.』</span><br><br>
+                산소가 고갈되기 전에, 낡은 보물지도에 적힌 순서쌍을 해독하고 비례 그래프의 숨겨진 규칙을 찾아내어 12개의 방어막을 뚫어야 합니다! 실패하면 영원히 해저의 미아로 남게 됩니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
             <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
                 <div style="margin-bottom: 1rem;">
                     <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
@@ -505,507 +571,466 @@
                     <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
                 </div>
             </div>
-            <div class="btn-group" style="margin-top: 2rem; width:100%;"><button class="btn"  onclick="nextStage('intro', 'panel_q1', 8.3)">미궁으로 진입하기</button></div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;"><button class="btn" onclick="tryStartGame('m1_04')">심해 다이브 시작</button></div>
         </div>
 
         <!-- Q1 -->
 
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
-            <h2>제 1구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q1.png" alt="Background" class="panel-image">
+            <h2>제 1구역: 심해로 가는 좌표 (순서쌍과 좌표) <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🚨 <strong>[대원의 비명]</strong><br><br>앗 뜨거워! 천장에서 빛줄기가 내려오고 있습니다. 거울 기둥들을 교차시켜 빛을 분산시켜야 합니다!</div>
+                <div class="story-text">🌊 <strong>[목표 지점 확인]</strong><br><br>잠수정을 투하할 해수면 좌표를 계산해야 합니다. 조금이라도 좌표가 어긋나면 아틀란티스 유적으로 향하는 해류를 타지 못하고 암초에 부딪히게 됩니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1. [다각형의 대각선 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 한 꼭짓점에서 그을 수 있는 대각선의 개수 공식은 n-3 입니다.')">💡 힌트</button><br>한 꼭짓점에서 그을 수 있는 대각선의 개수가 5개인 다각형의 이름을 구하시오.
+                    <strong>Q1. [순서쌍 좌표 찍기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 순서쌍은 (x좌표, y좌표) 형태로 나타내며, 괄호와 쉼표를 정확히 표시합니다. 주어진 문제에서 x좌표와 y좌표가 무엇인지 찾아 차례대로 적어보세요.')">💡 힌트</button><br>x좌표가 -5 이고, y좌표가 8 인 점의 <strong>좌표</strong>를 순서쌍 기호 괄호 ()를 사용하여 나타내시오.
                     <div class="input-group">
-                        <input type="text" id="ans1" placeholder="예: 육각형">
+                        <input type="text" id="ans1" placeholder="예: (3, 4)">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error1">기둥 조작 오류!</div>
+            <div class="error-msg" id="error1">투하 좌표가 어긋났습니다! 암초에 부딪힐 위험이 있습니다!</div>
             <div class="btn-group">
-                <button class="btn" onclick="checkQ1()">미궁 진입</button>
-
-
+                <button class="btn" onclick="checkQ1()">잠항 시작</button>
             </div>
         </div>
 
         <!-- Q2 -->
         <div id="panel_q2" class="glass-panel">
-            <h2>제 2구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q2.png" alt="Background" class="panel-image">
+            <h2>제 2구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🚨 <strong>[대각선 교차]</strong><br><br>전체 대각선의 수를 계산해야 합니다.</div>
+                <div class="story-text">🌊 <strong>[투하 지점 갱신]</strong><br><br>좋습니다, 첫 번째 투하 지점을 통과했습니다. 다음 기착지인 해저 화산 입구를 통과하려면 x축 위의 점을 입력해야 합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2. [다각형의 대각선 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 총 대각선 수 공식인 n(n-3)/2 에 10을 대입하여 계산합니다.')">💡 힌트</button><br>십각형 모양의 기둥 배치에서 모든 기둥끼리 서로 빛을 교차 연결하려고 한다. 총 대각선의 개수를 구하시오.
+                    <strong>Q2. [x축, y축 위의 점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축 위에 있는 점들은 y축 방향으로 움직이지 않았으므로 y좌표가 항상 0입니다. 즉, (x좌표, 0)의 형태가 됩니다.')">💡 힌트</button><br>x축 위에 있고 x좌표가 7인 점의 좌표를 나타내시오.
                     <div class="input-group">
-                        <input type="text" id="ans2" placeholder="숫자만 입력">
+                        <input type="text" id="ans2" placeholder="예: (2, 0)">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error2">계산 오류!</div>
+            <div class="error-msg" id="error2">좌표 입력 오류! 수압 경고!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ2()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q3 -->
         <div id="panel_q3" class="glass-panel">
-            <h2>제 3구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q3.png" alt="Background" class="panel-image">
+            <h2>제 3구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🚨 <strong>[빛의 굴절]</strong><br><br>빛이 새어나가고 있어요! 삼각형 반사판의 외각을 계산하세요.</div>
+                <div class="story-text">🌊 <strong>[기준점 확인]</strong><br><br>심해 내비게이션의 영점 조준이 필요합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3. [삼각형의 외각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 삼각형의 한 외각의 크기는 그와 이웃하지 않는 두 내각의 크기의 합과 같습니다.')">💡 힌트</button><br>삼각형 반사판에서 두 내각이 각각 45도, 60도일 때, 나머지 한 내각의 외각의 크기를 구하시오.
+                    <strong>Q3. [원점의 좌표]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 원점은 x축과 y축이 교차하는 시작점입니다. x좌표와 y좌표가 모두 0이 되는 지점을 순서쌍 형태로 나타내보세요.')">💡 힌트</button><br>두 좌표축이 만나는 원점 O의 좌표를 나타내시오.
                     <div class="input-group">
-                        <input type="text" id="ans3" placeholder="숫자만 입력">
+                        <input type="text" id="ans3" placeholder="예: (x, y)">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error3">각도 오류!</div>
+            <div class="error-msg" id="error3">영점 조준 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ3()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
-            <h2>제 4구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q4.png" alt="Background" class="panel-image">
+            <h2>제 4구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🚨 <strong>[외각의 비율]</strong><br><br>외각의 비례식을 풀어야 합니다.</div>
+                <div class="story-text">🌊 <strong>[추가 기준점]</strong><br><br>y축 방향의 해저 동굴 입구 좌표를 입력하세요.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4. [삼각형의 외각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 외각의 총합은 항상 360도입니다. 비례배분을 이용하여 가장 큰 비율(4)을 차지하는 외각을 구합니다.')">💡 힌트</button><br>삼각형의 세 외각의 비가 2:3:4일 때, 가장 큰 외각의 크기를 구하시오.
+                    <strong>Q4. [좌표 평면 위의 점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: y축 위에 있는 점들은 x축 방향으로 움직이지 않았으므로 x좌표가 항상 0입니다. 즉, (0, y좌표)의 형태가 됩니다.')">💡 힌트</button><br>y축 위에 있고 y좌표가 -3인 점의 좌표를 나타내시오.
                     <div class="input-group">
-                        <input type="text" id="ans4" placeholder="숫자만 입력">
+                        <input type="text" id="ans4" placeholder="예: (0, -5)">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error4">비율 오류!</div>
+            <div class="error-msg" id="error4">동굴 충돌 위험!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ4()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q5 -->
         <div id="panel_q5" class="glass-panel">
-            <h2>제 5구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q5.png" alt="Background" class="panel-image">
+            <h2>제 5구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🚨 <strong>[내각의 합]</strong><br><br>마지막 반사판의 구조를 파악하세요.</div>
+                <div class="story-text">🌊 <strong>[소용돌이 결계]</strong><br><br>레이더에 4개의 기둥 좌표가 찍혔습니다. 이 기둥들이 만드는 결계의 넓이를 구하세요.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5. [다각형의 내각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 내각의 총합 공식은 180 * (n-2) 입니다. 이 값이 900이 되는 n을 찾습니다.')">💡 힌트</button><br>내각의 크기의 합이 900도인 다각형의 꼭짓점의 개수를 구하시오.
+                    <strong>Q5. [도형의 넓이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 직사각형의 가로 길이는 두 x좌표 사이의 거리이고, 세로 길이는 두 y좌표 사이의 거리입니다. 가로와 세로의 길이를 각각 구해 서로 곱해보세요.')">💡 힌트</button><br>좌표평면 위에 네 기둥 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)를 이은 직사각형의 넓이를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans5" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error5">다각형 모양 오류!</div>
+            <div class="error-msg" id="error5">결계 돌파 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ5()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q6 -->
         <div id="panel_q6" class="glass-panel">
-            <h2>제 6구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q6.png" alt="Background" class="panel-image">
+            <h2>제 6구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧩 <strong>[비밀통로 발견]</strong><br><br>바닥에 거대한 회전 다이얼이 보입니다. 다각형의 내각과 외각의 합을 알아내면 통로가 열릴 겁니다!</div>
+                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br>해저 유적 내부로 진입했습니다. 이곳은 4개의 구역(사분면)으로 나뉘어 있습니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6. [다각형의 외각의 합]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형이 몇 각형이든 상관없이 모든 외각의 크기의 총합은 항상 360도입니다.')">💡 힌트</button><br>모든 다각형의 외각의 크기의 합은 항상 일정합니다. 그 크기는 몇 도인가?
+                    <strong>Q6. [사분면의 부호 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x좌표가 양수(+)이고, y좌표가 음수(-)인 점이 어느 위치에 있는지 생각해 보세요. 좌표평면의 네 영역 중 우하단에 해당하는 영역을 찾으면 됩니다.')">💡 힌트</button><br>점 (2, -5)는 제 몇 사분면 위의 점인가?
                     <div class="input-group">
-                        <input type="text" id="ans6" placeholder="숫자만 입력">
+                        <input type="text" id="ans6" placeholder="숫자만 입력 (예: 1)">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error6">회전판이 멈췄습니다!</div>
+            <div class="error-msg" id="error6">잘못된 구역입니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ6()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
-            <h2>제 7구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q7.png" alt="Background" class="panel-image">
+            <h2>제 7구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧩 <strong>[정다각형의 외각]</strong><br><br>외각의 크기로 다각형의 모양을 유추하세요.</div>
+                <div class="story-text">🧭 <strong>[추가 결계]</strong><br><br>두 번째 사분면 문을 엽니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7. [정다각형의 외각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정n각형의 한 외각 크기는 360 / n 입니다. 이 값이 36이 되는 n을 구해 정다각형 이름을 적습니다.')">💡 힌트</button><br>한 외각의 크기가 36도인 정다각형의 이름을 구하시오.
+                    <strong>Q7. [사분면의 부호 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x좌표가 음수(-), y좌표가 음수(-)인 점이 어느 위치에 있는지 생각해 보세요. 좌표평면의 네 영역 중 좌하단에 해당하는 영역을 찾으면 됩니다.')">💡 힌트</button><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?
                     <div class="input-group">
-                        <input type="text" id="ans7" placeholder="예: 정오각형">
+                        <input type="text" id="ans7" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error7">다이얼 문양 오류!</div>
+            <div class="error-msg" id="error7">잘못된 구역입니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ7()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q8 -->
         <div id="panel_q8" class="glass-panel">
-            <h2>제 8구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q8.png" alt="Background" class="panel-image">
+            <h2>제 8구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧩 <strong>[정다각형의 내각 1]</strong><br><br>팔각형 다이얼의 내각을 맞추세요.</div>
+                <div class="story-text">🧭 <strong>[고급 사분면]</strong><br><br>조건에 맞는 사분면을 찾아야 합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8. [정다각형의 내각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정팔각형의 내각 총합인 180 * (8-2) = 1080도를 꼭짓점 개수인 8로 나누어 한 내각을 구합니다.')">💡 힌트</button><br>정팔각형의 한 내각의 크기를 구하시오.
+                    <strong>Q8. [사분면의 이해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 곱이 음수(a × b < 0)라는 것은 두 수의 부호가 서로 다름을 뜻합니다. 뺀 값(a - b > 0)이 양수라는 것은 어느 쪽이 더 크다는 뜻일까요? 두 조건으로 a와 b의 부호를 판별해 보세요.')">💡 힌트</button><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans8" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error8">각도 입력 실패!</div>
+            <div class="error-msg" id="error8">잘못된 구역입니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ8()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q9 -->
         <div id="panel_q9" class="glass-panel">
-            <h2>제 9구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q9.png" alt="Background" class="panel-image">
+            <h2>제 9구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧩 <strong>[정다각형의 내각 2]</strong><br><br>다이얼의 대각선 개수를 계산해야 문이 열립니다.</div>
+                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br>결계의 성질을 이용해 새로운 좌표의 사분면을 예측해야 합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9. [정다각형의 내각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 내각이 150도이면 한 외각은 30도입니다. 외각의 합이 360도이므로 정십이각형임을 구한 뒤 총 대각선 공식을 적용합니다.')">💡 힌트</button><br>한 내각의 크기가 150도인 정다각형의 대각선의 총 개수를 구하시오.
+                    <strong>Q9. [사분면의 응용 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 점 P가 제2사분면 위의 점일 때 a와 b의 부호를 먼저 정해봅니다. 그 후 -b의 부호가 어떻게 바뀌는지 알아내어 점 Q의 (x좌표, y좌표) 부호를 분석해 보세요.')">💡 힌트</button><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?
                     <div class="input-group">
                         <input type="text" id="ans9" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error9">계산 오류!</div>
+            <div class="error-msg" id="error9">잘못된 구역입니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ9()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q10 -->
         <div id="panel_q10" class="glass-panel">
-            <h2>제 10구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q10.png" alt="Background" class="panel-image">
+            <h2>제 10구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧩 <strong>[내각과 외각의 비]</strong><br><br>마지막 암호판의 정체를 파악하세요.</div>
+                <div class="story-text">🧭 <strong>[결계 돌파]</strong><br><br>마지막 사분면 문을 열기 위해 부호를 반전시킨 좌표의 사분면을 알아내야 합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10. [내각과 외각의 비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 내각과 한 외각의 합은 180도입니다. 이를 4:1로 비례배분하여 한 외각을 구하고 다각형 이름을 유추합니다.')">💡 힌트</button><br>한 내각과 한 외각의 크기의 비가 4:1인 정다각형의 이름을 구하시오.
+                    <strong>Q10. [사분면의 응용 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 점 P가 제3사분면 위의 점일 때 a와 b의 부호를 먼저 정해봅니다. 그 후 -a의 부호가 어떻게 바뀌는지 알아내어 점 Q의 (x좌표, y좌표) 부호를 분석해 보세요.')">💡 힌트</button><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?
                     <div class="input-group">
-                        <input type="text" id="ans10" placeholder="예: 정육각형">
+                        <input type="text" id="ans10" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error10">암호판 고정 실패!</div>
+            <div class="error-msg" id="error10">잘못된 구역입니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ10()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q11 -->
         <div id="panel_q11" class="glass-panel">
-            <h2>제 11구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q11.png" alt="Background" class="panel-image">
+            <h2>제 11구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">☀️ <strong>[거대 톱니바퀴]</strong><br><br>문이 조금 열렸습니다! 완전히 열려면 테두리의 석판을 정비례 원리를 이용해 돌려야 합니다!</div>
+                <div class="story-text">🌊 <strong>[수압 경고]</strong><br><br>수압 그래프를 분석합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11. [호의 길이와 중심각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부채꼴의 중심각이 커질 때 호의 길이도 이에 비례하여 일정하게 늘어나는 성질을 뜻합니다.')">💡 힌트</button><br>한 원에서 부채꼴의 호의 길이는 중심각의 크기에 어떻게 비례하는가?
+                    <strong>Q11. [그래프 해석 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 시간(x)은 계속 흘러가는데 이동한 거리(y)를 나타내는 그래프의 높이가 변하지 않고 평평합니다. 이는 잠수정이 어떤 상태임을 뜻할까요?')">💡 힌트</button><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?
                     <div class="input-group">
-                        <input type="text" id="ans11" placeholder="예: 정비례, 반비례">
+                        <input type="text" id="ans11" placeholder="예: 상승, 하강, 정지">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error11">비례 원리 오류!</div>
+            <div class="error-msg" id="error11">그래프 해석 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ11()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
-            <h2>제 12구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q12.png" alt="Background" class="panel-image">
+            <h2>제 12구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">☀️ <strong>[호의 길이 비례식]</strong><br><br>중심각을 늘려서 석판을 더 많이 돌려야 합니다.</div>
+                <div class="story-text">🌊 <strong>[깊이 예측]</strong><br><br>일정한 속력으로 내려가는 잠수정의 깊이를 구합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12. [호의 길이와 중심각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 중심각의 크기와 호의 길이는 정비례하므로, 중심각이 4배 증가할 때 호의 길이도 똑같이 4배 증가합니다.')">💡 힌트</button><br>중심각이 40도일 때 호의 길이가 6cm라면, 중심각이 160도일 때 호의 길이를 구하시오.
+                    <strong>Q12. [그래프 해석 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 일정한 속력으로 내려가므로 시간과 깊이는 정비례 관계입니다. 10분 동안 100m를 내려갔을 때, 절반의 시간인 5분 동안에는 몇 m를 내려갔을지 비례식을 세워 보세요.')">💡 힌트</button><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?
                     <div class="input-group">
                         <input type="text" id="ans12" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error12">호의 길이 조절 실패!</div>
+            <div class="error-msg" id="error12">깊이 예측 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ12()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q13 -->
         <div id="panel_q13" class="glass-panel">
-            <h2>제 13구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q13.png" alt="Background" class="panel-image">
+            <h2>제 13구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">☀️ <strong>[부채꼴의 넓이 비율]</strong><br><br>빛을 모을 넓이의 비율을 맞추세요.</div>
+                <div class="story-text">🌊 <strong>[그래프 방향]</strong><br><br>직선의 방향성을 파악합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13. [부채꼴의 넓이와 중심각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 원 전체의 중심각은 360도입니다. 넓이가 원의 1/6이므로 중심각도 360도의 1/6을 차지합니다.')">💡 힌트</button><br>부채꼴의 넓이가 원의 넓이의 1/6일 때, 이 부채꼴의 중심각의 크기를 구하시오.
+                    <strong>Q13. [그래프 해석 3]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 우상향하는 직선은 오른쪽 위를 향합니다. 따라서 그래프 상에서 오른쪽(x가 커지는 방향)으로 이동할 때, 그래프의 세로 높이(y값)는 어떻게 변하는지 관찰해 보세요.')">💡 힌트</button><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?
                     <div class="input-group">
-                        <input type="text" id="ans13" placeholder="숫자만 입력">
+                        <input type="text" id="ans13" placeholder="예: 증가, 감소">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error13">각도 조절 실패!</div>
+            <div class="error-msg" id="error13">해석 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ13()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q14 -->
         <div id="panel_q14" class="glass-panel">
-            <h2>제 14구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q14.png" alt="Background" class="panel-image">
+            <h2>제 14구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">☀️ <strong>[현의 성질]</strong><br><br>두 개의 열쇠 구멍의 길이가 같은지 확인합니다.</div>
+                <div class="story-text">🌊 <strong>[변화량 분석]</strong><br><br>정지 상태에서의 변화량을 확인합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14. [현의 길이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 중심각이 같은 두 부채꼴에서 원 위의 두 점을 곧게 이은 선분(현)의 길이를 비교해 봅니다.')">💡 힌트</button><br>중심각의 크기가 같은 두 부채꼴의 현의 길이는 서로 같은가?
+                    <strong>Q14. [그래프 해석 4]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 수심 100m 지점에 5분 동안 계속 가만히 멈춰 있었다면, 멈춰 있는 동안 깊이(y값)가 변한 양은 얼마일지 생각해 보세요.')">💡 힌트</button><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?
                     <div class="input-group">
-                        <input type="text" id="ans14" placeholder="예: 같다, 다르다">
+                        <input type="text" id="ans14" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error14">현의 길이 오류!</div>
+            <div class="error-msg" id="error14">해석 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ14()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
-            <h2>제 15구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q15.png" alt="Background" class="panel-image">
+            <h2>제 15구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">☀️ <strong>[현과 중심각의 비례]</strong><br><br>비례 관계를 정확히 이해해야 다음으로 넘어갈 수 있습니다.</div>
+                <div class="story-text">🌊 <strong>[산소 잔량]</strong><br><br>남은 산소의 양을 그래프로 나타낼 때의 개형을 맞춥니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15. [현과 중심각의 비례]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 중심각이 2배가 될 때 현의 길이도 정확히 2배가 되는지 원 위에 직접 그려 확인해 봅니다.')">💡 힌트</button><br>현의 길이는 중심각의 크기에 정비례하는가?
+                    <strong>Q15. [변수 관계 이해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 시간(x)이 흐를수록 탱크 안에 남은 산소량(y)은 늘어날까요, 아니면 줄어들까요? 양의 변화에 따른 그래프의 방향(우상향 또는 우하향)을 결정해 보세요.')">💡 힌트</button><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?
                     <div class="input-group">
-                        <input type="text" id="ans15" placeholder="예: 그렇다, 아니다">
+                        <input type="text" id="ans15" placeholder="예: 우하향, 우상향">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error15">비례 관계 오류!</div>
+            <div class="error-msg" id="error15">산소 예측 실패!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ15()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q16 -->
         <div id="panel_q16" class="glass-panel">
-            <h2>제 16구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q16.png" alt="Background" class="panel-image">
+            <h2>제 16구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔑 <strong>[마지막 관문]</strong><br><br>드디어 수조 앞입니다! 수조의 덮개를 열려면 부채꼴 모양 청동 열쇠의 넓이와 둘레를 정확히 계산해야 합니다!</div>
+                <div class="story-text">⚙️ <strong>[정비례 회전]</strong><br><br>황금 문을 여는 톱니바퀴의 회전수 관계를 파악합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16. [원주 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름이 r인 원의 둘레 공식은 2 * 파이 * r 입니다.')">💡 힌트</button><br>반지름의 길이가 5cm인 원의 둘레의 길이를 구하시오. (원주율은 π, 입력시 '파이'로 기재)
+                    <strong>Q16. [정비례 관계]</strong> <button class="btn-hint" onclick="alert('💡 힌트: y가 x에 정비례하므로 식 y = ax를 세울 수 있습니다. 먼저 주어진 x = 3, y = 15를 대입해 비례상수 a의 값을 구한 후, 완성된 식에 x = 5를 대입해 보세요.')">💡 힌트</button><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.
                     <div class="input-group">
-                        <input type="text" id="ans16" placeholder="예: 5파이">
+                        <input type="text" id="ans16" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error16">둘레 계산 오류!</div>
+            <div class="error-msg" id="error16">톱니바퀴가 멈췄습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ16()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q17 -->
         <div id="panel_q17" class="glass-panel">
-            <h2>제 17구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q17.png" alt="Background" class="panel-image">
+            <h2>제 17구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔑 <strong>[청동 열쇠 호의 길이]</strong><br><br>청동 열쇠 테두리에 금실을 둘러야 합니다.</div>
+                <div class="story-text">⚙️ <strong>[비례 상수]</strong><br><br>함수식을 완성해야 다이얼이 돌아갑니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17. [호의 길이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름이 r, 중심각이 x도인 부채꼴 호의 길이 공식은 2 * 파이 * r * (x / 360) 입니다.')">💡 힌트</button><br>반지름의 길이가 9cm이고 중심각의 크기가 120도인 부채꼴의 호의 길이를 구하시오.
+                    <strong>Q17. [정비례 함수식]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 점 (2, -8)을 지난다는 것은 x = 2일 때 y = -8이 성립한다는 뜻입니다. 이 값을 y = ax 식에 대입하여 일차방정식을 풀어보세요.')">💡 힌트</button><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.
                     <div class="input-group">
-                        <input type="text" id="ans17" placeholder="예: 3파이">
+                        <input type="text" id="ans17" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error17">금실 길이 부족!</div>
+            <div class="error-msg" id="error17">다이얼 번호 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ17()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q18 -->
         <div id="panel_q18" class="glass-panel">
-            <h2>제 18구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q18.png" alt="Background" class="panel-image">
+            <h2>제 18구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔑 <strong>[부채꼴 홈의 넓이]</strong><br><br>화강암 판 위에 에너지를 모을 면적을 계산하세요.</div>
+                <div class="story-text">💎 <strong>[보물 적재 경보]</strong><br><br>황금을 챙겨가려면 부력 장치와 무게의 반비례 관계를 알아야 합니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18. [부채꼴의 넓이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름이 r, 중심각이 x도인 부채꼴 넓이 공식은 파이 * r^2 * (x / 360) 입니다.')">💡 힌트</button><br>반지름의 길이가 6cm이고 중심각의 크기가 60도인 부채꼴 모양 홈의 넓이를 구하시오.
+                    <strong>Q18. [반비례 관계 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 두 변수 x, y가 반비례 관계일 때는 두 변수의 곱(x × y)이 항상 비례상수 a로 일정합니다. 먼저 4개일 때 60kg인 것을 이용해 곱을 구하고, 6개일 때의 무게를 계산해 보세요.')">💡 힌트</button><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?
                     <div class="input-group">
-                        <input type="text" id="ans18" placeholder="예: 2파이">
+                        <input type="text" id="ans18" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error18">면적 계산 오류!</div>
+            <div class="error-msg" id="error18">부력 균형 붕괴!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ18()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
-            <h2>제 19구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q19.png" alt="Background" class="panel-image">
+            <h2>제 19구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔑 <strong>[비상 게이트 수치]</strong><br><br>중심각을 모르는 상태에서 넓이를 계산해야 합니다.</div>
+                <div class="story-text">💎 <strong>[반비례 상수]</strong><br><br>반비례 관계식을 알아냅니다.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19. [중심각 없이 넓이 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름 r과 호의 길이 l이 주어졌을 때의 부채꼴 넓이 공식인 (1/2) * r * l 을 활용합니다.')">💡 힌트</button><br>반지름의 길이가 10cm이고 호의 길이가 5π cm인 부채꼴 모양 석문의 넓이를 계산하시오.
+                    <strong>Q19. [반비례 관계 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: y가 x에 반비례하므로 y = a/x 식에 대입할 수 있습니다. 주어진 x = 2, y = 10을 대입하여 분수 식을 참으로 만드는 상수 a의 값을 구해 보세요.')">💡 힌트</button><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.
                     <div class="input-group">
-                        <input type="text" id="ans19" placeholder="예: 10파이">
+                        <input type="text" id="ans19" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error19">게이트 수치 오류!</div>
+            <div class="error-msg" id="error19">식 계산 오류!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ19()">다음으로</button>
-
-
             </div>
         </div>
 
         <!-- Q20 -->
         <div id="panel_q20" class="glass-panel">
-            <h2>제 20구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_06_plane_geometry/q20.png" alt="Background" class="panel-image">
+            <h2>제 20구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_04_coordinates/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔑 <strong>[최종 탈출]</strong><br><br>마지막 암호 다이얼입니다! 색칠된 넓이를 맞추세요.</div>
+                <div class="story-text">🔴 <strong>[최종 탈출 레이저]</strong><br><br>마지막 탈출구를 엽니다!</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20. [색칠한 부분의 넓이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름 8cm인 큰 반원 넓이에서 반지름 4cm인 작은 반원 두 개(합치면 작은 원 하나)의 넓이를 뺍니다.')">💡 힌트</button><br>반지름이 8cm인 반원에서 반지름이 4cm인 반원 두 개를 뺀 색칠된 부분의 넓이를 구하시오.
+                    <strong>Q20. [최종 암호 해독]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 점 (-3, k)가 반비례 그래프 위에 있으므로 x = -3, y = k를 식 y = 12/x에 대입하면 등식이 성립합니다. k값을 계산해 보세요.')">💡 힌트</button><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.
                     <div class="input-group">
-                        <input type="text" id="ans20" placeholder="예: 12파이">
+                        <input type="text" id="ans20" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error20">다이얼이 잠겼습니다!</div>
+            <div class="error-msg" id="error20">레이저 방어막에 막혔습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ20()">탈출하기</button>
-
-
             </div>
         </div>
 
         <!-- 아웃트로 -->
         <div id="outro" class="glass-panel">
             <h1>탈출 성공!</h1>
-            <h2>태양 신전의 거울 미궁</h2>
-            <img src="assets/m1_06_plane_geometry/outro.png" alt="Background" class="panel-image">
+            <h2>아틀란티스의 보물</h2>
+            <img src="assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">여러분들이 땀을 흘리며 석문에 정답을 입력하고 다이얼을 돌리는 순간! 
-                천장에서 쏟아지던 뜨겁고 살인적인 빛줄기가 마지막 거울에 반사되어 지하에 있는 깊은 냉각 수조의 중심부로 정확히 꽂힙니다. 
-                쉭-! 하는 굉음과 함께 하얀 수증기가 신전을 가득 채우더니, 이내 굳게 닫혀 있던 탈출용 거대 돌벽이 스르륵 내려앉습니다. 
-                눈을 뜰 수 없이 밝은 사막의 태양과 시원한 모래바람이 밀려옵니다. 거울 미궁 탈출에 성공했습니다!</div>
+                <div class="story-text">"패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 소리와 함께 해저 도시의 거대한 황금 문이 갈라집니다. 
+                남은 산소는 단 2분. 여러분은 황금 문을 연 성취감을 안고, 잠수정의 부력 장치를 가동하여 보물상자와 함께 해수면을 향해 솟구쳐 오릅니다. 
+                좌표평면과 비례 그래프의 지혜로 전설을 현실로 만들었습니다. 미션 대성공!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
         </div>
 
-        <script>
+    <script>
         function tryStartGame(unitId) {
             const sid = document.getElementById('studentId');
             const sname = document.getElementById('studentName');
@@ -1034,6 +1059,31 @@
             
             nextStage('intro', 'panel_q1', 5);
         }
+
+
+        let storyHistory = [];
+        function openLog() {
+            document.getElementById('storyLogModal').classList.add('active');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = '기록이 없습니다.';
+            } else {
+                container.innerHTML = storyHistory.join('<hr>');
+            }
+        }
+        function closeLog() {
+            document.getElementById('storyLogModal').classList.remove('active');
+        }
+
+        // Add current intro to history on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const introPanel = document.getElementById('intro');
+            const introTitle = introPanel.querySelector('h1') ? introPanel.querySelector('h1').innerText : '도입부';
+            const introStory = introPanel.querySelector('.story-box') ? introPanel.querySelector('.story-box').innerHTML : '';
+            if (introStory) {
+                storyHistory.push(`<strong>[${introTitle}]</strong><br>${introStory}`);
+            }
+        });
 
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         const audioCtx = new AudioContext();
@@ -1127,10 +1177,12 @@
             stopBGM();
             [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
                 setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
-            },
-                { f: 659.25, t: 0.2 },
-                { f: 783.99, t: 0.4 },
-                { f: 1046.50, t: 0.6 }
+            },   
+                { f: 659.25, t: 0 },   
+                { f: 783.99, t: 0 },   
+                { f: 659.25, t: 0.2 }, 
+                { f: 783.99, t: 0.4 }, 
+                { f: 1046.50, t: 0.4 } 
             ];
             chords.forEach(note => {
                 setTimeout(() => {
@@ -1138,12 +1190,12 @@
                     const gain = audioCtx.createGain();
                     osc.type = 'triangle';
                     osc.frequency.value = note.f;
-                    gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-                    gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
+                    gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
                     osc.start();
-                    osc.stop(audioCtx.currentTime + 1.0);
+                    osc.stop(audioCtx.currentTime + 0.6);
                 }, note.t * 1000);
             });
         }
@@ -1169,12 +1221,6 @@
             osc.stop(now + 0.03);
         }
 
-                // Visual Novel chunk Typewriter Engine
-        
-        
-                // Visual Novel chunk Typewriter Engine
-        let typeWriterTimeout = null;
-        
         function splitSentences(text) {
             let result = [];
             let start = 0;
@@ -1199,7 +1245,6 @@
             let isComplete = false;
             let currentChunkIndex = 0;
             let chunks = [];
-            
             const textEl = element.querySelector('.story-text');
             if(!textEl) {
                 if(onComplete) onComplete();
@@ -1214,27 +1259,21 @@
                 }
             }
             if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
-            
             const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
             if (!textEl.hasAttribute('data-raw-html')) {
                 textEl.setAttribute('data-raw-html', htmlContent);
             }
-            
             let rawLines = htmlContent.split(/<br\s*\/?>/i);
             for(let line of rawLines) {
                 let sentences = splitSentences(line);
                 for(let s of sentences) {
-                    if(s.trim()) {
-                        chunks.push(s.trim());
-                    }
+                    if(s.trim()) chunks.push(s.trim());
                 }
             }
-
             if(chunks.length === 0) {
                 triggerComplete();
                 return;
             }
-            
             let i = 0;
             let textStr = '';
             let typingFinished = false;
@@ -1245,20 +1284,16 @@
                 i = 0;
                 textStr = '';
                 typingFinished = false;
-                
                 let chunkText = chunks[currentChunkIndex];
-                
                 const currentPanel = element.closest('.glass-panel');
-                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '안내문';
                 const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
                 if (!storyHistory.includes(logEntry)) {
                     storyHistory.push(logEntry);
                 }
-
                 if(currentChunkIndex < chunks.length - 1) {
                     chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
                 }
-                
                 textEl.innerHTML = '';
                 
                 function type() {
@@ -1277,7 +1312,6 @@
                             i++;
                         }
                         textEl.innerHTML = textStr;
-                        
                         if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
                             try { playTick(); } catch(e) {}
                         }
@@ -1292,7 +1326,6 @@
                 }
                 type();
             }
-            
             element.onclick = () => {
                 if (!typingFinished) {
                     clearTimeout(typeWriterTimeout);
@@ -1302,9 +1335,7 @@
                     }
                     textEl.innerHTML = chunkText;
                     typingFinished = true;
-                    if(currentChunkIndex === chunks.length - 1) {
-                        triggerComplete();
-                    }
+                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
                 } else {
                     if (currentChunkIndex < chunks.length - 1) {
                         currentChunkIndex++;
@@ -1312,7 +1343,6 @@
                     }
                 }
             };
-            
             renderChunk();
         }
 
@@ -1345,67 +1375,57 @@
 
         function nextStage(currentId, nextId, progressPercent) {
             if (currentId === 'intro') startTimer();
-            if (nextId === 'outro') clearInterval(timerId);
+            if (nextId === 'outro') {
+                clearInterval(timerId);
+                if (window.userRecordRow) {
+                    try {
+                        google.script.run.recordEnd(window.userRecordRow);
+                    } catch(e) {
+                        console.error("기록 저장 실패: ", e);
+                    }
+                }
+            }
             try { playClick(); } catch(e) {}
             if(currentId === 'intro') {
                 try { startBGM(); } catch(e) {}
             }
-
             const currentEl = document.getElementById(currentId);
             const nextEl = document.getElementById(nextId);
             const progContainer = document.getElementById('progressContainer');
             const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
+            
+            if (currentEl) currentEl.classList.remove('active');
             
             setTimeout(() => {
-                if(nextId !== 'intro') progContainer.style.display = 'block';
-                progBar.style.width = progressPercent + '%';
-                nextEl.classList.add('active');
-                
-                // Keep controls always visible. Just trigger typewriter on the story box
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25);
-                }
-            }, 300);
-        }
-
-            const currentEl = document.getElementById(currentId);
-            const nextEl = document.getElementById(nextId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
-            
-            setTimeout(() => {
-                if(nextId !== 'intro') progContainer.style.display = 'block';
-                progBar.style.width = progressPercent + '%';
-                nextEl.classList.add('active');
-                
-                const toHide = nextEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
+                if(nextId !== 'intro' && progContainer) progContainer.style.display = 'block';
+                if(progBar) progBar.style.width = progressPercent + '%';
+                if(nextEl) {
+                    nextEl.classList.add('active');
+                    
+                    const toHide = nextEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                    toHide.forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(10px)';
+                        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                        el.style.pointerEvents = 'none';
+                    });
+                    
+                    const storyBox = nextEl.querySelector('.story-box');
+                    if(storyBox) {
+                        typeWriterHTML(storyBox, 25, () => {
+                            toHide.forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                                el.style.pointerEvents = 'auto';
+                            });
+                        });
+                    } else {
                         toHide.forEach(el => {
                             el.style.opacity = '1';
                             el.style.transform = 'translateY(0)';
                             el.style.pointerEvents = 'auto';
                         });
-                    });
-                } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
+                    }
                 }
             }, 300);
         }
@@ -1416,48 +1436,39 @@
             const prevEl = document.getElementById(prevId);
             const progContainer = document.getElementById('progressContainer');
             const progBar = document.getElementById('progressBar');
-
-            currentEl.classList.remove('active');
+            
+            if (currentEl) currentEl.classList.remove('active');
             
             setTimeout(() => {
-                if(prevId === 'intro') {
-                    progContainer.style.display = 'none';
-                }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25);
-                }
-            }, 300);
-        }
-                progBar.style.width = progressPercent + '%';
-                prevEl.classList.add('active');
-
-                const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
-
-                const storyBox = prevEl.querySelector('.story-box');
-                if(storyBox) {
-                    typeWriterHTML(storyBox, 25, () => {
+                if(prevId === 'intro' && progContainer) progContainer.style.display = 'none';
+                if(progBar) progBar.style.width = progressPercent + '%';
+                if(prevEl) {
+                    prevEl.classList.add('active');
+                    
+                    const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                    toHide.forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(10px)';
+                        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                        el.style.pointerEvents = 'none';
+                    });
+                    
+                    const storyBox = prevEl.querySelector('.story-box');
+                    if(storyBox) {
+                        typeWriterHTML(storyBox, 25, () => {
+                            toHide.forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                                el.style.pointerEvents = 'auto';
+                            });
+                        });
+                    } else {
                         toHide.forEach(el => {
                             el.style.opacity = '1';
                             el.style.transform = 'translateY(0)';
                             el.style.pointerEvents = 'auto';
                         });
-                    });
-                } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
+                    }
                 }
             }, 300);
         }
@@ -1512,17 +1523,13 @@
             });
         });
 
-        function cleanPi(str) {
-            let s = cleanString(str);
-            return s.replace('파이', 'pi').replace('π', 'pi');
-        }
 
         // Q1
 
         // Q1
         function checkQ1() {
             const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
-            if (ans === '팔각형') {
+            if (ans === '-5,8') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q1', 'panel_q2', 5);
@@ -1542,7 +1549,7 @@
         // Q2
         function checkQ2() {
             const ans = cleanString(document.getElementById('ans2').value).replace('(','').replace(')','');
-            if (ans === '35') {
+            if (ans === '7,0') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q2', 'panel_q3', 10);
@@ -1562,7 +1569,7 @@
         // Q3
         function checkQ3() {
             const ans = cleanString(document.getElementById('ans3').value).replace('(','').replace(')','');
-            if (ans === '105') {
+            if (ans === '0,0') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q3', 'panel_q4', 15);
@@ -1582,7 +1589,7 @@
         // Q4
         function checkQ4() {
             const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
-            if (ans === '160') {
+            if (ans === '0,-3') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q4', 'panel_q5', 20);
@@ -1602,7 +1609,7 @@
         // Q5
         function checkQ5() {
             const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
-            if (ans === '7') {
+            if (ans === '48') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q5', 'panel_q6', 25);
@@ -1622,7 +1629,7 @@
         // Q6
         function checkQ6() {
             const ans = cleanString(document.getElementById('ans6').value).replace('(','').replace(')','');
-            if (ans === '360') {
+            if (ans === '4') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q6', 'panel_q7', 30);
@@ -1642,7 +1649,7 @@
         // Q7
         function checkQ7() {
             const ans = cleanString(document.getElementById('ans7').value).replace('(','').replace(')','');
-            if (ans === '정십각형') {
+            if (ans === '3') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q7', 'panel_q8', 35);
@@ -1662,7 +1669,7 @@
         // Q8
         function checkQ8() {
             const ans = cleanString(document.getElementById('ans8').value).replace('(','').replace(')','');
-            if (ans === '135') {
+            if (ans === '4') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q8', 'panel_q9', 40);
@@ -1682,7 +1689,7 @@
         // Q9
         function checkQ9() {
             const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
-            if (ans === '54') {
+            if (ans === '3') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q9', 'panel_q10', 45);
@@ -1702,7 +1709,7 @@
         // Q10
         function checkQ10() {
             const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
-            if (ans === '정십각형') {
+            if (ans === '4') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q10', 'panel_q11', 50);
@@ -1722,7 +1729,7 @@
         // Q11
         function checkQ11() {
             const ans = cleanString(document.getElementById('ans11').value).replace('(','').replace(')','');
-            if (ans === '정비례') {
+            if (ans === '정지') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q11', 'panel_q12', 55);
@@ -1742,7 +1749,7 @@
         // Q12
         function checkQ12() {
             const ans = cleanString(document.getElementById('ans12').value).replace('(','').replace(')','');
-            if (ans === '24') {
+            if (ans === '50') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q12', 'panel_q13', 60);
@@ -1762,7 +1769,7 @@
         // Q13
         function checkQ13() {
             const ans = cleanString(document.getElementById('ans13').value).replace('(','').replace(')','');
-            if (ans === '60') {
+            if (ans === '증가') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q13', 'panel_q14', 65);
@@ -1782,7 +1789,7 @@
         // Q14
         function checkQ14() {
             const ans = cleanString(document.getElementById('ans14').value).replace('(','').replace(')','');
-            if (ans === '같다') {
+            if (ans === '0') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q14', 'panel_q15', 70);
@@ -1802,7 +1809,7 @@
         // Q15
         function checkQ15() {
             const ans = cleanString(document.getElementById('ans15').value).replace('(','').replace(')','');
-            if (ans === '아니다') {
+            if (ans === '우하향') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q15', 'panel_q16', 75);
@@ -1822,7 +1829,7 @@
         // Q16
         function checkQ16() {
             const ans = cleanString(document.getElementById('ans16').value).replace('(','').replace(')','');
-            if (ans === '10파이') {
+            if (ans === '25') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q16', 'panel_q17', 80);
@@ -1842,7 +1849,7 @@
         // Q17
         function checkQ17() {
             const ans = cleanString(document.getElementById('ans17').value).replace('(','').replace(')','');
-            if (ans === '6파이') {
+            if (ans === '-4') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q17', 'panel_q18', 85);
@@ -1862,7 +1869,7 @@
         // Q18
         function checkQ18() {
             const ans = cleanString(document.getElementById('ans18').value).replace('(','').replace(')','');
-            if (ans === '6파이') {
+            if (ans === '40') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q18', 'panel_q19', 90);
@@ -1882,7 +1889,7 @@
         // Q19
         function checkQ19() {
             const ans = cleanString(document.getElementById('ans19').value).replace('(','').replace(')','');
-            if (ans === '25파이') {
+            if (ans === '20') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q19', 'panel_q20', 95);
@@ -1902,13 +1909,13 @@
         // Q20
         function checkQ20() {
             const ans = cleanString(document.getElementById('ans20').value).replace('(','').replace(')','');
-            if (ans === '16파이') {
+            if (ans === '-4') {
                 wrongCount = 0;
                 try { playVictory(); } catch(e) {} 
                 // GAS 기록 종료 호출
                 try {
                     if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
-                        google.script.run.recordEnd(window.userRecordRow, 'm1_06');
+                        google.script.run.recordEnd(window.userRecordRow, 'm1_04');
                     }
                 } catch(e) {
                     console.warn("구글 시트 종료 기록 실패(로컬 테스트 모드):", e);
@@ -1951,6 +1958,17 @@
             }
         };
     </script>
+
+    <!-- Story Log UI -->
+    
+    <div id="storyLogModal" class="log-modal">
+        <div class="log-content">
+            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
+            <h2>📜 지나온 해저 탐사 기록</h2>
+            <div id="logContainer">기록이 없습니다.</div>
+        </div>
+    </div>
+
 
     <script>
         function tryStartGame(unitId) {

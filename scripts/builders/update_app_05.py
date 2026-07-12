@@ -561,6 +561,12 @@ base_html = """<!DOCTYPE html>
 
         
 
+        
+
+        
+
+        
+
 
         let timeLeft = 40 * 60;
         let timerId = null;
