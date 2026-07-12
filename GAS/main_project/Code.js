@@ -78,3 +78,20 @@ function recordEnd(rowNum, unit) {
   
   return true;
 }
+
+function initSheets() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var units = ["m1_01", "m1_02", "m1_03", "m1_04", "m1_05", "m1_06", "m1_07", "m1_08"];
+  
+  for (var i = 0; i < units.length; i++) {
+    var sheetName = "기록_" + units[i];
+    var sheet = ss.getSheetByName(sheetName);
+    if (!sheet) {
+      sheet = ss.insertSheet(sheetName);
+    }
+    // 헤더가 비어있다면 생성
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["학번", "이름", "시작 시간", "종료 시간", "소요 시간", "완료"]);
+    }
+  }
+}
