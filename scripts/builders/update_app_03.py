@@ -529,7 +529,7 @@ base_html = """<!DOCTYPE html>
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-mechanical-switch-key-2980.wav" type="audio/wav">
     </audio>
     <audio id="sndTick">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-key-press-computer-2253.wav" type="audio/wav">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-mechanical-keyboard-clicks-2266.wav" type="audio/wav">
     </audio>
     <audio id="sndSuccess">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-digital-quick-bypass-2255.wav" type="audio/wav">
@@ -563,7 +563,7 @@ base_html = """<!DOCTYPE html>
             // 브라우저 오디오 정책 해제 (락 풀기)
             try {
                 if (!isMuted) {
-                    bgm.volume = 0.15;
+                    bgm.volume = 0.3;
                     bgm.play().catch(e => {});
                     [sndClick, sndTick, sndSuccess, sndError, sndVictory].forEach(snd => {
                         if(snd) {
@@ -631,7 +631,7 @@ base_html = """<!DOCTYPE html>
 
         function startBGM() {
             if (!isMuted) {
-                bgm.volume = 0.15;
+                bgm.volume = 0.3;
                 try {
                     bgm.play().catch(e => console.log("BGM Autoplay blocked: play on user interaction"));
                 } catch(e) {}
@@ -642,7 +642,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndClick.currentTime = 0;
-                    sndClick.volume = 0.3;
+                    sndClick.volume = 0.45;
                     sndClick.play().catch(e => {});
                 } catch(e) {}
             }
@@ -652,7 +652,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndTick.currentTime = 0;
-                    sndTick.volume = 0.2;
+                    sndTick.volume = 0.45;
                     sndTick.play().catch(e => {});
                 } catch(e) {}
             }
@@ -662,7 +662,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndSuccess.currentTime = 0;
-                    sndSuccess.volume = 0.25;
+                    sndSuccess.volume = 0.5;
                     sndSuccess.play().catch(e => {});
                 } catch(e) {}
             }
@@ -672,7 +672,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndError.currentTime = 0;
-                    sndError.volume = 0.3;
+                    sndError.volume = 0.5;
                     sndError.play().catch(e => {});
                 } catch(e) {}
             }
@@ -682,7 +682,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     bgm.pause();
-                    sndVictory.volume = 0.3;
+                    sndVictory.volume = 0.5;
                     sndVictory.play().catch(e => {});
                 } catch(e) {}
             }
