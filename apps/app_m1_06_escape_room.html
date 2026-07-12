@@ -464,7 +464,548 @@
     </style>
 
     <!-- MathJax for LaTeX Rendering -->
-    <script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <div class="sunbeam" style="left: 20%; animation-delay: 0s;"></div>
+    <div class="sunbeam" style="left: 50%; animation-delay: 1.5s; width: 3px;"></div>
+    <div class="sunbeam" style="left: 80%; animation-delay: 0.7s;"></div>
+
+    <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔊 소리 켜짐</button>
+
+    <div class="container">
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- 0. 인트로 -->
+        <div id="intro" class="glass-panel active">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_06_plane_geometry/intro.png" alt="Background" class="panel-image">
+            <h1>고대 태양 신전</h1>
+            <h2>거울 미궁 탈출</h2>
+            <div class="story-box"><div class="story-text">1924년, 이집트 왕가의 계곡 외곽. 한 달째 몰아치던 기록적인 모래 폭풍이 잦아들자, 깎아지른 절벽 아래로 전설로만 전해지던 <strong>'아문-라의 잊혀진 태양 신전'</strong>의 입구가 웅장한 모습을 드러냈습니다. 이 신전은 고대 이집트 최고의 수학자와 건축가들이 모여 빛의 에너지를 다루기 위해 설계했다고 알려져 있습니다.<br><br>
+                당신은 세계 각국에서 모인 최고의 수학 전문가들로 구성된 비밀 탐사대의 핵심 연구원입니다. 조심스럽게 신전 최하층에 위치한 거대한 '거울 미궁'에 발을 들이는 순간, 앞장서던 대원이 무심코 바닥의 황금 타일을 밟고 말았습니다.<br><br>
+                <em>"쿠르르르릉-!"</em><br><br>
+                섬뜩한 굉음과 함께 육중한 화강암 문이 닫히며 퇴로가 차단되었습니다. 동시에 천장이 기계음과 함께 열리며, 지름이 10미터는 족히 되어 보이는 거대한 돋보기 렌즈를 통해 맹렬한 사막의 태양빛이 직사광선처럼 쏟아져 내리기 시작합니다.<br><br>
+                귀에 꽂힌 무전기를 통해 지상 베이스캠프에 남은 탐사대장의 다급한 외침이 들려옵니다.<br><br>
+                <span style="color: #F87171;">『신전 내부의 온도가 급격히 상승하고 있다! 시뮬레이션 결과, 정확히 45분 뒤면 내부 온도가 1000도를 넘어 모든 대원들이 잿더미가 될 거다! 거울의 반사각을 조절해 태양빛 에너지를 신전 동력으로 전환시켜 탈출구를 열어라!』</span><br><br>
+                생존을 위한 카운트다운이 시작되었습니다. 거울 미궁에 숨겨진 12개의 기하학적 수수께끼를 연속으로 풀어내십시오!
+            
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button></div>
+            
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+            </div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;"><button class="btn"  onclick="nextStage('intro', 'panel_q1', 8.3)">미궁으로 진입하기</button></div>
+        </div>
+
+        <!-- Q1 -->
+
+        <!-- Q1 -->
+        <div id="panel_q1" class="glass-panel">
+            <h2>제 1구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q1.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🚨 <strong>[대원의 비명]</strong><br><br>앗 뜨거워! 천장에서 빛줄기가 내려오고 있습니다. 거울 기둥들을 교차시켜 빛을 분산시켜야 합니다!</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q1. [다각형의 대각선 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 한 꼭짓점에서 그을 수 있는 대각선의 개수 공식은 n-3 입니다.')">💡 힌트</button><br>한 꼭짓점에서 그을 수 있는 대각선의 개수가 5개인 다각형의 이름을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans1" placeholder="예: 육각형">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error1">기둥 조작 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ1()">미궁 진입</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div id="panel_q2" class="glass-panel">
+            <h2>제 2구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q2.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🚨 <strong>[대각선 교차]</strong><br><br>전체 대각선의 수를 계산해야 합니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q2. [다각형의 대각선 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 총 대각선 수 공식인 n(n-3)/2 에 10을 대입하여 계산합니다.')">💡 힌트</button><br>십각형 모양의 기둥 배치에서 모든 기둥끼리 서로 빛을 교차 연결하려고 한다. 총 대각선의 개수를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error2">계산 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ2()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div id="panel_q3" class="glass-panel">
+            <h2>제 3구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q3.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🚨 <strong>[빛의 굴절]</strong><br><br>빛이 새어나가고 있어요! 삼각형 반사판의 외각을 계산하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q3. [삼각형의 외각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 삼각형의 한 외각의 크기는 그와 이웃하지 않는 두 내각의 크기의 합과 같습니다.')">💡 힌트</button><br>삼각형 반사판에서 두 내각이 각각 45도, 60도일 때, 나머지 한 내각의 외각의 크기를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error3">각도 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ3()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div id="panel_q4" class="glass-panel">
+            <h2>제 4구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q4.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🚨 <strong>[외각의 비율]</strong><br><br>외각의 비례식을 풀어야 합니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q4. [삼각형의 외각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 외각의 총합은 항상 360도입니다. 비례배분을 이용하여 가장 큰 비율(4)을 차지하는 외각을 구합니다.')">💡 힌트</button><br>삼각형의 세 외각의 비가 2:3:4일 때, 가장 큰 외각의 크기를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error4">비율 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ4()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div id="panel_q5" class="glass-panel">
+            <h2>제 5구역: 빛의 반사각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q5.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🚨 <strong>[내각의 합]</strong><br><br>마지막 반사판의 구조를 파악하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q5. [다각형의 내각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 내각의 총합 공식은 180 * (n-2) 입니다. 이 값이 900이 되는 n을 찾습니다.')">💡 힌트</button><br>내각의 크기의 합이 900도인 다각형의 꼭짓점의 개수를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans5" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error5">다각형 모양 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ5()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div id="panel_q6" class="glass-panel">
+            <h2>제 6구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q6.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🧩 <strong>[비밀통로 발견]</strong><br><br>바닥에 거대한 회전 다이얼이 보입니다. 다각형의 내각과 외각의 합을 알아내면 통로가 열릴 겁니다!</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q6. [다각형의 외각의 합]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형이 몇 각형이든 상관없이 모든 외각의 크기의 총합은 항상 360도입니다.')">💡 힌트</button><br>모든 다각형의 외각의 크기의 합은 항상 일정합니다. 그 크기는 몇 도인가?
+                    <div class="input-group">
+                        <input type="text" id="ans6" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error6">회전판이 멈췄습니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ6()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div id="panel_q7" class="glass-panel">
+            <h2>제 7구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q7.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🧩 <strong>[정다각형의 외각]</strong><br><br>외각의 크기로 다각형의 모양을 유추하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q7. [정다각형의 외각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정n각형의 한 외각 크기는 360 / n 입니다. 이 값이 36이 되는 n을 구해 정다각형 이름을 적습니다.')">💡 힌트</button><br>한 외각의 크기가 36도인 정다각형의 이름을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans7" placeholder="예: 정오각형">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error7">다이얼 문양 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ7()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div id="panel_q8" class="glass-panel">
+            <h2>제 8구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q8.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🧩 <strong>[정다각형의 내각 1]</strong><br><br>팔각형 다이얼의 내각을 맞추세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q8. [정다각형의 내각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정팔각형의 내각 총합인 180 * (8-2) = 1080도를 꼭짓점 개수인 8로 나누어 한 내각을 구합니다.')">💡 힌트</button><br>정팔각형의 한 내각의 크기를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error8">각도 입력 실패!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ8()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div id="panel_q9" class="glass-panel">
+            <h2>제 9구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q9.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🧩 <strong>[정다각형의 내각 2]</strong><br><br>다이얼의 대각선 개수를 계산해야 문이 열립니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q9. [정다각형의 내각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 내각이 150도이면 한 외각은 30도입니다. 외각의 합이 360도이므로 정십이각형임을 구한 뒤 총 대각선 공식을 적용합니다.')">💡 힌트</button><br>한 내각의 크기가 150도인 정다각형의 대각선의 총 개수를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans9" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error9">계산 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ9()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div id="panel_q10" class="glass-panel">
+            <h2>제 10구역: 신전 바닥의 암호판 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q10.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🧩 <strong>[내각과 외각의 비]</strong><br><br>마지막 암호판의 정체를 파악하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q10. [내각과 외각의 비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 내각과 한 외각의 합은 180도입니다. 이를 4:1로 비례배분하여 한 외각을 구하고 다각형 이름을 유추합니다.')">💡 힌트</button><br>한 내각과 한 외각의 크기의 비가 4:1인 정다각형의 이름을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="예: 정육각형">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error10">암호판 고정 실패!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ10()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div id="panel_q11" class="glass-panel">
+            <h2>제 11구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q11.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">☀️ <strong>[거대 톱니바퀴]</strong><br><br>문이 조금 열렸습니다! 완전히 열려면 테두리의 석판을 정비례 원리를 이용해 돌려야 합니다!</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q11. [호의 길이와 중심각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부채꼴의 중심각이 커질 때 호의 길이도 이에 비례하여 일정하게 늘어나는 성질을 뜻합니다.')">💡 힌트</button><br>한 원에서 부채꼴의 호의 길이는 중심각의 크기에 어떻게 비례하는가?
+                    <div class="input-group">
+                        <input type="text" id="ans11" placeholder="예: 정비례, 반비례">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error11">비례 원리 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ11()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div id="panel_q12" class="glass-panel">
+            <h2>제 12구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q12.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">☀️ <strong>[호의 길이 비례식]</strong><br><br>중심각을 늘려서 석판을 더 많이 돌려야 합니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q12. [호의 길이와 중심각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 중심각의 크기와 호의 길이는 정비례하므로, 중심각이 4배 증가할 때 호의 길이도 똑같이 4배 증가합니다.')">💡 힌트</button><br>중심각이 40도일 때 호의 길이가 6cm라면, 중심각이 160도일 때 호의 길이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans12" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error12">호의 길이 조절 실패!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ12()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div id="panel_q13" class="glass-panel">
+            <h2>제 13구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q13.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">☀️ <strong>[부채꼴의 넓이 비율]</strong><br><br>빛을 모을 넓이의 비율을 맞추세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q13. [부채꼴의 넓이와 중심각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 원 전체의 중심각은 360도입니다. 넓이가 원의 1/6이므로 중심각도 360도의 1/6을 차지합니다.')">💡 힌트</button><br>부채꼴의 넓이가 원의 넓이의 1/6일 때, 이 부채꼴의 중심각의 크기를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans13" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error13">각도 조절 실패!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ13()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div id="panel_q14" class="glass-panel">
+            <h2>제 14구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q14.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">☀️ <strong>[현의 성질]</strong><br><br>두 개의 열쇠 구멍의 길이가 같은지 확인합니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q14. [현의 길이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 중심각이 같은 두 부채꼴에서 원 위의 두 점을 곧게 이은 선분(현)의 길이를 비교해 봅니다.')">💡 힌트</button><br>중심각의 크기가 같은 두 부채꼴의 현의 길이는 서로 같은가?
+                    <div class="input-group">
+                        <input type="text" id="ans14" placeholder="예: 같다, 다르다">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error14">현의 길이 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ14()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div id="panel_q15" class="glass-panel">
+            <h2>제 15구역: 태양 신의 석판 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q15.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">☀️ <strong>[현과 중심각의 비례]</strong><br><br>비례 관계를 정확히 이해해야 다음으로 넘어갈 수 있습니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q15. [현과 중심각의 비례]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 중심각이 2배가 될 때 현의 길이도 정확히 2배가 되는지 원 위에 직접 그려 확인해 봅니다.')">💡 힌트</button><br>현의 길이는 중심각의 크기에 정비례하는가?
+                    <div class="input-group">
+                        <input type="text" id="ans15" placeholder="예: 그렇다, 아니다">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error15">비례 관계 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ15()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q16 -->
+        <div id="panel_q16" class="glass-panel">
+            <h2>제 16구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q16.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🔑 <strong>[마지막 관문]</strong><br><br>드디어 수조 앞입니다! 수조의 덮개를 열려면 부채꼴 모양 청동 열쇠의 넓이와 둘레를 정확히 계산해야 합니다!</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q16. [원주 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름이 r인 원의 둘레 공식은 2 * 파이 * r 입니다.')">💡 힌트</button><br>반지름의 길이가 5cm인 원의 둘레의 길이를 구하시오. (원주율은 π, 입력시 '파이'로 기재)
+                    <div class="input-group">
+                        <input type="text" id="ans16" placeholder="예: 5파이">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error16">둘레 계산 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ16()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q17 -->
+        <div id="panel_q17" class="glass-panel">
+            <h2>제 17구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q17.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🔑 <strong>[청동 열쇠 호의 길이]</strong><br><br>청동 열쇠 테두리에 금실을 둘러야 합니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q17. [호의 길이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름이 r, 중심각이 x도인 부채꼴 호의 길이 공식은 2 * 파이 * r * (x / 360) 입니다.')">💡 힌트</button><br>반지름의 길이가 9cm이고 중심각의 크기가 120도인 부채꼴의 호의 길이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans17" placeholder="예: 3파이">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error17">금실 길이 부족!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ17()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q18 -->
+        <div id="panel_q18" class="glass-panel">
+            <h2>제 18구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q18.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🔑 <strong>[부채꼴 홈의 넓이]</strong><br><br>화강암 판 위에 에너지를 모을 면적을 계산하세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q18. [부채꼴의 넓이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름이 r, 중심각이 x도인 부채꼴 넓이 공식은 파이 * r^2 * (x / 360) 입니다.')">💡 힌트</button><br>반지름의 길이가 6cm이고 중심각의 크기가 60도인 부채꼴 모양 홈의 넓이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans18" placeholder="예: 2파이">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error18">면적 계산 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ18()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q19 -->
+        <div id="panel_q19" class="glass-panel">
+            <h2>제 19구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q19.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🔑 <strong>[비상 게이트 수치]</strong><br><br>중심각을 모르는 상태에서 넓이를 계산해야 합니다.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q19. [중심각 없이 넓이 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름 r과 호의 길이 l이 주어졌을 때의 부채꼴 넓이 공식인 (1/2) * r * l 을 활용합니다.')">💡 힌트</button><br>반지름의 길이가 10cm이고 호의 길이가 5π cm인 부채꼴 모양 석문의 넓이를 계산하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans19" placeholder="예: 10파이">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error19">게이트 수치 오류!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ19()">다음으로</button>
+
+
+            </div>
+        </div>
+
+        <!-- Q20 -->
+        <div id="panel_q20" class="glass-panel">
+            <h2>제 20구역: 최종 냉각 수조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="assets/m1_06_plane_geometry/q20.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🔑 <strong>[최종 탈출]</strong><br><br>마지막 암호 다이얼입니다! 색칠된 넓이를 맞추세요.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box">
+                <div class="question-content">
+                    <strong>Q20. [색칠한 부분의 넓이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 반지름 8cm인 큰 반원 넓이에서 반지름 4cm인 작은 반원 두 개(합치면 작은 원 하나)의 넓이를 뺍니다.')">💡 힌트</button><br>반지름이 8cm인 반원에서 반지름이 4cm인 반원 두 개를 뺀 색칠된 부분의 넓이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans20" placeholder="예: 12파이">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error20">다이얼이 잠겼습니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ20()">탈출하기</button>
+
+
+            </div>
+        </div>
+
+        <!-- 아웃트로 -->
+        <div id="outro" class="glass-panel">
+            <h1>탈출 성공!</h1>
+            <h2>태양 신전의 거울 미궁</h2>
+            <img src="assets/m1_06_plane_geometry/outro.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">여러분들이 땀을 흘리며 석문에 정답을 입력하고 다이얼을 돌리는 순간! 
+                천장에서 쏟아지던 뜨겁고 살인적인 빛줄기가 마지막 거울에 반사되어 지하에 있는 깊은 냉각 수조의 중심부로 정확히 꽂힙니다. 
+                쉭-! 하는 굉음과 함께 하얀 수증기가 신전을 가득 채우더니, 이내 굳게 닫혀 있던 탈출용 거대 돌벽이 스르륵 내려앉습니다. 
+                눈을 뜰 수 없이 밝은 사막의 태양과 시원한 모래바람이 밀려옵니다. 거울 미궁 탈출에 성공했습니다!</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
+        </div>
+
+        <script>
         function tryStartGame(unitId) {
             const sid = document.getElementById('studentId');
             const sname = document.getElementById('studentName');
@@ -494,11 +1035,286 @@
             nextStage('intro', 'panel_q1', 5);
         }
 
-        
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = new AudioContext();
+        let bgmOscillators = [];
+        let lfo = null;
+        let bgmGain = null;
+        let isMuted = false;
+        let audioCtx = null;
+        let bgmOsc = null;
+        let bgmGain = null;
+        let bgmLfo = null;
 
-        
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
 
+        function playSynth(freq, type, duration, vol) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function stopBGM() {
+            try {
+                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
+                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
+            } catch(e){}
+        }
+
+        function startBGM() {
+            if (isMuted) return;
+            try {
+                initAudio();
+                if(bgmOsc) return;
+                bgmOsc = audioCtx.createOscillator();
+                bgmGain = audioCtx.createGain();
+                bgmOsc.type = 'triangle';
+                bgmOsc.frequency.setValueAtTime(55.00, audioCtx.currentTime);
+                bgmGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                bgmOsc.connect(bgmGain);
+                bgmGain.connect(audioCtx.destination);
+                bgmOsc.start();
+                
+                bgmLfo = audioCtx.createOscillator();
+                bgmLfo.type = 'sine';
+                bgmLfo.frequency.setValueAtTime(0.15, audioCtx.currentTime); 
+                const lfoGain = audioCtx.createGain();
+                lfoGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                bgmLfo.connect(lfoGain);
+                lfoGain.connect(bgmGain.gain);
+                bgmLfo.start();
+            } catch(e) {}
+        }
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            const btn = document.getElementById('soundToggle');
+            if (isMuted) {
+                if(btn) btn.innerText = '🔇 소리 꺼짐';
+                stopBGM();
+            } else {
+                if(btn) btn.innerText = '🔊 소리 켜짐';
+                startBGM();
+            }
+        }
+
+        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
+        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
+        function playSuccess() { 
+            playSynth(523.25, 'sine', 0.15, 0.7); 
+            setTimeout(()=>playSynth(659.25, 'sine', 0.15, 0.7), 150); 
+            setTimeout(()=>playSynth(783.99, 'sine', 0.3, 0.7), 300); 
+        }
+        function playError() {
+            playSynth(150, 'sawtooth', 0.3, 0.6);
+            setTimeout(()=>playSynth(100, 'sawtooth', 0.4, 0.6), 200);
+        }
+        function playVictory() {
+            stopBGM();
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
+            },
+                { f: 659.25, t: 0.2 },
+                { f: 783.99, t: 0.4 },
+                { f: 1046.50, t: 0.6 }
+            ];
+            chords.forEach(note => {
+                setTimeout(() => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.value = note.f;
+                    gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 1.0);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.0);
+                }, note.t * 1000);
+            });
+        }
+
+        let lastTickTime = 0;
+        function playTick() {
+            if (isMuted) return;
+            if (audioCtx.state === 'suspended') return;
+            const now = audioCtx.currentTime;
+            if (now - lastTickTime < 0.05) return; 
+            lastTickTime = now;
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(400, now);
+            osc.frequency.exponentialRampToValueAtTime(200, now + 0.03);
+            gain.gain.setValueAtTime(0.015, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.03);
+        }
+
+                // Visual Novel chunk Typewriter Engine
         
+        
+                // Visual Novel chunk Typewriter Engine
+        let typeWriterTimeout = null;
+        
+        function splitSentences(text) {
+            let result = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                if (char === '.' || char === '!' || char === '?') {
+                    const nextChar = text.charAt(i + 1);
+                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
+                        result.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
+                    }
+                }
+            }
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) {
+                result.push(finalChunk);
+            }
+            return result;
+        }
+
+        function typeWriterHTML(element, speed = 25, onComplete = null) {
+            let isComplete = false;
+            let currentChunkIndex = 0;
+            let chunks = [];
+            
+            const textEl = element.querySelector('.story-text');
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
+            function triggerComplete() {
+                if(!isComplete) {
+                    isComplete = true;
+                    element.style.cursor = 'default';
+                    if(onComplete) onComplete();
+                }
+            }
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            
+            const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
+            if (!textEl.hasAttribute('data-raw-html')) {
+                textEl.setAttribute('data-raw-html', htmlContent);
+            }
+            
+            let rawLines = htmlContent.split(/<br\s*\/?>/i);
+            for(let line of rawLines) {
+                let sentences = splitSentences(line);
+                for(let s of sentences) {
+                    if(s.trim()) {
+                        chunks.push(s.trim());
+                    }
+                }
+            }
+
+            if(chunks.length === 0) {
+                triggerComplete();
+                return;
+            }
+            
+            let i = 0;
+            let textStr = '';
+            let typingFinished = false;
+            element.style.cursor = 'pointer';
+            
+            function renderChunk() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                i = 0;
+                textStr = '';
+                typingFinished = false;
+                
+                let chunkText = chunks[currentChunkIndex];
+                
+                const currentPanel = element.closest('.glass-panel');
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
+                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                if (!storyHistory.includes(logEntry)) {
+                    storyHistory.push(logEntry);
+                }
+
+                if(currentChunkIndex < chunks.length - 1) {
+                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                }
+                
+                textEl.innerHTML = '';
+                
+                function type() {
+                    if (i < chunkText.length) {
+                        if (chunkText.charAt(i) === '<') {
+                            const endTag = chunkText.indexOf('>', i);
+                            if (endTag !== -1) {
+                                textStr += chunkText.substring(i, endTag + 1);
+                                i = endTag + 1;
+                            } else {
+                                textStr += chunkText.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            textStr += chunkText.charAt(i);
+                            i++;
+                        }
+                        textEl.innerHTML = textStr;
+                        
+                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
+                            try { playTick(); } catch(e) {}
+                        }
+                        typeWriterTimeout = setTimeout(type, speed);
+                    } else {
+                        textEl.innerHTML = chunkText;
+                        typingFinished = true;
+                        if(currentChunkIndex === chunks.length - 1) {
+                            triggerComplete();
+                        }
+                    }
+                }
+                type();
+            }
+            
+            element.onclick = () => {
+                if (!typingFinished) {
+                    clearTimeout(typeWriterTimeout);
+                    let chunkText = chunks[currentChunkIndex];
+                    if(currentChunkIndex < chunks.length - 1) {
+                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    }
+                    textEl.innerHTML = chunkText;
+                    typingFinished = true;
+                    if(currentChunkIndex === chunks.length - 1) {
+                        triggerComplete();
+                    }
+                } else {
+                    if (currentChunkIndex < chunks.length - 1) {
+                        currentChunkIndex++;
+                        renderChunk();
+                    }
+                }
+            };
+            
+            renderChunk();
+        }
 
         
         let timeLeft = 40 * 60;
@@ -528,7 +1344,33 @@
         }
 
         function nextStage(currentId, nextId, progressPercent) {
+            if (currentId === 'intro') startTimer();
+            if (nextId === 'outro') clearInterval(timerId);
             try { playClick(); } catch(e) {}
+            if(currentId === 'intro') {
+                try { startBGM(); } catch(e) {}
+            }
+
+            const currentEl = document.getElementById(currentId);
+            const nextEl = document.getElementById(nextId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            currentEl.classList.remove('active');
+            
+            setTimeout(() => {
+                if(nextId !== 'intro') progContainer.style.display = 'block';
+                progBar.style.width = progressPercent + '%';
+                nextEl.classList.add('active');
+                
+                // Keep controls always visible. Just trigger typewriter on the story box
+                const storyBox = nextEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25);
+                }
+            }, 300);
+        }
+
             const currentEl = document.getElementById(currentId);
             const nextEl = document.getElementById(nextId);
             const progContainer = document.getElementById('progressContainer');
@@ -590,7 +1432,35 @@
                 }
             }, 300);
         }
+                progBar.style.width = progressPercent + '%';
+                prevEl.classList.add('active');
 
+                const toHide = prevEl.querySelectorAll('.question-box, .graph-container, .btn-group');
+                toHide.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(10px)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    el.style.pointerEvents = 'none';
+                });
+
+                const storyBox = prevEl.querySelector('.story-box');
+                if(storyBox) {
+                    typeWriterHTML(storyBox, 25, () => {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    });
+                } else {
+                    toHide.forEach(el => {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                        el.style.pointerEvents = 'auto';
+                    });
+                }
+            }, 300);
+        }
 
         function showError(panelId, errorId) {
             playError(); 
@@ -1080,6 +1950,44 @@
                 }
             }
         };
+    </script>
+
+    <script>
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+                // GAS 로직
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 브라우저 오디오 엔진 시작 (외부 링크 의존 없음)
+            try {
+                if (!isMuted) {
+                    initAudio();
+                    startBGM();
+                }
+            } catch(e) {}
+            
+            nextStage('intro', 'panel_q1', 5);
+        }
+
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
     </script>
 </body>
 </html>
