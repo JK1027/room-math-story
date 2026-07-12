@@ -384,8 +384,18 @@
                 이 미궁은 입체도형의 마법으로 보호받고 있습니다. 다면체와 회전체의 성질을 이용해 함정을 피하고, 각종 도형의 겉넓이와 부피를 계산하여 20개의 암호를 풀어야만 지상으로 올라갈 수 있습니다.<br><br>
                 산소는 딱 40분 남았습니다. 수학적 지혜를 발휘하여 피라미드를 탈출하세요!
             </div>
-            <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">시스템 복구 시작</button>
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+            </div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;">
+                <button class="btn" onclick="tryStartGame('m1_07')">시스템 복구 시작</button>
             </div>
         </div>
         <!-- Q1 -->
@@ -894,29 +904,80 @@
             nextStage('intro', 'panel_q1', 5);
         }
 
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let isMuted = false;
+        let audioCtx = null;
+        let bgmOsc = null;
+        let bgmGain = null;
+        let bgmLfo = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSynth(freq, type, duration, vol) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function stopBGM() {
+            try {
+                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
+                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
+            } catch(e){}
+        }
+
+        function startBGM() {
+            if (isMuted) return;
+            try {
+                initAudio();
+                if(bgmOsc) return;
+                bgmOsc = audioCtx.createOscillator();
+                bgmGain = audioCtx.createGain();
+                bgmOsc.type = 'triangle';
+                bgmOsc.frequency.setValueAtTime(55.00, audioCtx.currentTime);
+                bgmGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                bgmOsc.connect(bgmGain);
+                bgmGain.connect(audioCtx.destination);
+                bgmOsc.start();
+                
+                bgmLfo = audioCtx.createOscillator();
+                bgmLfo.type = 'sine';
+                bgmLfo.frequency.setValueAtTime(0.15, audioCtx.currentTime); 
+                const lfoGain = audioCtx.createGain();
+                lfoGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                bgmLfo.connect(lfoGain);
+                lfoGain.connect(bgmGain.gain);
+                bgmLfo.start();
+            } catch(e) {}
+        }
 
         function toggleSound() {
             isMuted = !isMuted;
-            document.querySelector('.sound-ctrl').innerText = isMuted ? "🔇 소리 꺼짐" : "🔊 소리 켜짐";
+            const btn = document.querySelector('.sound-ctrl') || document.getElementById('soundToggle');
+            if (isMuted) {
+                if(btn) btn.innerText = '🔇 소리 꺼짐';
+                stopBGM();
+            } else {
+                if(btn) btn.innerText = '🔊 소리 켜짐';
+                startBGM();
+            }
         }
 
-        function playClick() {
-            if (isMuted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
+        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
+        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
 
         
         let timeLeft = 40 * 60;
@@ -1064,6 +1125,133 @@ function nextStage(currentId, nextId, progressPercent) {
         
         function closeLog() {
             document.getElementById('storyLogModal').style.display = 'none';
+        }
+
+        let typeWriterTimeout;
+        
+        function splitSentences(text) {
+            let result = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                if (char === '.' || char === '!' || char === '?') {
+                    const nextChar = text.charAt(i + 1);
+                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
+                        result.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
+                    }
+                }
+            }
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) {
+                result.push(finalChunk);
+            }
+            return result;
+        }
+
+        function typeWriterHTML(element, speed = 25, onComplete = null) {
+            let isComplete = false;
+            let currentChunkIndex = 0;
+            let chunks = [];
+            const textEl = element.querySelector('.story-text');
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
+            function triggerComplete() {
+                if(!isComplete) {
+                    isComplete = true;
+                    element.style.cursor = 'default';
+                    if(onComplete) onComplete();
+                }
+            }
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
+            if (!textEl.hasAttribute('data-raw-html')) {
+                textEl.setAttribute('data-raw-html', htmlContent);
+            }
+            let rawLines = htmlContent.split(/<br\s*\/?>/i);
+            for(let line of rawLines) {
+                let sentences = splitSentences(line);
+                for(let s of sentences) {
+                    if(s.trim()) chunks.push(s.trim());
+                }
+            }
+            if(chunks.length === 0) {
+                triggerComplete();
+                return;
+            }
+            let i = 0;
+            let textStr = '';
+            let typingFinished = false;
+            element.style.cursor = 'pointer';
+            
+            function renderChunk() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                i = 0;
+                textStr = '';
+                typingFinished = false;
+                let chunkText = chunks[currentChunkIndex];
+                const currentPanel = element.closest('.glass-panel');
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '안내문';
+                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                if (!storyHistory.includes(logEntry)) {
+                    storyHistory.push(logEntry);
+                }
+                if(currentChunkIndex < chunks.length - 1) {
+                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                }
+                textEl.innerHTML = '';
+                
+                function type() {
+                    if (i < chunkText.length) {
+                        if (chunkText.charAt(i) === '<') {
+                            const endTag = chunkText.indexOf('>', i);
+                            if (endTag !== -1) {
+                                textStr += chunkText.substring(i, endTag + 1);
+                                i = endTag + 1;
+                            } else {
+                                textStr += chunkText.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            textStr += chunkText.charAt(i);
+                            i++;
+                        }
+                        textEl.innerHTML = textStr;
+                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
+                            try { playTick(); } catch(e) {}
+                        }
+                        typeWriterTimeout = setTimeout(type, speed);
+                    } else {
+                        textEl.innerHTML = chunkText;
+                        typingFinished = true;
+                        if(currentChunkIndex === chunks.length - 1) {
+                            triggerComplete();
+                        }
+                    }
+                }
+                type();
+            }
+            element.onclick = () => {
+                if (!typingFinished) {
+                    clearTimeout(typeWriterTimeout);
+                    let chunkText = chunks[currentChunkIndex];
+                    if(currentChunkIndex < chunks.length - 1) {
+                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    }
+                    textEl.innerHTML = chunkText;
+                    typingFinished = true;
+                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
+                } else {
+                    if (currentChunkIndex < chunks.length - 1) {
+                        currentChunkIndex++;
+                        renderChunk();
+                    }
+                }
+            };
+            renderChunk();
         }
 
 
