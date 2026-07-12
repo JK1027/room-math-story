@@ -891,18 +891,18 @@
             <h2>제 20구역: 탈출 포드 사출 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_03_equations/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌠 <strong>[농도 희석]</strong><br><br>탈출 엔진 연료를 6% 농도로 희석하기 위해 주입할 희석수 양을 구하세요.</div>
+                <div class="story-text">🌠 <strong>[동면 연도 계산]</strong><br><br>동면 장치 가동 중인 요원들의 생체 나이 동기화 타이머를 설정하십시오.</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20. [소금물 농도 활용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 추가할 희석수(물)의 양을 x g으로 둡니다. 연료 희석 전과 희석 후의 원액(소금)의 양은 보존됩니다. 처음 10% 연료 300g에 포함된 연료 원액의 양(300 × 0.1)과, 물을 섞어 6%가 된 연료 (300 + x)g에 포함된 원액의 양이 같다는 식을 세워 해결해 보세요.')">💡 힌트</button><br>10%의 액체 연료 300g에 몇 g의 희석수를 더 넣으면 6%의 혼합 연료가 되는가?
+                    <strong>Q20. [나이에 관한 문제]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 구하고자 하는 연수를 x년 후로 둡니다. x년 후의 어머니의 나이는 42 + x 세, 딸의 나이는 12 + x 세가 됩니다. 42 + x = 3 × (12 + x) 로 일차방정식을 세워 계산해 보세요.')">💡 힌트</button><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error20">연료 비율 오류! 역화 경고!</div>
+            <div class="error-msg" id="error20">동기화 실패! 생체 나이 비동기화 경고!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ20()">탈출하기</button>
             </div>
@@ -914,7 +914,7 @@
             <h2>우주 정거장 델타의 비상 탈출</h2>
             <img src="assets/m1_03_equations/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">여러분들이 마지막 암호 '200'을 입력하자, 굉음과 함께 굳게 닫혀 있던 비상 해치가 개방되며 소형 탈출 포드가 사출 궤도로 미끄러져 들어갑니다! 
+                <div class="story-text">여러분들이 마지막 암호 '3'을 입력하자, 굉음과 함께 굳게 닫혀 있던 비상 해치가 개방되며 소형 탈출 포드가 사출 궤도로 미끄러져 들어갑니다! 
                 카운트다운이 0을 가리키는 순간, 포드가 불꽃을 뿜으며 암흑 속 우주 정거장 델타를 빠져나와 지구를 향해 아름다운 호를 그리며 나아갑니다. 
                 문자와 식의 규칙을 찾아내고, 소행성 충돌 시간을 일차방정식으로 풀어 극적으로 살아남은 요원들, 미션 완벽 성공입니다!</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
@@ -1703,7 +1703,7 @@ function cleanString(str) {
         // Q20
         function checkQ20() {
             const ans = cleanString(document.getElementById('ans20').value).replace('(','').replace(')','');
-            if (ans === '200' || ans === '200g') {
+            if (ans === '3' || ans === '3년') {
                 wrongCount = 0;
                 try { playVictory(); } catch(e) {} 
                 nextStage('panel_q20', 'outro', 100);
