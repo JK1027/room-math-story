@@ -469,7 +469,7 @@ base_html = """<!DOCTYPE html>
 
         <!-- 0. 인트로 -->
         <div id="intro" class="glass-panel active">
-            <img src="assets/m1_08_statistics/intro.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/intro.png" alt="Background" class="panel-image">
             <h1>셜록 홈즈와 통계국</h1>
             <h2>위조된 데이터의 비밀을 해독하라</h2>
             <div class="story-box">
@@ -485,8 +485,19 @@ base_html = """<!DOCTYPE html>
                 ⚠️ <b>주의사항</b><br>
                 문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. 신중하게 도전하세요!
             </div>
+            
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+            </div>
             <div class="btn-group" style="margin-top: 2rem; width:100%;">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 5)">통계 데이터 복구 가동</button>
+                <button class="btn" onclick="tryStartGame('m1_08')">통계 데이터 복구 가동</button>
             </div>
         </div>
 
@@ -515,6 +526,26 @@ base_html = """<!DOCTYPE html>
     </audio>
 
     <script>
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+                // GAS 로직
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            nextStage('intro', 'panel_q1', 5);
+        }
+
 
         let timeLeft = 40 * 60;
         let timerId = null;
@@ -981,7 +1012,7 @@ for q in qs:
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_08_statistics/q{qnum}.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
@@ -1008,7 +1039,7 @@ outro_html = '''
         <div id="outro" class="glass-panel">
             <h1>검거 성공!</h1>
             <h2>런던 통계국 보안 복구 완료</h2>
-            <img src="assets/m1_08_statistics/outro.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">마지막 단서 수치 '8'을 제어반에 입력하자, 조작되었던 통계 장부들이 올바른 줄기와 잎 그림으로 재정렬되며 진범의 탈출 경로가 지도 위에 뚜렷이 그려집니다! 
                 빅토리아 시기 런던의 안개가 걷히며 홈즈와 런던 경찰들이 현장에서 범인 모리아티의 스파이를 무사히 검거합니다. 
