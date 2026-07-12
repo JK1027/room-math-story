@@ -1011,26 +1011,56 @@ panels_html += outro_html
 js_checks = ""
 for q in qs:
     qnum = q['qnum']
-    ans_check = q['ans_check']
+    ans_check = q.get('ans_check', 'false')
     next_stage = f"'panel_q{qnum+1}'" if qnum < 20 else "'outro'"
     next_progress = qnum*5
     victory_call = 'try { playVictory(); } catch(e) {}' if qnum == 20 else 'try { playSuccess(); } catch(e) {}'
     
+    if qnum <= 5:
+        reset_qnum = 1
+        reset_prog = 0
+        zone_name = "1구역"
+    elif qnum <= 10:
+        reset_qnum = 6
+        reset_prog = 25
+        zone_name = "2구역"
+    elif qnum <= 15:
+        reset_qnum = 11
+        reset_prog = 50
+        zone_name = "3구역"
+    else:
+        reset_qnum = 16
+        reset_prog = 75
+        zone_name = "4구역"
+        
+    # GAS 종료 호출 로직 추가 (Q20)
+    gas_end_call = ""
+    if qnum == 20:
+        gas_end_call = '''
+                // GAS 기록 종료 호출
+                try {
+                    if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run.recordEnd(window.userRecordRow);
+                    }
+                } catch(e) {
+                    console.warn("구글 시트 종료 기록 실패(로컬 테스트 모드):", e);
+                }'''
+
     js = f'''
         // Q{qnum}
         function checkQ{qnum}() {{
             const ans = cleanString(document.getElementById('ans{qnum}').value).replace('(','').replace(')','');
             if ({ans_check}) {{
                 wrongCount = 0;
-                {victory_call} 
+                {victory_call} {gas_end_call}
                 nextStage('panel_q{qnum}', {next_stage}, {next_progress});
             }} else {{
                 wrongCount++;
                 if (wrongCount >= 3) {{
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! {zone_name} 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q{qnum}', 'panel_q1', 0);
+                    document.getElementById('ans{reset_qnum}').value = '';
+                    nextStage('panel_q{qnum}', 'panel_q{reset_qnum}', {reset_prog});
                 }} else {{
                     showError('panel_q{qnum}', 'error{qnum}');
                 }}

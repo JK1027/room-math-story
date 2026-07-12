@@ -1,14 +1,16 @@
-function doGet() {
-  return HtmlService.createTemplateFromFile('Index')
+var SPREADSHEET_ID = "1BKTNLVsSE2kuSEyRpEVRL2t-vkeqZEJyyXHBhCl5F1Q";
+
+function doGet(e) {
+  var unit = (e && e.parameter && e.parameter.unit) || "m1_01";
+  return HtmlService.createTemplateFromFile('Index_' + unit)
       .evaluate()
-      .setTitle('사라진 아틀란티스 (중1 4단원)')
+      .setTitle('사라진 아틀란티스 (' + unit + ')')
       .addMetaTag('viewport', 'width=device-width, initial-scale=1')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
 function recordStart(studentId, name) {
-  var sheetId = "1BKTNLVsSE2kuSEyRpEVRL2t-vkeqZEJyyXHBhCl5F1Q";
-  var ss = SpreadsheetApp.openById(sheetId);
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName("기록");
   
   if (!sheet) {
@@ -40,8 +42,7 @@ function recordStart(studentId, name) {
 function recordEnd(rowNum) {
   if (!rowNum) return;
   
-  var sheetId = "1BKTNLVsSE2kuSEyRpEVRL2t-vkeqZEJyyXHBhCl5F1Q";
-  var ss = SpreadsheetApp.openById(sheetId);
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   var sheet = ss.getSheetByName("기록");
   if (!sheet) return;
   

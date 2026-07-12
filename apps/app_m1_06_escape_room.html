@@ -1524,15 +1524,15 @@
 
         // Q1
         function checkQ1() {
-            const ans = cleanString(document.getElementById('ans1').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
             if (ans === '팔각형') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q1', 'panel_q2', 5);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q1', 'panel_q1', 0);
@@ -1544,15 +1544,15 @@
 
         // Q2
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans2').value).replace('(','').replace(')','');
             if (ans === '35') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q2', 'panel_q3', 10);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q2', 'panel_q1', 0);
@@ -1564,15 +1564,15 @@
 
         // Q3
         function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans3').value).replace('(','').replace(')','');
             if (ans === '105') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q3', 'panel_q4', 15);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q3', 'panel_q1', 0);
@@ -1584,15 +1584,15 @@
 
         // Q4
         function checkQ4() {
-            const ans = cleanString(document.getElementById('ans4').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
             if (ans === '160') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q4', 'panel_q5', 20);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q4', 'panel_q1', 0);
@@ -1604,15 +1604,15 @@
 
         // Q5
         function checkQ5() {
-            const ans = cleanString(document.getElementById('ans5').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
             if (ans === '7') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q5', 'panel_q6', 25);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q5', 'panel_q1', 0);
@@ -1624,18 +1624,18 @@
 
         // Q6
         function checkQ6() {
-            const ans = cleanString(document.getElementById('ans6').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans6').value).replace('(','').replace(')','');
             if (ans === '360') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q6', 'panel_q7', 30);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q6', 'panel_q1', 0);
+                    document.getElementById('ans6').value = '';
+                    nextStage('panel_q6', 'panel_q6', 25);
                 } else {
                     showError('panel_q6', 'error6');
                 }
@@ -1644,18 +1644,18 @@
 
         // Q7
         function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans7').value).replace('(','').replace(')','');
             if (ans === '정십각형') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q7', 'panel_q8', 35);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q7', 'panel_q1', 0);
+                    document.getElementById('ans6').value = '';
+                    nextStage('panel_q7', 'panel_q6', 25);
                 } else {
                     showError('panel_q7', 'error7');
                 }
@@ -1664,18 +1664,18 @@
 
         // Q8
         function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans8').value).replace('(','').replace(')','');
             if (ans === '135') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q8', 'panel_q9', 40);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q8', 'panel_q1', 0);
+                    document.getElementById('ans6').value = '';
+                    nextStage('panel_q8', 'panel_q6', 25);
                 } else {
                     showError('panel_q8', 'error8');
                 }
@@ -1684,18 +1684,18 @@
 
         // Q9
         function checkQ9() {
-            const ans = cleanString(document.getElementById('ans9').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
             if (ans === '54') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q9', 'panel_q10', 45);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q9', 'panel_q1', 0);
+                    document.getElementById('ans6').value = '';
+                    nextStage('panel_q9', 'panel_q6', 25);
                 } else {
                     showError('panel_q9', 'error9');
                 }
@@ -1704,18 +1704,18 @@
 
         // Q10
         function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
             if (ans === '정십각형') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q10', 'panel_q11', 50);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q10', 'panel_q1', 0);
+                    document.getElementById('ans6').value = '';
+                    nextStage('panel_q10', 'panel_q6', 25);
                 } else {
                     showError('panel_q10', 'error10');
                 }
@@ -1724,18 +1724,18 @@
 
         // Q11
         function checkQ11() {
-            const ans = cleanString(document.getElementById('ans11').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans11').value).replace('(','').replace(')','');
             if (ans === '정비례') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q11', 'panel_q12', 55);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q11', 'panel_q1', 0);
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q11', 'panel_q11', 50);
                 } else {
                     showError('panel_q11', 'error11');
                 }
@@ -1744,18 +1744,18 @@
 
         // Q12
         function checkQ12() {
-            const ans = cleanString(document.getElementById('ans12').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans12').value).replace('(','').replace(')','');
             if (ans === '24') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q12', 'panel_q13', 60);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q12', 'panel_q1', 0);
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q12', 'panel_q11', 50);
                 } else {
                     showError('panel_q12', 'error12');
                 }
@@ -1764,18 +1764,18 @@
 
         // Q13
         function checkQ13() {
-            const ans = cleanString(document.getElementById('ans13').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans13').value).replace('(','').replace(')','');
             if (ans === '60') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q13', 'panel_q14', 65);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q13', 'panel_q1', 0);
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q13', 'panel_q11', 50);
                 } else {
                     showError('panel_q13', 'error13');
                 }
@@ -1784,18 +1784,18 @@
 
         // Q14
         function checkQ14() {
-            const ans = cleanString(document.getElementById('ans14').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans14').value).replace('(','').replace(')','');
             if (ans === '같다') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q14', 'panel_q15', 70);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q14', 'panel_q1', 0);
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q14', 'panel_q11', 50);
                 } else {
                     showError('panel_q14', 'error14');
                 }
@@ -1804,18 +1804,18 @@
 
         // Q15
         function checkQ15() {
-            const ans = cleanString(document.getElementById('ans15').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans15').value).replace('(','').replace(')','');
             if (ans === '아니다') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q15', 'panel_q16', 75);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q15', 'panel_q1', 0);
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q15', 'panel_q11', 50);
                 } else {
                     showError('panel_q15', 'error15');
                 }
@@ -1824,18 +1824,18 @@
 
         // Q16
         function checkQ16() {
-            const ans = cleanString(document.getElementById('ans16').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans16').value).replace('(','').replace(')','');
             if (ans === '10파이') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q16', 'panel_q17', 80);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q16', 'panel_q1', 0);
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q16', 'panel_q16', 75);
                 } else {
                     showError('panel_q16', 'error16');
                 }
@@ -1844,18 +1844,18 @@
 
         // Q17
         function checkQ17() {
-            const ans = cleanString(document.getElementById('ans17').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans17').value).replace('(','').replace(')','');
             if (ans === '6파이') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q17', 'panel_q18', 85);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q17', 'panel_q1', 0);
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q17', 'panel_q16', 75);
                 } else {
                     showError('panel_q17', 'error17');
                 }
@@ -1864,18 +1864,18 @@
 
         // Q18
         function checkQ18() {
-            const ans = cleanString(document.getElementById('ans18').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans18').value).replace('(','').replace(')','');
             if (ans === '6파이') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q18', 'panel_q19', 90);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q18', 'panel_q1', 0);
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q18', 'panel_q16', 75);
                 } else {
                     showError('panel_q18', 'error18');
                 }
@@ -1884,18 +1884,18 @@
 
         // Q19
         function checkQ19() {
-            const ans = cleanString(document.getElementById('ans19').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans19').value).replace('(','').replace(')','');
             if (ans === '25파이') {
                 wrongCount = 0;
-                playSuccess(); 
+                try { playSuccess(); } catch(e) {} 
                 nextStage('panel_q19', 'panel_q20', 95);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q19', 'panel_q1', 0);
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q19', 'panel_q16', 75);
                 } else {
                     showError('panel_q19', 'error19');
                 }
@@ -1904,18 +1904,26 @@
 
         // Q20
         function checkQ20() {
-            const ans = cleanString(document.getElementById('ans20').value).replace(/\s+/g, '');
+            const ans = cleanString(document.getElementById('ans20').value).replace('(','').replace(')','');
             if (ans === '16파이') {
                 wrongCount = 0;
-                playVictory(); 
+                try { playVictory(); } catch(e) {} 
+                // GAS 기록 종료 호출
+                try {
+                    if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run.recordEnd(window.userRecordRow);
+                    }
+                } catch(e) {
+                    console.warn("구글 시트 종료 기록 실패(로컬 테스트 모드):", e);
+                }
                 nextStage('panel_q20', 'outro', 100);
             } else {
                 wrongCount++;
                 if (wrongCount >= 3) {
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q20', 'panel_q1', 0);
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q20', 'panel_q16', 75);
                 } else {
                     showError('panel_q20', 'error20');
                 }
