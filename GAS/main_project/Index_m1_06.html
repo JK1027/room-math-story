@@ -1058,26 +1058,26 @@
         }
 
         window.onload = () => {
-            // Hide intro buttons first
             const introPanel = document.getElementById('intro');
-            const introBtnGroup = introPanel.querySelector('.btn-group');
-            if (introBtnGroup) {
-                introBtnGroup.style.opacity = '0';
-                introBtnGroup.style.transform = 'translateY(10px)';
-                introBtnGroup.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                introBtnGroup.style.pointerEvents = 'none';
-            }
-            
-            // Start intro typing
-            const introStoryBox = introPanel.querySelector('.story-box');
-            if (introStoryBox) {
-                typeWriterHTML(introStoryBox, 25, () => {
-                    if (introBtnGroup) {
-                        introBtnGroup.style.opacity = '1';
-                        introBtnGroup.style.transform = 'translateY(0)';
-                        introBtnGroup.style.pointerEvents = 'auto';
-                    }
-                });
+            if (introPanel) {
+                const introBtnGroup = introPanel.querySelector('.btn-group');
+                if (introBtnGroup) {
+                    introBtnGroup.style.opacity = '0';
+                    introBtnGroup.style.transform = 'translateY(10px)';
+                    introBtnGroup.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    introBtnGroup.style.pointerEvents = 'none';
+                }
+                
+                const introStoryBox = introPanel.querySelector('.story-box');
+                if (introStoryBox) {
+                    typeWriterHTML(introStoryBox, 25, () => {
+                        if (introBtnGroup) {
+                            introBtnGroup.style.opacity = '1';
+                            introBtnGroup.style.transform = 'translateY(0)';
+                            introBtnGroup.style.pointerEvents = 'auto';
+                        }
+                    });
+                }
             }
         };
     </script>
