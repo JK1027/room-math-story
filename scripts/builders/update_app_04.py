@@ -100,10 +100,14 @@ for i, q in enumerate(qs):
     next_stage = f"'panel_q{qnum+1}'" if qnum < 20 else "'outro'"
     next_progress = qnum*5
     
+    # 💡 힌트 버튼을 질문 제목 <strong>Q{qnum}. [제목]</strong> 바로 옆에 삽입
+    hint_btn_html = f'<button class="btn-hint" onclick="alert(\'💡 힌트: {q["hint"]}\')">💡 힌트</button>'
+    qtext_hinted = qtext.replace('</strong>', f'</strong> {hint_btn_html}', 1)
+    
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
-            <h2>제 {qnum}구역: {title} <button class="btn-hint" onclick="alert('💡 힌트: {q["hint"]}')">💡 힌트</button> <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_04_coordinates/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
@@ -111,7 +115,7 @@ for i, q in enumerate(qs):
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    {qtext}
+                    {qtext_hinted}
                     <div class="input-group">
                         <input type="text" id="ans{qnum}" placeholder="{placeholder}">
                     </div>
