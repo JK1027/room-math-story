@@ -1009,25 +1009,18 @@
                 } catch(e) { console.warn('GAS 연동 안됨:', e); }
             }
             
-            // 브라우저 오디오 정책 해제 (락 풀기) 및 볼륨 100%
+            // 브라우저 오디오 엔진 시작 (외부 링크 의존 없음)
             try {
                 if (!isMuted) {
-                    bgm.volume = 1.0;
-                    bgm.play().catch(e => {});
-                    [sndClick, sndTick, sndSuccess, sndError, sndVictory].forEach(snd => {
-                        if(snd) {
-                            snd.volume = 0;
-                            snd.play().catch(e=>{});
-                            snd.pause();
-                            snd.currentTime = 0;
-                            snd.volume = 1.0; // 복구 (이게 빠져서 소리가 안났음)
-                        }
-                    });
+                    initAudio();
+                    startBGM();
                 }
             } catch(e) {}
             
             nextStage('intro', 'panel_q1', 5);
         }
+
+        
 
         
 
@@ -1061,82 +1054,93 @@
         }
 
         let isMuted = false;
-        const bgm = document.getElementById('bgm');
-        const sndClick = document.getElementById('sndClick');
-        const sndTick = document.getElementById('sndTick');
-        const sndSuccess = document.getElementById('sndSuccess');
-        const sndError = document.getElementById('sndError');
-        const sndVictory = document.getElementById('sndVictory');
+        let audioCtx = null;
+        let bgmOsc = null;
+        let bgmGain = null;
+        let bgmLfo = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSynth(freq, type, duration, vol) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function stopBGM() {
+            try {
+                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
+                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
+            } catch(e){}
+        }
+
+        function startBGM() {
+            if (isMuted) return;
+            try {
+                initAudio();
+                if(bgmOsc) return;
+                bgmOsc = audioCtx.createOscillator();
+                bgmGain = audioCtx.createGain();
+                bgmOsc.type = 'triangle';
+                bgmOsc.frequency.setValueAtTime(55.00, audioCtx.currentTime);
+                bgmGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                bgmOsc.connect(bgmGain);
+                bgmGain.connect(audioCtx.destination);
+                bgmOsc.start();
+                
+                bgmLfo = audioCtx.createOscillator();
+                bgmLfo.type = 'sine';
+                bgmLfo.frequency.setValueAtTime(0.15, audioCtx.currentTime); 
+                const lfoGain = audioCtx.createGain();
+                lfoGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                bgmLfo.connect(lfoGain);
+                lfoGain.connect(bgmGain.gain);
+                bgmLfo.start();
+            } catch(e) {}
+        }
 
         function toggleSound() {
             isMuted = !isMuted;
             const btn = document.getElementById('soundToggle');
             if (isMuted) {
-                btn.innerText = '🔇 소리 꺼짐';
-                try { bgm.pause(); } catch(e) {}
+                if(btn) btn.innerText = '🔇 소리 꺼짐';
+                stopBGM();
             } else {
-                btn.innerText = '🔊 소리 켜짐';
-                try { bgm.play(); } catch(e) {}
+                if(btn) btn.innerText = '🔊 소리 켜짐';
+                startBGM();
             }
         }
 
-        function startBGM() {
-            if (!isMuted) {
-                bgm.volume = 1.0;
-                try {
-                    bgm.play().catch(e => console.log("BGM Autoplay blocked"));
-                } catch(e) {}
-            }
+        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
+        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
+        function playSuccess() { 
+            playSynth(523.25, 'sine', 0.15, 0.7); 
+            setTimeout(()=>playSynth(659.25, 'sine', 0.15, 0.7), 150); 
+            setTimeout(()=>playSynth(783.99, 'sine', 0.3, 0.7), 300); 
         }
-
-        function playClick() {
-            if (!isMuted) {
-                try {
-                    sndClick.currentTime = 0;
-                    sndClick.volume = 1.0;
-                    sndClick.play().catch(e => {});
-                } catch(e) {}
-            }
-        }
-
-        function playTick() {
-            if (!isMuted) {
-                try {
-                    sndTick.currentTime = 0;
-                    sndTick.volume = 1.0;
-                    sndTick.play().catch(e => {});
-                } catch(e) {}
-            }
-        }
-
-        function playSuccess() {
-            if (!isMuted) {
-                try {
-                    sndSuccess.currentTime = 0;
-                    sndSuccess.volume = 1.0;
-                    sndSuccess.play().catch(e => {});
-                } catch(e) {}
-            }
-        }
-
         function playError() {
-            if (!isMuted) {
-                try {
-                    sndError.currentTime = 0;
-                    sndError.volume = 1.0;
-                    sndError.play().catch(e => {});
-                } catch(e) {}
-            }
+            playSynth(150, 'sawtooth', 0.3, 0.6);
+            setTimeout(()=>playSynth(100, 'sawtooth', 0.4, 0.6), 200);
         }
-
         function playVictory() {
-            if (!isMuted) {
-                try {
-                    bgm.pause();
-                    sndVictory.volume = 1.0;
-                    sndVictory.play().catch(e => {});
-                } catch(e) {}
-            }
+            stopBGM();
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
+            });
         }
 
         let wrongCount = 0;
