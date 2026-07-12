@@ -559,8 +559,27 @@ base_html = """<!DOCTYPE html>
                     }
                 } catch(e) { console.warn('GAS 연동 안됨:', e); }
             }
+            
+            // 브라우저 오디오 정책 해제 (락 풀기)
+            try {
+                if (!isMuted) {
+                    bgm.volume = 0.15;
+                    bgm.play().catch(e => {});
+                    [sndClick, sndTick, sndSuccess, sndError, sndVictory].forEach(snd => {
+                        if(snd) {
+                            snd.volume = 0;
+                            snd.play().catch(e=>{});
+                            snd.pause();
+                            snd.currentTime = 0;
+                        }
+                    });
+                }
+            } catch(e) {}
+            
             nextStage('intro', 'panel_q1', 5);
         }
+
+        
 
 
         let timeLeft = 40 * 60;
@@ -612,7 +631,7 @@ base_html = """<!DOCTYPE html>
 
         function startBGM() {
             if (!isMuted) {
-                bgm.volume = 0.3;
+                bgm.volume = 0.15;
                 try {
                     bgm.play().catch(e => console.log("BGM Autoplay blocked: play on user interaction"));
                 } catch(e) {}
@@ -623,6 +642,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndClick.currentTime = 0;
+                    sndClick.volume = 0.3;
                     sndClick.play().catch(e => {});
                 } catch(e) {}
             }
@@ -632,7 +652,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndTick.currentTime = 0;
-                    sndTick.volume = 0.5;
+                    sndTick.volume = 0.2;
                     sndTick.play().catch(e => {});
                 } catch(e) {}
             }
@@ -642,6 +662,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndSuccess.currentTime = 0;
+                    sndSuccess.volume = 0.25;
                     sndSuccess.play().catch(e => {});
                 } catch(e) {}
             }
@@ -651,6 +672,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndError.currentTime = 0;
+                    sndError.volume = 0.3;
                     sndError.play().catch(e => {});
                 } catch(e) {}
             }
@@ -660,7 +682,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     bgm.pause();
-                    sndVictory.volume = 0.5;
+                    sndVictory.volume = 0.3;
                     sndVictory.play().catch(e => {});
                 } catch(e) {}
             }
