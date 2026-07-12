@@ -560,10 +560,10 @@ base_html = """<!DOCTYPE html>
                 } catch(e) { console.warn('GAS 연동 안됨:', e); }
             }
             
-            // 브라우저 오디오 정책 해제 (락 풀기)
+            // 브라우저 오디오 정책 해제 (락 풀기) 및 볼륨 100%
             try {
                 if (!isMuted) {
-                    bgm.volume = 0.3;
+                    bgm.volume = 1.0;
                     bgm.play().catch(e => {});
                     [sndClick, sndTick, sndSuccess, sndError, sndVictory].forEach(snd => {
                         if(snd) {
@@ -571,6 +571,7 @@ base_html = """<!DOCTYPE html>
                             snd.play().catch(e=>{});
                             snd.pause();
                             snd.currentTime = 0;
+                            snd.volume = 1.0; // 복구 (이게 빠져서 소리가 안났음)
                         }
                     });
                 }
@@ -578,6 +579,8 @@ base_html = """<!DOCTYPE html>
             
             nextStage('intro', 'panel_q1', 5);
         }
+
+        
 
         
 
@@ -631,7 +634,7 @@ base_html = """<!DOCTYPE html>
 
         function startBGM() {
             if (!isMuted) {
-                bgm.volume = 0.3;
+                bgm.volume = 1.0;
                 try {
                     bgm.play().catch(e => console.log("BGM Autoplay blocked: play on user interaction"));
                 } catch(e) {}
@@ -642,7 +645,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndClick.currentTime = 0;
-                    sndClick.volume = 0.45;
+                    sndClick.volume = 1.0;
                     sndClick.play().catch(e => {});
                 } catch(e) {}
             }
@@ -652,7 +655,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndTick.currentTime = 0;
-                    sndTick.volume = 0.45;
+                    sndTick.volume = 1.0;
                     sndTick.play().catch(e => {});
                 } catch(e) {}
             }
@@ -662,7 +665,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndSuccess.currentTime = 0;
-                    sndSuccess.volume = 0.5;
+                    sndSuccess.volume = 1.0;
                     sndSuccess.play().catch(e => {});
                 } catch(e) {}
             }
@@ -672,7 +675,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     sndError.currentTime = 0;
-                    sndError.volume = 0.5;
+                    sndError.volume = 1.0;
                     sndError.play().catch(e => {});
                 } catch(e) {}
             }
@@ -682,7 +685,7 @@ base_html = """<!DOCTYPE html>
             if (!isMuted) {
                 try {
                     bgm.pause();
-                    sndVictory.volume = 0.5;
+                    sndVictory.volume = 1.0;
                     sndVictory.play().catch(e => {});
                 } catch(e) {}
             }
