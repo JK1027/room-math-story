@@ -4,7 +4,7 @@ function doGet(e) {
   var unit = (e && e.parameter && e.parameter.unit) || "m1_01";
   return HtmlService.createTemplateFromFile('Index_' + unit)
       .evaluate()
-      .setTitle('사라진 아틀란티스 (' + unit + ')')
+      .setTitle('(중1) 방탈출 게임')
       .addMetaTag('viewport', 'width=device-width, initial-scale=1')
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
