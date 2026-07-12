@@ -204,7 +204,7 @@ for q in qs:
                     document.getElementById('ans{reset_qnum}').value = '';
                     nextStage('panel_q{qnum}', 'panel_q{reset_qnum}', {reset_prog});
                 }} else {{
-                    showError('panel_q{qnum}', 'error{qnum}');
+                    showError('panel_q{qnum}', 'error{qnum}', wrongCount);
                 }}
             }}
         }}
