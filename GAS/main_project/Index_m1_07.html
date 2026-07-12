@@ -1046,6 +1046,13 @@ function nextStage(currentId, nextId, progressPercent) {
             osc.stop(audioCtx.currentTime + 0.25);
         }
 
+        function playVictory() {
+            if (isMuted) return;
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
+            });
+        }
+
         let storyHistory = [];
         
         function openLog() {
