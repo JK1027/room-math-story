@@ -1125,26 +1125,7 @@
             });
         }
 
-        let lastTickTime = 0;
-        function playTick() {
-            if (isMuted) return;
-            if (audioCtx.state === 'suspended') return;
-            const now = audioCtx.currentTime;
-            if (now - lastTickTime < 0.05) return; 
-            lastTickTime = now;
-            
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(400, now);
-            osc.frequency.exponentialRampToValueAtTime(200, now + 0.03);
-            gain.gain.setValueAtTime(0.015, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(now);
-            osc.stop(now + 0.03);
-        }
+
 
                 // Visual Novel chunk Typewriter Engine
         
