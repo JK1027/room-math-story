@@ -790,17 +790,45 @@ function cleanString(str) {
             if(currentId === 'intro') {
                 try { startBGM(); } catch(e) {}
             }
+
             const currentEl = document.getElementById(currentId);
             const nextEl = document.getElementById(nextId);
             const progContainer = document.getElementById('progressContainer');
             const progBar = document.getElementById('progressBar');
-            currentEl.classList.remove('active');
+
+            if (currentEl) currentEl.classList.remove('active');
+    
             setTimeout(() => {
-                if(nextId !== 'intro') progContainer.style.display = 'block';
-                progBar.style.width = progressPercent + '%';
-                nextEl.classList.add('active');
-                const storyBox = nextEl.querySelector('.story-box');
-                if(storyBox) typeWriterHTML(storyBox, 25);
+                if(nextId !== 'intro' && progContainer) progContainer.style.display = 'block';
+                if(progBar) progBar.style.width = progressPercent + '%';
+                if(nextEl) {
+                    nextEl.classList.add('active');
+            
+                    const toHide = nextEl.querySelectorAll('.question-box, .btn-group');
+                    toHide.forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(10px)';
+                        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                        el.style.pointerEvents = 'none';
+                    });
+            
+                    const storyBox = nextEl.querySelector('.story-box');
+                    if(storyBox) {
+                        typeWriterHTML(storyBox, 25, () => {
+                            toHide.forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                                el.style.pointerEvents = 'auto';
+                            });
+                        });
+                    } else {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    }
+                }
             }, 300);
         }
 
