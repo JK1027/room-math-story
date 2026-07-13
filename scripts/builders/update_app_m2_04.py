@@ -398,7 +398,7 @@ base_html = """<!DOCTYPE html>
         <div id="intro" class="glass-panel active">
             <h1>괴도 X의 암호 편지</h1>
             <h2>일차부등식의 해와 성질</h2>
-            <img src="../images/중2/04_intro.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!</div>
             </div>
@@ -413,7 +413,7 @@ base_html = """<!DOCTYPE html>
         <div id="outro" class="glass-panel">
             <h1>미션 완료!</h1>
             <h2>요정 숲의 균형 회복</h2>
-            <img src="../images/중2/04_ending.png" alt="Ending" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
                 <div class="story-text">음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!</div>
             </div>
@@ -773,10 +773,7 @@ for q in qs:
 
 for q in qs:
     qn = q['qnum']
-    if 1 <= qn <= 5: q['img'] = f"../images/중2/04_clues.png"
-    elif 6 <= qn <= 10: q['img'] = f"../images/중2/04_tangled.png"
-    elif 11 <= qn <= 15: q['img'] = f"../images/중2/04_decoding.png"
-    elif 16 <= qn <= 20: q['img'] = f"../images/중2/04_hideout.png"
+    q['img'] = f"https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q{qn}.png"
 
 for q in qs:
     if 'hint' in q and '<button class="btn-hint"' not in q['qtext']:
