@@ -374,6 +374,38 @@ base_html = """<!DOCTYPE html>
             .story-text { font-size: 0.9rem; min-height: 140px; }
             .btn { width: 100%; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -397,7 +429,9 @@ base_html = """<!DOCTYPE html>
             <h2>제곱근과 실수</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">고대 그리스의 수학자 피타고라스가 살아생전 무리수의 존재를 숨기기 위해 설계했다는 깊은 사막 속의 '무리수 사원'에 도달했습니다. 사원의 중심부로 갈수록 알 수 없는 수학 결계들이 여러분의 앞길을 가로막습니다. 사원에 가득 찬 제곱근의 기호를 해독하여 제한시간 45분 내에 무리수의 비밀을 밝히고 무사히 탈출하십시오!</div>
+                <div class="story-text">
+                [사원의 파수꾼 피타고라스-P]: "고대 그리스의 수학자 피타고라스가 살아생전 무리수의 존재를 숨기기 위해 설계했다는 깊은 사막 속의 '무리수 사원'에 도달했습니다. 사원의 중심부로 갈수록 알 수 없는 수학 결계들이 여러분의 앞길을 가로막습니다. 사원에 가득 찬 제곱근의 기호를 해독하여 제한시간 45분 내에 무리수의 비밀을 밝히고 무사히 탈출하십시오!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
@@ -412,7 +446,9 @@ base_html = """<!DOCTYPE html>
             <h2>최종 봉인 탈출 성공</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">무리수의 모든 결계가 사그라지며 사원 지하 깊은 곳에 묻혀있던 황금 피라미드가 솟아오릅니다. 고대 수학자들이 영원히 숨겨두려 했던 세상의 비밀이 밝혀지는 순간입니다. 탐사대원 여러분, 무리수 사원 탈출 성공을 축하합니다!</div>
+                <div class="story-text">
+                [사원의 파수꾼 피타고라스-P]: "무리수의 모든 결계가 사그라지며 사원 지하 깊은 곳에 묻혀있던 황금 피라미드가 솟아오릅니다. 고대 수학자들이 영원히 숨겨두려 했던 세상의 비밀이 밝혀지는 순간입니다. 탐사대원 여러분, 무리수 사원 탈출 성공을 축하합니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -636,206 +672,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "스테이지 1",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q1.</strong> 9의 제곱근을 구하시오. (단, 답이 2개인 경우 ± 기호를 사용해 나타내시오. 예: ±3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '±3' || ans === '+-3' || ans === '3,-3' || ans === '-3,3'",
-        "hint": "어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근이라고 합니다. 양수의 제곱근은 항상 양과 음의 부호를 모두 가져야 함을 주지시킵니다."
-    },
-    {
-        "qnum": 2,
-        "title": "스테이지 2",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q2.</strong> √16의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '4'",
-        "hint": "주어진 수가 어떤 자연수의 제곱수인지 파악하여 근호(√)를 벗겨내도록 유도합니다."
-    },
-    {
-        "qnum": 3,
-        "title": "스테이지 3",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q3.</strong> 제곱근 25의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '5'",
-        "hint": "제곱근 a는 양의 제곱근인 √a만을 가리킨다는 개념상의 차이를 상기시킵니다."
-    },
-    {
-        "qnum": 4,
-        "title": "스테이지 4",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q4.</strong> (-3)²의 제곱근 중 양수인 것을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '3'",
-        "hint": "거듭제곱 식을 먼저 계산한 뒤, 얻어지는 양수 값의 두 제곱근 중 플러스 부호를 가진 것을 찾도록 안내합니다."
-    },
-    {
-        "qnum": 5,
-        "title": "스테이지 5",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q5.</strong> 다음 보기 중 무리수인 것의 번호를 쓰시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "무리수는 순환하지 않는 무한소수입니다. 원주율이나 근호가 완전히 벗겨지지 않는 유리수 이외의 값을 선별하게 지도합니다."
-    },
-    {
-        "qnum": 6,
-        "title": "스테이지 6",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q6.</strong> 두 실수 √2와 √3 중 더 큰 수를 쓰시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√3'",
-        "hint": "근호 안의 숫자가 클수록 실제 값도 큽니다. 두 수의 크기를 비교해 봅니다."
-    },
-    {
-        "qnum": 7,
-        "title": "스테이지 7",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q7.</strong> √5의 정수 부분을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '2'",
-        "hint": "주어진 루트 값이 어떤 연속하는 두 자연수 사이에 존재하는지 파악하여 정수 부분을 추출하도록 합니다."
-    },
-    {
-        "qnum": 8,
-        "title": "스테이지 8",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q8.</strong> √5의 소수 부분을 구하시오. (루트 기호를 사용하여 식으로 나타내시오. 예: √5-2)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√5-2'",
-        "hint": "무리수의 소수 부분은 전체 무리수 식에서 그 정수 부분을 뺀 수식으로 구성됨을 원리로 설명합니다."
-    },
-    {
-        "qnum": 9,
-        "title": "스테이지 9",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q9.</strong> √12를 a√b 꼴로 나타낼 때, 자연수 a, b에 대하여 a+b의 값을 구하시오. (단, b는 가장 작은 자연수)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '5'",
-        "hint": "근호 안의 수치를 소인수분해하여 제곱인 인수를 찾아 근호 밖으로 꺼내는 a√b 형태의 변형을 안내합니다."
-    },
-    {
-        "qnum": 10,
-        "title": "스테이지 10",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q10.</strong> 수직선 위에서 2와 √5 중 더 우측에 있는 수를 쓰시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√5'",
-        "hint": "자연수를 제곱근 기호를 씌운 형태로 바꾸어 두 제곱근 수치의 근호 안 크기를 대조하여 수직선 우측(큰 수)을 선별하게 합니다."
-    },
-    {
-        "qnum": 11,
-        "title": "스테이지 11",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q11.</strong> √3 × √5 의 값을 구하시오. (식으로 표현하시오. 예: √15)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√15'",
-        "hint": "근호가 있는 식의 곱셈은 근호 안의 숫자끼리 곱하여 하나의 근호 속에 넣고 정리하게 합니다."
-    },
-    {
-        "qnum": 12,
-        "title": "스테이지 12",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q12.</strong> √18 ÷ √2 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '3'",
-        "hint": "근호가 있는 식의 나눗셈은 근호 안의 수끼리 나누어 하나의 근호 속에 넣고 유리수 몫을 도출하게 지도합니다."
-    },
-    {
-        "qnum": 13,
-        "title": "스테이지 13",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q13.</strong> 2√6 × 3√3 의 값을 구하시오. (간단히 나타내시오. 예: 18√2)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '18√2'",
-        "hint": "근호 밖의 계수는 계수끼리 곱하고, 근호 안의 수는 안의 수끼리 곱해 정리한 뒤 제곱수를 밖으로 추출하도록 유도합니다."
-    },
-    {
-        "qnum": 14,
-        "title": "스테이지 14",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q14.</strong> 6/√3의 분모를 유리화한 값을 구하시오. (예: 2√3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '2√3'",
-        "hint": "분모에 위치한 무리수와 동일한 제곱근을 분모와 분자에 곱하는 분모의 유리화 공식을 사용하도록 가이드합니다."
-    },
-    {
-        "qnum": 15,
-        "title": "스테이지 15",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q15.</strong> √20 × √5 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '10'",
-        "hint": "두 수의 근호 안 수치를 먼저 소인수분해하여 곱한 후 제곱 성분을 밖으로 꺼내 정수 값으로 정돈합니다."
-    },
-    {
-        "qnum": 16,
-        "title": "스테이지 16",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q16.</strong> 3√2 + 5√2 의 값을 구하시오. (예: 8√2)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '8√2'",
-        "hint": "무리수 부분이 동일하므로, 문자 식의 동류항 계산처럼 근호 앞의 유리수 계수끼리 더하도록 유도합니다."
-    },
-    {
-        "qnum": 17,
-        "title": "스테이지 17",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q17.</strong> √2(√2 + √6) 의 값을 분배법칙을 이용해 계산하시오. (예: 2+2√3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '2+2√3'",
-        "hint": "분배법칙을 사용하여 괄호 밖의 무리수를 괄호 안의 각 항에 곱해주고, 제곱근 곱셈 규칙에 따라 정리합니다."
-    },
-    {
-        "qnum": 18,
-        "title": "스테이지 18",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q18.</strong> 5√3 - √12 의 값을 구하시오. (예: 3√3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '3√3'",
-        "hint": "뒤쪽 항의 무리수를 a√b 형태로 먼저 고친 후, 무리수 부분이 같은 동류항끼리 뺄셈 연산을 처리하게 안내합니다."
-    },
-    {
-        "qnum": 19,
-        "title": "스테이지 19",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q19.</strong> (2 + √3) + (3 - √3) 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '5'",
-        "hint": "괄호를 열고 유리수 부분은 유리수 부분끼리, 무리수 부분은 무리수 부분끼리 따로 모아 계산하게 유도합니다."
-    },
-    {
-        "qnum": 20,
-        "title": "스테이지 20",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q20.</strong> \\frac{√3}{√2} + \\frac{√2}{√3} 을 계산하여 분모를 유리화한 값을 구하시오. (예: 5√6/6)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '5√6/6'",
-        "hint": "통분을 진행할 때 두 분모의 곱으로 분모를 단일화하고 분자를 각각 곱해 더한 후 최종적으로 분모를 유리화하도록 가이드합니다."
-    }
+    {'qnum': 1, 'title': '스테이지 1', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q1.</strong> 9의 제곱근을 구하시오. (단, 답이 2개인 경우 ± 기호를 사용해 나타내시오. 예: ±3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '±3' || ans === '+-3' || ans === '3,-3' || ans === '-3,3'", 'hint': '어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근이라고 합니다. 양수의 제곱근은 항상 양과 음의 부호를 모두 가져야 함을 주지시킵니다.'},
+    {'qnum': 2, 'title': '스테이지 2', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q2.</strong> √16의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '4'", 'hint': '주어진 수가 어떤 자연수의 제곱수인지 파악하여 근호(√)를 벗겨내도록 유도합니다.'},
+    {'qnum': 3, 'title': '스테이지 3', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q3.</strong> 제곱근 25의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5'", 'hint': '제곱근 a는 양의 제곱근인 √a만을 가리킨다는 개념상의 차이를 상기시킵니다.'},
+    {'qnum': 4, 'title': '스테이지 4', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q4.</strong> (-3)²의 제곱근 중 양수인 것을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '3'", 'hint': '거듭제곱 식을 먼저 계산한 뒤, 얻어지는 양수 값의 두 제곱근 중 플러스 부호를 가진 것을 찾도록 안내합니다.'},
+    {'qnum': 5, 'title': '스테이지 5', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q5.</strong> 다음 보기 중 무리수인 것의 번호를 쓰시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '무리수는 순환하지 않는 무한소수입니다. 원주율이나 근호가 완전히 벗겨지지 않는 유리수 이외의 값을 선별하게 지도합니다.'},
+    {'qnum': 6, 'title': '스테이지 6', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q6.</strong> 두 실수 √2와 √3 중 더 큰 수를 쓰시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√3'", 'hint': '근호 안의 숫자가 클수록 실제 값도 큽니다. 두 수의 크기를 비교해 봅니다.'},
+    {'qnum': 7, 'title': '스테이지 7', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> √5의 정수 부분을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2'", 'hint': '주어진 루트 값이 어떤 연속하는 두 자연수 사이에 존재하는지 파악하여 정수 부분을 추출하도록 합니다.'},
+    {'qnum': 8, 'title': '스테이지 8', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> √5의 소수 부분을 구하시오. (루트 기호를 사용하여 식으로 나타내시오. 예: √5-2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√5-2'", 'hint': '무리수의 소수 부분은 전체 무리수 식에서 그 정수 부분을 뺀 수식으로 구성됨을 원리로 설명합니다.'},
+    {'qnum': 9, 'title': '스테이지 9', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> √12를 a√b 꼴로 나타낼 때, 자연수 a, b에 대하여 a+b의 값을 구하시오. (단, b는 가장 작은 자연수)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5'", 'hint': '근호 안의 수치를 소인수분해하여 제곱인 인수를 찾아 근호 밖으로 꺼내는 a√b 형태의 변형을 안내합니다.'},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q10.</strong> 수직선 위에서 2와 √5 중 더 우측에 있는 수를 쓰시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√5'", 'hint': '자연수를 제곱근 기호를 씌운 형태로 바꾸어 두 제곱근 수치의 근호 안 크기를 대조하여 수직선 우측(큰 수)을 선별하게 합니다.'},
+    {'qnum': 11, 'title': '스테이지 11', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> √3 × √5 의 값을 구하시오. (식으로 표현하시오. 예: √15)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√15'", 'hint': '근호가 있는 식의 곱셈은 근호 안의 숫자끼리 곱하여 하나의 근호 속에 넣고 정리하게 합니다.'},
+    {'qnum': 12, 'title': '스테이지 12', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> √18 ÷ √2 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '3'", 'hint': '근호가 있는 식의 나눗셈은 근호 안의 수끼리 나누어 하나의 근호 속에 넣고 유리수 몫을 도출하게 지도합니다.'},
+    {'qnum': 13, 'title': '스테이지 13', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> 2√6 × 3√3 의 값을 구하시오. (간단히 나타내시오. 예: 18√2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '18√2'", 'hint': '근호 밖의 계수는 계수끼리 곱하고, 근호 안의 수는 안의 수끼리 곱해 정리한 뒤 제곱수를 밖으로 추출하도록 유도합니다.'},
+    {'qnum': 14, 'title': '스테이지 14', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q14.</strong> 6/√3의 분모를 유리화한 값을 구하시오. (예: 2√3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2√3'", 'hint': '분모에 위치한 무리수와 동일한 제곱근을 분모와 분자에 곱하는 분모의 유리화 공식을 사용하도록 가이드합니다.'},
+    {'qnum': 15, 'title': '스테이지 15', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q15.</strong> √20 × √5 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '10'", 'hint': '두 수의 근호 안 수치를 먼저 소인수분해하여 곱한 후 제곱 성분을 밖으로 꺼내 정수 값으로 정돈합니다.'},
+    {'qnum': 16, 'title': '스테이지 16', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q16.</strong> 3√2 + 5√2 의 값을 구하시오. (예: 8√2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8√2'", 'hint': '무리수 부분이 동일하므로, 문자 식의 동류항 계산처럼 근호 앞의 유리수 계수끼리 더하도록 유도합니다.'},
+    {'qnum': 17, 'title': '스테이지 17', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> √2(√2 + √6) 의 값을 분배법칙을 이용해 계산하시오. (예: 2+2√3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2+2√3'", 'hint': '분배법칙을 사용하여 괄호 밖의 무리수를 괄호 안의 각 항에 곱해주고, 제곱근 곱셈 규칙에 따라 정리합니다.'},
+    {'qnum': 18, 'title': '스테이지 18', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> 5√3 - √12 의 값을 구하시오. (예: 3√3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '3√3'", 'hint': '뒤쪽 항의 무리수를 a√b 형태로 먼저 고친 후, 무리수 부분이 같은 동류항끼리 뺄셈 연산을 처리하게 안내합니다.'},
+    {'qnum': 19, 'title': '스테이지 19', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> (2 + √3) + (3 - √3) 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5'", 'hint': '괄호를 열고 유리수 부분은 유리수 부분끼리, 무리수 부분은 무리수 부분끼리 따로 모아 계산하게 유도합니다.'},
+    {'qnum': 20, 'title': '스테이지 20', 'story': '[사원의 파수꾼 피타고라스-P]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q20.</strong> \\frac{√3}{√2} + \\frac{√2}{√3} 을 계산하여 분모를 유리화한 값을 구하시오. (예: 5√6/6)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5√6/6'", 'hint': '통분을 진행할 때 두 분모의 곱으로 분모를 단일화하고 분자를 각각 곱해 더한 후 최종적으로 분모를 유리화하도록 가이드합니다.'}
 ]
 
 import re
@@ -976,6 +832,28 @@ js_boilerplate = """
 """
 
 final_html = base_html.replace("{{panels_placeholder}}", panels_html) + "\n<script>\n" + js_checks + "\n</script>"
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)

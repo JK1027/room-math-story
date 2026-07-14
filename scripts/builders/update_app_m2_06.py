@@ -371,6 +371,38 @@ base_html = """<!DOCTYPE html>
         @keyframes blink {
             50% { opacity: 0; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
@@ -400,7 +432,9 @@ base_html = """<!DOCTYPE html>
             <h2>도형의 성질 1 (삼각형과 사각형)</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">고대 이집트의 위대한 건축가 임호텝이 남긴 파피루스 설계도가 발견되었습니다. 이 설계도에는 삼각형과 사각형의 기하학적 성질을 이용한 20개의 암호가 걸려 있습니다. 여러분은 임호텝의 제자가 되어 도형의 성질(내심, 외심, 평행사변형 등)을 파악하고 설계도의 봉인을 해제해야 합니다!</div>
+                <div class="story-text">
+                [고대 홀로그램 임호텝-H]: "고대 이집트의 위대한 건축가 임호텝이 남긴 파피루스 설계도가 발견되었습니다. 이 설계도에는 삼각형과 사각형의 기하학적 성질을 이용한 20개의 암호가 걸려 있습니다. 여러분은 임호텝의 제자가 되어 도형의 성질(내심, 외심, 평행사변형 등)을 파악하고 설계도의 봉인을 해제해야 합니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">설계도 봉인 해제 시작</button>
@@ -415,7 +449,9 @@ base_html = """<!DOCTYPE html>
             <h2>황금빛 입체 도면의 탄생</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">정사각형 보석을 대각선에 맞추자, 파피루스 설계도의 모든 선형이 황금빛으로 타오르며 완벽한 피라미드의 입체 도면이 떠오릅니다! 여러분은 임호텝의 기하학적 시험을 통과하고 인류 최고의 건축 기술을 손에 넣었습니다!</div>
+                <div class="story-text">
+                [고대 홀로그램 임호텝-H]: "정사각형 보석을 대각선에 맞추자, 파피루스 설계도의 모든 선형이 황금빛으로 타오르며 완벽한 피라미드의 입체 도면이 떠오릅니다! 여러분은 임호텝의 기하학적 시험을 통과하고 인류 최고의 건축 기술을 손에 넣었습니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -535,186 +571,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "설계도의 기본 뼈대",
-        "story": "가장 먼저 임호텝의 설계도 기초를 분석해야 합니다. 두 기둥의 길이가 같은 기초적인 삼각 골조의 이름을 규정하여 암호 다이얼을 정렬하세요.",
-        "qtext": "<strong>Q1.</strong> 두 변의 길이가 같은 삼각형을 무엇이라 하는가?",
-        "placeholder": "이등변삼각형 입력",
-        "error": "삼각형의 명칭이 올바르지 않습니다.",
-        "ans_check": "ans === '이등변삼각형'"
-    },
-    {
-        "qnum": 2,
-        "title": "대칭의 각도",
-        "story": "삼각형의 기단이 대칭 균형을 잡기 위해선 두 변이 만나는 밑부분의 두 각의 크기가 완벽히 같아야 합니다. 빈칸에 들어갈 알맞은 말을 구하십시오.",
-        "qtext": "<strong>Q2.</strong> 이등변삼각형의 두 ( ? )의 크기는 같다.",
-        "placeholder": "두 글자 입력",
-        "error": "틀렸습니다. 밑변에 접하는 두 각의 이름입니다.",
-        "ans_check": "ans === '밑각'"
-    },
-    {
-        "qnum": 3,
-        "title": "기단의 경사각 계산",
-        "story": "설계도의 꼭대기 각인 꼭지각이 40도로 계측되었습니다. 양쪽 대칭 경사면의 하단 각도가 몇 도여야 완벽한 평형이 맞을까요?",
-        "qtext": "<strong>Q3.</strong> 꼭지각이 40도인 이등변삼각형의 한 밑각의 크기를 구하시오.",
-        "placeholder": "단위 생략하고 숫자만 또는 '70도' 형태로 입력",
-        "error": "틀렸습니다. 삼각형 내각의 합(180도)과 꼭지각의 차를 2로 나누어보세요.",
-        "ans_check": "ans === '70' || ans === '70도'"
-    },
-    {
-        "qnum": 4,
-        "title": "직각 기둥의 대칭 조건",
-        "story": "피라미드 내부 직각 묘실 벽면들이 정확히 합동인지 확인하기 위한 직각삼각형의 두 가지 합동 조건을 알파벳 기호로 입력창에 전송하세요.",
-        "qtext": "<strong>Q4.</strong> 직각삼각형의 합동 조건 두 가지를 영어 기호로 쓰시오. (예: RHS, RHA)",
-        "placeholder": "예: RHS, RHA",
-        "error": "합동 조건 기호가 올바르지 않습니다. (RHS, RHA 확인)",
-        "ans_check": "ans.includes('RHS') && ans.includes('RHA')"
-    },
-    {
-        "qnum": 5,
-        "title": "예각의 합동 판정",
-        "story": "경사면의 빗변 길이와 한 예각의 크기가 동일하다면, 두 개의 석조 구조는 서로 완벽히 포개집니다. 이 합동 조건의 정식 기호를 입력하세요.",
-        "qtext": "<strong>Q5.</strong> 빗변의 길이와 한 예각의 크기가 같은 두 직각삼각형은 서로 합동이다. 이 조건을 무엇이라 하는가?",
-        "placeholder": "알파벳 기호 입력",
-        "error": "틀렸습니다. R...?",
-        "ans_check": "ans.includes('RHA')"
-    },
-    {
-        "qnum": 6,
-        "title": "세 꼭짓점의 외접원",
-        "story": "제 2구역: 신성한 중심점입니다. 세 꼭짓점을 모두 관통하여 감싸 안는 외접원의 핵심 동력원인 중심 명칭을 규명해야 다음 구역의 문이 열립니다.",
-        "qtext": "<strong>Q6.</strong> 삼각형의 세 꼭짓점을 지나는 원을 외접원이라 하고, 그 중심을 무엇이라 하는가?",
-        "placeholder": "두 글자 입력",
-        "error": "올바른 명칭이 아닙니다. 바깥쪽 원의 중심입니다.",
-        "ans_check": "ans === '외심'"
-    },
-    {
-        "qnum": 7,
-        "title": "기울어진 기둥의 외심",
-        "story": "한 각이 90도보다 크게 기울어진 둔각삼각형 형태의 사원 지붕에서, 외접원의 중심은 지붕 구조물의 내부와 외부 중 어느 곳에 위치하게 됩니까?",
-        "qtext": "<strong>Q7.</strong> 둔각삼각형의 외심은 삼각형의 ( 내부 / 외부 )에 위치한다.",
-        "placeholder": "내부 또는 외부 입력",
-        "error": "틀렸습니다. 기하학 모형을 머릿속으로 그려보세요.",
-        "ans_check": "ans === '외부'"
-    },
-    {
-        "qnum": 8,
-        "title": "직각 지붕의 중심",
-        "story": "직각을 이루는 정교한 석조 묘실 천장에서, 외심은 빗변의 정확히 어느 점(위치)에 놓이는지 알아내야 에너지 평형 핀을 꽂을 수 있습니다.",
-        "qtext": "<strong>Q8.</strong> 직각삼각형의 외심은 빗변의 ( ? )에 위치한다.",
-        "placeholder": "두 글자 입력",
-        "error": "틀렸습니다. 빗변을 정확히 반으로 가르는 지점입니다.",
-        "ans_check": "ans === '중점'"
-    },
-    {
-        "qnum": 9,
-        "title": "세 내각의 분할점",
-        "story": "내부 방들의 세 모퉁이 각도를 정확하게 반씩 쪼개어 모은 중심점을 찾아 설계도 파편을 회수해야 합니다.",
-        "qtext": "<strong>Q9.</strong> 삼각형의 세 내각의 이등분선이 만나는 점을 무엇이라 하는가?",
-        "placeholder": "두 글자 입력",
-        "error": "틀렸습니다. 안쪽 원의 중심입니다.",
-        "ans_check": "ans === '내심'"
-    },
-    {
-        "qnum": 10,
-        "title": "내심의 거리적 특징",
-        "story": "동력점인 내심은 삼각형을 이루는 구성 요소 중 어디까지의 수직 최단 거리가 모두 일치하는 독특한 대칭 특징을 갖고 있을까요?",
-        "qtext": "<strong>Q10.</strong> 삼각형의 내심에서 세 ( ? )에 이르는 거리는 같다.",
-        "placeholder": "한 글자 입력",
-        "error": "틀렸습니다. 기하학 구조를 확인하세요.",
-        "ans_check": "ans === '변'"
-    },
-    {
-        "qnum": 11,
-        "title": "평행 회랑의 정의",
-        "story": "제 3구역: 대칭의 돌림판입니다. 마주 보는 두 쌍의 변이 나란히 영원히 만나지 않고 뻗어 나가는 기본 사각형의 종류를 입력해 락을 해제하세요.",
-        "qtext": "<strong>Q11.</strong> 마주 보는 두 쌍의 대변이 각각 평행한 사각형을 무엇이라 하는가?",
-        "placeholder": "다섯 글자 입력",
-        "error": "올바른 명칭이 아닙니다.",
-        "ans_check": "ans === '평행사변형'"
-    },
-    {
-        "qnum": 12,
-        "title": "대변의 균형",
-        "story": "돌림판의 평행사변형 홈에 맞추기 위해, 서로 마주 보는 변(대변)의 길이가 어떤 대칭 관계에 있는지 대소 비교(같다 / 다르다)해 답하세요.",
-        "qtext": "<strong>Q12.</strong> 평행사변형에서 마주 보는 대변의 길이는 서로 ( 같다 / 다르다 ).",
-        "placeholder": "같다 또는 다르다 입력",
-        "error": "틀렸습니다. 두 대변의 길이를 가늠해보세요.",
-        "ans_check": "ans === '같다'"
-    },
-    {
-        "qnum": 13,
-        "title": "대각의 평형",
-        "story": "돌림판의 회전 밸런스를 맞추기 위해 마주 보고 서 있는 대각선 양 코너의 각도(대각)의 크기 관계를 명문화(같다 / 다르다)하십시오.",
-        "qtext": "<strong>Q13.</strong> 평행사변형에서 마주 보는 두 대각의 크기는 서로 ( 같다 / 다르다 ).",
-        "placeholder": "같다 또는 다르다 입력",
-        "error": "틀렸습니다. 대칭되는 두 각의 관계를 상기하세요.",
-        "ans_check": "ans === '같다'"
-    },
-    {
-        "qnum": 14,
-        "title": "대각선의 골조 교차",
-        "story": "돌림판 중앙을 교차하는 두 사각 대각선 기둥은 서로의 길이를 어떻게 분할하는지 힌트 단어를 참고해 네 글자로 작성하세요.",
-        "qtext": "<strong>Q14.</strong> 평행사변형의 두 대각선은 서로 다른 것을 ( ? ) 한다.",
-        "placeholder": "세 글자 또는 네 글자 입력",
-        "error": "틀렸습니다. 서로를 똑같이 둘로 나눕니다.",
-        "ans_check": "ans.includes('이등분')"
-    },
-    {
-        "qnum": 15,
-        "title": "인접한 두 각의 합",
-        "story": "돌림판의 연속된 임의의 이웃하는 두 모퉁이 각도의 합이 180도를 유지하는 사각형 골조의 기본 명칭을 타이핑하세요.",
-        "qtext": "<strong>Q15.</strong> 이웃하는 두 내각의 크기의 합이 항상 180도인 사각형은 무엇인가?",
-        "placeholder": "다섯 글자 입력",
-        "error": "틀렸습니다. 대변이 평행한 사각형입니다.",
-        "ans_check": "ans === '평행사변형'"
-    },
-    {
-        "qnum": 16,
-        "title": "직각 보석함의 형태",
-        "story": "제 4구역: 왕의 보석입니다. 왕의 묘실 중앙 보석함의 상판 형태를 결정해야 합니다. 모든 네 모퉁이의 내각이 정확히 90도인 사각형의 이름을 해독하세요.",
-        "qtext": "<strong>Q16.</strong> 네 내각의 크기가 모두 90도로 같은 사각형을 무엇이라 하는가?",
-        "placeholder": "세 글자 입력",
-        "error": "틀렸습니다. 직각을 이루는 사각형입니다.",
-        "ans_check": "ans === '직사각형'"
-    },
-    {
-        "qnum": 17,
-        "title": "보석함의 대각선 지지대",
-        "story": "보석함 상판의 뒤틀림을 방지하기 위해 가로지르는 두 대각선 기둥의 길이 관계를 계측해 입력(같다 / 다르다)해 주십시오.",
-        "qtext": "<strong>Q17.</strong> 직사각형의 두 대각선의 길이는 서로 ( 같다 / 다르다 ).",
-        "placeholder": "같다 또는 다르다 입력",
-        "error": "틀렸습니다. 직사각형 대각선의 성질을 상기하세요.",
-        "ans_check": "ans === '같다'"
-    },
-    {
-        "qnum": 18,
-        "title": "대칭 석재의 정렬",
-        "story": "정밀 재단된 보석 고정틀 중 네 테두리 변의 치수가 모두 균일하게 만들어진 사각형 석재의 이름을 규정해 고정 장치를 맞추세요.",
-        "qtext": "<strong>Q18.</strong> 네 변의 길이가 모두 같은 사각형을 무엇이라 하는가?",
-        "placeholder": "세 글자 입력",
-        "error": "틀렸습니다. 마름모꼴 모양의 사각형입니다.",
-        "ans_check": "ans === '마름모'"
-    },
-    {
-        "qnum": 19,
-        "title": "수직 교차의 법칙",
-        "story": "마름모틀을 관통하는 대각선 축들의 교차가 직각을 이루는지 판별하십시오. 직교 법칙이 맞으면 알파벳 대문자 O, 아니면 X를 전송하세요.",
-        "qtext": "<strong>Q19.</strong> 마름모의 두 대각선은 서로 수직으로 만난다. ( O / X )",
-        "placeholder": "O 또는 X 입력",
-        "error": "틀렸습니다. 마름모 대각선의 직교 성질을 생각해 보세요.",
-        "ans_check": "ans === 'O' || ans === '오' || ans === 'TRUE'"
-    },
-    {
-        "qnum": 20,
-        "title": "완벽의 정사각형",
-        "story": "네 모퉁이가 수직이고 모든 테두리 변의 길이까지 완벽히 같은, 임호텝이 피라미드 중앙 코어로 삼은 최종 보석의 이름을 밝히십시오.",
-        "qtext": "<strong>Q20.</strong> 직사각형인 동시에 마름모인 사각형, 즉 네 변의 길이와 네 각의 크기가 모두 같은 사각형의 이름은?",
-        "placeholder": "세 글자 입력",
-        "error": "최종 보석의 명칭이 바르지 않습니다.",
-        "ans_check": "ans === '정사각형'"
-    }
+    {'qnum': 1, 'title': '설계도의 기본 뼈대', 'story': '[고대 홀로그램 임호텝-H]: \\"가장 먼저 임호텝의 설계도 기초를 분석해야 합니다. 두 기둥의 길이가 같은 기초적인 삼각 골조의 이름을 규정하여 암호 다이얼을 정렬하세요.\\"', 'qtext': '<strong>Q1.</strong> 두 변의 길이가 같은 삼각형을 무엇이라 하는가?', 'placeholder': '이등변삼각형 입력', 'error': '삼각형의 명칭이 올바르지 않습니다.', 'ans_check': "ans === '이등변삼각형'"},
+    {'qnum': 2, 'title': '대칭의 각도', 'story': '[고대 홀로그램 임호텝-H]: \\"삼각형의 기단이 대칭 균형을 잡기 위해선 두 변이 만나는 밑부분의 두 각의 크기가 완벽히 같아야 합니다. 빈칸에 들어갈 알맞은 말을 구하십시오.\\"', 'qtext': '<strong>Q2.</strong> 이등변삼각형의 두 ( ? )의 크기는 같다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 밑변에 접하는 두 각의 이름입니다.', 'ans_check': "ans === '밑각'"},
+    {'qnum': 3, 'title': '기단의 경사각 계산', 'story': '[고대 홀로그램 임호텝-H]: \\"설계도의 꼭대기 각인 꼭지각이 40도로 계측되었습니다. 양쪽 대칭 경사면의 하단 각도가 몇 도여야 완벽한 평형이 맞을까요?\\"', 'qtext': '<strong>Q3.</strong> 꼭지각이 40도인 이등변삼각형의 한 밑각의 크기를 구하시오.', 'placeholder': "단위 생략하고 숫자만 또는 '70도' 형태로 입력", 'error': '틀렸습니다. 삼각형 내각의 합(180도)과 꼭지각의 차를 2로 나누어보세요.', 'ans_check': "ans === '70' || ans === '70도'"},
+    {'qnum': 4, 'title': '직각 기둥의 대칭 조건', 'story': '[고대 홀로그램 임호텝-H]: \\"피라미드 내부 직각 묘실 벽면들이 정확히 합동인지 확인하기 위한 직각삼각형의 두 가지 합동 조건을 알파벳 기호로 입력창에 전송하세요.\\"', 'qtext': '<strong>Q4.</strong> 직각삼각형의 합동 조건 두 가지를 영어 기호로 쓰시오. (예: RHS, RHA)', 'placeholder': '예: RHS, RHA', 'error': '합동 조건 기호가 올바르지 않습니다. (RHS, RHA 확인)', 'ans_check': "ans.includes('RHS') && ans.includes('RHA')"},
+    {'qnum': 5, 'title': '예각의 합동 판정', 'story': '[고대 홀로그램 임호텝-H]: \\"경사면의 빗변 길이와 한 예각의 크기가 동일하다면, 두 개의 석조 구조는 서로 완벽히 포개집니다. 이 합동 조건의 정식 기호를 입력하세요.\\"', 'qtext': '<strong>Q5.</strong> 빗변의 길이와 한 예각의 크기가 같은 두 직각삼각형은 서로 합동이다. 이 조건을 무엇이라 하는가?', 'placeholder': '알파벳 기호 입력', 'error': '틀렸습니다. R...?', 'ans_check': "ans.includes('RHA')"},
+    {'qnum': 6, 'title': '세 꼭짓점의 외접원', 'story': '[고대 홀로그램 임호텝-H]: \\"제 2구역: 신성한 중심점입니다. 세 꼭짓점을 모두 관통하여 감싸 안는 외접원의 핵심 동력원인 중심 명칭을 규명해야 다음 구역의 문이 열립니다.\\"', 'qtext': '<strong>Q6.</strong> 삼각형의 세 꼭짓점을 지나는 원을 외접원이라 하고, 그 중심을 무엇이라 하는가?', 'placeholder': '두 글자 입력', 'error': '올바른 명칭이 아닙니다. 바깥쪽 원의 중심입니다.', 'ans_check': "ans === '외심'"},
+    {'qnum': 7, 'title': '기울어진 기둥의 외심', 'story': '[고대 홀로그램 임호텝-H]: \\"한 각이 90도보다 크게 기울어진 둔각삼각형 형태의 사원 지붕에서, 외접원의 중심은 지붕 구조물의 내부와 외부 중 어느 곳에 위치하게 됩니까?\\"', 'qtext': '<strong>Q7.</strong> 둔각삼각형의 외심은 삼각형의 ( 내부 / 외부 )에 위치한다.', 'placeholder': '내부 또는 외부 입력', 'error': '틀렸습니다. 기하학 모형을 머릿속으로 그려보세요.', 'ans_check': "ans === '외부'"},
+    {'qnum': 8, 'title': '직각 지붕의 중심', 'story': '[고대 홀로그램 임호텝-H]: \\"직각을 이루는 정교한 석조 묘실 천장에서, 외심은 빗변의 정확히 어느 점(위치)에 놓이는지 알아내야 에너지 평형 핀을 꽂을 수 있습니다.\\"', 'qtext': '<strong>Q8.</strong> 직각삼각형의 외심은 빗변의 ( ? )에 위치한다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 빗변을 정확히 반으로 가르는 지점입니다.', 'ans_check': "ans === '중점'"},
+    {'qnum': 9, 'title': '세 내각의 분할점', 'story': '[고대 홀로그램 임호텝-H]: \\"내부 방들의 세 모퉁이 각도를 정확하게 반씩 쪼개어 모은 중심점을 찾아 설계도 파편을 회수해야 합니다.\\"', 'qtext': '<strong>Q9.</strong> 삼각형의 세 내각의 이등분선이 만나는 점을 무엇이라 하는가?', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 안쪽 원의 중심입니다.', 'ans_check': "ans === '내심'"},
+    {'qnum': 10, 'title': '내심의 거리적 특징', 'story': '[고대 홀로그램 임호텝-H]: \\"동력점인 내심은 삼각형을 이루는 구성 요소 중 어디까지의 수직 최단 거리가 모두 일치하는 독특한 대칭 특징을 갖고 있을까요?\\"', 'qtext': '<strong>Q10.</strong> 삼각형의 내심에서 세 ( ? )에 이르는 거리는 같다.', 'placeholder': '한 글자 입력', 'error': '틀렸습니다. 기하학 구조를 확인하세요.', 'ans_check': "ans === '변'"},
+    {'qnum': 11, 'title': '평행 회랑의 정의', 'story': '[고대 홀로그램 임호텝-H]: \\"제 3구역: 대칭의 돌림판입니다. 마주 보는 두 쌍의 변이 나란히 영원히 만나지 않고 뻗어 나가는 기본 사각형의 종류를 입력해 락을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> 마주 보는 두 쌍의 대변이 각각 평행한 사각형을 무엇이라 하는가?', 'placeholder': '다섯 글자 입력', 'error': '올바른 명칭이 아닙니다.', 'ans_check': "ans === '평행사변형'"},
+    {'qnum': 12, 'title': '대변의 균형', 'story': '[고대 홀로그램 임호텝-H]: \\"돌림판의 평행사변형 홈에 맞추기 위해, 서로 마주 보는 변(대변)의 길이가 어떤 대칭 관계에 있는지 대소 비교(같다 / 다르다)해 답하세요.\\"', 'qtext': '<strong>Q12.</strong> 평행사변형에서 마주 보는 대변의 길이는 서로 ( 같다 / 다르다 ).', 'placeholder': '같다 또는 다르다 입력', 'error': '틀렸습니다. 두 대변의 길이를 가늠해보세요.', 'ans_check': "ans === '같다'"},
+    {'qnum': 13, 'title': '대각의 평형', 'story': '[고대 홀로그램 임호텝-H]: \\"돌림판의 회전 밸런스를 맞추기 위해 마주 보고 서 있는 대각선 양 코너의 각도(대각)의 크기 관계를 명문화(같다 / 다르다)하십시오.\\"', 'qtext': '<strong>Q13.</strong> 평행사변형에서 마주 보는 두 대각의 크기는 서로 ( 같다 / 다르다 ).', 'placeholder': '같다 또는 다르다 입력', 'error': '틀렸습니다. 대칭되는 두 각의 관계를 상기하세요.', 'ans_check': "ans === '같다'"},
+    {'qnum': 14, 'title': '대각선의 골조 교차', 'story': '[고대 홀로그램 임호텝-H]: \\"돌림판 중앙을 교차하는 두 사각 대각선 기둥은 서로의 길이를 어떻게 분할하는지 힌트 단어를 참고해 네 글자로 작성하세요.\\"', 'qtext': '<strong>Q14.</strong> 평행사변형의 두 대각선은 서로 다른 것을 ( ? ) 한다.', 'placeholder': '세 글자 또는 네 글자 입력', 'error': '틀렸습니다. 서로를 똑같이 둘로 나눕니다.', 'ans_check': "ans.includes('이등분')"},
+    {'qnum': 15, 'title': '인접한 두 각의 합', 'story': '[고대 홀로그램 임호텝-H]: \\"돌림판의 연속된 임의의 이웃하는 두 모퉁이 각도의 합이 180도를 유지하는 사각형 골조의 기본 명칭을 타이핑하세요.\\"', 'qtext': '<strong>Q15.</strong> 이웃하는 두 내각의 크기의 합이 항상 180도인 사각형은 무엇인가?', 'placeholder': '다섯 글자 입력', 'error': '틀렸습니다. 대변이 평행한 사각형입니다.', 'ans_check': "ans === '평행사변형'"},
+    {'qnum': 16, 'title': '직각 보석함의 형태', 'story': '[고대 홀로그램 임호텝-H]: \\"제 4구역: 왕의 보석입니다. 왕의 묘실 중앙 보석함의 상판 형태를 결정해야 합니다. 모든 네 모퉁이의 내각이 정확히 90도인 사각형의 이름을 해독하세요.\\"', 'qtext': '<strong>Q16.</strong> 네 내각의 크기가 모두 90도로 같은 사각형을 무엇이라 하는가?', 'placeholder': '세 글자 입력', 'error': '틀렸습니다. 직각을 이루는 사각형입니다.', 'ans_check': "ans === '직사각형'"},
+    {'qnum': 17, 'title': '보석함의 대각선 지지대', 'story': '[고대 홀로그램 임호텝-H]: \\"보석함 상판의 뒤틀림을 방지하기 위해 가로지르는 두 대각선 기둥의 길이 관계를 계측해 입력(같다 / 다르다)해 주십시오.\\"', 'qtext': '<strong>Q17.</strong> 직사각형의 두 대각선의 길이는 서로 ( 같다 / 다르다 ).', 'placeholder': '같다 또는 다르다 입력', 'error': '틀렸습니다. 직사각형 대각선의 성질을 상기하세요.', 'ans_check': "ans === '같다'"},
+    {'qnum': 18, 'title': '대칭 석재의 정렬', 'story': '[고대 홀로그램 임호텝-H]: \\"정밀 재단된 보석 고정틀 중 네 테두리 변의 치수가 모두 균일하게 만들어진 사각형 석재의 이름을 규정해 고정 장치를 맞추세요.\\"', 'qtext': '<strong>Q18.</strong> 네 변의 길이가 모두 같은 사각형을 무엇이라 하는가?', 'placeholder': '세 글자 입력', 'error': '틀렸습니다. 마름모꼴 모양의 사각형입니다.', 'ans_check': "ans === '마름모'"},
+    {'qnum': 19, 'title': '수직 교차의 법칙', 'story': '[고대 홀로그램 임호텝-H]: \\"마름모틀을 관통하는 대각선 축들의 교차가 직각을 이루는지 판별하십시오. 직교 법칙이 맞으면 알파벳 대문자 O, 아니면 X를 전송하세요.\\"', 'qtext': '<strong>Q19.</strong> 마름모의 두 대각선은 서로 수직으로 만난다. ( O / X )', 'placeholder': 'O 또는 X 입력', 'error': '틀렸습니다. 마름모 대각선의 직교 성질을 생각해 보세요.', 'ans_check': "ans === 'O' || ans === '오' || ans === 'TRUE'"},
+    {'qnum': 20, 'title': '완벽의 정사각형', 'story': '[고대 홀로그램 임호텝-H]: \\"네 모퉁이가 수직이고 모든 테두리 변의 길이까지 완벽히 같은, 임호텝이 피라미드 중앙 코어로 삼은 최종 보석의 이름을 밝히십시오.\\"', 'qtext': '<strong>Q20.</strong> 직사각형인 동시에 마름모인 사각형, 즉 네 변의 길이와 네 각의 크기가 모두 같은 사각형의 이름은?', 'placeholder': '세 글자 입력', 'error': '최종 보석의 명칭이 바르지 않습니다.', 'ans_check': "ans === '정사각형'"}
 ]
 
 # Generate Q panels
@@ -1075,6 +951,28 @@ final_html = base_html.replace('{panels_placeholder}', panels_html)
 # Add checks and boilerplate inside final script tag
 script_insert = js_boilerplate + js_checks + "\n"
 final_html = final_html.replace('        window.onload = () => {', script_insert + '        window.onload = () => {')
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)

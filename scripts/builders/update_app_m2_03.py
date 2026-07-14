@@ -371,6 +371,38 @@ base_html = """<!DOCTYPE html>
         @keyframes blink {
             50% { opacity: 0; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
@@ -400,7 +432,9 @@ base_html = """<!DOCTYPE html>
             <h2>일차부등식의 해와 성질</h2>
             <img src="assets/m2_03_inequalities/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!</div>
+                <div class="story-text">
+                [숲의 정령 실프-F]: "아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">숲의 저울 가동</button>
@@ -415,7 +449,9 @@ base_html = """<!DOCTYPE html>
             <h2>요정 숲의 균형 회복</h2>
             <img src="assets/m2_03_inequalities/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!</div>
+                <div class="story-text">
+                [숲의 정령 실프-F]: "음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -535,186 +571,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "마법 저울의 눈금",
-        "story": "⚖️ <strong>[저울 작동 테스트]</strong><br><br>숲을 구하기 위해 마법 저울의 해를 부등식으로 표기하여 가동해 주십시오.<br> 'x는 3보다 크거나 같다'를 부등호로 나타내십시오.",
-        "qtext": "<strong>Q1. [부등식의 표시]</strong><br>$x$는 3보다 크거나 같다를 부등호로 나타내시오.",
-        "placeholder": "예: x>=3",
-        "error": "저울 측정 실패! 바늘이 격렬하게 흔들립니다.",
-        "ans_check": "ans === 'X>=3' || ans === 'X\\\\GE3'"
-    },
-    {
-        "qnum": 2,
-        "title": "저울의 해 찾기",
-        "story": "⚖️ <strong>[해의 판정]</strong><br><br>저울 눈금판에 균형 해를 찾아 입력하십시오. 주어진 보기 중에서 $x=2$가 해인 부등식을 지목하십시오.",
-        "qtext": "<strong>Q2. [부등식의 해]</strong><br>다음 중 $x=2$가 해인 부등식은?<br>(1) $2x - 1 &lt; 0$<br>(2) $3x \\\\ge 6$<br>(3) $-x &gt; 0$",
-        "placeholder": "예: (2) 또는 2",
-        "error": "오답 입력! 저울이 한쪽으로 요동칩니다.",
-        "ans_check": "ans === '(2)' || ans === '2' || ans === '②'"
-    },
-    {
-        "qnum": 3,
-        "title": "미만의 눈금 조율",
-        "story": "⚖️ <strong>[경계값 분석]</strong><br><br>안개가 다시 차오릅니다. 'x는 5 미만이다'의 수학 기호를 저울에 기입하십시오.",
-        "qtext": "<strong>Q3. [미만의 정의]</strong><br>$x$는 5 미만이다를 부등호로 나타내시오.",
-        "placeholder": "예: x<5",
-        "error": "부등호 방향 오류! 기류가 흐트러집니다.",
-        "ans_check": "ans === 'X<5'"
-    },
-    {
-        "qnum": 4,
-        "title": "자연수 해 결합",
-        "story": "⚖️ <strong>[자연수 에너지]</strong><br><br>부등식 $x + 2 &lt; 5$ 를 만족하는 마법의 자연수 해 $x$를 모두 찾아 합쳐야 합니다. 작은 수부터 쉼표로 연결해 주십시오.",
-        "qtext": "<strong>Q4. [조건을 만족하는 해]</strong><br>부등식 $x + 2 &lt; 5$ 를 만족하는 자연수 $x$를 모두 구하시오.",
-        "placeholder": "예: 1,2",
-        "error": "조합 실패! 마법석이 어두워집니다.",
-        "ans_check": "ans === '1,2' || ans === '1,2개' || ans === '1과2'"
-    },
-    {
-        "qnum": 5,
-        "title": "한계 질량 구하기",
-        "story": "⚖️ <strong>[최대 질량 제한]</strong><br><br>1구역의 최종 장벽입니다. 부등식 $2x \\\\le 8$ 을 만족하는 가장 큰 정수를 조율 장치에 입력하십시오.",
-        "qtext": "<strong>Q5. [해의 최대값]</strong><br>부등식 $2x \\\\le 8$ 을 만족하는 가장 큰 정수를 구하시오.",
-        "placeholder": "예: 4",
-        "error": "질량 초과! 저울 리미터가 울립니다.",
-        "ans_check": "ans === '4' || ans === '4개'"
-    },
-    {
-        "qnum": 6,
-        "title": "저울의 덧셈 성질",
-        "story": "⚖️ <strong>[양변에 더하기]</strong><br><br>2구역 저울의 성질 구역입니다. $a &lt; b$ 일 때, 양변에 똑같이 2를 더한 $a + 2$ 와 $b + 2$ 의 대소 관계를 입력하십시오.",
-        "qtext": "<strong>Q6. [부등식의 성질 1]</strong><br>$a &lt; b$ 일 때, $a + 2$ 와 $b + 2$ 의 대소를 비교하시오.",
-        "placeholder": "예: a+2<b+2",
-        "error": "평형 오류! 저울 받침대가 삐걱거립니다.",
-        "ans_check": "ans === 'A+2<B+2' || ans === 'B+2>A+2'"
-    },
-    {
-        "qnum": 7,
-        "title": "저울의 곱셈 성질",
-        "story": "⚖️ <strong>[양변에 양수 곱하기]</strong><br><br>$a &lt; b$ 일 때, 양변에 똑같이 양수 3을 곱한 $3a$ 와 $3b$ 의 대소 관계를 저울에 설정하십시오.",
-        "qtext": "<strong>Q7. [부등식의 성질 2]</strong><br>$a &lt; b$ 일 때, $3a$ 와 $3b$ 의 대소를 비교하시오.",
-        "placeholder": "예: 3a<3b",
-        "error": "에너지 증폭 이상! 스파크가 튑니다.",
-        "ans_check": "ans === '3A<3B' || ans === '3B>3A'"
-    },
-    {
-        "qnum": 8,
-        "title": "음수 곱셈의 반전",
-        "story": "⚖️ <strong>[양변에 음수 곱하기]</strong><br><br>주의하십시오! $a &lt; b$ 일 때, 양변에 똑같이 음수 -2를 곱한 $-2a$ 와 $-2b$ 의 대소 관계를 입력하십시오.",
-        "qtext": "<strong>Q8. [부등식의 성질 3]</strong><br>$a &lt; b$ 일 때, $-2a$ 와 $-2b$ 의 대소 관계를 부등호로 나타내시오.",
-        "placeholder": "예: -2a>-2b",
-        "error": "반전 에러! 저울이 균형을 완전히 잃고 기울어집니다.",
-        "ans_check": "ans === '-2A>-2B' || ans === '-2B<-2A'"
-    },
-    {
-        "qnum": 9,
-        "title": "방향 반전 법칙",
-        "story": "⚖️ <strong>[부등호 방향의 진실]</strong><br><br>음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가? 단답으로 입력해 저울의 봉인을 푸십시오. (바뀐다 / 그대로다)",
-        "qtext": "<strong>Q9. [부등호의 핵심 법칙]</strong><br>음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가?",
-        "placeholder": "바뀐다 또는 그대로다 입력",
-        "error": "법칙 위반! 숲의 정령들이 길을 막습니다.",
-        "ans_check": "ans === '바뀐다' || ans === '변한다' || ans === '바뀜'"
-    },
-    {
-        "qnum": 10,
-        "title": "음수 나눗셈의 완성",
-        "story": "⚖️ <strong>[최종 방향 제어]</strong><br><br>2구역 마지막 관문입니다. 부등식 $-3x &gt; 9$ 의 양변을 -3으로 나눈 최종 부등식 해를 완성하십시오.",
-        "qtext": "<strong>Q10. [음수 나눗셈 연습]</strong><br>$-3x &gt; 9$ 양변을 -3으로 나누면 부등식은 어떻게 되는가?",
-        "placeholder": "예: x<-3",
-        "error": "부호 오류! 2구역 탈출 밸브가 차단됩니다.",
-        "ans_check": "ans === 'X<-3'"
-    },
-    {
-        "qnum": 11,
-        "title": "마법진 1차 해제",
-        "story": "⚖️ <strong>[일차부등식 풀이]</strong><br><br>3구역 불균형 해소 마법진입니다. 일차부등식 $2x - 4 &gt; 0$ 의 해를 풀어 입력하십시오.",
-        "qtext": "<strong>Q11. [기초 부등식 풀이]</strong><br>일차부등식 $2x - 4 &gt; 0$ 의 해를 구하시오.",
-        "placeholder": "예: x>2",
-        "error": "마법 해제 실패! 마법진이 붉게 점멸합니다.",
-        "ans_check": "ans === 'X>2'"
-    },
-    {
-        "qnum": 12,
-        "title": "마법진 2차 해제",
-        "story": "⚖️ <strong>[이항과 음수 나눗셈]</strong><br><br>이항을 이용하여 일차부등식 $3x + 1 \\\\le 7$ 의 해를 구하십시오. 차분하게 상수를 옮기십시오.",
-        "qtext": "<strong>Q12. [이항 계산]</strong><br>일차부등식 $3x + 1 \\\\le 7$ 의 해를 구하시오.",
-        "placeholder": "예: x<=2",
-        "error": "이항 연산 미스! 결합 에너지가 소멸됩니다.",
-        "ans_check": "ans === 'X<=2' || ans === 'X\\\\LE2'"
-    },
-    {
-        "qnum": 13,
-        "title": "양변 이항 결합",
-        "story": "⚖️ <strong>[양변의 미지수 정리]</strong><br><br>미지수가 양변에 존재합니다. $5x - 2 &lt; 3x + 8$ 을 이항하여 깔끔한 부등식 해로 도출하십시오.",
-        "qtext": "<strong>Q13. [복합 이항]</strong><br>일차부등식 $5x - 2 &lt; 3x + 8$ 의 해를 구하시오.",
-        "placeholder": "예: x<5",
-        "error": "이항 부호 에러! 에너지 균형이 흐트러집니다.",
-        "ans_check": "ans === 'X<5'"
-    },
-    {
-        "qnum": 14,
-        "title": "음수 계수 이항",
-        "story": "⚖️ <strong>[음수 계수 처리]</strong><br><br>중요한 고비입니다! 일차부등식 $-2x + 5 \\\\ge x - 4$ 의 해를 구하십시오. 마지막 나눗셈의 부등호 반전에 유의하십시오.",
-        "qtext": "<strong>Q14. [음수 계수 이항]</strong><br>일차부등식 $-2x + 5 \\\\ge x - 4$ 의 해를 구하시오.",
-        "placeholder": "예: x<=3",
-        "error": "반전 연산 실패! 마법진 온도가 급격히 올라갑니다.",
-        "ans_check": "ans === 'X<=3' || ans === 'X\\\\LE3'"
-    },
-    {
-        "qnum": 15,
-        "title": "괄호 마법진 돌파",
-        "story": "⚖️ <strong>[괄호 분배 법칙]</strong><br><br>3구역의 최종 마법진입니다. 분배법칙을 이용해 괄호를 풀고, $2(x - 1) &gt; 4$ 의 해를 정밀하게 입력하십시오.",
-        "qtext": "<strong>Q15. [괄호가 있는 부등식]</strong><br>일차부등식 $2(x - 1) &gt; 4$ 의 해를 구하시오.",
-        "placeholder": "예: x>3",
-        "error": "괄호 분배 오류! 마법진이 비상 셧다운 모드로 돌입합니다.",
-        "ans_check": "ans === 'X>3'"
-    },
-    {
-        "qnum": 16,
-        "title": "연속하는 자연수 씨앗",
-        "story": "⚖️ <strong>[자연수 씨앗 분배]</strong><br><br>4구역 생명의 씨앗 분배 장치입니다. 연속하는 두 자연수의 합이 15보다 크다고 할 때, 이를 만족하는 가장 작은 두 자연수를 쉼표로 적으십시오.",
-        "qtext": "<strong>Q16. [자연수 응용]</strong><br>연속하는 두 자연수의 합이 15보다 크다고 할 때, 이를 만족하는 가장 작은 두 자연수를 구하시오.",
-        "placeholder": "예: 8,9",
-        "error": "수치 조합 오류! 씨앗 공급 장치가 걸립니다.",
-        "ans_check": "ans === '8,9' || ans === '8과9'"
-    },
-    {
-        "qnum": 17,
-        "title": "장미 꽃잎 제단",
-        "story": "⚖️ <strong>[제단 비용 부등식]</strong><br><br>한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 맞추는 부등식을 세우십시오. (공백 없이 입력)",
-        "qtext": "<strong>Q17. [식 세우기]</strong><br>한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 하려고 한다. 부등식을 세우시오.",
-        "placeholder": "예: 800x+1000<=6000",
-        "error": "부등식 기호 불일치! 제단의 마법 빛이 사그라듭니다.",
-        "ans_check": "ans === '800X+1000<=6000' || ans === '800X+1000\\\\LE6000'"
-    },
-    {
-        "qnum": 18,
-        "title": "장미의 최대 송이",
-        "story": "⚖️ <strong>[최대 장미 수량]</strong><br><br>이전 제단의 부등식을 바탕으로, 살 수 있는 장미의 최대 송이수를 계산해 제단 바구니에 입력하십시오.",
-        "qtext": "<strong>Q18. [최대값 구하기]</strong><br>Q17 조건에서 장미는 최대 몇 송이까지 살 수 있는가?",
-        "placeholder": "예: 6 또는 6송이",
-        "error": "꽃잎 수량 한계 초과! 저울이 균형을 잃습니다.",
-        "ans_check": "ans === '6' || ans === '6송이'"
-    },
-    {
-        "qnum": 19,
-        "title": "동생의 저금 역전",
-        "story": "⚖️ <strong>[저금 역전 시기]</strong><br><br>형의 저금통에는 20000원, 동생은 10000원이 있습니다. 다음 달부터 매월 형은 2000원, 동생은 3000원씩 저금합니다. 동생이 형보다 많아지는 것은 몇 개월 후입니까?",
-        "qtext": "<strong>Q19. [실생활 활용]</strong><br>몇 개월 후부터 동생의 저금액이 형의 저금액보다 많아지는지 구하시오.",
-        "placeholder": "예: 11 또는 11개월",
-        "error": "연도 계산 오류! 이자가 바닥납니다.",
-        "ans_check": "ans === '11' || ans === '11개월' || ans === '11개월후'"
-    },
-    {
-        "qnum": 20,
-        "title": "생명의 숲 최소 면적",
-        "story": "⚖️ <strong>[숲의 정화 경계]</strong><br><br>마지막 순간입니다! 현재 요정 숲의 남은 면적의 절반에서 5를 뺀 것이 10보다 큽니다. 남은 면적의 최소 범위를 입력해 숲을 구원하십시오.",
-        "qtext": "<strong>Q20. [최종 면적 구하기]</strong><br>요정 숲의 남은 면적은 최소 얼마 초과인가?",
-        "placeholder": "숫자만 또는 초과 입력 (예: 30)",
-        "error": "정화 범위 미달! 숲 전체가 봉인 모드로 잠겨버립니다!",
-        "ans_check": "ans === '30' || ans === '30초과'"
-    }
+    {'qnum': 1, 'title': '마법 저울의 눈금', 'story': '⚖️ <strong>[저울 작동 테스트]</strong><br><br>[숲의 정령 실프-F]: \\"숲을 구하기 위해 마법 저울의 해를 부등식으로 표기하여 가동해 주십시오.<br> \'x는 3보다 크거나 같다\'를 부등호로 나타내십시오.\\"', 'qtext': '<strong>Q1. [부등식의 표시]</strong><br>$x$는 3보다 크거나 같다를 부등호로 나타내시오.', 'placeholder': '예: x>=3', 'error': '저울 측정 실패! 바늘이 격렬하게 흔들립니다.', 'ans_check': "ans === 'X>=3' || ans === 'X\\\\GE3'"},
+    {'qnum': 2, 'title': '저울의 해 찾기', 'story': '⚖️ <strong>[해의 판정]</strong><br><br>[숲의 정령 실프-F]: \\"저울 눈금판에 균형 해를 찾아 입력하십시오. 주어진 보기 중에서 $x=2$가 해인 부등식을 지목하십시오.\\"', 'qtext': '<strong>Q2. [부등식의 해]</strong><br>다음 중 $x=2$가 해인 부등식은?<br>(1) $2x - 1 &lt; 0$<br>(2) $3x \\\\ge 6$<br>(3) $-x &gt; 0$', 'placeholder': '예: (2) 또는 2', 'error': '오답 입력! 저울이 한쪽으로 요동칩니다.', 'ans_check': "ans === '(2)' || ans === '2' || ans === '②'"},
+    {'qnum': 3, 'title': '미만의 눈금 조율', 'story': '⚖️ <strong>[경계값 분석]</strong><br><br>[숲의 정령 실프-F]: \\"안개가 다시 차오릅니다. \'x는 5 미만이다\'의 수학 기호를 저울에 기입하십시오.\\"', 'qtext': '<strong>Q3. [미만의 정의]</strong><br>$x$는 5 미만이다를 부등호로 나타내시오.', 'placeholder': '예: x<5', 'error': '부등호 방향 오류! 기류가 흐트러집니다.', 'ans_check': "ans === 'X<5'"},
+    {'qnum': 4, 'title': '자연수 해 결합', 'story': '⚖️ <strong>[자연수 에너지]</strong><br><br>[숲의 정령 실프-F]: \\"부등식 $x + 2 &lt; 5$ 를 만족하는 마법의 자연수 해 $x$를 모두 찾아 합쳐야 합니다. 작은 수부터 쉼표로 연결해 주십시오.\\"', 'qtext': '<strong>Q4. [조건을 만족하는 해]</strong><br>부등식 $x + 2 &lt; 5$ 를 만족하는 자연수 $x$를 모두 구하시오.', 'placeholder': '예: 1,2', 'error': '조합 실패! 마법석이 어두워집니다.', 'ans_check': "ans === '1,2' || ans === '1,2개' || ans === '1과2'"},
+    {'qnum': 5, 'title': '한계 질량 구하기', 'story': '⚖️ <strong>[최대 질량 제한]</strong><br><br>[숲의 정령 실프-F]: \\"1구역의 최종 장벽입니다. 부등식 $2x \\\\le 8$ 을 만족하는 가장 큰 정수를 조율 장치에 입력하십시오.\\"', 'qtext': '<strong>Q5. [해의 최대값]</strong><br>부등식 $2x \\\\le 8$ 을 만족하는 가장 큰 정수를 구하시오.', 'placeholder': '예: 4', 'error': '질량 초과! 저울 리미터가 울립니다.', 'ans_check': "ans === '4' || ans === '4개'"},
+    {'qnum': 6, 'title': '저울의 덧셈 성질', 'story': '⚖️ <strong>[양변에 더하기]</strong><br><br>[숲의 정령 실프-F]: \\"2구역 저울의 성질 구역입니다. $a &lt; b$ 일 때, 양변에 똑같이 2를 더한 $a + 2$ 와 $b + 2$ 의 대소 관계를 입력하십시오.\\"', 'qtext': '<strong>Q6. [부등식의 성질 1]</strong><br>$a &lt; b$ 일 때, $a + 2$ 와 $b + 2$ 의 대소를 비교하시오.', 'placeholder': '예: a+2<b+2', 'error': '평형 오류! 저울 받침대가 삐걱거립니다.', 'ans_check': "ans === 'A+2<B+2' || ans === 'B+2>A+2'"},
+    {'qnum': 7, 'title': '저울의 곱셈 성질', 'story': '⚖️ <strong>[양변에 양수 곱하기]</strong><br><br>[숲의 정령 실프-F]: \\"$a &lt; b$ 일 때, 양변에 똑같이 양수 3을 곱한 $3a$ 와 $3b$ 의 대소 관계를 저울에 설정하십시오.\\"', 'qtext': '<strong>Q7. [부등식의 성질 2]</strong><br>$a &lt; b$ 일 때, $3a$ 와 $3b$ 의 대소를 비교하시오.', 'placeholder': '예: 3a<3b', 'error': '에너지 증폭 이상! 스파크가 튑니다.', 'ans_check': "ans === '3A<3B' || ans === '3B>3A'"},
+    {'qnum': 8, 'title': '음수 곱셈의 반전', 'story': '⚖️ <strong>[양변에 음수 곱하기]</strong><br><br>[숲의 정령 실프-F]: \\"주의하십시오! $a &lt; b$ 일 때, 양변에 똑같이 음수 -2를 곱한 $-2a$ 와 $-2b$ 의 대소 관계를 입력하십시오.\\"', 'qtext': '<strong>Q8. [부등식의 성질 3]</strong><br>$a &lt; b$ 일 때, $-2a$ 와 $-2b$ 의 대소 관계를 부등호로 나타내시오.', 'placeholder': '예: -2a>-2b', 'error': '반전 에러! 저울이 균형을 완전히 잃고 기울어집니다.', 'ans_check': "ans === '-2A>-2B' || ans === '-2B<-2A'"},
+    {'qnum': 9, 'title': '방향 반전 법칙', 'story': '⚖️ <strong>[부등호 방향의 진실]</strong><br><br>[숲의 정령 실프-F]: \\"음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가? 단답으로 입력해 저울의 봉인을 푸십시오. (바뀐다 / 그대로다)\\"', 'qtext': '<strong>Q9. [부등호의 핵심 법칙]</strong><br>음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가?', 'placeholder': '바뀐다 또는 그대로다 입력', 'error': '법칙 위반! 숲의 정령들이 길을 막습니다.', 'ans_check': "ans === '바뀐다' || ans === '변한다' || ans === '바뀜'"},
+    {'qnum': 10, 'title': '음수 나눗셈의 완성', 'story': '⚖️ <strong>[최종 방향 제어]</strong><br><br>[숲의 정령 실프-F]: \\"2구역 마지막 관문입니다. 부등식 $-3x &gt; 9$ 의 양변을 -3으로 나눈 최종 부등식 해를 완성하십시오.\\"', 'qtext': '<strong>Q10. [음수 나눗셈 연습]</strong><br>$-3x &gt; 9$ 양변을 -3으로 나누면 부등식은 어떻게 되는가?', 'placeholder': '예: x<-3', 'error': '부호 오류! 2구역 탈출 밸브가 차단됩니다.', 'ans_check': "ans === 'X<-3'"},
+    {'qnum': 11, 'title': '마법진 1차 해제', 'story': '⚖️ <strong>[일차부등식 풀이]</strong><br><br>[숲의 정령 실프-F]: \\"3구역 불균형 해소 마법진입니다. 일차부등식 $2x - 4 &gt; 0$ 의 해를 풀어 입력하십시오.\\"', 'qtext': '<strong>Q11. [기초 부등식 풀이]</strong><br>일차부등식 $2x - 4 &gt; 0$ 의 해를 구하시오.', 'placeholder': '예: x>2', 'error': '마법 해제 실패! 마법진이 붉게 점멸합니다.', 'ans_check': "ans === 'X>2'"},
+    {'qnum': 12, 'title': '마법진 2차 해제', 'story': '⚖️ <strong>[이항과 음수 나눗셈]</strong><br><br>[숲의 정령 실프-F]: \\"이항을 이용하여 일차부등식 $3x + 1 \\\\le 7$ 의 해를 구하십시오. 차분하게 상수를 옮기십시오.\\"', 'qtext': '<strong>Q12. [이항 계산]</strong><br>일차부등식 $3x + 1 \\\\le 7$ 의 해를 구하시오.', 'placeholder': '예: x<=2', 'error': '이항 연산 미스! 결합 에너지가 소멸됩니다.', 'ans_check': "ans === 'X<=2' || ans === 'X\\\\LE2'"},
+    {'qnum': 13, 'title': '양변 이항 결합', 'story': '⚖️ <strong>[양변의 미지수 정리]</strong><br><br>[숲의 정령 실프-F]: \\"미지수가 양변에 존재합니다. $5x - 2 &lt; 3x + 8$ 을 이항하여 깔끔한 부등식 해로 도출하십시오.\\"', 'qtext': '<strong>Q13. [복합 이항]</strong><br>일차부등식 $5x - 2 &lt; 3x + 8$ 의 해를 구하시오.', 'placeholder': '예: x<5', 'error': '이항 부호 에러! 에너지 균형이 흐트러집니다.', 'ans_check': "ans === 'X<5'"},
+    {'qnum': 14, 'title': '음수 계수 이항', 'story': '⚖️ <strong>[음수 계수 처리]</strong><br><br>[숲의 정령 실프-F]: \\"중요한 고비입니다! 일차부등식 $-2x + 5 \\\\ge x - 4$ 의 해를 구하십시오. 마지막 나눗셈의 부등호 반전에 유의하십시오.\\"', 'qtext': '<strong>Q14. [음수 계수 이항]</strong><br>일차부등식 $-2x + 5 \\\\ge x - 4$ 의 해를 구하시오.', 'placeholder': '예: x<=3', 'error': '반전 연산 실패! 마법진 온도가 급격히 올라갑니다.', 'ans_check': "ans === 'X<=3' || ans === 'X\\\\LE3'"},
+    {'qnum': 15, 'title': '괄호 마법진 돌파', 'story': '⚖️ <strong>[괄호 분배 법칙]</strong><br><br>[숲의 정령 실프-F]: \\"3구역의 최종 마법진입니다. 분배법칙을 이용해 괄호를 풀고, $2(x - 1) &gt; 4$ 의 해를 정밀하게 입력하십시오.\\"', 'qtext': '<strong>Q15. [괄호가 있는 부등식]</strong><br>일차부등식 $2(x - 1) &gt; 4$ 의 해를 구하시오.', 'placeholder': '예: x>3', 'error': '괄호 분배 오류! 마법진이 비상 셧다운 모드로 돌입합니다.', 'ans_check': "ans === 'X>3'"},
+    {'qnum': 16, 'title': '연속하는 자연수 씨앗', 'story': '⚖️ <strong>[자연수 씨앗 분배]</strong><br><br>[숲의 정령 실프-F]: \\"4구역 생명의 씨앗 분배 장치입니다. 연속하는 두 자연수의 합이 15보다 크다고 할 때, 이를 만족하는 가장 작은 두 자연수를 쉼표로 적으십시오.\\"', 'qtext': '<strong>Q16. [자연수 응용]</strong><br>연속하는 두 자연수의 합이 15보다 크다고 할 때, 이를 만족하는 가장 작은 두 자연수를 구하시오.', 'placeholder': '예: 8,9', 'error': '수치 조합 오류! 씨앗 공급 장치가 걸립니다.', 'ans_check': "ans === '8,9' || ans === '8과9'"},
+    {'qnum': 17, 'title': '장미 꽃잎 제단', 'story': '⚖️ <strong>[제단 비용 부등식]</strong><br><br>[숲의 정령 실프-F]: \\"한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 맞추는 부등식을 세우십시오. (공백 없이 입력)\\"', 'qtext': '<strong>Q17. [식 세우기]</strong><br>한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 하려고 한다. 부등식을 세우시오.', 'placeholder': '예: 800x+1000<=6000', 'error': '부등식 기호 불일치! 제단의 마법 빛이 사그라듭니다.', 'ans_check': "ans === '800X+1000<=6000' || ans === '800X+1000\\\\LE6000'"},
+    {'qnum': 18, 'title': '장미의 최대 송이', 'story': '⚖️ <strong>[최대 장미 수량]</strong><br><br>[숲의 정령 실프-F]: \\"이전 제단의 부등식을 바탕으로, 살 수 있는 장미의 최대 송이수를 계산해 제단 바구니에 입력하십시오.\\"', 'qtext': '<strong>Q18. [최대값 구하기]</strong><br>Q17 조건에서 장미는 최대 몇 송이까지 살 수 있는가?', 'placeholder': '예: 6 또는 6송이', 'error': '꽃잎 수량 한계 초과! 저울이 균형을 잃습니다.', 'ans_check': "ans === '6' || ans === '6송이'"},
+    {'qnum': 19, 'title': '동생의 저금 역전', 'story': '⚖️ <strong>[저금 역전 시기]</strong><br><br>[숲의 정령 실프-F]: \\"형의 저금통에는 20000원, 동생은 10000원이 있습니다. 다음 달부터 매월 형은 2000원, 동생은 3000원씩 저금합니다. 동생이 형보다 많아지는 것은 몇 개월 후입니까?\\"', 'qtext': '<strong>Q19. [실생활 활용]</strong><br>몇 개월 후부터 동생의 저금액이 형의 저금액보다 많아지는지 구하시오.', 'placeholder': '예: 11 또는 11개월', 'error': '연도 계산 오류! 이자가 바닥납니다.', 'ans_check': "ans === '11' || ans === '11개월' || ans === '11개월후'"},
+    {'qnum': 20, 'title': '생명의 숲 최소 면적', 'story': '⚖️ <strong>[숲의 정화 경계]</strong><br><br>[숲의 정령 실프-F]: \\"마지막 순간입니다! 현재 요정 숲의 남은 면적의 절반에서 5를 뺀 것이 10보다 큽니다. 남은 면적의 최소 범위를 입력해 숲을 구원하십시오.\\"', 'qtext': '<strong>Q20. [최종 면적 구하기]</strong><br>요정 숲의 남은 면적은 최소 얼마 초과인가?', 'placeholder': '숫자만 또는 초과 입력 (예: 30)', 'error': '정화 범위 미달! 숲 전체가 봉인 모드로 잠겨버립니다!', 'ans_check': "ans === '30' || ans === '30초과'"}
 ]
 
 # Generate Q panels
@@ -1075,6 +951,28 @@ final_html = base_html.replace('{panels_placeholder}', panels_html)
 # Add checks and boilerplate inside final script tag
 script_insert = js_boilerplate + js_checks + "\n"
 final_html = final_html.replace('        window.onload = () => {', script_insert + '        window.onload = () => {')
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)

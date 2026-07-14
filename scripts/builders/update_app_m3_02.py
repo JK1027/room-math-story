@@ -374,6 +374,38 @@ base_html = """<!DOCTYPE html>
             .story-text { font-size: 0.9rem; min-height: 140px; }
             .btn { width: 100%; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -397,7 +429,9 @@ base_html = """<!DOCTYPE html>
             <h2>다항식의 곱셈과 인수분해</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_02/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">연금술사 파라켈수스의 비밀 공방에 발을 들여놓았습니다. 이곳의 모든 황금 제조법과 비약의 비밀 배합 공식은 '인수분해'와 '곱셈공식'의 암호로 잠겨 있습니다. 복잡하게 얽힌 수식들을 풀어내어 알맞은 인수들로 쪼개고 결합해야만 탈출의 열쇠를 완성할 수 있습니다. 45분 내에 연금술의 궁극의 공식을 복원하고 탈출하십시오!</div>
+                <div class="story-text">
+                [연금술 호문쿨루스 알케미-H]: "연금술사 파라켈수스의 비밀 공방에 발을 들여놓았습니다. 이곳의 모든 황금 제조법과 비약의 비밀 배합 공식은 '인수분해'와 '곱셈공식'의 암호로 잠겨 있습니다. 복잡하게 얽힌 수식들을 풀어내어 알맞은 인수들로 쪼개고 결합해야만 탈출의 열쇠를 완성할 수 있습니다. 45분 내에 연금술의 궁극의 공식을 복원하고 탈출하십시오!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
@@ -412,7 +446,9 @@ base_html = """<!DOCTYPE html>
             <h2>최종 봉인 탈출 성공</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_02/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">배합 비약 항아리에서 황금빛 증기가 뿜어져 나오며 현자의 돌이 모습을 드러냅니다. 공방의 연금술 결계가 스르륵 풀리며 굳게 잠겨있던 문이 열립니다. PARACELSUS의 위대한 비법을 밝혀내어 연금술 공방을 탈출하는 데 성공했습니다!</div>
+                <div class="story-text">
+                [연금술 호문쿨루스 알케미-H]: "배합 비약 항아리에서 황금빛 증기가 뿜어져 나오며 현자의 돌이 모습을 드러냅니다. 공방의 연금술 결계가 스르륵 풀리며 굳게 잠겨있던 문이 열립니다. PARACELSUS의 위대한 비법을 밝혀내어 연금술 공방을 탈출하는 데 성공했습니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -636,206 +672,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "스테이지 1",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q1.</strong> (x+2)(x+3) 을 전개했을 때, x의 계수를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '5'",
-        "hint": "(x+a)(x+b) = x² + (a+b)x + ab 공식을 이용하여 x항의 계수가 두 상수의 합과 같음을 인지시킵니다."
-    },
-    {
-        "qnum": 2,
-        "title": "스테이지 2",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q2.</strong> (x+3)² 을 전개한 식을 구하시오. (예: x²+6x+9)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === 'X²+6X+9'",
-        "hint": "완전제곱식 공식 (a+b)² = a² + 2ab + b² 을 적용하여 전개하도록 지도합니다."
-    },
-    {
-        "qnum": 3,
-        "title": "스테이지 3",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q3.</strong> (2a-b)² 을 전개한 식을 구하시오. (예: 4a²-4ab+b²)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '4A²-4AB+B²'",
-        "hint": "완전제곱식 공식 (a-b)² = a² - 2ab + b² 을 적용하되 앞 항의 계수 제곱에 주의하도록 가이드합니다."
-    },
-    {
-        "qnum": 4,
-        "title": "스테이지 4",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q4.</strong> (x+4)(x-4) 을 전개한 식을 구하시오. (예: x²-16)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === 'X²-16'",
-        "hint": "합차 공식 (a+b)(a-b) = a² - b² 을 적용하도록 안내합니다."
-    },
-    {
-        "qnum": 5,
-        "title": "스테이지 5",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q5.</strong> (x-3)(x+5) 을 전개했을 때, 상수항의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '-15'",
-        "hint": "다항식 전개 시 상수항은 두 일차식의 상수항끼리의 곱과 같음을 설명합니다."
-    },
-    {
-        "qnum": 6,
-        "title": "스테이지 6",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q6.</strong> (2x+1)(3x-2) 을 전개했을 때, x의 계수를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '-1'",
-        "hint": "(ax+b)(cx+d) = acx² + (ad+bc)x + bd 공식을 적용하여 x항의 계수를 대각선 곱셈의 합으로 구하게 합니다."
-    },
-    {
-        "qnum": 7,
-        "title": "스테이지 7",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q7.</strong> 곱셈 공식을 이용하여 101² 의 값을 가장 편리하게 계산할 수 있는 공식의 번호를 선택하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "주어진 큰 숫자를 100에 가까운 값의 덧셈의 제곱 형태로 표현하여 곱셈공식을 활용하도록 유도합니다."
-    },
-    {
-        "qnum": 8,
-        "title": "스테이지 8",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q8.</strong> 다항식 2a²b - 4ab² 을 인수분해할 때, 꺼내야 할 가장 큰 공통인수를 구하시오. (예: 2ab)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '2AB'",
-        "hint": "두 항에 공통으로 곱해진 약수(인수)를 계수와 문자별로 쪼개어 가장 큰 형태로 묶어내게 가이드합니다."
-    },
-    {
-        "qnum": 9,
-        "title": "스테이지 9",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q9.</strong> x² + 6x + 9 를 인수분해한 식을 구하시오. (예: (x+3)²)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "더해서 x항 계수가 되고 곱해서 상수항이 되는 두 동일한 인수를 찾아 완전제곱식으로 인수분해합니다."
-    },
-    {
-        "qnum": 10,
-        "title": "스테이지 10",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q10.</strong> 이차식 x² - 10x + a 가 완전제곱식이 되기 위한 상수 a의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '25'",
-        "hint": "이차식이 완전제곱식이 되려면 상수항이 x항 계수의 반의 제곱과 같아야 한다는 공식을 적용하게 유도합니다."
-    },
-    {
-        "qnum": 11,
-        "title": "스테이지 11",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q11.</strong> a² - 16 을 인수분해한 식을 구하시오. (인수들의 곱으로 표현하시오. 예: (a+4)(a-4))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "제곱의 차 공식인 a² - b² = (a+b)(a-b)를 적용하도록 16을 제곱수로 고치게 안내합니다."
-    },
-    {
-        "qnum": 12,
-        "title": "스테이지 12",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q12.</strong> x² - 4y² 을 인수분해한 식을 구하시오. (예: (x+2y)(x-2y))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "두 번째 항을 전체의 제곱 형태로 묶은 뒤, 제곱의 차 공식(합차 공식)을 적용하도록 지도합니다."
-    },
-    {
-        "qnum": 13,
-        "title": "스테이지 13",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q13.</strong> x² + 5x + 6 을 인수분해한 식을 구하시오. (예: (x+2)(x+3))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "합이 x의 계수가 되고, 곱이 상수항이 되는 두 정수를 찾아 (x+a)(x+b) 형태로 인수분해합니다."
-    },
-    {
-        "qnum": 14,
-        "title": "스테이지 14",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q14.</strong> x² - 8x + 12 를 인수분해한 식을 구하시오. (예: (x-2)(x-6))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "합이 음수인 x의 계수가 되고, 곱이 양수인 상수항이 되는 두 음의 정수를 찾아 조합하도록 가이드합니다."
-    },
-    {
-        "qnum": 15,
-        "title": "스테이지 15",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q15.</strong> 2x² + 7x + 3 을 인수분해한 식을 구하시오. (예: (2x+1)(x+3))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "대각선 곱셈 인수분해 방법을 사용하여, 2차항 계수와 상수항의 약수 조합을 대각선으로 곱해 1차항 계수가 맞춰지도록 유도합니다."
-    },
-    {
-        "qnum": 16,
-        "title": "스테이지 16",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q16.</strong> 다항식 3x² - 12 를 인수분해한 식을 구하시오. (공통인수를 먼저 묶어내어 계산하시오. 예: 3(x+2)(x-2))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '3'",
-        "hint": "먼저 모든 항에 공통으로 곱해져 있는 공통인수를 밖으로 완전히 묶어낸 후, 남은 다항식을 추가로 인수분해합니다."
-    },
-    {
-        "qnum": 17,
-        "title": "스테이지 17",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q17.</strong> 인수분해 공식을 활용하여 99² - 1 의 값을 구하시오. (계산된 최종 수치를 적으시오.)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '9800'",
-        "hint": "주어진 수치 식을 제곱의 차 공식인 a²-b² 형태로 변형하여 곱셈 연산을 수월하게 처리하도록 힌트를 줍니다."
-    },
-    {
-        "qnum": 18,
-        "title": "스테이지 18",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q18.</strong> x=98 일 때, 식 x² + 4x + 4 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '10000'",
-        "hint": "다항식을 완전제곱식으로 먼저 인수분해한 후 x 값을 미지수 자리에 대입하여 계산하게 합니다."
-    },
-    {
-        "qnum": 19,
-        "title": "스테이지 19",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q19.</strong> a+b=5, a-b=3 일 때, a² - b² 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '15'",
-        "hint": "구하고자 하는 다항식의 인수분해 공식을 적용하여 변형한 뒤, 주어진 두 식의 값을 대입하여 계산하게 안내합니다."
-    },
-    {
-        "qnum": 20,
-        "title": "스테이지 20",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q20.</strong> 두 일차식의 곱이 x² - 2x - 15 일 때, 이 두 일차식의 합을 구하시오. (예: 2x-2)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '2X-2'",
-        "hint": "이차식을 두 일차식의 곱으로 인수분해하여 두 일차식을 도출하고, 두 식을 덧셈하여 최종 합을 구하도록 가이드합니다."
-    }
+    {'qnum': 1, 'title': '스테이지 1', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q1.</strong> (x+2)(x+3) 을 전개했을 때, x의 계수를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5'", 'hint': '(x+a)(x+b) = x² + (a+b)x + ab 공식을 이용하여 x항의 계수가 두 상수의 합과 같음을 인지시킵니다.'},
+    {'qnum': 2, 'title': '스테이지 2', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q2.</strong> (x+3)² 을 전개한 식을 구하시오. (예: x²+6x+9)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === 'X²+6X+9'", 'hint': '완전제곱식 공식 (a+b)² = a² + 2ab + b² 을 적용하여 전개하도록 지도합니다.'},
+    {'qnum': 3, 'title': '스테이지 3', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q3.</strong> (2a-b)² 을 전개한 식을 구하시오. (예: 4a²-4ab+b²)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '4A²-4AB+B²'", 'hint': '완전제곱식 공식 (a-b)² = a² - 2ab + b² 을 적용하되 앞 항의 계수 제곱에 주의하도록 가이드합니다.'},
+    {'qnum': 4, 'title': '스테이지 4', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q4.</strong> (x+4)(x-4) 을 전개한 식을 구하시오. (예: x²-16)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === 'X²-16'", 'hint': '합차 공식 (a+b)(a-b) = a² - b² 을 적용하도록 안내합니다.'},
+    {'qnum': 5, 'title': '스테이지 5', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q5.</strong> (x-3)(x+5) 을 전개했을 때, 상수항의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '-15'", 'hint': '다항식 전개 시 상수항은 두 일차식의 상수항끼리의 곱과 같음을 설명합니다.'},
+    {'qnum': 6, 'title': '스테이지 6', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q6.</strong> (2x+1)(3x-2) 을 전개했을 때, x의 계수를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '-1'", 'hint': '(ax+b)(cx+d) = acx² + (ad+bc)x + bd 공식을 적용하여 x항의 계수를 대각선 곱셈의 합으로 구하게 합니다.'},
+    {'qnum': 7, 'title': '스테이지 7', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> 곱셈 공식을 이용하여 101² 의 값을 가장 편리하게 계산할 수 있는 공식의 번호를 선택하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '주어진 큰 숫자를 100에 가까운 값의 덧셈의 제곱 형태로 표현하여 곱셈공식을 활용하도록 유도합니다.'},
+    {'qnum': 8, 'title': '스테이지 8', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> 다항식 2a²b - 4ab² 을 인수분해할 때, 꺼내야 할 가장 큰 공통인수를 구하시오. (예: 2ab)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2AB'", 'hint': '두 항에 공통으로 곱해진 약수(인수)를 계수와 문자별로 쪼개어 가장 큰 형태로 묶어내게 가이드합니다.'},
+    {'qnum': 9, 'title': '스테이지 9', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> x² + 6x + 9 를 인수분해한 식을 구하시오. (예: (x+3)²)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '더해서 x항 계수가 되고 곱해서 상수항이 되는 두 동일한 인수를 찾아 완전제곱식으로 인수분해합니다.'},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q10.</strong> 이차식 x² - 10x + a 가 완전제곱식이 되기 위한 상수 a의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '25'", 'hint': '이차식이 완전제곱식이 되려면 상수항이 x항 계수의 반의 제곱과 같아야 한다는 공식을 적용하게 유도합니다.'},
+    {'qnum': 11, 'title': '스테이지 11', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> a² - 16 을 인수분해한 식을 구하시오. (인수들의 곱으로 표현하시오. 예: (a+4)(a-4))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '제곱의 차 공식인 a² - b² = (a+b)(a-b)를 적용하도록 16을 제곱수로 고치게 안내합니다.'},
+    {'qnum': 12, 'title': '스테이지 12', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> x² - 4y² 을 인수분해한 식을 구하시오. (예: (x+2y)(x-2y))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '두 번째 항을 전체의 제곱 형태로 묶은 뒤, 제곱의 차 공식(합차 공식)을 적용하도록 지도합니다.'},
+    {'qnum': 13, 'title': '스테이지 13', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> x² + 5x + 6 을 인수분해한 식을 구하시오. (예: (x+2)(x+3))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '합이 x의 계수가 되고, 곱이 상수항이 되는 두 정수를 찾아 (x+a)(x+b) 형태로 인수분해합니다.'},
+    {'qnum': 14, 'title': '스테이지 14', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q14.</strong> x² - 8x + 12 를 인수분해한 식을 구하시오. (예: (x-2)(x-6))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '합이 음수인 x의 계수가 되고, 곱이 양수인 상수항이 되는 두 음의 정수를 찾아 조합하도록 가이드합니다.'},
+    {'qnum': 15, 'title': '스테이지 15', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q15.</strong> 2x² + 7x + 3 을 인수분해한 식을 구하시오. (예: (2x+1)(x+3))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '대각선 곱셈 인수분해 방법을 사용하여, 2차항 계수와 상수항의 약수 조합을 대각선으로 곱해 1차항 계수가 맞춰지도록 유도합니다.'},
+    {'qnum': 16, 'title': '스테이지 16', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q16.</strong> 다항식 3x² - 12 를 인수분해한 식을 구하시오. (공통인수를 먼저 묶어내어 계산하시오. 예: 3(x+2)(x-2))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '3'", 'hint': '먼저 모든 항에 공통으로 곱해져 있는 공통인수를 밖으로 완전히 묶어낸 후, 남은 다항식을 추가로 인수분해합니다.'},
+    {'qnum': 17, 'title': '스테이지 17', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> 인수분해 공식을 활용하여 99² - 1 의 값을 구하시오. (계산된 최종 수치를 적으시오.)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '9800'", 'hint': '주어진 수치 식을 제곱의 차 공식인 a²-b² 형태로 변형하여 곱셈 연산을 수월하게 처리하도록 힌트를 줍니다.'},
+    {'qnum': 18, 'title': '스테이지 18', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> x=98 일 때, 식 x² + 4x + 4 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '10000'", 'hint': '다항식을 완전제곱식으로 먼저 인수분해한 후 x 값을 미지수 자리에 대입하여 계산하게 합니다.'},
+    {'qnum': 19, 'title': '스테이지 19', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> a+b=5, a-b=3 일 때, a² - b² 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '15'", 'hint': '구하고자 하는 다항식의 인수분해 공식을 적용하여 변형한 뒤, 주어진 두 식의 값을 대입하여 계산하게 안내합니다.'},
+    {'qnum': 20, 'title': '스테이지 20', 'story': '[연금술 호문쿨루스 알케미-H]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q20.</strong> 두 일차식의 곱이 x² - 2x - 15 일 때, 이 두 일차식의 합을 구하시오. (예: 2x-2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2X-2'", 'hint': '이차식을 두 일차식의 곱으로 인수분해하여 두 일차식을 도출하고, 두 식을 덧셈하여 최종 합을 구하도록 가이드합니다.'}
 ]
 
 import re
@@ -976,6 +832,28 @@ js_boilerplate = """
 """
 
 final_html = base_html.replace("{{panels_placeholder}}", panels_html) + "\n<script>\n" + js_checks + "\n</script>"
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)

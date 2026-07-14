@@ -5,362 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>자율주행 택시의 길찾기: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #050508;
-            --glass-bg: rgba(13, 10, 25, 0.75);
-            --glass-border: rgba(255, 0, 127, 0.25);
-            --accent: #ff007f;
-            --accent-hover: #ff3399;
-            --text-main: #f0fbf0;
-            --text-muted: #9abfa0;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(255, 0, 127, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(13, 10, 25, 0.3) 0%, transparent 40%);
-            z-index: -2;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 0, 127, 0.4);
-            border-left: 1px solid rgba(255, 0, 127, 0.4);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 0 50px rgba(255, 0, 127, 0.15), inset 0 0 20px rgba(255, 0, 127, 0.02);
-            display: none; 
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 {
-            font-family: 'Orbit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(50, 205, 50, 0.3);
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255, 0, 127, 0.15);
-            padding-bottom: 0.75rem;
-        }
-
-.panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .story-box {
-            background: rgba(13, 10, 25, 0.5);
-            border: 1px solid rgba(255, 0, 127, 0.15);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .story-box:hover {
-            background: rgba(10, 20, 15, 0.7);
-        }
-
-        .story-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-main);
-            min-height: 110px;
-            word-break: keep-all;
-        }
-        
-        #intro .story-text {
-            min-height: 80px;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            bottom: 8px;
-            right: 12px;
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-size: 0.8rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .story-log-trigger:hover {
-            opacity: 1;
-        }
-
-        .question-box {
-            background: rgba(255, 0, 127, 0.05);
-            border: 1px dashed rgba(255, 0, 127, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .question-content {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .input-group {
-            margin-top: 1rem;
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            background: rgba(13, 10, 25, 0.8);
-            border: 1px solid rgba(255, 0, 127, 0.3);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            color: #fff;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: 'Share Tech Mono', monospace;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--accent) 0%, #1e5c1e 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 0.85rem 2.5rem;
-            font-size: 1.05rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.5);
-            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
-        }
-
-        .btn-hint {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 4px 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            vertical-align: middle;
-            margin-left: 10px;
-            letter-spacing: 0.5px;
-            text-transform: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .btn-hint:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-        }
-
-
-        .error-msg {
-            color: #ff6b6b;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: -0.5rem;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 500;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 100%;
-            background: rgba(10, 20, 15, 0.6);
-            border: 1px solid rgba(50, 205, 50, 0.2);
-            border-radius: 50px;
-            height: 10px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        /* Sound Control */
-        .sound-ctrl {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-        
-        .sound-ctrl:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(50, 205, 50, 0.2);
-        }
-
-        /* Log Modal */
-        .log-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 12, 8, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .log-content {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 70vh;
-            padding: 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .log-content h2 {
-            border-bottom: 1px solid rgba(50, 205, 50, 0.2);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .log-list {
-            overflow-y: auto;
-            flex: 1;
-            padding-right: 5px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .log-item {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            padding: 0.5rem 0.75rem;
-            background: rgba(10, 20, 15, 0.4);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
-        }
-        
-        .close-log {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        
-        .close-log:hover {
-            color: #fff;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-    </style>
+    <style>:root{--bg-main:#050508;--glass-bg:rgba(13,10,25,0.75);--glass-border:rgba(255,0,127,0.25);--accent:#ff007f;--accent-hover:#ff3399;--text-main:#f0fbf0;--text-muted:#9abfa0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(255,0,127,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(13,10,25,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(255,0,127,0.4);border-left:1px solid rgba(255,0,127,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(255,0,127,0.15),inset 0 0 20px rgba(255,0,127,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(255,0,127,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(13,10,25,0.5);border:1px solid rgba(255,0,127,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(255,0,127,0.05);border:1px dashed rgba(255,0,127,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(13,10,25,0.8);border:1px solid rgba(255,0,127,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(255,0,127,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(255,0,127,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,0,127,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(50,205,50,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -389,7 +34,9 @@
             <h2>일차함수와 그 그래프</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">미래 도시 '네오 서울', 여러분이 탄 자율주행 택시의 내비게이션이 바이러스에 감염되어 경로를 이탈했습니다. 택시는 절벽을 향해 달리고 있습니다! 유일한 제어 방법은 일차함수의 그래프를 이용해 주행 궤적을 수정하는 것뿐입니다. 기울기와 절편을 조절해 20개의 경로 포인트를 맞추고 택시를 안전한 목적지로 안내하세요!</div>
+                <div class="story-text">
+                [자율주행 관제 로봇 루트-R]: "미래 도시 '네오 서울', 여러분이 탄 자율주행 택시의 내비게이션이 바이러스에 감염되어 경로를 이탈했습니다. 택시는 절벽을 향해 달리고 있습니다! 유일한 제어 방법은 일차함수의 그래프를 이용해 주행 궤적을 수정하는 것뿐입니다. 기울기와 절편을 조절해 20개의 경로 포인트를 맞추고 택시를 안전한 목적지로 안내하세요!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">내비게이션 제어 시작</button>
@@ -402,7 +49,7 @@
             <h2>제 1구역: 시스템 함수 정의 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">자율주행 택시의 제어 콘솔이 겨우 켜졌습니다. 시스템 복구의 첫 단계로, 독립 변수 $x$에 따른 종속 변수 $y$의 기본 연결 관계인 함수의 개념을 규정해야 합니다.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"자율주행 택시의 제어 콘솔이 겨우 켜졌습니다. 시스템 복구의 첫 단계로, 독립 변수 $x$에 따른 종속 변수 $y$의 기본 연결 관계인 함수의 개념을 규정해야 합니다.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -425,7 +72,7 @@
             <h2>제 2구역: 기본 궤적 연산 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">기본 주행 함수 $f(x)=2x-3$이 활성화되었습니다. 입력 신호 $x=4$에 도달했을 때 출력 전압(함숫값)의 세기를 계산하여 장치를 구동시키세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"기본 주행 함수 $f(x)=2x-3$이 활성화되었습니다. 입력 신호 $x=4$에 도달했을 때 출력 전압(함숫값)의 세기를 계산하여 장치를 구동시키세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -448,7 +95,7 @@
             <h2>제 3구역: 속도 제어 밸브 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">엔진의 안전 속도를 계산하는 시스템 함수 식을 점검합니다. 입력값이 2일 때 제어 장치의 밸브 값 $f(2)$를 정확하게 입력창에 전송하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"엔진의 안전 속도를 계산하는 시스템 함수 식을 점검합니다. 입력값이 2일 때 제어 장치의 밸브 값 $f(2)$를 정확하게 입력창에 전송하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -471,7 +118,7 @@
             <h2>제 4구역: 일차함수 판별 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">메인 엔진에 가할 수 있는 주행 제어 수식 리스트가 복원되었습니다. 이 중 일차함수의 형태를 띠고 있는 정상 제어 패킷의 번호를 선택하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"메인 엔진에 가할 수 있는 주행 제어 수식 리스트가 복원되었습니다. 이 중 일차함수의 형태를 띠고 있는 정상 제어 패킷의 번호를 선택하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -494,7 +141,7 @@
             <h2>제 5구역: 궤적 평행이동 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">목표 궤적인 $y=4x$를 장애물을 피할 수 있는 안전 경로로 재구축해야 합니다. 이를 위해 $y$축의 음의 방향으로 2만큼 시프트한 새로운 경로 식을 전송하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"목표 궤적인 $y=4x$를 장애물을 피할 수 있는 안전 경로로 재구축해야 합니다. 이를 위해 $y$축의 음의 방향으로 2만큼 시프트한 새로운 경로 식을 전송하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -517,7 +164,7 @@
             <h2>제 6구역: 축 교점 분석 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">택시 궤적이 모니터의 중심축인 $x$축과 정확히 만나는 지점을 계측해야 우회 도로에 안착합니다. 그래프가 $x$축과 만나는 교점의 $x$좌표를 일컫는 수학적 명칭을 찾아내세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"택시 궤적이 모니터의 중심축인 $x$축과 정확히 만나는 지점을 계측해야 우회 도로에 안착합니다. 그래프가 $x$축과 만나는 교점의 $x$좌표를 일컫는 수학적 명칭을 찾아내세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -540,7 +187,7 @@
             <h2>제 7구역: 출발지 복원 ($y$절편) <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">택시의 이탈을 방지하기 위해 중심 회선($y$축)과 마주치는 원점 시작 높이를 구해야 합니다. 함수 $y=2x+6$의 $y$축 절편 값을 알아내세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"택시의 이탈을 방지하기 위해 중심 회선($y$축)과 마주치는 원점 시작 높이를 구해야 합니다. 함수 $y=2x+6$의 $y$축 절편 값을 알아내세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -563,7 +210,7 @@
             <h2>제 8구역: 제동 장벽 통과 ($x$절편) <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">안전 제동 구역인 $x$축의 가로 교점을 알아내야 장벽 충돌을 막을 수 있습니다. 직선 $y=2x+6$의 $x$절편을 구하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"안전 제동 구역인 $x$축의 가로 교점을 알아내야 장벽 충돌을 막을 수 있습니다. 직선 $y=2x+6$의 $x$절편을 구하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -586,7 +233,7 @@
             <h2>제 9구역: 회전 각도 정합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">반대편 선로에서 미끄러져 오는 궤적 $y=-\frac{1}{2}x+4$의 차단 장치 도킹 좌표($x$절편)를 구하여 정면충돌 위험을 원천 제거하십시오.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"반대편 선로에서 미끄러져 오는 궤적 $y=-\frac{1}{2}x+4$의 차단 장치 도킹 좌표($x$절편)를 구하여 정면충돌 위험을 원천 제거하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -609,7 +256,7 @@
             <h2>제 10구역: 궤적 방정식 조립 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">두 축의 제어 절편 좌표인 $y$절편 5와 $x$절편 -5를 결합하여 내비게이션 메인 프로세서에 주입할 회피 기동용 일차함수 식을 완전 조립하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"두 축의 제어 절편 좌표인 $y$절편 5와 $x$절편 -5를 결합하여 내비게이션 메인 프로세서에 주입할 회피 기동용 일차함수 식을 완전 조립하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -632,7 +279,7 @@
             <h2>제 11구역: 변화율 계산 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">택시가 경사 진 직선 도로에 접어들며 비상 가속을 시작합니다. 시간 단위인 $x$가 1초 흘러갈 때 주행축 $y$는 얼마나 가속 변동하는지 가파른 변화율을 계측하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"택시가 경사 진 직선 도로에 접어들며 비상 가속을 시작합니다. 시간 단위인 $x$가 1초 흘러갈 때 주행축 $y$는 얼마나 가속 변동하는지 가파른 변화율을 계측하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -655,7 +302,7 @@
             <h2>제 12구역: 기울기 심볼 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">궤도선의 변화 각을 제어하기 위해 시스템 표준으로 설정된 '기울기' 매개변수를 수치화하는 공식 시스템 심볼(문자 기호)을 입력기에 타이핑하십시오.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"궤도선의 변화 각을 제어하기 위해 시스템 표준으로 설정된 '기울기' 매개변수를 수치화하는 공식 시스템 심볼(문자 기호)을 입력기에 타이핑하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -678,7 +325,7 @@
             <h2>제 13구역: 두 점 사이의 구배 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">안전 주행 영역의 제1 포인트 $(1,3)$과 제2 포인트 $(3,7)$을 잇는 안전 벨트 궤도의 가파르기(기울기)를 도출해 내야 센서가 길을 잃지 않습니다.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"안전 주행 영역의 제1 포인트 $(1,3)$과 제2 포인트 $(3,7)$을 잇는 안전 벨트 궤도의 가파르기(기울기)를 도출해 내야 센서가 길을 잃지 않습니다.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -701,7 +348,7 @@
             <h2>제 14구역: 경로 함수 합성 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">점점 가속도가 꺾여 하강하는 기울기 -2와 정적 시작 오프셋 1을 지닌 긴급 조향용 경로 제어용 일차함수 수식을 합성하여 릴레이 보드에 입력하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"점점 가속도가 꺾여 하강하는 기울기 -2와 정적 시작 오프셋 1을 지닌 긴급 조향용 경로 제어용 일차함수 수식을 합성하여 릴레이 보드에 입력하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -724,7 +371,7 @@
             <h2>제 15구역: 조향 방향 결정 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">감속 제동 직선인 $y=-3x+4$의 주행 벡터가 화면의 오른쪽 위 또는 아래 중 어느 벡터 방향으로 쏠려 내려가는지 택시의 물리 조향 방향을 확정 지으세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"감속 제동 직선인 $y=-3x+4$의 주행 벡터가 화면의 오른쪽 위 또는 아래 중 어느 벡터 방향으로 쏠려 내려가는지 택시의 물리 조향 방향을 확정 지으세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -747,7 +394,7 @@
             <h2>제 16구역: 소모 패턴 식화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">자율주행 택시의 비상 예비 배터리 연료가 떨어지고 있습니다. 최초 20cm의 초고온 냉각 전지가 1시간에 2cm 비율로 감소할 때, 잔여량 $y$에 대한 시간 $x$의 식을 주입하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"자율주행 택시의 비상 예비 배터리 연료가 떨어지고 있습니다. 최초 20cm의 초고온 냉각 전지가 1시간에 2cm 비율로 감소할 때, 잔여량 $y$에 대한 시간 $x$의 식을 주입하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -770,7 +417,7 @@
             <h2>제 17구역: 완전 방전 시간 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">냉각 연료 전지가 완전히 0(바닥)이 될 때까지 주행할 수 있는 한계 시간(안전 제한 시간)을 계측해 택시가 그전에 멈추도록 예비 방전 도달 시간을 설정하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"냉각 연료 전지가 완전히 0(바닥)이 될 때까지 주행할 수 있는 한계 시간(안전 제한 시간)을 계측해 택시가 그전에 멈추도록 예비 방전 도달 시간을 설정하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -793,7 +440,7 @@
             <h2>제 18구역: 음파 내비게이션 복구 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">도시 터널을 지나기 위해 센서의 음속 보정 공식을 복원해야 합니다. 0도에서 초속 331m이고 기온 $x$가 1도씩 오를 때마다 속력 $y$가 0.6m/s씩 증가하는 보정 식을 제출하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"도시 터널을 지나기 위해 센서의 음속 보정 공식을 복원해야 합니다. 0도에서 초속 331m이고 기온 $x$가 1도씩 오를 때마다 속력 $y$가 0.6m/s씩 증가하는 보정 식을 제출하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -816,7 +463,7 @@
             <h2>제 19구역: 최종 기온 속력 정합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">외부 기상 센서에 측정된 네오 서울 터널 안의 기온은 현재 15도입니다. 이 환경에서 음파 레이더 거리를 정확히 계산할 때의 전파 속력 값을 계산해 적용하세요.</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"외부 기상 센서에 측정된 네오 서울 터널 안의 기온은 현재 15도입니다. 이 환경에서 음파 레이더 거리를 정확히 계산할 때의 전파 속력 값을 계산해 적용하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -839,7 +486,7 @@
             <h2>제 20구역: 감속 냉각 시간 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">마지막 최종 조향 통제입니다! 50L의 냉각 탱크 연료가 분당 3L 속도로 유출되고 있는 절박한 절벽 직전의 상황에서, 20L 마지노선까지 버틸 수 있는 한계 가용 분(시간)을 맞추어 제어 브레이크를 동작시키십시오!</div>
+                <div class="story-text">[자율주행 관제 로봇 루트-R]: \"마지막 최종 조향 통제입니다! 50L의 냉각 탱크 연료가 분당 3L 속도로 유출되고 있는 절박한 절벽 직전의 상황에서, 20L 마지노선까지 버틸 수 있는 한계 가용 분(시간)을 맞추어 제어 브레이크를 동작시키십시오!\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -864,7 +511,9 @@
             <h2>네오 서울 중앙역 무사 도착</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">정확히 10분을 입력하자 내비게이션이 정상 궤도를 회복했습니다! 택시가 절벽을 아슬아슬하게 피하며 네오 서울 중앙역에 부드럽게 멈춰 섭니다. 일차함수의 마법사 여러분, 무사 생환을 축하합니다!</div>
+                <div class="story-text">
+                [자율주행 관제 로봇 루트-R]: "정확히 10분을 입력하자 내비게이션이 정상 궤도를 회복했습니다! 택시가 절벽을 아슬아슬하게 피하며 네오 서울 중앙역에 부드럽게 멈춰 섭니다. 일차함수의 마법사 여러분, 무사 생환을 축하합니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>

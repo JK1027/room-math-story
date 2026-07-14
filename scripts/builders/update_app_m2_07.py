@@ -371,6 +371,38 @@ base_html = """<!DOCTYPE html>
         @keyframes blink {
             50% { opacity: 0; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
@@ -400,7 +432,9 @@ base_html = """<!DOCTYPE html>
             <h2>도형의 닮음 (평행선과 선분의 비)</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">실수로 거울 나라의 축소 광선을 맞은 여러분! 몸집이 장난감만 해졌습니다. 원래 크기로 돌아가려면 거울 성에 숨겨진 '닮음비'와 '비례식'에 관련된 20개의 퍼즐을 풀어 해독 광선을 가동해야 합니다. 축소된 몸이 굳기 전에 45분 안에 서둘러야 합니다!</div>
+                <div class="story-text">
+                [체스 퀸 AI 앨리스-Q]: "실수로 거울 나라의 축소 광선을 맞은 여러분! 몸집이 장난감만 해졌습니다. 원래 크기로 돌아가려면 거울 성에 숨겨진 '닮음비'와 '비례식'에 관련된 20개의 퍼즐을 풀어 해독 광선을 가동해야 합니다. 축소된 몸이 굳기 전에 45분 안에 서둘러야 합니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">해독 광선 장치 가동</button>
@@ -415,7 +449,9 @@ base_html = """<!DOCTYPE html>
             <h2>원래 크기로 무사 복원</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">정확한 비례식을 입력하자, 해독 광선이 눈부시게 빛나며 여러분을 감쌉니다. 순식간에 시야가 다시 넓어지고 거울에 비친 여러분의 몸이 원래 크기로 완벽하게 되돌아옵니다! 닮음의 지혜로 거울 나라를 무사히 탈출했습니다!</div>
+                <div class="story-text">
+                [체스 퀸 AI 앨리스-Q]: "정확한 비례식을 입력하자, 해독 광선이 눈부시게 빛나며 여러분을 감쌉니다. 순식간에 시야가 다시 넓어지고 거울에 비친 여러분의 몸이 원래 크기로 완벽하게 되돌아옵니다! 닮음의 지혜로 거울 나라를 무사히 탈출했습니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -535,186 +571,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "닮음의 문양 계측",
-        "story": "거울 나라의 성문이 잠겼습니다. 한 도형을 축소 또는 확대해서 다른 도형과 완벽히 포개질 때의 기하학적 관계 명칭을 해독 장치에 입력해 작동시키세요.",
-        "qtext": "<strong>Q1.</strong> 한 도형을 일정한 비율로 확대하거나 축소한 도형이 다른 도형과 합동이 될 때, 두 도형은 서로 ( ? )인 관계에 있다고 한다.",
-        "placeholder": "두 글자 입력",
-        "error": "틀렸습니다. 대칭과 축소의 기본 관계 단어입니다.",
-        "ans_check": "ans === '닮음'"
-    },
-    {
-        "qnum": 2,
-        "title": "축소의 배율",
-        "story": "해독 광선이 우리의 원래 크기와 축소된 장난감 크기 사이의 대응하는 선분의 길이의 비율을 파악하려 합니다. 이 비율의 이름을 무엇이라 합니까?",
-        "qtext": "<strong>Q2.</strong> 서로 닮은 두 평면도형에서 대응하는 선분의 길이의 비를 무엇이라 하는가?",
-        "placeholder": "세 글자 입력",
-        "error": "틀렸습니다. 닮음인 두 도형의 선분 길이의 비입니다.",
-        "ans_check": "ans === '닮음비'"
-    },
-    {
-        "qnum": 3,
-        "title": "원형 거울의 굴절",
-        "story": "거울 성 벽면의 크고 작은 원형 거울들은 크기와 상관없이 항상 완벽하게 형태가 닮아 있는 도형입니까? O 또는 X로 입력해 답하세요.",
-        "qtext": "<strong>Q3.</strong> 두 원은 항상 닮은 도형인가? ( O / X )",
-        "placeholder": "O 또는 X 입력",
-        "error": "틀렸습니다. 모든 원은 중심에서 테두리까지 비율이 균일합니다.",
-        "ans_check": "ans === 'O' || ans === '오'"
-    },
-    {
-        "qnum": 4,
-        "title": "축소된 액자의 가로",
-        "story": "가로 세로 닮음비가 2:3인 액자가 있습니다. 축소된 작은 액자의 가로가 4cm일 때, 원래 거울 성에 걸려 있던 큰 액자의 가로 길이는 몇 cm인지 구하세요.",
-        "qtext": "<strong>Q4.</strong> 닮음비가 2:3인 두 직사각형이 있다. 작은 직사각형의 가로가 4cm일 때, 큰 직사각형의 가로는 몇 cm인가?",
-        "placeholder": "단위 없이 숫자만 또는 '6cm' 입력",
-        "error": "틀렸습니다. 비례식 $2:3 = 4:x$를 해결해보세요.",
-        "ans_check": "ans === '6' || ans === '6CM'"
-    },
-    {
-        "qnum": 5,
-        "title": "체스판 타일의 닮음",
-        "story": "거울 방 바닥의 크기가 다른 정사각형 모양의 체스판 타일들은 모두 항상 서로 닮음 관계에 있습니까? 대문자 O 또는 X로 전송하십시오.",
-        "qtext": "<strong>Q5.</strong> 모든 정사각형은 항상 서로 닮은 도형인가? ( O / X )",
-        "placeholder": "O 또는 X 입력",
-        "error": "틀렸습니다. 정사각형은 네 변의 길이가 같고 네 각이 90도로 고정되어 있습니다.",
-        "ans_check": "ans === 'O' || ans === '오'"
-    },
-    {
-        "qnum": 6,
-        "title": "세 변의 닮음 조건",
-        "story": "제 2구역: 잃어버린 각도입니다. 거울 톱니바퀴의 세 쌍의 변의 길이 비율이 동일함을 사용해 닮음을 확정 짓는 삼각형 닮음 조건 기호(영문 3글자)를 입력하세요.",
-        "qtext": "<strong>Q6.</strong> 삼각형의 세 쌍의 대응하는 변의 길이의 비가 같을 때의 닮음 조건을 쓰시오. (기호로)",
-        "placeholder": "영문 세 글자 입력 (예: SSS)",
-        "error": "기호가 올바르지 않습니다. Side-Side-Side의 약자입니다.",
-        "ans_check": "ans === 'SSS'"
-    },
-    {
-        "qnum": 7,
-        "title": "변과 사잇각의 조건",
-        "story": "두 변의 길이비가 일정하고 그 사이에 위치하는 끼인각의 크기가 같을 때 성립하는 삼각형 닮음 판정 기호(영문 3글자)를 입력하여 락을 푸십시오.",
-        "qtext": "<strong>Q7.</strong> 삼각형의 두 쌍의 대응하는 변의 길이의 비가 같고, 그 끼인각의 크기가 같을 때의 닮음 조건을 쓰시오.",
-        "placeholder": "영문 세 글자 입력 (예: SAS)",
-        "error": "기호가 올바르지 않습니다. Side-Angle-Side의 약자입니다.",
-        "ans_check": "ans === 'SAS'"
-    },
-    {
-        "qnum": 8,
-        "title": "두 각의 닮음 조건",
-        "story": "길이를 알 필요 없이 오직 두 모퉁이 각도가 서로 같으면 성립하는 가장 유용하고 보편적인 닮음 조건 기호(영문 2글자)를 타이핑하세요.",
-        "qtext": "<strong>Q8.</strong> 삼각형의 두 쌍의 대응하는 각의 크기가 같을 때의 닮음 조건을 쓰시오.",
-        "placeholder": "영문 두 글자 입력 (예: AA)",
-        "error": "기호가 올바르지 않습니다. Angle-Angle의 약자입니다.",
-        "ans_check": "ans === 'AA'"
-    },
-    {
-        "qnum": 9,
-        "title": "정삼각형의 정합비",
-        "story": "한 각이 60도인 두 정삼각형은 무조건 어떤 닮음 조건에 의해 닮음이 성립되는지 한글을 포함해 정확히 입력창에 전송하세요.",
-        "qtext": "<strong>Q9.</strong> 한 각이 60도인 두 정삼각형은 무조건 어떤 닮음 조건에 의해 닮음인가?",
-        "placeholder": "예: AA닮음",
-        "error": "조건이 틀렸습니다. 세 각의 크기가 모두 60도로 동일하게 되는 성질을 생각하세요.",
-        "ans_check": "ans === 'AA' || ans === 'AA닮음'"
-    },
-    {
-        "qnum": 10,
-        "title": "수선 궤적의 쪼개짐",
-        "story": "직각 꼭짓점에서 마주 보는 빗변에 수직으로 내린 수선 레이저가 가르는 두 개의 내부 직각삼각형 구조물은 서로 어떤 굴절 관계에 있습니까?",
-        "qtext": "<strong>Q10.</strong> 직각삼각형 내부에서 직각인 꼭짓점에서 빗변에 수선을 내렸을 때 만들어지는 두 개의 작은 직각삼각형은 서로 ( ? ) 관계이다.",
-        "placeholder": "두 글자 입력",
-        "error": "틀렸습니다. 크기는 다르지만 모양이 똑같습니다.",
-        "ans_check": "ans === '닮음'"
-    },
-    {
-        "qnum": 11,
-        "title": "평행 관계의 사다리",
-        "story": "제 3구역: 사다리 건너기입니다. 사다리 구조물 양쪽 변의 중간 지점인 M과 N을 이은 가로목 MN은 밑바닥 BC 기둥과 공간상에서 어떤 관계에 있습니까?",
-        "qtext": "<strong>Q11.</strong> 삼각형 ABC에서 변 AB의 중점 M, 변 AC의 중점 N을 이은 선분 MN은 변 BC와 어떤 위치 관계에 있는가?",
-        "placeholder": "두 글자 입력 (예: 평행)",
-        "error": "틀렸습니다. 두 기둥이 나란히 뻗어 있습니다.",
-        "ans_check": "ans === '평행'"
-    },
-    {
-        "qnum": 12,
-        "title": "중점 연결의 길이 비",
-        "story": "삼각형의 중점 연결 정리에 의해, 가로목 MN의 길이는 가장 길고 탄탄한 밑바닥 BC 길이의 몇 배가 되는지 분수나 소수로 적으십시오.",
-        "qtext": "<strong>Q12.</strong> 위 Q11의 삼각형 중점 연결 정리에서 선분 MN의 길이는 선분 BC의 길이의 ( 몇 분의 몇 ) 인가?",
-        "placeholder": "예: 1/2 또는 절반",
-        "error": "틀렸습니다. 중점을 연결했으므로 크기가 절반으로 축소됩니다.",
-        "ans_check": "ans === '1/2' || ans === '절반' || ans === '0.5'"
-    },
-    {
-        "qnum": 13,
-        "title": "평행 차단막의 닮음",
-        "story": "삼각형의 한 모퉁이에 나란한 평행 차단 장벽을 그었을 때, 새로 나뉘어 생긴 미니 삼각형은 기존의 거대 삼각형과 어떤 궤적 관계에 있습니까?",
-        "qtext": "<strong>Q13.</strong> 삼각형의 한 변에 평행한 선분을 그어 다른 두 변과 만나게 하면, 새로 만들어진 작은 삼각형은 원래 삼각형과 ( ? ) 관계이다.",
-        "placeholder": "두 글자 입력",
-        "error": "틀렸습니다. 세 각의 크기가 같은 비례형 삼각형입니다.",
-        "ans_check": "ans === '닮음'"
-    },
-    {
-        "qnum": 14,
-        "title": "평행 빔의 등가 비율",
-        "story": "세 가닥의 평행선 레이저 장벽을 두 개의 비스듬한 도선이 관통하여 지나갑니다. 이 도선들에 의해 잘려 생기는 대응 선분들의 길이 비율은 서로 어떠합니까?",
-        "qtext": "<strong>Q14.</strong> 평행한 세 직선이 두 직선과 만날 때, 잘린 대응하는 선분의 길이의 비는 서로 ( 같다 / 다르다 ).",
-        "placeholder": "같다 또는 다르다 입력",
-        "error": "틀렸습니다. 평행선 사이의 선분 비례 공식을 생각하세요.",
-        "ans_check": "ans === '같다'"
-    },
-    {
-        "qnum": 15,
-        "title": "질량 중심의 분할비",
-        "story": "사다리를 매달아 평형을 찾게 해주는 삼각형의 핵심 균형점(무게중심)은 꼭짓점으로부터 중선 지지대를 몇 대 몇의 정수로 나누는지 비율 형태로 입력하세요.",
-        "qtext": "<strong>Q15.</strong> 삼각형의 무게중심은 세 중선의 길이를 꼭짓점으로부터 각각 ( ? ) : ( ? ) 의 비율로 나눈다.",
-        "placeholder": "예: 2:1 또는 2대1",
-        "error": "비율이 올바르지 않습니다. 위쪽이 아래쪽보다 두 배 더 깁니다.",
-        "ans_check": "ans.replace(/\s+/g, '') === '2:1' || ans.replace(/\s+/g, '') === '2대1'"
-    },
-    {
-        "qnum": 16,
-        "title": "넓이의 차원비",
-        "story": "제 4구역: 해독 광선의 출력 포트입니다. 닮음비가 $m:n$인 두 평면거울에 대해, 반사되는 표면적(넓이)의 비율 수식을 제곱 기호(^)를 사용해 입력하세요.",
-        "qtext": "<strong>Q16.</strong> 두 평면도형의 닮음비가 $m:n$ 일 때, 넓이의 비는 얼마인가?",
-        "placeholder": "예: m^2:n^2",
-        "error": "비율 식이 잘못되었습니다. 넓이의 비는 닮음비의 제곱의 비입니다.",
-        "ans_check": "ans.replace(/\s+/g, '') === 'M^2:N^2' || ans.replace(/\s+/g, '') === 'M2:N2' || ans.replace(/\s+/g, '') === 'M^2대N^2'"
-    },
-    {
-        "qnum": 17,
-        "title": "정육면체 거울 상자의 표면적",
-        "story": "닮음비가 1:2인 정육면체 모양의 에너지 충전 박스가 2개 결합해 있습니다. 이 박스들의 겉 표면 전체 넓이(겉넓이) 비율은 몇 대 몇인지 입력하세요.",
-        "qtext": "<strong>Q17.</strong> 두 정육면체의 닮음비가 1:2 일 때, 넓이(겉넓이)의 비는 얼마인가?",
-        "placeholder": "예: 1:4 또는 1대4",
-        "error": "틀렸습니다. 닮음비가 1:2이면 넓이의 비는 제곱의 비입니다.",
-        "ans_check": "ans.replace(/\s+/g, '') === '1:4' || ans.replace(/\s+/g, '') === '1대4'"
-    },
-    {
-        "qnum": 18,
-        "title": "부피의 차원비",
-        "story": "입체도형 방의 공간 부피를 정합해야 해독 광선 출력이 최대로 가동됩니다. 닮음비가 $m:n$일 때, 부피의 비율 수식을 세제곱 기호(^)를 써서 적으십시오.",
-        "qtext": "<strong>Q18.</strong> 두 입체도형의 닮음비가 $m:n$ 일 때, 부피의 비는 얼마인가?",
-        "placeholder": "예: m^3:n^3",
-        "error": "부피의 비는 닮음비의 세제곱에 비례합니다.",
-        "ans_check": "ans.replace(/\s+/g, '') === 'M^3:N^3' || ans.replace(/\s+/g, '') === 'M3:N3' || ans.replace(/\s+/g, '') === 'M^3대N^3'"
-    },
-    {
-        "qnum": 19,
-        "title": "거울 구슬의 체적비",
-        "story": "닮음비가 1:3으로 서로 크기가 다른 구슬형 부품들이 들어 있습니다. 해독 광선 발사대의 이 두 구슬의 실제 부피 비율을 계산해 입력하세요.",
-        "qtext": "<strong>Q19.</strong> 닮음비가 1:3 인 두 구슬의 부피의 비는 얼마인가?",
-        "placeholder": "예: 1:27",
-        "error": "틀렸습니다. 1과 3을 각각 세제곱하여 비율을 구하세요.",
-        "ans_check": "ans.replace(/\s+/g, '') === '1:27' || ans.replace(/\s+/g, '') === '1대27'"
-    },
-    {
-        "qnum": 20,
-        "title": "광선 증폭의 최종 비례식",
-        "story": "작은 컵의 부피가 10mL이고 닮음비가 2:3인 큰 컵이 나란히 놓여 있습니다. 큰 컵의 부피 $x$를 도출하기 위해, 닮음비를 부피비로 환산한 최종 비례식을 입력해 광선을 쏘세요!",
-        "qtext": "<strong>Q20.</strong> 작은 컵의 부피가 10mL이다. 닮음비가 2:3인 큰 컵이 있다면, 큰 컵의 부피를 구하기 위한 비례식을 세워보시오.",
-        "placeholder": "예: 8:27=10:x",
-        "error": "비례식 세팅 실패! 부피비는 닮음비의 세제곱인 8:27임을 이용해 10:x와 연계해 세우세요.",
-        "ans_check": "ans.replace(/\s+/g, '') === '8:27=10:X' || ans.replace(/\s+/g, '') === '10:X=8:27'"
-    }
+    {'qnum': 1, 'title': '닮음의 문양 계측', 'story': '[체스 퀸 AI 앨리스-Q]: \\"거울 나라의 성문이 잠겼습니다. 한 도형을 축소 또는 확대해서 다른 도형과 완벽히 포개질 때의 기하학적 관계 명칭을 해독 장치에 입력해 작동시키세요.\\"', 'qtext': '<strong>Q1.</strong> 한 도형을 일정한 비율로 확대하거나 축소한 도형이 다른 도형과 합동이 될 때, 두 도형은 서로 ( ? )인 관계에 있다고 한다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 대칭과 축소의 기본 관계 단어입니다.', 'ans_check': "ans === '닮음'"},
+    {'qnum': 2, 'title': '축소의 배율', 'story': '[체스 퀸 AI 앨리스-Q]: \\"해독 광선이 우리의 원래 크기와 축소된 장난감 크기 사이의 대응하는 선분의 길이의 비율을 파악하려 합니다. 이 비율의 이름을 무엇이라 합니까?\\"', 'qtext': '<strong>Q2.</strong> 서로 닮은 두 평면도형에서 대응하는 선분의 길이의 비를 무엇이라 하는가?', 'placeholder': '세 글자 입력', 'error': '틀렸습니다. 닮음인 두 도형의 선분 길이의 비입니다.', 'ans_check': "ans === '닮음비'"},
+    {'qnum': 3, 'title': '원형 거울의 굴절', 'story': '[체스 퀸 AI 앨리스-Q]: \\"거울 성 벽면의 크고 작은 원형 거울들은 크기와 상관없이 항상 완벽하게 형태가 닮아 있는 도형입니까? O 또는 X로 입력해 답하세요.\\"', 'qtext': '<strong>Q3.</strong> 두 원은 항상 닮은 도형인가? ( O / X )', 'placeholder': 'O 또는 X 입력', 'error': '틀렸습니다. 모든 원은 중심에서 테두리까지 비율이 균일합니다.', 'ans_check': "ans === 'O' || ans === '오'"},
+    {'qnum': 4, 'title': '축소된 액자의 가로', 'story': '[체스 퀸 AI 앨리스-Q]: \\"가로 세로 닮음비가 2:3인 액자가 있습니다. 축소된 작은 액자의 가로가 4cm일 때, 원래 거울 성에 걸려 있던 큰 액자의 가로 길이는 몇 cm인지 구하세요.\\"', 'qtext': '<strong>Q4.</strong> 닮음비가 2:3인 두 직사각형이 있다. 작은 직사각형의 가로가 4cm일 때, 큰 직사각형의 가로는 몇 cm인가?', 'placeholder': "단위 없이 숫자만 또는 '6cm' 입력", 'error': '틀렸습니다. 비례식 $2:3 = 4:x$를 해결해보세요.', 'ans_check': "ans === '6' || ans === '6CM'"},
+    {'qnum': 5, 'title': '체스판 타일의 닮음', 'story': '[체스 퀸 AI 앨리스-Q]: \\"거울 방 바닥의 크기가 다른 정사각형 모양의 체스판 타일들은 모두 항상 서로 닮음 관계에 있습니까? 대문자 O 또는 X로 전송하십시오.\\"', 'qtext': '<strong>Q5.</strong> 모든 정사각형은 항상 서로 닮은 도형인가? ( O / X )', 'placeholder': 'O 또는 X 입력', 'error': '틀렸습니다. 정사각형은 네 변의 길이가 같고 네 각이 90도로 고정되어 있습니다.', 'ans_check': "ans === 'O' || ans === '오'"},
+    {'qnum': 6, 'title': '세 변의 닮음 조건', 'story': '[체스 퀸 AI 앨리스-Q]: \\"제 2구역: 잃어버린 각도입니다. 거울 톱니바퀴의 세 쌍의 변의 길이 비율이 동일함을 사용해 닮음을 확정 짓는 삼각형 닮음 조건 기호(영문 3글자)를 입력하세요.\\"', 'qtext': '<strong>Q6.</strong> 삼각형의 세 쌍의 대응하는 변의 길이의 비가 같을 때의 닮음 조건을 쓰시오. (기호로)', 'placeholder': '영문 세 글자 입력 (예: SSS)', 'error': '기호가 올바르지 않습니다. Side-Side-Side의 약자입니다.', 'ans_check': "ans === 'SSS'"},
+    {'qnum': 7, 'title': '변과 사잇각의 조건', 'story': '[체스 퀸 AI 앨리스-Q]: \\"두 변의 길이비가 일정하고 그 사이에 위치하는 끼인각의 크기가 같을 때 성립하는 삼각형 닮음 판정 기호(영문 3글자)를 입력하여 락을 푸십시오.\\"', 'qtext': '<strong>Q7.</strong> 삼각형의 두 쌍의 대응하는 변의 길이의 비가 같고, 그 끼인각의 크기가 같을 때의 닮음 조건을 쓰시오.', 'placeholder': '영문 세 글자 입력 (예: SAS)', 'error': '기호가 올바르지 않습니다. Side-Angle-Side의 약자입니다.', 'ans_check': "ans === 'SAS'"},
+    {'qnum': 8, 'title': '두 각의 닮음 조건', 'story': '[체스 퀸 AI 앨리스-Q]: \\"길이를 알 필요 없이 오직 두 모퉁이 각도가 서로 같으면 성립하는 가장 유용하고 보편적인 닮음 조건 기호(영문 2글자)를 타이핑하세요.\\"', 'qtext': '<strong>Q8.</strong> 삼각형의 두 쌍의 대응하는 각의 크기가 같을 때의 닮음 조건을 쓰시오.', 'placeholder': '영문 두 글자 입력 (예: AA)', 'error': '기호가 올바르지 않습니다. Angle-Angle의 약자입니다.', 'ans_check': "ans === 'AA'"},
+    {'qnum': 9, 'title': '정삼각형의 정합비', 'story': '[체스 퀸 AI 앨리스-Q]: \\"한 각이 60도인 두 정삼각형은 무조건 어떤 닮음 조건에 의해 닮음이 성립되는지 한글을 포함해 정확히 입력창에 전송하세요.\\"', 'qtext': '<strong>Q9.</strong> 한 각이 60도인 두 정삼각형은 무조건 어떤 닮음 조건에 의해 닮음인가?', 'placeholder': '예: AA닮음', 'error': '조건이 틀렸습니다. 세 각의 크기가 모두 60도로 동일하게 되는 성질을 생각하세요.', 'ans_check': "ans === 'AA' || ans === 'AA닮음'"},
+    {'qnum': 10, 'title': '수선 궤적의 쪼개짐', 'story': '[체스 퀸 AI 앨리스-Q]: \\"직각 꼭짓점에서 마주 보는 빗변에 수직으로 내린 수선 레이저가 가르는 두 개의 내부 직각삼각형 구조물은 서로 어떤 굴절 관계에 있습니까?\\"', 'qtext': '<strong>Q10.</strong> 직각삼각형 내부에서 직각인 꼭짓점에서 빗변에 수선을 내렸을 때 만들어지는 두 개의 작은 직각삼각형은 서로 ( ? ) 관계이다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 크기는 다르지만 모양이 똑같습니다.', 'ans_check': "ans === '닮음'"},
+    {'qnum': 11, 'title': '평행 관계의 사다리', 'story': '[체스 퀸 AI 앨리스-Q]: \\"제 3구역: 사다리 건너기입니다. 사다리 구조물 양쪽 변의 중간 지점인 M과 N을 이은 가로목 MN은 밑바닥 BC 기둥과 공간상에서 어떤 관계에 있습니까?\\"', 'qtext': '<strong>Q11.</strong> 삼각형 ABC에서 변 AB의 중점 M, 변 AC의 중점 N을 이은 선분 MN은 변 BC와 어떤 위치 관계에 있는가?', 'placeholder': '두 글자 입력 (예: 평행)', 'error': '틀렸습니다. 두 기둥이 나란히 뻗어 있습니다.', 'ans_check': "ans === '평행'"},
+    {'qnum': 12, 'title': '중점 연결의 길이 비', 'story': '[체스 퀸 AI 앨리스-Q]: \\"삼각형의 중점 연결 정리에 의해, 가로목 MN의 길이는 가장 길고 탄탄한 밑바닥 BC 길이의 몇 배가 되는지 분수나 소수로 적으십시오.\\"', 'qtext': '<strong>Q12.</strong> 위 Q11의 삼각형 중점 연결 정리에서 선분 MN의 길이는 선분 BC의 길이의 ( 몇 분의 몇 ) 인가?', 'placeholder': '예: 1/2 또는 절반', 'error': '틀렸습니다. 중점을 연결했으므로 크기가 절반으로 축소됩니다.', 'ans_check': "ans === '1/2' || ans === '절반' || ans === '0.5'"},
+    {'qnum': 13, 'title': '평행 차단막의 닮음', 'story': '[체스 퀸 AI 앨리스-Q]: \\"삼각형의 한 모퉁이에 나란한 평행 차단 장벽을 그었을 때, 새로 나뉘어 생긴 미니 삼각형은 기존의 거대 삼각형과 어떤 궤적 관계에 있습니까?\\"', 'qtext': '<strong>Q13.</strong> 삼각형의 한 변에 평행한 선분을 그어 다른 두 변과 만나게 하면, 새로 만들어진 작은 삼각형은 원래 삼각형과 ( ? ) 관계이다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 세 각의 크기가 같은 비례형 삼각형입니다.', 'ans_check': "ans === '닮음'"},
+    {'qnum': 14, 'title': '평행 빔의 등가 비율', 'story': '[체스 퀸 AI 앨리스-Q]: \\"세 가닥의 평행선 레이저 장벽을 두 개의 비스듬한 도선이 관통하여 지나갑니다. 이 도선들에 의해 잘려 생기는 대응 선분들의 길이 비율은 서로 어떠합니까?\\"', 'qtext': '<strong>Q14.</strong> 평행한 세 직선이 두 직선과 만날 때, 잘린 대응하는 선분의 길이의 비는 서로 ( 같다 / 다르다 ).', 'placeholder': '같다 또는 다르다 입력', 'error': '틀렸습니다. 평행선 사이의 선분 비례 공식을 생각하세요.', 'ans_check': "ans === '같다'"},
+    {'qnum': 15, 'title': '질량 중심의 분할비', 'story': '[체스 퀸 AI 앨리스-Q]: \\"사다리를 매달아 평형을 찾게 해주는 삼각형의 핵심 균형점(무게중심)은 꼭짓점으로부터 중선 지지대를 몇 대 몇의 정수로 나누는지 비율 형태로 입력하세요.\\"', 'qtext': '<strong>Q15.</strong> 삼각형의 무게중심은 세 중선의 길이를 꼭짓점으로부터 각각 ( ? ) : ( ? ) 의 비율로 나눈다.', 'placeholder': '예: 2:1 또는 2대1', 'error': '비율이 올바르지 않습니다. 위쪽이 아래쪽보다 두 배 더 깁니다.', 'ans_check': "ans.replace(/\\s+/g, '') === '2:1' || ans.replace(/\\s+/g, '') === '2대1'"},
+    {'qnum': 16, 'title': '넓이의 차원비', 'story': '[체스 퀸 AI 앨리스-Q]: \\"제 4구역: 해독 광선의 출력 포트입니다. 닮음비가 $m:n$인 두 평면거울에 대해, 반사되는 표면적(넓이)의 비율 수식을 제곱 기호(^)를 사용해 입력하세요.\\"', 'qtext': '<strong>Q16.</strong> 두 평면도형의 닮음비가 $m:n$ 일 때, 넓이의 비는 얼마인가?', 'placeholder': '예: m^2:n^2', 'error': '비율 식이 잘못되었습니다. 넓이의 비는 닮음비의 제곱의 비입니다.', 'ans_check': "ans.replace(/\\s+/g, '') === 'M^2:N^2' || ans.replace(/\\s+/g, '') === 'M2:N2' || ans.replace(/\\s+/g, '') === 'M^2대N^2'"},
+    {'qnum': 17, 'title': '정육면체 거울 상자의 표면적', 'story': '[체스 퀸 AI 앨리스-Q]: \\"닮음비가 1:2인 정육면체 모양의 에너지 충전 박스가 2개 결합해 있습니다. 이 박스들의 겉 표면 전체 넓이(겉넓이) 비율은 몇 대 몇인지 입력하세요.\\"', 'qtext': '<strong>Q17.</strong> 두 정육면체의 닮음비가 1:2 일 때, 넓이(겉넓이)의 비는 얼마인가?', 'placeholder': '예: 1:4 또는 1대4', 'error': '틀렸습니다. 닮음비가 1:2이면 넓이의 비는 제곱의 비입니다.', 'ans_check': "ans.replace(/\\s+/g, '') === '1:4' || ans.replace(/\\s+/g, '') === '1대4'"},
+    {'qnum': 18, 'title': '부피의 차원비', 'story': '[체스 퀸 AI 앨리스-Q]: \\"입체도형 방의 공간 부피를 정합해야 해독 광선 출력이 최대로 가동됩니다. 닮음비가 $m:n$일 때, 부피의 비율 수식을 세제곱 기호(^)를 써서 적으십시오.\\"', 'qtext': '<strong>Q18.</strong> 두 입체도형의 닮음비가 $m:n$ 일 때, 부피의 비는 얼마인가?', 'placeholder': '예: m^3:n^3', 'error': '부피의 비는 닮음비의 세제곱에 비례합니다.', 'ans_check': "ans.replace(/\\s+/g, '') === 'M^3:N^3' || ans.replace(/\\s+/g, '') === 'M3:N3' || ans.replace(/\\s+/g, '') === 'M^3대N^3'"},
+    {'qnum': 19, 'title': '거울 구슬의 체적비', 'story': '[체스 퀸 AI 앨리스-Q]: \\"닮음비가 1:3으로 서로 크기가 다른 구슬형 부품들이 들어 있습니다. 해독 광선 발사대의 이 두 구슬의 실제 부피 비율을 계산해 입력하세요.\\"', 'qtext': '<strong>Q19.</strong> 닮음비가 1:3 인 두 구슬의 부피의 비는 얼마인가?', 'placeholder': '예: 1:27', 'error': '틀렸습니다. 1과 3을 각각 세제곱하여 비율을 구하세요.', 'ans_check': "ans.replace(/\\s+/g, '') === '1:27' || ans.replace(/\\s+/g, '') === '1대27'"},
+    {'qnum': 20, 'title': '광선 증폭의 최종 비례식', 'story': '[체스 퀸 AI 앨리스-Q]: \\"작은 컵의 부피가 10mL이고 닮음비가 2:3인 큰 컵이 나란히 놓여 있습니다. 큰 컵의 부피 $x$를 도출하기 위해, 닮음비를 부피비로 환산한 최종 비례식을 입력해 광선을 쏘세요!\\"', 'qtext': '<strong>Q20.</strong> 작은 컵의 부피가 10mL이다. 닮음비가 2:3인 큰 컵이 있다면, 큰 컵의 부피를 구하기 위한 비례식을 세워보시오.', 'placeholder': '예: 8:27=10:x', 'error': '비례식 세팅 실패! 부피비는 닮음비의 세제곱인 8:27임을 이용해 10:x와 연계해 세우세요.', 'ans_check': "ans.replace(/\\s+/g, '') === '8:27=10:X' || ans.replace(/\\s+/g, '') === '10:X=8:27'"}
 ]
 # Generate Q panels
 
@@ -1074,6 +950,28 @@ final_html = base_html.replace('{panels_placeholder}', panels_html)
 # Add checks and boilerplate inside final script tag
 script_insert = js_boilerplate + js_checks + "\n"
 final_html = final_html.replace('        window.onload = () => {', script_insert + '        window.onload = () => {')
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)

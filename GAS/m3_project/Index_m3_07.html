@@ -5,367 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>은하계 연합의 산포도 데이터베이스: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #06181e;
-            --glass-bg: rgba(10, 28, 35, 0.75);
-            --glass-border: rgba(6, 182, 212, 0.25);
-            --accent: #06b6d4;
-            --accent-hover: #22d3ee;
-            --text-main: #fbfbf3;
-            --text-muted: #cbbba0;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(15, 23, 42, 0.3) 0%, transparent 40%);
-            z-index: -2;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(6, 182, 212, 0.4);
-            border-left: 1px solid rgba(6, 182, 212, 0.4);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 0 50px rgba(6, 182, 212, 0.15), inset 0 0 20px rgba(6, 182, 212, 0.02);
-            display: none; 
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 {
-            font-family: 'Orbit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(6, 182, 212, 0.15);
-            padding-bottom: 0.75rem;
-        }
-
-        .panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .story-box {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid rgba(6, 182, 212, 0.15);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .story-box:hover {
-            background: rgba(15, 23, 42, 0.7);
-        }
-
-        .story-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-main);
-            min-height: 110px;
-            word-break: keep-all;
-        }
-        
-        #intro .story-text {
-            min-height: 80px;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            bottom: 8px;
-            right: 12px;
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-size: 0.8rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .story-log-trigger:hover {
-            opacity: 1;
-        }
-
-        .question-box {
-            background: rgba(6, 182, 212, 0.05);
-            border: 1px dashed rgba(6, 182, 212, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .question-content {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .input-group {
-            margin-top: 1rem;
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            color: #fff;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: 'Share Tech Mono', monospace;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--accent) 0%, #1a2a3a 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 0.85rem 2.5rem;
-            font-size: 1.05rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
-            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
-        }
-
-        .btn-hint {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 4px 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            vertical-align: middle;
-            margin-left: 10px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .btn-hint:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-        }
-
-        .error-msg {
-            color: #ff6b6b;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: -0.5rem;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 500;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
-        }
-
-        .progress-container {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 50px;
-            height: 10px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        .sound-ctrl {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-        .sound-ctrl:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
-
-        .info-panel {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            z-index: 100;
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .log-modal {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-        
-        .log-content {
-            background: var(--bg-main);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 70vh;
-            padding: 2rem;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-        
-        .close-log {
-            position: absolute;
-            top: 15px; right: 15px;
-            background: none; border: none; color: #fff;
-            font-size: 1.2rem; cursor: pointer;
-        }
-        
-        .log-list {
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .log-item {
-            padding: 0.75rem;
-            background: rgba(255,255,255,0.03);
-            border-left: 3px solid var(--accent);
-            font-size: 0.9rem;
-            line-height: 1.5;
-            border-radius: 4px;
-        }
-        
-        .log-content h2 {
-            border-bottom: 1px solid rgba(6, 182, 212, 0.2);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 600px) {
-            .container { padding: 1rem; }
-            .glass-panel { padding: 1.5rem; border-radius: 16px; }
-            h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.1rem; }
-            .story-text { font-size: 0.9rem; min-height: 140px; }
-            .btn { width: 100%; }
-        }
-    </style>
+    <style>:root{--bg-main:#06181e;--glass-bg:rgba(10,28,35,0.75);--glass-border:rgba(6,182,212,0.25);--accent:#06b6d4;--accent-hover:#22d3ee;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(6,182,212,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(6,182,212,0.4);border-left:1px solid rgba(6,182,212,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(6,182,212,0.15),inset 0 0 20px rgba(6,182,212,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(6,182,212,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(6,182,212,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(6,182,212,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(6,182,212,0.05);border:1px dashed rgba(6,182,212,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(6,182,212,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(6,182,212,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(6,182,212,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(6,182,212,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(6,182,212,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(6,182,212,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(6,182,212,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
 </head>
 <body>
     <button class="sound-ctrl" onclick="toggleMute()">
@@ -388,7 +28,9 @@
             <h2>통계</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">우주 은하연합의 거대한 중앙 통계 분석실 '산포도 데이터베이스'에 도착했습니다. 이곳의 방대한 우주선 궤도 예측 자료와 기후 데이터는 통계 수치 결계로 암호화되어 있어 시스템 조작이 불가능합니다. 우주선 통계 변량들의 대푯값과 흩어진 정도를 나타내는 산포도를 계산하여 제한시간 45분 내에 시스템 락을 해제하고 무사히 궤도를 복구하여 귀환하십시오!</div>
+                <div class="story-text">
+                [은하계 통계 코어 갤럭시-G]: "우주 은하연합의 거대한 중앙 통계 분석실 '산포도 데이터베이스'에 도착했습니다. 이곳의 방대한 우주선 궤도 예측 자료와 기후 데이터는 통계 수치 결계로 암호화되어 있어 시스템 조작이 불가능합니다. 우주선 통계 변량들의 대푯값과 흩어진 정도를 나타내는 산포도를 계산하여 제한시간 45분 내에 시스템 락을 해제하고 무사히 궤도를 복구하여 귀환하십시오!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
@@ -401,7 +43,7 @@
             <h2>제 1구역: 스테이지 1</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -423,7 +65,7 @@
             <h2>제 2구역: 스테이지 2</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -445,7 +87,7 @@
             <h2>제 3구역: 스테이지 3</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -467,7 +109,7 @@
             <h2>제 4구역: 스테이지 4</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -489,7 +131,7 @@
             <h2>제 5구역: 스테이지 5</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -511,7 +153,7 @@
             <h2>제 6구역: 스테이지 6</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -533,7 +175,7 @@
             <h2>제 7구역: 스테이지 7</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -555,7 +197,7 @@
             <h2>제 8구역: 스테이지 8</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -577,7 +219,7 @@
             <h2>제 9구역: 스테이지 9</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -599,7 +241,7 @@
             <h2>제 10구역: 스테이지 10</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -621,7 +263,7 @@
             <h2>제 11구역: 스테이지 11</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -643,7 +285,7 @@
             <h2>제 12구역: 스테이지 12</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -665,7 +307,7 @@
             <h2>제 13구역: 스테이지 13</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -687,7 +329,7 @@
             <h2>제 14구역: 스테이지 14</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -709,7 +351,7 @@
             <h2>제 15구역: 스테이지 15</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -731,7 +373,7 @@
             <h2>제 16구역: 스테이지 16</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -753,7 +395,7 @@
             <h2>제 17구역: 스테이지 17</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -775,7 +417,7 @@
             <h2>제 18구역: 스테이지 18</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -797,7 +439,7 @@
             <h2>제 19구역: 스테이지 19</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -819,7 +461,7 @@
             <h2>제 20구역: 스테이지 20</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">주어진 단서를 해결하여 방의 봉인을 해제하세요.</div>
+                <div class="story-text">[은하계 통계 코어 갤럭시-G]: \"주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -843,7 +485,9 @@
             <h2>최종 봉인 탈출 성공</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_07/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">은하 연합의 거대한 홀로그램 맵에 안정적인 우주선 궤도선들이 다시 한 번 안전한 선으로 점등됩니다. 통계 데이터 분석실의 비상 잠금장치가 모두 해제되며 우주 귀환선의 해치가 열립니다. 데이터를 마스터한 통계 분석관의 귀환을 환영합니다!</div>
+                <div class="story-text">
+                [은하계 통계 코어 갤럭시-G]: "은하 연합의 거대한 홀로그램 맵에 안정적인 우주선 궤도선들이 다시 한 번 안전한 선으로 점등됩니다. 통계 데이터 분석실의 비상 잠금장치가 모두 해제되며 우주 귀환선의 해치가 열립니다. 데이터를 마스터한 통계 분석관의 귀환을 환영합니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>

@@ -374,6 +374,38 @@ base_html = """<!DOCTYPE html>
             .story-text { font-size: 0.9rem; min-height: 140px; }
             .btn { width: 100%; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -397,7 +429,9 @@ base_html = """<!DOCTYPE html>
             <h2>삼각비</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_05/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">고대 그리스의 유명한 천문 측정 학자 테오도루스의 천체 관측소에 입장하셨습니다. 하늘에 흩어진 신비한 별자리들의 거리와 고도를 측정하여 천문 관측 구체의 고정 장치를 해제해야 합니다. 별빛의 각도와 삼각형의 변의 비율을 나타내는 '삼각비' 공식을 사용해 45분 내에 모든 측정대 센서를 동기화하고 탈출하십시오!</div>
+                <div class="story-text">
+                [별빛 관측기 아스트로-A]: "고대 그리스의 유명한 천문 측정 학자 테오도루스의 천체 관측소에 입장하셨습니다. 하늘에 흩어진 신비한 별자리들의 거리와 고도를 측정하여 천문 관측 구체의 고정 장치를 해제해야 합니다. 별빛의 각도와 삼각형의 변의 비율을 나타내는 '삼각비' 공식을 사용해 45분 내에 모든 측정대 센서를 동기화하고 탈출하십시오!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
@@ -412,7 +446,9 @@ base_html = """<!DOCTYPE html>
             <h2>최종 봉인 탈출 성공</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_05/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">천체 구체 모델의 렌즈 각도들이 오차 없이 맞아떨어지며 관측 구체가 웅장한 회전 소리를 내며 빛을 투사합니다. 돔탑의 쇠사슬 빗장이 덜컥 풀리며 지상의 문이 개방됩니다. 삼각비의 지배자로 거듭나 천문 관측소 탈출에 성공했습니다!</div>
+                <div class="story-text">
+                [별빛 관측기 아스트로-A]: "천체 구체 모델의 렌즈 각도들이 오차 없이 맞아떨어지며 관측 구체가 웅장한 회전 소리를 내며 빛을 투사합니다. 돔탑의 쇠사슬 빗장이 덜컥 풀리며 지상의 문이 개방됩니다. 삼각비의 지배자로 거듭나 천문 관측소 탈출에 성공했습니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -636,206 +672,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "스테이지 1",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q1.</strong> 직각삼각형에서 빗변의 길이에 대한 높이의 비율을 나타내는 삼각비의 명칭을 구하시오. (한글로 쓰시오. 예: 사인)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '사인'",
-        "hint": "직각삼각형에서 빗변의 길이에 대한 높이의 비율(대변/빗변)을 나타내는 삼각비를 한글 두 글자로 대답하게 합니다."
-    },
-    {
-        "qnum": 2,
-        "title": "스테이지 2",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q2.</strong> \\sin 30° 의 값을 구하시오. (슬래시를 사용해 분수로 나타내시오. 예: 1/2)",
-        "placeholder": "수식 입력 (예: 1/2 또는 8:27=10:x)",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '1/2' || ans === '0.5'",
-        "hint": "특수각 30도에 대한 직각삼각형의 삼각비 표 값을 상기시키며 분수 형태를 찾게 합니다."
-    },
-    {
-        "qnum": 3,
-        "title": "스테이지 3",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q3.</strong> \\cos 45° 의 값을 구하시오. (루트와 분수를 사용해 식으로 나타내시오. 예: √2/2)",
-        "placeholder": "수식 입력 (예: 1/2 또는 8:27=10:x)",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√2/2'",
-        "hint": "특수각 45도에 대한 코사인 값은 빗변에 대한 밑변의 비율임을 활용합니다."
-    },
-    {
-        "qnum": 4,
-        "title": "스테이지 4",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q4.</strong> \\tan 60° 의 값을 구하시오. (예: √3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√3'",
-        "hint": "특수각 60도에 대한 탄젠트 값은 밑변에 대한 높이의 비율임을 활용합니다."
-    },
-    {
-        "qnum": 5,
-        "title": "스테이지 5",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q5.</strong> 직각삼각형 ABC 에서 ∠ B = 90° 이고, 빗변 AC = 5, 높이 BC = 4, 밑변 AB = 3 일 때, \\sin A 의 값을 구하시오. (예: 4/5)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '4/5' || ans === '0.8'",
-        "hint": "사인 공식인 (높이)/(빗변) 공식을 대입하여 직각삼각형 두 변의 길이 비를 산출하도록 유도합니다."
-    },
-    {
-        "qnum": 6,
-        "title": "스테이지 6",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q6.</strong> \\sin 90° 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '1'",
-        "hint": "예각이 90도에 한없이 가까워질 때 사인 값의 기하학적 변화(최댓값)를 이해하게 합니다."
-    },
-    {
-        "qnum": 7,
-        "title": "스테이지 7",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q7.</strong> \\cos 90° 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '0'",
-        "hint": "예각이 90도에 한없이 가까워질 때 코사인 값의 기하학적 변화(최솟값)를 확인시킵니다."
-    },
-    {
-        "qnum": 8,
-        "title": "스테이지 8",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q8.</strong> \\tan 45° 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '1'",
-        "hint": "밑변과 높이가 같은 직각이등변삼각형에서의 탄젠트 값을 상기시킵니다."
-    },
-    {
-        "qnum": 9,
-        "title": "스테이지 9",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q9.</strong> \\cos 0° 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '1'",
-        "hint": "예각이 0도에 한없이 가까워질 때 코사인 값의 기하학적 변화(최댓값)를 확인시킵니다."
-    },
-    {
-        "qnum": 10,
-        "title": "스테이지 10",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q10.</strong> \\sin 60° + \\cos 30° 의 값을 구하시오. (예: √3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√3'",
-        "hint": "특수각 60도에 대한 사인 값과 30도에 대한 코사인 값을 각각 구하여 덧셈합니다."
-    },
-    {
-        "qnum": 11,
-        "title": "스테이지 11",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q11.</strong> \\tan 0° 의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '0'",
-        "hint": "예각이 0도에 한없이 가까워질 때 탄젠트 값의 기하학적 변화(최솟값)를 확인시킵니다."
-    },
-    {
-        "qnum": 12,
-        "title": "스테이지 12",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q12.</strong> \\sin 45° × \\cos 45° 의 값을 구하시오. (예: 1/2)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '1/2' || ans === '0.5'",
-        "hint": "사인 45도와 코사인 45도의 값을 찾아 서로 곱하도록 안내합니다."
-    },
-    {
-        "qnum": 13,
-        "title": "스테이지 13",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q13.</strong> \\tan 30° 의 값을 구하시오. (예: √3/3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '√3/3'",
-        "hint": "특수각 30도에 대한 탄젠트 값을 삼각비 표에서 찾도록 합니다."
-    },
-    {
-        "qnum": 14,
-        "title": "스테이지 14",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q14.</strong> 직각삼각형 ABC 에서 ∠ C = 90° 이고 빗변 AB = 10, ∠ A = 30° 일 때, 높이 BC 의 길이를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '5'",
-        "hint": "직각삼각형의 높이 = (빗변) × sin A 공식을 사용하여 미지의 높이를 계산합니다."
-    },
-    {
-        "qnum": 15,
-        "title": "스테이지 15",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q15.</strong> 직각삼각형 ABC 에서 ∠ C = 90° 이고 밑변 AC = 8, ∠ A = 45° 일 때, 대변 BC 의 길이를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '8'",
-        "hint": "직각삼각형의 높이 = (밑변) × tan A 공식을 사용하여 미지의 높이를 계산합니다."
-    },
-    {
-        "qnum": 16,
-        "title": "스테이지 16",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q16.</strong> 두 변의 길이가 각각 4, 6이고 그 사잇각이 30° 인 삼각형의 넓이를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '6'",
-        "hint": "일반 삼각형의 넓이 공식인 1/2 × a × b × sin C 를 적용하여 계산을 처리합니다."
-    },
-    {
-        "qnum": 17,
-        "title": "스테이지 17",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q17.</strong> 두 변의 길이가 각각 6, 8이고 그 사잇각이 45° 인 삼각형의 넓이를 구하시오. (예: 12√2)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '12√2'",
-        "hint": "두 변의 길이와 그 사잇각의 크기가 주어졌을 때의 삼각형 넓이 구하기 공식인 1/2 × a × b × sin C 를 활용합니다."
-    },
-    {
-        "qnum": 18,
-        "title": "스테이지 18",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q18.</strong> 두 변의 길이가 각각 4, 5이고 그 사잇각이 120° 인 둔각삼각형의 넓이를 구하시오. (예: 5√3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '5√3'",
-        "hint": "둔각삼각형의 사잇각이 둔각(C)일 때 넓이는 180도에서 둔각을 뺀 예각의 사인 값을 사잇각으로 대입해 계산함을 지도합니다."
-    },
-    {
-        "qnum": 19,
-        "title": "스테이지 19",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q19.</strong> 이웃한 두 변의 길이가 5, 8이고 그 사잇각이 60° 인 평행사변형의 넓이를 구하시오. (예: 20√3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '20√3'",
-        "hint": "평행사변형의 넓이 = 두 이웃변 곱 × sin C 공식을 활용해 값을 도출하게 합니다."
-    },
-    {
-        "qnum": 20,
-        "title": "스테이지 20",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q20.</strong> 관측소 돔탑 밑동에서 10m 떨어진 지점에서 돔탑 꼭대기를 올려다본 각도가 30° 일 때, 돔탑의 높이를 구하시오. (예: 10√3/3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '10√3/3'",
-        "hint": "밑변의 거리와 올려다본 각도가 주어졌을 때의 높이 = (밑변 거리) × tan C 공식을 활용합니다."
-    }
+    {'qnum': 1, 'title': '스테이지 1', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q1.</strong> 직각삼각형에서 빗변의 길이에 대한 높이의 비율을 나타내는 삼각비의 명칭을 구하시오. (한글로 쓰시오. 예: 사인)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '사인'", 'hint': '직각삼각형에서 빗변의 길이에 대한 높이의 비율(대변/빗변)을 나타내는 삼각비를 한글 두 글자로 대답하게 합니다.'},
+    {'qnum': 2, 'title': '스테이지 2', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q2.</strong> \\sin 30° 의 값을 구하시오. (슬래시를 사용해 분수로 나타내시오. 예: 1/2)', 'placeholder': '수식 입력 (예: 1/2 또는 8:27=10:x)', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1/2' || ans === '0.5'", 'hint': '특수각 30도에 대한 직각삼각형의 삼각비 표 값을 상기시키며 분수 형태를 찾게 합니다.'},
+    {'qnum': 3, 'title': '스테이지 3', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q3.</strong> \\cos 45° 의 값을 구하시오. (루트와 분수를 사용해 식으로 나타내시오. 예: √2/2)', 'placeholder': '수식 입력 (예: 1/2 또는 8:27=10:x)', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√2/2'", 'hint': '특수각 45도에 대한 코사인 값은 빗변에 대한 밑변의 비율임을 활용합니다.'},
+    {'qnum': 4, 'title': '스테이지 4', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q4.</strong> \\tan 60° 의 값을 구하시오. (예: √3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√3'", 'hint': '특수각 60도에 대한 탄젠트 값은 밑변에 대한 높이의 비율임을 활용합니다.'},
+    {'qnum': 5, 'title': '스테이지 5', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q5.</strong> 직각삼각형 ABC 에서 ∠ B = 90° 이고, 빗변 AC = 5, 높이 BC = 4, 밑변 AB = 3 일 때, \\sin A 의 값을 구하시오. (예: 4/5)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '4/5' || ans === '0.8'", 'hint': '사인 공식인 (높이)/(빗변) 공식을 대입하여 직각삼각형 두 변의 길이 비를 산출하도록 유도합니다.'},
+    {'qnum': 6, 'title': '스테이지 6', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q6.</strong> \\sin 90° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': '예각이 90도에 한없이 가까워질 때 사인 값의 기하학적 변화(최댓값)를 이해하게 합니다.'},
+    {'qnum': 7, 'title': '스테이지 7', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> \\cos 90° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '0'", 'hint': '예각이 90도에 한없이 가까워질 때 코사인 값의 기하학적 변화(최솟값)를 확인시킵니다.'},
+    {'qnum': 8, 'title': '스테이지 8', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> \\tan 45° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': '밑변과 높이가 같은 직각이등변삼각형에서의 탄젠트 값을 상기시킵니다.'},
+    {'qnum': 9, 'title': '스테이지 9', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> \\cos 0° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': '예각이 0도에 한없이 가까워질 때 코사인 값의 기하학적 변화(최댓값)를 확인시킵니다.'},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q10.</strong> \\sin 60° + \\cos 30° 의 값을 구하시오. (예: √3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√3'", 'hint': '특수각 60도에 대한 사인 값과 30도에 대한 코사인 값을 각각 구하여 덧셈합니다.'},
+    {'qnum': 11, 'title': '스테이지 11', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> \\tan 0° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '0'", 'hint': '예각이 0도에 한없이 가까워질 때 탄젠트 값의 기하학적 변화(최솟값)를 확인시킵니다.'},
+    {'qnum': 12, 'title': '스테이지 12', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> \\sin 45° × \\cos 45° 의 값을 구하시오. (예: 1/2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1/2' || ans === '0.5'", 'hint': '사인 45도와 코사인 45도의 값을 찾아 서로 곱하도록 안내합니다.'},
+    {'qnum': 13, 'title': '스테이지 13', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> \\tan 30° 의 값을 구하시오. (예: √3/3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√3/3'", 'hint': '특수각 30도에 대한 탄젠트 값을 삼각비 표에서 찾도록 합니다.'},
+    {'qnum': 14, 'title': '스테이지 14', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q14.</strong> 직각삼각형 ABC 에서 ∠ C = 90° 이고 빗변 AB = 10, ∠ A = 30° 일 때, 높이 BC 의 길이를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5'", 'hint': '직각삼각형의 높이 = (빗변) × sin A 공식을 사용하여 미지의 높이를 계산합니다.'},
+    {'qnum': 15, 'title': '스테이지 15', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q15.</strong> 직각삼각형 ABC 에서 ∠ C = 90° 이고 밑변 AC = 8, ∠ A = 45° 일 때, 대변 BC 의 길이를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8'", 'hint': '직각삼각형의 높이 = (밑변) × tan A 공식을 사용하여 미지의 높이를 계산합니다.'},
+    {'qnum': 16, 'title': '스테이지 16', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q16.</strong> 두 변의 길이가 각각 4, 6이고 그 사잇각이 30° 인 삼각형의 넓이를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '6'", 'hint': '일반 삼각형의 넓이 공식인 1/2 × a × b × sin C 를 적용하여 계산을 처리합니다.'},
+    {'qnum': 17, 'title': '스테이지 17', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> 두 변의 길이가 각각 6, 8이고 그 사잇각이 45° 인 삼각형의 넓이를 구하시오. (예: 12√2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '12√2'", 'hint': '두 변의 길이와 그 사잇각의 크기가 주어졌을 때의 삼각형 넓이 구하기 공식인 1/2 × a × b × sin C 를 활용합니다.'},
+    {'qnum': 18, 'title': '스테이지 18', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> 두 변의 길이가 각각 4, 5이고 그 사잇각이 120° 인 둔각삼각형의 넓이를 구하시오. (예: 5√3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5√3'", 'hint': '둔각삼각형의 사잇각이 둔각(C)일 때 넓이는 180도에서 둔각을 뺀 예각의 사인 값을 사잇각으로 대입해 계산함을 지도합니다.'},
+    {'qnum': 19, 'title': '스테이지 19', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> 이웃한 두 변의 길이가 5, 8이고 그 사잇각이 60° 인 평행사변형의 넓이를 구하시오. (예: 20√3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '20√3'", 'hint': '평행사변형의 넓이 = 두 이웃변 곱 × sin C 공식을 활용해 값을 도출하게 합니다.'},
+    {'qnum': 20, 'title': '스테이지 20', 'story': '[별빛 관측기 아스트로-A]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q20.</strong> 관측소 돔탑 밑동에서 10m 떨어진 지점에서 돔탑 꼭대기를 올려다본 각도가 30° 일 때, 돔탑의 높이를 구하시오. (예: 10√3/3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '10√3/3'", 'hint': '밑변의 거리와 올려다본 각도가 주어졌을 때의 높이 = (밑변 거리) × tan C 공식을 활용합니다.'}
 ]
 
 import re
@@ -976,6 +832,28 @@ js_boilerplate = """
 """
 
 final_html = base_html.replace("{{panels_placeholder}}", panels_html) + "\n<script>\n" + js_checks + "\n</script>"
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)

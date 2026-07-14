@@ -5,362 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>괴도 X의 암호 편지: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #0c101b;
-            --glass-bg: rgba(15, 23, 42, 0.75);
-            --glass-border: rgba(224, 180, 76, 0.25);
-            --accent: #e0b44c;
-            --accent-hover: #f5d06e;
-            --text-main: #f0fbf0;
-            --text-muted: #9abfa0;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(50, 205, 50, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(34, 139, 34, 0.08) 0%, transparent 40%);
-            z-index: -2;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(50, 205, 50, 0.4);
-            border-left: 1px solid rgba(50, 205, 50, 0.4);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 0 50px rgba(50, 205, 50, 0.1), inset 0 0 20px rgba(50, 205, 50, 0.02);
-            display: none; 
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 {
-            font-family: 'Orbit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(50, 205, 50, 0.3);
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(50, 205, 50, 0.15);
-            padding-bottom: 0.75rem;
-        }
-
-.panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .story-box {
-            background: rgba(10, 20, 15, 0.5);
-            border: 1px solid rgba(50, 205, 50, 0.15);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .story-box:hover {
-            background: rgba(10, 20, 15, 0.7);
-        }
-
-        .story-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-main);
-            min-height: 110px;
-            word-break: keep-all;
-        }
-        
-        #intro .story-text {
-            min-height: 80px;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            bottom: 8px;
-            right: 12px;
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-size: 0.8rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .story-log-trigger:hover {
-            opacity: 1;
-        }
-
-        .question-box {
-            background: rgba(50, 205, 50, 0.05);
-            border: 1px dashed rgba(50, 205, 50, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .question-content {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .input-group {
-            margin-top: 1rem;
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            background: rgba(10, 20, 15, 0.8);
-            border: 1px solid rgba(50, 205, 50, 0.3);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            color: #fff;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: 'Share Tech Mono', monospace;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(50, 205, 50, 0.3);
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--accent) 0%, #1e5c1e 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 0.85rem 2.5rem;
-            font-size: 1.05rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(50, 205, 50, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(50, 205, 50, 0.5);
-            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
-        }
-
-        .btn-hint {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 4px 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            vertical-align: middle;
-            margin-left: 10px;
-            letter-spacing: 0.5px;
-            text-transform: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .btn-hint:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-        }
-
-
-        .error-msg {
-            color: #ff6b6b;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: -0.5rem;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 500;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 100%;
-            background: rgba(10, 20, 15, 0.6);
-            border: 1px solid rgba(50, 205, 50, 0.2);
-            border-radius: 50px;
-            height: 10px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        /* Sound Control */
-        .sound-ctrl {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-        
-        .sound-ctrl:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(50, 205, 50, 0.2);
-        }
-
-        /* Log Modal */
-        .log-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 12, 8, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .log-content {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 70vh;
-            padding: 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .log-content h2 {
-            border-bottom: 1px solid rgba(50, 205, 50, 0.2);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .log-list {
-            overflow-y: auto;
-            flex: 1;
-            padding-right: 5px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .log-item {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            padding: 0.5rem 0.75rem;
-            background: rgba(10, 20, 15, 0.4);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
-        }
-        
-        .close-log {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        
-        .close-log:hover {
-            color: #fff;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-    </style>
+    <style>:root{--bg-main:#0c101b;--glass-bg:rgba(15,23,42,0.75);--glass-border:rgba(224,180,76,0.25);--accent:#e0b44c;--accent-hover:#f5d06e;--text-main:#f0fbf0;--text-muted:#9abfa0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(50,205,50,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(34,139,34,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(50,205,50,0.4);border-left:1px solid rgba(50,205,50,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(50,205,50,0.1),inset 0 0 20px rgba(50,205,50,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(50,205,50,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(10,20,15,0.5);border:1px solid rgba(50,205,50,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(50,205,50,0.05);border:1px dashed rgba(50,205,50,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(10,20,15,0.8);border:1px solid rgba(50,205,50,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(50,205,50,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(50,205,50,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(50,205,50,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -389,7 +34,9 @@
             <h2>연립일차방정식의 암호 해독</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">세계적인 미술관에서 전설 of 다이아몬드 '별의 눈물'이 도난당했습니다! 현장에는 오직 괴도 X가 남긴 연립방정식 암호 편지뿐. x와 y 두 개의 미지수로 얽힌 이 단서들 속에 괴도 X의 은신처가 숨겨져 있습니다. 40분 내에 20개의 연립방정식을 풀어 다이아몬드를 되찾아오세요!</div>
+                <div class="story-text">
+                [안티-씨프 AI 가드-X]: "세계적인 미술관에서 전설 of 다이아몬드 '별의 눈물'이 도난당했습니다! 현장에는 오직 괴도 X가 남긴 연립방정식 암호 편지뿐. x와 y 두 개의 미지수로 얽힌 이 단서들 속에 괴도 X의 은신처가 숨겨져 있습니다. 40분 내에 20개의 연립방정식을 풀어 다이아몬드를 되찾아오세요!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">암호 해독 시작</button>
@@ -402,7 +49,7 @@
             <h2>제 1구역: 스테이지 1 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -425,7 +72,7 @@
             <h2>제 2구역: 스테이지 2 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -448,7 +95,7 @@
             <h2>제 3구역: 스테이지 3 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -471,7 +118,7 @@
             <h2>제 4구역: 스테이지 4 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -494,7 +141,7 @@
             <h2>제 5구역: 스테이지 5 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -517,7 +164,7 @@
             <h2>제 6구역: 스테이지 6 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -540,7 +187,7 @@
             <h2>제 7구역: 스테이지 7 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -563,7 +210,7 @@
             <h2>제 8구역: 스테이지 8 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -586,7 +233,7 @@
             <h2>제 9구역: 스테이지 9 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -609,7 +256,7 @@
             <h2>제 10구역: 스테이지 10 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -632,7 +279,7 @@
             <h2>제 11구역: 스테이지 11 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -655,7 +302,7 @@
             <h2>제 12구역: 스테이지 12 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -678,7 +325,7 @@
             <h2>제 13구역: 스테이지 13 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -701,7 +348,7 @@
             <h2>제 14구역: 스테이지 14 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -724,7 +371,7 @@
             <h2>제 15구역: 스테이지 15 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -747,7 +394,7 @@
             <h2>제 16구역: 스테이지 16 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -770,7 +417,7 @@
             <h2>제 17구역: 스테이지 17 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -793,7 +440,7 @@
             <h2>제 18구역: 스테이지 18 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -816,7 +463,7 @@
             <h2>제 19구역: 스테이지 19 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -839,7 +486,7 @@
             <h2>제 20구역: 스테이지 20 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">단서를 찾아 문제를 해결하세요.</div>
+                <div class="story-text">[안티-씨프 AI 가드-X]: \"단서를 찾아 문제를 해결하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -864,7 +511,9 @@
             <h2>괴도 X 체포 및 다이아몬드 회수</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 탐정 여러분!</div>
+                <div class="story-text">
+                [안티-씨프 AI 가드-X]: "아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 탐정 여러분!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>

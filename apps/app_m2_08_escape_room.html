@@ -5,362 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>행운의 카지노 로얄: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #061c10;
-            --glass-bg: rgba(6, 28, 16, 0.75);
-            --glass-border: rgba(220, 53, 69, 0.25);
-            --accent: #dc3545;
-            --accent-hover: #ff4d5a;
-            --text-main: #f8fbf9;
-            --text-muted: #9abfb5;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(220, 53, 69, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(6, 28, 16, 0.3) 0%, transparent 40%);
-            z-index: -2;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(220, 53, 69, 0.4);
-            border-left: 1px solid rgba(220, 53, 69, 0.4);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 0 50px rgba(220, 53, 69, 0.15), inset 0 0 20px rgba(220, 53, 69, 0.02);
-            display: none; 
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 {
-            font-family: 'Orbit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(50, 205, 50, 0.3);
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(220, 53, 69, 0.15);
-            padding-bottom: 0.75rem;
-        }
-
-.panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .story-box {
-            background: rgba(6, 28, 16, 0.5);
-            border: 1px solid rgba(220, 53, 69, 0.15);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .story-box:hover {
-            background: rgba(10, 20, 15, 0.7);
-        }
-
-        .story-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: var(--text-main);
-            min-height: 110px;
-            word-break: keep-all;
-        }
-        
-        #intro .story-text {
-            min-height: 80px;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            bottom: 8px;
-            right: 12px;
-            background: none;
-            border: none;
-            color: var(--accent);
-            font-size: 0.8rem;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-        
-        .story-log-trigger:hover {
-            opacity: 1;
-        }
-
-        .question-box {
-            background: rgba(220, 53, 69, 0.05);
-            border: 1px dashed rgba(220, 53, 69, 0.3);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .question-content {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .input-group {
-            margin-top: 1rem;
-            display: flex;
-            gap: 10px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            background: rgba(6, 28, 16, 0.8);
-            border: 1px solid rgba(220, 53, 69, 0.3);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            color: #fff;
-            font-size: 1rem;
-            transition: all 0.3s;
-            font-family: 'Share Tech Mono', monospace;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(220, 53, 69, 0.3);
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--accent) 0%, #1e5c1e 100%);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 0.85rem 2.5rem;
-            font-size: 1.05rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
-            background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
-        }
-
-        .btn-hint {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 4px 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            vertical-align: middle;
-            margin-left: 10px;
-            letter-spacing: 0.5px;
-            text-transform: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .btn-hint:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-        }
-
-
-        .error-msg {
-            color: #ff6b6b;
-            font-size: 0.9rem;
-            text-align: center;
-            margin-top: -0.5rem;
-            margin-bottom: 1rem;
-            display: none;
-            font-weight: 500;
-            text-shadow: 0 0 10px rgba(255, 107, 107, 0.2);
-        }
-
-        /* Progress Bar */
-        .progress-container {
-            width: 100%;
-            background: rgba(10, 20, 15, 0.6);
-            border: 1px solid rgba(50, 205, 50, 0.2);
-            border-radius: 50px;
-            height: 10px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 100%);
-            width: 0%;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        /* Sound Control */
-        .sound-ctrl {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-        }
-        
-        .sound-ctrl:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(50, 205, 50, 0.2);
-        }
-
-        /* Log Modal */
-        .log-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 12, 8, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .log-content {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 70vh;
-            padding: 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .log-content h2 {
-            border-bottom: 1px solid rgba(220, 53, 69, 0.2);
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .log-list {
-            overflow-y: auto;
-            flex: 1;
-            padding-right: 5px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        
-        .log-item {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            padding: 0.5rem 0.75rem;
-            background: rgba(10, 20, 15, 0.4);
-            border-radius: 8px;
-            border-left: 3px solid var(--accent);
-        }
-        
-        .close-log {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-        
-        .close-log:hover {
-            color: #fff;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-    </style>
+    <style>:root{--bg-main:#061c10;--glass-bg:rgba(6,28,16,0.75);--glass-border:rgba(220,53,69,0.25);--accent:#dc3545;--accent-hover:#ff4d5a;--text-main:#f8fbf9;--text-muted:#9abfb5;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(220,53,69,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(6,28,16,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(220,53,69,0.4);border-left:1px solid rgba(220,53,69,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(220,53,69,0.15),inset 0 0 20px rgba(220,53,69,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(220,53,69,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(6,28,16,0.5);border:1px solid rgba(220,53,69,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(220,53,69,0.05);border:1px dashed rgba(220,53,69,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(6,28,16,0.8);border:1px solid rgba(220,53,69,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(220,53,69,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(220,53,69,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(220,53,69,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(220,53,69,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -389,7 +34,9 @@
             <h2>경우의 수와 확률</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">화려한 라스베이거스의 카지노, 악당 갬블러 '잭팟'이 카지노의 시스템을 조작해 모든 돈을 털어가려 합니다. 이를 막기 위해서는 주사위, 동전, 카드 게임 속에 숨겨진 확률의 법칙 20개를 정확히 계산해 그를 게임에서 파산시켜야 합니다! 운이 아닌 수학으로 승부하세요!</div>
+                <div class="story-text">
+                [딜러 로봇 잭팟-D]: "화려한 라스베이거스의 카지노, 악당 갬블러 '잭팟'이 카지노의 시스템을 조작해 모든 돈을 털어가려 합니다. 이를 막기 위해서는 주사위, 동전, 카드 게임 속에 숨겨진 확률의 법칙 20개를 정확히 계산해 그를 게임에서 파산시켜야 합니다! 운이 아닌 수학으로 승부하세요!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">카드 배틀 시작</button>
@@ -402,7 +49,7 @@
             <h2>제 1구역: 딜러의 주사위 분석 1 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">잭팟의 딜러가 사용하는 6면 주사위가 테이블에 놓여 있습니다. 짝수의 눈이 나와 잭팟의 첫 베팅을 무너뜨리는 경우의 수를 계산해 입력하세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"잭팟의 딜러가 사용하는 6면 주사위가 테이블에 놓여 있습니다. 짝수의 눈이 나와 잭팟의 첫 베팅을 무너뜨리는 경우의 수를 계산해 입력하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -425,7 +72,7 @@
             <h2>제 2구역: 쌍주사위의 전수 조합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">잭팟이 두 개의 주사위를 컵에 넣어 흔듭니다. 컵을 열었을 때 발생할 수 있는 전체 눈의 경우의 수(모든 조합)를 구하세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"잭팟이 두 개의 주사위를 컵에 넣어 흔듭니다. 컵을 열었을 때 발생할 수 있는 전체 눈의 경우의 수(모든 조합)를 구하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -448,7 +95,7 @@
             <h2>제 3구역: 동전과 주사위의 링크 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">동전 1개와 주사위 1개를 룰렛 머신에 동시에 던집니다. 시스템 룰렛 판에 기록될 수 있는 모든 경우의 수는 몇 가지입니까?</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"동전 1개와 주사위 1개를 룰렛 머신에 동시에 던집니다. 시스템 룰렛 판에 기록될 수 있는 모든 경우의 수는 몇 가지입니까?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -471,7 +118,7 @@
             <h2>제 4구역: 잭팟의 히든카드 추적 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">1부터 10까지의 숫자 카드 중 3의 배수가 적혀 잭팟의 사기 패턴을 발동시키는 카드의 장수를 계산해 전송하십시오.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"1부터 10까지의 숫자 카드 중 3의 배수가 적혀 잭팟의 사기 패턴을 발동시키는 카드의 장수를 계산해 전송하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -494,7 +141,7 @@
             <h2>제 5구역: 주사위 합의 조작선 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">두 주사위를 동시에 던졌을 때, 두 눈의 합이 정확히 4가 되어 잭팟의 배팅 칩을 획득하는 경우의 수를 구하십시오.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"두 주사위를 동시에 던졌을 때, 두 눈의 합이 정확히 4가 되어 잭팟의 배팅 칩을 획득하는 경우의 수를 구하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -517,7 +164,7 @@
             <h2>제 6구역: 딜러의 위장 복장 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">제 2구역: 딜러의 선택입니다. 카지노 딜러의 단상에 상의 3벌과 하의 4벌의 제복이 있습니다. 딜러가 매칭해서 입을 수 있는 총 의상 조합의 수는?</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"제 2구역: 딜러의 선택입니다. 카지노 딜러의 단상에 상의 3벌과 하의 4벌의 제복이 있습니다. 딜러가 매칭해서 입을 수 있는 총 의상 조합의 수는?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -540,7 +187,7 @@
             <h2>제 7구역: 탈출 경로의 탐색 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">카지노 해킹 완수 후 네바다를 빠져나갈 탈출용 버스 노선 3가지와 기차 노선 2가지가 있습니다. 한 번에 한 수단만 고르는 경우의 수는?</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"카지노 해킹 완수 후 네바다를 빠져나갈 탈출용 버스 노선 3가지와 기차 노선 2가지가 있습니다. 한 번에 한 수단만 고르는 경우의 수는?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -563,7 +210,7 @@
             <h2>제 8구역: 경호원 보안 레이아웃 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">의심받지 않고 복도를 지나가야 합니다. 보초를 서고 있는 경호원 A, B, C 세 명을 문 앞에 일렬로 줄 세우는 총 경우의 수를 구하세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"의심받지 않고 복도를 지나가야 합니다. 보초를 서고 있는 경호원 A, B, C 세 명을 문 앞에 일렬로 줄 세우는 총 경우의 수를 구하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -586,7 +233,7 @@
             <h2>제 9구역: 카지노 임원진 선출 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">잭팟의 사기 딜러 4명 중 의심 대상 1순위(대표)와 2순위(부대표)를 임의로 지목하여 보안 로그를 감시하는 모든 경우의 수는 몇 가지입니까?</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"잭팟의 사기 딜러 4명 중 의심 대상 1순위(대표)와 2순위(부대표)를 임의로 지목하여 보안 로그를 감시하는 모든 경우의 수는 몇 가지입니까?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -609,7 +256,7 @@
             <h2>제 10구역: 수사팀 구성 조합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">침투 임무를 수행할 동등 자격의 현장 비밀 요원 2명을 전체 요원 4명 중에서 동반 선출하는 모든 경우의 수를 알아내십시오.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"침투 임무를 수행할 동등 자격의 현장 비밀 요원 2명을 전체 요원 4명 중에서 동반 선출하는 모든 경우의 수를 알아내십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -632,7 +279,7 @@
             <h2>제 11구역: 확률의 기본 범위 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">제 3구역: 배팅의 수학입니다. 칩 환전기 콘솔입니다. 모든 수학적 확률 $p$가 나타낼 수 있는 값의 최소와 최대 제한 부등식을 정확하게 세우세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"제 3구역: 배팅의 수학입니다. 칩 환전기 콘솔입니다. 모든 수학적 확률 $p$가 나타낼 수 있는 값의 최소와 최대 제한 부등식을 정확하게 세우세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -655,7 +302,7 @@
             <h2>제 12구역: 치명적 잭팟의 실패율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">절대로 일어날 수 없는 조작 오류 사건(예: 주사위를 굴렸는데 0이나 7이 나옴)의 확률 값을 수치로 타이핑하여 락을 푸십시오.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"절대로 일어날 수 없는 조작 오류 사건(예: 주사위를 굴렸는데 0이나 7이 나옴)의 확률 값을 수치로 타이핑하여 락을 푸십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -678,7 +325,7 @@
             <h2>제 13구역: 동전 승부의 진실 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">잭팟이 칩을 걸고 던진 게임 동선에서, 앞면이 나올 수학적 기댓 확률을 분수 형태로 도출해 칩 제어 장치에 적용하세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"잭팟이 칩을 걸고 던진 게임 동선에서, 앞면이 나올 수학적 기댓 확률을 분수 형태로 도출해 칩 제어 장치에 적용하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -701,7 +348,7 @@
             <h2>제 14구역: 소수 슬롯머신 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">슬롯 머신 휠의 6개 숫자 중 소수(2, 3, 5)가 걸려 잭팟의 사기 패턴의 흐름을 끊어낼 확률을 분수로 계산하십시오.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"슬롯 머신 휠의 6개 숫자 중 소수(2, 3, 5)가 걸려 잭팟의 사기 패턴의 흐름을 끊어낼 확률을 분수로 계산하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -724,7 +371,7 @@
             <h2>제 15구역: 2 이하의 안전 룰 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">룰렛 휠을 굴려 2 이하의 낮은 눈이 떨어져 잭팟의 보안 공격을 일시 지연시키는 성공 확률을 기약분수로 적으세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"룰렛 휠을 굴려 2 이하의 낮은 눈이 떨어져 잭팟의 보안 공격을 일시 지연시키는 성공 확률을 기약분수로 적으세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -747,7 +394,7 @@
             <h2>제 16구역: 포커 덱의 홀수 확률 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">제 4구역: 잭팟 무력화입니다. 1부터 5까지 적힌 포커 덱 5장 중 한 장을 뽑을 때, 짝수(2, 4)가 아닌 홀수 카드를 뽑아 잭팟을 이길 확률은?</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"제 4구역: 잭팟 무력화입니다. 1부터 5까지 적힌 포커 덱 5장 중 한 장을 뽑을 때, 짝수(2, 4)가 아닌 홀수 카드를 뽑아 잭팟을 이길 확률은?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -770,7 +417,7 @@
             <h2>제 17구역: 비 올 확률의 대칭 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">기상 조작 레이저 시스템 연산 중, 오늘 비가 올 확률이 3/5로 매핑되어 있습니다. 시스템 과열을 막기 위해 비가 오지 않을 확률을 역산해 쏘세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"기상 조작 레이저 시스템 연산 중, 오늘 비가 올 확률이 3/5로 매핑되어 있습니다. 시스템 과열을 막기 위해 비가 오지 않을 확률을 역산해 쏘세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -793,7 +440,7 @@
             <h2>제 18구역: 색상 칩 주머니 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">딜러의 칩 주머니에 빨간 칩 3개와 파란 칩 2개가 보관되어 있습니다. 임의로 1개를 꺼내어 빨간 칩을 획득할 수 있는 확률을 구하세요.</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"딜러의 칩 주머니에 빨간 칩 3개와 파란 칩 2개가 보관되어 있습니다. 임의로 1개를 꺼내어 빨간 칩을 획득할 수 있는 확률을 구하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -816,7 +463,7 @@
             <h2>제 19구역: 더블 코인 플립 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">잭팟과의 최종 주화 던지기 내기입니다. 동전 2개를 동시에 하늘로 플립하여 두 동전 모두 앞면이 나와 게임에서 이길 연계 확률은?</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"잭팟과의 최종 주화 던지기 내기입니다. 동전 2개를 동시에 하늘로 플립하여 두 동전 모두 앞면이 나와 게임에서 이길 연계 확률은?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -839,7 +486,7 @@
             <h2>제 20구역: 마지막 선택의 순간 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">잭팟이 차단막 뒤의 5지선다형 오지 선다 트랩을 작동시켰습니다. 임의의 하나의 선택지를 찍었을 때, 오답을 골라 트랩이 격발될 확률을 전송하십시오!</div>
+                <div class="story-text">[딜러 로봇 잭팟-D]: \"잭팟이 차단막 뒤의 5지선다형 오지 선다 트랩을 작동시켰습니다. 임의의 하나의 선택지를 찍었을 때, 오답을 골라 트랩이 격발될 확률을 전송하십시오!\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -864,7 +511,9 @@
             <h2>수학은 완벽한 행운을 이긴다</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">마지막 오답 확률 80%를 계산해 내며 잭팟의 카드 패가 사기임을 만천하에 증명했습니다! 잭팟은 결국 파산하여 무릎을 꿇고, 카지노에는 정의가 구현되었습니다. 수학의 힘으로 완벽한 카지노의 위기를 물리쳤습니다!</div>
+                <div class="story-text">
+                [딜러 로봇 잭팟-D]: "마지막 오답 확률 80%를 계산해 내며 잭팟의 카드 패가 사기임을 만천하에 증명했습니다! 잭팟은 결국 파산하여 무릎을 꿇고, 카지노에는 정의가 구현되었습니다. 수학의 힘으로 완벽한 카지노의 위기를 물리쳤습니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>

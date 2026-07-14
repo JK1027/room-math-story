@@ -374,6 +374,38 @@ base_html = """<!DOCTYPE html>
             .story-text { font-size: 0.9rem; min-height: 140px; }
             .btn { width: 100%; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -397,7 +429,9 @@ base_html = """<!DOCTYPE html>
             <h2>이차함수</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">사이버 도시의 드론 비행을 통제하는 '드론 관제실'에 비상경보가 울렸습니다. 해킹 프로그램으로 인해 드론들의 비행 궤적이 엉망이 되어 도시의 빌딩들과 충돌하기 직전입니다! 드론들의 비행선인 '포물선 궤도(이차함수)'를 올바르게 해독하여 조종 시스템을 복구하십시오. 제한시간 45분 내에 충돌 사고를 막고 관제실을 정상화해야 탈출할 수 있습니다!</div>
+                <div class="story-text">
+                [드론 요격 AI 이글-E]: "사이버 도시의 드론 비행을 통제하는 '드론 관제실'에 비상경보가 울렸습니다. 해킹 프로그램으로 인해 드론들의 비행 궤적이 엉망이 되어 도시의 빌딩들과 충돌하기 직전입니다! 드론들의 비행선인 '포물선 궤도(이차함수)'를 올바르게 해독하여 조종 시스템을 복구하십시오. 제한시간 45분 내에 충돌 사고를 막고 관제실을 정상화해야 탈출할 수 있습니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
@@ -412,7 +446,9 @@ base_html = """<!DOCTYPE html>
             <h2>최종 봉인 탈출 성공</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">정렬 신호가 들어오며 도시 상공의 수백 대 드론이 질서정연하게 안착합니다. 충돌 궤도들이 녹색선으로 교체되며 해킹 시스템이 완전 격퇴되었습니다. 사이버 도시의 하늘을 지켜낸 여러분의 활약을 치하합니다!</div>
+                <div class="story-text">
+                [드론 요격 AI 이글-E]: "정렬 신호가 들어오며 도시 상공의 수백 대 드론이 질서정연하게 안착합니다. 충돌 궤도들이 녹색선으로 교체되며 해킹 시스템이 완전 격퇴되었습니다. 사이버 도시의 하늘을 지켜낸 여러분의 활약을 치하합니다!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -636,206 +672,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "스테이지 1",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q1.</strong> 다음 보기 중 y가 x에 대한 이차함수인 것의 번호를 쓰시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "y = ax² + bx + c (a ≠ 0) 형태로 우변이 x에 대한 2차식인 함수를 고르게 유도합니다."
-    },
-    {
-        "qnum": 2,
-        "title": "스테이지 2",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q2.</strong> 이차함수 y=3x² 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 적으시오. 예: (0,0))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "기본형 y = ax² 의 꼭짓점 좌표는 항상 원점 (0,0)임을 설명합니다."
-    },
-    {
-        "qnum": 3,
-        "title": "스테이지 3",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q3.</strong> 이차함수 y=-2x² 그래프의 대칭축(축의 방정식)을 구하시오. (예: x=0)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === 'X=0'",
-        "hint": "기본형 y = ax² 그래프의 대칭축은 y축이며, 그 직선의 방정식을 식으로 표현하게 가이드합니다."
-    },
-    {
-        "qnum": 4,
-        "title": "스테이지 4",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q4.</strong> 이차함수 y=ax² 의 그래프가 점 (2,8) 을 지날 때, 상수 a의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '2'",
-        "hint": "함수식의 x와 y 자리에 주어진 좌표값을 대입하여 미지수 a를 구합니다."
-    },
-    {
-        "qnum": 5,
-        "title": "스테이지 5",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q5.</strong> 이차함수 y=x² 의 그래프를 y축의 양의 방향으로 3만큼 평행이동한 그래프의 식을 구하시오. (예: y=x²+3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === 'Y=X²+3'",
-        "hint": "y = ax² 그래프를 y축 방향으로 q만큼 평행이동하면 식은 y = ax² + q 가 됨을 상기시킵니다."
-    },
-    {
-        "qnum": 6,
-        "title": "스테이지 6",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q6.</strong> 이차함수 y=3(x-1)² 그래프의 꼭짓점 좌표를 구하시오. (예: (1,0))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "y = a(x-p)² 형태의 꼭짓점은 x축 위에 위치하게 됨을 설명합니다."
-    },
-    {
-        "qnum": 7,
-        "title": "스테이지 7",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q7.</strong> 이차함수 y=-(x-2)² + 4 그래프의 꼭짓점 좌표를 구하시오. (예: (2,4))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "y = a(x-p)² + q 형태의 꼭짓점 좌표는 (p, q)가 됨을 활용합니다."
-    },
-    {
-        "qnum": 8,
-        "title": "스테이지 8",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q8.</strong> 이차함수 y=2(x+3)² - 5 그래프의 대칭축의 방정식을 구하시오. (예: x=-3)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === 'X=-3'",
-        "hint": "표준형 y = a(x-p)² + q 의 대칭축 방정식은 꼭짓점의 x좌표 값과 같음을 상기시킵니다."
-    },
-    {
-        "qnum": 9,
-        "title": "스테이지 9",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q9.</strong> 이차함수 y=(x-1)² + 2 그래프가 y축과 만나는 점의 y좌표를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '3'",
-        "hint": "그래프가 y축과 만나는 점(y절편)은 x = 0 일 때의 y값이므로 x 자리에 0을 대입하여 계산합니다."
-    },
-    {
-        "qnum": 10,
-        "title": "스테이지 10",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q10.</strong> 이차함수 y=-x² 의 그래프와 x축에 대하여 서로 대칭인 그래프의 식을 구하시오. (예: y=x²)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === 'Y=X²'",
-        "hint": "두 그래프가 x축 대칭이려면 x²의 계수인 a의 부호만 반대가 되어야 함을 인지시킵니다."
-    },
-    {
-        "qnum": 11,
-        "title": "스테이지 11",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q11.</strong> 이차함수 y=x² - 4x + 7 을 표준형 y=a(x-p)²+q 꼴로 나타낼 때, 세 상수 a, p, q에 대하여 a+p+q의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '6'",
-        "hint": "이차식을 완전제곱식 y = a(x-p)² + q 형태로 변형하여 꼭짓점의 정보(p, q)와 최고차항 계수 a의 합을 구합니다."
-    },
-    {
-        "qnum": 12,
-        "title": "스테이지 12",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q12.</strong> 이차함수 y=x² - 6x + 5 그래프의 꼭짓점 좌표를 구하시오. (예: (3,-4))",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === ''",
-        "hint": "이차식을 완전제곱식 형태로 나타내어 꼭짓점의 x좌표와 y좌표 값을 확인하도록 안내합니다."
-    },
-    {
-        "qnum": 13,
-        "title": "스테이지 13",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q13.</strong> 이차함수 y=x² + 2x - 3 그래프가 x축과 만나는 두 점의 x좌표를 구하시오. (작은 수부터 적으시오. 예: -3, 1)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '-3,1'",
-        "hint": "x축과의 교점은 y = 0 일 때의 x의 값이므로 이차방정식을 세워 해를 구합니다."
-    },
-    {
-        "qnum": 14,
-        "title": "스테이지 14",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q14.</strong> 이차함수 y=-2x² + 8x - 5 그래프의 꼭짓점의 y좌표를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '3'",
-        "hint": "x의 계수로 묶어내어 표준형으로 바꾼 뒤 꼭짓점의 y좌표 값을 읽어내도록 지도합니다."
-    },
-    {
-        "qnum": 15,
-        "title": "스테이지 15",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q15.</strong> 이차함수 y=x² - 4x 그래프의 대칭축의 방정식을 구하시오. (예: x=2)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === 'X=2'",
-        "hint": "완전제곱식 형태로 식을 고친 후 축의 방정식인 x = p 형태의 p 값을 구하게 합니다."
-    },
-    {
-        "qnum": 16,
-        "title": "스테이지 16",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q16.</strong> 이차함수 y=ax²+bx+c 의 그래프 모양이 아래로 볼록할 때, a의 값의 부호를 쓰시오. (기호를 써서 나타내시오. 예: >0)",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '>0'",
-        "hint": "포물선 그래프가 아래로 볼록(∪형)하려면 x²의 계수인 a의 부호가 어떠해야 하는지 질문합니다."
-    },
-    {
-        "qnum": 17,
-        "title": "스테이지 17",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q17.</strong> \"이차함수 y=x² + 2x 의 그래프는 항상 원점(0,0)을 지난다.\" 이 명제가 맞으면 참, 틀리면 거짓을 쓰시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '참'",
-        "hint": "주어진 식에 x = 0 을 대입하여 등식이 성립하는지 확인해 봅니다."
-    },
-    {
-        "qnum": 18,
-        "title": "스테이지 18",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q18.</strong> 이차함수 y=x² - 2x - 3 그래프가 y축과 만나는 점의 y좌표를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '-3'",
-        "hint": "y축과의 교점은 x = 0 을 대입한 값이므로 상수항을 확인하면 된다고 가이드합니다."
-    },
-    {
-        "qnum": 19,
-        "title": "스테이지 19",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q19.</strong> 이차함수 y=3(x-2)² + 1 의 최솟값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '1'",
-        "hint": "y = a(x-p)² + q 에서 a > 0 일 때 꼭짓점의 y좌표인 q가 바로 함수의 최솟값이 됨을 이용합니다."
-    },
-    {
-        "qnum": 20,
-        "title": "스테이지 20",
-        "story": "주어진 단서를 해결하여 방의 봉인을 해제하세요.",
-        "qtext": "<strong>Q20.</strong> 보안 드론의 회피 포물선 비행 궤도 식은 y = -x² + 4x 이다. 이 드론이 도달할 수 있는 가장 높은 지점의 높이(y좌표)를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "정답이 올바르지 않습니다. 다시 계산해보세요.",
-        "ans_check": "ans === '4'",
-        "hint": "스토리 지문과 힌트를 다시 한번 분석해보세요."
-    }
+    {'qnum': 1, 'title': '스테이지 1', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q1.</strong> 다음 보기 중 y가 x에 대한 이차함수인 것의 번호를 쓰시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': 'y = ax² + bx + c (a ≠ 0) 형태로 우변이 x에 대한 2차식인 함수를 고르게 유도합니다.'},
+    {'qnum': 2, 'title': '스테이지 2', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q2.</strong> 이차함수 y=3x² 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 적으시오. 예: (0,0))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '기본형 y = ax² 의 꼭짓점 좌표는 항상 원점 (0,0)임을 설명합니다.'},
+    {'qnum': 3, 'title': '스테이지 3', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q3.</strong> 이차함수 y=-2x² 그래프의 대칭축(축의 방정식)을 구하시오. (예: x=0)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === 'X=0'", 'hint': '기본형 y = ax² 그래프의 대칭축은 y축이며, 그 직선의 방정식을 식으로 표현하게 가이드합니다.'},
+    {'qnum': 4, 'title': '스테이지 4', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q4.</strong> 이차함수 y=ax² 의 그래프가 점 (2,8) 을 지날 때, 상수 a의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2'", 'hint': '함수식의 x와 y 자리에 주어진 좌표값을 대입하여 미지수 a를 구합니다.'},
+    {'qnum': 5, 'title': '스테이지 5', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q5.</strong> 이차함수 y=x² 의 그래프를 y축의 양의 방향으로 3만큼 평행이동한 그래프의 식을 구하시오. (예: y=x²+3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === 'Y=X²+3'", 'hint': 'y = ax² 그래프를 y축 방향으로 q만큼 평행이동하면 식은 y = ax² + q 가 됨을 상기시킵니다.'},
+    {'qnum': 6, 'title': '스테이지 6', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q6.</strong> 이차함수 y=3(x-1)² 그래프의 꼭짓점 좌표를 구하시오. (예: (1,0))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': 'y = a(x-p)² 형태의 꼭짓점은 x축 위에 위치하게 됨을 설명합니다.'},
+    {'qnum': 7, 'title': '스테이지 7', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> 이차함수 y=-(x-2)² + 4 그래프의 꼭짓점 좌표를 구하시오. (예: (2,4))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': 'y = a(x-p)² + q 형태의 꼭짓점 좌표는 (p, q)가 됨을 활용합니다.'},
+    {'qnum': 8, 'title': '스테이지 8', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> 이차함수 y=2(x+3)² - 5 그래프의 대칭축의 방정식을 구하시오. (예: x=-3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === 'X=-3'", 'hint': '표준형 y = a(x-p)² + q 의 대칭축 방정식은 꼭짓점의 x좌표 값과 같음을 상기시킵니다.'},
+    {'qnum': 9, 'title': '스테이지 9', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> 이차함수 y=(x-1)² + 2 그래프가 y축과 만나는 점의 y좌표를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '3'", 'hint': '그래프가 y축과 만나는 점(y절편)은 x = 0 일 때의 y값이므로 x 자리에 0을 대입하여 계산합니다.'},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q10.</strong> 이차함수 y=-x² 의 그래프와 x축에 대하여 서로 대칭인 그래프의 식을 구하시오. (예: y=x²)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === 'Y=X²'", 'hint': '두 그래프가 x축 대칭이려면 x²의 계수인 a의 부호만 반대가 되어야 함을 인지시킵니다.'},
+    {'qnum': 11, 'title': '스테이지 11', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> 이차함수 y=x² - 4x + 7 을 표준형 y=a(x-p)²+q 꼴로 나타낼 때, 세 상수 a, p, q에 대하여 a+p+q의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '6'", 'hint': '이차식을 완전제곱식 y = a(x-p)² + q 형태로 변형하여 꼭짓점의 정보(p, q)와 최고차항 계수 a의 합을 구합니다.'},
+    {'qnum': 12, 'title': '스테이지 12', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> 이차함수 y=x² - 6x + 5 그래프의 꼭짓점 좌표를 구하시오. (예: (3,-4))', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === ''", 'hint': '이차식을 완전제곱식 형태로 나타내어 꼭짓점의 x좌표와 y좌표 값을 확인하도록 안내합니다.'},
+    {'qnum': 13, 'title': '스테이지 13', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> 이차함수 y=x² + 2x - 3 그래프가 x축과 만나는 두 점의 x좌표를 구하시오. (작은 수부터 적으시오. 예: -3, 1)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '-3,1'", 'hint': 'x축과의 교점은 y = 0 일 때의 x의 값이므로 이차방정식을 세워 해를 구합니다.'},
+    {'qnum': 14, 'title': '스테이지 14', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q14.</strong> 이차함수 y=-2x² + 8x - 5 그래프의 꼭짓점의 y좌표를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '3'", 'hint': 'x의 계수로 묶어내어 표준형으로 바꾼 뒤 꼭짓점의 y좌표 값을 읽어내도록 지도합니다.'},
+    {'qnum': 15, 'title': '스테이지 15', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q15.</strong> 이차함수 y=x² - 4x 그래프의 대칭축의 방정식을 구하시오. (예: x=2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === 'X=2'", 'hint': '완전제곱식 형태로 식을 고친 후 축의 방정식인 x = p 형태의 p 값을 구하게 합니다.'},
+    {'qnum': 16, 'title': '스테이지 16', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q16.</strong> 이차함수 y=ax²+bx+c 의 그래프 모양이 아래로 볼록할 때, a의 값의 부호를 쓰시오. (기호를 써서 나타내시오. 예: >0)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '>0'", 'hint': '포물선 그래프가 아래로 볼록(∪형)하려면 x²의 계수인 a의 부호가 어떠해야 하는지 질문합니다.'},
+    {'qnum': 17, 'title': '스테이지 17', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> "이차함수 y=x² + 2x 의 그래프는 항상 원점(0,0)을 지난다." 이 명제가 맞으면 참, 틀리면 거짓을 쓰시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '참'", 'hint': '주어진 식에 x = 0 을 대입하여 등식이 성립하는지 확인해 봅니다.'},
+    {'qnum': 18, 'title': '스테이지 18', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> 이차함수 y=x² - 2x - 3 그래프가 y축과 만나는 점의 y좌표를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '-3'", 'hint': 'y축과의 교점은 x = 0 을 대입한 값이므로 상수항을 확인하면 된다고 가이드합니다.'},
+    {'qnum': 19, 'title': '스테이지 19', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> 이차함수 y=3(x-2)² + 1 의 최솟값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': 'y = a(x-p)² + q 에서 a > 0 일 때 꼭짓점의 y좌표인 q가 바로 함수의 최솟값이 됨을 이용합니다.'},
+    {'qnum': 20, 'title': '스테이지 20', 'story': '[드론 요격 AI 이글-E]: \\"주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q20.</strong> 보안 드론의 회피 포물선 비행 궤도 식은 y = -x² + 4x 이다. 이 드론이 도달할 수 있는 가장 높은 지점의 높이(y좌표)를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '4'", 'hint': '스토리 지문과 힌트를 다시 한번 분석해보세요.'}
 ]
 
 import re
@@ -976,6 +832,28 @@ js_boilerplate = """
 """
 
 final_html = base_html.replace("{{panels_placeholder}}", panels_html) + "\n<script>\n" + js_checks + "\n</script>"
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)

@@ -5,375 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>무한을 달리는 사이버 스피드웨이: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #09090e;
-            --glass-bg: rgba(13, 15, 30, 0.75);
-            --glass-border: rgba(0, 240, 255, 0.2);
-            --accent: #00f0ff;
-            --accent-hover: #39f5ff;
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 40%);
-            z-index: -2;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(0, 240, 255, 0.35);
-            border-left: 1px solid rgba(0, 240, 255, 0.35);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 0 50px rgba(0, 240, 255, 0.1), inset 0 0 20px rgba(0, 240, 255, 0.02);
-            display: none; 
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 {
-            font-family: 'Orbit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-.panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .story-box {
-            position: relative;
-            background: linear-gradient(90deg, rgba(13, 25, 48, 0.6) 0%, rgba(0,0,0,0.3) 100%);
-            border-left: 4px solid var(--accent);
-            padding: 0.8rem 1.2rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            height: 110px;
-            max-height: 110px;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            background: rgba(0, 240, 255, 0.15);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            color: var(--accent);
-            padding: 4px 10px;
-            font-size: 0.75rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            z-index: 10;
-        }
-        .story-log-trigger:hover {
-            background: rgba(0, 240, 255, 0.3);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-
-        .question-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.02);
-        }
-
-        .question-content {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #cbd5e1;
-        }
-
-        .input-group {
-            margin-top: 1rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            padding: 1rem;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1.1rem;
-            font-family: 'Share Tech Mono', monospace;
-            text-align: center;
-            transition: all 0.3s;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .error-msg {
-            color: #ff4a4a;
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            display: none;
-            text-shadow: 0 0 10px rgba(255, 74, 74, 0.3);
-        }
-
-        .btn-group {
-            display: flex;
-            justify-content: center;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            pointer-events: none;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, rgba(0, 240, 255, 0.2) 0%, rgba(0, 240, 255, 0.05) 100%);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 1rem 3rem;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.1);
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, var(--accent) 0%, rgba(0, 240, 255, 0.6) 100%);
-            color: #000;
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
-            scale: 1.03;
-            text-shadow: none;
-        }
-
-        .btn-hint {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 4px 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            vertical-align: middle;
-            margin-left: 10px;
-            letter-spacing: 0.5px;
-            text-transform: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .btn-hint:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-        }
-
-
-        .sound-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            padding: 6px 12px;
-            font-size: 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            z-index: 100;
-        }
-        .sound-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: none;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), #a78bfa);
-            box-shadow: 0 0 10px var(--accent);
-            transition: width 0.5s ease-in-out;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        .log-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-        .log-content {
-            background: #0d0f1e;
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 70vh;
-            padding: 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.2);
-        }
-        .log-content h2 {
-            text-align: left;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid rgba(0, 240, 255, 0.15);
-            padding-bottom: 0.5rem;
-            color: var(--accent);
-        }
-        #logContainer {
-            overflow-y: auto;
-            flex-grow: 1;
-            margin-bottom: 1.5rem;
-            padding-right: 10px;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: #cbd5e1;
-        }
-        #logContainer::-webkit-scrollbar {
-            width: 6px;
-        }
-        #logContainer::-webkit-scrollbar-thumb {
-            background: rgba(0, 240, 255, 0.3);
-            border-radius: 3px;
-        }
-        #logContainer strong {
-            color: var(--accent);
-        }
-        .close-log {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            color: #ef4444;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .close-log:hover {
-            transform: scale(1.2);
-        }
-
-        @media (max-width: 768px) {
-            .glass-panel {
-                padding: 1.5rem;
-                border-radius: 16px;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .story-box {
-                height: 80px;
-                max-height: 80px;
-            }
-            .story-text {
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+    <style>:root{--bg-main:#09090e;--glass-bg:rgba(13,15,30,0.75);--glass-border:rgba(0,240,255,0.2);--accent:#00f0ff;--accent-hover:#39f5ff;--text-main:#e2e8f0;--text-muted:#94a3b8;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(0,240,255,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(139,92,246,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(0,240,255,0.35);border-left:1px solid rgba(0,240,255,0.35);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(0,240,255,0.1),inset 0 0 20px rgba(0,240,255,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(0,240,255,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg,rgba(13,25,48,0.6) 0%,rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:110px;max-height:110px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:10px;right:15px;background:rgba(0,240,255,0.15);border:1px solid rgba(0,240,255,0.3);color:var(--accent);padding:4px 10px;font-size:0.75rem;border-radius:6px;cursor:pointer;transition:all 0.2s;z-index:10;}.story-log-trigger:hover{background:rgba(0,240,255,0.3);box-shadow:0 0 10px rgba(0,240,255,0.5);}.question-box{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:inset 0 0 15px rgba(255,255,255,0.02);}.question-content{font-size:1.1rem;line-height:1.7;color:#cbd5e1;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(0,240,255,0.2);padding:1rem;border-radius:12px;color:#fff;font-size:1.1rem;font-family:'Share Tech Mono',monospace;text-align:center;transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(0,240,255,0.3),inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#ff4a4a;text-align:center;margin-bottom:1rem;font-size:0.95rem;display:none;text-shadow:0 0 10px rgba(255,74,74,0.3);}.btn-group{display:flex;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 0.8s ease,transform 0.8s ease;pointer-events:none;}.btn{background:linear-gradient(135deg,rgba(0,240,255,0.2) 0%,rgba(0,240,255,0.05) 100%);border:1px solid var(--accent);color:var(--accent);padding:1rem 3rem;font-size:1.1rem;font-weight:900;border-radius:16px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);text-shadow:0 0 10px rgba(0,240,255,0.5);box-shadow:0 4px 15px rgba(0,240,255,0.1);letter-spacing:1px;}.btn:hover{background:linear-gradient(135deg,var(--accent) 0%,rgba(0,240,255,0.6) 100%);color:#000;box-shadow:0 0 25px rgba(0,240,255,0.6);scale:1.03;text-shadow:none;}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.sound-toggle{position:absolute;top:20px;right:20px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:6px 12px;font-size:0.8rem;border-radius:8px;cursor:pointer;transition:all 0.2s;z-index:100;}.sound-toggle:hover{background:rgba(255,255,255,0.1);}.progress-container{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--accent),#a78bfa);box-shadow:0 0 10px var(--accent);transition:width 0.5s ease-in-out;}@keyframes blink{50%{opacity:0;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:999;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#0d0f1e;border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,240,255,0.2);}.log-content h2{text-align:left;font-size:1.3rem;margin-bottom:1rem;border-bottom:1px solid rgba(0,240,255,0.15);padding-bottom:0.5rem;color:var(--accent);}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer::-webkit-scrollbar{width:6px;}#logContainer::-webkit-scrollbar-thumb{background:rgba(0,240,255,0.3);border-radius:3px;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:transform 0.2s;}.close-log:hover{transform:scale(1.2);}@media (max-width:768px){.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}.story-box{height:80px;max-height:80px;}.story-text{font-size:0.9rem;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -397,34 +29,19 @@
 
         <!-- 0. 인트로 -->
         <div id="intro" class="glass-panel active">
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/intro.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/intro.png" alt="Background" class="panel-image">
             <h1>사이버 스피드웨이</h1>
             <h2>무한의 루프를 해킹하라</h2>
             <div class="story-box">
                 <div class="story-text">
-                    사이버 공간 최고의 레이싱 대회 '순환 스피드웨이'에 출전한 여러분!<br><br>
+                [레이싱 내비게이션 스피드-N]: "사이버 공간 최고의 레이싱 대회 '순환 스피드웨이'에 출전한 여러분!<br><br>
                     우승 트로피를 눈앞에 둔 순간, 악당 해커가 레이싱 트랙을 끝없는 무한 소수의 늪으로 만들어 버렸습니다.<br><br>
-                    결승선으로 도달하려면 분수의 무한 순환 패턴을 해독하고, 분수로 변환하여 20개의 방화벽 결계를 뚫고 전속력으로 탈출하십시오!
-                </div>
+                    결승선으로 도달하려면 분수의 무한 순환 패턴을 해독하고, 분수로 변환하여 20개의 방화벽 결계를 뚫고 전속력으로 탈출하십시오!"
+            </div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
-                        <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="margin-bottom: 1rem;">
-                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
-                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
-                </div>
-                <div>
-                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
-                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
-                </div>
-            </div>
-            
-            <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-bottom: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6;">
-                ⚠️ <b>주의사항</b><br>
-                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. 신중하게 도전하세요!
-            </div>
             <div class="btn-group" style="margin-top: 2rem; width:100%;">
-                <button class="btn" onclick="tryStartGame('m2_0_')">레이싱 시동 가동</button>
+                <button class="btn" onclick="nextStage('intro', 'panel_q1', 5)">레이싱 시동 가동</button>
             </div>
         </div>
 
@@ -433,9 +50,9 @@
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
             <h2>제 1구역: 사이버 트랙 분석 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q1.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏎️ <strong>[순환 스피드웨이 진입]</strong><br><br>순환 스피드웨이에 오신 것을 환영합니다! 해커가 첫 번째 트랙의 센서를 교란시켜 분수 신호가 차단되었습니다. 분수 $3/4$을 소수로 변환하여 차량 컴퓨터에 입력해야 트랙 분석이 활성화됩니다.</div>
+                <div class="story-text">🏎️ <strong>[순환 스피드웨이 진입]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"순환 스피드웨이에 오신 것을 환영합니다! 해커가 첫 번째 트랙의 센서를 교란시켜 분수 신호가 차단되었습니다. 분수 $3/4$을 소수로 변환하여 차량 컴퓨터에 입력해야 트랙 분석이 활성화됩니다.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -456,9 +73,9 @@
         <!-- Q2 -->
         <div id="panel_q2" class="glass-panel">
             <h2>제 2구역: 유한소수 게이트 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q2.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏎️ <strong>[유한한 경계]</strong><br><br>첫 번째 게이트에 도착했습니다. 소수점 아래 0이 아닌 숫자가 유한 번만 나타나는 소수의 명칭을 게이트 패널에 입력하십시오.</div>
+                <div class="story-text">🏎️ <strong>[유한한 경계]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"첫 번째 게이트에 도착했습니다. 소수점 아래 0이 아닌 숫자가 유한 번만 나타나는 소수의 명칭을 게이트 패널에 입력하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -479,9 +96,9 @@
         <!-- Q3 -->
         <div id="panel_q3" class="glass-panel">
             <h2>제 3구역: 엔진 냉각 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q3.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏎️ <strong>[냉각 장치 조건]</strong><br><br>엔진 과열 경보! 분수가 유한소수로 깨끗하게 떨어지기 위한 기약분수의 분모 소인수 조건을 충전해야 엔진이 정상 작동합니다.</div>
+                <div class="story-text">🏎️ <strong>[냉각 장치 조건]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"엔진 과열 경보! 분수가 유한소수로 깨끗하게 떨어지기 위한 기약분수의 분모 소인수 조건을 충전해야 엔진이 정상 작동합니다.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -502,9 +119,9 @@
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
             <h2>제 4구역: 두 갈래 길 선택 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q4.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏎️ <strong>[트랙 분기점]</strong><br><br>앞에 두 갈래 길이 나타납니다. 왼쪽 트랙 분수 $\frac{7}{20}$의 소수 성질을 파악하여 안전한 경로의 성질을 입력하십시오.</div>
+                <div class="story-text">🏎️ <strong>[트랙 분기점]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"앞에 두 갈래 길이 나타납니다. 왼쪽 트랙 분수 $\frac{7}{20}$의 소수 성질을 파악하여 안전한 경로의 성질을 입력하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -525,9 +142,9 @@
         <!-- Q5 -->
         <div id="panel_q5" class="glass-panel">
             <h2>제 5구역: 급커브 코스 감속 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q5.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏎️ <strong>[커브길 감속 레벨]</strong><br><br>헤어핀 커브에 진입합니다. 우측 분수 $\frac{13}{30}$의 성질에 맞춰 엔진 출력을 유한소수 또는 무한소수 레벨로 세팅하십시오.</div>
+                <div class="story-text">🏎️ <strong>[커브길 감속 레벨]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"헤어핀 커브에 진입합니다. 우측 분수 $\frac{13}{30}$의 성질에 맞춰 엔진 출력을 유한소수 또는 무한소수 레벨로 세팅하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -548,9 +165,9 @@
         <!-- Q6 -->
         <div id="panel_q6" class="glass-panel">
             <h2>제 6구역: 무한 루프 진입 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q6.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔄 <strong>[루프의 늪]</strong><br><br>제 2구역 무한 루프 구간에 도달했습니다. 일정한 숫자의 배열이 끝없이 되풀이되는 무한소수의 정확한 이름을 입력하여 동기화하십시오.</div>
+                <div class="story-text">🔄 <strong>[루프의 늪]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"제 2구역 무한 루프 구간에 도달했습니다. 일정한 숫자의 배열이 끝없이 되풀이되는 무한소수의 정확한 이름을 입력하여 동기화하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -571,9 +188,9 @@
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
             <h2>제 7구역: 순환마디 락 해제 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q7.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔄 <strong>[기본 코드 해독]</strong><br><br>순환소수 0.3333... 의 무한 루프를 끄기 위해 순환마디 점을 찍은 간략화 코드로 해독하십시오. (대괄호 `[]`로 순환마디를 감싸서 입력하세요. 예: 0.[3])</div>
+                <div class="story-text">🔄 <strong>[기본 코드 해독]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"순환소수 0.3333... 의 무한 루프를 끄기 위해 순환마디 점을 찍은 간략화 코드로 해독하십시오. (대괄호 `[]`로 순환마디를 감싸서 입력하세요. 예: 0.[3])\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -594,9 +211,9 @@
         <!-- Q8 -->
         <div id="panel_q8" class="glass-panel">
             <h2>제 8구역: 트랙 코어 해킹 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q8.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔄 <strong>[코어 패턴 인식]</strong><br><br>두 번째 루프 코어입니다. 소수 1.252525... 에서 무한히 반복되는 패턴(순환마디) 자체의 값을 찾아내어 입력하십시오.</div>
+                <div class="story-text">🔄 <strong>[코어 패턴 인식]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"두 번째 루프 코어입니다. 소수 1.252525... 에서 무한히 반복되는 패턴(순환마디) 자체의 값을 찾아내어 입력하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -617,9 +234,9 @@
         <!-- Q9 -->
         <div id="panel_q9" class="glass-panel">
             <h2>제 9구역: 복합 루프 우회 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q9.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔄 <strong>[비대칭 패턴 분석]</strong><br><br>순환하지 않는 소수점 자리가 포함된 복합 루프입니다. 0.4565656... 을 대괄호 `[]` 규칙을 적용해 압축 코드로 우회하십시오. (예: 0.4[56])</div>
+                <div class="story-text">🔄 <strong>[비대칭 패턴 분석]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"순환하지 않는 소수점 자리가 포함된 복합 루프입니다. 0.4565656... 을 대괄호 `[]` 규칙을 적용해 압축 코드로 우회하십시오. (예: 0.4[56])\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -640,9 +257,9 @@
         <!-- Q10 -->
         <div id="panel_q10" class="glass-panel">
             <h2>제 10구역: 루프 마디 압축 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q10.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔄 <strong>[분수의 루프화]</strong><br><br>분수 $\frac{1}{3}$의 무한 순환 패턴을 파악했습니다. 이 소수의 순환마디를 입력하여 압축 장치를 기동하십시오.</div>
+                <div class="story-text">🔄 <strong>[분수의 루프화]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"분수 $\frac{1}{3}$의 무한 순환 패턴을 파악했습니다. 이 소수의 순환마디를 입력하여 압축 장치를 기동하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -663,9 +280,9 @@
         <!-- Q11 -->
         <div id="panel_q11" class="glass-panel">
             <h2>제 11구역: 방화벽 1단계 돌파 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q11.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧮 <strong>[포트 변환 1]</strong><br><br>제 3구역 방화벽 구역입니다. 1차 포트 보안을 뚫기 위해 순환소수 $0.\dot{7}$을 분수로 변환하여 록을 해제하십시오. (예: 7/9)</div>
+                <div class="story-text">🧮 <strong>[포트 변환 1]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"제 3구역 방화벽 구역입니다. 1차 포트 보안을 뚫기 위해 순환소수 $0.\dot{7}$을 분수로 변환하여 록을 해제하십시오. (예: 7/9)\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -686,9 +303,9 @@
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
             <h2>제 12구역: 방화벽 2단계 돌파 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q12.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧮 <strong>[포트 변환 2]</strong><br><br>2차 보안 해제 단계입니다. 순환소수 $0.\dot{4}\dot{5}$의 기약분수 코드를 전송하여 보안 회로를 무력화하십시오.</div>
+                <div class="story-text">🧮 <strong>[포트 변환 2]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"2차 보안 해제 단계입니다. 순환소수 $0.\dot{4}\dot{5}$의 기약분수 코드를 전송하여 보안 회로를 무력화하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -709,9 +326,9 @@
         <!-- Q13 -->
         <div id="panel_q13" class="glass-panel">
             <h2>제 13구역: 방화벽 우회 공식 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q13.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧮 <strong>[방정식 유도]</strong><br><br>순환소수 $x = 0.\dot{3}$을 분수로 고치기 위해 $10x - x$ 식을 풀고 있습니다. 이때 좌변 결과인 $9x$의 최종 정수 값을 입력하세요.</div>
+                <div class="story-text">🧮 <strong>[방정식 유도]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"순환소수 $x = 0.\dot{3}$을 분수로 고치기 위해 $10x - x$ 식을 풀고 있습니다. 이때 좌변 결과인 $9x$의 최종 정수 값을 입력하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -732,9 +349,9 @@
         <!-- Q14 -->
         <div id="panel_q14" class="glass-panel">
             <h2>제 14구역: 방화벽 3단계 돌파 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q14.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧮 <strong>[정수부 포함 분수]</strong><br><br>3차 방화벽 포트입니다. 정수 부분이 0이 아닌 순환소수 $1.\dot{2}$를 기약분수 코드로 입력하십시오.</div>
+                <div class="story-text">🧮 <strong>[정수부 포함 분수]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"3차 방화벽 포트입니다. 정수 부분이 0이 아닌 순환소수 $1.\dot{2}$를 기약분수 코드로 입력하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -755,9 +372,9 @@
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
             <h2>제 15구역: 방화벽 마스터 해킹 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q15.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧮 <strong>[소수점 아래 혼합형]</strong><br><br>방화벽의 마스터 컨트롤 포트입니다. 순환소수 $x = 0.2\dot{5}$를 분수로 고치는 연산($100x - 10x$)을 완료하여 기약분수로 입력하십시오.</div>
+                <div class="story-text">🧮 <strong>[소수점 아래 혼합형]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"방화벽의 마스터 컨트롤 포트입니다. 순환소수 $x = 0.2\dot{5}$를 분수로 고치는 연산($100x - 10x$)을 완료하여 기약분수로 입력하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -778,9 +395,9 @@
         <!-- Q16 -->
         <div id="panel_q16" class="glass-panel">
             <h2>제 16구역: 부스터 점화 공식 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q16.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏁 <strong>[출력 부스터 시동]</strong><br><br>마지막 4구역 최종 부스터 구간입니다. $0.1\dot{2}\dot{3}$을 공식으로 분수로 바꿀 때, 분모에 적용될 정합 값을 연산해 시동 장치에 입력하세요.</div>
+                <div class="story-text">🏁 <strong>[출력 부스터 시동]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"마지막 4구역 최종 부스터 구간입니다. $0.1\dot{2}\dot{3}$을 공식으로 분수로 바꿀 때, 분모에 적용될 정합 값을 연산해 시동 장치에 입력하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -801,9 +418,9 @@
         <!-- Q17 -->
         <div id="panel_q17" class="glass-panel">
             <h2>제 17구역: 부스터 출력 충전 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q17.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏁 <strong>[출력 에너지 전송]</strong><br><br>공식의 분자 값($123 - 1$) 계산을 마저 끝내고, 최종 완성된 기약분수 에너지를 엔진에 공급하십시오.</div>
+                <div class="story-text">🏁 <strong>[출력 에너지 전송]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"공식의 분자 값($123 - 1$) 계산을 마저 끝내고, 최종 완성된 기약분수 에너지를 엔진에 공급하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -824,9 +441,9 @@
         <!-- Q18 -->
         <div id="panel_q18" class="glass-panel">
             <h2>제 18구역: 최종 부스터 대소비교 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q18.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏁 <strong>[더 강한 연료 선택]</strong><br><br>두 에너지 팩 $0.\dot{3}$ 과 $0.3$ 중 더 강력한 출력을 내는 에너지를 입력하여 연소실에 투입하십시오.</div>
+                <div class="story-text">🏁 <strong>[더 강한 연료 선택]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"두 에너지 팩 $0.\dot{3}$ 과 $0.3$ 중 더 강력한 출력을 내는 에너지를 입력하여 연소실에 투입하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -847,9 +464,9 @@
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
             <h2>제 19구역: 부스터 잠금 해제 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q19.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏁 <strong>[참과 거짓 판정]</strong><br><br>마지막 관문 진입 직전입니다. '모든 순환소수는 유리수이다.' 명제의 진위를 가려 회로를 해제하십시오.</div>
+                <div class="story-text">🏁 <strong>[참과 거짓 판정]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"마지막 관문 진입 직전입니다. '모든 순환소수는 유리수이다.' 명제의 진위를 가려 회로를 해제하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -870,9 +487,9 @@
         <!-- Q20 -->
         <div id="panel_q20" class="glass-panel">
             <h2>제 20구역: 골인 레이저 가동 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/q20.png" alt="Background" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🏁 <strong>[결승선 조준]</strong><br><br>마지막 순간입니다! 순환소수 $0.\dot{9}$를 기약분수로 변환하여 최종 조준 장치에 입력하십시오. 이 수치가 1과 같은지 확인하십시오.</div>
+                <div class="story-text">🏁 <strong>[결승선 조준]</strong><br><br>[레이싱 내비게이션 스피드-N]: \"마지막 순간입니다! 순환소수 $0.\dot{9}$를 기약분수로 변환하여 최종 조준 장치에 입력하십시오. 이 수치가 1과 같은지 확인하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -894,13 +511,13 @@
         <!-- 아웃트로 -->
         <div id="outro" class="glass-panel">
             <h2>MISSION ACCOMPLISHED</h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_01_rational_numbers/outro.png" alt="Ending" class="panel-image">
+            <img src="assets/m2_01_rational_numbers/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
                 <div class="story-text">
-                    "최종 코드를 업로드하는 순간, 계기판의 순환 소수 루프가 일제히 정지합니다!<br><br>
+                [레이싱 내비게이션 스피드-N]: ""최종 코드를 업로드하는 순간, 계기판의 순환 소수 루프가 일제히 정지합니다!<br><br>
                     끝없이 쪼개지던 트랙이 하나로 아름답게 정렬되며 결승선이 푸른 네온 사인으로 빛납니다.<br><br>
-                    최종 부스터를 점화하여 해커의 차단막을 관통하고 마침내 체커기를 받았습니다. 여러분의 승리입니다!"
-                </div>
+                    최종 부스터를 점화하여 해커의 차단막을 관통하고 마침내 체커기를 받았습니다. 여러분의 승리입니다!""
+            </div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <button class="btn" style="margin-top: 2rem; width:100%;" onclick="location.reload()">새로운 레이스 도전</button>
@@ -910,94 +527,31 @@
 
     <!-- Audio API setup -->
     <script>
-                let isMuted = false;
-        let audioCtx = null;
-        let bgmOsc = null;
-        let bgmGain = null;
-        let bgmLfo = null;
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let isMuted = false;
 
-        function initAudio() {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') audioCtx.resume();
-        }
-
-        function playSynth(freq, type, duration, vol) {
+        function playSynth(freq, type, duration, vol=0.1) {
             if (isMuted) return;
-            try {
-                initAudio();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch(e){}
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
         }
 
-        function stopBGM() {
-            try {
-                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
-                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
-            } catch(e){}
-        }
-
-        function startBGM() {
-            if (isMuted) return;
-            try {
-                initAudio();
-                if(bgmOsc) return;
-                bgmOsc = audioCtx.createOscillator();
-                bgmGain = audioCtx.createGain();
-                bgmOsc.type = 'triangle';
-                bgmOsc.frequency.setValueAtTime(55.00, audioCtx.currentTime);
-                bgmGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-                bgmOsc.connect(bgmGain);
-                bgmGain.connect(audioCtx.destination);
-                bgmOsc.start();
-                
-                bgmLfo = audioCtx.createOscillator();
-                bgmLfo.type = 'sine';
-                bgmLfo.frequency.setValueAtTime(0.15, audioCtx.currentTime); 
-                const lfoGain = audioCtx.createGain();
-                lfoGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                bgmLfo.connect(lfoGain);
-                lfoGain.connect(bgmGain.gain);
-                bgmLfo.start();
-            } catch(e) {}
-        }
-
-        function toggleSound() {
-            isMuted = !isMuted;
-            const btn = document.querySelector('.sound-ctrl') || document.getElementById('soundToggle');
-            if (isMuted) {
-                if(btn) btn.innerText = '🔇 소리 꺼짐';
-                stopBGM();
-            } else {
-                if(btn) btn.innerText = '🔊 소리 켜짐';
-                startBGM();
-            }
-        }
-
-        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
-        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
-        function playSuccess() { 
-            playSynth(523.25, 'sine', 0.15, 0.7); 
-            setTimeout(()=>playSynth(659.25, 'sine', 0.15, 0.7), 150); 
-            setTimeout(()=>playSynth(783.99, 'sine', 0.3, 0.7), 300); 
+        function playClick() { playSynth(800, 'sine', 0.08, 0.15); }
+        function playTick() { playSynth(1200, 'sine', 0.03, 0.05); }
+        function playSuccess() {
+            playSynth(600, 'triangle', 0.15, 0.15);
+            setTimeout(() => playSynth(900, 'triangle', 0.25, 0.15), 100);
         }
         function playError() {
-            playSynth(150, 'sawtooth', 0.3, 0.6);
-            setTimeout(()=>playSynth(100, 'sawtooth', 0.4, 0.6), 200);
-        }
-        function playVictory() {
-            stopBGM();
-            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
-                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
-            });
+            playSynth(150, 'sawtooth', 0.3, 0.2);
         }
         function playVictory() {
             const notes = [523, 659, 783, 1046];
@@ -1627,35 +1181,6 @@ function cleanString(str) {
                     showError('panel_q20', 'error20');
                 }
             }
-        }
-
-                function tryStartGame(unitId) {
-            const sid = document.getElementById('studentId');
-            const sname = document.getElementById('studentName');
-            if(sid && sname) {
-                if(!sid.value.trim() || !sname.value.trim()) {
-                    alert('학번과 이름을 모두 입력해주세요!');
-                    return;
-                }
-                // GAS 로직
-                try {
-                    if(typeof google !== 'undefined' && google.script && google.script.run) {
-                        google.script.run
-                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
-                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
-                    }
-                } catch(e) { console.warn('GAS 연동 안됨:', e); }
-            }
-            
-            // 브라우저 오디오 엔진 시작 (외부 링크 의존 없음)
-            try {
-                if (!isMuted) {
-                    initAudio();
-                    startBGM();
-                }
-            } catch(e) {}
-            
-            nextStage('intro', 'panel_q1', 5);
         }
 
         window.onload = () => {

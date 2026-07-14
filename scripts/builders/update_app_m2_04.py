@@ -371,6 +371,38 @@ base_html = """<!DOCTYPE html>
         @keyframes blink {
             50% { opacity: 0; }
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
@@ -400,7 +432,9 @@ base_html = """<!DOCTYPE html>
             <h2>연립일차방정식의 암호 해독</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">세계적인 미술관에서 전설 of 다이아몬드 '별의 눈물'이 도난당했습니다! 현장에는 오직 괴도 X가 남긴 연립방정식 암호 편지뿐. x와 y 두 개의 미지수로 얽힌 이 단서들 속에 괴도 X의 은신처가 숨겨져 있습니다. 40분 내에 20개의 연립방정식을 풀어 다이아몬드를 되찾아오세요!</div>
+                <div class="story-text">
+                [안티-씨프 AI 가드-X]: "세계적인 미술관에서 전설 of 다이아몬드 '별의 눈물'이 도난당했습니다! 현장에는 오직 괴도 X가 남긴 연립방정식 암호 편지뿐. x와 y 두 개의 미지수로 얽힌 이 단서들 속에 괴도 X의 은신처가 숨겨져 있습니다. 40분 내에 20개의 연립방정식을 풀어 다이아몬드를 되찾아오세요!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">암호 해독 시작</button>
@@ -415,7 +449,9 @@ base_html = """<!DOCTYPE html>
             <h2>괴도 X 체포 및 다이아몬드 회수</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 탐정 여러분!</div>
+                <div class="story-text">
+                [안티-씨프 AI 가드-X]: "아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 탐정 여러분!"
+            </div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -535,186 +571,26 @@ base_html = """<!DOCTYPE html>
 
 # Questions configuration
 qs = [
-    {
-        "qnum": 1,
-        "title": "스테이지 1",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q1.</strong> 방정식 $2x + y - 5 = 0$ 은 미지수가 몇 개인 일차방정식인가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2개'"
-    },
-    {
-        "qnum": 2,
-        "title": "스테이지 2",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q2.</strong> 다음 중 미지수가 2개인 일차방정식은? (1) $x + 2 = 3$ (2) $x + y = 5$ (3) $x^2 + y = 1$",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2'"
-    },
-    {
-        "qnum": 3,
-        "title": "스테이지 3",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q3.</strong> $x, y$가 자연수일 때, $x + y = 3$ 을 만족하는 순서쌍 $(x, y)$를 모두 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '1'"
-    },
-    {
-        "qnum": 4,
-        "title": "스테이지 4",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q4.</strong> $x, y$가 자연수일 때, $2x + y = 5$ 를 만족하는 순서쌍 $(x, y)$의 개수는 몇 개인가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2개'"
-    },
-    {
-        "qnum": 5,
-        "title": "스테이지 5",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q5.</strong> $x=1, y=2$ 가 방정식 $3x - ay = -1$ 의 해일 때, 상수 $a$의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2'"
-    },
-    {
-        "qnum": 6,
-        "title": "스테이지 6",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q6.</strong> 두 일차방정식을 한 쌍으로 묶어 놓은 것을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '연립일차방정식'"
-    },
-    {
-        "qnum": 7,
-        "title": "스테이지 7",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q7.</strong> $(x=2, y=1)$ 이 연립방정식 $\begin{cases} x+y=3 \\ ax-y=3 \end{cases}$ 의 해일 때, $a$의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2'"
-    },
-    {
-        "qnum": 8,
-        "title": "스테이지 8",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q8.</strong> $\begin{cases} x+y=5 \\ x-y=1 \end{cases}$ 의 해를 직관적으로 구해보시오. (순서쌍으로)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '3'"
-    },
-    {
-        "qnum": 9,
-        "title": "스테이지 9",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q9.</strong> 연립방정식의 해는 두 일차방정식의 그래프가 만나는 ( ? )의 좌표와 같다. ?에 들어갈 말은? (힌트: 두 직선이 만나는 점)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '교점'"
-    },
-    {
-        "qnum": 10,
-        "title": "스테이지 10",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q10.</strong> 연립방정식을 풀 때 한 방정식을 다른 방정식에 대입하여 미지수를 없애는 방법을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '대입법'"
-    },
-    {
-        "qnum": 11,
-        "title": "스테이지 11",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q11.</strong> 연립방정식을 풀 때 두 방정식을 더하거나 빼서 미지수를 없애는 방법을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '가감법'"
-    },
-    {
-        "qnum": 12,
-        "title": "스테이지 12",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q12.</strong> $\begin{cases} y = 2x \\ x + y = 6 \end{cases}$ 을 대입법으로 풀 때, $x$의 값을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2'"
-    },
-    {
-        "qnum": 13,
-        "title": "스테이지 13",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q13.</strong> $\begin{cases} 2x + y = 7 \\ 2x - y = 1 \end{cases}$ 을 가감법으로 풀기 위해 두 식을 ( 더해야 / 빼야 ) $y$가 없어진다.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '더해야'"
-    },
-    {
-        "qnum": 14,
-        "title": "스테이지 14",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q14.</strong> Q13의 연립방정식을 풀어 해 $(x, y)$를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2'"
-    },
-    {
-        "qnum": 15,
-        "title": "스테이지 15",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q15.</strong> $\begin{cases} x + 2y = 4 \\ 3x + 2y = 8 \end{cases}$ 의 해를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2'"
-    },
-    {
-        "qnum": 16,
-        "title": "스테이지 16",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q16.</strong> 토끼와 닭이 섞여 있는 우리에 머리가 모두 10개, 다리가 모두 28개이다. 토끼를 $x$마리, 닭을 $y$마리라 할 때, 다리 수에 대한 방정식을 세우시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '4x'"
-    },
-    {
-        "qnum": 17,
-        "title": "스테이지 17",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q17.</strong> Q16의 연립방정식을 풀어 토끼($x$)는 몇 마리인지 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '4마리'"
-    },
-    {
-        "qnum": 18,
-        "title": "스테이지 18",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q18.</strong> 100원짜리 동전 $x$개와 500원짜리 동전 $y$개를 합하여 10개, 금액이 2600원일 때, 동전 개수에 대한 방정식을 세우시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === 'x'"
-    },
-    {
-        "qnum": 19,
-        "title": "스테이지 19",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q19.</strong> Q18의 연립방정식을 풀어 100원짜리 동전($x$)은 몇 개인가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '6개'"
-    },
-    {
-        "qnum": 20,
-        "title": "스테이지 20",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q20.</strong> 현재 아버지와 아들의 나이의 합은 50세이고, 5년 후에는 아버지의 나이가 아들의 나이의 3배가 된다. 현재 아들의 나이를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '10세'"
-    }
+    {'qnum': 1, 'title': '스테이지 1', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q1.</strong> 방정식 $2x + y - 5 = 0$ 은 미지수가 몇 개인 일차방정식인가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2개'"},
+    {'qnum': 2, 'title': '스테이지 2', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q2.</strong> 다음 중 미지수가 2개인 일차방정식은? (1) $x + 2 = 3$ (2) $x + y = 5$ (3) $x^2 + y = 1$', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
+    {'qnum': 3, 'title': '스테이지 3', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q3.</strong> $x, y$가 자연수일 때, $x + y = 3$ 을 만족하는 순서쌍 $(x, y)$를 모두 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '1'"},
+    {'qnum': 4, 'title': '스테이지 4', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q4.</strong> $x, y$가 자연수일 때, $2x + y = 5$ 를 만족하는 순서쌍 $(x, y)$의 개수는 몇 개인가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2개'"},
+    {'qnum': 5, 'title': '스테이지 5', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q5.</strong> $x=1, y=2$ 가 방정식 $3x - ay = -1$ 의 해일 때, 상수 $a$의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
+    {'qnum': 6, 'title': '스테이지 6', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q6.</strong> 두 일차방정식을 한 쌍으로 묶어 놓은 것을 무엇이라 하는가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '연립일차방정식'"},
+    {'qnum': 7, 'title': '스테이지 7', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q7.</strong> $(x=2, y=1)$ 이 연립방정식 $\x08egin{cases} x+y=3 \\ ax-y=3 \\end{cases}$ 의 해일 때, $a$의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
+    {'qnum': 8, 'title': '스테이지 8', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q8.</strong> $\x08egin{cases} x+y=5 \\ x-y=1 \\end{cases}$ 의 해를 직관적으로 구해보시오. (순서쌍으로)', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '3'"},
+    {'qnum': 9, 'title': '스테이지 9', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q9.</strong> 연립방정식의 해는 두 일차방정식의 그래프가 만나는 ( ? )의 좌표와 같다. ?에 들어갈 말은? (힌트: 두 직선이 만나는 점)', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '교점'"},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q10.</strong> 연립방정식을 풀 때 한 방정식을 다른 방정식에 대입하여 미지수를 없애는 방법을 무엇이라 하는가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '대입법'"},
+    {'qnum': 11, 'title': '스테이지 11', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q11.</strong> 연립방정식을 풀 때 두 방정식을 더하거나 빼서 미지수를 없애는 방법을 무엇이라 하는가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '가감법'"},
+    {'qnum': 12, 'title': '스테이지 12', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q12.</strong> $\x08egin{cases} y = 2x \\ x + y = 6 \\end{cases}$ 을 대입법으로 풀 때, $x$의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
+    {'qnum': 13, 'title': '스테이지 13', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q13.</strong> $\x08egin{cases} 2x + y = 7 \\ 2x - y = 1 \\end{cases}$ 을 가감법으로 풀기 위해 두 식을 ( 더해야 / 빼야 ) $y$가 없어진다.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '더해야'"},
+    {'qnum': 14, 'title': '스테이지 14', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q14.</strong> Q13의 연립방정식을 풀어 해 $(x, y)$를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
+    {'qnum': 15, 'title': '스테이지 15', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q15.</strong> $\x08egin{cases} x + 2y = 4 \\ 3x + 2y = 8 \\end{cases}$ 의 해를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
+    {'qnum': 16, 'title': '스테이지 16', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q16.</strong> 토끼와 닭이 섞여 있는 우리에 머리가 모두 10개, 다리가 모두 28개이다. 토끼를 $x$마리, 닭을 $y$마리라 할 때, 다리 수에 대한 방정식을 세우시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '4x'"},
+    {'qnum': 17, 'title': '스테이지 17', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q17.</strong> Q16의 연립방정식을 풀어 토끼($x$)는 몇 마리인지 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '4마리'"},
+    {'qnum': 18, 'title': '스테이지 18', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q18.</strong> 100원짜리 동전 $x$개와 500원짜리 동전 $y$개를 합하여 10개, 금액이 2600원일 때, 동전 개수에 대한 방정식을 세우시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === 'x'"},
+    {'qnum': 19, 'title': '스테이지 19', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q19.</strong> Q18의 연립방정식을 풀어 100원짜리 동전($x$)은 몇 개인가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '6개'"},
+    {'qnum': 20, 'title': '스테이지 20', 'story': '[안티-씨프 AI 가드-X]: \\"단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q20.</strong> 현재 아버지와 아들의 나이의 합은 50세이고, 5년 후에는 아버지의 나이가 아들의 나이의 3배가 된다. 현재 아들의 나이를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '10세'"}
 ]
 
 # Generate Q panels
@@ -1080,6 +956,28 @@ final_html = base_html.replace('{panels_placeholder}', panels_html)
 # Add checks and boilerplate inside final script tag
 script_insert = js_boilerplate + js_checks + "\n"
 final_html = final_html.replace('        window.onload = () => {', script_insert + '        window.onload = () => {')
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+try:
+    final_html = minify_css_builder(final_html)
+except NameError:
+    pass
+
+try:
+    new_content = minify_css_builder(new_content)
+except NameError:
+    pass
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(final_html)
