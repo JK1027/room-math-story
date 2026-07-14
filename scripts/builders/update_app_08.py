@@ -17,445 +17,8 @@ base_html = """<!DOCTYPE html>
     <title>(중1) 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-main: #131A1C;
-            --glass-bg: rgba(20, 28, 30, 0.75);
-            --glass-border: rgba(13, 148, 136, 0.25);
-            --accent: #0D9488;
-            --accent-hover: #2DD4BF;
-            --text-main: #E0F2FE;
-            --text-muted: #94A3B8;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(13, 148, 136, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(17, 94, 89, 0.12) 0%, transparent 40%);
-            z-index: -2;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(13, 148, 136, 0.4);
-            border-left: 1px solid rgba(13, 148, 136, 0.4);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(13, 148, 136, 0.05);
-            display: none; 
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 {
-            font-family: 'Orbit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(13, 148, 136, 0.3);
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-.panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .story-box {
-            position: relative;
-            background: linear-gradient(90deg, rgba(20, 40, 45, 0.5) 0%, rgba(0,0,0,0.3) 100%);
-            border-left: 4px solid var(--accent);
-            padding: 0.8rem 1.2rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            height: 90px;
-            max-height: 90px;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            bottom: 4px;
-            right: 8px;
-            background: rgba(16, 185, 129, 0.25);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 2px 6px;
-            font-size: 0.7rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: bold;
-            z-index: 10;
-        }
-        .story-log-trigger:hover {
-            background: rgba(16, 185, 129, 0.5);
-            color: white;
-        }
-
-        .question-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
-        }
-
-        .question-box::before {
-            content: 'Q';
-            position: absolute;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 4rem;
-            color: rgba(13, 148, 136, 0.05);
-            top: -10px;
-            right: 10px;
-            font-weight: bold;
-            pointer-events: none;
-        }
-
-        .question-content {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .input-group {
-            margin-top: 1rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 1rem 1.2rem;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(13, 148, 136, 0.3);
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            font-family: 'Share Tech Mono', monospace, 'Noto Sans KR';
-            transition: all 0.3s;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(13, 148, 136, 0.4), inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .error-msg {
-            color: #EF4444;
-            font-size: 0.95rem;
-            margin-top: 0.5rem;
-            display: none;
-            text-align: center;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: none;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #0F766E, var(--accent));
-            border-radius: 3px;
-            box-shadow: 0 0 10px var(--accent);
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #0F766E, #115E59);
-            color: white;
-            border: 1px solid #14B8A6;
-            padding: 0.6rem 1.5rem;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            width: 100%;
-            box-shadow: 0 10px 25px rgba(17, 94, 89, 0.5), inset 0 2px 5px rgba(255,255,255,0.3);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.6s;
-        }
-
-        .btn:hover::after {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(13, 148, 136, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);
-            border-color: #2DD4BF;
-        }
-
-        .btn-hint {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 4px 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            vertical-align: middle;
-            margin-left: 10px;
-            letter-spacing: 0.5px;
-            text-transform: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .btn-hint:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-        }
-
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .sound-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(20, 28, 30, 0.6);
-            border: 1px solid var(--glass-border);
-            padding: 8px 16px;
-            border-radius: 20px;
-            color: white;
-            cursor: pointer;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .sound-toggle:hover {
-            background: var(--accent);
-            border-color: white;
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Mobile Responsive Viewport */
-        @media (max-width: 600px) {
-            body {
-                overflow-y: auto;
-            }
-            .container {
-                padding: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                box-sizing: border-box;
-                min-height: 100vh;
-            }
-            .glass-panel {
-                width: 100%;
-                max-height: 94vh;
-                max-height: 94dvh;
-                height: auto;
-                padding: 1.2rem;
-                border-radius: 16px;
-                box-sizing: border-box;
-                display: none;
-                flex-direction: column;
-                justify-content: flex-start;
-                overflow-y: auto;
-            }
-            .glass-panel.active {
-                display: flex;
-            }
-            .story-box {
-                padding: 0.6rem 1rem;
-                margin-bottom: 0.5rem;
-                height: 80px;
-                max-height: 80px;
-                overflow: hidden;
-                flex: 0 0 auto;
-            }
-            .story-text {
-                font-size: 0.85rem;
-                line-height: 1.5;
-            }
-            h1 { font-size: 1.6rem; letter-spacing: 1px; }
-            h2 { font-size: 1rem; margin-bottom: 1rem; }
-            .panel-image { max-height: 180px; margin-bottom: 1rem; }
-            .question-box { padding: 0.8rem; margin-bottom: 1rem; }
-            .question-box::before { font-size: 3rem; top: -5px; right: -5px; }
-            input[type="text"] { font-size: 1rem; padding: 0.8rem; }
-            .btn { font-size: 0.9rem; padding: 0.5rem; letter-spacing: 1px;  border-radius: 6px;}
-            .btn-group { flex-direction: column; gap: 0.6rem; }
-            .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
-        }
-
-        /* Visual Novel Log Modal Styles */
-        .log-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-        .log-content {
-            background: #111A1B;
-            border: 2px solid var(--accent);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            padding: 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        .log-content h2 {
-            font-family: 'Orbit', sans-serif;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-        #logContainer {
-            overflow-y: auto;
-            flex-grow: 1;
-            margin-bottom: 1.5rem;
-            padding-right: 10px;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: #cbd5e1;
-        }
-        #logContainer strong {
-            color: var(--accent);
-        }
-        .close-log {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            color: #ef4444;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: scale 0.2s;
-        }
-        .close-log:hover {
-            scale: 1.2;
-        }
-    </style>
+:root{--bg-main:#131A1C;--glass-bg:rgba(20, 28, 30, 0.75);--glass-border:rgba(13, 148, 136, 0.25);--accent:#0D9488;--accent-hover:#2DD4BF;--text-main:#E0F2FE;--text-muted:#94A3B8;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR', sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 30%, rgba(13, 148, 136, 0.1) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(17, 94, 89, 0.12) 0%, transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(13, 148, 136, 0.4);border-left:1px solid rgba(13, 148, 136, 0.4);border-radius:24px;padding:3rem;box-shadow:0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(13, 148, 136, 0.05);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4, 0, 0.2, 1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit', sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg, #FFF 30%, var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(13, 148, 136, 0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg, rgba(20, 40, 45, 0.5) 0%, rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:90px;max-height:90px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:4px;right:8px;background:rgba(16, 185, 129, 0.25);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:2px 6px;font-size:0.7rem;border-radius:4px;cursor:pointer;transition:all 0.2s;font-weight:bold;z-index:10;}.story-log-trigger:hover{background:rgba(16, 185, 129, 0.5);color:white;}.question-box{background:rgba(255, 255, 255, 0.02);border:1px solid rgba(255, 255, 255, 0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;position:relative;box-shadow:inset 0 0 20px rgba(255, 255, 255, 0.02);}.question-box::before{content:'Q';position:absolute;font-family:'Share Tech Mono', monospace;font-size:4rem;color:rgba(13, 148, 136, 0.05);top:-10px;right:10px;font-weight:bold;pointer-events:none;}.question-content{font-size:1.15rem;line-height:1.8;margin-bottom:1rem;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;padding:1rem 1.2rem;background:rgba(15, 23, 42, 0.8);border:1px solid rgba(13, 148, 136, 0.3);border-radius:12px;color:white;font-size:1.1rem;font-family:'Share Tech Mono', monospace, 'Noto Sans KR';transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(13, 148, 136, 0.4), inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#EF4444;font-size:0.95rem;margin-top:0.5rem;display:none;text-align:center;font-weight:bold;text-shadow:0 0 10px rgba(239, 68, 68, 0.3);animation:shake 0.5s ease;}@keyframes shake{0%, 100%{transform:translateX(0);}20%, 60%{transform:translateX(-5px);}40%, 80%{transform:translateX(5px);}}.progress-container{width:100%;height:6px;background:rgba(255, 255, 255, 0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;border:1px solid rgba(255, 255, 255, 0.02);}.progress-bar{height:100%;width:0%;background:linear-gradient(90deg, #0F766E, var(--accent));border-radius:3px;box-shadow:0 0 10px var(--accent);transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1);}.btn-group{display:flex;gap:1rem;margin-top:2rem;}.btn{background:linear-gradient(135deg, #0F766E, #115E59);color:white;border:1px solid #14B8A6;padding:0.6rem 1.5rem;font-size:1.1rem;font-weight:900;border-radius:8px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);text-transform:uppercase;letter-spacing:3px;width:100%;box-shadow:0 10px 25px rgba(17, 94, 89, 0.5), inset 0 2px 5px rgba(255,255,255,0.3);text-shadow:0 2px 4px rgba(0,0,0,0.5);position:relative;overflow:hidden;}.btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);transition:all 0.6s;}.btn:hover::after{left:100%;}.btn:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(13, 148, 136, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);border-color:#2DD4BF;}.btn-hint{display:inline-block;background:rgba(16, 185, 129, 0.2);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0, 0, 0, 0.2);}.btn-hint:hover{background:rgba(16, 185, 129, 0.4);color:#fff;box-shadow:0 0 10px rgba(52, 211, 153, 0.4);}.btn:active{transform:translateY(1px);}.sound-toggle{position:fixed;top:20px;right:20px;background:rgba(20, 28, 30, 0.6);border:1px solid var(--glass-border);padding:8px 16px;border-radius:20px;color:white;cursor:pointer;z-index:100;backdrop-filter:blur(10px);font-size:0.9rem;transition:all 0.3s;font-weight:bold;}.sound-toggle:hover{background:var(--accent);border-color:white;box-shadow:0 0 15px var(--accent);}@keyframes blink{0%, 100%{opacity:1;}50%{opacity:0;}}@media (max-width:600px){body{overflow-y:auto;}.container{padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;min-height:100vh;}.glass-panel{width:100%;max-height:94vh;max-height:94dvh;height:auto;padding:1.2rem;border-radius:16px;box-sizing:border-box;display:none;flex-direction:column;justify-content:flex-start;overflow-y:auto;}.glass-panel.active{display:flex;}.story-box{padding:0.6rem 1rem;margin-bottom:0.5rem;height:80px;max-height:80px;overflow:hidden;flex:0 0 auto;}.story-text{font-size:0.85rem;line-height:1.5;}h1{font-size:1.6rem;letter-spacing:1px;}h2{font-size:1rem;margin-bottom:1rem;}.panel-image{max-height:180px;margin-bottom:1rem;}.question-box{padding:0.8rem;margin-bottom:1rem;}.question-box::before{font-size:3rem;top:-5px;right:-5px;}input[type="text"]{font-size:1rem;padding:0.8rem;}.btn{font-size:0.9rem;padding:0.5rem;letter-spacing:1px;border-radius:6px;}.btn-group{flex-direction:column;gap:0.6rem;}.sound-toggle{top:10px;right:10px;font-size:0.8rem;padding:6px 12px;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.85);z-index:1000;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#111A1B;border:2px solid var(--accent);border-radius:20px;width:90%;max-width:600px;max-height:80vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{font-family:'Orbit', sans-serif;color:var(--accent);margin-bottom:1rem;text-align:left;}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:scale 0.2s;}.close-log:hover{scale:1.2;}@keyframes shake{0%, 100%{transform:translate(0, 0) rotate(0deg);}10%{transform:translate(-2px, -1px) rotate(-0.5deg);}20%{transform:translate(-3px, 0px) rotate(1deg);}30%{transform:translate(0px, 2px) rotate(0deg);}40%{transform:translate(1px, -1px) rotate(1deg);}50%{transform:translate(-1px, 2px) rotate(-1deg);}60%{transform:translate(-3px, 1px) rotate(0deg);}70%{transform:translate(2px, 1px) rotate(-0.5deg);}80%{transform:translate(-1px, -1px) rotate(1deg);}90%{transform:translate(2px, 2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255, 0, 0, 0);pointer-events:none;z-index:9999;transition:background 0.15s ease-out;}.laser-flash-active{background:rgba(255, 0, 0, 0.15);transition:none;}
+</style>
 </head>
 <body>
 
@@ -701,7 +264,7 @@ function cleanString(str) {
             }
         });
 
-        // 오디오 로드 에러 복구/예외 방어선
+
         window.addEventListener('DOMContentLoaded', () => {
             const audios = [
                 document.getElementById('bgm'),
@@ -720,7 +283,27 @@ function cleanString(str) {
             });
         });
 
-        function showError(panelId, errorId, currentWrongCount) {
+        
+        function triggerLockdownAlert() {
+            const flash = document.getElementById('laserFlash');
+            if (flash) {
+                flash.classList.add('laser-flash-active');
+                setTimeout(() => {
+                    flash.classList.remove('laser-flash-active');
+                }, 150);
+            }
+            const activePanel = document.querySelector('.glass-panel.active');
+            if (activePanel) {
+                activePanel.classList.add('shake-effect');
+                setTimeout(() => {
+                    activePanel.classList.remove('shake-effect');
+                }, 300);
+            }
+        }
+
+function showError(panelId, errorId, currentWrongCount) {
+            triggerLockdownAlert();
+
             try { playError(); } catch(e) {}
             const panel = document.getElementById(panelId);
             const err = document.getElementById(errorId);
@@ -955,29 +538,209 @@ function cleanString(str) {
 """
 
 qs = [
-    {"qnum": 1, "title": "줄기와 잎 그림 해독", "story": "📊 <strong>[소매치기 장부 분석]</strong><br><br>셜록 홈즈가 런던의 조작된 소매치기 건수 자료를 돋보기로 들여다봅니다. 줄기가 2인 잎의 데이터 리스트를 모두 복구해 내야 합니다.<br>(자료: 12, 15, 23, 24, 27, 31, 31, 35, 42, 45)", "qtext": "<strong>Q1. [줄기와 잎 그림]</strong><br>위 자료를 줄기와 잎 그림으로 나타낼 때, 줄기가 2인 잎을 쉼표(,)로 구분하여 크기 순으로 모두 적으시오.", "placeholder": "예: 3, 4, 7", "error": "장부 판독 실패! 잎을 다시 세십시오.", "ans_check": "ans === '3,4,7' || ans === '3, 4, 7' || ans === '347'", "hint": "줄기가 2인 데이터 변량들의 일의 자리 숫자들을 차례대로 나열해 줍니다."},
-    {"qnum": 2, "title": "총 변량 파악", "story": "📊 <strong>[장부 표본 세기]</strong><br><br>통계 조작범이 런던 소매치기 장부에 기록한 전체 변량(데이터 수)의 총개수를 구하십시오.", "qtext": "<strong>Q2. [변량의 개수]</strong><br>위 자료에서 전체 변량의 개수는 몇 개인가?", "placeholder": "숫자 또는 개수 입력", "error": "변량 개수 불일치! 장부의 줄 수가 다릅니다.", "ans_check": "ans === '10' || ans === '10개'", "hint": "수집된 전체 데이터 샘플의 개수가 모두 몇 개인지 직접 세어 봅니다."},
-    {"qnum": 3, "title": "최다 빈도 줄기", "story": "📊 <strong>[최다 분포대 탐색]</strong><br><br>나이대별로 잎이 가장 많이 뭉쳐 있는 최다 분포대 줄기 번호를 찾아내십시오. (줄기가 여러 개라면 쉼표로 구분)", "qtext": "<strong>Q3. [최다 잎 줄기]</strong><br>위 자료에서 잎이 가장 많은 줄기는 무엇인가?", "placeholder": "예: 2, 3", "error": "탐색 실패! 잎의 최대 개수가 매칭되지 않습니다.", "ans_check": "ans === '2와3' || ans === '2,3' || ans === '2, 3'", "hint": "줄기와 잎 그림에서 잎(오른쪽 숫자)의 개수가 가장 많이 늘어선 줄기 번호를 찾습니다."},
-    {"qnum": 4, "title": "특정 영역 분석", "story": "📊 <strong>[우범 지대 필터링]</strong><br><br>소매치기 발생 건수가 30건 이상인 런던 시내의 핵심 위험 구역 개수를 입력하십시오.", "qtext": "<strong>Q4. [조건 필터링]</strong><br>소매치기 발생 건수가 30건 이상인 지역은 몇 곳인가?", "placeholder": "숫자 또는 곳 입력", "error": "구역 필터링 개수가 달라 통신 오류가 발생합니다!", "ans_check": "ans === '5' || ans === '5곳'", "hint": "30 이상인 숫자(31, 31, 35, 42, 45)가 모두 몇 개인지 개수를 셉니다."},
-    {"qnum": 5, "title": "정렬과 순위", "story": "📊 <strong>[안전한 구역 분석]</strong><br><br>소매치기 발생 건수가 가장 적은 쪽에서 3번째인 구역의 실제 수치를 도출해 내십시오.", "qtext": "<strong>Q5. [순위 데이터]</strong><br>소매치기 발생 건수가 적은 쪽에서 3번째인 지역의 건수는 얼마인가?", "placeholder": "숫자 또는 건 입력", "error": "수치 불일치! 정렬 순서가 꼬였습니다.", "ans_check": "ans === '23' || ans === '23건'", "hint": "데이터를 크기 순서대로 정렬했을 때 세 번째로 작은 건수 값을 찾습니다."},
-    {"qnum": 6, "title": "도수분포 용어 1", "story": "📋 <strong>[용의자 분포 장막]</strong><br><br>2구역 용의자 분류판입니다. 자료를 일정한 간격으로 나눈 20대, 30대 등의 수식 구간 자체를 뜻하는 한글 통계 용어를 쓰십시오.", "qtext": "<strong>Q6. [계급의 정의]</strong><br>자료를 몇 개의 구간으로 나눌 때, 이 구간을 무엇이라 하는가?", "placeholder": "한글 단어 입력", "error": "기초 통계 용어 오류! 결계가 열리지 않습니다.", "ans_check": "ans === '계급'", "hint": "수집된 변량을 일정한 간격으로 나눈 구간을 가리키는 통계 용어입니다."},
-    {"qnum": 7, "title": "도수분포 용어 2", "story": "📋 <strong>[용의자 총합 확인]</strong><br><br>각 구간(계급)에 속해 있는 용의자 수와 같이 변량의 개수를 가리키는 한글 통계 명칭을 적어 결계를 푸십시오.", "qtext": "<strong>Q7. [도수의 정의]</strong><br>각 계급에 속하는 변량의 개수를 무엇이라 하는가?", "placeholder": "한글 단어 입력", "error": "마나 입력 오류! 올바른 한글 용어를 쓰십시오.", "ans_check": "ans === '도수'", "hint": "각 계급 구간에 속해 있는 자료(변량)의 개수를 의미하는 용어입니다."},
-    {"qnum": 8, "title": "계급의 너비 결정", "story": "📋 <strong>[구간 너비 동기]</strong><br><br>10대, 20대와 같이 용의자 나이대를 나눈 계급의 정확한 가로폭(너비) 수치를 입력하십시오.", "qtext": "<strong>Q8. [계급의 크기]</strong><br>계급의 너비(크기)는 얼마인가? (자료: 10대, 20대 식일 때의 너비)", "placeholder": "숫자만 입력", "error": "너비 부조화! 구간 세그먼트가 틀어졌습니다.", "ans_check": "ans === '10' || ans === '10세'", "hint": "한 계급 구간의 너비(끝값 - 시작값)를 계산하여 단위를 포함하지 않은 값을 적습니다."},
-    {"qnum": 9, "title": "최대 도수 탐지", "story": "📋 <strong>[주요 용의자 군]</strong><br><br>용의자 나이대 중 가장 많은 인원이 속한 핵심 최대 도수 연령대 구간 명칭을 입력하십시오.", "qtext": "<strong>Q9. [최대 도수 계급]</strong><br>도수가 가장 큰 계급은 어느 연령대인가? (자료: 10대: 4명, 20대: 8명, 30대: 5명, 40대: 3명)", "placeholder": "예: 20대", "error": "용의자 타겟팅 오류!", "ans_check": "ans === '20대'", "hint": "도수(인원수)가 8명으로 가장 많이 몰려 있는 나이대 계급을 찾습니다."},
-    {"qnum": 10, "title": "비율 백분율 산출", "story": "📋 <strong>[통제선 비율]</strong><br><br>나이가 30세 미만인 용의자가 전체 용의자 집단(20명)에서 차지하는 비율을 백분율(%) 수치로 구하십시오.", "qtext": "<strong>Q10. [백분율 계산]</strong><br>나이가 30세 미만인 용의자는 전체의 몇 %인가? (단위 생략)", "placeholder": "숫자만 입력", "error": "백분율 오차 발생! 차단 셔터 압력 증가!", "ans_check": "ans === '60' || ans === '60%'", "hint": "30세 미만 인원수(4명 + 8명 = 12명)가 전체 20명 중에서 차지하는 비율을 백분율(%)로 계산합니다."},
-    {"qnum": 11, "title": "히스토그램의 복구", "story": "📈 <strong>[비상 직사각형 그래프]</strong><br><br>3구역 스파이 통로입니다. 계급을 가로축, 도수를 세로축으로 하여 직사각형 기둥들로 그린 통계 그래프의 명칭을 입력하세요.", "qtext": "<strong>Q11. [히스토그램]</strong><br>도수분포표를 바탕으로 가로축에 계급, 세로축에 도수를 나타내어 직사각형 모양으로 그린 그래프를 무엇이라 하는가?", "placeholder": "한글 그래프 이름 입력", "error": "그래프 타입 인식 불가능!", "ans_check": "ans === '히스토그램'", "hint": "도수분포표를 바탕으로 가로에 계급, 세로에 도수를 매칭해 그린 직사각형 모양의 그래프 명칭입니다."},
-    {"qnum": 12, "title": "직사각형 가로 의미", "story": "📈 <strong>[가로축 동기화]</strong><br><br>히스토그램의 직사각형 가로 폭의 길이 수치는 통계적으로 어떤 고유 수치를 가리키는지 쓰십시오.", "qtext": "<strong>Q12. [히스토그램 가로]</strong><br>히스토그램에서 직사각형의 가로의 길이는 무엇을 의미하는가?", "placeholder": "예: 계급의 크기", "error": "가로축 픽셀 정렬 에러!", "ans_check": "ans === '계급의크기' || ans === '계급의 크기' || ans === '계급의너비' || ans === '계급의 너비'", "hint": "도수분포표의 각 직사각형의 가로폭이 나타내는 계급의 간격 크기를 의미합니다."},
-    {"qnum": 13, "title": "직사각형 총 넓이", "story": "📈 <strong>[면적 합산 연산]</strong><br><br>히스토그램 직사각형의 총넓이 공식은 (계급의 크기) × ( ? ) 입니다. ?에 해당하는 알맞은 명칭을 대십시오.", "qtext": "<strong>Q13. [히스토그램 넓이 공식]</strong><br>히스토그램에서 직사각형의 넓이의 합은 (계급의 크기) × ( ? ) 이다. ?에 들어갈 알맞은 말은?", "placeholder": "한글 단어 입력", "error": "면적 총합 불일치! 차원 결계 폐쇄 경보!", "ans_check": "ans === '도수의총합' || ans === '도수의 총합' || ans === '도수의합' || ans === '도수의 합'", "hint": "모든 직사각형의 넓이 합 공식은 (계급의 크기) * (도수의 총합) 입니다."},
-    {"qnum": 14, "title": "꺾은선 연결 그래프", "story": "📈 <strong>[다각형 차트 락]</strong><br><br>히스토그램 윗변의 중점을 연결하여 산 모양으로 만든 대표적인 통계 다각형 차트 명칭을 완성하여 잠금을 푸십시오.", "qtext": "<strong>Q14. [도수분포다각형]</strong><br>히스토그램의 각 직사각형 윗변의 중점을 차례로 선분으로 연결한 그래프를 무엇이라 하는가?", "placeholder": "한글 그래프 이름 입력", "error": "다각형 궤적 링크 오류!", "ans_check": "ans === '도수분포다각형'", "hint": "히스토그램의 각 직사각형 윗변의 중점들을 선분으로 이어 꺾은선 모양으로 만든 다각형 그래프입니다."},
-    {"qnum": 15, "title": "넓이 보존의 법칙", "story": "📈 <strong>[차트 넓이 비교]</strong><br><br>도수분포다각형과 가로축이 만드는 전체 면적은 히스토그램 직사각형들의 총합과 어떠합니까? (같다 / 다르다)", "qtext": "<strong>Q15. [넓이의 성질]</strong><br>도수분포다각형과 가로축으로 둘러싸인 부분의 넓이는 히스토그램의 직사각형들의 넓이의 합과 어떠한가?", "placeholder": "같다 또는 다르다 입력", "error": "면적 불균형! 공간 붕괴 위험!", "ans_check": "ans === '같다'", "hint": "도수분포다각형과 가로축이 만드는 면적은 히스토그램 전체 직사각형 넓이의 합과 항상 같은 성질을 가집니다."},
-    {"qnum": 16, "title": "상대적인 비교 비율", "story": "🔍 <strong>[최종 용의자 실마리]</strong><br><br>마지막 4구역입니다. 각 도수를 전체 도수의 총합으로 나눈 가중치 비교 비율을 뜻하는 중요한 한글 통계 용어를 쓰십시오.", "qtext": "<strong>Q16. [상대도수의 정의]</strong><br>각 계급의 도수를 도수의 총합으로 나눈 비율을 무엇이라 하는가?", "placeholder": "한글 단어 입력", "error": "가중치 데이터 로드 불가!", "ans_check": "ans === '상대도수'", "hint": "각 계급의 도수가 전체 도수 총합 중에서 차지하는 상대적인 비율을 뜻하는 용어입니다."},
-    {"qnum": 17, "title": "상대도수 산출", "story": "🔍 <strong>[단서 주파수 보정]</strong><br><br>특정 계급의 도수가 15이고 전체 변량이 50일 때, 이 지점의 상대도수를 소수로 구하십시오.", "qtext": "<strong>Q17. [상대도수 계산]</strong><br>어떤 계급의 도수가 15, 도수의 총합이 50일 때, 이 계급의 상대도수를 구하시오. (소수로 기재)", "placeholder": "예: 0.5", "error": "주파수 오차 발생! 안개가 더 짙어집니다.", "ans_check": "ans === '0.3'", "hint": "특정 계급 도수(15)를 전체 도수(50)로 나눈 비율을 소수 값으로 계산합니다."},
-    {"qnum": 18, "title": "상대도수 총합", "story": "🔍 <strong>[상대도수 한계선]</strong><br><br>상대도수의 전체 총합은 어떠한 데이터 셋이 오더라도 항상 일정한 상수값입니다. 이 상수는 얼마입니까?", "qtext": "<strong>Q18. [상대도수 총합]</strong><br>상대도수의 총합은 항상 얼마인가?", "placeholder": "숫자만 입력", "error": "한계선 수치 초과! 시스템 잠금!", "ans_check": "ans === '1'", "hint": "상대적인 비율들의 총합은 항상 전체를 뜻하는 고정된 자연수 값이 나옵니다."},
-    {"qnum": 19, "title": "집단 비교의 유용성", "story": "🔍 <strong>[집단 데이터 튜닝]</strong><br><br>도수의 총합이 다른 두 대규모 데이터 집단을 정량적으로 상호 비교할 때 상대도수는 효과적입니까?", "qtext": "<strong>Q19. [상대도수의 활용]</strong><br>상대도수는 도수의 총합이 다른 두 집단의 분포 상태를 비교할 때 어떠한가? (유용하다 / 불필요하다)", "placeholder": "유용하다 또는 불필요하다 입력", "error": "비교 엔진 작동 불능!", "ans_check": "ans === '유용하다'", "hint": "조사 대상의 전체 총인원수가 서로 다른 두 집단의 성적이나 선호도를 비율로 공평하게 비교할 때의 유용성 여부를 생각합니다."},
-    {"qnum": 20, "title": "스파이 프로파일링 키", "story": "🔍 <strong>[최종 범인 지목]</strong><br><br>상대도수 0.2에 해당하는 타겟 집단입니다. 전체 인원이 40명일 때 스파이가 훔쳐간 데이터 총 개수(도수)를 도출하십시오!", "qtext": "<strong>Q20. [도수 구하기]</strong><br>상대도수가 0.2이고 전체 도수가 40명일 때, 이 계급의 도수를 구하시오.", "placeholder": "숫자만 입력", "error": "지목 실패! 스파이가 안개 속으로 도망칩니다!", "ans_check": "ans === '8' || ans === '8명'", "hint": "(전체 인원 40명) * (상대도수 비율 0.2)를 곱하여 해당 계급의 실제 인원수를 계산합니다."}
+    {
+        "qnum": 1,
+        "title": "잎의 복원",
+        "story": "[왓슨-X]: \"소매치기 발생 장부에서 줄기가 2인 잎의 목록을 쉼표 없이 순서대로 적어주세요! (자료: 12,15,23,24,27,31,31,35,42,45)\"",
+        "qtext": "<strong>Q1. [줄기와 잎 그림]</strong><br>위 자료를 줄기와 잎 그림으로 나타낼 때, 줄기가 2인 잎을 쉼표(,)로 구분하여 크기 순으로 모두 적으시오.",
+        "placeholder": "예: 3, 4, 7",
+        "error": "장부 판독 실패! 잎을 다시 세십시오.",
+        "ans_check": "ans === '3,4,7' || ans === '3, 4, 7' || ans === '347'",
+        "hint": "줄기가 2인 데이터 변량들의 일의 자리 숫자들을 차례대로 나열해 줍니다."
+    },
+    {
+        "qnum": 2,
+        "title": "변량 개수",
+        "story": "[왓슨-X]: \"수집된 전체 지역(변량) 샘플의 개수가 모두 몇 곳인지 식별해보고해주십시오.\"",
+        "qtext": "<strong>Q2. [변량의 개수]</strong><br>위 자료에서 전체 변량의 개수는 몇 개인가?",
+        "placeholder": "숫자 또는 개수 입력",
+        "error": "변량 개수 불일치! 장부의 줄 수가 다릅니다.",
+        "ans_check": "ans === '10' || ans === '10개'",
+        "hint": "수집된 전체 데이터 샘플의 개수가 모두 몇 개인지 직접 세어 봅니다."
+    },
+    {
+        "qnum": 3,
+        "title": "최대 분포 줄기",
+        "story": "[왓슨-X]: \"도난 데이터 왜곡 흔적입니다. 잎의 개수가 가장 많이 분포한 줄기 번호를 대주십시오.\"",
+        "qtext": "<strong>Q3. [최다 잎 줄기]</strong><br>위 자료에서 잎이 가장 많은 줄기는 무엇인가?",
+        "placeholder": "예: 2, 3",
+        "error": "탐색 실패! 잎의 최대 개수가 매칭되지 않습니다.",
+        "ans_check": "ans === '2와3' || ans === '2,3' || ans === '2, 3'",
+        "hint": "줄기와 잎 그림에서 잎(오른쪽 숫자)의 개수가 가장 많이 늘어선 줄기 번호를 찾습니다."
+    },
+    {
+        "qnum": 4,
+        "title": "우범 구역 식별",
+        "story": "[왓슨-X]: \"소매치기 발생 건수가 30건 이상인 지역은 총 몇 곳입니까?\"",
+        "qtext": "<strong>Q4. [조건 필터링]</strong><br>소매치기 발생 건수가 30건 이상인 지역은 몇 곳인가?",
+        "placeholder": "숫자 또는 곳 입력",
+        "error": "구역 필터링 개수가 달라 통신 오류가 발생합니다!",
+        "ans_check": "ans === '5' || ans === '5곳'",
+        "hint": "30 이상인 숫자(31, 31, 35, 42, 45)가 모두 몇 개인지 개수를 셉니다."
+    },
+    {
+        "qnum": 5,
+        "title": "경미 지역 추적",
+        "story": "[왓슨-X]: \"가장 경미한 지역들 중 뒤에서 3번째로 발생 건수가 적은 지역의 건수를 보고하십시오!\"",
+        "qtext": "<strong>Q5. [순위 데이터]</strong><br>소매치기 발생 건수가 적은 쪽에서 3번째인 지역의 건수는 얼마인가?",
+        "placeholder": "숫자 또는 건 입력",
+        "error": "수치 불일치! 정렬 순서가 꼬였습니다.",
+        "ans_check": "ans === '23' || ans === '23건'",
+        "hint": "데이터를 크기 순서대로 정렬했을 때 세 번째로 작은 건수 값을 찾습니다."
+    },
+    {
+        "qnum": 6,
+        "title": "제2구역: 계급 분류",
+        "story": "[왓슨-X]: \"20명의 용의자 나이 변량을 일정한 간격으로 나눈 이 구간들을 무엇이라 합니까?\"",
+        "qtext": "<strong>Q6. [계급의 정의]</strong><br>자료를 몇 개의 구간으로 나눌 때, 이 구간을 무엇이라 하는가?",
+        "placeholder": "한글 단어 입력",
+        "error": "기초 통계 용어 오류! 결계가 열리지 않습니다.",
+        "ans_check": "ans === '계급'",
+        "hint": "수집된 변량을 일정한 간격으로 나눈 구간을 가리키는 통계 용어입니다."
+    },
+    {
+        "qnum": 7,
+        "title": "도수의 정의",
+        "story": "[왓슨-X]: \"그 나이 구간(계급) 각각에 할당 분류된 인원수(자료의 수)를 일컫는 통계 용어는?\"",
+        "qtext": "<strong>Q7. [도수의 정의]</strong><br>각 계급에 속하는 변량의 개수를 무엇이라 하는가?",
+        "placeholder": "한글 단어 입력",
+        "error": "마나 입력 오류! 올바른 한글 용어를 쓰십시오.",
+        "ans_check": "ans === '도수'",
+        "hint": "각 계급 구간에 속해 있는 자료(변량)의 개수를 의미하는 용어입니다."
+    },
+    {
+        "qnum": 8,
+        "title": "계급의 폭",
+        "story": "[왓슨-X]: \"나이 분류표 상 10대, 20대 등으로 나뉘어 있을 때, 이 각 나이 구간 너비(계급의 크기)는 얼마인가요?\"",
+        "qtext": "<strong>Q8. [계급의 크기]</strong><br>계급의 너비(크기)는 얼마인가? (자료: 10대, 20대 식일 때의 너비)",
+        "placeholder": "숫자만 입력",
+        "error": "너비 부조화! 구간 세그먼트가 틀어졌습니다.",
+        "ans_check": "ans === '10' || ans === '10세'",
+        "hint": "한 계급 구간의 너비(끝값 - 시작값)를 계산하여 단위를 포함하지 않은 값을 적습니다."
+    },
+    {
+        "qnum": 9,
+        "title": "최대 나이 도수",
+        "story": "[왓슨-X]: \"용의자 분포 중, 도수가 8명으로 가장 높은 도수를 보이는 용의자 나이 계급은? (예: 20대)\"",
+        "qtext": "<strong>Q9. [최대 도수 계급]</strong><br>도수가 가장 큰 계급은 어느 연령대인가? (자료: 10대: 4명, 20대: 8명, 30대: 5명, 40대: 3명)",
+        "placeholder": "예: 20대",
+        "error": "용의자 타겟팅 오류!",
+        "ans_check": "ans === '20대'",
+        "hint": "도수(인원수)가 8명으로 가장 많이 몰려 있는 나이대 계급을 찾습니다."
+    },
+    {
+        "qnum": 10,
+        "title": "청년 용의자 비율",
+        "story": "[왓슨-X]: \"나이가 30세 미만인 용의자가 전체 용의자 20명 중에서 차지하는 비중은 몇 %인가요? (숫자만)\"",
+        "qtext": "<strong>Q10. [백분율 계산]</strong><br>나이가 30세 미만인 용의자는 전체의 몇 %인가? (단위 생략)",
+        "placeholder": "숫자만 입력",
+        "error": "백분율 오차 발생! 차단 셔터 압력 증가!",
+        "ans_check": "ans === '60' || ans === '60%'",
+        "hint": "30세 미만 인원수(4명 + 8명 = 12명)가 전체 20명 중에서 차지하는 비율을 백분율(%)로 계산합니다."
+    },
+    {
+        "qnum": 11,
+        "title": "제3구역: 히스토그램",
+        "story": "[왓슨-X]: \"가로축에 계급, 세로축에 도수를 세워 직사각형으로 표현한 이 그래프 이름은 무엇입니까?\"",
+        "qtext": "<strong>Q11. [히스토그램]</strong><br>도수분포표를 바탕으로 가로축에 계급, 세로축에 도수를 나타내어 직사각형 모양으로 그린 그래프를 무엇이라 하는가?",
+        "placeholder": "한글 그래프 이름 입력",
+        "error": "그래프 타입 인식 불가능!",
+        "ans_check": "ans === '히스토그램'",
+        "hint": "도수분포표를 바탕으로 가로에 계급, 세로에 도수를 매칭해 그린 직사각형 모양의 그래프 명칭입니다."
+    },
+    {
+        "qnum": 12,
+        "title": "가로폭의 속성",
+        "story": "[왓슨-X]: \"스파이가 히스토그램의 가로폭 배율을 건드렸군요. 직사각형의 가로폭이 원래 의미하는 바는 무엇인가요?\"",
+        "qtext": "<strong>Q12. [히스토그램 가로]</strong><br>히스토그램에서 직사각형의 가로의 길이는 무엇을 의미하는가?",
+        "placeholder": "예: 계급의 크기",
+        "error": "가로축 픽셀 정렬 에러!",
+        "ans_check": "ans === '계급의크기' || ans === '계급의 크기' || ans === '계급의너비' || ans === '계급의 너비'",
+        "hint": "도수분포표의 각 직사각형의 가로폭이 나타내는 계급의 간격 크기를 의미합니다."
+    },
+    {
+        "qnum": 13,
+        "title": "넓이의 총합",
+        "story": "[왓슨-X]: \"히스토그램 직사각형들의 넓이 총합 공식은 (계급의 크기) × ( ? ) 입니다. ?를 대십시오.\"",
+        "qtext": "<strong>Q13. [히스토그램 넓이 공식]</strong><br>히스토그램에서 직사각형의 넓이의 합은 (계급의 크기) × ( ? ) 이다. ?에 들어갈 알맞은 말은?",
+        "placeholder": "한글 단어 입력",
+        "error": "면적 총합 불일치! 차원 결계 폐쇄 경보!",
+        "ans_check": "ans === '도수의총합' || ans === '도수의 총합' || ans === '도수의합' || ans === '도수의 합'",
+        "hint": "모든 직사각형의 넓이 합 공식은 (계급의 크기) * (도수의 총합) 입니다."
+    },
+    {
+        "qnum": 14,
+        "title": "다각형 그래프",
+        "story": "[왓슨-X]: \"직사각형 윗변의 가운데 중점들을 꺾은선으로 연결한 이 다각형 모양의 도수 분석 그래프 명칭은?\"",
+        "qtext": "<strong>Q14. [도수분포다각형]</strong><br>히스토그램의 각 직사각형 윗변의 중점을 차례로 선분으로 연결한 그래프를 무엇이라 하는가?",
+        "placeholder": "한글 그래프 이름 입력",
+        "error": "다각형 궤적 링크 오류!",
+        "ans_check": "ans === '도수분포다각형'",
+        "hint": "히스토그램의 각 직사각형 윗변의 중점들을 선분으로 이어 꺾은선 모양으로 만든 다각형 그래프입니다."
+    },
+    {
+        "qnum": 15,
+        "title": "넓이의 동등성",
+        "story": "[왓슨-X]: \"도수분포다각형과 가로축으로 둘러싸인 부분의 넓이는 히스토그램 직사각형들 넓이 합과 서로 어떠합니까?\"",
+        "qtext": "<strong>Q15. [넓이의 성질]</strong><br>도수분포다각형과 가로축으로 둘러싸인 부분의 넓이는 히스토그램의 직사각형들의 넓이의 합과 어떠한가?",
+        "placeholder": "같다 또는 다르다 입력",
+        "error": "면적 불균형! 공간 붕괴 위험!",
+        "ans_check": "ans === '같다'",
+        "hint": "도수분포다각형과 가로축이 만드는 면적은 히스토그램 전체 직사각형 넓이의 합과 항상 같은 성질을 가집니다."
+    },
+    {
+        "qnum": 16,
+        "title": "제4구역: 상대도수",
+        "story": "[왓슨-X]: \"각 계급 도수의 크기를 전체 도수의 총합 비율로 구한 이 값을 통계학적으로 무엇이라 합니까?\"",
+        "qtext": "<strong>Q16. [상대도수의 정의]</strong><br>각 계급의 도수를 도수의 총합으로 나눈 비율을 무엇이라 하는가?",
+        "placeholder": "한글 단어 입력",
+        "error": "가중치 데이터 로드 불가!",
+        "ans_check": "ans === '상대도수'",
+        "hint": "각 계급의 도수가 전체 도수 총합 중에서 차지하는 상대적인 비율을 뜻하는 용어입니다."
+    },
+    {
+        "qnum": 17,
+        "title": "상대도수 계산",
+        "story": "[왓슨-X]: \"용의자 도수가 15이고 전체 도수의 총합이 50일 때, 이 계급의 상대도수 값을 소수로 구해주십시오.\"",
+        "qtext": "<strong>Q17. [상대도수 계산]</strong><br>어떤 계급의 도수가 15, 도수의 총합이 50일 때, 이 계급의 상대도수를 구하시오. (소수로 기재)",
+        "placeholder": "예: 0.5",
+        "error": "주파수 오차 발생! 안개가 더 짙어집니다.",
+        "ans_check": "ans === '0.3'",
+        "hint": "특정 계급 도수(15)를 전체 도수(50)로 나눈 비율을 소수 값으로 계산합니다."
+    },
+    {
+        "qnum": 18,
+        "title": "상대도수의 총합",
+        "story": "[왓슨-X]: \"상대도수의 종합 총합은 수학적으로 항상 얼마가 됩니까?\"",
+        "qtext": "<strong>Q18. [상대도수 총합]</strong><br>상대도수의 총합은 항상 얼마인가?",
+        "placeholder": "숫자만 입력",
+        "error": "한계선 수치 초과! 시스템 잠금!",
+        "ans_check": "ans === '1'",
+        "hint": "상대적인 비율들의 총합은 항상 전체를 뜻하는 고정된 자연수 값이 나옵니다."
+    },
+    {
+        "qnum": 19,
+        "title": "분포 상태 비교",
+        "story": "[왓슨-X]: \"도수 총합이 서로 다른 두 용의자 집단의 분포 상태를 비교할 때 상대도수는 ( 유용하다 / 불필요하다 )?\"",
+        "qtext": "<strong>Q19. [상대도수의 활용]</strong><br>상대도수는 도수의 총합이 다른 두 집단의 분포 상태를 비교할 때 어떠한가? (유용하다 / 불필요하다)",
+        "placeholder": "유용하다 또는 불필요하다 입력",
+        "error": "비교 엔진 작동 불능!",
+        "ans_check": "ans === '유용하다'",
+        "hint": "조사 대상의 전체 총인원수가 서로 다른 두 집단의 성적이나 선호도를 비율로 공평하게 비교할 때의 유용성 여부를 생각합니다."
+    },
+    {
+        "qnum": 20,
+        "title": "범인 도수 산출",
+        "story": "[왓슨-X]: \"상대도수 값이 0.2이고 전체 용의자가 40명일 때, 이 계급의 진짜 스파이 도수는 몇 명인가요?\"",
+        "qtext": "<strong>Q20. [도수 구하기]</strong><br>상대도수가 0.2이고 전체 도수가 40명일 때, 이 계급의 도수를 구하시오.",
+        "placeholder": "숫자만 입력",
+        "error": "지목 실패! 스파이가 안개 속으로 도망칩니다!",
+        "ans_check": "ans === '8' || ans === '8명'",
+        "hint": "(전체 인원 40명) * (상대도수 비율 0.2)를 곱하여 해당 계급의 실제 인원수를 계산합니다."
+    }
 ]
 
-
+import re
 import re
 def generate_hint(qtext, ans_check):
     qtext_clean = qtext.lower()
