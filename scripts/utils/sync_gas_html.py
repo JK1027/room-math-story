@@ -3,9 +3,9 @@ import glob
 import shutil
 
 apps_dir = r"c:\Coding\Projects\School\room-math-story\apps"
-gas_dir = r"c:\Coding\Projects\School\room-math-story\GAS\main_project"
+gas_dir = r"c:\Coding\Projects\School\room-math-story\GAS\m1_project"
 
-# Ensure the main_project directory exists
+# Ensure the m1_project directory exists
 os.makedirs(gas_dir, exist_ok=True)
 
 # Find all middle school year 1 HTML apps
