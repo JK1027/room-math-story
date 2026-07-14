@@ -397,13 +397,13 @@ base_html = """<!DOCTYPE html>
         <!-- Intro Panel -->
         <div id="intro" class="glass-panel active">
             <h1>괴도 X의 암호 편지</h1>
-            <h2>일차부등식의 해와 성질</h2>
+            <h2>연립일차방정식의 암호 해독</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!</div>
+                <div class="story-text">세계적인 미술관에서 전설 of 다이아몬드 '별의 눈물'이 도난당했습니다! 현장에는 오직 괴도 X가 남긴 연립방정식 암호 편지뿐. x와 y 두 개의 미지수로 얽힌 이 단서들 속에 괴도 X의 은신처가 숨겨져 있습니다. 40분 내에 20개의 연립방정식을 풀어 다이아몬드를 되찾아오세요!</div>
             </div>
             <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">숲의 저울 가동</button>
+                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">암호 해독 시작</button>
             </div>
         </div>
 
@@ -412,10 +412,10 @@ base_html = """<!DOCTYPE html>
         <!-- Outro Panel -->
         <div id="outro" class="glass-panel">
             <h1>미션 완료!</h1>
-            <h2>요정 숲의 균형 회복</h2>
+            <h2>괴도 X 체포 및 다이아몬드 회수</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!</div>
+                <div class="story-text">아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 탐정 여러분!</div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
