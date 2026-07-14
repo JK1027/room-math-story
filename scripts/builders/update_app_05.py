@@ -17,447 +17,12 @@ base_html = """<!DOCTYPE html>
     <title>(중1) 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-main: #201A15;
-            --glass-bg: rgba(35, 28, 22, 0.75);
-            --glass-border: rgba(205, 133, 63, 0.25);
-            --accent: #CD853F;
-            --accent-hover: #D2B48C;
-            --text-main: #FDF5E6;
-            --text-muted: #D3C2B0;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(205, 133, 63, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(139, 92, 26, 0.12) 0%, transparent 40%);
-            z-index: -2;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            padding: 2rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(205, 133, 63, 0.4);
-            border-left: 1px solid rgba(205, 133, 63, 0.4);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(205, 133, 63, 0.05);
-            display: none; 
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 {
-            font-family: 'Orbit', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFF 30%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(205, 133, 63, 0.3);
-            letter-spacing: 2px;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
-
-.panel-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .story-box {
-            position: relative;
-            background: linear-gradient(90deg, rgba(60, 45, 30, 0.5) 0%, rgba(0,0,0,0.3) 100%);
-            border-left: 4px solid var(--accent);
-            padding: 0.8rem 1.2rem;
-            margin-bottom: 1.5rem;
-            border-radius: 0 12px 12px 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-            height: 90px;
-            max-height: 90px;
-            overflow: hidden;
-            box-sizing: border-box;
-        }
-
-        .story-text {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            line-height: 1.6;
-            font-size: 1.02rem;
-            color: var(--text-main);
-            text-align: justify;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            bottom: 4px;
-            right: 8px;
-            background: rgba(16, 185, 129, 0.25);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 2px 6px;
-            font-size: 0.7rem;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-weight: bold;
-            z-index: 10;
-        }
-        .story-log-trigger:hover {
-            background: rgba(16, 185, 129, 0.5);
-            color: white;
-        }
-
-        .question-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
-        }
-
-        .question-box::before {
-            content: 'Q';
-            position: absolute;
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 4rem;
-            color: rgba(205, 133, 63, 0.05);
-            top: -10px;
-            right: 10px;
-            font-weight: bold;
-            pointer-events: none;
-        }
-
-        .question-content {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .input-group {
-            margin-top: 1rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 1rem 1.2rem;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(205, 133, 63, 0.3);
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            font-family: 'Share Tech Mono', monospace, 'Noto Sans KR';
-            transition: all 0.3s;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px rgba(205, 133, 63, 0.4), inset 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .error-msg {
-            color: #EF4444;
-            font-size: 0.95rem;
-            margin-top: 0.5rem;
-            display: none;
-            text-align: center;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            display: none;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #B45309, var(--accent));
-            border-radius: 3px;
-            box-shadow: 0 0 10px var(--accent);
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #B45309, #78350F);
-            color: white;
-            border: 1px solid #D97706;
-            padding: 0.6rem 1.5rem;
-            font-size: 1.1rem;
-            font-weight: 900;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            width: 100%;
-            box-shadow: 0 10px 25px rgba(120, 53, 15, 0.5), inset 0 2px 5px rgba(255,255,255,0.3);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: all 0.6s;
-        }
-
-        .btn:hover::after {
-            left: 100%;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(205, 133, 63, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);
-            border-color: #F59E0B;
-        }
-
-        .btn-hint {
-            display: inline-block;
-            background: rgba(16, 185, 129, 0.2);
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            color: #34D399;
-            padding: 4px 10px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            vertical-align: middle;
-            margin-left: 10px;
-            letter-spacing: 0.5px;
-            text-transform: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .btn-hint:hover {
-            background: rgba(16, 185, 129, 0.4);
-            color: #fff;
-            box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
-        }
-
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .sound-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(35, 28, 22, 0.6);
-            border: 1px solid var(--glass-border);
-            padding: 8px 16px;
-            border-radius: 20px;
-            color: white;
-            cursor: pointer;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .sound-toggle:hover {
-            background: var(--accent);
-            border-color: white;
-            box-shadow: 0 0 15px var(--accent);
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Mobile Responsive Viewport */
-        @media (max-width: 600px) {
-            body {
-                overflow-y: auto;
-            }
-            .container {
-                padding: 10px;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                box-sizing: border-box;
-                min-height: 100vh;
-            }
-            .glass-panel {
-                width: 100%;
-                max-height: 94vh;
-                max-height: 94dvh;
-                height: auto;
-                padding: 1.2rem;
-                border-radius: 16px;
-                box-sizing: border-box;
-                display: none;
-                flex-direction: column;
-                justify-content: flex-start;
-                overflow-y: auto;
-            }
-            .glass-panel.active {
-                display: flex;
-            }
-            .story-box {
-                padding: 0.6rem 1rem;
-                margin-bottom: 0.5rem;
-                height: 80px;
-                max-height: 80px;
-                overflow: hidden;
-                flex: 0 0 auto;
-            }
-            .story-text {
-                font-size: 0.85rem;
-                line-height: 1.5;
-            }
-            h1 { font-size: 1.6rem; letter-spacing: 1px; }
-            h2 { font-size: 1rem; margin-bottom: 1rem; }
-            .panel-image { max-height: 180px; margin-bottom: 1rem; }
-            .question-box { padding: 0.8rem; margin-bottom: 1rem; }
-            .question-box::before { font-size: 3rem; top: -5px; right: -5px; }
-            input[type="text"] { font-size: 1rem; padding: 0.8rem; }
-            .btn { font-size: 0.9rem; padding: 0.5rem; letter-spacing: 1px;  border-radius: 6px;}
-            .btn-group { flex-direction: column; gap: 0.6rem; }
-            .sound-toggle { top: 10px; right: 10px; font-size: 0.8rem; padding: 6px 12px; }
-        }
-
-        /* Visual Novel Log Modal Styles */
-        .log-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-        .log-content {
-            background: #231B15;
-            border: 2px solid var(--accent);
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 80vh;
-            padding: 2rem;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-        .log-content h2 {
-            font-family: 'Orbit', sans-serif;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-        #logContainer {
-            overflow-y: auto;
-            flex-grow: 1;
-            margin-bottom: 1.5rem;
-            padding-right: 10px;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: #cbd5e1;
-        }
-        #logContainer strong {
-            color: var(--accent);
-        }
-        .close-log {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            color: #ef4444;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: scale 0.2s;
-        }
-        .close-log:hover {
-            scale: 1.2;
-        }
-    </style>
+@keyframes shake{0%, 100%{transform:translate(0, 0) rotate(0deg);}10%{transform:translate(-2px, -1px) rotate(-0.5deg);}20%{transform:translate(-3px, 0px) rotate(1deg);}30%{transform:translate(0px, 2px) rotate(0deg);}40%{transform:translate(1px, -1px) rotate(1deg);}50%{transform:translate(-1px, 2px) rotate(-1deg);}60%{transform:translate(-3px, 1px) rotate(0deg);}70%{transform:translate(2px, 1px) rotate(-0.5deg);}80%{transform:translate(-1px, -1px) rotate(1deg);}90%{transform:translate(2px, 2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255, 0, 0, 0);pointer-events:none;z-index:9999;transition:background 0.15s ease-out;}.laser-flash-active{background:rgba(255, 0, 0, 0.15);transition:none;}:root{--bg-main:#201A15;--glass-bg:rgba(35, 28, 22, 0.75);--glass-border:rgba(205, 133, 63, 0.25);--accent:#CD853F;--accent-hover:#D2B48C;--text-main:#FDF5E6;--text-muted:#D3C2B0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR', sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 30%, rgba(205, 133, 63, 0.1) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(139, 92, 26, 0.12) 0%, transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(205, 133, 63, 0.4);border-left:1px solid rgba(205, 133, 63, 0.4);border-radius:24px;padding:3rem;box-shadow:0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(205, 133, 63, 0.05);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4, 0, 0.2, 1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit', sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg, #FFF 30%, var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(205, 133, 63, 0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg, rgba(60, 45, 30, 0.5) 0%, rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:90px;max-height:90px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:4px;right:8px;background:rgba(16, 185, 129, 0.25);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:2px 6px;font-size:0.7rem;border-radius:4px;cursor:pointer;transition:all 0.2s;font-weight:bold;z-index:10;}.story-log-trigger:hover{background:rgba(16, 185, 129, 0.5);color:white;}.question-box{background:rgba(255, 255, 255, 0.02);border:1px solid rgba(255, 255, 255, 0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;position:relative;box-shadow:inset 0 0 20px rgba(255, 255, 255, 0.02);}.question-box::before{content:'Q';position:absolute;font-family:'Share Tech Mono', monospace;font-size:4rem;color:rgba(205, 133, 63, 0.05);top:-10px;right:10px;font-weight:bold;pointer-events:none;}.question-content{font-size:1.15rem;line-height:1.8;margin-bottom:1rem;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;padding:1rem 1.2rem;background:rgba(15, 23, 42, 0.8);border:1px solid rgba(205, 133, 63, 0.3);border-radius:12px;color:white;font-size:1.1rem;font-family:'Share Tech Mono', monospace, 'Noto Sans KR';transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(205, 133, 63, 0.4), inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#EF4444;font-size:0.95rem;margin-top:0.5rem;display:none;text-align:center;font-weight:bold;text-shadow:0 0 10px rgba(239, 68, 68, 0.3);animation:shake 0.5s ease;}@keyframes shake{0%, 100%{transform:translateX(0);}20%, 60%{transform:translateX(-5px);}40%, 80%{transform:translateX(5px);}}.progress-container{width:100%;height:6px;background:rgba(255, 255, 255, 0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;border:1px solid rgba(255, 255, 255, 0.02);}.progress-bar{height:100%;width:0%;background:linear-gradient(90deg, #B45309, var(--accent));border-radius:3px;box-shadow:0 0 10px var(--accent);transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1);}.btn-group{display:flex;gap:1rem;margin-top:2rem;}.btn{background:linear-gradient(135deg, #B45309, #78350F);color:white;border:1px solid #D97706;padding:0.6rem 1.5rem;font-size:1.1rem;font-weight:900;border-radius:8px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);text-transform:uppercase;letter-spacing:3px;width:100%;box-shadow:0 10px 25px rgba(120, 53, 15, 0.5), inset 0 2px 5px rgba(255,255,255,0.3);text-shadow:0 2px 4px rgba(0,0,0,0.5);position:relative;overflow:hidden;}.btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);transition:all 0.6s;}.btn:hover::after{left:100%;}.btn:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(205, 133, 63, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);border-color:#F59E0B;}.btn-hint{display:inline-block;background:rgba(16, 185, 129, 0.2);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0, 0, 0, 0.2);}.btn-hint:hover{background:rgba(16, 185, 129, 0.4);color:#fff;box-shadow:0 0 10px rgba(52, 211, 153, 0.4);}.btn:active{transform:translateY(1px);}.sound-toggle{position:fixed;top:20px;right:20px;background:rgba(35, 28, 22, 0.6);border:1px solid var(--glass-border);padding:8px 16px;border-radius:20px;color:white;cursor:pointer;z-index:100;backdrop-filter:blur(10px);font-size:0.9rem;transition:all 0.3s;font-weight:bold;}.sound-toggle:hover{background:var(--accent);border-color:white;box-shadow:0 0 15px var(--accent);}@keyframes blink{0%, 100%{opacity:1;}50%{opacity:0;}}@media (max-width:600px){body{overflow-y:auto;}.container{padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;min-height:100vh;}.glass-panel{width:100%;max-height:94vh;max-height:94dvh;height:auto;padding:1.2rem;border-radius:16px;box-sizing:border-box;display:none;flex-direction:column;justify-content:flex-start;overflow-y:auto;}.glass-panel.active{display:flex;}.story-box{padding:0.6rem 1rem;margin-bottom:0.5rem;height:80px;max-height:80px;overflow:hidden;flex:0 0 auto;}.story-text{font-size:0.85rem;line-height:1.5;}h1{font-size:1.6rem;letter-spacing:1px;}h2{font-size:1rem;margin-bottom:1rem;}.panel-image{max-height:180px;margin-bottom:1rem;}.question-box{padding:0.8rem;margin-bottom:1rem;}.question-box::before{font-size:3rem;top:-5px;right:-5px;}input[type="text"]{font-size:1rem;padding:0.8rem;}.btn{font-size:0.9rem;padding:0.5rem;letter-spacing:1px;border-radius:6px;}.btn-group{flex-direction:column;gap:0.6rem;}.sound-toggle{top:10px;right:10px;font-size:0.8rem;padding:6px 12px;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.85);z-index:1000;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#231B15;border:2px solid var(--accent);border-radius:20px;width:90%;max-width:600px;max-height:80vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{font-family:'Orbit', sans-serif;color:var(--accent);margin-bottom:1rem;text-align:left;}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:scale 0.2s;}.close-log:hover{scale:1.2;}
+</style>
 </head>
 <body>
+    <div class="laser-flash-overlay" id="laserFlash"></div>
+
 
     <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔊 소리 켜짐</button>
 
@@ -701,7 +266,7 @@ function cleanString(str) {
             }
         });
 
-        // 오디오 로드 에러 복구/예외 방어선
+
         window.addEventListener('DOMContentLoaded', () => {
             const audios = [
                 document.getElementById('bgm'),
@@ -720,7 +285,30 @@ function cleanString(str) {
             });
         });
 
-        function showError(panelId, errorId, currentWrongCount) {
+        
+        function triggerLockdownAlert() {
+    
+            const flash = document.getElementById('laserFlash');
+            if (flash) {
+                flash.classList.add('laser-flash-active');
+                setTimeout(() => {
+                    flash.classList.remove('laser-flash-active');
+                }, 150);
+            }
+            
+    
+            const activePanel = document.querySelector('.glass-panel.active');
+            if (activePanel) {
+                activePanel.classList.add('shake-effect');
+                setTimeout(() => {
+                    activePanel.classList.remove('shake-effect');
+                }, 300);
+            }
+        }
+
+function showError(panelId, errorId, currentWrongCount) {
+            triggerLockdownAlert();
+
             try { playError(); } catch(e) {}
             const panel = document.getElementById(panelId);
             const err = document.getElementById(errorId);
@@ -955,29 +543,189 @@ function cleanString(str) {
 """
 
 qs = [
-    {"qnum": 1, "title": "도형의 3요소", "story": "📐 <strong>[양피지 도면 스케치]</strong><br><br>다빈치의 책상에 기하학의 시작을 알리는 스케치북이 펼쳐져 있습니다. 도형을 만드는 기본 3요소를 완성하십시오.", "qtext": "<strong>Q1. [도형의 기본 요소]</strong><br>도형을 구성하는 가장 기본이 되는 요소 세 가지는 점, 선, 그리고 무엇인가?", "placeholder": "한글 단어 입력", "error": "도형이 입체적으로 구성되지 않습니다! 3요소를 다시 쓰십시오.", "ans_check": "ans === '면'", "hint": "도형을 구성하는 가장 기본 요소인 점, 선, 면 중 마지막 요소를 생각해 봅니다."},
-    {"qnum": 2, "title": "두 점을 잇는 직선", "story": "📐 <strong>[직선 스케일러]</strong><br><br>나무 제어반 위에 두 금속 핀 A, B가 고정되어 있습니다. 이 두 점을 완전히 통과할 수 있는 단 하나의 직선 개수를 도출하십시오.", "qtext": "<strong>Q2. [직선의 결정]</strong><br>서로 다른 두 점 A, B를 지나는 직선은 모두 몇 개인가?", "placeholder": "숫자 또는 개수 입력", "error": "직선이 어긋납니다! 개수를 확인하세요.", "ans_check": "ans === '1' || ans === '1개'", "hint": "한 점에서 다른 한 점을 향해 자를 대고 그을 수 있는 직선은 오직 하나뿐입니다."},
-    {"qnum": 3, "title": "뻗어가는 광선", "story": "📐 <strong>[렌즈 광선 방출]</strong><br><br>시작점 A에서 나와 조절 반사경 B를 지나 끝없이 뻗어 나가는 성질의 기하학적 도형 명칭을 쓰시오.", "qtext": "<strong>Q3. [선분과 반직선]</strong><br>점 A에서 시작하여 점 B 방향으로 끝없이 뻗어 나가는 선분을 기호로 나타낼 때, 이를 무엇이라 부르는가?", "placeholder": "한글 단어 입력", "error": "광선의 방향이나 명칭이 잘못되었습니다!", "ans_check": "ans === '반직선' || ans === '반직선ab'", "hint": "한 점에서 시작하여 다른 점 방향으로 끝없이 뻗어 나가는 선의 명칭을 구합니다."},
-    {"qnum": 4, "title": "수평의 각도", "story": "📐 <strong>[수평 평형추]</strong><br><br>작업대 기울기가 한쪽으로 쏠려 있습니다. 완벽하게 평평한 수평 상태의 각도 명칭을 입력해 수평추를 고정시키세요.", "qtext": "<strong>Q4. [평각]</strong><br>180도인 각을 무엇이라 부르는가?", "placeholder": "한글 단어 입력", "error": "추가 수평을 유지하지 못하고 떨어집니다!", "ans_check": "ans === '평각'", "hint": "평평한 일직선이 이루는 각으로, 한자 '평평할 평'을 사용하는 각의 명칭입니다."},
-    {"qnum": 5, "title": "다빈치의 벽시계", "story": "📐 <strong>[기계식 추시계]</strong><br><br>벽면에 나뭇가지 기어로 된 추시계 바늘이 4시 정각에 걸려 멈췄습니다. 시침과 분침 사이의 좁은 쪽 각도를 입력해 시계를 다시 작동시키세요.", "qtext": "<strong>Q5. [시계 각도]</strong><br>시계가 4시 정각을 가리킬 때, 시침과 분침이 이루는 작은 쪽의 각의 크기를 구하시오. (단위 생략)", "placeholder": "숫자 또는 각도 입력", "error": "톱니가 제대로 돌지 못합니다! 각도를 확인하십시오.", "ans_check": "ans === '120' || ans === '120도'", "hint": "시계의 한 시간 간격(한 칸)은 30도를 이룹니다. 4시 정각일 때 두 바늘 사이의 칸수를 세어 30도에 곱합니다."},
-    {"qnum": 6, "title": "교차하는 빛줄기", "story": "✂️ <strong>[교차 거울 방호벽]</strong><br><br>지하 복도 양쪽에서 나온 두 빛줄기가 한 점에서 교차해 사각 문양이 나타납니다. 서로 마주 보며 대칭을 이루는 두 각의 이름을 대십시오.", "qtext": "<strong>Q6. [교각과 맞꼭지각]</strong><br>두 직선이 교차할 때 생기는 교각 중, 마주 보는 두 각을 무엇이라 하는가?", "placeholder": "한글 단어 입력", "error": "문양의 중심이 어긋납니다!", "ans_check": "ans === '맞꼭지각'", "hint": "두 직선이 교차하여 만날 때 서로 마주 보는 쌍으로 존재하는 두 각을 의미합니다."},
-    {"qnum": 7, "title": "맞꼭지각의 성질", "story": "✂️ <strong>[반사 평형]</strong><br><br>마주 보는 거울의 크기 비율을 묻습니다. 맞꼭지각의 크기 성질을 한마디로 적으십시오.", "qtext": "<strong>Q7. [맞꼭지각의 크기]</strong><br>맞꼭지각의 크기는 서로 어떠한가? (같다 / 다르다)", "placeholder": "예: 같다", "error": "반사 평형이 성립하지 않습니다!", "ans_check": "ans === '같다'", "hint": "서로 마주 보는 맞꼭지각의 크기는 항상 서로 같은 성질을 가집니다."},
-    {"qnum": 8, "title": "평행선의 법칙 1", "story": "✂️ <strong>[평행 빔 통로]</strong><br><br>평행하게 달리는 두 철 레일 l과 m 위에 직각 대각선 n이 놓였습니다. 같은 위치에 대응하는 두 동위각의 크기 관계는 어떠합니까?", "qtext": "<strong>Q8. [동위각]</strong><br>직선 l과 m이 평행하고 한 직선 n과 만날 때, 동위각의 크기는 서로 어떠한가? (같다 / 다르다)", "placeholder": "예: 같다", "error": "평행 빔이 엇갈려 차단 장벽이 다시 활성화됩니다!", "ans_check": "ans === '같다'", "hint": "두 직선이 평행할 때, 같은 위치에 있는 동위각의 크기는 항상 서로 같습니다."},
-    {"qnum": 9, "title": "평행선의 법칙 2", "story": "✂️ <strong>[엇각 센서 조율]</strong><br><br>철 레일 교차점 반대편의 어긋난 엇각 센서 각도를 정렬해야 합니다. 엇각의 크기 성질은 서로 어떠합니까?", "qtext": "<strong>Q9. [엇각]</strong><br>평행한 두 직선 사이를 가로지르는 선이 있을 때, 엇각의 크기는 서로 어떠한가? (같다 / 다르다)", "placeholder": "예: 같다", "error": "센서 각도 매칭 실패!", "ans_check": "ans === '같다'", "hint": "두 직선이 평행할 때, 엇갈린 위치에 있는 엇각의 크기는 서로 같습니다."},
-    {"qnum": 10, "title": "최종 평행 조건", "story": "✂️ <strong>[평행 잠금 링]</strong><br><br>문 고리 톱니를 잠급니다. 두 직선이 평행할 최종 조건 중 하나는 동위각이 같거나 무엇이 같은 경우입니까?", "qtext": "<strong>Q10. [평행선 조건]</strong><br>두 직선이 평행할 조건 중 하나는 동위각의 크기가 같거나 무엇의 크기가 같은 경우인가?", "placeholder": "한글 단어 입력", "error": "문 고리가 고정되지 않고 헛돕니다!", "ans_check": "ans === '엇각'", "hint": "두 직선이 평행할 조건 중 하나는 동위각 또는 엇각의 크기가 서로 같은 경우입니다."},
-    {"qnum": 11, "title": "도구 없는 수작업", "story": "📏 <strong>[설계판 도구함]</strong><br><br>3구역 작도의 방입니다. 오직 눈금 없는 황동 자와 회전 컴퍼스만으로 선을 그리는 기하학적 행위를 무엇이라 부릅니까?", "qtext": "<strong>Q11. [작도의 정의]</strong><br>눈금 없는 자와 컴퍼스만을 사용하여 도형을 그리는 것을 무엇이라 하는가?", "placeholder": "한글 단어 입력", "error": "도구 선택법이 기하학 원칙에 어긋납니다!", "ans_check": "ans === '작도'", "hint": "눈금 없는 자와 컴퍼스 단 두 도구만 사용하여 도형을 그리는 수학적 작도법을 뜻합니다."},
-    {"qnum": 12, "title": "길이의 복사", "story": "📏 <strong>[황동 컴퍼스 보정]</strong><br><br>특정 선분의 길이를 그대로 복사해 가로축 목재 보드판 위에 표시하기 위해 사용해야 할 필수 작도 기구를 적으십시오.", "qtext": "<strong>Q12. [작도 도구]</strong><br>길이가 주어진 선분을 다른 직선 위로 옮길 때 주로 사용하는 도구는 무엇인가?", "placeholder": "한글 단어 입력", "error": "길이가 왜곡되었습니다! 엉뚱한 도구를 썼습니다.", "ans_check": "ans === '컴퍼스'", "hint": "주어진 선분의 길이를 그대로 재어서 다른 곳으로 복사해 옮길 때 벌려서 사용하는 도구를 떠올려 봅니다."},
-    {"qnum": 13, "title": "삼각형 조립 조건", "story": "📏 <strong>[삼각형 목재 프레임]</strong><br><br>가장 긴 기둥 c가 나머지 두 기둥 a, b의 합보다 어떠해야 삼각형 구조가 견고하게 지탱됩니까?", "qtext": "<strong>Q13. [삼각형의 결정 조건]</strong><br>삼각형의 세 변의 길이가 a, b, c (c가 가장 긴 변)일 때, c는 a+b보다 ( 커야 / 작아야 ) 하는가?", "placeholder": "커야 또는 작아야 입력", "error": "프레임이 연결되지 않고 무너집니다!", "ans_check": "ans === '작아야'", "hint": "가장 긴 변의 길이는 나머지 두 짧은 변의 길이를 더한 값보다 항상 작아야 삼각형이 만들어집니다."},
-    {"qnum": 14, "title": "기둥 조립 테스트", "story": "📏 <strong>[세 개의 나무 쐐기]</strong><br><br>준비된 세 쐐기 (3cm, 4cm, 7cm)로 결합 장치 삼각형 지지대를 만들 수 있는지 판별하십시오.", "qtext": "<strong>Q14. [삼각형 조립 판별]</strong><br>다음 세 선분의 길이로 삼각형을 만들 수 있는가? (3cm, 4cm, 7cm) (있다 / 없다)", "placeholder": "있다 또는 없다 입력", "error": "쐐기 길이가 맞물리지 않고 어긋납니다!", "ans_check": "ans === '없다'", "hint": "가장 긴 변인 7cm와 나머지 두 변의 합인 3+4=7cm를 비교하여 삼각형 성립 조건을 따져봅니다."},
-    {"qnum": 15, "title": "각도와 변의 작도", "story": "📏 <strong>[마지막 작도 완성]</strong><br><br>두 변의 길이와 그 사이의 각(끼인각)이 주어지면, 단 하나의 고유한 삼각형을 작도할 수 있습니까?", "qtext": "<strong>Q15. [삼각형의 작도 조건]</strong><br>두 변의 길이와 그 끼인각의 크기가 주어졌을 때, 삼각형을 작도할 수 있는가? (있다 / 없다)", "placeholder": "있다 또는 없다 입력", "error": "작도식 오류! 모형이 일그러집니다.", "ans_check": "ans === '있다'", "hint": "두 변의 길이와 그 사이에 낀 각이 주어지면 삼각형은 오직 하나로 결정되므로 작도가 가능합니다."},
-    {"qnum": 16, "title": "완벽한 포갬", "story": "🖼️ <strong>[거울 대칭 무늬]</strong><br><br>4구역 미술실입니다. 좌우 모양과 크기가 완벽히 같아 겹쳤을 때 하나로 포개어지는 두 도형의 수학적 관계를 무어라 합니까?", "qtext": "<strong>Q16. [합동의 정의]</strong><br>모양과 크기가 완전히 같아서 포개었을 때 완전히 겹쳐지는 두 도형을 서로 무엇이라 하는가?", "placeholder": "한글 단어 입력", "error": "포개어지지 않고 테두리가 남습니다!", "ans_check": "ans === '합동'", "hint": "두 도형이 크기와 모양이 완벽히 같아서 포개었을 때 완전히 겹쳐지는 관계를 뜻합니다."},
-    {"qnum": 17, "title": "세 변의 합동", "story": "🖼️ <strong>[세 쇠사슬의 균형]</strong><br><br>세 변의 길이가 각각 같은 두 삼각형 액자의 합동 조건을 기호 세 글자로 써넣으십시오.", "qtext": "<strong>Q17. [SSS 합동]</strong><br>삼각형의 합동 조건 중 세 변의 길이가 각각 같을 때의 합동을 무엇이라 하는가?", "placeholder": "예: SSS", "error": "합동 매칭 기호가 틀렸습니다!", "ans_check": "ans === 'sss' || ans === 'sss합동'", "hint": "세 변의 길이가 각각 같을 때의 합동 조건으로, 변을 뜻하는 Side의 첫 글자를 딴 기호입니다."},
-    {"qnum": 18, "title": "양 변과 사이 각", "story": "🖼️ <strong>[톱니 조작 밸런스]</strong><br><br>두 변의 길이와 그 사이에 끼인각이 같은 기하학적 합동 조건을 기호 세 글자로 써넣으십시오.", "qtext": "<strong>Q18. [SAS 합동]</strong><br>삼각형의 두 변의 길이와 그 끼인각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?", "placeholder": "예: SAS", "error": "기어가 헛돌며 맞물리지 않습니다!", "ans_check": "ans === 'sas' || ans === 'sas합동'", "hint": "두 변(Side)과 그 끼인각(Angle)의 크기가 각각 같을 때의 합동 기호를 떠올려 봅니다."},
-    {"qnum": 19, "title": "한 변과 두 각", "story": "🖼️ <strong>[양 날개 조율]</strong><br><br>한 변의 길이와 양 끝각이 같은 날개 양면의 기하학 합동 조건을 기호 세 글자로 써넣으십시오.", "qtext": "<strong>Q19. [ASA 합동]</strong><br>삼각형의 한 변의 길이와 그 양 끝각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?", "placeholder": "예: ASA", "error": "좌우 날개의 조화가 깨져 문이 다시 잠깁니다!", "ans_check": "ans === 'asa' || ans === 'asa합동'", "hint": "한 변(Side)과 그 양 끝각(Angle)의 크기가 각각 같을 때의 합동 기호를 떠올려 봅니다."},
-    {"qnum": 20, "title": "최종 마스터 합동 키", "story": "🖼️ <strong>[걸작의 봉인 해제]</strong><br><br>직각삼각형 빗변과 한 예각의 특수 기하학 조건이 완성되었습니다. 두 기하학 파트는 서로 '합동이다 / 아니다' 중 무엇입니까?", "qtext": "<strong>Q20. [합동 판별]</strong><br>직각삼각형에서 빗변의 길이와 한 예각의 크기가 같을 때, 두 삼각형은 합동인 양상을 나타내는가? (합동이다 / 아니다)", "placeholder": "합동이다 또는 아니다 입력", "error": "걸작 모나리자 스크린의 잠금이 해제되지 않습니다!", "ans_check": "ans === '합동이다' || ans === '합동'", "hint": "두 직각삼각형이 완전히 포개어져 크기와 모양이 일치하는지 직관적으로 판단해 봅니다."}
+    {
+        "qnum": 1,
+        "title": "코덱스-L의 위협",
+        "story": "[코덱스-L]: \"어리석은 침입자여! 난 다빈치 님께서 설계하신 기계 비서 코덱스-L이다. 보안 트랩이 기동되어 작업실이 폐쇄된다! 묘실이 완전히 잠기기 전에 기하학 기초 요소 점, 선, 그리고 마지막을 입력해 능력을 증명해라!\"",
+        "qtext": "<strong>Q1.</strong> 도형을 구성하는 가장 기본이 되는 요소 세 가지는 점, 선, 그리고 무엇인가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 점이 모여 선이 되고, 선이 모여 이것이 됩니다.",
+        "ans_check": "ans === '면'"
+    },
+    {
+        "qnum": 2,
+        "title": "궤적의 고유성",
+        "story": "[코덱스-L]: \"호오, 기본은 아는군. 그럼 서로 다른 두 개의 고정 핀 A, B를 일직선으로 잇는 로프(직선)는 오직 몇 개만 설치할 수 있는지 말해봐라!\"",
+        "qtext": "<strong>Q2.</strong> 서로 다른 두 점 A, B를 지나는 직선은 모두 몇 개인가?",
+        "placeholder": "예: 1개",
+        "error": "틀렸습니다. 두 점을 동시에 관통하는 직선은 세상에 오직 하나뿐입니다.",
+        "ans_check": "ans === '1' || ans === '1개'"
+    },
+    {
+        "qnum": 3,
+        "title": "레이저 방향 지정",
+        "story": "[코덱스-L]: \"점 A에서 시작해서 점 B 방향으로 곧장 발사되어 끝없이 뻗어 나가는 파괴 레이저(선)를 기하학 용어로 무엇이라 부르는가?\"",
+        "qtext": "<strong>Q3.</strong> 점 A에서 시작하여 점 B 방향으로 끝없이 뻗어 나가는 선분을 기호로 나타낼 때, 이를 무엇이라 부르는가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 한쪽으로만 끝없이 뻗어 나가는 직선의 절반입니다.",
+        "ans_check": "ans.includes('반직선')"
+    },
+    {
+        "qnum": 4,
+        "title": "수평의 바닥",
+        "story": "[코덱스-L]: \"바닥이 완전히 평평하게 펼쳐져 180도 일직선을 이루는 이 성스러운 각도의 이름을 대라. 머리가 굳었다면 힌트 단추를 눌러보든가!\"",
+        "qtext": "<strong>Q4.</strong> 180도인 각을 무엇이라 부르는가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 평평한 각을 뜻하는 명칭입니다.",
+        "ans_check": "ans === '평각'"
+    },
+    {
+        "qnum": 5,
+        "title": "경보 태엽의 각도",
+        "story": "[코덱스-L]: \"시계 기어의 시침과 분침이 4시 정각을 가리키며 톱니 락이 걸렸다. 두 침 사이의 좁은 쪽 각도를 연산하여 기어 압력을 해제하라!\"",
+        "qtext": "<strong>Q5.</strong> 시계가 4시 정각을 가리킬 때, 시침과 분침이 이루는 작은 쪽의 각의 크기를 구하시오.",
+        "placeholder": "단위 없이 숫자만 입력 또는 '120도' 입력",
+        "error": "틀렸습니다. 시계의 1시간 간격은 30도입니다. 4시간의 각도를 계산해보세요.",
+        "ans_check": "ans === '120' || ans === '120도'"
+    },
+    {
+        "qnum": 6,
+        "title": "제 2구역: 교차하는 빛줄기",
+        "story": "[코덱스-L]: \"2구역 진입을 환영한다! 교차하는 두 광학 센서가 그물처럼 얽혀 있군. 교차하는 두 선이 마주 보며 똑같은 크기로 대치하는 각을 무엇이라 하는가?\"",
+        "qtext": "<strong>Q6.</strong> 두 직선이 교차할 때 생기는 교각 중, 마주 보는 두 각을 무엇이라 하는가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 마주 보고 솟은 꼭지점을 공유하는 각입니다.",
+        "ans_check": "ans === '맞꼭지각'"
+    },
+    {
+        "qnum": 7,
+        "title": "광선의 대칭성",
+        "story": "[코덱스-L]: \"마주 보는 그 두 각(맞꼭지각)의 크기 관계가 서로 '같다'와 '다르다' 중 무엇에 해당하는지 입력 장치에 송신해라!\"",
+        "qtext": "<strong>Q7.</strong> 맞꼭지각의 크기는 서로 어떠한가? (예: 같다, 다르다)",
+        "placeholder": "같다 또는 다르다 입력",
+        "error": "틀렸습니다. 마주 보는 각은 기하학적으로 항상 동일한 크기를 가집니다.",
+        "ans_check": "ans === '같다'"
+    },
+    {
+        "qnum": 8,
+        "title": "평행 레이저의 동위",
+        "story": "[코덱스-L]: \"나란한 두 평행 레이저 l, m을 하나의 대각선 빔이 뚫고 지나갈 때, 같은 방향의 고유 수신 포트(동위각)의 크기 관계는?\"",
+        "qtext": "<strong>Q8.</strong> 직선 l과 m이 평행하고 한 직선 n과 만날 때, 동위각의 크기는 서로 어떠한가?",
+        "placeholder": "같다 또는 다르다 입력",
+        "error": "틀렸습니다. 평행할 때 동위각의 크기는 항상 대칭 일치합니다.",
+        "ans_check": "ans === '같다'"
+    },
+    {
+        "qnum": 9,
+        "title": "엇갈린 반사각",
+        "story": "[코덱스-L]: \"좋아, 그럼 평행선 장벽 내부에서 지그재그로 엇갈리게 꺾이는 반사 빔(엇각)의 크기 관계는 어떻게 설계되겠나?\"",
+        "qtext": "<strong>Q9.</strong> 평행한 두 직선 사이를 가로지르는 선이 있을 때, 엇각의 크기는 서로 어떠한가?",
+        "placeholder": "같다 또는 다르다 입력",
+        "error": "틀렸습니다. 평행한 직선 사이에서 엇각의 크기는 언제나 일치합니다.",
+        "ans_check": "ans === '같다'"
+    },
+    {
+        "qnum": 10,
+        "title": "위치 정렬 빔",
+        "story": "[코덱스-L]: \"두 도선이 나란하게(평행) 배열되도록 강제하기 위해선, 동위각의 크기가 같거나 무엇의 크기가 서로 같아야 하는가?\"",
+        "qtext": "<strong>Q10.</strong> 두 직선이 평행할 조건 중 하나는 동위각의 크기가 같거나 무엇의 크기가 같은 경우인가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 엇갈린 위치에 있는 각도입니다.",
+        "ans_check": "ans === '엇각'"
+    },
+    {
+        "qnum": 11,
+        "title": "제 3구역: 작도의 방",
+        "story": "[코덱스-L]: \"3구역이다! 다빈치 님의 순수한 기하학 법칙에 따라, 오직 '눈금 없는 자'와 '컴퍼스'만으로 모형을 그리는 이 성스러운 행위를 무엇이라 하는가?\"",
+        "qtext": "<strong>Q11.</strong> 눈금 없는 자와 컴퍼스만을 사용하여 도형을 그리는 것을 무엇이라 하는가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 두 글자 기하학 용어입니다.",
+        "ans_check": "ans === '작도'"
+    },
+    {
+        "qnum": 12,
+        "title": "길이 복제기",
+        "story": "[코덱스-L]: \"특정 석재 선분의 폭을 정확히 계측해 설계도 위로 옮겨 복제할 때 주로 쓰는 양다리 금속 기구의 이름을 입력하라!\"",
+        "qtext": "<strong>Q12.</strong> 길이가 주어진 선분을 다른 직선 위로 옮길 때 주로 사용하는 도구는 무엇인가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 원을 그리거나 길이를 재어 옮기는 도구입니다.",
+        "ans_check": "ans === '컴퍼스'"
+    },
+    {
+        "qnum": 13,
+        "title": "삼각 지지대의 성립 조건",
+        "story": "[코덱스-L]: \"삼각형 지지대를 만들 때, 가장 긴 변 c는 나머지 두 변의 합(a+b)보다 무조건 ( 커야 / 작아야 ) 조립이 되는가?\"",
+        "qtext": "<strong>Q13.</strong> 삼각형의 세 변의 길이가 a, b, c (c가 가장 긴 변)일 때, c는 a+b보다 ( 커야 / 작아야 ) 삼각형이 만들어진다. 알맞은 말은?",
+        "placeholder": "커야 또는 작아야 입력",
+        "error": "틀렸습니다. 한 변이 너무 길면 양쪽에서 닫히지 않고 벌어집니다.",
+        "ans_check": "ans === '작아야'"
+    },
+    {
+        "qnum": 14,
+        "title": "목재 조립 테스트",
+        "story": "[코덱스-L]: \"자, 3cm, 4cm, 7cm 길이의 나무 막대 세 개를 주지. 이 막대들로 삼각형 구조물을 세울 수 있는지 '있다'와 '없다' 중 답해라!\"",
+        "qtext": "<strong>Q14.</strong> 다음 세 선분의 길이로 삼각형을 만들 수 있는가? (3cm, 4cm, 7cm) (예: 있다, 없다)",
+        "placeholder": "있다 또는 없다 입력",
+        "error": "틀렸습니다. 가장 긴 변이 나머지 두 변의 합과 같으므로 겹쳐져 무너집니다.",
+        "ans_check": "ans === '없다'"
+    },
+    {
+        "qnum": 15,
+        "title": "설계 완성 가능 여부",
+        "story": "[코덱스-L]: \"삼각형의 두 변의 길이와 그 사이의 끼인각의 크기를 안다면, 이 설계도면 위에 완벽한 삼각형을 결정해서 그려낼 수 있는가? (있다/없다)\"",
+        "qtext": "<strong>Q15.</strong> 두 변의 길이와 그 끼인각의 크기가 주어졌을 때, 삼각형을 작도할 수 있는가? (예: 있다, 없다)",
+        "placeholder": "있다 또는 없다 입력",
+        "error": "틀렸습니다. 두 변과 사잇각은 삼각형을 고정하는 완벽한 조건입니다.",
+        "ans_check": "ans === '있다'"
+    },
+    {
+        "qnum": 16,
+        "title": "제 4구역: 잃어버린 걸작 복원",
+        "story": "[코덱스-L]: \"마지막 4구역이다! 모양과 크기가 거울처럼 완벽하게 동일하여 서로 포갰을 때 100% 빈틈없이 일치하는 두 도형의 기하학적 관계는?\"",
+        "qtext": "<strong>Q16.</strong> 모양과 크기가 완전히 같아서 포개었을 때 완전히 겹쳐지는 두 도형을 서로 무엇이라 하는가?",
+        "placeholder": "정답 입력",
+        "error": "틀렸습니다. 두 글자 수학적 명칭입니다.",
+        "ans_check": "ans === '합동'"
+    },
+    {
+        "qnum": 17,
+        "title": "세 기둥의 합동 락",
+        "story": "[코덱스-L]: \"삼각형 보석판의 세 변의 길이가 모두 똑같아 완전히 합동임을 지시하는 조건 기호(영문 3글자)를 입력하여 락을 가동해라!\"",
+        "qtext": "<strong>Q17.</strong> 삼각형의 합동 조건 중 세 변의 길이가 각각 같을 때의 합동을 기호로 무엇이라 하는가? (예: SSS, SAS, ASA)",
+        "placeholder": "영문 대문자 세 글자 입력",
+        "error": "틀렸습니다. 변(Side) 세 개를 뜻하는 기호입니다.",
+        "ans_check": "ans === 'SSS' || ans === 'SSS합동'"
+    },
+    {
+        "qnum": 18,
+        "title": "두 변과 사잇각의 락",
+        "story": "[코덱스-L]: \"두 변의 길이와 그 사이에 끼인각이 각각 같을 때의 삼각형 합동 조건 기호(영문 3글자)를 정밀하게 송신해라!\"",
+        "qtext": "<strong>Q18.</strong> 삼각형의 두 변의 길이와 그 끼인각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?",
+        "placeholder": "영문 대문자 세 글자 입력",
+        "error": "틀렸습니다. 변(Side) 두 개와 각(Angle) 하나가 끼어 있는 기호입니다.",
+        "ans_check": "ans === 'SAS' || ans === 'SAS합동'"
+    },
+    {
+        "qnum": 19,
+        "title": "한 변과 양 끝각의 락",
+        "story": "[코덱스-L]: \"한 변의 길이와 그 변의 양쪽 끝에 걸려 있는 두 모퉁이 각도(양 끝각)가 같을 때의 합동 조건 기호(영문 3글자)는?\"",
+        "qtext": "<strong>Q19.</strong> 삼각형의 한 변의 길이와 그 양 끝각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?",
+        "placeholder": "영문 대문자 세 글자 입력",
+        "error": "틀렸습니다. 각(Angle) 두 개 사이에 변(Side)이 끼어 있는 기호입니다.",
+        "ans_check": "ans === 'ASA' || ans === 'ASA합동'"
+    },
+    {
+        "qnum": 20,
+        "title": "최종 마스터 봉인",
+        "story": "[코덱스-L]: \"마지막 경고다! 두 직각삼각형 락의 빗변 길이와 한 예각의 크기가 동일하다면, 두 락은 서로 어떤 관계인가? ('합동이다' 또는 '합동')\"",
+        "qtext": "<strong>Q20.</strong> 직각삼각형에서 빗변의 길이와 한 예각의 크기가 같을 때의 합동 조건을 무엇이라 하는가?",
+        "placeholder": "합동이다 또는 합동 입력",
+        "error": "틀렸습니다. 빗변과 예각이 같으면 무조건 합동이 성립됩니다.",
+        "ans_check": "ans === '합동' || ans === '합동이다'"
+    }
 ]
 
-
+import re
 import re
 def generate_hint(qtext, ans_check):
     qtext_clean = qtext.lower()
