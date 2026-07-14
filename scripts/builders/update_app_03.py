@@ -471,6 +471,38 @@ base_html = """<!DOCTYPE html>
         .close-log:hover {
             scale: 1.2;
         }
+    
+        /* 화면 진동 효과 */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255, 0, 0, 0.4);
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.15s ease-out;
+        }
+        .laser-flash-overlay.flash-active {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -1045,33 +1077,26 @@ with open(html_path, 'w', encoding='utf-8') as f:
 
 # 2. 20 Questions Data for Unit 3 Equations
 qs = [
-    # Area 1: 시스템 식 복구 (문자와 식)
-    {"qnum": 1, "title": "시스템 식 복구", "story": "🚀 <strong>[코드 단순화]</strong><br><br>손상된 전송 코드를 수신했습니다. 방정식 엔진에 식을 단순화해 입력해야 모듈이 활성화됩니다.", "qtext": "<strong>Q1. [문자의 사용]</strong><br>a × b × a × 3 을 곱셈 기호를 생략하고 거듭제곱을 사용하여 간단히 나타내시오.", "placeholder": "예: 5x^2y", "error": "구문 오류! 시스템 연결 실패!", "ans_check": "ans === '3a^2b' || ans === '3ba^2'"},
-    {"qnum": 2, "title": "시스템 식 복구", "story": "🚀 <strong>[식 세우기]</strong><br><br>소형 포드와 대형 포드의 전력 소모량을 계산해 총 에너지 요구 식을 완성하세요.", "qtext": "<strong>Q2. [식 세우기]</strong><br>소형 포드 1개 작동에 x kW, 대형 포드 1개 작동에 1000 kW가 듭니다. 소형 포드 5개와 대형 포드 1개를 동시에 작동할 때 필요한 총 전력량을 x에 대한 식으로 나타내시오.", "placeholder": "예: 3x+500", "error": "에너지 초과 경고!", "ans_check": "ans === '5x+1000' || ans === '1000+5x'"},
-    {"qnum": 3, "title": "시스템 식 복구", "story": "🚀 <strong>[식의 대입]</strong><br><br>현재 엔진 온도 조건 x = -2일 때, 냉각 시스템 계수를 계산하십시오.", "qtext": "<strong>Q3. [식의 값]</strong><br>x = -2 일 때, 대입 식 3x + 5 의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "냉각수 부족! 온도가 상승합니다!", "ans_check": "ans === '-1'"},
-    {"qnum": 4, "title": "시스템 식 복구", "story": "🚀 <strong>[계수 추출]</strong><br><br>안정 장치의 다항식 코드에서 핵심 증폭 계수를 추출하십시오.", "qtext": "<strong>Q4. [다항식과 일차식]</strong><br>다항식 2x² - 5x + 3 에서 x의 계수를 구하시오. (부호 포함)", "placeholder": "숫자만 입력", "error": "증폭 계수 불일치! 차단벽 가동!", "ans_check": "ans === '-5'"},
-    {"qnum": 5, "title": "시스템 식 복구", "story": "🚀 <strong>[분배법칙]</strong><br><br>두 개의 예비 회로를 병렬로 통합하기 위해 괄호를 풀어 회로식을 단순화하세요.", "qtext": "<strong>Q5. [일차식의 계산 1]</strong><br>식 3(2x - 4) + 2x 를 분배법칙을 활용해 간단히 정리한 식을 입력하시오.", "placeholder": "예: 5x-7", "error": "회로 쇼트 경고! 전력 누출!", "ans_check": "ans === '8x-12'"},
-    
-    # Area 2: 전력망 동기화 (일차식의 계산)
-    {"qnum": 6, "title": "전력망 동기화", "story": "🔋 <strong>[전압 분배]</strong><br><br>메인 전력 노드의 전압을 2개의 서브 배터리로 균등 분배합니다.", "qtext": "<strong>Q6. [일차식의 나눗셈]</strong><br>식 (6x - 4) ÷ 2 를 간단히 한 식을 입력하시오.", "placeholder": "예: 2x-5", "error": "배터리 과부하! 전력이 역류합니다!", "ans_check": "ans === '3x-2'"},
-    {"qnum": 7, "title": "전력망 동기화", "story": "🔋 <strong>[통분 계산]</strong><br><br>두 라인의 전파 동기화 신호를 합쳐 최적의 주파수 대역을 확보하세요.", "qtext": "<strong>Q7. [일차식의 계산 2]</strong><br>식 1/2(4x - 6) - 1/3(3x + 9) 를 계산하여 간단히 하시오.", "placeholder": "예: 2x-8", "error": "주파수 왜곡! 동기화 실패!", "ans_check": "ans === 'x-6'"},
-    {"qnum": 8, "title": "전력망 동기화", "story": "🔋 <strong>[일차식 구분]</strong><br><br>일차식 전원 코어만 선택해야 회로가 타지 않습니다.", "qtext": "<strong>Q8. [일차식 판별]</strong><br>다음 중 차수가 1인 <strong>일차식</strong>의 번호만 쓰시오.<br>(1) 3x² &nbsp;&nbsp;(2) 0 × x + 2 &nbsp;&nbsp;(3) 1/x + 1 &nbsp;&nbsp;(4) -2x + 1", "placeholder": "숫자만 입력", "error": "회로 폭발! 코어가 과열되었습니다!", "ans_check": "ans === '4'"},
-    {"qnum": 9, "title": "전력망 동기화", "story": "🔋 <strong>[동류항 정리]</strong><br><br>두 동축 케이블의 잔류 저항값을 합산하여 상쇄시키십시오.", "qtext": "<strong>Q9. [동류항 정리]</strong><br>식 2x - 3 - (x - 5) 를 계산하여 간단히 정리하시오.", "placeholder": "예: 3x-4", "error": "저항 매칭 실패! 감전 위험!", "ans_check": "ans === 'x+2'"},
-    {"qnum": 10, "title": "전력망 동기화", "story": "🔋 <strong>[대입 정리]</strong><br><br>시스템 부하값 A와 B를 조합한 최종 부하 공식을 도출하십시오.", "qtext": "<strong>Q10. [식의 대입 정리]</strong><br>A = x - 2, B = -2x + 3 일 때, 2A - B 를 x에 대한 식으로 나타내시오.", "placeholder": "예: 3x+5", "error": "시스템 임계치 돌파! 비상 경보!", "ans_check": "ans === '4x-7'"},
-    
-    # Area 3: 메인 엔진 재가동 (일차방정식의 풀이)
-    {"qnum": 11, "title": "메인 엔진 재가동", "story": "🛰️ <strong>[방정식 검증]</strong><br><br>참과 거짓이 미지수에 따라 결정되는 진짜 보안 방정식을 감지하세요.", "qtext": "<strong>Q11. [방정식의 이해]</strong><br>다음 식 중 미지수 x에 따라 참도 되고 거짓도 되는 <strong>방정식</strong>인 것의 번호를 쓰시오.<br>(1) 2x + 3 &nbsp;&nbsp;(2) x + x = 2x &nbsp;&nbsp;(3) 3x - 1 = 5 &nbsp;&nbsp;(4) 3 < 5", "placeholder": "숫자만 입력", "error": "위조 보안식 감지! 암호화 록!", "ans_check": "ans === '3'"},
-    {"qnum": 12, "title": "메인 엔진 재가동", "story": "🛰️ <strong>[등식의 성질]</strong><br><br>엔진 연료 이송 밸브의 양방향 수압을 평형 상태로 맞추세요.", "qtext": "<strong>Q12. [일차방정식 1]</strong><br>방정식 x - 4 = 6 의 해를 구하시오.", "placeholder": "숫자만 입력", "error": "연료 부족! 엔진 시동 지연!", "ans_check": "ans === '10'"},
-    {"qnum": 13, "title": "메인 엔진 재가동", "story": "🛰️ <strong>[이항 정리]</strong><br><br>이항 법칙에 따라 제어 장치의 밸브 각도를 조정하십시오.", "qtext": "<strong>Q13. [일차방정식 2]</strong><br>방정식 2x + 5 = 11 의 해를 구하시오.", "placeholder": "숫자만 입력", "error": "조정 각도 이탈! 압력 경보!", "ans_check": "ans === '3'"},
-    {"qnum": 14, "title": "메인 엔진 재가동", "story": "🛰️ <strong>[미지수 이항]</strong><br><br>미지수 항과 상수 항을 각 변으로 격리하여 해를 구합니다.", "qtext": "<strong>Q14. [일차방정식 3]</strong><br>방정식 3x - 2 = x + 6 의 해를 구하시오.", "placeholder": "숫자만 입력", "error": "격리 실패! 동력원 손상!", "ans_check": "ans === '4'"},
-    {"qnum": 15, "title": "메인 엔진 재가동", "story": "🛰️ <strong>[비례식 해결]</strong><br><br>비례 배분 제어 펌프의 내외항 동력비를 맞춰 해를 연산하십시오.", "qtext": "<strong>Q15. [비례식 풀이]</strong><br>비례식 (x - 1) : 2 = (2x + 1) : 5 을 만족하는 해 x의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "비율 붕괴! 기어 훼손 경고!", "ans_check": "ans === '7'"},
-    
-    # Area 4: 탈출 포드 사출 (일차방정식의 활용)
-    {"qnum": 16, "title": "탈출 포드 사출", "story": "🌠 <strong>[연속하는 수]</strong><br><br>순차적으로 발사할 세 포드의 번호를 계산해야 충돌을 방지합니다.", "qtext": "<strong>Q16. [연속하는 세 수]</strong><br>연속하는 세 자연수의 합이 36일 때, 세 자연수 중 가장 큰 자연수를 구하시오.", "placeholder": "숫자만 입력", "error": "궤도 겹침 감지! 발사 중단!", "ans_check": "ans === '13'"},
-    {"qnum": 17, "title": "탈출 포드 사출", "story": "🌠 <strong>[어떤 수 연산]</strong><br><br>메인 컴퓨터가 유실한 어떤 시스템 정수를 방정식으로 복원하세요.", "qtext": "<strong>Q17. [식의 활용 1]</strong><br>어떤 수의 3배에서 5를 뺀 수는 어떤 수의 2배보다 4만큼 크다. 이 어떤 수를 구하시오.", "placeholder": "숫자만 입력", "error": "데이터 복원 실패!", "ans_check": "ans === '9'"},
-    {"qnum": 18, "title": "탈출 포드 사출", "story": "🌠 <strong>[과부족 계산]</strong><br><br>대피 요원들의 탈출 포드 탑승 인원 분배를 해결하십시오.", "qtext": "<strong>Q18. [과부족 문제]</strong><br>요원들에게 산소 팩을 나누어 주는데, 한 명에게 4개씩 주면 3개가 남고, 5개씩 주면 2개가 부족하다. 요원 수(명)를 구하시오.", "placeholder": "숫자만 입력", "error": "산소 배분 실패! 탑승 불가!", "ans_check": "ans === '5'"},
-    {"qnum": 19, "title": "탈출 포드 사출", "story": "🌠 <strong>[거리 속력 시간]</strong><br><br>정거장 비상 해치까지 가장 빠르게 도달할 통로 거리를 연산하십시오.", "qtext": "<strong>Q19. [거리 속력 시간]</strong><br>해치까지 가는데 시속 4km로 걸어가면 시속 12km로 호버보드를 타고 가는 것보다 20분 늦게 도착한다. 총 통로 거리(km)를 구하시오.", "placeholder": "숫자만 입력", "error": "도착 시간 지연! 폭발 경보!", "ans_check": "ans === '2' || ans === '2km'"},
-    {"qnum": 20, "title": "탈출 포드 사출", "story": "🌠 <strong>[동면 연도 계산]</strong><br><br>동면 장치 가동 중인 요원들의 생체 나이 동기화 타이머를 설정하십시오.", "qtext": "<strong>Q20. [나이에 관한 문제]</strong><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?", "placeholder": "숫자만 입력", "error": "동기화 실패! 생체 나이 비동기화 경고!", "ans_check": "ans === '3' || ans === '3년'"}
+    {"qnum": 1, "title": "단순화 코드 전송", "story": "[오라클-X]: \"전송 코드가 복잡해 병목 현상이 발생합니다. 곱셈 기호를 생략하고 거듭제곱으로 간결하게 압축하십시오.\"", "qtext": "<strong>Q1. [문자의 사용]</strong><br>a × b × a × 3 을 곱셈 기호를 생략하고 거듭제곱을 사용하여 간단히 나타내시오.", "placeholder": "예: 5x^2y", "error": "구문 오류! 시스템 연결 실패!", "ans_check": "ans === '3a^2b' || ans === '3ba^2'"},
+    {"qnum": 2, "title": "전력 요구 식 세우기", "story": "[오라클-X]: \"소형 포드 5개, 대형 포드 1개의 총 에너지 요구량을 미지수 x를 사용해 정확한 다항식으로 산출하십시오.\"", "qtext": "<strong>Q2. [식 세우기]</strong><br>소형 포드 1개 작동에 x kW, 대형 포드 1개 작동에 1000 kW가 듭니다. 소형 포드 5개와 대형 포드 1개를 동시에 작동할 때 필요한 총 전력량을 x에 대한 식으로 나타내시오.", "placeholder": "예: 3x+500", "error": "에너지 초과 경고!", "ans_check": "ans === '5x+1000' || ans === '1000+5x'"},
+    {"qnum": 3, "title": "냉각수 계수 대입", "story": "[오라클-X]: \"현재 엔진 온도 x = -2입니다. 3x + 5 식에 대입해 냉각 시스템 계수를 계산하십시오.\"", "qtext": "<strong>Q3. [식의 값]</strong><br>x = -2 일 때, 대입 식 3x + 5 의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "냉각수 부족! 온도가 상승합니다!", "ans_check": "ans === '-1'"},
+    {"qnum": 4, "title": "증폭 계수 추출", "story": "[오라클-X]: \"안정 장치의 다항식 코드에서 일차항 x의 증폭 계수를 추출해 차단벽을 수동 가동하십시오.\"", "qtext": "<strong>Q4. [다항식과 일차식]</strong><br>다항식 2x² - 5x + 3 에서 x의 계수를 구하시오. (부호 포함)", "placeholder": "숫자만 입력", "error": "증폭 계수 불일치! 차단벽 가동!", "ans_check": "ans === '-5'"},
+    {"qnum": 5, "title": "예비 회로 분배 결합", "story": "[오라클-X]: \"병렬 회로의 괄호를 분배법칙으로 풀어 하나의 일차식으로 완벽하게 통합하십시오.\"", "qtext": "<strong>Q5. [일차식의 계산 1]</strong><br>식 3(2x - 4) + 2x 를 분배법칙을 활용해 간단히 정리한 식을 입력하시오.", "placeholder": "예: 5x-7", "error": "회로 쇼트 경고! 전력 누출!", "ans_check": "ans === '8x-12'"},
+    {"qnum": 6, "title": "서브 전압 분배기", "story": "[오라클-X]: \"전력 노드의 전압 (6x - 4)를 2로 나누어 서브 배터리에 과부하 없이 분배하십시오.\"", "qtext": "<strong>Q6. [일차식의 나눗셈]</strong><br>식 (6x - 4) ÷ 2 를 간단히 한 식을 입력하시오.", "placeholder": "예: 2x-5", "error": "배터리 과부하! 전력이 역류합니다!", "ans_check": "ans === '3x-2'"},
+    {"qnum": 7, "title": "주파수 대역 통분 동기화", "story": "[오라클-X]: \"분수 형태의 두 전파 동기화 신호를 통분 계산해 최적의 통신 주파수 식을 찾아내십시오.\"", "qtext": "<strong>Q7. [일차식의 계산 2]</strong><br>식 1/2(4x - 6) - 1/3(3x + 9) 를 계산하여 간단히 하시오.", "placeholder": "예: 2x-8", "error": "주파수 왜곡! 동기화 실패!", "ans_check": "ans === 'x-6'"},
+    {"qnum": 8, "title": "일차식 전원 코어 감별", "story": "[오라클-X]: \"시스템 과열 방지를 위해 차수가 정확히 1인 일차식 전원 코어 번호만 식별해 내십시오.\"", "qtext": "<strong>Q8. [일차식 판별]</strong><br>다음 중 차수가 1인 <strong>일차식</strong>의 번호만 쓰시오.<br>(1) 3x² &nbsp;&nbsp;(2) 0 × x + 2 &nbsp;&nbsp;(3) 1/x + 1 &nbsp;&nbsp;(4) -2x + 1", "placeholder": "숫자만 입력", "error": "회로 폭발! 코어가 과열되었습니다!", "ans_check": "ans === '4'"},
+    {"qnum": 9, "title": "잔류 저항 동류항 정리", "story": "[오라클-X]: \"두 동축 케이블 간의 잔류 저항식에서 괄호를 풀고 동류항끼리 정리해 값을 상쇄하십시오.\"", "qtext": "<strong>Q9. [동류항 정리]</strong><br>식 2x - 3 - (x - 5) 를 계산하여 간단히 정리하시오.", "placeholder": "예: 3x-4", "error": "저항 매칭 실패! 감전 위험!", "ans_check": "ans === 'x+2'"},
+    {"qnum": 10, "title": "부하값 대입 최종식", "story": "[오라클-X]: \"A와 B 부하 식을 2A - B 에 대입하여 최종 시스템 부하 공식을 도출해 임계치를 해제하십시오.\"", "qtext": "<strong>Q10. [식의 대입 정리]</strong><br>A = x - 2, B = -2x + 3 일 때, 2A - B 를 x에 대한 식으로 나타내시오.", "placeholder": "예: 3x+5", "error": "시스템 임계치 돌파! 비상 경보!", "ans_check": "ans === '4x-7'"},
+    {"qnum": 11, "title": "진짜 보안 방정식 감별", "story": "[오라클-X]: \"참과 거짓이 x값에 따라 변하는 진짜 '방정식'만을 스캔하여 위조 보안식을 걸러내십시오.\"", "qtext": "<strong>Q11. [방정식의 이해]</strong><br>다음 식 중 미지수 x에 따라 참도 되고 거짓도 되는 <strong>방정식</strong>인 것의 번호를 쓰시오.<br>(1) 2x + 3 &nbsp;&nbsp;(2) x + x = 2x &nbsp;&nbsp;(3) 3x - 1 = 5 &nbsp;&nbsp;(4) 3 < 5", "placeholder": "숫자만 입력", "error": "위조 보안식 감지! 암호화 록!", "ans_check": "ans === '3'"},
+    {"qnum": 12, "title": "수압 밸브 이항 제어 1", "story": "[오라클-X]: \"엔진 연료 밸브 방정식 x - 4 = 6 의 해를 구해 양방향 수압을 평형 상태로 맞추십시오.\"", "qtext": "<strong>Q12. [일차방정식 1]</strong><br>방정식 x - 4 = 6 의 해를 구하시오.", "placeholder": "숫자만 입력", "error": "연료 부족! 엔진 시동 지연!", "ans_check": "ans === '10'"},
+    {"qnum": 13, "title": "수압 밸브 이항 제어 2", "story": "[오라클-X]: \"2x + 5 = 11 일차방정식 이항 법칙에 따라 제어 장치의 밸브 각도를 조정하십시오.\"", "qtext": "<strong>Q13. [일차방정식 2]</strong><br>방정식 2x + 5 = 11 의 해를 구하시오.", "placeholder": "숫자만 입력", "error": "조정 각도 이탈! 압력 경보!", "ans_check": "ans === '3'"},
+    {"qnum": 14, "title": "미지수/상수 이항 격리", "story": "[오라클-X]: \"미지수 항과 상수 항을 각 변으로 완벽히 격리하여 3x - 2 = x + 6 방정식의 해를 연산하십시오.\"", "qtext": "<strong>Q14. [일차방정식 3]</strong><br>방정식 3x - 2 = x + 6 의 해를 구하시오.", "placeholder": "숫자만 입력", "error": "격리 실패! 동력원 손상!", "ans_check": "ans === '4'"},
+    {"qnum": 15, "title": "비례식 펌프 동력비", "story": "[오라클-X]: \"비례 배분 제어 펌프의 내항과 외항 동력비를 맞춰 방정식의 정확한 해를 구하십시오.\"", "qtext": "<strong>Q15. [비례식 풀이]</strong><br>비례식 (x - 1) : 2 = (2x + 1) : 5 을 만족하는 해 x의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "비율 붕괴! 기어 훼손 경고!", "ans_check": "ans === '7'"},
+    {"qnum": 16, "title": "사출 궤도 충돌 방지", "story": "[오라클-X]: \"연속하는 세 자연수의 합이 36입니다. 포드 충돌을 막기 위해 가장 큰 자연수 번호를 계산하십시오.\"", "qtext": "<strong>Q16. [연속하는 세 수]</strong><br>연속하는 세 자연수의 합이 36일 때, 세 자연수 중 가장 큰 자연수를 구하시오.", "placeholder": "숫자만 입력", "error": "궤도 겹침 감지! 발사 중단!", "ans_check": "ans === '13'"},
+    {"qnum": 17, "title": "유실된 시스템 정수 복원", "story": "[오라클-X]: \"어떤 수의 3배에서 5를 뺀 값이 2배보다 4 큽니다. 유실된 이 시스템 정수를 방정식으로 복원하십시오.\"", "qtext": "<strong>Q17. [식의 활용 1]</strong><br>어떤 수의 3배에서 5를 뺀 수는 어떤 수의 2배보다 4만큼 크다. 이 어떤 수를 구하시오.", "placeholder": "숫자만 입력", "error": "데이터 복원 실패!", "ans_check": "ans === '9'"},
+    {"qnum": 18, "title": "산소 팩 과부족 분배", "story": "[오라클-X]: \"1인 4개 지급 시 3개 남고, 5개 지급 시 2개 부족합니다. 정확한 탑승 요원 수를 산출하십시오.\"", "qtext": "<strong>Q18. [과부족 문제]</strong><br>요원들에게 산소 팩을 나누어 주는데, 한 명에게 4개씩 주면 3개가 남고, 5개씩 주면 2개가 부족하다. 요원 수(명)를 구하시오.", "placeholder": "숫자만 입력", "error": "산소 배분 실패! 탑승 불가!", "ans_check": "ans === '5'"},
+    {"qnum": 19, "title": "대피 통로 거리 속력 연산", "story": "[오라클-X]: \"시속 4km 걷기와 시속 12km 호버보드 사이의 20분 격차를 이용해 해치까지의 총 거리를 도출하십시오.\"", "qtext": "<strong>Q19. [거리 속력 시간]</strong><br>해치까지 가는데 시속 4km로 걸어가면 시속 12km로 호버보드를 타고 가는 것보다 20분 늦게 도착한다. 총 통로 거리(km)를 구하시오.", "placeholder": "숫자만 입력", "error": "도착 시간 지연! 폭발 경보!", "ans_check": "ans === '2' || ans === '2km'"},
+    {"qnum": 20, "title": "동면 생체 나이 동기화", "story": "[오라클-X]: \"현재 42세, 12세 모녀의 나이가 3배가 되는 시점(년 후)을 구하여 동면 장치 타이머를 동기화하십시오!\"", "qtext": "<strong>Q20. [나이에 관한 문제]</strong><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?", "placeholder": "숫자만 입력", "error": "동기화 실패! 생체 나이 비동기화 경고!", "ans_check": "ans === '3' || ans === '3년'"}
 ]
 
 # Generate panels HTML
@@ -1284,6 +1309,20 @@ new_content = re.sub(r'<!-- Q1.*?-->', lambda m: '<!-- Q1 -->\n' + panels_html +
 # Inject JS checks right after let isMuted = ...
 # Search where cleanString is or // Q1
 new_content = re.sub(r'// Q1[\s\S]*?(?=window\.onload = \(\) => \{)', lambda m: '// Q1\n' + js_checks + '\n        ', new_content)
+
+
+# Apply CSS Minification before writing
+import re
+def minify_css_builder(html_content):
+    def replacer(match):
+        css_code = match.group(1)
+        css_code = re.sub(r'/\*.*?\*/', '', css_code, flags=re.DOTALL)
+        css_code = re.sub(r'\s+', ' ', css_code)
+        css_code = re.sub(r'\s*([{}:;,])\s*', r'\1', css_code)
+        return f"<style>{css_code}</style>"
+    return re.sub(r'<style>(.*?)</style>', replacer, html_content, flags=re.DOTALL)
+
+new_content = minify_css_builder(new_content)
 
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(new_content)
