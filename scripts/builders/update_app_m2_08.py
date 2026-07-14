@@ -18,13 +18,13 @@ base_html = """<!DOCTYPE html>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #110000;
-            --glass-bg: rgba(25, 5, 5, 0.75);
-            --glass-border: rgba(255, 30, 30, 0.25);
-            --accent: #ff1e1e;
-            --accent-hover: #ff5555;
-            --text-main: #f0fbf0;
-            --text-muted: #9abfa0;
+            --bg-main: #061c10;
+            --glass-bg: rgba(6, 28, 16, 0.75);
+            --glass-border: rgba(220, 53, 69, 0.25);
+            --accent: #dc3545;
+            --accent-hover: #ff4d5a;
+            --text-main: #f8fbf9;
+            --text-muted: #9abfb5;
         }
 
         * {
@@ -50,8 +50,8 @@ base_html = """<!DOCTYPE html>
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                radial-gradient(circle at 10% 20%, rgba(50, 205, 50, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(34, 139, 34, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(220, 53, 69, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 28, 16, 0.3) 0%, transparent 40%);
             z-index: -2;
         }
 
@@ -68,11 +68,11 @@ base_html = """<!DOCTYPE html>
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(50, 205, 50, 0.4);
-            border-left: 1px solid rgba(50, 205, 50, 0.4);
+            border-top: 1px solid rgba(220, 53, 69, 0.4);
+            border-left: 1px solid rgba(220, 53, 69, 0.4);
             border-radius: 24px;
             padding: 3rem;
-            box-shadow: 0 0 50px rgba(50, 205, 50, 0.1), inset 0 0 20px rgba(50, 205, 50, 0.02);
+            box-shadow: 0 0 50px rgba(220, 53, 69, 0.15), inset 0 0 20px rgba(220, 53, 69, 0.02);
             display: none; 
             opacity: 0;
             transform: translateY(20px);
@@ -105,7 +105,7 @@ base_html = """<!DOCTYPE html>
             margin-bottom: 1.5rem;
             font-weight: 500;
             letter-spacing: 1px;
-            border-bottom: 1px solid rgba(50, 205, 50, 0.15);
+            border-bottom: 1px solid rgba(220, 53, 69, 0.15);
             padding-bottom: 0.75rem;
         }
 
@@ -119,8 +119,8 @@ base_html = """<!DOCTYPE html>
         }
 
         .story-box {
-            background: rgba(10, 20, 15, 0.5);
-            border: 1px solid rgba(50, 205, 50, 0.15);
+            background: rgba(6, 28, 16, 0.5);
+            border: 1px solid rgba(220, 53, 69, 0.15);
             border-radius: 12px;
             padding: 1.25rem;
             margin-bottom: 1.5rem;
@@ -163,8 +163,8 @@ base_html = """<!DOCTYPE html>
         }
 
         .question-box {
-            background: rgba(50, 205, 50, 0.05);
-            border: 1px dashed rgba(50, 205, 50, 0.3);
+            background: rgba(220, 53, 69, 0.05);
+            border: 1px dashed rgba(220, 53, 69, 0.3);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -185,8 +185,8 @@ base_html = """<!DOCTYPE html>
 
         input[type="text"] {
             flex: 1;
-            background: rgba(10, 20, 15, 0.8);
-            border: 1px solid rgba(50, 205, 50, 0.3);
+            background: rgba(6, 28, 16, 0.8);
+            border: 1px solid rgba(220, 53, 69, 0.3);
             border-radius: 8px;
             padding: 0.75rem 1rem;
             color: #fff;
@@ -198,7 +198,7 @@ base_html = """<!DOCTYPE html>
         input[type="text"]:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(50, 205, 50, 0.3);
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.3);
         }
 
         .btn-group {
@@ -216,13 +216,13 @@ base_html = """<!DOCTYPE html>
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(50, 205, 50, 0.3);
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
             letter-spacing: 1px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(50, 205, 50, 0.5);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.5);
             background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
         }
 
@@ -330,7 +330,7 @@ base_html = """<!DOCTYPE html>
         }
         
         .log-content h2 {
-            border-bottom: 1px solid rgba(50, 205, 50, 0.2);
+            border-bottom: 1px solid rgba(220, 53, 69, 0.2);
             padding-bottom: 0.5rem;
             margin-bottom: 1rem;
         }
@@ -397,13 +397,13 @@ base_html = """<!DOCTYPE html>
         <!-- Intro Panel -->
         <div id="intro" class="glass-panel active">
             <h1>행운의 카지노 로얄</h1>
-            <h2>일차부등식의 해와 성질</h2>
-            <img src="assets/m2_08_probability/intro.png" alt="Background" class="panel-image">
+            <h2>경우의 수와 확률</h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!</div>
+                <div class="story-text">화려한 라스베이거스의 카지노, 악당 갬블러 '잭팟'이 카지노의 시스템을 조작해 모든 돈을 털어가려 합니다. 이를 막기 위해서는 주사위, 동전, 카드 게임 속에 숨겨진 확률의 법칙 20개를 정확히 계산해 그를 게임에서 파산시켜야 합니다! 운이 아닌 수학으로 승부하세요!</div>
             </div>
             <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">숲의 저울 가동</button>
+                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">카드 배틀 시작</button>
             </div>
         </div>
 
@@ -412,10 +412,10 @@ base_html = """<!DOCTYPE html>
         <!-- Outro Panel -->
         <div id="outro" class="glass-panel">
             <h1>미션 완료!</h1>
-            <h2>요정 숲의 균형 회복</h2>
-            <img src="assets/m2_08_probability/outro.png" alt="Ending" class="panel-image">
+            <h2>수학은 완벽한 행운을 이긴다</h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!</div>
+                <div class="story-text">마지막 오답 확률 80%를 계산해 내며 잭팟의 카드 패가 사기임을 만천하에 증명했습니다! 잭팟은 결국 파산하여 무릎을 꿇고, 카지노에는 정의가 구현되었습니다. 수학의 힘으로 완벽한 카지노의 위기를 물리쳤습니다!</div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -537,186 +537,185 @@ base_html = """<!DOCTYPE html>
 qs = [
     {
         "qnum": 1,
-        "title": "스테이지 1",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "딜러의 주사위 분석 1",
+        "story": "잭팟의 딜러가 사용하는 6면 주사위가 테이블에 놓여 있습니다. 짝수의 눈이 나와 잭팟의 첫 베팅을 무너뜨리는 경우의 수를 계산해 입력하세요.",
         "qtext": "<strong>Q1.</strong> 1에서 6까지 있는 주사위 한 개를 던질 때, 짝수의 눈이 나오는 경우의 수를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 짝수는 2, 4, 6입니다.",
         "ans_check": "ans === '3'"
     },
     {
         "qnum": 2,
-        "title": "스테이지 2",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "쌍주사위의 전수 조합",
+        "story": "잭팟이 두 개의 주사위를 컵에 넣어 흔듭니다. 컵을 열었을 때 발생할 수 있는 전체 눈의 경우의 수(모든 조합)를 구하세요.",
         "qtext": "<strong>Q2.</strong> 서로 다른 두 개의 주사위를 동시에 던질 때, 일어날 수 있는 모든 경우의 수를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 각 주사위당 6가지씩 동시에 일어나는 경우입니다.",
         "ans_check": "ans === '36'"
     },
     {
         "qnum": 3,
-        "title": "스테이지 3",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "동전과 주사위의 링크",
+        "story": "동전 1개와 주사위 1개를 룰렛 머신에 동시에 던집니다. 시스템 룰렛 판에 기록될 수 있는 모든 경우의 수는 몇 가지입니까?",
         "qtext": "<strong>Q3.</strong> 동전 1개와 주사위 1개를 동시에 던질 때 일어나는 모든 경우의 수를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 동전의 경우의 수와 주사위의 경우의 수를 곱해보세요.",
         "ans_check": "ans === '12'"
     },
     {
         "qnum": 4,
-        "title": "스테이지 4",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "잭팟의 히든카드 추적",
+        "story": "1부터 10까지의 숫자 카드 중 3의 배수가 적혀 잭팟의 사기 패턴을 발동시키는 카드의 장수를 계산해 전송하십시오.",
         "qtext": "<strong>Q4.</strong> 1에서 10까지 적힌 10장의 카드에서 1장을 뽑을 때, 3의 배수가 나오는 경우의 수를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 10 이하의 수 중 3의 배수들의 개수입니다.",
         "ans_check": "ans === '3'"
     },
     {
         "qnum": 5,
-        "title": "스테이지 5",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "주사위 합의 조작선",
+        "story": "두 주사위를 동시에 던졌을 때, 두 눈의 합이 정확히 4가 되어 잭팟의 배팅 칩을 획득하는 경우의 수를 구하십시오.",
         "qtext": "<strong>Q5.</strong> 두 개의 주사위를 동시에 던질 때, 눈의 합이 4가 되는 경우의 수를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 합이 4가 되는 순서쌍 (x, y)의 개수를 구하세요.",
         "ans_check": "ans === '3'"
     },
     {
         "qnum": 6,
-        "title": "스테이지 6",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "딜러의 위장 복장",
+        "story": "제 2구역: 딜러의 선택입니다. 카지노 딜러의 단상에 상의 3벌과 하의 4벌의 제복이 있습니다. 딜러가 매칭해서 입을 수 있는 총 의상 조합의 수는?",
         "qtext": "<strong>Q6.</strong> 상의 3벌, 하의 4벌이 있을 때, 짝을 지어 입는 경우의 수는?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 상의 선택과 하의 선택은 연달아 일어나므로 곱의 법칙을 적용합니다.",
         "ans_check": "ans === '12'"
     },
     {
         "qnum": 7,
-        "title": "스테이지 7",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "탈출 경로의 탐색",
+        "story": "카지노 해킹 완수 후 네바다를 빠져나갈 탈출용 버스 노선 3가지와 기차 노선 2가지가 있습니다. 한 번에 한 수단만 고르는 경우의 수는?",
         "qtext": "<strong>Q7.</strong> 서울에서 부산으로 가는 버스가 3가지, 기차가 2가지 있을 때, 서울에서 부산으로 가는 경우의 수는?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 동시에 타는 것이 아닌 선택지 중 하나이므로 합의 법칙을 씁니다.",
         "ans_check": "ans === '5'"
     },
     {
         "qnum": 8,
-        "title": "스테이지 8",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "경호원 보안 레이아웃",
+        "story": "의심받지 않고 복도를 지나가야 합니다. 보초를 서고 있는 경호원 A, B, C 세 명을 문 앞에 일렬로 줄 세우는 총 경우의 수를 구하세요.",
         "qtext": "<strong>Q8.</strong> A, B, C 세 명의 학생을 일렬로 세우는 경우의 수는?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 3명을 순서대로 배열하는 경우의 수($3 \times 2 \times 1$)입니다.",
         "ans_check": "ans === '6'"
     },
     {
         "qnum": 9,
-        "title": "스테이지 9",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "카지노 임원진 선출",
+        "story": "잭팟의 사기 딜러 4명 중 의심 대상 1순위(대표)와 2순위(부대표)를 임의로 지목하여 보안 로그를 감시하는 모든 경우의 수는 몇 가지입니까?",
         "qtext": "<strong>Q9.</strong> 4명 중 반장 1명, 부반장 1명을 뽑는 경우의 수는?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 순서와 직책이 있으므로 $4 \times 3$으로 연산합니다.",
         "ans_check": "ans === '12'"
     },
     {
         "qnum": 10,
-        "title": "스테이지 10",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "수사팀 구성 조합",
+        "story": "침투 임무를 수행할 동등 자격의 현장 비밀 요원 2명을 전체 요원 4명 중에서 동반 선출하는 모든 경우의 수를 알아내십시오.",
         "qtext": "<strong>Q10.</strong> 4명 중 자격이 같은 대표 2명을 뽑는 경우의 수는?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 자격이 같으므로 뽑는 순서의 중복을 제거해야 합니다. ($(4 \times 3) \div 2$)",
         "ans_check": "ans === '6'"
     },
     {
         "qnum": 11,
-        "title": "스테이지 11",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q11.</strong> 어떤 사건이 일어날 확률을 $p$라고 할 때, $p$의 범위는 어떻게 되는가? (최소값과 최대값)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '0'"
+        "title": "확률의 기본 범위",
+        "story": "제 3구역: 배팅의 수학입니다. 칩 환전기 콘솔입니다. 모든 수학적 확률 $p$가 나타낼 수 있는 값의 최소와 최대 제한 부등식을 정확하게 세우세요.",
+        "qtext": "<strong>Q11.</strong> 어떤 사건이 일어날 확률을 $p$라고 할 때, $p$의 범위는 어떻게 되는가?",
+        "placeholder": "예: 0<=p<=1 (공백 없이 입력)",
+        "error": "부등식 표현이 잘못되었습니다. 확률은 0 이상 1 이하의 범위를 가집니다.",
+        "ans_check": "ans.replace(/\s+/g, '') === '0<=P<=1' || ans.replace(/\s+/g, '') === '0<=P<=1.0'"
     },
     {
         "qnum": 12,
-        "title": "스테이지 12",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "치명적 잭팟의 실패율",
+        "story": "절대로 일어날 수 없는 조작 오류 사건(예: 주사위를 굴렸는데 0이나 7이 나옴)의 확률 값을 수치로 타이핑하여 락을 푸십시오.",
         "qtext": "<strong>Q12.</strong> 절대로 일어날 수 없는 사건의 확률은 얼마인가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "숫자만 입력",
+        "error": "틀렸습니다. 불가능한 사건의 확률 값입니다.",
         "ans_check": "ans === '0'"
     },
     {
         "qnum": 13,
-        "title": "스테이지 13",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "동전 승부의 진실",
+        "story": "잭팟이 칩을 걸고 던진 게임 동선에서, 앞면이 나올 수학적 기댓 확률을 분수 형태로 도출해 칩 제어 장치에 적용하세요.",
         "qtext": "<strong>Q13.</strong> 동전 한 개를 던질 때 앞면이 나올 확률을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '1/2'"
+        "placeholder": "분수 형태로 입력 (예: 1/2)",
+        "error": "틀렸습니다. 동전의 단면은 앞면과 뒷면 총 두 가지입니다.",
+        "ans_check": "ans === '1/2' || ans === '0.5'"
     },
     {
         "qnum": 14,
-        "title": "스테이지 14",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "소수 슬롯머신",
+        "story": "슬롯 머신 휠의 6개 숫자 중 소수(2, 3, 5)가 걸려 잭팟의 사기 패턴의 흐름을 끊어낼 확률을 분수로 계산하십시오.",
         "qtext": "<strong>Q14.</strong> 주사위 한 개를 던질 때 소수의 눈이 나올 확률을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '1/2'"
+        "placeholder": "분수 형태로 입력 (예: 1/2)",
+        "error": "틀렸습니다. 6개 눈 중 소수(2, 3, 5)의 비율을 구하세요.",
+        "ans_check": "ans === '1/2' || ans === '0.5'"
     },
     {
         "qnum": 15,
-        "title": "스테이지 15",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "2 이하의 안전 룰",
+        "story": "룰렛 휠을 굴려 2 이하의 낮은 눈이 떨어져 잭팟의 보안 공격을 일시 지연시키는 성공 확률을 기약분수로 적으세요.",
         "qtext": "<strong>Q15.</strong> 주사위 한 개를 던질 때, 2 이하의 눈이 나올 확률을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "분수 형태로 입력 (예: 1/3)",
+        "error": "틀렸습니다. 전체 6가지 중 1, 2 두 가지입니다. 약분하여 기약분수로 적으세요.",
         "ans_check": "ans === '1/3'"
     },
     {
         "qnum": 16,
-        "title": "스테이지 16",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "포커 덱의 홀수 확률",
+        "story": "제 4구역: 잭팟 무력화입니다. 1부터 5까지 적힌 포커 덱 5장 중 한 장을 뽑을 때, 짝수(2, 4)가 아닌 홀수 카드를 뽑아 잭팟을 이길 확률은?",
         "qtext": "<strong>Q16.</strong> 1부터 5까지 적힌 5장의 카드 중 1장을 뽑을 때, 짝수가 아닐 확률을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '3/5'"
+        "placeholder": "분수 형태로 입력 (예: 3/5)",
+        "error": "틀렸습니다. 5장 중 홀수 카드의 장수 비율입니다.",
+        "ans_check": "ans === '3/5' || ans === '0.6'"
     },
     {
         "qnum": 17,
-        "title": "스테이지 17",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "비 올 확률의 대칭",
+        "story": "기상 조작 레이저 시스템 연산 중, 오늘 비가 올 확률이 3/5로 매핑되어 있습니다. 시스템 과열을 막기 위해 비가 오지 않을 확률을 역산해 쏘세요.",
         "qtext": "<strong>Q17.</strong> 비가 올 확률이 $\frac{3}{5}$ 일 때, 비가 오지 않을 확률을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '2/5'"
+        "placeholder": "분수 형태로 입력 (예: 2/5)",
+        "error": "틀렸습니다. 전체 확률 1에서 비가 올 확률 3/5을 빼서 계산하세요.",
+        "ans_check": "ans === '2/5' || ans === '0.4'"
     },
     {
         "qnum": 18,
-        "title": "스테이지 18",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "색상 칩 주머니",
+        "story": "딜러의 칩 주머니에 빨간 칩 3개와 파란 칩 2개가 보관되어 있습니다. 임의로 1개를 꺼내어 빨간 칩을 획득할 수 있는 확률을 구하세요.",
         "qtext": "<strong>Q18.</strong> A 주머니에는 빨간 공 3개와 파란 공 2개가 있다. 1개를 꺼낼 때 빨간 공이 나올 확률은?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '3/5'"
+        "placeholder": "분수 형태로 입력 (예: 3/5)",
+        "error": "틀렸습니다. 전체 공의 개수 중 빨간 공의 개수 비율입니다.",
+        "ans_check": "ans === '3/5' || ans === '0.6'"
     },
     {
         "qnum": 19,
-        "title": "스테이지 19",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "더블 코인 플립",
+        "story": "잭팟과의 최종 주화 던지기 내기입니다. 동전 2개를 동시에 하늘로 플립하여 두 동전 모두 앞면이 나와 게임에서 이길 연계 확률은?",
         "qtext": "<strong>Q19.</strong> 동전 2개를 동시에 던질 때, 모두 앞면이 나올 확률을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '1/4'"
+        "placeholder": "분수 형태로 입력 (예: 1/4)",
+        "error": "틀렸습니다. 각 동전의 앞면 확률 1/2을 서로 곱해보십시오.",
+        "ans_check": "ans === '1/4' || ans === '0.25'"
     },
     {
         "qnum": 20,
-        "title": "스테이지 20",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "마지막 선택의 순간",
+        "story": "잭팟이 차단막 뒤의 5지선다형 오지 선다 트랩을 작동시켰습니다. 임의의 하나의 선택지를 찍었을 때, 오답을 골라 트랩이 격발될 확률을 전송하십시오!",
         "qtext": "<strong>Q20.</strong> 객관식 5지 선다형 문제 1개를 임의로 찍었을 때, 틀릴 확률을 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '4/5'"
+        "placeholder": "분수 형태로 입력 (예: 4/5)",
+        "error": "틀렸습니다. 정답 확률이 1/5이므로 오답(틀릴) 확률을 구하십시오.",
+        "ans_check": "ans === '4/5' || ans === '0.8'"
     }
 ]
-
 # Generate Q panels
 
 import re
@@ -788,7 +787,7 @@ for q in qs:
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_08_probability/q{qnum}.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>

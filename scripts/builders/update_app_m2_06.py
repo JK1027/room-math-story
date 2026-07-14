@@ -18,13 +18,13 @@ base_html = """<!DOCTYPE html>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #1a140d;
-            --glass-bg: rgba(30, 24, 15, 0.75);
+            --bg-main: #14120c;
+            --glass-bg: rgba(28, 24, 18, 0.75);
             --glass-border: rgba(212, 175, 55, 0.25);
             --accent: #d4af37;
-            --accent-hover: #f0d05c;
-            --text-main: #f0fbf0;
-            --text-muted: #9abfa0;
+            --accent-hover: #ffdf00;
+            --text-main: #fbfbf3;
+            --text-muted: #cbbba0;
         }
 
         * {
@@ -50,8 +50,8 @@ base_html = """<!DOCTYPE html>
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                radial-gradient(circle at 10% 20%, rgba(50, 205, 50, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(34, 139, 34, 0.08) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(28, 24, 18, 0.3) 0%, transparent 40%);
             z-index: -2;
         }
 
@@ -68,11 +68,11 @@ base_html = """<!DOCTYPE html>
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(50, 205, 50, 0.4);
-            border-left: 1px solid rgba(50, 205, 50, 0.4);
+            border-top: 1px solid rgba(212, 175, 55, 0.4);
+            border-left: 1px solid rgba(212, 175, 55, 0.4);
             border-radius: 24px;
             padding: 3rem;
-            box-shadow: 0 0 50px rgba(50, 205, 50, 0.1), inset 0 0 20px rgba(50, 205, 50, 0.02);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.15), inset 0 0 20px rgba(212, 175, 55, 0.02);
             display: none; 
             opacity: 0;
             transform: translateY(20px);
@@ -105,7 +105,7 @@ base_html = """<!DOCTYPE html>
             margin-bottom: 1.5rem;
             font-weight: 500;
             letter-spacing: 1px;
-            border-bottom: 1px solid rgba(50, 205, 50, 0.15);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
             padding-bottom: 0.75rem;
         }
 
@@ -119,8 +119,8 @@ base_html = """<!DOCTYPE html>
         }
 
         .story-box {
-            background: rgba(10, 20, 15, 0.5);
-            border: 1px solid rgba(50, 205, 50, 0.15);
+            background: rgba(28, 24, 18, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 12px;
             padding: 1.25rem;
             margin-bottom: 1.5rem;
@@ -163,8 +163,8 @@ base_html = """<!DOCTYPE html>
         }
 
         .question-box {
-            background: rgba(50, 205, 50, 0.05);
-            border: 1px dashed rgba(50, 205, 50, 0.3);
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px dashed rgba(212, 175, 55, 0.3);
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
@@ -185,8 +185,8 @@ base_html = """<!DOCTYPE html>
 
         input[type="text"] {
             flex: 1;
-            background: rgba(10, 20, 15, 0.8);
-            border: 1px solid rgba(50, 205, 50, 0.3);
+            background: rgba(28, 24, 18, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.3);
             border-radius: 8px;
             padding: 0.75rem 1rem;
             color: #fff;
@@ -198,7 +198,7 @@ base_html = """<!DOCTYPE html>
         input[type="text"]:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(50, 205, 50, 0.3);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
         }
 
         .btn-group {
@@ -216,13 +216,13 @@ base_html = """<!DOCTYPE html>
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(50, 205, 50, 0.3);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
             letter-spacing: 1px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(50, 205, 50, 0.5);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
             background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent) 100%);
         }
 
@@ -330,7 +330,7 @@ base_html = """<!DOCTYPE html>
         }
         
         .log-content h2 {
-            border-bottom: 1px solid rgba(50, 205, 50, 0.2);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
             padding-bottom: 0.5rem;
             margin-bottom: 1rem;
         }
@@ -397,13 +397,13 @@ base_html = """<!DOCTYPE html>
         <!-- Intro Panel -->
         <div id="intro" class="glass-panel active">
             <h1>피라미드 건축가의 비밀</h1>
-            <h2>일차부등식의 해와 성질</h2>
-            <img src="assets/m2_06_geometry1/intro.png" alt="Background" class="panel-image">
+            <h2>도형의 성질 1 (삼각형과 사각형)</h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!</div>
+                <div class="story-text">고대 이집트의 위대한 건축가 임호텝이 남긴 파피루스 설계도가 발견되었습니다. 이 설계도에는 삼각형과 사각형의 기하학적 성질을 이용한 20개의 암호가 걸려 있습니다. 여러분은 임호텝의 제자가 되어 도형의 성질(내심, 외심, 평행사변형 등)을 파악하고 설계도의 봉인을 해제해야 합니다!</div>
             </div>
             <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">숲의 저울 가동</button>
+                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">설계도 봉인 해제 시작</button>
             </div>
         </div>
 
@@ -412,10 +412,10 @@ base_html = """<!DOCTYPE html>
         <!-- Outro Panel -->
         <div id="outro" class="glass-panel">
             <h1>미션 완료!</h1>
-            <h2>요정 숲의 균형 회복</h2>
-            <img src="assets/m2_06_geometry1/outro.png" alt="Ending" class="panel-image">
+            <h2>황금빛 입체 도면의 탄생</h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!</div>
+                <div class="story-text">정사각형 보석을 대각선에 맞추자, 파피루스 설계도의 모든 선형이 황금빛으로 타오르며 완벽한 피라미드의 입체 도면이 떠오릅니다! 여러분은 임호텝의 기하학적 시험을 통과하고 인류 최고의 건축 기술을 손에 넣었습니다!</div>
             </div>
             <div class="btn-group">
                 <button class="btn" onclick="location.reload()">다시 하기</button>
@@ -537,182 +537,182 @@ base_html = """<!DOCTYPE html>
 qs = [
     {
         "qnum": 1,
-        "title": "스테이지 1",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "설계도의 기본 뼈대",
+        "story": "가장 먼저 임호텝의 설계도 기초를 분석해야 합니다. 두 기둥의 길이가 같은 기초적인 삼각 골조의 이름을 규정하여 암호 다이얼을 정렬하세요.",
         "qtext": "<strong>Q1.</strong> 두 변의 길이가 같은 삼각형을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "이등변삼각형 입력",
+        "error": "삼각형의 명칭이 올바르지 않습니다.",
         "ans_check": "ans === '이등변삼각형'"
     },
     {
         "qnum": 2,
-        "title": "스테이지 2",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q2.</strong> 이등변삼각형의 두 ( ? )의 크기는 같다. 빈칸에 알맞은 말은? (힌트: 밑각)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "title": "대칭의 각도",
+        "story": "삼각형의 기단이 대칭 균형을 잡기 위해선 두 변이 만나는 밑부분의 두 각의 크기가 완벽히 같아야 합니다. 빈칸에 들어갈 알맞은 말을 구하십시오.",
+        "qtext": "<strong>Q2.</strong> 이등변삼각형의 두 ( ? )의 크기는 같다.",
+        "placeholder": "두 글자 입력",
+        "error": "틀렸습니다. 밑변에 접하는 두 각의 이름입니다.",
         "ans_check": "ans === '밑각'"
     },
     {
         "qnum": 3,
-        "title": "스테이지 3",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "기단의 경사각 계산",
+        "story": "설계도의 꼭대기 각인 꼭지각이 40도로 계측되었습니다. 양쪽 대칭 경사면의 하단 각도가 몇 도여야 완벽한 평형이 맞을까요?",
         "qtext": "<strong>Q3.</strong> 꼭지각이 40도인 이등변삼각형의 한 밑각의 크기를 구하시오.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '70도'"
+        "placeholder": "단위 생략하고 숫자만 또는 '70도' 형태로 입력",
+        "error": "틀렸습니다. 삼각형 내각의 합(180도)과 꼭지각의 차를 2로 나누어보세요.",
+        "ans_check": "ans === '70' || ans === '70도'"
     },
     {
         "qnum": 4,
-        "title": "스테이지 4",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "직각 기둥의 대칭 조건",
+        "story": "피라미드 내부 직각 묘실 벽면들이 정확히 합동인지 확인하기 위한 직각삼각형의 두 가지 합동 조건을 알파벳 기호로 입력창에 전송하세요.",
         "qtext": "<strong>Q4.</strong> 직각삼각형의 합동 조건 두 가지를 영어 기호로 쓰시오. (예: RHS, RHA)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === 'RHS'"
+        "placeholder": "예: RHS, RHA",
+        "error": "합동 조건 기호가 올바르지 않습니다. (RHS, RHA 확인)",
+        "ans_check": "ans.includes('RHS') && ans.includes('RHA')"
     },
     {
         "qnum": 5,
-        "title": "스테이지 5",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "예각의 합동 판정",
+        "story": "경사면의 빗변 길이와 한 예각의 크기가 동일하다면, 두 개의 석조 구조는 서로 완벽히 포개집니다. 이 합동 조건의 정식 기호를 입력하세요.",
         "qtext": "<strong>Q5.</strong> 빗변의 길이와 한 예각의 크기가 같은 두 직각삼각형은 서로 합동이다. 이 조건을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === 'RHA'"
+        "placeholder": "알파벳 기호 입력",
+        "error": "틀렸습니다. R...?",
+        "ans_check": "ans.includes('RHA')"
     },
     {
         "qnum": 6,
-        "title": "스테이지 6",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "세 꼭짓점의 외접원",
+        "story": "제 2구역: 신성한 중심점입니다. 세 꼭짓점을 모두 관통하여 감싸 안는 외접원의 핵심 동력원인 중심 명칭을 규명해야 다음 구역의 문이 열립니다.",
         "qtext": "<strong>Q6.</strong> 삼각형의 세 꼭짓점을 지나는 원을 외접원이라 하고, 그 중심을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "두 글자 입력",
+        "error": "올바른 명칭이 아닙니다. 바깥쪽 원의 중심입니다.",
         "ans_check": "ans === '외심'"
     },
     {
         "qnum": 7,
-        "title": "스테이지 7",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "기울어진 기둥의 외심",
+        "story": "한 각이 90도보다 크게 기울어진 둔각삼각형 형태의 사원 지붕에서, 외접원의 중심은 지붕 구조물의 내부와 외부 중 어느 곳에 위치하게 됩니까?",
         "qtext": "<strong>Q7.</strong> 둔각삼각형의 외심은 삼각형의 ( 내부 / 외부 )에 위치한다.",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "내부 또는 외부 입력",
+        "error": "틀렸습니다. 기하학 모형을 머릿속으로 그려보세요.",
         "ans_check": "ans === '외부'"
     },
     {
         "qnum": 8,
-        "title": "스테이지 8",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q8.</strong> 직각삼각형의 외심은 빗변의 ( ? )에 위치한다. 빈칸은?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "title": "직각 지붕의 중심",
+        "story": "직각을 이루는 정교한 석조 묘실 천장에서, 외심은 빗변의 정확히 어느 점(위치)에 놓이는지 알아내야 에너지 평형 핀을 꽂을 수 있습니다.",
+        "qtext": "<strong>Q8.</strong> 직각삼각형의 외심은 빗변의 ( ? )에 위치한다.",
+        "placeholder": "두 글자 입력",
+        "error": "틀렸습니다. 빗변을 정확히 반으로 가르는 지점입니다.",
         "ans_check": "ans === '중점'"
     },
     {
         "qnum": 9,
-        "title": "스테이지 9",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "세 내각의 분할점",
+        "story": "내부 방들의 세 모퉁이 각도를 정확하게 반씩 쪼개어 모은 중심점을 찾아 설계도 파편을 회수해야 합니다.",
         "qtext": "<strong>Q9.</strong> 삼각형의 세 내각의 이등분선이 만나는 점을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "두 글자 입력",
+        "error": "틀렸습니다. 안쪽 원의 중심입니다.",
         "ans_check": "ans === '내심'"
     },
     {
         "qnum": 10,
-        "title": "스테이지 10",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q10.</strong> 삼각형의 내심에서 세 ( ? )에 이르는 거리는 같다. 빈칸은? (힌트: 변)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "title": "내심의 거리적 특징",
+        "story": "동력점인 내심은 삼각형을 이루는 구성 요소 중 어디까지의 수직 최단 거리가 모두 일치하는 독특한 대칭 특징을 갖고 있을까요?",
+        "qtext": "<strong>Q10.</strong> 삼각형의 내심에서 세 ( ? )에 이르는 거리는 같다.",
+        "placeholder": "한 글자 입력",
+        "error": "틀렸습니다. 기하학 구조를 확인하세요.",
         "ans_check": "ans === '변'"
     },
     {
         "qnum": 11,
-        "title": "스테이지 11",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "평행 회랑의 정의",
+        "story": "제 3구역: 대칭의 돌림판입니다. 마주 보는 두 쌍의 변이 나란히 영원히 만나지 않고 뻗어 나가는 기본 사각형의 종류를 입력해 락을 해제하세요.",
         "qtext": "<strong>Q11.</strong> 마주 보는 두 쌍의 대변이 각각 평행한 사각형을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "다섯 글자 입력",
+        "error": "올바른 명칭이 아닙니다.",
         "ans_check": "ans === '평행사변형'"
     },
     {
         "qnum": 12,
-        "title": "스테이지 12",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "대변의 균형",
+        "story": "돌림판의 평행사변형 홈에 맞추기 위해, 서로 마주 보는 변(대변)의 길이가 어떤 대칭 관계에 있는지 대소 비교(같다 / 다르다)해 답하세요.",
         "qtext": "<strong>Q12.</strong> 평행사변형에서 마주 보는 대변의 길이는 서로 ( 같다 / 다르다 ).",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "같다 또는 다르다 입력",
+        "error": "틀렸습니다. 두 대변의 길이를 가늠해보세요.",
         "ans_check": "ans === '같다'"
     },
     {
         "qnum": 13,
-        "title": "스테이지 13",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "대각의 평형",
+        "story": "돌림판의 회전 밸런스를 맞추기 위해 마주 보고 서 있는 대각선 양 코너의 각도(대각)의 크기 관계를 명문화(같다 / 다르다)하십시오.",
         "qtext": "<strong>Q13.</strong> 평행사변형에서 마주 보는 두 대각의 크기는 서로 ( 같다 / 다르다 ).",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "같다 또는 다르다 입력",
+        "error": "틀렸습니다. 대칭되는 두 각의 관계를 상기하세요.",
         "ans_check": "ans === '같다'"
     },
     {
         "qnum": 14,
-        "title": "스테이지 14",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q14.</strong> 평행사변형의 두 대각선은 서로 다른 것을 ( ? ) 한다. 빈칸은? (힌트: 이등분)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === '이등분'"
+        "title": "대각선의 골조 교차",
+        "story": "돌림판 중앙을 교차하는 두 사각 대각선 기둥은 서로의 길이를 어떻게 분할하는지 힌트 단어를 참고해 네 글자로 작성하세요.",
+        "qtext": "<strong>Q14.</strong> 평행사변형의 두 대각선은 서로 다른 것을 ( ? ) 한다.",
+        "placeholder": "세 글자 또는 네 글자 입력",
+        "error": "틀렸습니다. 서로를 똑같이 둘로 나눕니다.",
+        "ans_check": "ans.includes('이등분')"
     },
     {
         "qnum": 15,
-        "title": "스테이지 15",
-        "story": "단서를 찾아 문제를 해결하세요.",
-        "qtext": "<strong>Q15.</strong> 이웃하는 두 내각의 크기의 합이 항상 180도인 사각형은 무엇인가? (평행사변형)",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "title": "인접한 두 각의 합",
+        "story": "돌림판의 연속된 임의의 이웃하는 두 모퉁이 각도의 합이 180도를 유지하는 사각형 골조의 기본 명칭을 타이핑하세요.",
+        "qtext": "<strong>Q15.</strong> 이웃하는 두 내각의 크기의 합이 항상 180도인 사각형은 무엇인가?",
+        "placeholder": "다섯 글자 입력",
+        "error": "틀렸습니다. 대변이 평행한 사각형입니다.",
         "ans_check": "ans === '평행사변형'"
     },
     {
         "qnum": 16,
-        "title": "스테이지 16",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "직각 보석함의 형태",
+        "story": "제 4구역: 왕의 보석입니다. 왕의 묘실 중앙 보석함의 상판 형태를 결정해야 합니다. 모든 네 모퉁이의 내각이 정확히 90도인 사각형의 이름을 해독하세요.",
         "qtext": "<strong>Q16.</strong> 네 내각의 크기가 모두 90도로 같은 사각형을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "세 글자 입력",
+        "error": "틀렸습니다. 직각을 이루는 사각형입니다.",
         "ans_check": "ans === '직사각형'"
     },
     {
         "qnum": 17,
-        "title": "스테이지 17",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "보석함의 대각선 지지대",
+        "story": "보석함 상판의 뒤틀림을 방지하기 위해 가로지르는 두 대각선 기둥의 길이 관계를 계측해 입력(같다 / 다르다)해 주십시오.",
         "qtext": "<strong>Q17.</strong> 직사각형의 두 대각선의 길이는 서로 ( 같다 / 다르다 ).",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "같다 또는 다르다 입력",
+        "error": "틀렸습니다. 직사각형 대각선의 성질을 상기하세요.",
         "ans_check": "ans === '같다'"
     },
     {
         "qnum": 18,
-        "title": "스테이지 18",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "대칭 석재의 정렬",
+        "story": "정밀 재단된 보석 고정틀 중 네 테두리 변의 치수가 모두 균일하게 만들어진 사각형 석재의 이름을 규정해 고정 장치를 맞추세요.",
         "qtext": "<strong>Q18.</strong> 네 변의 길이가 모두 같은 사각형을 무엇이라 하는가?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "세 글자 입력",
+        "error": "틀렸습니다. 마름모꼴 모양의 사각형입니다.",
         "ans_check": "ans === '마름모'"
     },
     {
         "qnum": 19,
-        "title": "스테이지 19",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "수직 교차의 법칙",
+        "story": "마름모틀을 관통하는 대각선 축들의 교차가 직각을 이루는지 판별하십시오. 직교 법칙이 맞으면 알파벳 대문자 O, 아니면 X를 전송하세요.",
         "qtext": "<strong>Q19.</strong> 마름모의 두 대각선은 서로 수직으로 만난다. ( O / X )",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
-        "ans_check": "ans === 'O'"
+        "placeholder": "O 또는 X 입력",
+        "error": "틀렸습니다. 마름모 대각선의 직교 성질을 생각해 보세요.",
+        "ans_check": "ans === 'O' || ans === '오' || ans === 'TRUE'"
     },
     {
         "qnum": 20,
-        "title": "스테이지 20",
-        "story": "단서를 찾아 문제를 해결하세요.",
+        "title": "완벽의 정사각형",
+        "story": "네 모퉁이가 수직이고 모든 테두리 변의 길이까지 완벽히 같은, 임호텝이 피라미드 중앙 코어로 삼은 최종 보석의 이름을 밝히십시오.",
         "qtext": "<strong>Q20.</strong> 직사각형인 동시에 마름모인 사각형, 즉 네 변의 길이와 네 각의 크기가 모두 같은 사각형의 이름은?",
-        "placeholder": "정답 입력",
-        "error": "틀렸습니다. 다시 시도해보세요.",
+        "placeholder": "세 글자 입력",
+        "error": "최종 보석의 명칭이 바르지 않습니다.",
         "ans_check": "ans === '정사각형'"
     }
 ]
@@ -788,7 +788,7 @@ for q in qs:
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_06_geometry1/q{qnum}.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
