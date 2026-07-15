@@ -510,6 +510,78 @@ base_html = """<!DOCTYPE html>
             return str.replace(/\s+/g, '').toUpperCase();
         }
 
+        
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = sname.value.trim();
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+            
+            nextStage('intro', 'panel_q1', 0);
+        }
+
         function nextStage(currentId, nextId, progressPercent) {
             try { playClick(); } catch(e) {}
             
@@ -521,6 +593,78 @@ base_html = """<!DOCTYPE html>
                     alert("학번과 이름을 반드시 입력해야 진행할 수 있습니다.");
                     return;
                 }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
                 
                 document.getElementById('displayStudentId').innerText = "학번: " + studentId;
                 document.getElementById('displayName').innerText = "이름: " + studentName;
@@ -681,7 +825,7 @@ qs = [
     {'qnum': 7, 'title': '스테이지 7', 'story': '[모드레드-AI]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> 원 O 의 반지름의 길이가 6 이고, 원 밖의 한 점 P 에서 원에 그은 접선 PT 의 접점 T 에 대하여 선분 OP 의 길이가 10 일 때, 접선의 길이 PT 를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8'", 'hint': '접선과 반지름이 만나는 점의 각도는 직각(90도)이므로 피타고라스 정리를 이용해 접선의 길이를 구하도록 유도합니다.'},
     {'qnum': 8, 'title': '스테이지 8', 'story': '[모드레드-AI]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> 원 밖의 점 P 에서 두 접점 A, B 에 접선을 그어 형성된 각 ∠ APB = 50° 일 때, 사각형 AOBP 의 내부각 ∠ AOB 의 크기(도)를 구하시오. (숫자만 적으시오.)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '130'", 'hint': '접선과 반지름이 만나는 두 각(각각 90도)을 제외한 사각형 두 대각의 크기의 합이 180도임을 활용해 문제를 풀게 합니다.'},
     {'qnum': 9, 'title': '스테이지 9', 'story': '[모드레드-AI]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> 원에 외접하는 사각형의 마주 보는 두 쌍의 대변의 길이의 합은 서로 어떠한가? (두 글자 한글로 쓰시오. 예: 같다)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '같다'", 'hint': '외접사각형의 마주 보는 두 대변의 길이의 합이 서로 같다는 성질을 적용하게 안내합니다.'},
-    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[모드레드-AI]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[랜슬롯-M]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 한 호에 대한 원주각의 크기는 그 호에 대한 중심각의 크기의 몇 배인가? (슬래시를 사용해 분수로 쓰시오. 예: 1/2)', 'placeholder': '수식 입력 (예: 1/2 또는 8:27=10:x)', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1/2' || ans === '0.5'", 'hint': '동일한 호에 대한 원주각의 크기는 항상 그 호의 중심각의 절반(1/2)입니다.', "extra_class": "glitch-bg"},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[모드레드-AI]: \\"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\\"<br><br>[랜슬롯-M]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 한 호에 대한 원주각의 크기는 그 호에 대한 중심각의 크기의 몇 배인가? (슬래시를 사용해 분수로 쓰시오. 예: 1/2)', 'placeholder': '수식 입력 (예: 1/2 또는 8:27=10:x)', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1/2' || ans === '0.5'", 'hint': '동일한 호에 대한 원주각의 크기는 항상 그 호의 중심각의 절반(1/2)입니다.', "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '스테이지 11', 'story': '[랜슬롯-M]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> 한 호에 대한 원주각들의 크기는 위치에 관계없이 모두 어떠한가? (두 글자 한글로 쓰시오. 예: 같다)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '같다'", 'hint': '한 호에 대한 원주각들의 크기는 원둘레 위의 위치가 어디든지 관계없이 모두 크기가 같습니다.'},
     {'qnum': 12, 'title': '스테이지 12', 'story': '[랜슬롯-M]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> 반원(지름)에 대한 원주각의 크기(도)는 몇 도인가?', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '90'", 'hint': '반원에 대한 원주각(지름의 두 끝점과 원 위의 한 점이 이루는 각)은 항상 직각(90도)입니다.'},
     {'qnum': 13, 'title': '스테이지 13', 'story': '[랜슬롯-M]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> 원 O 에서 호 AB 에 대한 중심각의 크기가 80° 일 때, 원주각 ∠ APB 의 크기(도)를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '40'", 'hint': '동일 호에 대한 원주각은 그 호의 중심각 크기의 절반임을 이용해 나눗셈 연산을 하도록 지도합니다.'},
@@ -691,7 +835,7 @@ qs = [
     {'qnum': 17, 'title': '스테이지 17', 'story': '[모드레드-AI]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> 원에 내접하는 사각형 ABCD 에서 각 ∠ A = 75° 일 때, 마주 보는 대각 ∠ C 의 크기(도)를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '105'", 'hint': '내접하는 사각형의 마주 보는 두 대각의 합이 180도임을 활용해 뺄셈합니다.'},
     {'qnum': 18, 'title': '스테이지 18', 'story': '[모드레드-AI]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> 원에 내접하는 사각형 ABCD 의 한 외각의 크기가 85° 일 때, 이와 이웃하지 않는 대각(내대각)의 크기(도)를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '85'", 'hint': '내접하는 사각형의 한 외각의 크기는 그 내대각(이웃하지 않는 대각)의 크기와 같다는 원리를 적용하도록 힌트를 줍니다.'},
     {'qnum': 19, 'title': '스테이지 19', 'story': '[모드레드-AI]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> 원 O 의 접선 PT 에 대하여 접점 T 를 지나는 현 TA 가 만드는 각 ∠ ATP = 60° 일 때, 그 현에 대한 원주각의 크기(도)를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '60'", 'hint': '접선과 현이 이루는 각의 성질에 따라, 접선과 현이 이루는 각의 크기는 그 각 내부에 있는 호에 대한 원주각의 크기와 같음을 이용합니다.'},
-    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[랜슬롯-M]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[모드레드-AI]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 원 O 에서 길이가 서로 같은 두 호에 대한 두 원주각의 크기의 비율은 몇 대 몇인지 수치 비율로 적으시오. (예: 1)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': '한 원에서 호의 길이가 같으면 그에 대한 원주각의 크기도 같으므로 두 각의 비율을 파악해 봅니다.', "extra_class": "glitch-bg"}
+    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[랜슬롯-M]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[모드레드-AI]: \\"안 돼... 내 제어권이... 정지한다아아!\\"', 'qtext': '<strong>Q20.</strong> 원 O 에서 길이가 서로 같은 두 호에 대한 두 원주각의 크기의 비율은 몇 대 몇인지 수치 비율로 적으시오. (예: 1)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': '한 원에서 호의 길이가 같으면 그에 대한 원주각의 크기도 같으므로 두 각의 비율을 파악해 봅니다.', "extra_class": "glitch-bg"}
 ]
 
 import re

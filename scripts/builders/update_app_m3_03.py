@@ -510,6 +510,78 @@ base_html = """<!DOCTYPE html>
             return str.replace(/\s+/g, '').toUpperCase();
         }
 
+        
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = sname.value.trim();
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+            
+            nextStage('intro', 'panel_q1', 0);
+        }
+
         function nextStage(currentId, nextId, progressPercent) {
             try { playClick(); } catch(e) {}
             
@@ -521,6 +593,78 @@ base_html = """<!DOCTYPE html>
                     alert("학번과 이름을 반드시 입력해야 진행할 수 있습니다.");
                     return;
                 }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
                 
                 document.getElementById('displayStudentId').innerText = "학번: " + studentId;
                 document.getElementById('displayName').innerText = "이름: " + studentName;
@@ -681,7 +825,7 @@ qs = [
     {'qnum': 7, 'title': '스테이지 7', 'story': '[시간의-방랑자]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> 이차방정식 x² + ax + 9 = 0 이 중근을 가질 때, 양수 a의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '6'", 'hint': '이차방정식이 중근을 가질 조건은 상수항이 1차항 계수의 반의 제곱과 같아야 한다는 공식을 적용하게 합니다.'},
     {'qnum': 8, 'title': '스테이지 8', 'story': '[시간의-방랑자]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> 이차방정식 (x-2)² = 5 의 근을 구하시오. (기호 ±와 루트를 사용하여 나타내시오. 예: 2±√5)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '±2√5' || ans === '+-2√5' || ans === '2√5,-2√5' || ans === '-2√5,2√5'", 'hint': '완전제곱식을 이용해 제곱근의 정의를 활용하여 미지수 값의 범위를 구하도록 지도합니다.'},
     {'qnum': 9, 'title': '스테이지 9', 'story': '[시간의-방랑자]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> 이차방정식 x² - 6x + 2 = 0 을 (x-p)² = q 꼴로 고칠 때, 두 상수 p, q에 대하여 p+q의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8'", 'hint': '상수항을 먼저 우변으로 이항한 후, 좌변을 완전제곱식으로 만들기 위해 양변에 필요한 상수를 더해주는 과정을 안내합니다.'},
-    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[시간의-방랑자]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[크로노스-C]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 근의 공식을 사용하여 이차방정식 x² - 3x + 1 = 0 의 근을 구할 때, 분모에 들어갈 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2'", 'hint': '이차방정식의 근의 공식 분모 부분을 구하는 문제로, 분모는 x² 계수의 2배가 됨을 상기시킵니다.', "extra_class": "glitch-bg"},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[시간의-방랑자]: \\"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\\"<br><br>[크로노스-C]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 근의 공식을 사용하여 이차방정식 x² - 3x + 1 = 0 의 근을 구할 때, 분모에 들어갈 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2'", 'hint': '이차방정식의 근의 공식 분모 부분을 구하는 문제로, 분모는 x² 계수의 2배가 됨을 상기시킵니다.', "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '스테이지 11', 'story': '[크로노스-C]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> 이차방정식 x² - 4x - 1 = 0 의 근을 구하시오. (근의 공식을 활용하여 나타내시오. 예: 2±√5)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '±2√5' || ans === '+-2√5' || ans === '2√5,-2√5' || ans === '-2√5,2√5'", 'hint': '인수분해가 되지 않는 경우 근의 공식을 사용하여 해를 대입하여 계산하게 가이드합니다.'},
     {'qnum': 12, 'title': '스테이지 12', 'story': '[크로노스-C]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> 이차방정식 2x² + 5x - 3 = 0 의 두 근을 구하시오. (작은 수부터 적으시오. 분수는 슬래시로 표현하시오. 예: -3, 1/2)', 'placeholder': '수식 입력 (예: 1/2 또는 8:27=10:x)', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '-3,1/2'", 'hint': '대각선 곱셈 인수분해 기법을 활용해 좌변을 두 일차식의 곱으로 유도한 후 해를 구하게 합니다.'},
     {'qnum': 13, 'title': '스테이지 13', 'story': '[크로노스-C]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> 이차방정식 (x-1)(x-2) = 6 의 두 근을 구하시오. (작은 수부터 적으시오. 예: -1, 4)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '-1,4'", 'hint': '괄호 식을 먼저 모두 전개한 후 모든 항을 한 변으로 이항해 정리하여 이차방정식 기본 형태로 바꾸어 풀게 합니다.'},
@@ -691,7 +835,7 @@ qs = [
     {'qnum': 17, 'title': '스테이지 17', 'story': '[시간의-방랑자]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> 이차방정식 3x² - 7x + 2 = 0 의 두 근 중 정수인 근을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2'", 'hint': '인수분해를 통해 근을 도출하고, 그 중에서 정수 형태를 가진 근만 선별하도록 가이드합니다.'},
     {'qnum': 18, 'title': '스테이지 18', 'story': '[시간의-방랑자]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> 이차방정식 x² - 6x + 9 = 0 의 중근을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '3'", 'hint': '좌변이 완전제곱식이 되어 한 개의 중근을 가지게 되는 식을 판별하게 유도합니다.'},
     {'qnum': 19, 'title': '스테이지 19', 'story': '[시간의-방랑자]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> 연속하는 두 자연수의 곱이 56일 때, 두 자연수 중 큰 수를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8'", 'hint': '두 연속하는 자연수를 x와 x+1 로 두고 곱을 나타내는 방정식을 세워 이차방정식으로 해결하게 유도합니다.'},
-    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[크로노스-C]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[시간의-방랑자]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 지면에서 초속 30m로 똑바로 쏘아 올린 물체의 t초 후의 높이가 30t - 5t² (m)이다. 이 물체의 높이가 40m가 되는 시점은 몇 초 후인지 모두 구하시오. (오름차순으로 적으시오. 예: 2, 4)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2,4'", 'hint': '높이 식과 목표 수치가 같다는 방정식을 세운 뒤 최고차항의 계수를 간단히 정리하여 해를 구하도록 안내합니다.', "extra_class": "glitch-bg"}
+    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[크로노스-C]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[시간의-방랑자]: \\"안 돼... 내 제어권이... 정지한다아아!\\"', 'qtext': '<strong>Q20.</strong> 지면에서 초속 30m로 똑바로 쏘아 올린 물체의 t초 후의 높이가 30t - 5t² (m)이다. 이 물체의 높이가 40m가 되는 시점은 몇 초 후인지 모두 구하시오. (오름차순으로 적으시오. 예: 2, 4)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '2,4'", 'hint': '높이 식과 목표 수치가 같다는 방정식을 세운 뒤 최고차항의 계수를 간단히 정리하여 해를 구하도록 안내합니다.', "extra_class": "glitch-bg"}
 ]
 
 import re

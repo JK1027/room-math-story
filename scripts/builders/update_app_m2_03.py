@@ -436,9 +436,21 @@ base_html = """<!DOCTYPE html>
                 [숲의 정령 실프-F]: "아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!"
             </div>
             </div>
-            <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">숲의 저울 가동</button>
+            
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
             </div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;">
+                <button class="btn" onclick="tryStartGame('m2_03')">미션 시작</button>
+            </div>
+
         </div>
 
         {panels_placeholder}
@@ -580,7 +592,7 @@ qs = [
     {'qnum': 7, 'title': '저울의 곱셈 성질', 'story': '[다크-엘프]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! ⚖️ <strong>[양변에 양수 곱하기]</strong><br><br>[숲의 정령 실프-F]: \\"$a &lt; b$ 일 때, 양변에 똑같이 양수 3을 곱한 $3a$ 와 $3b$ 의 대소 관계를 저울에 설정하십시오.\\"\\"', 'qtext': '<strong>Q7. [부등식의 성질 2]</strong><br>$a &lt; b$ 일 때, $3a$ 와 $3b$ 의 대소를 비교하시오.', 'placeholder': '예: 3a<3b', 'error': '에너지 증폭 이상! 스파크가 튑니다.', 'ans_check': "ans === '3A<3B' || ans === '3B>3A'"},
     {'qnum': 8, 'title': '음수 곱셈의 반전', 'story': '[다크-엘프]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! ⚖️ <strong>[양변에 음수 곱하기]</strong><br><br>[숲의 정령 실프-F]: \\"주의하십시오! $a &lt; b$ 일 때, 양변에 똑같이 음수 -2를 곱한 $-2a$ 와 $-2b$ 의 대소 관계를 입력하십시오.\\"\\"', 'qtext': '<strong>Q8. [부등식의 성질 3]</strong><br>$a &lt; b$ 일 때, $-2a$ 와 $-2b$ 의 대소 관계를 부등호로 나타내시오.', 'placeholder': '예: -2a>-2b', 'error': '반전 에러! 저울이 균형을 완전히 잃고 기울어집니다.', 'ans_check': "ans === '-2A>-2B' || ans === '-2B<-2A'"},
     {'qnum': 9, 'title': '방향 반전 법칙', 'story': '[다크-엘프]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! ⚖️ <strong>[부등호 방향의 진실]</strong><br><br>[숲의 정령 실프-F]: \\"음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가? 단답으로 입력해 저울의 봉인을 푸십시오. (바뀐다 / 그대로다)\\"\\"', 'qtext': '<strong>Q9. [부등호의 핵심 법칙]</strong><br>음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가?', 'placeholder': '바뀐다 또는 그대로다 입력', 'error': '법칙 위반! 숲의 정령들이 길을 막습니다.', 'ans_check': "ans === '바뀐다' || ans === '변한다' || ans === '바뀜'"},
-    {'qnum': 10, 'title': '음수 나눗셈의 완성', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[다크-엘프]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[실프-F]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [음수 나눗셈 연습]</strong><br>$-3x &gt; 9$ 양변을 -3으로 나누면 부등식은 어떻게 되는가?', 'placeholder': '예: x<-3', 'error': '부호 오류! 2구역 탈출 밸브가 차단됩니다.', 'ans_check': "ans === 'X<-3'", "extra_class": "glitch-bg"},
+    {'qnum': 10, 'title': '음수 나눗셈의 완성', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[다크-엘프]: \\"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\\"<br><br>[실프-F]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [음수 나눗셈 연습]</strong><br>$-3x &gt; 9$ 양변을 -3으로 나누면 부등식은 어떻게 되는가?', 'placeholder': '예: x<-3', 'error': '부호 오류! 2구역 탈출 밸브가 차단됩니다.', 'ans_check': "ans === 'X<-3'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '마법진 1차 해제', 'story': '[실프-F]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚖️ <strong>[일차부등식 풀이]</strong><br><br>[숲의 정령 실프-F]: \\"3구역 불균형 해소 마법진입니다. 일차부등식 $2x - 4 &gt; 0$ 의 해를 풀어 입력하십시오.\\"\\"', 'qtext': '<strong>Q11. [기초 부등식 풀이]</strong><br>일차부등식 $2x - 4 &gt; 0$ 의 해를 구하시오.', 'placeholder': '예: x>2', 'error': '마법 해제 실패! 마법진이 붉게 점멸합니다.', 'ans_check': "ans === 'X>2'"},
     {'qnum': 12, 'title': '마법진 2차 해제', 'story': '[실프-F]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚖️ <strong>[이항과 음수 나눗셈]</strong><br><br>[숲의 정령 실프-F]: \\"이항을 이용하여 일차부등식 $3x + 1 \\\\le 7$ 의 해를 구하십시오. 차분하게 상수를 옮기십시오.\\"\\"', 'qtext': '<strong>Q12. [이항 계산]</strong><br>일차부등식 $3x + 1 \\\\le 7$ 의 해를 구하시오.', 'placeholder': '예: x<=2', 'error': '이항 연산 미스! 결합 에너지가 소멸됩니다.', 'ans_check': "ans === 'X<=2' || ans === 'X\\\\LE2'"},
     {'qnum': 13, 'title': '양변 이항 결합', 'story': '[실프-F]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚖️ <strong>[양변의 미지수 정리]</strong><br><br>[숲의 정령 실프-F]: \\"미지수가 양변에 존재합니다. $5x - 2 &lt; 3x + 8$ 을 이항하여 깔끔한 부등식 해로 도출하십시오.\\"\\"', 'qtext': '<strong>Q13. [복합 이항]</strong><br>일차부등식 $5x - 2 &lt; 3x + 8$ 의 해를 구하시오.', 'placeholder': '예: x<5', 'error': '이항 부호 에러! 에너지 균형이 흐트러집니다.', 'ans_check': "ans === 'X<5'"},
@@ -590,7 +602,7 @@ qs = [
     {'qnum': 17, 'title': '장미 꽃잎 제단', 'story': '[다크-엘프]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⚖️ <strong>[제단 비용 부등식]</strong><br><br>[숲의 정령 실프-F]: \\"한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 맞추는 부등식을 세우십시오. (공백 없이 입력)\\"\\"', 'qtext': '<strong>Q17. [식 세우기]</strong><br>한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 하려고 한다. 부등식을 세우시오.', 'placeholder': '예: 800x+1000<=6000', 'error': '부등식 기호 불일치! 제단의 마법 빛이 사그라듭니다.', 'ans_check': "ans === '800X+1000<=6000' || ans === '800X+1000\\\\LE6000'"},
     {'qnum': 18, 'title': '장미의 최대 송이', 'story': '[다크-엘프]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⚖️ <strong>[최대 장미 수량]</strong><br><br>[숲의 정령 실프-F]: \\"이전 제단의 부등식을 바탕으로, 살 수 있는 장미의 최대 송이수를 계산해 제단 바구니에 입력하십시오.\\"\\"', 'qtext': '<strong>Q18. [최대값 구하기]</strong><br>Q17 조건에서 장미는 최대 몇 송이까지 살 수 있는가?', 'placeholder': '예: 6 또는 6송이', 'error': '꽃잎 수량 한계 초과! 저울이 균형을 잃습니다.', 'ans_check': "ans === '6' || ans === '6송이'"},
     {'qnum': 19, 'title': '동생의 저금 역전', 'story': '[다크-엘프]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⚖️ <strong>[저금 역전 시기]</strong><br><br>[숲의 정령 실프-F]: \\"형의 저금통에는 20000원, 동생은 10000원이 있습니다. 다음 달부터 매월 형은 2000원, 동생은 3000원씩 저금합니다. 동생이 형보다 많아지는 것은 몇 개월 후입니까?\\"\\"', 'qtext': '<strong>Q19. [실생활 활용]</strong><br>몇 개월 후부터 동생의 저금액이 형의 저금액보다 많아지는지 구하시오.', 'placeholder': '예: 11 또는 11개월', 'error': '연도 계산 오류! 이자가 바닥납니다.', 'ans_check': "ans === '11' || ans === '11개월' || ans === '11개월후'"},
-    {'qnum': 20, 'title': '생명의 숲 최소 면적', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[실프-F]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[다크-엘프]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [최종 면적 구하기]</strong><br>요정 숲의 남은 면적은 최소 얼마 초과인가?', 'placeholder': '숫자만 또는 초과 입력 (예: 30)', 'error': '정화 범위 미달! 숲 전체가 봉인 모드로 잠겨버립니다!', 'ans_check': "ans === '30' || ans === '30초과'", "extra_class": "glitch-bg"}
+    {'qnum': 20, 'title': '생명의 숲 최소 면적', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[실프-F]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[다크-엘프]: \\"안 돼... 내 제어권이... 정지한다아아!\\"', 'qtext': '<strong>Q20. [최종 면적 구하기]</strong><br>요정 숲의 남은 면적은 최소 얼마 초과인가?', 'placeholder': '숫자만 또는 초과 입력 (예: 30)', 'error': '정화 범위 미달! 숲 전체가 봉인 모드로 잠겨버립니다!', 'ans_check': "ans === '30' || ans === '30초과'", "extra_class": "glitch-bg"}
 ]
 
 # Generate Q panels
@@ -894,6 +906,42 @@ function cleanString(str) {
             };
             
             renderChunk();
+        }
+
+        
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = sname.value.trim();
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+            
+            nextStage('intro', 'panel_q1', 0);
         }
 
         function nextStage(currentId, nextId, progressPercent) {

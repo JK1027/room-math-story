@@ -510,6 +510,78 @@ base_html = """<!DOCTYPE html>
             return str.replace(/\s+/g, '').toUpperCase();
         }
 
+        
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = sname.value.trim();
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+            
+            nextStage('intro', 'panel_q1', 0);
+        }
+
         function nextStage(currentId, nextId, progressPercent) {
             try { playClick(); } catch(e) {}
             
@@ -521,6 +593,78 @@ base_html = """<!DOCTYPE html>
                     alert("학번과 이름을 반드시 입력해야 진행할 수 있습니다.");
                     return;
                 }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
                 
                 document.getElementById('displayStudentId').innerText = "학번: " + studentId;
                 document.getElementById('displayName').innerText = "이름: " + studentName;
@@ -681,7 +825,7 @@ qs = [
     {'qnum': 7, 'title': '스테이지 7', 'story': '[안티-매터]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> 데이터 3, 5, 5, 7, 8, 8, 8 의 최빈값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8'", 'hint': '제시된 데이터 중 출현 빈도가 가장 높은(가장 많이 나타나는) 수치를 최빈값으로 선별하게 합니다.'},
     {'qnum': 8, 'title': '스테이지 8', 'story': '[안티-매터]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> 대푯값 중 극단적인 값(아주 크거나 아주 작은 값)에 영향을 가장 적게 받아, 치우친 자료에 유용한 대푯값을 쓰시오. (세 글자 한글로 쓰시오. 예: 중앙값)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '중앙값'", 'hint': '극단치(아주 큰 수치)가 섞여 있을 때 평균은 왜곡되기 쉬우므로, 크기순으로 줄을 세운 중앙값을 대푯값으로 쓰는 이유를 설명합니다.'},
     {'qnum': 9, 'title': '스테이지 9', 'story': '[안티-매터]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> 변량들이 평균으로부터 떨어져 있는 차이(즉, 변량 - 평균)를 무엇이라 부르는가? (두 글자 한글로 쓰시오. 예: 편차)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '편차'", 'hint': '편차를 구하는 수학 공식인 (변량 - 평균)을 상기시킵니다.'},
-    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[안티-매터]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[갤럭시-G]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 변량들의 편차의 총합은 항상 얼마인가? (숫자로 적으시오.)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '0'", 'hint': '각 변량의 편차(변량 - 평균)들의 총합은 통계학적 성질에 의해 항상 일정한 상수 값이 됨을 주지시킵니다.', "extra_class": "glitch-bg"},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[안티-매터]: \\"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\\"<br><br>[갤럭시-G]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 변량들의 편차의 총합은 항상 얼마인가? (숫자로 적으시오.)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '0'", 'hint': '각 변량의 편차(변량 - 평균)들의 총합은 통계학적 성질에 의해 항상 일정한 상수 값이 됨을 주지시킵니다.', "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '스테이지 11', 'story': '[갤럭시-G]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> 편차의 제곱의 평균을 구하여 산포도를 나타내는 통계 값을 무엇이라 부르는가? (두 글자 한글로 쓰시오. 예: 분산)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '분산'", 'hint': '분산의 정의인 (편차의 제곱들의 평균)을 지칭하는 두 글자 단어를 쓰게 합니다.'},
     {'qnum': 12, 'title': '스테이지 12', 'story': '[갤럭시-G]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> 분산의 음이 아닌 양의 제곱근 값을 구하여 실제 변량과 단위를 맞춘 산포도 값을 무엇이라 하는가? (네 글자 한글로 쓰시오. 예: 표준편차)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '표준편차'", 'hint': '분산의 양의 제곱근 값을 구하여 실제 변량과 단위를 일치시키는 4글자 용어입니다.'},
     {'qnum': 13, 'title': '스테이지 13', 'story': '[갤럭시-G]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> 자료들의 흩어진 정도를 나타내는 하나의 수치를 통틀어 무엇이라 하는가? (삼항 구조의 세 글자 한글로 쓰시오. 예: 산포도)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '산포도'", 'hint': '자료들이 흩어져 있는 정도를 나타내는 통계적 수치의 총칭인 3글자 단어를 상기시킵니다.'},
@@ -691,7 +835,7 @@ qs = [
     {'qnum': 17, 'title': '스테이지 17', 'story': '[안티-매터]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> 한 변량 x의 값이 증가할 때, 다른 변량 y의 값도 대체로 증가하는 관계를 무슨 상관관계라 하는가? (칠글자 한글로 쓰시오. 예: 양의 상관관계)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '양의상관관계'", 'hint': 'x가 증가할 때 y도 우상향하여 증가하는 경향을 나타내는 7글자 용어(양의 상관관계)를 쓰게 합니다.'},
     {'qnum': 18, 'title': '스테이지 18', 'story': '[안티-매터]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> 한 변량 x의 값이 증가할 때, 다른 변량 y의 값은 대체로 감소하는 관계를 무슨 상관관계라 하는가? (칠글자 한글로 쓰시오. 예: 음의 상관관계)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '음의상관관계'", 'hint': 'x가 증가할 때 y는 우하향하여 감소하는 경향을 보이는 7글자 용어(음의 상관관계)를 쓰게 합니다.'},
     {'qnum': 19, 'title': '스테이지 19', 'story': '[안티-매터]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> "사람들의 키와 지능지수(IQ) 사이의 상관관계"는 어떤 관계가 있는지 쓰시오. (한글 세 글자로 쓰시오. 예: 없다)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '없다'", 'hint': "두 변량 사이에 아무런 선형 관계나 경향성이 보이지 않을 때 상관관계가 '없다'라고 답하게 지도합니다."},
-    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[갤럭시-G]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[안티-매터]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> "겨울철 실외 평균 기온과 각 가정의 가스 난방비 사이의 상관관계"는 어떤 관계가 있는지 쓰시오. (칠글자 한글로 쓰시오. 예: 음의 상관관계)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '음의상관관계'", 'hint': '한 요인이 증가할 때 다른 요인이 대체로 감소하는 관계인 7글자 상관관계 용어를 찾아 작성하게 안내합니다.', "extra_class": "glitch-bg"}
+    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[갤럭시-G]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[안티-매터]: \\"안 돼... 내 제어권이... 정지한다아아!\\"', 'qtext': '<strong>Q20.</strong> "겨울철 실외 평균 기온과 각 가정의 가스 난방비 사이의 상관관계"는 어떤 관계가 있는지 쓰시오. (칠글자 한글로 쓰시오. 예: 음의 상관관계)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '음의상관관계'", 'hint': '한 요인이 증가할 때 다른 요인이 대체로 감소하는 관계인 7글자 상관관계 용어를 찾아 작성하게 안내합니다.', "extra_class": "glitch-bg"}
 ]
 
 import re

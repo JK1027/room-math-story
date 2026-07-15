@@ -436,9 +436,21 @@ base_html = """<!DOCTYPE html>
                 [체스 퀸 AI 앨리스-Q]: "실수로 거울 나라의 축소 광선을 맞은 여러분! 몸집이 장난감만 해졌습니다. 원래 크기로 돌아가려면 거울 성에 숨겨진 '닮음비'와 '비례식'에 관련된 20개의 퍼즐을 풀어 해독 광선을 가동해야 합니다. 축소된 몸이 굳기 전에 45분 안에 서둘러야 합니다!"
             </div>
             </div>
-            <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">해독 광선 장치 가동</button>
+            
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
             </div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;">
+                <button class="btn" onclick="tryStartGame('m2_07')">미션 시작</button>
+            </div>
+
         </div>
 
         {panels_placeholder}
@@ -580,7 +592,7 @@ qs = [
     {'qnum': 7, 'title': '변과 사잇각의 조건', 'story': '[붉은-여왕]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 두 변의 길이비가 일정하고 그 사이에 위치하는 끼인각의 크기가 같을 때 성립하는 삼각형 닮음 판정 기호(영문 3글자)를 입력하여 락을 푸십시오.\\"', 'qtext': '<strong>Q7.</strong> 삼각형의 두 쌍의 대응하는 변의 길이의 비가 같고, 그 끼인각의 크기가 같을 때의 닮음 조건을 쓰시오.', 'placeholder': '영문 세 글자 입력 (예: SAS)', 'error': '기호가 올바르지 않습니다. Side-Angle-Side의 약자입니다.', 'ans_check': "ans === 'SAS'"},
     {'qnum': 8, 'title': '두 각의 닮음 조건', 'story': '[붉은-여왕]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 길이를 알 필요 없이 오직 두 모퉁이 각도가 서로 같으면 성립하는 가장 유용하고 보편적인 닮음 조건 기호(영문 2글자)를 타이핑하세요.\\"', 'qtext': '<strong>Q8.</strong> 삼각형의 두 쌍의 대응하는 각의 크기가 같을 때의 닮음 조건을 쓰시오.', 'placeholder': '영문 두 글자 입력 (예: AA)', 'error': '기호가 올바르지 않습니다. Angle-Angle의 약자입니다.', 'ans_check': "ans === 'AA'"},
     {'qnum': 9, 'title': '정삼각형의 정합비', 'story': '[붉은-여왕]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 한 각이 60도인 두 정삼각형은 무조건 어떤 닮음 조건에 의해 닮음이 성립되는지 한글을 포함해 정확히 입력창에 전송하세요.\\"', 'qtext': '<strong>Q9.</strong> 한 각이 60도인 두 정삼각형은 무조건 어떤 닮음 조건에 의해 닮음인가?', 'placeholder': '예: AA닮음', 'error': '조건이 틀렸습니다. 세 각의 크기가 모두 60도로 동일하게 되는 성질을 생각하세요.', 'ans_check': "ans === 'AA' || ans === 'AA닮음'"},
-    {'qnum': 10, 'title': '수선 궤적의 쪼개짐', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[붉은-여왕]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[앨리스-Q]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 직각삼각형 내부에서 직각인 꼭짓점에서 빗변에 수선을 내렸을 때 만들어지는 두 개의 작은 직각삼각형은 서로 ( ? ) 관계이다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 크기는 다르지만 모양이 똑같습니다.', 'ans_check': "ans === '닮음'", "extra_class": "glitch-bg"},
+    {'qnum': 10, 'title': '수선 궤적의 쪼개짐', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[붉은-여왕]: \\"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\\"<br><br>[앨리스-Q]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 직각삼각형 내부에서 직각인 꼭짓점에서 빗변에 수선을 내렸을 때 만들어지는 두 개의 작은 직각삼각형은 서로 ( ? ) 관계이다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 크기는 다르지만 모양이 똑같습니다.', 'ans_check': "ans === '닮음'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '평행 관계의 사다리', 'story': '[앨리스-Q]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 제 3구역: 사다리 건너기입니다. 사다리 구조물 양쪽 변의 중간 지점인 M과 N을 이은 가로목 MN은 밑바닥 BC 기둥과 공간상에서 어떤 관계에 있습니까?\\"', 'qtext': '<strong>Q11.</strong> 삼각형 ABC에서 변 AB의 중점 M, 변 AC의 중점 N을 이은 선분 MN은 변 BC와 어떤 위치 관계에 있는가?', 'placeholder': '두 글자 입력 (예: 평행)', 'error': '틀렸습니다. 두 기둥이 나란히 뻗어 있습니다.', 'ans_check': "ans === '평행'"},
     {'qnum': 12, 'title': '중점 연결의 길이 비', 'story': '[앨리스-Q]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 삼각형의 중점 연결 정리에 의해, 가로목 MN의 길이는 가장 길고 탄탄한 밑바닥 BC 길이의 몇 배가 되는지 분수나 소수로 적으십시오.\\"', 'qtext': '<strong>Q12.</strong> 위 Q11의 삼각형 중점 연결 정리에서 선분 MN의 길이는 선분 BC의 길이의 ( 몇 분의 몇 ) 인가?', 'placeholder': '예: 1/2 또는 절반', 'error': '틀렸습니다. 중점을 연결했으므로 크기가 절반으로 축소됩니다.', 'ans_check': "ans === '1/2' || ans === '절반' || ans === '0.5'"},
     {'qnum': 13, 'title': '평행 차단막의 닮음', 'story': '[앨리스-Q]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 삼각형의 한 모퉁이에 나란한 평행 차단 장벽을 그었을 때, 새로 나뉘어 생긴 미니 삼각형은 기존의 거대 삼각형과 어떤 궤적 관계에 있습니까?\\"', 'qtext': '<strong>Q13.</strong> 삼각형의 한 변에 평행한 선분을 그어 다른 두 변과 만나게 하면, 새로 만들어진 작은 삼각형은 원래 삼각형과 ( ? ) 관계이다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 세 각의 크기가 같은 비례형 삼각형입니다.', 'ans_check': "ans === '닮음'"},
@@ -590,7 +602,7 @@ qs = [
     {'qnum': 17, 'title': '정육면체 거울 상자의 표면적', 'story': '[붉은-여왕]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 닮음비가 1:2인 정육면체 모양의 에너지 충전 박스가 2개 결합해 있습니다. 이 박스들의 겉 표면 전체 넓이(겉넓이) 비율은 몇 대 몇인지 입력하세요.\\"', 'qtext': '<strong>Q17.</strong> 두 정육면체의 닮음비가 1:2 일 때, 넓이(겉넓이)의 비는 얼마인가?', 'placeholder': '예: 1:4 또는 1대4', 'error': '틀렸습니다. 닮음비가 1:2이면 넓이의 비는 제곱의 비입니다.', 'ans_check': "ans.replace(/\\s+/g, '') === '1:4' || ans.replace(/\\s+/g, '') === '1대4'"},
     {'qnum': 18, 'title': '부피의 차원비', 'story': '[붉은-여왕]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 입체도형 방의 공간 부피를 정합해야 해독 광선 출력이 최대로 가동됩니다. 닮음비가 $m:n$일 때, 부피의 비율 수식을 세제곱 기호(^)를 써서 적으십시오.\\"', 'qtext': '<strong>Q18.</strong> 두 입체도형의 닮음비가 $m:n$ 일 때, 부피의 비는 얼마인가?', 'placeholder': '예: m^3:n^3', 'error': '부피의 비는 닮음비의 세제곱에 비례합니다.', 'ans_check': "ans.replace(/\\s+/g, '') === 'M^3:N^3' || ans.replace(/\\s+/g, '') === 'M3:N3' || ans.replace(/\\s+/g, '') === 'M^3대N^3'"},
     {'qnum': 19, 'title': '거울 구슬의 체적비', 'story': '[붉은-여왕]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 닮음비가 1:3으로 서로 크기가 다른 구슬형 부품들이 들어 있습니다. 해독 광선 발사대의 이 두 구슬의 실제 부피 비율을 계산해 입력하세요.\\"', 'qtext': '<strong>Q19.</strong> 닮음비가 1:3 인 두 구슬의 부피의 비는 얼마인가?', 'placeholder': '예: 1:27', 'error': '틀렸습니다. 1과 3을 각각 세제곱하여 비율을 구하세요.', 'ans_check': "ans.replace(/\\s+/g, '') === '1:27' || ans.replace(/\\s+/g, '') === '1대27'"},
-    {'qnum': 20, 'title': '광선 증폭의 최종 비례식', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[앨리스-Q]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[붉은-여왕]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 작은 컵의 부피가 10mL이다. 닮음비가 2:3인 큰 컵이 있다면, 큰 컵의 부피를 구하기 위한 비례식을 세워보시오.', 'placeholder': '예: 8:27=10:x', 'error': '비례식 세팅 실패! 부피비는 닮음비의 세제곱인 8:27임을 이용해 10:x와 연계해 세우세요.', 'ans_check': "ans.replace(/\\s+/g, '') === '8:27=10:X' || ans.replace(/\\s+/g, '') === '10:X=8:27'", "extra_class": "glitch-bg"}
+    {'qnum': 20, 'title': '광선 증폭의 최종 비례식', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[앨리스-Q]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[붉은-여왕]: \\"안 돼... 내 제어권이... 정지한다아아!\\"', 'qtext': '<strong>Q20.</strong> 작은 컵의 부피가 10mL이다. 닮음비가 2:3인 큰 컵이 있다면, 큰 컵의 부피를 구하기 위한 비례식을 세워보시오.', 'placeholder': '예: 8:27=10:x', 'error': '비례식 세팅 실패! 부피비는 닮음비의 세제곱인 8:27임을 이용해 10:x와 연계해 세우세요.', 'ans_check': "ans.replace(/\\s+/g, '') === '8:27=10:X' || ans.replace(/\\s+/g, '') === '10:X=8:27'", "extra_class": "glitch-bg"}
 ]
 # Generate Q panels
 
@@ -893,6 +905,42 @@ function cleanString(str) {
             };
             
             renderChunk();
+        }
+
+        
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = sname.value.trim();
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+            
+            nextStage('intro', 'panel_q1', 0);
         }
 
         function nextStage(currentId, nextId, progressPercent) {

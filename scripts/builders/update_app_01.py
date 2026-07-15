@@ -566,6 +566,42 @@ base_html = """<!DOCTYPE html>
                     alert('학번과 이름을 모두 입력해주세요!');
                     return;
                 }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
                 // GAS 로직
                 try {
                     if(typeof google !== 'undefined' && google.script && google.script.run) {
@@ -996,7 +1032,7 @@ qs = [
     {'qnum': 7, 'title': '앙부일구 암호판', 'story': '<span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 🔐 <strong>[빛의 굴절 판독]</strong><br><br>영침 끝에서 레이저처럼 반사된 빛이 천장을 비춥니다. 식의 거듭제곱 계산값을 구해야 다음 거울을 회전시킵니다.\\"', 'qtext': '<strong>Q7. [거듭제곱의 계산]</strong><br>$2^3 \\times 3^2$ 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '거울 각도가 틀렸습니다! 빛이 소멸합니다.', 'ans_check': "ans === '72'"},
     {'qnum': 8, 'title': '앙부일구 암호판', 'story': '<span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 🔐 <strong>[소인수 정렬]</strong><br><br>두 번째 광선이 황동 암호판으로 유도됩니다. 180의 소인수들의 합을 입력하여 록(Lock)을 푸십시오.\\"', 'qtext': '<strong>Q8. [소인수의 합]</strong><br>180의 소인수를 모두 더한 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '암호판이 잠겨 움직이지 않습니다!', 'ans_check': "ans === '10'"},
     {'qnum': 9, 'title': '앙부일구 암호판', 'story': '<span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 🔐 <strong>[약수 기어 작동]</strong><br><br>암호판의 톱니들이 돌아가기 시작합니다. 72의 약수의 개수를 구하여 톱니 조절판에 입력해야 정상 동기화됩니다.\\"', 'qtext': '<strong>Q9. [약수의 개수 1]</strong><br>72의 약수의 개수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '기어 맞물림 이상! 톱니 개수가 맞지 않습니다.', 'ans_check': "ans === '12'"},
-    {'qnum': 10, 'title': '앙부일구 암호판', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[자격-M]</span></span></span>: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [약수의 개수 2]</strong><br>$3^4 \\times 5^a$ 의 약수의 개수가 15개일 때, a의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '동기화 실패! 시간이 어긋납니다.', 'ans_check': "ans === '2'", "extra_class": "glitch-bg"},
+    {'qnum': 10, 'title': '앙부일구 암호판', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\\"<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[자격-M]</span></span></span>: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [약수의 개수 2]</strong><br>$3^4 \\times 5^a$ 의 약수의 개수가 15개일 때, a의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '동기화 실패! 시간이 어긋납니다.', 'ans_check': "ans === '2'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '자격루 동력 복구', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[자격-M]</span></span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚙️ <strong>[물통 수압 동기]</strong><br><br>쿵- 하는 소리와 함께 지하 거대 물시계(자격루)의 실린더가 노출됩니다. 24와 36의 최대공약수를 구해 수압 밸브를 개방하십시오.\\"', 'qtext': '<strong>Q11. [최대공약수]</strong><br>24와 36의 최대공약수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '수압 이상! 물통이 파열될 위험이 있습니다!', 'ans_check': "ans === '12'"},
     {'qnum': 12, 'title': '자격루 동력 복구', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[자격-M]</span></span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚙️ <strong>[동력 톱니 동기]</strong><br><br>물이 흘러가며 물레바퀴가 돌기 시작합니다. 두 동력 톱니바퀴 15와 25의 최소공배수를 구하여 속도를 매칭하십시오.\\"', 'qtext': '<strong>Q12. [최소공배수]</strong><br>15와 25의 최소공배수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '속도 불일치! 기어가 헛돕니다.', 'ans_check': "ans === '75'"},
     {'qnum': 13, 'title': '자격루 동력 복구', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[자격-M]</span></span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚙️ <strong>[압축 실린더 평형]</strong><br><br>피스톤 압축기가 상하 운동을 개시합니다. 두 거듭제곱 수의 최대공약수를 구하여 피스톤 높이를 통제하십시오.\\"', 'qtext': '<strong>Q13. [거듭제곱의 최대공약수]</strong><br>두 수 $2^2 \\times 3$, $2 \\times 3^2 \\times 5$ 의 최대공약수를 구하시오. (숫자로 환산)', 'placeholder': '숫자만 입력', 'error': '압축 피스톤 불균형! 진동이 커집니다.', 'ans_check': "ans === '6'"},
@@ -1006,7 +1042,7 @@ qs = [
     {'qnum': 17, 'title': '일식 관측과 시간 톱니', 'story': '<span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⏱️ <strong>[톱니바퀴 맞물림]</strong><br><br>관측 회전 기어를 조절합니다. 톱니수 12개와 18개인 A, B 기어가 처음으로 다시 만날 때까지 기어 A가 몇 바퀴를 돌아야 합니까?\\"', 'qtext': '<strong>Q17. [최소공배수 활용 1]</strong><br>톱니수가 각각 12개, 18개인 두 톱니바퀴 A, B가 맞물려 돌 때, 처음으로 다시 같은 톱니에서 맞물리려면 A는 몇 바퀴를 돌아야 하는가?', 'placeholder': '숫자 또는 바퀴 수 입력', 'error': '기어 스펙이 안 맞습니다! 회전이 멈춥니다.', 'ans_check': "ans === '3' || ans === '3바퀴'"},
     {'qnum': 18, 'title': '일식 관측과 시간 톱니', 'story': '<span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⏱️ <strong>[관측 거울 간격]</strong><br><br>햇빛을 적절히 차단할 렌즈 간격을 연산해야 합니다. 나눗셈의 나머지를 역이용하여 최고 간격 수치를 구하세요.\\"', 'qtext': '<strong>Q18. [최대공약수 활용 2]</strong><br>어떤 수로 37을 나누면 1이 남고, 46을 나누면 2가 남는다. 이러한 수 중 가장 큰 수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '렌즈 초점이 맞지 않아 일식이 보이지 않습니다!', 'ans_check': "ans === '4'"},
     {'qnum': 19, 'title': '일식 관측과 시간 톱니', 'story': '<span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⏱️ <strong>[신호용 북 타이머]</strong><br><br>일식의 시작을 전 궁궐에 알릴 두 대고의 북 연타 타이머를 맞춥니다. 10분, 15분 간격으로 치는 북이 오전 9시 이후 처음 동시 작동하는 시간을 구하세요.\\"', 'qtext': '<strong>Q19. [최소공배수 활용 2]</strong><br>버스 A는 10분, 버스 B는 15분 간격으로 출발한다. 오전 9시에 동시에 출발했다면, 다음으로 처음 동시에 출발하는 시각은 9시 몇 분인가? (분만 입력)', 'placeholder': '숫자 또는 분 입력', 'error': '북 신호가 어긋나 백성들이 혼란에 빠집니다!', 'ans_check': "ans === '30' || ans === '30분'"},
-    {'qnum': 20, 'title': '일식 관측과 시간 톱니', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[자격-M]</span></span></span>: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [최소공배수 활용 3]</strong><br>3, 4, 5 어느 수로 나누어도 2가 남는 가장 작은 세 자리 자연수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '암호 실패! 일식 예측 보고가 불가능합니다!', 'ans_check': "ans === '122'", "extra_class": "glitch-bg"}
+    {'qnum': 20, 'title': '일식 관측과 시간 톱니', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[자격-M]</span></span></span>: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\"><span class=\"glitch-text\" style=\"color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;\">[블랙-기어]</span></span></span>: \\"안 돼... 내 제어권이... 정지한다아아!\\"', 'qtext': '<strong>Q20. [최소공배수 활용 3]</strong><br>3, 4, 5 어느 수로 나누어도 2가 남는 가장 작은 세 자리 자연수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '암호 실패! 일식 예측 보고가 불가능합니다!', 'ans_check': "ans === '122'", "extra_class": "glitch-bg"}
 ]
 
 
@@ -1164,7 +1200,7 @@ for q in qs:
                 동시에 저 멀리서 장영실의 일식 예측 성공을 축하하는 전령의 외침이 들려오고 참형 집행이 즉시 중단됩니다. 
                 그 순간 찬란한 광채가 여러분을 감싸더니 다시 국립중앙박물관의 한 전시실로 소환됩니다. 소인수분해와 공배수의 비밀로 역사를 멋지게 구했습니다!";
                     } else {
-                        outroDiv.innerHTML = "탈출 장치가 기동되는 순간! 시스템이 크게 요동칩니다.<br><br>잦은 오답과 연산 지연의 여파로 시스템이 과부하에 걸렸고, 데이터의 일부가 유실되었습니다. 하지만 여러분은 끝까지 포기하지 않고 방화벽을 해제하여 간신히 탈출구로 몸을 피했습니다! 상처투성이의 탈출이었지만, 수학의 지혜로 목숨을 건졌습니다. 미션 성공!";
+                        outroDiv.innerHTML = "탈출 장치가 기동되는 순간! 시스템이 크게 요동칩니다.<br><br>잦은 오답과 연산 지연의 여파로 시스템이 과부하에 걸렸고, 데이터의 일부가 유실되었습니다. 하지만 여러분은 끝까지 포기하지 않고 방화벽을 해제하여 간신히 탈출구로 몸을 피했습니다! 상처투성이의 탈출이었지만, 수학의 지혜로 보물을 획득했습니다. 미션 성공!";
                     }
                 }'''
 

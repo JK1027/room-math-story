@@ -582,6 +582,42 @@ base_html = """<!DOCTYPE html>
                     alert('학번과 이름을 모두 입력해주세요!');
                     return;
                 }
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
                 // GAS 로직
                 try {
                     if(typeof google !== 'undefined' && google.script && google.script.run) {
@@ -1086,7 +1122,7 @@ qs = [
     {'qnum': 7, 'title': '주파수 대역 통분 동기화', 'story': '[바이러스-V]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "분수 형태의 두 전파 동기화 신호를 통분 계산해 최적의 통신 주파수 식을 찾아내십시오."\\"', 'qtext': '<strong>Q7. [일차식의 계산 2]</strong><br>식 1/2(4x - 6) - 1/3(3x + 9) 를 계산하여 간단히 하시오.', 'placeholder': '예: 2x-8', 'error': '주파수 왜곡! 동기화 실패!', 'ans_check': "ans === 'x-6'"},
     {'qnum': 8, 'title': '일차식 전원 코어 감별', 'story': '[바이러스-V]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "시스템 과열 방지를 위해 차수가 정확히 1인 일차식 전원 코어 번호만 식별해 내십시오."\\"', 'qtext': '<strong>Q8. [일차식 판별]</strong><br>다음 중 차수가 1인 <strong>일차식</strong>의 번호만 쓰시오.<br>(1) 3x² &nbsp;&nbsp;(2) 0 × x + 2 &nbsp;&nbsp;(3) 1/x + 1 &nbsp;&nbsp;(4) -2x + 1', 'placeholder': '숫자만 입력', 'error': '회로 폭발! 코어가 과열되었습니다!', 'ans_check': "ans === '4'"},
     {'qnum': 9, 'title': '잔류 저항 동류항 정리', 'story': '[바이러스-V]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "두 동축 케이블 간의 잔류 저항식에서 괄호를 풀고 동류항끼리 정리해 값을 상쇄하십시오."\\"', 'qtext': '<strong>Q9. [동류항 정리]</strong><br>식 2x - 3 - (x - 5) 를 계산하여 간단히 정리하시오.', 'placeholder': '예: 3x-4', 'error': '저항 매칭 실패! 감전 위험!', 'ans_check': "ans === 'x+2'"},
-    {'qnum': 10, 'title': '부하값 대입 최종식', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[바이러스-V]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [식의 대입 정리]</strong><br>A = x - 2, B = -2x + 3 일 때, 2A - B 를 x에 대한 식으로 나타내시오.', 'placeholder': '예: 3x+5', 'error': '시스템 임계치 돌파! 비상 경보!', 'ans_check': "ans === '4x-7'", "extra_class": "glitch-bg"},
+    {'qnum': 10, 'title': '부하값 대입 최종식', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[바이러스-V]: \\"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\\"<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [식의 대입 정리]</strong><br>A = x - 2, B = -2x + 3 일 때, 2A - B 를 x에 대한 식으로 나타내시오.', 'placeholder': '예: 3x+5', 'error': '시스템 임계치 돌파! 비상 경보!', 'ans_check': "ans === '4x-7'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '진짜 보안 방정식 감별', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "참과 거짓이 x값에 따라 변하는 진짜 \'방정식\'만을 스캔하여 위조 보안식을 걸러내십시오."\\"', 'qtext': '<strong>Q11. [방정식의 이해]</strong><br>다음 식 중 미지수 x에 따라 참도 되고 거짓도 되는 <strong>방정식</strong>인 것의 번호를 쓰시오.<br>(1) 2x + 3 &nbsp;&nbsp;(2) x + x = 2x &nbsp;&nbsp;(3) 3x - 1 = 5 &nbsp;&nbsp;(4) 3 < 5', 'placeholder': '숫자만 입력', 'error': '위조 보안식 감지! 암호화 록!', 'ans_check': "ans === '3'"},
     {'qnum': 12, 'title': '수압 밸브 이항 제어 1', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "엔진 연료 밸브 방정식 x - 4 = 6 의 해를 구해 양방향 수압을 평형 상태로 맞추십시오."\\"', 'qtext': '<strong>Q12. [일차방정식 1]</strong><br>방정식 x - 4 = 6 의 해를 구하시오.', 'placeholder': '숫자만 입력', 'error': '연료 부족! 엔진 시동 지연!', 'ans_check': "ans === '10'"},
     {'qnum': 13, 'title': '수압 밸브 이항 제어 2', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "2x + 5 = 11 일차방정식 이항 법칙에 따라 제어 장치의 밸브 각도를 조정하십시오."\\"', 'qtext': '<strong>Q13. [일차방정식 2]</strong><br>방정식 2x + 5 = 11 의 해를 구하시오.', 'placeholder': '숫자만 입력', 'error': '조정 각도 이탈! 압력 경보!', 'ans_check': "ans === '3'"},
@@ -1096,7 +1132,7 @@ qs = [
     {'qnum': 17, 'title': '유실된 시스템 정수 복원', 'story': '[바이러스-V]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "어떤 수의 3배에서 5를 뺀 값이 2배보다 4 큽니다. 유실된 이 시스템 정수를 방정식으로 복원하십시오."\\"', 'qtext': '<strong>Q17. [식의 활용 1]</strong><br>어떤 수의 3배에서 5를 뺀 수는 어떤 수의 2배보다 4만큼 크다. 이 어떤 수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '데이터 복원 실패!', 'ans_check': "ans === '9'"},
     {'qnum': 18, 'title': '산소 팩 과부족 분배', 'story': '[바이러스-V]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "1인 4개 지급 시 3개 남고, 5개 지급 시 2개 부족합니다. 정확한 탑승 요원 수를 산출하십시오."\\"', 'qtext': '<strong>Q18. [과부족 문제]</strong><br>요원들에게 산소 팩을 나누어 주는데, 한 명에게 4개씩 주면 3개가 남고, 5개씩 주면 2개가 부족하다. 요원 수(명)를 구하시오.', 'placeholder': '숫자만 입력', 'error': '산소 배분 실패! 탑승 불가!', 'ans_check': "ans === '5'"},
     {'qnum': 19, 'title': '대피 통로 거리 속력 연산', 'story': '[바이러스-V]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! <span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: "시속 4km 걷기와 시속 12km 호버보드 사이의 20분 격차를 이용해 해치까지의 총 거리를 도출하십시오."\\"', 'qtext': '<strong>Q19. [거리 속력 시간]</strong><br>해치까지 가는데 시속 4km로 걸어가면 시속 12km로 호버보드를 타고 가는 것보다 20분 늦게 도착한다. 총 통로 거리(km)를 구하시오.', 'placeholder': '숫자만 입력', 'error': '도착 시간 지연! 폭발 경보!', 'ans_check': "ans === '2' || ans === '2km'"},
-    {'qnum': 20, 'title': '동면 생체 나이 동기화', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[바이러스-V]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [나이에 관한 문제]</strong><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?', 'placeholder': '숫자만 입력', 'error': '동기화 실패! 생체 나이 비동기화 경고!', 'ans_check': "ans === '3' || ans === '3년'", "extra_class": "glitch-bg"}
+    {'qnum': 20, 'title': '동면 생체 나이 동기화', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[오라클-X]</span></span></span>: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[바이러스-V]: \\"안 돼... 내 제어권이... 정지한다아아!\\"', 'qtext': '<strong>Q20. [나이에 관한 문제]</strong><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?', 'placeholder': '숫자만 입력', 'error': '동기화 실패! 생체 나이 비동기화 경고!', 'ans_check': "ans === '3' || ans === '3년'", "extra_class": "glitch-bg"}
 ]
 
 # Generate panels HTML
@@ -1287,7 +1323,7 @@ for q in qs:
                 카운트다운이 0을 가리키는 순간, 포드가 불꽃을 뿜으며 암흑 속 우주 정거장 델타를 빠져나와 지구를 향해 아름다운 호를 그리며 나아갑니다. 
                 문자와 식의 규칙을 찾아내고, 소행성 충돌 시간을 일차방정식으로 풀어 극적으로 살아남은 요원들, 미션 완벽 성공입니다!";
                     } else {
-                        outroDiv.innerHTML = "탈출 장치가 기동되는 순간! 시스템이 크게 요동칩니다.<br><br>잦은 오답과 연산 지연의 여파로 시스템이 과부하에 걸렸고, 데이터의 일부가 유실되었습니다. 하지만 여러분은 끝까지 포기하지 않고 방화벽을 해제하여 간신히 탈출구로 몸을 피했습니다! 상처투성이의 탈출이었지만, 수학의 지혜로 목숨을 건졌습니다. 미션 성공!";
+                        outroDiv.innerHTML = "탈출 장치가 기동되는 순간! 시스템이 크게 요동칩니다.<br><br>잦은 오답과 연산 지연의 여파로 시스템이 과부하에 걸렸고, 데이터의 일부가 유실되었습니다. 하지만 여러분은 끝까지 포기하지 않고 방화벽을 해제하여 간신히 탈출구로 몸을 피했습니다! 상처투성이의 탈출이었지만, 수학의 지혜로 보물을 획득했습니다. 미션 성공!";
                     }
                 }'''
 

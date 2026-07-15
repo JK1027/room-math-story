@@ -2951,6 +2951,42 @@ let totalWrongCount = 0;
             }
         }
  catch(e) {
+                    console.warn("구글 시트 종료 기록 실패:", e);
+                }
+                
+                // 멀티 엔딩 처리
+                let outroDiv = document.getElementById("outro-dynamic-text");
+                if (outroDiv) {
+                    const sname = document.getElementById('studentName').value.trim();
+                    let firstName = sname.length > 2 ? sname.substring(1) : sname;
+                    if (totalWrongCount < 5) {
+                        outroDiv.innerHTML = "패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 거대한 소리와 함께 고대 AI 포세이돈-V가 문을 활짝 열어줍니다.<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: '훌륭하다. 수천 년 만에 아틀란티스의 지혜를 물려줄 진정한 후계자를 만났군.'<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: '" + firstName + " 캡틴! 완벽합니다! 금화와 지식이 쏟아집니다, 어서 챙겨서 부상합시다!'<br><br>여러분은 완벽한 수학적 통찰력으로 심해의 전설을 정복했습니다. <b>[칭호 획득: 심연의 좌표 마스터]</b> 미션 대성공!";
+                    } else {
+                        outroDiv.innerHTML = "패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 거친 마찰음과 함께 문이 간신히 열립니다.<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: '오답이 너무 많지만... 끈기 하나는 인정해주마. 얼른 가져가라.'<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: '" + firstName + " 캡틴! 간신히 황금 문이 열렸습니다! 보물을 다 챙길 시간은 없습니다. 당장 부력 장치를 가동해야 합니다!'<br><br>여러분은 황급히 금화 몇 닢을 챙기고 해수면으로 솟구쳐 오릅니다. 상처투성이의 탈출이었지만 미션 성공!";
+                    }
+                }
+                nextStage('panel_q20', 'outro', 100);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    
+                    document.getElementById('ans16').value = '';
+        
+                    nextStage('panel_q20', 'panel_q16', 75);
+                } else {
+                    showError('panel_q20', 'error20', wrongCount);
+                }
+            }
+        }
+ catch(e) {
                     console.warn("구글 시트 종료 기록 실패(로컬 테스트 모드):", e);
                 }
                 
