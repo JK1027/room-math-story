@@ -429,7 +429,7 @@ base_html = """<!DOCTYPE html>
             <h2>삼각비</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_05/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [별빛 관측기 아스트로-A]: "고대 그리스의 유명한 천문 측정 학자 테오도루스의 천체 관측소에 입장하셨습니다. 하늘에 흩어진 신비한 별자리들의 거리와 고도를 측정하여 천문 관측 구체의 고정 장치를 해제해야 합니다. 별빛의 각도와 삼각형의 변의 비율을 나타내는 '삼각비' 공식을 사용해 45분 내에 모든 측정대 센서를 동기화하고 탈출하십시오!"
             </div>
             </div>
@@ -446,7 +446,7 @@ base_html = """<!DOCTYPE html>
             <h2>최종 봉인 탈출 성공</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_05/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [별빛 관측기 아스트로-A]: "천체 구체 모델의 렌즈 각도들이 오차 없이 맞아떨어지며 관측 구체가 웅장한 회전 소리를 내며 빛을 투사합니다. 돔탑의 쇠사슬 빗장이 덜컥 풀리며 지상의 문이 개방됩니다. 삼각비의 지배자로 거듭나 천문 관측소 탈출에 성공했습니다!"
             </div>
             </div>
@@ -681,17 +681,17 @@ qs = [
     {'qnum': 7, 'title': '스테이지 7', 'story': '[블랙홀-B]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q7.</strong> \\cos 90° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '0'", 'hint': '예각이 90도에 한없이 가까워질 때 코사인 값의 기하학적 변화(최솟값)를 확인시킵니다.'},
     {'qnum': 8, 'title': '스테이지 8', 'story': '[블랙홀-B]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q8.</strong> \\tan 45° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': '밑변과 높이가 같은 직각이등변삼각형에서의 탄젠트 값을 상기시킵니다.'},
     {'qnum': 9, 'title': '스테이지 9', 'story': '[블랙홀-B]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q9.</strong> \\cos 0° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1'", 'hint': '예각이 0도에 한없이 가까워질 때 코사인 값의 기하학적 변화(최댓값)를 확인시킵니다.'},
-    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[블랙홀-B]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[아스트로-A]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> \\sin 60° + \\cos 30° 의 값을 구하시오. (예: √3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√3'", 'hint': '특수각 60도에 대한 사인 값과 30도에 대한 코사인 값을 각각 구하여 덧셈합니다.'},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[블랙홀-B]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[아스트로-A]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> \\sin 60° + \\cos 30° 의 값을 구하시오. (예: √3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√3'", 'hint': '특수각 60도에 대한 사인 값과 30도에 대한 코사인 값을 각각 구하여 덧셈합니다.', "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '스테이지 11', 'story': '[아스트로-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> \\tan 0° 의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '0'", 'hint': '예각이 0도에 한없이 가까워질 때 탄젠트 값의 기하학적 변화(최솟값)를 확인시킵니다.'},
     {'qnum': 12, 'title': '스테이지 12', 'story': '[아스트로-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q12.</strong> \\sin 45° × \\cos 45° 의 값을 구하시오. (예: 1/2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '1/2' || ans === '0.5'", 'hint': '사인 45도와 코사인 45도의 값을 찾아 서로 곱하도록 안내합니다.'},
     {'qnum': 13, 'title': '스테이지 13', 'story': '[아스트로-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q13.</strong> \\tan 30° 의 값을 구하시오. (예: √3/3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '√3/3'", 'hint': '특수각 30도에 대한 탄젠트 값을 삼각비 표에서 찾도록 합니다.'},
     {'qnum': 14, 'title': '스테이지 14', 'story': '[아스트로-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q14.</strong> 직각삼각형 ABC 에서 ∠ C = 90° 이고 빗변 AB = 10, ∠ A = 30° 일 때, 높이 BC 의 길이를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5'", 'hint': '직각삼각형의 높이 = (빗변) × sin A 공식을 사용하여 미지의 높이를 계산합니다.'},
-    {'qnum': 15, 'title': '스테이지 15', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[아스트로-A]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[블랙홀-B]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 직각삼각형 ABC 에서 ∠ C = 90° 이고 밑변 AC = 8, ∠ A = 45° 일 때, 대변 BC 의 길이를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8'", 'hint': '직각삼각형의 높이 = (밑변) × tan A 공식을 사용하여 미지의 높이를 계산합니다.'},
+    {'qnum': 15, 'title': '스테이지 15', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br>[아스트로-A]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[블랙홀-B]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 직각삼각형 ABC 에서 ∠ C = 90° 이고 밑변 AC = 8, ∠ A = 45° 일 때, 대변 BC 의 길이를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '8'", 'hint': '직각삼각형의 높이 = (밑변) × tan A 공식을 사용하여 미지의 높이를 계산합니다.', "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '스테이지 16', 'story': '[블랙홀-B]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q16.</strong> 두 변의 길이가 각각 4, 6이고 그 사잇각이 30° 인 삼각형의 넓이를 구하시오.', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '6'", 'hint': '일반 삼각형의 넓이 공식인 1/2 × a × b × sin C 를 적용하여 계산을 처리합니다.'},
     {'qnum': 17, 'title': '스테이지 17', 'story': '[블랙홀-B]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q17.</strong> 두 변의 길이가 각각 6, 8이고 그 사잇각이 45° 인 삼각형의 넓이를 구하시오. (예: 12√2)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '12√2'", 'hint': '두 변의 길이와 그 사잇각의 크기가 주어졌을 때의 삼각형 넓이 구하기 공식인 1/2 × a × b × sin C 를 활용합니다.'},
     {'qnum': 18, 'title': '스테이지 18', 'story': '[블랙홀-B]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q18.</strong> 두 변의 길이가 각각 4, 5이고 그 사잇각이 120° 인 둔각삼각형의 넓이를 구하시오. (예: 5√3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '5√3'", 'hint': '둔각삼각형의 사잇각이 둔각(C)일 때 넓이는 180도에서 둔각을 뺀 예각의 사인 값을 사잇각으로 대입해 계산함을 지도합니다.'},
     {'qnum': 19, 'title': '스테이지 19', 'story': '[블랙홀-B]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\\"', 'qtext': '<strong>Q19.</strong> 이웃한 두 변의 길이가 5, 8이고 그 사잇각이 60° 인 평행사변형의 넓이를 구하시오. (예: 20√3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '20√3'", 'hint': '평행사변형의 넓이 = 두 이웃변 곱 × sin C 공식을 활용해 값을 도출하게 합니다.'},
-    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[아스트로-A]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[블랙홀-B]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 관측소 돔탑 밑동에서 10m 떨어진 지점에서 돔탑 꼭대기를 올려다본 각도가 30° 일 때, 돔탑의 높이를 구하시오. (예: 10√3/3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '10√3/3'", 'hint': '밑변의 거리와 올려다본 각도가 주어졌을 때의 높이 = (밑변 거리) × tan C 공식을 활용합니다.'}
+    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[아스트로-A]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[블랙홀-B]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 관측소 돔탑 밑동에서 10m 떨어진 지점에서 돔탑 꼭대기를 올려다본 각도가 30° 일 때, 돔탑의 높이를 구하시오. (예: 10√3/3)', 'placeholder': '정답 입력', 'error': '정답이 올바르지 않습니다. 다시 계산해보세요.', 'ans_check': "ans === '10√3/3'", 'hint': '밑변의 거리와 올려다본 각도가 주어졌을 때의 높이 = (밑변 거리) × tan C 공식을 활용합니다.', "extra_class": "glitch-bg"}
 ]
 
 import re
@@ -773,7 +773,7 @@ for q in qs:
             <h2>제 {qnum}구역: {title}</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_05/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -793,7 +793,7 @@ for q in qs:
     panels_html += panel
 
 # JS Answer Checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q['ans_check']
@@ -813,7 +813,7 @@ for q in qs:
                 
                 nextStage('panel_q{qnum}', {next_stage}, {progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;

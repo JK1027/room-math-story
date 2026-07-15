@@ -432,7 +432,7 @@ base_html = """<!DOCTYPE html>
             <h2>도형의 성질 1 (삼각형과 사각형)</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [고대 홀로그램 임호텝-H]: "고대 이집트의 위대한 건축가 임호텝이 남긴 파피루스 설계도가 발견되었습니다. 이 설계도에는 삼각형과 사각형의 기하학적 성질을 이용한 20개의 암호가 걸려 있습니다. 여러분은 임호텝의 제자가 되어 도형의 성질(내심, 외심, 평행사변형 등)을 파악하고 설계도의 봉인을 해제해야 합니다!"
             </div>
             </div>
@@ -449,7 +449,7 @@ base_html = """<!DOCTYPE html>
             <h2>황금빛 입체 도면의 탄생</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [고대 홀로그램 임호텝-H]: "정사각형 보석을 대각선에 맞추자, 파피루스 설계도의 모든 선형이 황금빛으로 타오르며 완벽한 피라미드의 입체 도면이 떠오릅니다! 여러분은 임호텝의 기하학적 시험을 통과하고 인류 최고의 건축 기술을 손에 넣었습니다!"
             </div>
             </div>
@@ -580,17 +580,17 @@ qs = [
     {'qnum': 7, 'title': '기울어진 기둥의 외심', 'story': '[도굴꾼-G]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 한 각이 90도보다 크게 기울어진 둔각삼각형 형태의 사원 지붕에서, 외접원의 중심은 지붕 구조물의 내부와 외부 중 어느 곳에 위치하게 됩니까?\\"', 'qtext': '<strong>Q7.</strong> 둔각삼각형의 외심은 삼각형의 ( 내부 / 외부 )에 위치한다.', 'placeholder': '내부 또는 외부 입력', 'error': '틀렸습니다. 기하학 모형을 머릿속으로 그려보세요.', 'ans_check': "ans === '외부'"},
     {'qnum': 8, 'title': '직각 지붕의 중심', 'story': '[도굴꾼-G]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 직각을 이루는 정교한 석조 묘실 천장에서, 외심은 빗변의 정확히 어느 점(위치)에 놓이는지 알아내야 에너지 평형 핀을 꽂을 수 있습니다.\\"', 'qtext': '<strong>Q8.</strong> 직각삼각형의 외심은 빗변의 ( ? )에 위치한다.', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 빗변을 정확히 반으로 가르는 지점입니다.', 'ans_check': "ans === '중점'"},
     {'qnum': 9, 'title': '세 내각의 분할점', 'story': '[도굴꾼-G]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 내부 방들의 세 모퉁이 각도를 정확하게 반씩 쪼개어 모은 중심점을 찾아 설계도 파편을 회수해야 합니다.\\"', 'qtext': '<strong>Q9.</strong> 삼각형의 세 내각의 이등분선이 만나는 점을 무엇이라 하는가?', 'placeholder': '두 글자 입력', 'error': '틀렸습니다. 안쪽 원의 중심입니다.', 'ans_check': "ans === '내심'"},
-    {'qnum': 10, 'title': '내심의 거리적 특징', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[도굴꾼-G]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[임호텝-H]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 삼각형의 내심에서 세 ( ? )에 이르는 거리는 같다.', 'placeholder': '한 글자 입력', 'error': '틀렸습니다. 기하학 구조를 확인하세요.', 'ans_check': "ans === '변'"},
+    {'qnum': 10, 'title': '내심의 거리적 특징', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[도굴꾼-G]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[임호텝-H]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 삼각형의 내심에서 세 ( ? )에 이르는 거리는 같다.', 'placeholder': '한 글자 입력', 'error': '틀렸습니다. 기하학 구조를 확인하세요.', 'ans_check': "ans === '변'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '평행 회랑의 정의', 'story': '[임호텝-H]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 제 3구역: 대칭의 돌림판입니다. 마주 보는 두 쌍의 변이 나란히 영원히 만나지 않고 뻗어 나가는 기본 사각형의 종류를 입력해 락을 해제하세요.\\"', 'qtext': '<strong>Q11.</strong> 마주 보는 두 쌍의 대변이 각각 평행한 사각형을 무엇이라 하는가?', 'placeholder': '다섯 글자 입력', 'error': '올바른 명칭이 아닙니다.', 'ans_check': "ans === '평행사변형'"},
     {'qnum': 12, 'title': '대변의 균형', 'story': '[임호텝-H]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 돌림판의 평행사변형 홈에 맞추기 위해, 서로 마주 보는 변(대변)의 길이가 어떤 대칭 관계에 있는지 대소 비교(같다 / 다르다)해 답하세요.\\"', 'qtext': '<strong>Q12.</strong> 평행사변형에서 마주 보는 대변의 길이는 서로 ( 같다 / 다르다 ).', 'placeholder': '같다 또는 다르다 입력', 'error': '틀렸습니다. 두 대변의 길이를 가늠해보세요.', 'ans_check': "ans === '같다'"},
     {'qnum': 13, 'title': '대각의 평형', 'story': '[임호텝-H]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 돌림판의 회전 밸런스를 맞추기 위해 마주 보고 서 있는 대각선 양 코너의 각도(대각)의 크기 관계를 명문화(같다 / 다르다)하십시오.\\"', 'qtext': '<strong>Q13.</strong> 평행사변형에서 마주 보는 두 대각의 크기는 서로 ( 같다 / 다르다 ).', 'placeholder': '같다 또는 다르다 입력', 'error': '틀렸습니다. 대칭되는 두 각의 관계를 상기하세요.', 'ans_check': "ans === '같다'"},
     {'qnum': 14, 'title': '대각선의 골조 교차', 'story': '[임호텝-H]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 돌림판 중앙을 교차하는 두 사각 대각선 기둥은 서로의 길이를 어떻게 분할하는지 힌트 단어를 참고해 네 글자로 작성하세요.\\"', 'qtext': '<strong>Q14.</strong> 평행사변형의 두 대각선은 서로 다른 것을 ( ? ) 한다.', 'placeholder': '세 글자 또는 네 글자 입력', 'error': '틀렸습니다. 서로를 똑같이 둘로 나눕니다.', 'ans_check': "ans.includes('이등분')"},
-    {'qnum': 15, 'title': '인접한 두 각의 합', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[임호텝-H]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[도굴꾼-G]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 이웃하는 두 내각의 크기의 합이 항상 180도인 사각형은 무엇인가?', 'placeholder': '다섯 글자 입력', 'error': '틀렸습니다. 대변이 평행한 사각형입니다.', 'ans_check': "ans === '평행사변형'"},
+    {'qnum': 15, 'title': '인접한 두 각의 합', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br>[임호텝-H]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[도굴꾼-G]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 이웃하는 두 내각의 크기의 합이 항상 180도인 사각형은 무엇인가?', 'placeholder': '다섯 글자 입력', 'error': '틀렸습니다. 대변이 평행한 사각형입니다.', 'ans_check': "ans === '평행사변형'", "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '직각 보석함의 형태', 'story': '[도굴꾼-G]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 제 4구역: 왕의 보석입니다. 왕의 묘실 중앙 보석함의 상판 형태를 결정해야 합니다. 모든 네 모퉁이의 내각이 정확히 90도인 사각형의 이름을 해독하세요.\\"', 'qtext': '<strong>Q16.</strong> 네 내각의 크기가 모두 90도로 같은 사각형을 무엇이라 하는가?', 'placeholder': '세 글자 입력', 'error': '틀렸습니다. 직각을 이루는 사각형입니다.', 'ans_check': "ans === '직사각형'"},
     {'qnum': 17, 'title': '보석함의 대각선 지지대', 'story': '[도굴꾼-G]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 보석함 상판의 뒤틀림을 방지하기 위해 가로지르는 두 대각선 기둥의 길이 관계를 계측해 입력(같다 / 다르다)해 주십시오.\\"', 'qtext': '<strong>Q17.</strong> 직사각형의 두 대각선의 길이는 서로 ( 같다 / 다르다 ).', 'placeholder': '같다 또는 다르다 입력', 'error': '틀렸습니다. 직사각형 대각선의 성질을 상기하세요.', 'ans_check': "ans === '같다'"},
     {'qnum': 18, 'title': '대칭 석재의 정렬', 'story': '[도굴꾼-G]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 정밀 재단된 보석 고정틀 중 네 테두리 변의 치수가 모두 균일하게 만들어진 사각형 석재의 이름을 규정해 고정 장치를 맞추세요.\\"', 'qtext': '<strong>Q18.</strong> 네 변의 길이가 모두 같은 사각형을 무엇이라 하는가?', 'placeholder': '세 글자 입력', 'error': '틀렸습니다. 마름모꼴 모양의 사각형입니다.', 'ans_check': "ans === '마름모'"},
     {'qnum': 19, 'title': '수직 교차의 법칙', 'story': '[도굴꾼-G]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 마름모틀을 관통하는 대각선 축들의 교차가 직각을 이루는지 판별하십시오. 직교 법칙이 맞으면 알파벳 대문자 O, 아니면 X를 전송하세요.\\"', 'qtext': '<strong>Q19.</strong> 마름모의 두 대각선은 서로 수직으로 만난다. ( O / X )', 'placeholder': 'O 또는 X 입력', 'error': '틀렸습니다. 마름모 대각선의 직교 성질을 생각해 보세요.', 'ans_check': "ans === 'O' || ans === '오' || ans === 'TRUE'"},
-    {'qnum': 20, 'title': '완벽의 정사각형', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[임호텝-H]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[도굴꾼-G]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 직사각형인 동시에 마름모인 사각형, 즉 네 변의 길이와 네 각의 크기가 모두 같은 사각형의 이름은?', 'placeholder': '세 글자 입력', 'error': '최종 보석의 명칭이 바르지 않습니다.', 'ans_check': "ans === '정사각형'"}
+    {'qnum': 20, 'title': '완벽의 정사각형', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[임호텝-H]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[도굴꾼-G]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 직사각형인 동시에 마름모인 사각형, 즉 네 변의 길이와 네 각의 크기가 모두 같은 사각형의 이름은?', 'placeholder': '세 글자 입력', 'error': '최종 보석의 명칭이 바르지 않습니다.', 'ans_check': "ans === '정사각형'", "extra_class": "glitch-bg"}
 ]
 
 # Generate Q panels
@@ -666,7 +666,7 @@ for q in qs:
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_06_geometry1/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -687,7 +687,7 @@ for q in qs:
     panels_html += panel
 
 # JS Answer Checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q['ans_check']
@@ -702,7 +702,7 @@ for q in qs:
                 wrongCount = 0;
                 nextStage('panel_q{qnum}', {next_stage}, {progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;

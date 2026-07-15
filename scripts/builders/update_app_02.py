@@ -505,7 +505,7 @@ base_html = """<!DOCTYPE html>
             <h1>마법 학교 아르카나</h1>
             <h2>20관문 최종 입학 시험</h2>
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                     세계 최고의 마법 학교 '아르카나'의 최종 입학 시험장에 오신 것을 환영합니다.<br><br>
                     이곳의 마법은 단순한 주문이 아니라 '정수와 유리수'의 수학적 원리를 통해 발동합니다.<br><br>
                     제한 시간 40분 내에 20개의 수식 결계를 완벽하게 풀어내어 아르카나 수석 입학의 영광을 쟁취하십시오!
@@ -990,23 +990,23 @@ qs = [
     {'qnum': 1, 'title': '빛과 어둠의 대비', 'story': '[보이드-마스터]: \\"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 🔮 <strong>[속성 기호 표시]</strong><br><br>마법 아카데미의 첫 시험관이 양수와 음수의 부호를 사용한 표시법을 묻습니다. 해저의 수치를 기호로 바르게 나타내십시오.\\"', 'qtext': '<strong>Q1. [양수와 음수]</strong><br>해발 1000m를 +1000m로 나타낼 때, 해저 500m는 어떻게 나타내는가?', 'placeholder': '예: -300m', 'error': '마력이 충돌합니다! 방향과 부호를 다시 확인하십시오.', 'ans_check': "ans === '-500m' || ans === '-500'"},
     {'qnum': 2, 'title': '정수의 조건', 'story': '[보이드-마스터]: \\"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 🔮 <strong>[마법 스크롤 선별]</strong><br><br>다양한 수가 적힌 종이 중 정수가 아닌 속성을 골라내어 마법진에서 소거해야 문이 열립니다.\\"', 'qtext': '<strong>Q2. [정수의 판별]</strong><br>다음 중 정수가 아닌 것의 번호를 쓰시오.<br>(1) -3 &nbsp;&nbsp;(2) 0 &nbsp;&nbsp;(3) 1.5 &nbsp;&nbsp;(4) 7', 'placeholder': '보기 번호 입력', 'error': '스파크가 튑니다! 정수가 아닌 수를 다시 골라 보십시오.', 'ans_check': "ans === '3' || ans === '1.5' || ans === '(3)'"},
     {'qnum': 3, 'title': '수직선의 기점', 'story': '[보이드-마스터]: \\"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 🔮 <strong>[마력 수직선의 기점]</strong><br><br>공중에 투사된 마력선 위의 눈금 0을 가리키는 한글 단어를 묻는 단어 퀴즈 자물쇠입니다.\\"', 'qtext': '<strong>Q3. [원점]</strong><br>수직선에서 0을 나타내는 점을 무엇이라 하는가?', 'placeholder': '한글 단어 입력', 'error': '수직선 기점이 정렬되지 않습니다!', 'ans_check': "ans === '원점'"},
-    {'qnum': 4, 'title': '정수의 개수', 'story': '<strong>[시스템 통신 장애 발생]</strong><br><br>[그리무어-G]: \\"치지직... 들리십니까...? 보이드-마스터의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\\"', 'qtext': '<strong>Q4. [두 수 사이의 정수]</strong><br>-5와 3 사이에 있는 정수는 모두 몇 개인가?', 'placeholder': '숫자 또는 개수 입력', 'error': '수치가 맞지 않아 문이 닫힙니다!', 'ans_check': "ans === '7' || ans === '7개'"},
-    {'qnum': 5, 'title': '속성 에너지 융합', 'story': '<strong>[시스템 통신 장애 발생]</strong><br><br>[그리무어-G]: \\"치지직... 들리십니까...? 보이드-마스터의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\\"', 'qtext': '<strong>Q5. [수직선 위의 점]</strong><br>두 정수 a, b에 대하여 a는 원점으로부터의 거리가 4이고, b는 -2보다 3만큼 큰 수이다. a가 양수일 때 a+b의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '융합 실패! 에너지 폭발 조짐이 보입니다.', 'ans_check': "ans === '5'"},
+    {'qnum': 4, 'title': '정수의 개수', 'story': '<strong>[시스템 통신 장애 발생]</strong><br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"치지직... 들리십니까...? 보이드-마스터의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\\"', 'qtext': '<strong>Q4. [두 수 사이의 정수]</strong><br>-5와 3 사이에 있는 정수는 모두 몇 개인가?', 'placeholder': '숫자 또는 개수 입력', 'error': '수치가 맞지 않아 문이 닫힙니다!', 'ans_check': "ans === '7' || ans === '7개'"},
+    {'qnum': 5, 'title': '속성 에너지 융합', 'story': '<strong>[시스템 통신 장애 발생]</strong><br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"치지직... 들리십니까...? 보이드-마스터의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\\"', 'qtext': '<strong>Q5. [수직선 위의 점]</strong><br>두 정수 a, b에 대하여 a는 원점으로부터의 거리가 4이고, b는 -2보다 3만큼 큰 수이다. a가 양수일 때 a+b의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '융합 실패! 에너지 폭발 조짐이 보입니다.', 'ans_check': "ans === '5'"},
     {'qnum': 6, 'title': '마법 절댓값 장벽', 'story': '[보이드-마스터]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 📜 <strong>[절댓값 연산 장벽]</strong><br><br>두 수의 절댓값 합을 맞춰야만 계단을 막고 있는 마법 보라색 장벽이 걷힙니다.\\"', 'qtext': '<strong>Q6. [절댓값 계산]</strong><br>|-7| + |3| 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '장벽의 절댓값이 꿈쩍도 하지 않습니다!', 'ans_check': "ans === '10'"},
     {'qnum': 7, 'title': '상반되는 속성의 거리', 'story': '[보이드-마스터]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 📜 <strong>[최대 거리 추출]</strong><br><br>절댓값이 4인 두 상반된 지점 사이의 실제 물리적 거리를 계산하여 동력선에 입력하십시오.\\"', 'qtext': '<strong>Q7. [절댓값의 성질]</strong><br>절댓값이 4인 두 수의 차를 구하시오. (큰 수에서 작은 수를 뺌)', 'placeholder': '숫자만 입력', 'error': '수치 동조 실패! 축의 거리가 맞지 않습니다.', 'ans_check': "ans === '8'"},
     {'qnum': 8, 'title': '최강의 절댓값 보석', 'story': '[보이드-마스터]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 📜 <strong>[크기 비교 홀로그램]</strong><br><br>나열된 다섯 개의 오라클 마력석 중 절댓값 힘이 가장 거대한 원석을 제단에 올리십시오.\\"', 'qtext': '<strong>Q8. [절댓값의 대소]</strong><br>다음 수 중 절댓값이 가장 큰 수를 쓰시오.<br>[-2.5, 3, -4, 0, 1.5]', 'placeholder': '해당 수 입력 (부호 포함)', 'error': '제단이 보석을 밀어냅니다!', 'ans_check': "ans === '-4'"},
     {'qnum': 9, 'title': '부등식과 영역', 'story': '[보이드-마스터]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 📜 <strong>[영역 격리 밸브]</strong><br><br>조건식 -3 < x <= 2 에 속하는 모든 정수 마나 노드의 개수를 찾아 밸브 압력을 맞추세요.\\"', 'qtext': '<strong>Q9. [부등호의 이해]</strong><br>-3 < x <= 2 를 만족하는 정수 x의 개수를 구하시오.', 'placeholder': '숫자 또는 개수 입력', 'error': '압력이 새어나갑니다! 다시 계산하십시오.', 'ans_check': "ans === '5' || ans === '5개'"},
-    {'qnum': 10, 'title': '균형의 추', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[보이드-마스터]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[그리무어-G]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [한가운데 있는 수]</strong><br>수직선에서 -4와 8의 한가운데 있는 점이 나타내는 수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '조율 실패! 추가 비대칭으로 기울어집니다.', 'ans_check': "ans === '2'"},
-    {'qnum': 11, 'title': '기초 마법진 덧셈', 'story': '[그리무어-G]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[덧셈 진법]</strong><br><br>제 3구역에 진입했습니다. 기초 연산 마법진에 덧셈 수식을 입력해 전력을 공급하십시오.\\"', 'qtext': '<strong>Q11. [정수의 덧셈]</strong><br>(-5) + (+8) 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '마법진에 스파크가 튑니다! 연산이 틀렸습니다.', 'ans_check': "ans === '3'"},
-    {'qnum': 12, 'title': '기초 마법진 뺄셈', 'story': '[그리무어-G]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[뺄셈 에너지 반전]</strong><br><br>음수를 빼는 반전 수식 에너지를 통제해 회로를 통과시키십시오.\\"', 'qtext': '<strong>Q12. [정수의 뺄셈]</strong><br>(+3) - (-7) 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '반전 에너지가 제어되지 않습니다!', 'ans_check': "ans === '10'"},
-    {'qnum': 13, 'title': '소수점 마나 정렬', 'story': '[그리무어-G]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[유리수의 덧셈]</strong><br><br>소수점으로 조각난 음의 유리수 마나들의 합을 정밀 튜닝하십시오.\\"', 'qtext': '<strong>Q13. [유리수의 덧셈]</strong><br>(-2.5) + (-1.5) 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '마나 강도 어긋남! 폭주 위험!', 'ans_check': "ans === '-4'"},
-    {'qnum': 14, 'title': '3중 혼합 마나', 'story': '[그리무어-G]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[혼합 연산]</strong><br><br>연속해서 연결된 3중 수식 노드를 계산해 과전류를 상쇄해야 안전하게 나아갈 수 있습니다.\\"', 'qtext': '<strong>Q14. [정수의 덧뺄셈 혼합]</strong><br>5 - 9 + 3 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '과전류 차단 실패! 회로 차단 경고!', 'ans_check': "ans === '-1'"},
-    {'qnum': 15, 'title': '기억의 왜곡 복원', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[그리무어-G]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[보이드-마스터]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [식의 바른 계산]</strong><br>어떤 수에서 -3을 빼야 할 것을 잘못하여 더했더니 5가 되었다. 바르게 계산한 답을 구하시오.', 'placeholder': '숫자만 입력', 'error': '왜곡 복원 실패! 기억 마법이 정지됩니다.', 'ans_check': "ans === '11'"},
+    {'qnum': 10, 'title': '균형의 추', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[보이드-마스터]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [한가운데 있는 수]</strong><br>수직선에서 -4와 8의 한가운데 있는 점이 나타내는 수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '조율 실패! 추가 비대칭으로 기울어집니다.', 'ans_check': "ans === '2'", "extra_class": "glitch-bg"},
+    {'qnum': 11, 'title': '기초 마법진 덧셈', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[덧셈 진법]</strong><br><br>제 3구역에 진입했습니다. 기초 연산 마법진에 덧셈 수식을 입력해 전력을 공급하십시오.\\"', 'qtext': '<strong>Q11. [정수의 덧셈]</strong><br>(-5) + (+8) 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '마법진에 스파크가 튑니다! 연산이 틀렸습니다.', 'ans_check': "ans === '3'"},
+    {'qnum': 12, 'title': '기초 마법진 뺄셈', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[뺄셈 에너지 반전]</strong><br><br>음수를 빼는 반전 수식 에너지를 통제해 회로를 통과시키십시오.\\"', 'qtext': '<strong>Q12. [정수의 뺄셈]</strong><br>(+3) - (-7) 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '반전 에너지가 제어되지 않습니다!', 'ans_check': "ans === '10'"},
+    {'qnum': 13, 'title': '소수점 마나 정렬', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[유리수의 덧셈]</strong><br><br>소수점으로 조각난 음의 유리수 마나들의 합을 정밀 튜닝하십시오.\\"', 'qtext': '<strong>Q13. [유리수의 덧셈]</strong><br>(-2.5) + (-1.5) 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '마나 강도 어긋남! 폭주 위험!', 'ans_check': "ans === '-4'"},
+    {'qnum': 14, 'title': '3중 혼합 마나', 'story': '<span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🪄 <strong>[혼합 연산]</strong><br><br>연속해서 연결된 3중 수식 노드를 계산해 과전류를 상쇄해야 안전하게 나아갈 수 있습니다.\\"', 'qtext': '<strong>Q14. [정수의 덧뺄셈 혼합]</strong><br>5 - 9 + 3 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '과전류 차단 실패! 회로 차단 경고!', 'ans_check': "ans === '-1'"},
+    {'qnum': 15, 'title': '기억의 왜곡 복원', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[보이드-마스터]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [식의 바른 계산]</strong><br>어떤 수에서 -3을 빼야 할 것을 잘못하여 더했더니 5가 되었다. 바르게 계산한 답을 구하시오.', 'placeholder': '숫자만 입력', 'error': '왜곡 복원 실패! 기억 마법이 정지됩니다.', 'ans_check': "ans === '11'", "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '대마법 곱셈 시전', 'story': '[보이드-마스터]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🎇 <strong>[어둠의 곱셈]</strong><br><br>마지막 4구역입니다. 음양 속성이 혼재된 곱셈 결계를 차례대로 무력화하십시오.\\"', 'qtext': '<strong>Q16. [정수의 곱셈]</strong><br>(-4) × (+6) 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '곱셈 역류 발생! 차단막이 두꺼워집니다.', 'ans_check': "ans === '-24'"},
     {'qnum': 17, 'title': '대마법 나눗셈 시전', 'story': '[보이드-마스터]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🎇 <strong>[음수의 분열]</strong><br><br>음수를 음수로 나누어 마나를 안정적으로 분열시키는 몫을 구하십시오.\\"', 'qtext': '<strong>Q17. [정수의 나눗셈]</strong><br>(-15) ÷ (-3) 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '마나가 불균일하게 분열됩니다!', 'ans_check': "ans === '5'"},
     {'qnum': 18, 'title': '거듭제곱 마법', 'story': '[보이드-마스터]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🎇 <strong>[거듭제곱 메아리]</strong><br><br>음수 -2를 3중으로 중첩해 외치는 거듭제곱의 메아리 마법 수치를 해독하십시오.\\"', 'qtext': '<strong>Q18. [거듭제곱]</strong><br>$(-2)^3$ 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '메아리가 너무 큽니다! 귀를 막고 다시 입력하세요.', 'ans_check': "ans === '-8'"},
     {'qnum': 19, 'title': '사칙 혼합 제어', 'story': '[보이드-마스터]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🎇 <strong>[연산 제어 스크린]</strong><br><br>곱셈과 나눗셈이 혼재된 복합 스크린의 중앙 해답을 계산해 방화벽을 해킹하십시오.\\"', 'qtext': '<strong>Q19. [유리수의 사칙혼합 1]</strong><br>$(-2) \\times (-3) - (+10) \\div (-2)$ 의 값을 구하시오.', 'placeholder': '숫자만 입력', 'error': '해킹 방어 프로토콜 작동! 수치 리셋 경고!', 'ans_check': "ans === '11'"},
-    {'qnum': 20, 'title': '최종 마법진의 해', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[그리무어-G]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[보이드-마스터]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [유리수의 사칙혼합 2]</strong><br>$12 - [ 5 - \\{ (-2) \\times 3 - 4 \\} ]$ 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '시험 통과 실패! 최종 마나 코어가 작동하지 않습니다.', 'ans_check': "ans === '-3'"}
+    {'qnum': 20, 'title': '최종 마법진의 해', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[그리무어-G]</span></span>: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[보이드-마스터]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [유리수의 사칙혼합 2]</strong><br>$12 - [ 5 - \\{ (-2) \\times 3 - 4 \\, "extra_class": "glitch-bg"} ]$ 의 값을 구하시오.', 'placeholder': '숫자만 입력 (부호 포함)', 'error': '시험 통과 실패! 최종 마나 코어가 작동하지 않습니다.', 'ans_check': "ans === '-3'"}
 ]
 
 
@@ -1081,7 +1081,7 @@ for q in qs:
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_02_rational_numbers/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -1108,7 +1108,7 @@ outro_html = '''
             <h2>아르카나 마법 학교 입학 허가</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_02_rational_numbers/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">마지막 패스코드 '-3'을 입력하고 주문을 외우자, 거대한 연산 마법진이 황금빛 오라를 뿜어내며 하늘 높이 솟아오릅니다! 
+                <div class="story-text" id="outro-dynamic-text">마지막 패스코드 '-3'을 입력하고 주문을 외우자, 거대한 연산 마법진이 황금빛 오라를 뿜어내며 하늘 높이 솟아오릅니다! 
                 이마에 찬란한 입학 허가 인장이 새겨지고 시험장의 철문이 천천히 열리며 환호하는 아카데미 선배들이 나타납니다. 
                 정수와 유리수의 완벽한 사칙연산 제어로 험난한 마력 결계를 돌파해 낸 신입 마법사, 아르카나 수석 입학을 대성공으로 축하합니다!</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
@@ -1118,7 +1118,7 @@ outro_html = '''
 '''
 panels_html += outro_html
 
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q.get('ans_check', 'false')
@@ -1154,6 +1154,18 @@ for q in qs:
                     }
                 } catch(e) {
                     console.warn("구글 시트 종료 기록 실패(로컬 테스트 모드):", e);
+                }
+                
+                // 멀티 엔딩 처리
+                let outroDiv = document.getElementById("outro-dynamic-text");
+                if (outroDiv) {
+                    if (totalWrongCount < 5) {
+                        outroDiv.innerHTML = "마지막 패스코드 '-3'을 입력하고 주문을 외우자, 거대한 연산 마법진이 황금빛 오라를 뿜어내며 하늘 높이 솟아오릅니다! 
+                이마에 찬란한 입학 허가 인장이 새겨지고 시험장의 철문이 천천히 열리며 환호하는 아카데미 선배들이 나타납니다. 
+                정수와 유리수의 완벽한 사칙연산 제어로 험난한 마력 결계를 돌파해 낸 신입 마법사, 아르카나 수석 입학을 대성공으로 축하합니다!";
+                    } else {
+                        outroDiv.innerHTML = "탈출 장치가 기동되는 순간! 시스템이 크게 요동칩니다.<br><br>잦은 오답과 연산 지연의 여파로 시스템이 과부하에 걸렸고, 데이터의 일부가 유실되었습니다. 하지만 여러분은 끝까지 포기하지 않고 방화벽을 해제하여 간신히 탈출구로 몸을 피했습니다! 상처투성이의 탈출이었지만, 수학의 지혜로 목숨을 건졌습니다. 미션 성공!";
+                    }
                 }'''
 
     js = f'''
@@ -1165,7 +1177,7 @@ for q in qs:
                 {victory_call} {gas_end_call}
                 nextStage('panel_q{qnum}', {next_stage}, {next_progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! {zone_name} 처음으로 이동됩니다.");
                     wrongCount = 0;

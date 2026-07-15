@@ -432,7 +432,7 @@ base_html = """<!DOCTYPE html>
             <h2>일차함수와 그 그래프</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [자율주행 관제 로봇 루트-R]: "미래 도시 '네오 서울', 여러분이 탄 자율주행 택시의 내비게이션이 바이러스에 감염되어 경로를 이탈했습니다. 택시는 절벽을 향해 달리고 있습니다! 유일한 제어 방법은 일차함수의 그래프를 이용해 주행 궤적을 수정하는 것뿐입니다. 기울기와 절편을 조절해 20개의 경로 포인트를 맞추고 택시를 안전한 목적지로 안내하세요!"
                 </div>
             </div>
@@ -449,7 +449,7 @@ base_html = """<!DOCTYPE html>
             <h2>네오 서울 중앙역 무사 도착</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_05_functions/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [자율주행 관제 로봇 루트-R]: "정확히 10분을 입력하자 내비게이션이 정상 궤도를 회복했습니다! 택시가 절벽을 아슬아슬하게 피하며 네오 서울 중앙역에 부드럽게 멈춰 섭니다. 일차함수의 마법사 여러분, 무사 생환을 축하합니다!"
                 </div>
             </div>
@@ -580,17 +580,17 @@ qs = [
     {'qnum': 7, 'title': '출발지 복원 ($y$절편)', 'story': '[시스템-에러]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 택시의 이탈을 방지하기 위해 중심 회선($y$축)과 마주치는 원점 시작 높이를 구해야 합니다. 함수 $y=2x+6$의 $y$축 절편 값을 알아내세요.\\"', 'qtext': '<strong>Q7.</strong> 일차함수 $y = 2x + 6$ 의 $y$절편을 구하시오.', 'placeholder': '숫자만 입력', 'error': '절편 연산에 실패했습니다. $x=0$일 때의 $y$값을 구하세요.', 'ans_check': "ans === '6'"},
     {'qnum': 8, 'title': '제동 장벽 통과 ($x$절편)', 'story': '[시스템-에러]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 안전 제동 구역인 $x$축의 가로 교점을 알아내야 장벽 충돌을 막을 수 있습니다. 직선 $y=2x+6$의 $x$절편을 구하세요.\\"', 'qtext': '<strong>Q8.</strong> 일차함수 $y = 2x + 6$ 의 $x$절편을 구하시오.', 'placeholder': '음수는 마이너스 기호 포함 입력', 'error': '틀렸습니다. $y=0$일 때의 $x$값을 찾아보세요. ($2x+6=0$)', 'ans_check': "ans === '-3'"},
     {'qnum': 9, 'title': '회전 각도 정합', 'story': '[시스템-에러]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 반대편 선로에서 미끄러져 오는 궤적 $y=-\\frac{1}{2}x+4$의 차단 장치 도킹 좌표($x$절편)를 구하여 정면충돌 위험을 원천 제거하십시오.\\"', 'qtext': '<strong>Q9.</strong> 일차함수 $y = -\\frac{1}{2}x + 4$ 의 $x$절편을 구하시오.', 'placeholder': '숫자만 입력', 'error': '오류입니다. $-\\frac{1}{2}x + 4 = 0$이 되는 $x$값을 구하세요.', 'ans_check': "ans === '8'"},
-    {'qnum': 10, 'title': '궤적 방정식 조립', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[시스템-에러]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[루트-R]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> $y$절편이 5이고 $x$절편이 -5인 일차함수의 식을 구하시오.', 'placeholder': '예: y = x + 5', 'error': '방정식이 잘못 조립되었습니다. 기울기와 $y$절편을 바탕으로 식을 완성하세요.', 'ans_check': "ans.replace(/\\s+/g, '') === 'Y=X+5'"},
+    {'qnum': 10, 'title': '궤적 방정식 조립', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[시스템-에러]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[루트-R]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> $y$절편이 5이고 $x$절편이 -5인 일차함수의 식을 구하시오.', 'placeholder': '예: y = x + 5', 'error': '방정식이 잘못 조립되었습니다. 기울기와 $y$절편을 바탕으로 식을 완성하세요.', 'ans_check': "ans.replace(/\\s+/g, '') === 'Y=X+5'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '변화율 계산', 'story': '[루트-R]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 택시가 경사 진 직선 도로에 접어들며 비상 가속을 시작합니다. 시간 단위인 $x$가 1초 흘러갈 때 주행축 $y$는 얼마나 가속 변동하는지 가파른 변화율을 계측하세요.\\"', 'qtext': '<strong>Q11.</strong> 일차함수 $y = 3x - 2$ 에서 $x$의 값이 1만큼 증가할 때 $y$의 값은 얼마나 증가하는가?', 'placeholder': '숫자만 입력', 'error': '계측 오류입니다. 일차함수 $y=ax+b$에서 $x$의 계수가 의미하는 변화량을 찾아보세요.', 'ans_check': "ans === '3'"},
     {'qnum': 12, 'title': '기울기 심볼', 'story': '[루트-R]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 궤도선의 변화 각을 제어하기 위해 시스템 표준으로 설정된 \'기울기\' 매개변수를 수치화하는 공식 시스템 심볼(문자 기호)을 입력기에 타이핑하십시오.\\"', 'qtext': '<strong>Q12.</strong> 일차함수 $y = ax + b$ 에서 기울기를 나타내는 문자는 무엇인가?', 'placeholder': '알파벳 1글자 입력', 'error': '올바른 시스템 심볼이 아닙니다. $x$의 계수에 해당하는 변수 이름입니다.', 'ans_check': "ans === 'A'"},
     {'qnum': 13, 'title': '두 점 사이의 구배', 'story': '[루트-R]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 안전 주행 영역의 제1 포인트 $(1,3)$과 제2 포인트 $(3,7)$을 잇는 안전 벨트 궤도의 가파르기(기울기)를 도출해 내야 센서가 길을 잃지 않습니다.\\"', 'qtext': '<strong>Q13.</strong> 두 점 $(1, 3)$ 과 $(3, 7)$ 을 지나는 직선의 기울기를 구하시오.', 'placeholder': '숫자만 입력', 'error': '구배 연산에 실패했습니다. (y의 증가량) / (x의 증가량) 공식을 이용하세요.', 'ans_check': "ans === '2'"},
     {'qnum': 14, 'title': '경로 함수 합성', 'story': '[루트-R]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 점점 가속도가 꺾여 하강하는 기울기 -2와 정적 시작 오프셋 1을 지닌 긴급 조향용 경로 제어용 일차함수 수식을 합성하여 릴레이 보드에 입력하세요.\\"', 'qtext': '<strong>Q14.</strong> 기울기가 -2이고 $y$절편이 1인 일차함수의 식을 구하시오.', 'placeholder': '예: y = -2x + 1', 'error': '합성 식에 오류가 있습니다. 기울기와 $y$절편을 순서대로 식에 넣으세요.', 'ans_check': "ans.replace(/\\s+/g, '') === 'Y=-2X+1'"},
-    {'qnum': 15, 'title': '조향 방향 결정', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[루트-R]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[시스템-에러]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 일차함수 $y = -3x + 4$ 의 그래프는 오른쪽 ( 위 / 아래 ) 로 향하는 직선이다.', 'placeholder': '위 또는 아래 입력', 'error': '틀렸습니다. 기울기의 부호가 음수(-)일 때 직선이 향하는 방향을 생각해보세요.', 'ans_check': "ans === '아래'"},
+    {'qnum': 15, 'title': '조향 방향 결정', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br>[루트-R]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[시스템-에러]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 일차함수 $y = -3x + 4$ 의 그래프는 오른쪽 ( 위 / 아래 ) 로 향하는 직선이다.', 'placeholder': '위 또는 아래 입력', 'error': '틀렸습니다. 기울기의 부호가 음수(-)일 때 직선이 향하는 방향을 생각해보세요.', 'ans_check': "ans === '아래'", "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '소모 패턴 식화', 'story': '[시스템-에러]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 자율주행 택시의 비상 예비 배터리 연료가 떨어지고 있습니다. 최초 20cm의 초고온 냉각 전지가 1시간에 2cm 비율로 감소할 때, 잔여량 $y$에 대한 시간 $x$의 식을 주입하세요.\\"', 'qtext': '<strong>Q16.</strong> 길이가 20cm인 양초에 불을 붙이면 1시간에 2cm씩 짧아진다. $x$시간 후의 양초의 길이를 $y$cm라 할 때, $y$를 $x$의 식으로 나타내시오.', 'placeholder': '예: y = 20 - 2x', 'error': '수식이 올바르지 않습니다. 처음 전지 길이에서 시간당 소모량을 차감하는 식을 세우세요.', 'ans_check': "ans.replace(/\\s+/g, '') === 'Y=20-2X' || ans.replace(/\\s+/g, '') === 'Y=-2X+20'"},
     {'qnum': 17, 'title': '완전 방전 시간', 'story': '[시스템-에러]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 냉각 연료 전지가 완전히 0(바닥)이 될 때까지 주행할 수 있는 한계 시간(안전 제한 시간)을 계측해 택시가 그전에 멈추도록 예비 방전 도달 시간을 설정하세요.\\"', 'qtext': '<strong>Q17.</strong> 위 Q16의 양초가 완전히 다 타서 없어지는 것은 불을 붙인 지 몇 시간 후인가?', 'placeholder': '예: 10시간', 'error': '틀렸습니다. 냉각 연료 봉의 잔여 길이인 $y$가 0이 되는 시간 $x$를 구하세요.', 'ans_check': "ans === '10' || ans === '10시간'"},
     {'qnum': 18, 'title': '음파 내비게이션 복구', 'story': '[시스템-에러]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 도시 터널을 지나기 위해 센서의 음속 보정 공식을 복원해야 합니다. 0도에서 초속 331m이고 기온 $x$가 1도씩 오를 때마다 속력 $y$가 0.6m/s씩 증가하는 보정 식을 제출하세요.\\"', 'qtext': '<strong>Q18.</strong> 온도계가 없는 방에서 소리의 속력은 초속 331m이고 기온이 1도 오를 때마다 초속 0.6m씩 증가한다. 기온이 $x$도일 때 소리의 속력 $y$를 식으로 나타내시오.', 'placeholder': '예: y = 0.6x + 331', 'error': '물리 보정 식이 바르지 않습니다. 기온에 따른 가산율을 계산 식에 포함하세요.', 'ans_check': "ans.replace(/\\s+/g, '') === 'Y=0.6X+331' || ans.replace(/\\s+/g, '') === 'Y=331+0.6X'"},
     {'qnum': 19, 'title': '최종 기온 속력 정합', 'story': '[시스템-에러]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 외부 기상 센서에 측정된 네오 서울 터널 안의 기온은 현재 15도입니다. 이 환경에서 음파 레이더 거리를 정확히 계산할 때의 전파 속력 값을 계산해 적용하세요.\\"', 'qtext': '<strong>Q19.</strong> 기온이 15도일 때, 소리의 속력을 구하시오.', 'placeholder': "단위 없이 숫자만 또는 '초속...m' 형태로 입력", 'error': '오차 기온 속력입니다. $331 + 0.6 \\times 15$를 연산해 보세요.', 'ans_check': "ans === '340' || ans === '340M/S' || ans === '초속340M'"},
-    {'qnum': 20, 'title': '감속 냉각 시간', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[루트-R]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[시스템-에러]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 처음 물통에 50L의 물이 들어 있고 매분 3L씩 물을 빼낸다. 물이 20L가 남는 것은 몇 분 후인지 구하시오.', 'placeholder': "단위 없이 숫자만 또는 '10분' 형태로 입력", 'error': '브레이크 동작 실패! 유량 잔액 식 $50 - 3x = 20$을 만족하는 변수 값을 다시 구하십시오.', 'ans_check': "ans === '10' || ans === '10분'"}
+    {'qnum': 20, 'title': '감속 냉각 시간', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[루트-R]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[시스템-에러]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 처음 물통에 50L의 물이 들어 있고 매분 3L씩 물을 빼낸다. 물이 20L가 남는 것은 몇 분 후인지 구하시오.', 'placeholder': "단위 없이 숫자만 또는 '10분' 형태로 입력", 'error': '브레이크 동작 실패! 유량 잔액 식 $50 - 3x = 20$을 만족하는 변수 값을 다시 구하십시오.', 'ans_check': "ans === '10' || ans === '10분'", "extra_class": "glitch-bg"}
 ]
 
 # Generate Q panels
@@ -671,7 +671,7 @@ for q in qs:
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="{q['img']}" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -692,7 +692,7 @@ for q in qs:
     panels_html += panel
 
 # JS Answer Checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q['ans_check']
@@ -707,7 +707,7 @@ for q in qs:
                 wrongCount = 0;
                 nextStage('panel_q{qnum}', {next_stage}, {progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;

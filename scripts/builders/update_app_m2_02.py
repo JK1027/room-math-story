@@ -432,7 +432,7 @@ base_html = """<!DOCTYPE html>
             <h2>지수법칙과 다항식의 연산</h2>
             <img src="assets/m2_02_expressions/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [도시 관제 AI 기어즈-C]: "거대한 기계 도시 '기어즈'를 제어하는 중앙 메인프레임이 폭주하기 시작했습니다! 톱니바퀴들이 무질서하게 맞물려 도시 전체가 붕괴되기까지 남은 시간은 단 40분! 시스템을 안정화하려면 기계어의 기초인 지수법칙과 다항식 연산 20개를 완벽하게 계산해 코드를 덮어씌워야 합니다."
             </div>
             </div>
@@ -449,7 +449,7 @@ base_html = """<!DOCTYPE html>
             <h2>기계 도시 안정화 성공</h2>
             <img src="assets/m2_02_expressions/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [도시 관제 AI 기어즈-C]: "입력한 코드가 마지막 톱니바퀴에 완벽하게 맞물려 돌아가며, 굉음을 내던 기계 도시 기어즈가 평온을 되찾습니다! 여러분은 지수법칙과 다항식의 계산으로 도시의 붕괴를 성공적으로 막아냈습니다!"
             </div>
             </div>
@@ -580,17 +580,17 @@ qs = [
     {'qnum': 7, 'title': '콘덴서 역방향 충전', 'story': '[바이러스-K]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 🔌 <strong>[음전하 축전]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"음의 부호 전하를 가진 콘덴서 $(-2x^2y)^3$ 를 활성화하여 임시 배터리에 전하를 완충시켜 주십시오.\\"\\"', 'qtext': '<strong>Q7. [음수 항의 거듭제곱]</strong><br>$(-2x^2y)^3$ 을 간단히 하시오.', 'placeholder': '예: -8x^6y^3', 'error': '콘덴서 과부하! 퓨즈가 끊어집니다.', 'ans_check': "ans === '-8X^6Y^3' || ans === '-8X**6Y**3' || ans === '-8(X^6)(Y^3)'"},
     {'qnum': 8, 'title': '신호 분배기 해제', 'story': '[바이러스-K]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 🔌 <strong>[신호 분기 전압]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"단항 전류 전압 $12x^4y^2$ 를 $3x^2y$ 로 나눠 신호 분배 주파수를 획득하십시오.\\"\\"', 'qtext': '<strong>Q8. [단항식의 나눗셈]</strong><br>$12x^4y^2 \\div 3x^2y$ 를 간단히 하시오.', 'placeholder': '예: 4x^2y', 'error': '신호 감쇄! 모니터 화면이 흐려집니다.', 'ans_check': "ans === '4X^2Y' || ans === '4X**2Y' || ans === '4(X^2)Y'"},
     {'qnum': 9, 'title': '역전류 필터 우회', 'story': '[바이러스-K]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 🔌 <strong>[역전압 제거]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"전압이 분수 형태로 꺾인 역전류 필터 구역입니다. $8a^3b^2 \\div \\frac{2}{3}ab$ 의 필터 저항값을 계산해 전류를 우회시키십시오.\\"\\"', 'qtext': '<strong>Q9. [분수 단항식 나눗셈]</strong><br>$8a^3b^2 \\div \\frac{2}{3}ab$ 를 간단히 하시오.', 'placeholder': '예: 12a^2b', 'error': '필터 막힘! 역전류가 역류합니다!', 'ans_check': "ans === '12A^2B' || ans === '12A**2B'"},
-    {'qnum': 10, 'title': '메인 퓨즈 충방전', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[바이러스-K]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[기어즈-C]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [단항식 곱셈과 나눗셈]</strong><br>$4x^2 \\times (-3xy) \\div 2x^2y$ 를 간단히 하시오.', 'placeholder': '예: -6x', 'error': '전원 차단! 회로망 전체가 암전됩니다.', 'ans_check': "ans === '-6X'"},
+    {'qnum': 10, 'title': '메인 퓨즈 충방전', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[바이러스-K]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[기어즈-C]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [단항식 곱셈과 나눗셈]</strong><br>$4x^2 \\times (-3xy) \\div 2x^2y$ 를 간단히 하시오.', 'placeholder': '예: -6x', 'error': '전원 차단! 회로망 전체가 암전됩니다.', 'ans_check': "ans === '-6X'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '다항 압력 밸브 합산', 'story': '[기어즈-C]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🏭 <strong>[제어 밸브 1단계]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"3구역 다항식 제어 장치로 진입했습니다. 분산된 압력 배관 $(2x + 3y)$ 와 $(4x - y)$ 를 결합하여 단일 관으로 정렬하십시오.\\"\\"', 'qtext': '<strong>Q11. [다항식의 덧셈]</strong><br>$(2x + 3y) + (4x - y)$ 를 간단히 하시오.', 'placeholder': '예: 6x+2y', 'error': '밸브 누수! 기압 유실 경보가 울립니다.', 'ans_check': "ans === '6X+2Y' || ans === '2Y+6X'"},
     {'qnum': 12, 'title': '음압 실린더 차감', 'story': '[기어즈-C]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🏭 <strong>[제어 밸브 2단계]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"반대 방향 음압 실린더 배관 수식 $(5a - 2b) - (3a - 4b)$ 를 계산하여 음압 밸브의 압력을 조정하십시오. 부호 변화에 주의하십시오.\\"\\"', 'qtext': '<strong>Q12. [다항식의 뺄셈]</strong><br>$(5a - 2b) - (3a - 4b)$ 를 간단히 하시오.', 'placeholder': '예: 2a+2b', 'error': '부호 오류! 실린더 피스톤이 급제동합니다.', 'ans_check': "ans === '2A+2B' || ans === '2B+2A'"},
     {'qnum': 13, 'title': '배율 실린더 동조', 'story': '[기어즈-C]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🏭 <strong>[배율 증폭 축]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"배율 기어에 의해 3배와 2배로 각각 커진 실린더 식 $3(x - 2y) + 2(2x + y)$ 의 합산 회전비를 도출하십시오.\\"\\"', 'qtext': '<strong>Q13. [괄호가 있는 다항식 계산]</strong><br>$3(x - 2y) + 2(2x + y)$ 를 간단히 하시오.', 'placeholder': '예: 7x-4y', 'error': '증폭비 불일치! 기어 이가 맞지 않습니다.', 'ans_check': "ans === '7X-4Y' || ans === '-4Y+7X'"},
     {'qnum': 14, 'title': '다항식 분류 장치', 'story': '[기어즈-C]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 🏭 <strong>[특성 포트 분류]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"문자와 차수가 같은 항들끼리만 모아 처리해야 포트 분류가 가능합니다. 이러한 특성을 가진 항을 한글 3글자로 무엇이라 합니까?\\"\\"', 'qtext': '<strong>Q14. [다항식의 기초 용어]</strong><br>다항식의 덧셈에서 문자와 차수가 각각 같은 항을 무엇이라 하는가?', 'placeholder': '한글 3글자 입력', 'error': '분류 장치 걸림! 이물질 배출구가 작동합니다.', 'ans_check': "ans === '동류항'"},
-    {'qnum': 15, 'title': '이차 압축 제어판', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[기어즈-C]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[바이러스-K]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [이차식의 덧셈]</strong><br>$(3x^2 - 2x + 1) + (-x^2 + 5x - 3)$ 을 간단히 하시오.', 'placeholder': '예: 2x^2+3x-2', 'error': '이차 기어 마모 발생! 윤활유를 긴급 공급하십시오.', 'ans_check': "ans === '2X^2+3X-2' || ans === '2X**2+3X-2' || ans === '-2+3X+2X^2'"},
+    {'qnum': 15, 'title': '이차 압축 제어판', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br>[기어즈-C]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[바이러스-K]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [이차식의 덧셈]</strong><br>$(3x^2 - 2x + 1) + (-x^2 + 5x - 3)$ 을 간단히 하시오.', 'placeholder': '예: 2x^2+3x-2', 'error': '이차 기어 마모 발생! 윤활유를 긴급 공급하십시오.', 'ans_check': "ans === '2X^2+3X-2' || ans === '2X**2+3X-2' || ans === '-2+3X+2X^2'", "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '메인보드 단다항 곱셈', 'story': '[바이러스-K]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🚨 <strong>[메인프레임 코어 1단계]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"4구역 메인보드 과부하 구역에 진입했습니다! 단항식과 다항식의 곱셉 결합 수식 $2x(3x - 4y)$ 의 과부하 계수를 분배 계산하여 주입하십시오.\\"\\"', 'qtext': '<strong>Q16. [단항식과 다항식의 곱셈]</strong><br>$2x(3x - 4y)$ 를 간단히 하시오.', 'placeholder': '예: 6x^2-8xy', 'error': '코드 에러! 메인보드 발열이 시작됩니다.', 'ans_check': "ans === '6X^2-8XY' || ans === '6X**2-8XY' || ans === '-8XY+6X^2'"},
     {'qnum': 17, 'title': '신호 세기 분배 감쇠', 'story': '[바이러스-K]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🚨 <strong>[메인프레임 코어 2단계]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"다항식 전력을 단항식 포트로 나눈 $(6a^2b - 3ab^2) \\div 3ab$ 의 신호 세기를 계산해 전압 폭주를 막으십시오.\\"\\"', 'qtext': '<strong>Q17. [다항식과 단항식의 나눗셈]</strong><br>$(6a^2b - 3ab^2) \\div 3ab$ 를 간단히 하시오.', 'placeholder': '예: 2a-b', 'error': '전압 과충전! 경고부저가 울립니다.', 'ans_check': "ans === '2A-B' || ans === '-B+2A'"},
     {'qnum': 18, 'title': '코어 분배 합성', 'story': '[바이러스-K]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🚨 <strong>[메인프레임 코어 3단계]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"전원 차단 수치 $-3x(2x - 5) + 4x^2$ 을 정밀하게 병합하여 중앙 해제 코드를 전송하십시오.\\"\\"', 'qtext': '<strong>Q18. [분배법칙 복합 계산]</strong><br>$-3x(2x - 5) + 4x^2$ 을 간단히 하시오.', 'placeholder': '예: -2x^2+15x', 'error': '신호 전송 차단! 연결 유실 경고 발생.', 'ans_check': "ans === '-2X^2+15X' || ans === '-2X**2+15X' || ans === '15X-2X^2'"},
     {'qnum': 19, 'title': '음의 다항 신호 분기', 'story': '[바이러스-K]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 🚨 <strong>[메인프레임 코어 4단계]</strong><br><br>[도시 관제 AI 기어즈-C]: \\"코어 온도가 계속 올라갑니다! 음의 포트 전송 수식 $(4x^2y - 8xy^2) \\div (-2xy)$ 를 계산하여 긴급 냉각 밸브를 여십시오.\\"\\"', 'qtext': '<strong>Q19. [음수로 나누는 다항식 나눗셈]</strong><br>$(4x^2y - 8xy^2) \\div (-2xy)$ 를 간단히 하시오.', 'placeholder': '예: -2x+4y', 'error': '냉각수 밸브 고착! 발열이 임계치를 위협합니다.', 'ans_check': "ans === '-2X+4Y' || ans === '4Y-2X'"},
-    {'qnum': 20, 'title': '최종 제어 코드 입력', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[기어즈-C]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[바이러스-K]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [식의 계산 최종 복합형]</strong><br>$(15x^3 - 10x^2) \\div 5x^2 + 3(x - 2)$ 를 간단히 하시오.', 'placeholder': '예: 6x-8', 'error': '마스터 키 불일치! 기계도시 전체가 비상 셧다운 모드로 돌입합니다!', 'ans_check': "ans === '6X-8' || ans === '-8+6X'"}
+    {'qnum': 20, 'title': '최종 제어 코드 입력', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[기어즈-C]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[바이러스-K]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [식의 계산 최종 복합형]</strong><br>$(15x^3 - 10x^2) \\div 5x^2 + 3(x - 2)$ 를 간단히 하시오.', 'placeholder': '예: 6x-8', 'error': '마스터 키 불일치! 기계도시 전체가 비상 셧다운 모드로 돌입합니다!', 'ans_check': "ans === '6X-8' || ans === '-8+6X'", "extra_class": "glitch-bg"}
 ]
 
 # Generate Q panels
@@ -666,7 +666,7 @@ for q in qs:
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_02_expressions/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -687,7 +687,7 @@ for q in qs:
     panels_html += panel
 
 # JS Answer Checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q['ans_check']
@@ -702,7 +702,7 @@ for q in qs:
                 wrongCount = 0;
                 nextStage('panel_q{qnum}', {next_stage}, {progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;

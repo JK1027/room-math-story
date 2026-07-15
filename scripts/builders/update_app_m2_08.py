@@ -432,7 +432,7 @@ base_html = """<!DOCTYPE html>
             <h2>경우의 수와 확률</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [딜러 로봇 잭팟-D]: "화려한 라스베이거스의 카지노, 악당 갬블러 '잭팟'이 카지노의 시스템을 조작해 모든 돈을 털어가려 합니다. 이를 막기 위해서는 주사위, 동전, 카드 게임 속에 숨겨진 확률의 법칙 20개를 정확히 계산해 그를 게임에서 파산시켜야 합니다! 운이 아닌 수학으로 승부하세요!"
             </div>
             </div>
@@ -449,7 +449,7 @@ base_html = """<!DOCTYPE html>
             <h2>수학은 완벽한 행운을 이긴다</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [딜러 로봇 잭팟-D]: "마지막 오답 확률 80%를 계산해 내며 잭팟의 카드 패가 사기임을 만천하에 증명했습니다! 잭팟은 결국 파산하여 무릎을 꿇고, 카지노에는 정의가 구현되었습니다. 수학의 힘으로 완벽한 카지노의 위기를 물리쳤습니다!"
             </div>
             </div>
@@ -580,17 +580,17 @@ qs = [
     {'qnum': 7, 'title': '탈출 경로의 탐색', 'story': '[리퍼-R]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 카지노 해킹 완수 후 네바다를 빠져나갈 탈출용 버스 노선 3가지와 기차 노선 2가지가 있습니다. 한 번에 한 수단만 고르는 경우의 수는?\\"', 'qtext': '<strong>Q7.</strong> 서울에서 부산으로 가는 버스가 3가지, 기차가 2가지 있을 때, 서울에서 부산으로 가는 경우의 수는?', 'placeholder': '숫자만 입력', 'error': '틀렸습니다. 동시에 타는 것이 아닌 선택지 중 하나이므로 합의 법칙을 씁니다.', 'ans_check': "ans === '5'"},
     {'qnum': 8, 'title': '경호원 보안 레이아웃', 'story': '[리퍼-R]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 의심받지 않고 복도를 지나가야 합니다. 보초를 서고 있는 경호원 A, B, C 세 명을 문 앞에 일렬로 줄 세우는 총 경우의 수를 구하세요.\\"', 'qtext': '<strong>Q8.</strong> A, B, C 세 명의 학생을 일렬로 세우는 경우의 수는?', 'placeholder': '숫자만 입력', 'error': '틀렸습니다. 3명을 순서대로 배열하는 경우의 수($3 \times 2 \times 1$)입니다.', 'ans_check': "ans === '6'"},
     {'qnum': 9, 'title': '카지노 임원진 선출', 'story': '[리퍼-R]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 잭팟의 사기 딜러 4명 중 의심 대상 1순위(대표)와 2순위(부대표)를 임의로 지목하여 보안 로그를 감시하는 모든 경우의 수는 몇 가지입니까?\\"', 'qtext': '<strong>Q9.</strong> 4명 중 반장 1명, 부반장 1명을 뽑는 경우의 수는?', 'placeholder': '숫자만 입력', 'error': '틀렸습니다. 순서와 직책이 있으므로 $4 \times 3$으로 연산합니다.', 'ans_check': "ans === '12'"},
-    {'qnum': 10, 'title': '수사팀 구성 조합', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[리퍼-R]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[잭팟-D]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 4명 중 자격이 같은 대표 2명을 뽑는 경우의 수는?', 'placeholder': '숫자만 입력', 'error': '틀렸습니다. 자격이 같으므로 뽑는 순서의 중복을 제거해야 합니다. ($(4 \times 3) \\div 2$)', 'ans_check': "ans === '6'"},
+    {'qnum': 10, 'title': '수사팀 구성 조합', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[리퍼-R]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[잭팟-D]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 4명 중 자격이 같은 대표 2명을 뽑는 경우의 수는?', 'placeholder': '숫자만 입력', 'error': '틀렸습니다. 자격이 같으므로 뽑는 순서의 중복을 제거해야 합니다. ($(4 \times 3) \\div 2$)', 'ans_check': "ans === '6'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '확률의 기본 범위', 'story': '[잭팟-D]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 제 3구역: 배팅의 수학입니다. 칩 환전기 콘솔입니다. 모든 수학적 확률 $p$가 나타낼 수 있는 값의 최소와 최대 제한 부등식을 정확하게 세우세요.\\"', 'qtext': '<strong>Q11.</strong> 어떤 사건이 일어날 확률을 $p$라고 할 때, $p$의 범위는 어떻게 되는가?', 'placeholder': '예: 0<=p<=1 (공백 없이 입력)', 'error': '부등식 표현이 잘못되었습니다. 확률은 0 이상 1 이하의 범위를 가집니다.', 'ans_check': "ans.replace(/\\s+/g, '') === '0<=P<=1' || ans.replace(/\\s+/g, '') === '0<=P<=1.0'"},
     {'qnum': 12, 'title': '치명적 잭팟의 실패율', 'story': '[잭팟-D]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 절대로 일어날 수 없는 조작 오류 사건(예: 주사위를 굴렸는데 0이나 7이 나옴)의 확률 값을 수치로 타이핑하여 락을 푸십시오.\\"', 'qtext': '<strong>Q12.</strong> 절대로 일어날 수 없는 사건의 확률은 얼마인가?', 'placeholder': '숫자만 입력', 'error': '틀렸습니다. 불가능한 사건의 확률 값입니다.', 'ans_check': "ans === '0'"},
     {'qnum': 13, 'title': '동전 승부의 진실', 'story': '[잭팟-D]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 잭팟이 칩을 걸고 던진 게임 동선에서, 앞면이 나올 수학적 기댓 확률을 분수 형태로 도출해 칩 제어 장치에 적용하세요.\\"', 'qtext': '<strong>Q13.</strong> 동전 한 개를 던질 때 앞면이 나올 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 1/2)', 'error': '틀렸습니다. 동전의 단면은 앞면과 뒷면 총 두 가지입니다.', 'ans_check': "ans === '1/2' || ans === '0.5'"},
     {'qnum': 14, 'title': '소수 슬롯머신', 'story': '[잭팟-D]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 슬롯 머신 휠의 6개 숫자 중 소수(2, 3, 5)가 걸려 잭팟의 사기 패턴의 흐름을 끊어낼 확률을 분수로 계산하십시오.\\"', 'qtext': '<strong>Q14.</strong> 주사위 한 개를 던질 때 소수의 눈이 나올 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 1/2)', 'error': '틀렸습니다. 6개 눈 중 소수(2, 3, 5)의 비율을 구하세요.', 'ans_check': "ans === '1/2' || ans === '0.5'"},
-    {'qnum': 15, 'title': '2 이하의 안전 룰', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[잭팟-D]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[리퍼-R]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 주사위 한 개를 던질 때, 2 이하의 눈이 나올 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 1/3)', 'error': '틀렸습니다. 전체 6가지 중 1, 2 두 가지입니다. 약분하여 기약분수로 적으세요.', 'ans_check': "ans === '1/3'"},
+    {'qnum': 15, 'title': '2 이하의 안전 룰', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br>[잭팟-D]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[리퍼-R]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> 주사위 한 개를 던질 때, 2 이하의 눈이 나올 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 1/3)', 'error': '틀렸습니다. 전체 6가지 중 1, 2 두 가지입니다. 약분하여 기약분수로 적으세요.', 'ans_check': "ans === '1/3'", "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '포커 덱의 홀수 확률', 'story': '[리퍼-R]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 제 4구역: 잭팟 무력화입니다. 1부터 5까지 적힌 포커 덱 5장 중 한 장을 뽑을 때, 짝수(2, 4)가 아닌 홀수 카드를 뽑아 잭팟을 이길 확률은?\\"', 'qtext': '<strong>Q16.</strong> 1부터 5까지 적힌 5장의 카드 중 1장을 뽑을 때, 짝수가 아닐 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 3/5)', 'error': '틀렸습니다. 5장 중 홀수 카드의 장수 비율입니다.', 'ans_check': "ans === '3/5' || ans === '0.6'"},
     {'qnum': 17, 'title': '비 올 확률의 대칭', 'story': '[리퍼-R]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 기상 조작 레이저 시스템 연산 중, 오늘 비가 올 확률이 3/5로 매핑되어 있습니다. 시스템 과열을 막기 위해 비가 오지 않을 확률을 역산해 쏘세요.\\"', 'qtext': '<strong>Q17.</strong> 비가 올 확률이 $\x0crac{3}{5}$ 일 때, 비가 오지 않을 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 2/5)', 'error': '틀렸습니다. 전체 확률 1에서 비가 올 확률 3/5을 빼서 계산하세요.', 'ans_check': "ans === '2/5' || ans === '0.4'"},
     {'qnum': 18, 'title': '색상 칩 주머니', 'story': '[리퍼-R]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 딜러의 칩 주머니에 빨간 칩 3개와 파란 칩 2개가 보관되어 있습니다. 임의로 1개를 꺼내어 빨간 칩을 획득할 수 있는 확률을 구하세요.\\"', 'qtext': '<strong>Q18.</strong> A 주머니에는 빨간 공 3개와 파란 공 2개가 있다. 1개를 꺼낼 때 빨간 공이 나올 확률은?', 'placeholder': '분수 형태로 입력 (예: 3/5)', 'error': '틀렸습니다. 전체 공의 개수 중 빨간 공의 개수 비율입니다.', 'ans_check': "ans === '3/5' || ans === '0.6'"},
     {'qnum': 19, 'title': '더블 코인 플립', 'story': '[리퍼-R]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 잭팟과의 최종 주화 던지기 내기입니다. 동전 2개를 동시에 하늘로 플립하여 두 동전 모두 앞면이 나와 게임에서 이길 연계 확률은?\\"', 'qtext': '<strong>Q19.</strong> 동전 2개를 동시에 던질 때, 모두 앞면이 나올 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 1/4)', 'error': '틀렸습니다. 각 동전의 앞면 확률 1/2을 서로 곱해보십시오.', 'ans_check': "ans === '1/4' || ans === '0.25'"},
-    {'qnum': 20, 'title': '마지막 선택의 순간', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[잭팟-D]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[리퍼-R]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 객관식 5지 선다형 문제 1개를 임의로 찍었을 때, 틀릴 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 4/5)', 'error': '틀렸습니다. 정답 확률이 1/5이므로 오답(틀릴) 확률을 구하십시오.', 'ans_check': "ans === '4/5' || ans === '0.8'"}
+    {'qnum': 20, 'title': '마지막 선택의 순간', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[잭팟-D]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[리퍼-R]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 객관식 5지 선다형 문제 1개를 임의로 찍었을 때, 틀릴 확률을 구하시오.', 'placeholder': '분수 형태로 입력 (예: 4/5)', 'error': '틀렸습니다. 정답 확률이 1/5이므로 오답(틀릴) 확률을 구하십시오.', 'ans_check': "ans === '4/5' || ans === '0.8'", "extra_class": "glitch-bg"}
 ]
 # Generate Q panels
 
@@ -665,7 +665,7 @@ for q in qs:
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -686,7 +686,7 @@ for q in qs:
     panels_html += panel
 
 # JS Answer Checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q['ans_check']
@@ -701,7 +701,7 @@ for q in qs:
                 wrongCount = 0;
                 nextStage('panel_q{qnum}', {next_stage}, {progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;

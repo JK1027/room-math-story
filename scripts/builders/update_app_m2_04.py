@@ -432,7 +432,7 @@ base_html = """<!DOCTYPE html>
             <h2>연립일차방정식의 암호 해독</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [안티-씨프 AI 가드-X]: "세계적인 미술관에서 전설 of 다이아몬드 '별의 눈물'이 도난당했습니다! 현장에는 오직 괴도 X가 남긴 연립방정식 암호 편지뿐. x와 y 두 개의 미지수로 얽힌 이 단서들 속에 괴도 X의 은신처가 숨겨져 있습니다. 40분 내에 20개의 연립방정식을 풀어 다이아몬드를 되찾아오세요!"
             </div>
             </div>
@@ -449,7 +449,7 @@ base_html = """<!DOCTYPE html>
             <h2>괴도 X 체포 및 다이아몬드 회수</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [안티-씨프 AI 가드-X]: "아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 탐정 여러분!"
             </div>
             </div>
@@ -580,17 +580,17 @@ qs = [
     {'qnum': 7, 'title': '스테이지 7', 'story': '[괴도-루팡]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q7.</strong> $(x=2, y=1)$ 이 연립방정식 $\x08egin{cases} x+y=3 \\ ax-y=3 \\end{cases}$ 의 해일 때, $a$의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
     {'qnum': 8, 'title': '스테이지 8', 'story': '[괴도-루팡]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q8.</strong> $\x08egin{cases} x+y=5 \\ x-y=1 \\end{cases}$ 의 해를 직관적으로 구해보시오. (순서쌍으로)', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '3'"},
     {'qnum': 9, 'title': '스테이지 9', 'story': '[괴도-루팡]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q9.</strong> 연립방정식의 해는 두 일차방정식의 그래프가 만나는 ( ? )의 좌표와 같다. ?에 들어갈 말은? (힌트: 두 직선이 만나는 점)', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '교점'"},
-    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[괴도-루팡]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[가드-X]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 연립방정식을 풀 때 한 방정식을 다른 방정식에 대입하여 미지수를 없애는 방법을 무엇이라 하는가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '대입법'"},
+    {'qnum': 10, 'title': '스테이지 10', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[괴도-루팡]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[가드-X]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10.</strong> 연립방정식을 풀 때 한 방정식을 다른 방정식에 대입하여 미지수를 없애는 방법을 무엇이라 하는가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '대입법'", "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '스테이지 11', 'story': '[가드-X]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q11.</strong> 연립방정식을 풀 때 두 방정식을 더하거나 빼서 미지수를 없애는 방법을 무엇이라 하는가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '가감법'"},
     {'qnum': 12, 'title': '스테이지 12', 'story': '[가드-X]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q12.</strong> $\x08egin{cases} y = 2x \\ x + y = 6 \\end{cases}$ 을 대입법으로 풀 때, $x$의 값을 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
     {'qnum': 13, 'title': '스테이지 13', 'story': '[가드-X]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q13.</strong> $\x08egin{cases} 2x + y = 7 \\ 2x - y = 1 \\end{cases}$ 을 가감법으로 풀기 위해 두 식을 ( 더해야 / 빼야 ) $y$가 없어진다.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '더해야'"},
     {'qnum': 14, 'title': '스테이지 14', 'story': '[가드-X]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q14.</strong> Q13의 연립방정식을 풀어 해 $(x, y)$를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
-    {'qnum': 15, 'title': '스테이지 15', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[가드-X]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[괴도-루팡]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> $\x08egin{cases} x + 2y = 4 \\ 3x + 2y = 8 \\end{cases}$ 의 해를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
+    {'qnum': 15, 'title': '스테이지 15', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br>[가드-X]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[괴도-루팡]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15.</strong> $\x08egin{cases, "extra_class": "glitch-bg"} x + 2y = 4 \\ 3x + 2y = 8 \\end{cases}$ 의 해를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '2'"},
     {'qnum': 16, 'title': '스테이지 16', 'story': '[괴도-루팡]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q16.</strong> 토끼와 닭이 섞여 있는 우리에 머리가 모두 10개, 다리가 모두 28개이다. 토끼를 $x$마리, 닭을 $y$마리라 할 때, 다리 수에 대한 방정식을 세우시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '4x'"},
     {'qnum': 17, 'title': '스테이지 17', 'story': '[괴도-루팡]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q17.</strong> Q16의 연립방정식을 풀어 토끼($x$)는 몇 마리인지 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '4마리'"},
     {'qnum': 18, 'title': '스테이지 18', 'story': '[괴도-루팡]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q18.</strong> 100원짜리 동전 $x$개와 500원짜리 동전 $y$개를 합하여 10개, 금액이 2600원일 때, 동전 개수에 대한 방정식을 세우시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === 'x'"},
     {'qnum': 19, 'title': '스테이지 19', 'story': '[괴도-루팡]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 단서를 찾아 문제를 해결하세요.\\"', 'qtext': '<strong>Q19.</strong> Q18의 연립방정식을 풀어 100원짜리 동전($x$)은 몇 개인가?', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '6개'"},
-    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[가드-X]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[괴도-루팡]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 현재 아버지와 아들의 나이의 합은 50세이고, 5년 후에는 아버지의 나이가 아들의 나이의 3배가 된다. 현재 아들의 나이를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '10세'"}
+    {'qnum': 20, 'title': '스테이지 20', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[가드-X]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[괴도-루팡]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20.</strong> 현재 아버지와 아들의 나이의 합은 50세이고, 5년 후에는 아버지의 나이가 아들의 나이의 3배가 된다. 현재 아들의 나이를 구하시오.', 'placeholder': '정답 입력', 'error': '틀렸습니다. 다시 시도해보세요.', 'ans_check': "ans === '10세'", "extra_class": "glitch-bg"}
 ]
 
 # Generate Q panels
@@ -671,7 +671,7 @@ for q in qs:
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="{q['img']}" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -692,7 +692,7 @@ for q in qs:
     panels_html += panel
 
 # JS Answer Checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q['ans_check']
@@ -707,7 +707,7 @@ for q in qs:
                 wrongCount = 0;
                 nextStage('panel_q{qnum}', {next_stage}, {progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;

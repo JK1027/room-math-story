@@ -19,17 +19,17 @@ qs = [
     {'qnum': 7, 'title': '정다각형의 추적', 'story': '[세트-S]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [아누비스-A]: "한 외각의 크기가 36도인 정다각형을 찾아 그 이름을 다이얼 암호판에 입력해라!"\\"', 'qtext': '<strong>Q7. [정다각형의 외각]</strong><br>한 외각의 크기가 36도인 정다각형의 이름을 구하시오.', 'placeholder': '예: 정오각형', 'error': '다이얼 문양 오류!', 'ans_check': "ans === '정십각형'", 'hint': '정n각형의 한 외각 크기는 360 / n 입니다. 이 값이 36이 되는 n을 구해 정다각형 이름을 적습니다.'},
     {'qnum': 8, 'title': '블록 설계도', 'story': '[세트-S]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [아누비스-A]: "정팔각형 모양의 거울 블록 한 내각의 각도는 몇 도로 설계되었겠나?"\\"', 'qtext': '<strong>Q8. [정다각형의 내각 1]</strong><br>정팔각형의 한 내각의 크기를 구하시오.', 'placeholder': '숫자만 입력', 'error': '각도 입력 실패!', 'ans_check': "ans === '135'", 'hint': '정팔각형의 내각 총합인 180 * (8-2) = 1080도를 꼭짓점 개수인 8로 나누어 한 내각을 구합니다.'},
     {'qnum': 9, 'title': '대각선 기어', 'story': '[세트-S]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [아누비스-A]: "한 내각의 크기가 150도인 정다각형의 대각선의 총 개수를 정밀하게 연산해 내라!"\\"', 'qtext': '<strong>Q9. [정다각형의 내각 2]</strong><br>한 내각의 크기가 150도인 정다각형의 대각선의 총 개수를 구하시오.', 'placeholder': '숫자만 입력', 'error': '계산 오류!', 'ans_check': "ans === '54'", 'hint': '한 내각이 150도이면 한 외각은 30도입니다. 외각의 합이 360도이므로 정십이각형임을 구한 뒤 총 대각선 공식을 적용합니다.'},
-    {'qnum': 10, 'title': '비율 정렬', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[세트-S]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[아누비스-A]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [내각과 외각의 비]</strong><br>한 내각과 한 외각의 크기의 비가 4:1인 정다각형의 이름을 구하시오.', 'placeholder': '예: 정육각형', 'error': '암호판 고정 실패!', 'ans_check': "ans === '정십각형'", 'hint': '한 내각과 한 외각의 합은 180도입니다. 이를 4:1로 비례배분하여 한 외각을 구하고 다각형 이름을 유추합니다.'},
+    {'qnum': 10, 'title': '비율 정렬', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[세트-S]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[아누비스-A]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [내각과 외각의 비]</strong><br>한 내각과 한 외각의 크기의 비가 4:1인 정다각형의 이름을 구하시오.', 'placeholder': '예: 정육각형', 'error': '암호판 고정 실패!', 'ans_check': "ans === '정십각형'", 'hint': '한 내각과 한 외각의 합은 180도입니다. 이를 4:1로 비례배분하여 한 외각을 구하고 다각형 이름을 유추합니다.', "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '제3구역 석판 봉인', 'story': '[아누비스-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-A]: "자와 컴퍼스만으로 중심각을 조율하는 이 고대 기하학 도식법을 무엇이라 부르는가?"\\"', 'qtext': '<strong>Q11. [호의 길이와 중심각 1]</strong><br>한 원에서 부채꼴의 호의 길이는 중심각의 크기에 어떻게 비례하는가?', 'placeholder': '예: 정비례, 반비례', 'error': '비례 원리 오류!', 'ans_check': "ans === '정비례'", 'hint': '부채꼴의 중심각이 커질 때 호의 길이도 이에 비례하여 일정하게 늘어나는 성질을 뜻합니다.'},
     {'qnum': 12, 'title': '길이 복사기', 'story': '[아누비스-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-A]: "회전 톱니에 새겨진 선분의 길이를 그대로 복사해 옮길 때 사용해야 하는 2족 기구의 명칭은?"\\"', 'qtext': '<strong>Q12. [호의 길이와 중심각 2]</strong><br>중심각이 40도일 때 호의 길이가 6cm라면, 중심각이 160도일 때 호의 길이를 구하시오.', 'placeholder': '숫자만 입력', 'error': '호의 길이 조절 실패!', 'ans_check': "ans === '24'", 'hint': '중심각의 크기와 호의 길이는 정비례하므로, 중심각이 4배 증가할 때 호의 길이도 똑같이 4배 증가합니다.'},
     {'qnum': 13, 'title': '지지대의 평형', 'story': '[아누비스-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-A]: "삼각형 지지대 목재를 조립하려 한다. 가장 긴 변 c는 나머지 두 변의 합(a+b)보다 ( 커야 / 작아야 ) 조립이 되는지 판단하라!"\\"', 'qtext': '<strong>Q13. [부채꼴의 넓이와 중심각]</strong><br>부채꼴의 넓이가 원의 넓이의 1/6일 때, 이 부채꼴의 중심각의 크기를 구하시오.', 'placeholder': '숫자만 입력', 'error': '각도 조절 실패!', 'ans_check': "ans === '60'", 'hint': '원 전체의 중심각은 360도입니다. 넓이가 원의 1/6이므로 중심각도 360도의 1/6을 차지합니다.'},
     {'qnum': 14, 'title': '나무막대 기둥', 'story': '[아누비스-A]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-A]: "3cm, 4cm, 7cm 길이의 거울 지지목 세 개가 있다. 이 지지목들로 삼각형 반사대를 조립할 수 있는지 답해라! (있다/없다)"\\"', 'qtext': '<strong>Q14. [현의 길이]</strong><br>중심각의 크기가 같은 두 부채꼴의 현의 길이는 서로 같은가?', 'placeholder': '예: 같다, 다르다', 'error': '현의 길이 오류!', 'ans_check': "ans === '같다'", 'hint': '중심각이 같은 두 부채꼴에서 원 위의 두 점을 곧게 이은 선분(현)의 길이를 비교해 봅니다.'},
-    {'qnum': 15, 'title': '작도 판정', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[아누비스-A]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[세트-S]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [현과 중심각의 비례]</strong><br>현의 길이는 중심각의 크기에 정비례하는가?', 'placeholder': '예: 그렇다, 아니다', 'error': '비례 관계 오류!', 'ans_check': "ans === '아니다'", 'hint': '중심각이 2배가 될 때 현의 길이도 정확히 2배가 되는지 원 위에 직접 그려 확인해 봅니다.'},
+    {'qnum': 15, 'title': '작도 판정', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\"><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></span></strong> ✨<br><br>[아누비스-A]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[세트-S]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [현과 중심각의 비례]</strong><br>현의 길이는 중심각의 크기에 정비례하는가?', 'placeholder': '예: 그렇다, 아니다', 'error': '비례 관계 오류!', 'ans_check': "ans === '아니다'", 'hint': '중심각이 2배가 될 때 현의 길이도 정확히 2배가 되는지 원 위에 직접 그려 확인해 봅니다.', "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '제4구역 최종 냉각', 'story': '[세트-S]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-A]: "두 거울 패널이 모양과 크기가 완벽히 같아 겹쳤을 때 100% 일치하는 관계를 무엇이라 하는가?"\\"', 'qtext': "<strong>Q16. [원주 계산]</strong><br>반지름의 길이가 5cm인 원의 둘레의 길이를 구하시오. (원주율은 π, 입력시 '파이'로 기재)", 'placeholder': '예: 5파이', 'error': '둘레 계산 오류!', 'ans_check': "ans === '10파이'", 'hint': '반지름이 r인 원의 둘레 공식은 2 * 파이 * r 입니다.'},
     {'qnum': 17, 'title': '원형 뚜껑', 'story': '[세트-S]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-A]: "반지름 5cm인 원형 수조 뚜껑의 테두리 둘레 길이를 원주율 파이를 이용해 대라! (예: 10파이)"\\"', 'qtext': '<strong>Q17. [호의 길이 계산]</strong><br>반지름의 길이가 9cm이고 중심각의 크기가 120도인 부채꼴의 호의 길이를 구하시오.', 'placeholder': '예: 3파이', 'error': '금실 길이 부족!', 'ans_check': "ans === '6파이'", 'hint': '반지름이 r, 중심각이 x도인 부채꼴 호의 길이 공식은 2 * 파이 * r * (x / 360) 입니다.'},
     {'qnum': 18, 'title': '수로 조율', 'story': '[세트-S]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-A]: "반지름 9cm, 중심각 120도인 부채꼴 수로의 호의 길이를 구하여 수문 개방 조건을 만족해라! (예: 6파이)"\\"', 'qtext': '<strong>Q18. [부채꼴의 넓이 계산]</strong><br>반지름의 길이가 6cm이고 중심각의 크기가 60도인 부채꼴 모양 홈의 넓이를 구하시오.', 'placeholder': '예: 2파이', 'error': '면적 계산 오류!', 'ans_check': "ans === '6파이'", 'hint': '반지름이 r, 중심각이 x도인 부채꼴 넓이 공식은 파이 * r^2 * (x / 360) 입니다.'},
     {'qnum': 19, 'title': '냉각 밸브', 'story': '[세트-S]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-A]: "반지름 6cm, 중심각 60도인 부채꼴 냉각 밸브의 단면 넓이를 계산해 송신하라! (예: 6파이)"\\"', 'qtext': '<strong>Q19. [중심각 없이 넓이 구하기]</strong><br>반지름의 길이가 10cm이고 호의 길이가 5π cm인 부채꼴 모양 석문의 넓이를 계산하시오.', 'placeholder': '예: 10파이', 'error': '게이트 수치 오류!', 'ans_check': "ans === '25파이'", 'hint': '반지름 r과 호의 길이 l이 주어졌을 때의 부채꼴 넓이 공식인 (1/2) * r * l 을 활용합니다.'},
-    {'qnum': 20, 'title': '최종 마스터 게이트', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[아누비스-A]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[세트-S]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [색칠한 부분의 넓이]</strong><br>반지름이 8cm인 반원에서 반지름이 4cm인 반원 두 개를 뺀 색칠된 부분의 넓이를 구하시오.', 'placeholder': '예: 12파이', 'error': '다이얼이 잠겼습니다!', 'ans_check': "ans === '16파이'", 'hint': '반지름 8cm인 큰 반원 넓이에서 반지름 4cm인 작은 반원 두 개(합치면 작은 원 하나)의 넓이를 뺍니다.'}
+    {'qnum': 20, 'title': '최종 마스터 게이트', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[아누비스-A]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[세트-S]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [색칠한 부분의 넓이]</strong><br>반지름이 8cm인 반원에서 반지름이 4cm인 반원 두 개를 뺀 색칠된 부분의 넓이를 구하시오.', 'placeholder': '예: 12파이', 'error': '다이얼이 잠겼습니다!', 'ans_check': "ans === '16파이'", 'hint': '반지름 8cm인 큰 반원 넓이에서 반지름 4cm인 작은 반원 두 개(합치면 작은 원 하나)의 넓이를 뺍니다.', "extra_class": "glitch-bg"}
 ]
 
 import re
@@ -109,7 +109,7 @@ for i, q in enumerate(qs):
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m1_06_plane_geometry/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">{story}</div>
+                <div class="story-text" id="outro-dynamic-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -138,7 +138,7 @@ outro_html = '''
             <h2>태양 신전의 거울 미궁</h2>
             <img src="assets/m1_06_plane_geometry/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">여러분들이 땀을 흘리며 석문에 정답을 입력하고 다이얼을 돌리는 순간! 
+                <div class="story-text" id="outro-dynamic-text">여러분들이 땀을 흘리며 석문에 정답을 입력하고 다이얼을 돌리는 순간! 
                 천장에서 쏟아지던 뜨겁고 살인적인 빛줄기가 마지막 거울에 반사되어 지하에 있는 깊은 냉각 수조의 중심부로 정확히 꽂힙니다. 
                 쉭-! 하는 굉음과 함께 하얀 수증기가 신전을 가득 채우더니, 이내 굳게 닫혀 있던 탈출용 거대 돌벽이 스르륵 내려앉습니다. 
                 눈을 뜰 수 없이 밝은 사막의 태양과 시원한 모래바람이 밀려옵니다. 거울 미궁 탈출에 성공했습니다!</div>
@@ -150,7 +150,7 @@ outro_html = '''
 panels_html += outro_html
 
 # Generate JS checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q.get('ans_check', 'false')
@@ -185,6 +185,19 @@ for q in qs:
                     }
                 } catch(e) {
                     console.warn("구글 시트 종료 기록 실패(로컬 테스트 모드):", e);
+                }
+                
+                // 멀티 엔딩 처리
+                let outroDiv = document.getElementById("outro-dynamic-text");
+                if (outroDiv) {
+                    if (totalWrongCount < 5) {
+                        outroDiv.innerHTML = "여러분들이 땀을 흘리며 석문에 정답을 입력하고 다이얼을 돌리는 순간! 
+                천장에서 쏟아지던 뜨겁고 살인적인 빛줄기가 마지막 거울에 반사되어 지하에 있는 깊은 냉각 수조의 중심부로 정확히 꽂힙니다. 
+                쉭-! 하는 굉음과 함께 하얀 수증기가 신전을 가득 채우더니, 이내 굳게 닫혀 있던 탈출용 거대 돌벽이 스르륵 내려앉습니다. 
+                눈을 뜰 수 없이 밝은 사막의 태양과 시원한 모래바람이 밀려옵니다. 거울 미궁 탈출에 성공했습니다!";
+                    } else {
+                        outroDiv.innerHTML = "탈출 장치가 기동되는 순간! 시스템이 크게 요동칩니다.<br><br>잦은 오답과 연산 지연의 여파로 시스템이 과부하에 걸렸고, 데이터의 일부가 유실되었습니다. 하지만 여러분은 끝까지 포기하지 않고 방화벽을 해제하여 간신히 탈출구로 몸을 피했습니다! 상처투성이의 탈출이었지만, 수학의 지혜로 목숨을 건졌습니다. 미션 성공!";
+                    }
                 }'''
 
     js = f'''
@@ -196,7 +209,7 @@ for q in qs:
                 {victory_call} {gas_end_call}
                 nextStage('panel_q{qnum}', {next_stage}, {next_progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! {zone_name} 처음으로 이동됩니다.");
                     wrongCount = 0;
@@ -217,6 +230,31 @@ new_content = re.sub(r'<!-- Q1.*?<script>', lambda m: '<!-- Q1 -->\n' + panels_h
 
 # And for JS:
 new_content = re.sub(r'// Q1[\s\S]*?window\.onload = \(\) => \{', lambda m: '// Q1\n' + js_checks + '\n        window.onload = () => {', new_content)
+
+glitch_css = '''
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+</style>
+'''
+new_content = new_content.replace('</style>', glitch_css)
 
 with open(html_file, 'w', encoding='utf-8') as f:
     f.write(new_content)

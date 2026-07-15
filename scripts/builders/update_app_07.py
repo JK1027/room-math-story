@@ -47,17 +47,17 @@ qs = [
     {'qnum': 7, 'title': '세로 절단면', 'story': '[도굴꾼 봇-T]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [아누비스-T]: "원기둥 락의 회전축을 포함하는 평면으로 세로 절단했을 때, 단면의 모양은 무엇인가?"\\"', 'qtext': '<strong>Q7. [회전축과 단면 1]</strong><br>원기둥을 회전축을 포함하는 평면으로 자를 때 생기는 단면의 모양은 무엇인가?', 'placeholder': '예: 사각형', 'error': '단면 모양 오류!', 'ans_check': "ans === '직사각형'", 'hint': '원기둥의 가운데 회전축을 포함하도록 위에서 아래로 세로로 자른 단면의 평면 모양을 생각합니다.'},
     {'qnum': 8, 'title': '가로 절단면', 'story': '[도굴꾼 봇-T]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [아누비스-T]: "원뿔 락의 회전축에 수직인 평면으로 가로 절단하면 나타나는 단면의 모양은?"\\"', 'qtext': '<strong>Q8. [회전축과 단면 2]</strong><br>원뿔을 회전축에 수직인 평면으로 자를 때 생기는 단면의 모양은 무엇인가?', 'placeholder': '예: 타원', 'error': '단면 모양 오류!', 'ans_check': "ans === '원'", 'hint': '원뿔을 밑면에 평행하게(회전축에 수직으로) 가로로 자를 때 나타나는 단면의 모양을 생각합니다.'},
     {'qnum': 9, 'title': '직각삼각형 회전', 'story': '[도굴꾼 봇-T]: \\"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [아누비스-T]: "직각삼각형 모양의 석판을 한 변을 축 삼아 회전시키면 생성되는 입체도형은?"\\"', 'qtext': '<strong>Q9. [회전체의 종류]</strong><br>직각삼각형을 직각을 낀 한 변을 축으로 하여 1회전 시키면 생기는 도형은 무엇인가?', 'placeholder': '예: 원기둥', 'error': '도형 이름 오류!', 'ans_check': "ans === '원뿔'", 'hint': '직각삼각형을 한 변을 축으로 돌리면 고깔모자나 고깔콘 형태의 입체도형이 만들어집니다.'},
-    {'qnum': 10, 'title': '구의 단면', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[도굴꾼 봇-T]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[임호텝-P]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [구의 성질]</strong><br>구를 어떤 평면으로 자르더라도 그 단면은 항상 어떤 모양인가?', 'placeholder': '예: 타원', 'error': '단면 오류!', 'ans_check': "ans === '원'", 'hint': '구를 어떤 방향으로 자르더라도 그 단면의 평면 모양은 항상 완벽한 원이 됩니다.'},
+    {'qnum': 10, 'title': '구의 단면', 'story': '🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[도굴꾼 봇-T]: \\"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\\"<br><br>[임호텝-P]: \\"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\\"', 'qtext': '<strong>Q10. [구의 성질]</strong><br>구를 어떤 평면으로 자르더라도 그 단면은 항상 어떤 모양인가?', 'placeholder': '예: 타원', 'error': '단면 오류!', 'ans_check': "ans === '원'", 'hint': '구를 어떤 방향으로 자르더라도 그 단면의 평면 모양은 항상 완벽한 원이 됩니다.', "extra_class": "glitch-bg"},
     {'qnum': 11, 'title': '제3구역: 각기둥 도금', 'story': '[임호텝-P]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-T]: "가로 3cm, 세로 4cm, 높이 5cm인 각기둥 황금 상자의 총 겉넓이를 대라! (예: 94)"\\"', 'qtext': '<strong>Q11. [각기둥의 겉넓이]</strong><br>밑면이 가로 3cm, 세로 4cm인 직사각형이고, 높이가 5cm인 직육면체의 겉넓이를 구하시오.', 'placeholder': '숫자만 입력', 'error': '도금 면적 오류!', 'ans_check': "ans === '94'", 'hint': '세 모서리가 a, b, c인 직육면체의 겉넓이는 모든 면의 넓이 합이므로 2(ab + bc + ca) 입니다.'},
     {'qnum': 12, 'title': '원기둥 겉넓이', 'story': '[임호텝-P]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-T]: "밑면 반지름 2cm, 높이 6cm인 원기둥 모양 지지대의 총 겉넓이를 파이를 써서 연산하라! (예: 32파이)"\\"', 'qtext': '<strong>Q12. [원기둥의 겉넓이]</strong><br>밑면의 반지름이 2cm이고 높이가 6cm인 원기둥의 겉넓이를 구하시오.', 'placeholder': '예: 10파이', 'error': '도금 면적 오류!', 'ans_check': "ans === '32파이'", 'hint': '원기둥의 밑면 2개의 넓이(2 * 파이 * r^2)와 옆면 펼친 직사각형 넓이(2 * 파이 * r * h)를 더합니다.'},
     {'qnum': 13, 'title': '정사각뿔 상자', 'story': '[임호텝-P]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-T]: "밑면 한 변 4cm, 옆면 삼각형 높이 5cm인 정사각뿔 보석 상자의 총 겉넓이를 구하라! (예: 56)"\\"', 'qtext': '<strong>Q13. [사각뿔의 겉넓이]</strong><br>밑면이 한 변의 길이가 4cm인 정사각형이고, 옆면의 삼각형의 높이가 5cm인 정사각뿔의 겉넓이를 구하시오.', 'placeholder': '숫자만 입력', 'error': '도금 면적 오류!', 'ans_check': "ans === '56'", 'hint': '밑면 정사각형의 넓이(4*4)와 합동인 옆면 삼각형 4개의 넓이 합을 더합니다.'},
     {'qnum': 14, 'title': '원뿔 제단', 'story': '[임호텝-P]: \\"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [아누비스-T]: "밑면 반지름 3cm, 모선 길이 5cm인 원뿔 모양 제단의 겉넓이를 파이를 사용해 구해라! (예: 24파이)"\\"', 'qtext': '<strong>Q14. [원뿔의 겉넓이]</strong><br>밑면의 반지름이 3cm이고, 모선의 길이가 5cm인 원뿔의 겉넓이를 구하시오.', 'placeholder': '예: 10파이', 'error': '도금 면적 오류!', 'ans_check': "ans === '24파이'", 'hint': '원뿔의 겉넓이 공식인 (밑면 원 넓이) + (옆면 부채꼴 넓이) = 파이*r^2 + 파이*r*l 을 적용합니다.'},
-    {'qnum': 15, 'title': '구의 표면적', 'story': '✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[임호텝-P]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[도굴꾼 봇-T]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [구의 겉넓이]</strong><br>반지름의 길이가 3cm인 구의 겉넓이를 구하시오.', 'placeholder': '예: 10파이', 'error': '도금 면적 오류!', 'ans_check': "ans === '36파이'", 'hint': '반지름이 r인 구의 겉넓이 공식은 4 * 파이 * r^2 입니다.'},
+    {'qnum': 15, 'title': '구의 표면적', 'story': '✨ <strong><span style=\"color: #60a5fa; text-shadow: 0 0 5px #3b82f6;\">[조력자 시스템 권한 100% 완전 복구]</span></strong> ✨<br><br>[임호텝-P]: \\"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\\"<br><br>[도굴꾼 봇-T]: \\"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\\"', 'qtext': '<strong>Q15. [구의 겉넓이]</strong><br>반지름의 길이가 3cm인 구의 겉넓이를 구하시오.', 'placeholder': '예: 10파이', 'error': '도금 면적 오류!', 'ans_check': "ans === '36파이'", 'hint': '반지름이 r인 구의 겉넓이 공식은 4 * 파이 * r^2 입니다.', "extra_class": "glitch-bg"},
     {'qnum': 16, 'title': '제4구역: 생명의 수조', 'story': '[도굴꾼 봇-T]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-T]: "밑면 넓이 20제곱센티미터, 높이 8cm인 각기둥 수조에 채워야 할 수량(부피)은 얼마인가?"\\"', 'qtext': '<strong>Q16. [각기둥의 부피]</strong><br>밑면의 넓이가 20cm²이고 높이가 8cm인 각기둥의 부피를 구하시오.', 'placeholder': '숫자만 입력', 'error': '수압 조절 실패!', 'ans_check': "ans === '160'", 'hint': '모든 기둥의 부피는 (밑넓이) * (높이)로 일정하게 구합니다.'},
     {'qnum': 17, 'title': '원기둥 부피', 'story': '[도굴꾼 봇-T]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-T]: "반지름 4cm, 높이 5cm인 원기둥형 정수 필터의 부피를 계산해라! (예: 80파이)"\\"', 'qtext': '<strong>Q17. [원기둥의 부피]</strong><br>밑면의 반지름이 4cm이고 높이가 5cm인 원기둥의 부피를 구하시오.', 'placeholder': '예: 10파이', 'error': '물이 넘칩니다!', 'ans_check': "ans === '80파이'", 'hint': '원기둥의 부피 공식인 (밑면 원 넓이) * (높이) = 파이 * r^2 * h 를 적용합니다.'},
     {'qnum': 18, 'title': '원뿔 여과기', 'story': '[도굴꾼 봇-T]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-T]: "반지름 3cm, 높이 4cm인 원뿔형 물방울 여과 장치의 부피를 구하거라! (예: 12파이)"\\"', 'qtext': '<strong>Q18. [원뿔의 부피]</strong><br>밑면의 반지름이 3cm이고 높이가 4cm인 원뿔의 부피를 구하시오.', 'placeholder': '예: 10파이', 'error': '물이 넘칩니다!', 'ans_check': "ans === '12파이'", 'hint': '모든 뿔의 부피는 동일한 기둥 부피의 1/3을 차지하므로, (1/3) * 파이 * r^2 * h 입니다.'},
     {'qnum': 19, 'title': '구형 물탱크', 'story': '[도굴꾼 봇-T]: \\"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [아누비스-T]: "반지름 3cm인 완벽한 구형 물탱크의 내부 공간 부피를 파이를 이용해 구하라! (예: 36파이)"\\"', 'qtext': '<strong>Q19. [구의 부피]</strong><br>반지름의 길이가 3cm인 구의 부피를 구하시오.', 'placeholder': '예: 10파이', 'error': '물이 부족합니다!', 'ans_check': "ans === '36파이'", 'hint': '반지름이 r인 구의 부피 공식은 (4/3) * 파이 * r^3 입니다.'},
-    {'qnum': 20, 'title': '부피의 비례', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[임호텝-P]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[도굴꾼 봇-T]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [부피의 비]</strong><br>밑면의 반지름과 높이가 모두 같은 원뿔, 구, 원기둥의 부피의 비를 구하시오.', 'placeholder': '예: 1:2:3', 'error': '코드가 틀렸습니다!', 'ans_check': "ans === '1:2:3'", 'hint': '높이와 밑면이 같은 원뿔, 구, 원기둥의 부피의 비를 가장 간단한 자연수의 비로 나타내 봅니다.'}
+    {'qnum': 20, 'title': '부피의 비례', 'story': '🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[임호텝-P]: \\"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\\"<br><br>[도굴꾼 봇-T]: \\"안 돼... 내 제어권이... 소멸한다아아!\\"', 'qtext': '<strong>Q20. [부피의 비]</strong><br>밑면의 반지름과 높이가 모두 같은 원뿔, 구, 원기둥의 부피의 비를 구하시오.', 'placeholder': '예: 1:2:3', 'error': '코드가 틀렸습니다!', 'ans_check': "ans === '1:2:3'", 'hint': '높이와 밑면이 같은 원뿔, 구, 원기둥의 부피의 비를 가장 간단한 자연수의 비로 나타내 봅니다.', "extra_class": "glitch-bg"}
 ]
 
 import re
@@ -174,7 +174,7 @@ outro_html = '''
 panels_html += outro_html
 
 # Generate JS checks
-js_checks = ""
+js_checks = "let totalWrongCount = 0;\n"
 for q in qs:
     qnum = q['qnum']
     ans_check = q.get('ans_check', 'false')
@@ -220,7 +220,7 @@ for q in qs:
                 {victory_call} {gas_end_call}
                 nextStage('panel_q{qnum}', {next_stage}, {next_progress});
             }} else {{
-                wrongCount++;
+                wrongCount++;\n                totalWrongCount++;
                 if (wrongCount >= 3) {{
                     alert("🚨 3회 오답 패널티! {zone_name} 처음으로 이동됩니다.");
                     wrongCount = 0;
@@ -248,6 +248,31 @@ end_js_idx = content.find('        window.onload = () => {', start_js_idx)
 
 if start_js_idx != -1 and end_js_idx != -1:
     content = content[:start_js_idx] + js_checks + content[end_js_idx:]
+
+glitch_css = '''
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+</style>
+'''
+content = content.replace('</style>', glitch_css)
 
 with open(html_file, 'w', encoding='utf-8') as f:
     f.write(content)
