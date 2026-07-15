@@ -3057,47 +3057,6 @@ let totalWrongCount = 0;
     </div>
 
 
-    <script>
-        function tryStartGame(unitId) {
-            const sid = document.getElementById('studentId');
-            const sname = document.getElementById('studentName');
-            if(sid && sname) {
-                if(!sid.value.trim() || !sname.value.trim()) {
-                    alert('학번과 이름을 모두 입력해주세요!');
-                    return;
-                }
 
-            // 이름 동적 개인화 처리
-            let firstName = sname.value.trim().length > 2 ? sname.value.trim().substring(1) : sname.value.trim();
-            document.querySelectorAll(".dynamic-captain-name").forEach(el => { el.innerHTML = firstName + " 캡틴"; });
-
-                // GAS 로직
-                try {
-                    if(typeof google !== 'undefined' && google.script && google.script.run) {
-                        google.script.run
-                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
-                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
-                    }
-                } catch(e) { console.warn('GAS 연동 안됨:', e); }
-            }
-            
-            // 브라우저 오디오 엔진 시작 (외부 링크 의존 없음)
-            try {
-                if (!isMuted) {
-                    initAudio();
-                    startBGM();
-                }
-            } catch(e) {}
-            
-            nextStage('intro', 'panel_q1', 5);
-        }
-
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      }
-    };
-    </script>
 </body>
 </html>
