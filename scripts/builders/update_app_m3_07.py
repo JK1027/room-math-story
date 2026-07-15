@@ -433,6 +433,12 @@ base_html = """<!DOCTYPE html>
                 [은하계 통계 코어 갤럭시-G]: "우주 은하연합의 거대한 중앙 통계 분석실 '산포도 데이터베이스'에 도착했습니다. 이곳의 방대한 우주선 궤도 예측 자료와 기후 데이터는 통계 수치 결계로 암호화되어 있어 시스템 조작이 불가능합니다. 우주선 통계 변량들의 대푯값과 흩어진 정도를 나타내는 산포도를 계산하여 제한시간 45분 내에 시스템 락을 해제하고 무사히 궤도를 복구하여 귀환하십시오!"
             </div>
             </div>
+                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
             </div>
@@ -1011,7 +1017,7 @@ for q in qs:
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q{qnum}', 'panel_q1', 0);
                 }} else {{
-                    showError('panel_q{qnum}', 'error{qnum}');
+                    showError('panel_q{qnum}', 'error{qnum}', wrongCount);
                 }}
             }}
         }}

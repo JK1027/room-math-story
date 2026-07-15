@@ -433,6 +433,12 @@ base_html = """<!DOCTYPE html>
                 [연금술 호문쿨루스 알케미-H]: "연금술사 파라켈수스의 비밀 공방에 발을 들여놓았습니다. 이곳의 모든 황금 제조법과 비약의 비밀 배합 공식은 '인수분해'와 '곱셈공식'의 암호로 잠겨 있습니다. 복잡하게 얽힌 수식들을 풀어내어 알맞은 인수들로 쪼개고 결합해야만 탈출의 열쇠를 완성할 수 있습니다. 45분 내에 연금술의 궁극의 공식을 복원하고 탈출하십시오!"
             </div>
             </div>
+                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
             </div>
@@ -1011,7 +1017,7 @@ for q in qs:
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q{qnum}', 'panel_q1', 0);
                 }} else {{
-                    showError('panel_q{qnum}', 'error{qnum}');
+                    showError('panel_q{qnum}', 'error{qnum}', wrongCount);
                 }}
             }}
         }}

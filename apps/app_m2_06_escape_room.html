@@ -49,6 +49,12 @@
                     <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
                 </div>
             </div>
+                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+
             <div class="btn-group" style="margin-top: 2rem; width:100%;">
                 <button class="btn" onclick="tryStartGame('m2_06')">미션 시작</button>
             </div>
@@ -657,13 +663,23 @@ function cleanString(str) {
             return str.replace(/\s+/g, '').toUpperCase();
         }
 
-        function showError(panelId, errorId) {
+                function showError(panelId, errorId, currentWrongCount) {
             try { playError(); } catch(e) {}
-            const errEl = document.getElementById(errorId);
-            if (errEl) {
-                errEl.style.display = 'block';
-                setTimeout(() => { errEl.style.display = 'none'; }, 3000);
+            const panel = document.getElementById(panelId);
+            const err = document.getElementById(errorId);
+            err.style.display = 'block';
+            if (currentWrongCount !== undefined) {
+                if (!err.dataset.origText) {
+                    err.dataset.origText = err.innerText;
+                }
+                err.innerText = err.dataset.origText + " (오답 횟수: " + currentWrongCount + "/3)";
             }
+            err.classList.remove('shake');
+            void err.offsetWidth;
+            err.classList.add('shake');
+            setTimeout(() => {
+                err.style.display = 'none';
+            }, 3000);
         }
         
         // Chunk typewriter definition
@@ -951,7 +967,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
-                    showError('panel_q1', 'error1');
+                    showError('panel_q1', 'error1', wrongCount);
                 }
             }
         }
@@ -972,7 +988,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
-                    showError('panel_q2', 'error2');
+                    showError('panel_q2', 'error2', wrongCount);
                 }
             }
         }
@@ -993,7 +1009,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
-                    showError('panel_q3', 'error3');
+                    showError('panel_q3', 'error3', wrongCount);
                 }
             }
         }
@@ -1014,7 +1030,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
-                    showError('panel_q4', 'error4');
+                    showError('panel_q4', 'error4', wrongCount);
                 }
             }
         }
@@ -1035,7 +1051,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
-                    showError('panel_q5', 'error5');
+                    showError('panel_q5', 'error5', wrongCount);
                 }
             }
         }
@@ -1056,7 +1072,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q6', 'panel_q1', 0);
                 } else {
-                    showError('panel_q6', 'error6');
+                    showError('panel_q6', 'error6', wrongCount);
                 }
             }
         }
@@ -1077,7 +1093,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q7', 'panel_q1', 0);
                 } else {
-                    showError('panel_q7', 'error7');
+                    showError('panel_q7', 'error7', wrongCount);
                 }
             }
         }
@@ -1098,7 +1114,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q8', 'panel_q1', 0);
                 } else {
-                    showError('panel_q8', 'error8');
+                    showError('panel_q8', 'error8', wrongCount);
                 }
             }
         }
@@ -1119,7 +1135,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q9', 'panel_q1', 0);
                 } else {
-                    showError('panel_q9', 'error9');
+                    showError('panel_q9', 'error9', wrongCount);
                 }
             }
         }
@@ -1140,7 +1156,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q10', 'panel_q1', 0);
                 } else {
-                    showError('panel_q10', 'error10');
+                    showError('panel_q10', 'error10', wrongCount);
                 }
             }
         }
@@ -1161,7 +1177,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q11', 'panel_q1', 0);
                 } else {
-                    showError('panel_q11', 'error11');
+                    showError('panel_q11', 'error11', wrongCount);
                 }
             }
         }
@@ -1182,7 +1198,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q12', 'panel_q1', 0);
                 } else {
-                    showError('panel_q12', 'error12');
+                    showError('panel_q12', 'error12', wrongCount);
                 }
             }
         }
@@ -1203,7 +1219,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q13', 'panel_q1', 0);
                 } else {
-                    showError('panel_q13', 'error13');
+                    showError('panel_q13', 'error13', wrongCount);
                 }
             }
         }
@@ -1224,7 +1240,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q14', 'panel_q1', 0);
                 } else {
-                    showError('panel_q14', 'error14');
+                    showError('panel_q14', 'error14', wrongCount);
                 }
             }
         }
@@ -1245,7 +1261,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q15', 'panel_q1', 0);
                 } else {
-                    showError('panel_q15', 'error15');
+                    showError('panel_q15', 'error15', wrongCount);
                 }
             }
         }
@@ -1266,7 +1282,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q16', 'panel_q1', 0);
                 } else {
-                    showError('panel_q16', 'error16');
+                    showError('panel_q16', 'error16', wrongCount);
                 }
             }
         }
@@ -1287,7 +1303,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q17', 'panel_q1', 0);
                 } else {
-                    showError('panel_q17', 'error17');
+                    showError('panel_q17', 'error17', wrongCount);
                 }
             }
         }
@@ -1308,7 +1324,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q18', 'panel_q1', 0);
                 } else {
-                    showError('panel_q18', 'error18');
+                    showError('panel_q18', 'error18', wrongCount);
                 }
             }
         }
@@ -1329,7 +1345,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q19', 'panel_q1', 0);
                 } else {
-                    showError('panel_q19', 'error19');
+                    showError('panel_q19', 'error19', wrongCount);
                 }
             }
         }
@@ -1350,7 +1366,7 @@ let totalWrongCount = 0;
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q20', 'panel_q1', 0);
                 } else {
-                    showError('panel_q20', 'error20');
+                    showError('panel_q20', 'error20', wrongCount);
                 }
             }
         }

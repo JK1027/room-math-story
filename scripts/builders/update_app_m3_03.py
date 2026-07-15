@@ -433,6 +433,12 @@ base_html = """<!DOCTYPE html>
                 [시계탑 태엽장치 크로노스-C]: "멈춰버린 거대한 '시간의 탑'의 제어실에 들어섰습니다. 탑의 거대한 톱니바퀴들은 '이차방정식'의 동력 에너지 수식 결계로 고정되어 움직이지 않습니다. 톱니바퀴들의 맞물림 관계와 회전 주기를 나타내는 이차방정식의 근들을 정확하게 찾아내어 제한시간 45분 내에 시계탑을 다시 가동시키고 시간의 봉인에서 탈출하십시오!"
             </div>
             </div>
+                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
             </div>
@@ -1011,7 +1017,7 @@ for q in qs:
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q{qnum}', 'panel_q1', 0);
                 }} else {{
-                    showError('panel_q{qnum}', 'error{qnum}');
+                    showError('panel_q{qnum}', 'error{qnum}', wrongCount);
                 }}
             }}
         }}

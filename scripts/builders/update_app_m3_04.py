@@ -433,6 +433,12 @@ base_html = """<!DOCTYPE html>
                 [드론 요격 AI 이글-E]: "사이버 도시의 드론 비행을 통제하는 '드론 관제실'에 비상경보가 울렸습니다. 해킹 프로그램으로 인해 드론들의 비행 궤적이 엉망이 되어 도시의 빌딩들과 충돌하기 직전입니다! 드론들의 비행선인 '포물선 궤도(이차함수)'를 올바르게 해독하여 조종 시스템을 복구하십시오. 제한시간 45분 내에 충돌 사고를 막고 관제실을 정상화해야 탈출할 수 있습니다!"
             </div>
             </div>
+                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
             </div>
@@ -1011,7 +1017,7 @@ for q in qs:
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q{qnum}', 'panel_q1', 0);
                 }} else {{
-                    showError('panel_q{qnum}', 'error{qnum}');
+                    showError('panel_q{qnum}', 'error{qnum}', wrongCount);
                 }}
             }}
         }}

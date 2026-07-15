@@ -433,6 +433,12 @@ base_html = """<!DOCTYPE html>
                 [사원의 파수꾼 피타고라스-P]: "고대 그리스의 수학자 피타고라스가 살아생전 무리수의 존재를 숨기기 위해 설계했다는 깊은 사막 속의 '무리수 사원'에 도달했습니다. 사원의 중심부로 갈수록 알 수 없는 수학 결계들이 여러분의 앞길을 가로막습니다. 사원에 가득 찬 제곱근의 기호를 해독하여 제한시간 45분 내에 무리수의 비밀을 밝히고 무사히 탈출하십시오!"
             </div>
             </div>
+                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+
             <div class="btn-group">
                 <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">탈출 시도 개시</button>
             </div>
@@ -1011,7 +1017,7 @@ for q in qs:
                     document.getElementById('ans1').value = '';
                     nextStage('panel_q{qnum}', 'panel_q1', 0);
                 }} else {{
-                    showError('panel_q{qnum}', 'error{qnum}');
+                    showError('panel_q{qnum}', 'error{qnum}', wrongCount);
                 }}
             }}
         }}
