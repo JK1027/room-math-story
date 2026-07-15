@@ -462,7 +462,7 @@ base_html = """<!DOCTYPE html>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_04_equations/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
                 <div class="story-text" id="outro-dynamic-text">
-                [안티-씨프 AI 가드-X]: "아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 <span class="dynamic-captain-name">탐정</span> 여러분!"
+                [안티-씨프 AI 가드-X]: "아들의 나이 '10'이라는 마지막 암호를 해독하자, 지도의 특정 좌표가 붉게 빛납니다. 경찰과 함께 은신처를 덮쳐 괴도 X를 체포하고 다이아몬드 '별의 눈물'을 되찾았습니다! 수고하셨습니다, 최고의 <span class="dynamic-captain-name"><span class="dynamic-captain-name">탐정</span></span> 여러분!"
             </div>
             </div>
             <div class="btn-group">
@@ -922,6 +922,52 @@ function cleanString(str) {
                     alert('학번과 이름을 모두 입력해주세요!');
                     return;
                 }
+
+            // 이름 동적 개인화 처리 (복성 예외 처리 반영 및 전역 변수 바인딩)
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    const doubleLastNames = ["제갈", "황보", "사공", "남궁", "서문", "독고", "선우"];
+                    let firstName = rawName;
+                    if (rawName.length > 2) {
+                        let prefix2 = rawName.substring(0, 2);
+                        if (doubleLastNames.includes(prefix2)) {
+                            firstName = rawName.substring(2);
+                        } else {
+                            firstName = rawName.substring(1);
+                        }
+                    }
+                    window.playerFirstName = firstName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
                 try {
                     if(typeof google !== 'undefined' && google.script && google.script.run) {
                         google.script.run

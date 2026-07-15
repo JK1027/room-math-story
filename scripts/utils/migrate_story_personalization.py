@@ -32,7 +32,7 @@ roles = ["캡틴", "대장", "요원", "학도", "탐정", "모험가", "조수"
 role_pattern = r'(?<![a-zA-Z0-9_\-"\'/])(' + '|'.join(roles) + r')(?![a-zA-Z0-9_\-"\'/])'
 
 js_personalization_code = """
-            // 이름 동적 개인화 처리
+            // 이름 동적 개인화 처리 (복성 예외 처리 반영 및 전역 변수 바인딩)
             try {
                 let rawName = "";
                 if (typeof sname !== 'undefined' && sname) {
@@ -45,7 +45,17 @@ js_personalization_code = """
                     if (nameInput) rawName = nameInput.value.trim();
                 }
                 if (rawName) {
-                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    const doubleLastNames = ["제갈", "황보", "사공", "남궁", "서문", "독고", "선우"];
+                    let firstName = rawName;
+                    if (rawName.length > 2) {
+                        let prefix2 = rawName.substring(0, 2);
+                        if (doubleLastNames.includes(prefix2)) {
+                            firstName = rawName.substring(2);
+                        } else {
+                            firstName = rawName.substring(1);
+                        }
+                    }
+                    window.playerFirstName = firstName;
                     document.querySelectorAll(".dynamic-captain-name").forEach(el => {
                         let originalRole = el.getAttribute("data-original-role") || el.innerText;
                         if (!el.hasAttribute("data-original-role")) {
@@ -69,9 +79,6 @@ js_personalization_code = """
 """
 
 def extract_unit_id(filename):
-    # 예: update_app_01.py -> m1_01
-    # 예: update_app_m2_04.py -> m2_04
-    # 예: update_app_m3_01.py -> m3_01
     m = re.search(r'update_app_(m\d+)_(\d+)\.py', filename)
     if m:
         return f"{m.group(1)}_{m.group(2)}"
@@ -111,7 +118,6 @@ def migrate_file(filepath):
 
     # 3. 인트로 폼 주입 (학생 정보 입력 영역이 없는 경우)
     if "studentName" not in code and "studentId" not in code:
-        # 인트로의 버튼 영역 탐색
         btn_pattern = r'(<div class="btn-group">\s*<button class="btn" onclick="nextStage\(\'intro\', \'panel_q1\', \d+\)">.*?<\/button>\s*<\/div>)'
         student_form_html = f"""
             <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
@@ -151,7 +157,6 @@ def migrate_file(filepath):
         code = re.sub(onload_pattern, r'\1\n' + js_personalization_code, code)
         injected = True
         
-    # 만약 tryStartGame 함수가 아예 없는 빌더라면 (예: 중2 빌더들)
     if "function tryStartGame" not in code:
         try_start_game_js = f"""
         function tryStartGame(unitId) {{
@@ -171,19 +176,27 @@ def migrate_file(filepath):
                 }} catch(e) {{ console.warn('GAS 연동 안됨:', e); }}
             }}
             
-            // 이름 동적 개인화 처리
+            // 이름 동적 개인화 처리 (복성 예외 처리 반영 및 전역 변수 바인딩)
             try {{
+                const doubleLastNames = ["제갈", "황보", "사공", "남궁", "서문", "독고", "선우"];
                 let rawName = sname.value.trim();
-                if (rawName) {{
-                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
-                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {{
-                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
-                        if (!el.hasAttribute("data-original-role")) {{
-                            el.setAttribute("data-original-role", originalRole);
-                        }}
-                        el.innerHTML = firstName + " " + originalRole;
-                    }});
+                let firstName = rawName;
+                if (rawName.length > 2) {{
+                    let prefix2 = rawName.substring(0, 2);
+                    if (doubleLastNames.includes(prefix2)) {{
+                        firstName = rawName.substring(2);
+                    }} else {{
+                        firstName = rawName.substring(1);
+                    }}
                 }}
+                window.playerFirstName = firstName;
+                document.querySelectorAll(".dynamic-captain-name").forEach(el => {{
+                    let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                    if (!el.hasAttribute("data-original-role")) {{
+                        el.setAttribute("data-original-role", originalRole);
+                    }}
+                    el.innerHTML = firstName + " " + originalRole;
+                }});
             }} catch(e) {{ console.error("이름 개인화 에러:", e); }}
             
             nextStage('intro', 'panel_q1', 0);

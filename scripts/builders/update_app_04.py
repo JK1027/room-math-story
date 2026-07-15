@@ -48,9 +48,9 @@ qs = [
     {"qnum": 5, "title": "심해로 가는 좌표", "story": f"🌊 <strong>[소용돌이 차단벽]</strong><br><br>{nereus}: \"{dyn_captain}! 수호 기계들이 네 개의 에너지 포인트 기둥으로 사각형 소용돌이 결계를 구축했습니다. 이 차단막의 넓이를 정확하게 구해야 펄스 방출로 뚫고 나갈 수 있습니다!\"", "qtext": "<strong>Q5. [도형의 넓이]</strong><br>좌표평면 위에 네 기둥 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)를 이은 직사각형의 넓이를 구하시오.", "placeholder": "숫자만 입력", "error": "차단벽 넓이 연산 오류! 잠수정이 튕겨 나옵니다!", "ans_check": "ans === '48'"},
     {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제1 격자 방어망]</strong><br><br>{poseidon}: \"결계를 넘다니 제법이군. 하지만 고대 기하학 사분면 방어 격자가 기동하면 어떨까? 우리 도시의 기동점 좌표 (2, -5)가 관리하는 사분면 격자 영역을 추적하라!\"", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "잘못된 방어망 탐색! 빙글빙글 돌아갑니다.", "ans_check": "ans === '제4사분면'"},
     {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제2 격자 방어망]</strong><br><br>{poseidon}: \"호오, 아직 포기하지 않았군. 그렇다면 제어 좌표 (-4, -7)가 가리키는 사분면 위상은 어디인지 판독해라. 틀리면 에너지가 훅훅 줄어들 거다!\"", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "사분면 위상 동조 실패! 회로가 삐걱거립니다.", "ans_check": "ans === '제3사분면'"},
-    {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[암호화 부호 논리]</strong><br><br>{nereus}: \"{dyn_captain}! 포세이돈이 좌표 P(a, b)의 부호 조건을 꼬아놨습니다! a × b < 0 이고 a - b > 0 일 때 논리적인 부호 조합을 판별하여 P의 정확한 사분면 구역을 풀어주십시오!\"", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "숫자만 입력", "error": "부호 판별 불일치! 모듈이 달아오릅니다.", "ans_check": "ans === '4'"},
+    {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[암호화 부호 논리]</strong><br><br>{nereus}: \"{dyn_captain}! 포세이돈이 좌표 P(a, b)의 부호 조건을 꼬아놨습니다! a × b < 0 이고 a - b > 0 일 때 논리적인 부호 조합을 판별하여 P의 정확한 사분면 구역을 풀어주십시오!\"", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "예: 4 또는 제4사분면", "error": "부호 판별 불일치! 모듈이 달아오릅니다.", "ans_check": "ans === '4' || ans.includes('제4') || ans.includes('4사')"},
     {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[역 위상 연산]</strong><br><br>{poseidon}: \"조력자 녀석이 제법 똑똑하구나. 하지만 내 암호 폭격을 버틸 수 있을까? 본래 2사분면에 존재하던 점 P(a, b)의 대칭점 Q(a, -b)가 가리키는 사분면은 어디인가!\"", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "신호 대칭 불일치! 펌프가 덜컹거립니다.", "ans_check": "ans === '제3사분면'"},
-    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": f"💥 <strong>[긴급 상황: 외부 선체 흔들림!]</strong><br><br>{poseidon}: \"방어 그리드 최종 활성화! 좌표 Q(-a, b)의 사분면을 계산하지 못하면 쫓아내주마! 집으로 돌아가라!\"<br><br>{nereus}: \"{dyn_captain}! 포세이돈이 장난을 멈출 생각이 없나 봐요! 방어막 에너지가 닳고 있어요. 빨리 마지막 부호를 계산해 주세요!\"<br><br><div id='choice-container-q10' style='margin-top: 1rem; display: flex; gap: 1rem;'><button class='btn btn-secondary' onclick='makeChoiceQ10(1); event.stopPropagation();'>⚡ 발전기 오버클록</button><button class='btn btn-secondary' onclick='makeChoiceQ10(2); event.stopPropagation();'>🛡️ 방어막 과부하 전개</button></div><div id='chosen-story-q10' style='display: none; margin-top: 1rem;'></div>", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'", "extra_class": "glitch-bg"},
+    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": f"💥 <strong>[긴급 상황: 외부 선체 흔들림!]</strong><br><br>{poseidon}: \"방어 그리드 최종 활성화! 좌표 Q(-a, b)의 사분면을 계산하지 못하면 쫓아내주마! 집으로 돌아가라!\"<br><br>{nereus}: \"{dyn_captain}! 포세이돈이 장난을 멈출 생각이 없나 봐요! 방어막 에너지가 닳고 있어요. 빨리 마지막 부호를 계산해 주세요!\"<br><br><div id='choice-container-q10' style='margin-top: 1rem; display: flex; gap: 1rem;'><button class='btn btn-secondary' onclick='makeChoiceQ10(1); event.stopPropagation();'>⚡ 발전기 오버클록</button><button class='btn btn-secondary' onclick='makeChoiceQ10(2); event.stopPropagation();'>🛡️ 방어막 과부하 전개</button></div><div id='chosen-story-q10' style='display: none; margin-top: 1rem;'></div>", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "예: 4 또는 제4사분면", "error": "잘못된 구역입니다!", "ans_check": "ans === '4' || ans.includes('제4') || ans.includes('4사')", "extra_class": "glitch-bg"},
     {"qnum": 11, "title": "해저 수압의 변화", "story": f"🌊 <strong>[이동 상태 그래프 분석]</strong><br><br>{poseidon}: \"단순한 좌표 찍기는 유치원생도 하지. 진정한 아틀란티스인은 그래프의 흐름을 읽는 법! 수평을 유지한 이 구간이 뜻하는 건 뭘까? 과연 이 변화량을 꿰뚫어 볼 수 있을까?\"", "qtext": "<strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?", "placeholder": "예: 상승, 하강, 정지", "error": "상태 해석 불일치! 다시 생각해봐라!", "ans_check": "ans === '정지'"},
     {"qnum": 12, "title": "해저 수압의 변화", "story": f"🌊 <strong>[정비례 강하 압력]</strong><br><br>{nereus}: \"급속 강하 장치의 압력이 변하고 있습니다! 일정한 속도로 내려가 수심 100m까지 10분 소요되었다면, 정확히 5분이 경과한 시점의 수심을 재빨리 구하여 컨트롤 장치를 갱신해 주십시오!\"", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "보간 연산 오류! 유압 계통이 윙윙거립니다.", "ans_check": "ans === '50'"},
     {"qnum": 13, "title": "해저 수압의 변화", "story": f"🌊 <strong>[라이벌 의식과 두뇌 대결]</strong><br><br>{poseidon}: \"원점을 지나는 우상향 정비례 직선에서, 독립변수 x가 늘어날 때 y는 어떻게 될까? 이것도 모르면 심해의 보물을 차지할 자격이 없다!\"<br><br>{nereus}: \"우리 {dyn_captain}을 무시하지 마십시오! 우상향인지 우하향인지 우리가 더 잘 안다는 걸 보여줍시다!\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "선택지를 골라주세요", "options": ["증가한다", "감소한다", "변하지 않는다"], "error": "출력 증감 판단 오류! 똑바로 보아라!", "ans_check": "ans === '증가한다'"},
@@ -70,7 +70,7 @@ def generate_hint(qnum, qtext, ans_check):
     elif qnum == 2:
         return "x축 위에 있는 점들은 y축 방향으로 움직이지 않았으므로 y좌표가 항상 0입니다. 즉, (x좌표, 0)의 형태가 됩니다."
     elif qnum == 3:
-        return "원점은 x축과 y축이 교차하는 시작점입니다. x좌표와 y좌표가 모두 0이 되는 지점을 순서쌍 형태로 나타내보세요."
+        return "원점은 x축과 y축이 교차하는 시작점입니다. x좌표 and y좌표가 모두 0이 되는 지점을 순서쌍 형태로 나타내보세요."
     elif qnum == 4:
         return "y축 위에 있는 점들은 x축 방향으로 움직이지 않았으므로 x좌표가 항상 0입니다. 즉, (0, y좌표)의 형태가 됩니다."
     elif qnum == 5:
@@ -220,8 +220,7 @@ for q in qs:
                 // 멀티 엔딩 처리
                 let outroDiv = document.getElementById("outro-dynamic-text");
                 if (outroDiv) {{
-                    const sname = document.getElementById('studentName').value.trim();
-                    let firstName = sname.length > 2 ? sname.substring(1) : sname;
+                    let firstName = window.playerFirstName || "캡틴";
                     if (totalWrongCount < 5) {{
                         outroDiv.innerHTML = "패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 거대한 소리와 함께 고대 AI 포세이돈-V가 문을 활짝 열어줍니다.<br><br>{poseidon}: '훌륭하다. 수천 년 만에 아틀란티스의 지혜를 물려줄 진정한 후계자를 만났군.'<br><br>{nereus}: '" + firstName + " 캡틴! 완벽합니다! 금화와 지식이 쏟아집니다, 어서 챙겨서 부상합시다!'<br><br>여러분은 완벽한 수학적 통찰력으로 심해의 전설을 정복했습니다. <b>[칭호 획득: 심연의 좌표 마스터]</b> 미션 대성공!";
                     }} else {{
@@ -418,8 +417,7 @@ function showError(panelId, errorId, wrongCount) {
         errMsg.parentNode.insertBefore(radioDiv, errMsg.nextSibling);
     }
     
-    const sname = document.getElementById('studentName').value.trim();
-    let firstName = sname.length > 2 ? sname.substring(1) : sname;
+    let firstName = window.playerFirstName || "캡틴";
     
     if (wrongCount === 1) {
         radioDiv.innerHTML = "📡 [네레우스]: '" + firstName + " 캡틴, 사소한 계산 실수일 겁니다. 다시 계산해주십시오!'";
@@ -467,14 +465,10 @@ def replace_between(text, start_str, end_str, replacement):
     if end_idx == -1: return text
     return text[:start_idx] + replacement + text[end_idx:]
 
-# 1. 패널 HTML 치환 (<!-- Q1 --> 부터 <script> 전까지)
-# 단일 치환을 위해 정교하게 찾음. HTML 구조 내의 첫번째 <!-- Q1 --> 과 첫번째 <script> 사이.
+# 1. 패널 HTML 치환
 new_content = replace_between(content, '<!-- Q1 -->', '<script>', '<!-- Q1 -->\n' + panels_html + '\n    </div>\n    ')
 
-# 2. JS 치환 (// Q1 부터 document.addEventListener 직전 등 특정 구분선까지)
-# js_checks 시작점은 // Q1 로 찾고 끝점은 </script> 직전
-# 파일 내에 </script> 가 여러 개일 수 있으므로 마지막 문제를 검사하는 checkQ20을 덮어쓴다.
-# 조금 더 안전하게, 정규식으로 // Q1 부터 checkQ20 끝나는 중괄호까지.
+# 2. JS 치환
 new_content = re.sub(r'// Q1[\s\S]*?checkQ20\(\) \{[\s\S]*?\}\s*\}', '// Q1\n' + js_checks, new_content)
 
 # 3. CSS 주입
@@ -489,14 +483,35 @@ if "glitchOverlay" not in new_content:
 timer_pattern = r'function startTimer\(\) \{[\s\S]*?updateTimerDisplay\(\);\s*\}\s*,\s*1000\);\s*\}'
 new_content = re.sub(timer_pattern, timer_replacement.strip(), new_content)
 
-# 6. 동적 이름 치환 JS 주입 (tryStartGame)
-name_injection_pattern = r'(const sname = document\.getElementById\(\'studentName\'\);[\s\S]*?return;\s*\})'
-if ".dynamic-captain-name" not in new_content:
-    new_content = re.sub(
-        name_injection_pattern,
-        r'\1\n\n            // 이름 동적 개인화 처리\n            let firstName = sname.value.trim().length > 2 ? sname.value.trim().substring(1) : sname.value.trim();\n            document.querySelectorAll(".dynamic-captain-name").forEach(el => { el.innerHTML = firstName + " 캡틴"; });\n',
-        new_content
-    )
+# 6. 동적 이름 치환 JS 주입 (tryStartGame) - 복성 예외 처리 로직 추가
+name_injection_pattern = r'(const sid = document\.getElementById\(\'studentId\'\);[\s\S]*?const sname = document\.getElementById\(\'studentName\'\);[\s\S]*?return;\s*\})'
+double_name_js = r'''\1
+
+            // 이름 동적 개인화 처리 (복성 예외 처리 반영 및 전역 변수 바인딩)
+            try {
+                const doubleLastNames = ["제갈", "황보", "사공", "남궁", "서문", "독고", "선우"];
+                let rawName = sname.value.trim();
+                let firstName = rawName;
+                if (rawName.length > 2) {
+                    let prefix2 = rawName.substring(0, 2);
+                    if (doubleLastNames.includes(prefix2)) {
+                        firstName = rawName.substring(2);
+                    } else {
+                        firstName = rawName.substring(1);
+                    }
+                }
+                window.playerFirstName = firstName;
+                document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                    let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                    if (!el.hasAttribute("data-original-role")) {
+                        el.setAttribute("data-original-role", originalRole);
+                    }
+                    el.innerHTML = firstName + " " + originalRole;
+                });
+            } catch(e) { console.error("이름 파싱 에러:", e); }'''
+
+if "window.playerFirstName" not in new_content:
+    new_content = re.sub(name_injection_pattern, double_name_js, new_content)
 
 with open(html_file, 'w', encoding='utf-8') as f:
     f.write(new_content)
