@@ -36,9 +36,10 @@ img_map = {
 }
 
 # ----------------- 리소스 데이터 정의 (어드벤처 버전 톤앤매너 변경) -----------------
-nereus = '<span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>'
-poseidon = '<span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>'
-dyn_captain = '<span class="dynamic-captain-name">캡틴</span>'
+# 자바스크립트 내 따옴표 충돌 방지를 위해 속성값에 작은따옴표만 사용
+nereus = "<span style='color: #60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>"
+poseidon = "<span class='glitch-text' style='color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;'>[포세이돈-V]</span>"
+dyn_captain = "<span class='dynamic-captain-name'>캡틴</span>"
 
 qs = [
     {"qnum": 1, "title": "심해로 가는 좌표 (순서쌍과 좌표)", "story": f"🌊 <strong>[진입 투하 축 설정]</strong><br><br>{poseidon}: \"멈춰라, 외부인! 수학의 기본인 좌표도 모르는 자가 감히 아틀란티스의 문을 두드리는가? 자격을 증명해라!\"<br><br>🚨 <strong>[수문장의 방해 감지]</strong><br><br>{nereus}: \"으아앗, {dyn_captain}! 전설의 수문장 AI입니다! 생각보다 너무 깐깐해요. 제발 저 순서쌍 퀴즈 좀 맞춰서 통과하게 해주세요!\"", "qtext": "<strong>Q1. [순서쌍 좌표 찍기]</strong><br>x좌표가 -5 이고, y좌표가 8 인 점의 <strong>좌표</strong>를 순서쌍 기호 괄호 ()를 사용하여 나타내시오.", "placeholder": "예: (3, 4)", "error": "투하 궤적이 정렬되지 않아 선체가 조류에 흔들립니다!", "ans_check": "ans === '-5,8'"},
@@ -55,13 +56,18 @@ qs = [
     {"qnum": 12, "title": "해저 수압의 변화", "story": f"🌊 <strong>[정비례 강하 압력]</strong><br><br>{nereus}: \"급속 강하 장치의 압력이 변하고 있습니다! 일정한 속도로 내려가 수심 100m까지 10분 소요되었다면, 정확히 5분이 경과한 시점의 수심을 재빨리 구하여 컨트롤 장치를 갱신해 주십시오!\"", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "보간 연산 오류! 유압 계통이 윙윙거립니다.", "ans_check": "ans === '50'"},
     {"qnum": 13, "title": "해저 수압의 변화", "story": f"🌊 <strong>[라이벌 의식과 두뇌 대결]</strong><br><br>{poseidon}: \"원점을 지나는 우상향 정비례 직선에서, 독립변수 x가 늘어날 때 y는 어떻게 될까? 이것도 모르면 심해의 보물을 차지할 자격이 없다!\"<br><br>{nereus}: \"우리 {dyn_captain}을 무시하지 마십시오! 우상향인지 우하향인지 우리가 더 잘 안다는 걸 보여줍시다!\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "선택지를 골라주세요", "options": ["증가한다", "감소한다", "변하지 않는다"], "error": "출력 증감 판단 오류! 똑바로 보아라!", "ans_check": "ans === '증가한다'"},
     {"qnum": 14, "title": "해저 수압의 변화", "story": f"🌊 <strong>[기어 정지 잔량]</strong><br><br>{nereus}: \"수심 100m 지점에 5분간 완전히 정체해 있었을 때의 물리적 깊이 변화량 y값을 레지스터에 전송하십시오! 거의 다 왔습니다!\"", "qtext": "<strong>Q14. [그래프 해석 4]</strong><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?", "placeholder": "숫자만 입력", "error": "변화량 오차 감지! 기어 동조가 안 됩니다.", "ans_check": "ans === '0'"},
-    {"qnum": 15, "title": "해저 수압의 변화", "story": f"🚨 <strong>[산소 챔버 퀴즈]</strong><br><br>{poseidon}: \"산소 밸브가 말썽이군! 시간이 흐름에 따라 남은 산소량이 줄어드는 그래프 개형이 우상향인지 우하향인지 맞춰봐라! 맞춰야만 밸브가 열릴 거다!\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "선택지를 골라주세요", "options": ["우상향하는 모양", "우하향하는 모양", "수평인 모양"], "error": "산소 예측 밸브 고착! 숨을 참아야 할지도 몰라요!", "ans_check": "ans === '우하향하는 모양'", "extra_class": "glitch-bg"},
+    {"qnum": 15, "title": "해저 수압의 변화", "story": f"🚨 <strong>[산소 챔버 퀴즈]</strong><br><br>{poseidon}: \"산소 밸브가 말썽이군! 시간이 흐름에 따라 남은 산소량이 줄어드는 그래프 개형이 우상향인지 우하향인지 맞춰봐라! 맞춰야만 밸브가 열릴 거다!\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "선택지를 골라주세요", "options": ["우상향하는 모양", "우하향하는 모양", "수평인 모양"], "error": "산소 예측 밸브 고착! 숨을 참아야 할지도 몰라요!", "ans_check": "ans === '우하향하는 모양'", "extra_class": "glitch-bg"}
+]
+
+# (Q16 ~ Q20 생략없이 완전히 유지)
+qs_part2 = [
     {"qnum": 16, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[정비례 기어 링크]</strong><br><br>{poseidon}: \"이 산소 부족마저 통과하다니, 끈질긴 녀석들이군! 황금 문은 고정비 기어로 보호받는다. 출력 y가 구동각 x에 정비례하고 x=3일 때 y=15의 토크를 갖는다. x=5일 때는 어떨까?\"", "qtext": "<strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "기어 이가 맞물리지 않고 덜그럭거립니다!", "ans_check": "ans === '25'"},
     {"qnum": 17, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[거울 반사 조절 상수]</strong><br><br>{nereus}: \"메모리 장벽이 80% 열렸습니다! 기하학 광선 반사 경로 y = ax 식의 그래프가 거울 좌표 (2, -8)을 조준하도록 상수 a를 계산하십시오! 이제 곧 보물입니다!\"", "qtext": "<strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "거울 초점이 비틀어졌습니다! 다시 맞춰보세요.", "ans_check": "ans === '-4'"},
     {"qnum": 18, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[반비례 부력 링크]</strong><br><br>{nereus}: \"황금 문 너머의 보물이 보입니다! 부상하려면 부력 주머니 수 x개와 질량 y kg 사이의 반비례 관계를 연산하여 안전 균형을 맞춰야 합니다. 너무 무거우면 못 올라갑니다!\"", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 평형 균열 발생! 짐이 너무 무거워요.", "ans_check": "ans === '40'"},
     {"qnum": 19, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[인정과 명예로운 결말]</strong><br><br>{poseidon}: \"이럴 수가... 반비례와 정비례의 조화까지 완벽하게 이해하고 있다니! 너희는 단순한 도굴꾼이 아니었군. 반비례식 y = a/x를 완성시킬 최종 상수 a를 계산하라!\"", "qtext": "<strong>Q19. [반비례 관계 2]</strong><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "상수 불일치! 문이 꿈쩍도 안 합니다.", "ans_check": "ans === '20'"},
     {"qnum": 20, "title": "황금 문 톱니바퀴", "story": f"🔴 <strong>[최종 포탈 동기화]</strong><br><br>{nereus}: \"해냈습니다 {dyn_captain}!! 포세이돈이 우리 실력에 완전히 감탄했습니다! 마지막 탈출 포탈의 궤적 y = 12/x 가 점 (-3, k)를 통과하도록 최종 k값을 주입하십시오. 금화와 고대 지식을 챙겨서 해수면으로 부상합시다!!\"", "qtext": "<strong>Q20. [최종 암호 해독]</strong><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "차원 도약 포탈 동기화 실패! 조금만 더 집중하세요!", "ans_check": "ans === '-4'", "extra_class": "glitch-bg"}
 ]
+qs.extend(qs_part2)
 
 # Generate panels
 def generate_hint(qnum, qtext, ans_check):
@@ -70,7 +76,7 @@ def generate_hint(qnum, qtext, ans_check):
     elif qnum == 2:
         return "x축 위에 있는 점들은 y축 방향으로 움직이지 않았으므로 y좌표가 항상 0입니다. 즉, (x좌표, 0)의 형태가 됩니다."
     elif qnum == 3:
-        return "원점은 x축과 y축이 교차하는 시작점입니다. x좌표 and y좌표가 모두 0이 되는 지점을 순서쌍 형태로 나타내보세요."
+        return "원점은 x축과 y축이 교차하는 시작점입니다. x좌표와 y좌표가 모두 0이 되는 지점을 순서쌍 형태로 나타내보세요."
     elif qnum == 4:
         return "y축 위에 있는 점들은 x축 방향으로 움직이지 않았으므로 x좌표가 항상 0입니다. 즉, (0, y좌표)의 형태가 됩니다."
     elif qnum == 5:
@@ -390,13 +396,6 @@ function showGlitchOverlay() {
     }
 }
 
-function triggerTimerWarning() {
-    document.querySelectorAll('.game-timer').forEach(el => {
-        el.classList.add('timer-warning');
-        setTimeout(() => el.classList.remove('timer-warning'), 1000);
-    });
-}
-
 // showError 함수 오버라이딩 (네레우스 오답 무전 대응)
 function showError(panelId, errorId, wrongCount) {
     try { playError(); } catch(e) {} 
@@ -460,16 +459,33 @@ timer_replacement = '''
 
 def replace_between(text, start_str, end_str, replacement):
     start_idx = text.find(start_str)
-    if start_idx == -1: return text
+    if start_idx == -1:
+        print(f"Warning: Start marker '{start_str}' not found!")
+        return text
     end_idx = text.find(end_str, start_idx + len(start_str))
-    if end_idx == -1: return text
+    if end_idx == -1:
+        print(f"Warning: End marker '{end_str}' not found after start marker!")
+        return text
     return text[:start_idx] + replacement + text[end_idx:]
 
 # 1. 패널 HTML 치환
 new_content = replace_between(content, '<!-- Q1 -->', '<script>', '<!-- Q1 -->\n' + panels_html + '\n    </div>\n    ')
 
-# 2. JS 치환
-new_content = re.sub(r'// Q1[\s\S]*?checkQ20\(\) \{[\s\S]*?\}\s*\}', '// Q1\n' + js_checks, new_content)
+# 2. JS 치환 (오차 없는 완벽한 문자열 구분선 치환 적용)
+start_marker = "// Q1"
+end_marker = "window.onload = () => {"
+# 들여쓰기 공백을 포함해 검색
+end_idx_raw = new_content.find(end_marker)
+if end_idx_raw != -1:
+    start_search = end_idx_raw
+    while start_search > 0 and new_content[start_search - 1] in [' ', '\t']:
+        start_search -= 1
+    end_marker_with_indent = new_content[start_search:end_idx_raw + len(end_marker)]
+else:
+    end_marker_with_indent = end_marker
+
+# replacement 끝에 end_marker_with_indent 를 덧붙이지 않음 (원천적인 중복 정의 해결)
+new_content = replace_between(new_content, start_marker, end_marker_with_indent, start_marker + '\n' + js_checks + '\n\n        ')
 
 # 3. CSS 주입
 if ".glitch-text" not in new_content:
@@ -483,7 +499,7 @@ if "glitchOverlay" not in new_content:
 timer_pattern = r'function startTimer\(\) \{[\s\S]*?updateTimerDisplay\(\);\s*\}\s*,\s*1000\);\s*\}'
 new_content = re.sub(timer_pattern, timer_replacement.strip(), new_content)
 
-# 6. 동적 이름 치환 JS 주입 (tryStartGame) - 복성 예외 처리 로직 추가
+# 6. 동적 이름 치환 JS 주입 (tryStartGame) - 복성 예외 처리 로직 추가 (f-string이 아님에 유의)
 name_injection_pattern = r'(const sid = document\.getElementById\(\'studentId\'\);[\s\S]*?const sname = document\.getElementById\(\'studentName\'\);[\s\S]*?return;\s*\})'
 double_name_js = r'''\1
 
@@ -512,6 +528,17 @@ double_name_js = r'''\1
 
 if "window.playerFirstName" not in new_content:
     new_content = re.sub(name_injection_pattern, double_name_js, new_content)
+
+# 7. 타이머 중복 중괄호 찌꺼기 완전 소거 (빌더 레벨 멱등성 보장 조치)
+if "function nextStage" in new_content:
+    timer_body_end = new_content.find("function startTimer() {")
+    if timer_body_end != -1:
+        normal_end = new_content.find("}, 1000);\n        }", timer_body_end)
+        if normal_end != -1:
+            normal_end_pos = normal_end + len("}, 1000);\n        }")
+            next_stage_pos = new_content.find("function nextStage", normal_end_pos)
+            if next_stage_pos != -1:
+                new_content = new_content[:normal_end_pos] + "\n\n        " + new_content[next_stage_pos:]
 
 with open(html_file, 'w', encoding='utf-8') as f:
     f.write(new_content)
