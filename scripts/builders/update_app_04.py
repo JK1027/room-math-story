@@ -23,7 +23,7 @@ qs = [
     {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[추가 결계]</strong><br><br>{poseidon}: \"쥐새끼처럼 잘도 피하는군. 그렇다면 제2구역 결계 장벽의 좌표 (-4, -7) 사분면 영역을 해독해 봐라. 여기서 너희들의 숨통을 끊어주마!\"", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
     {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[고급 사분면]</strong><br><br>{nereus}: \"캡틴! 포세이돈-V가 좌표 P(a, b)의 부호 조건을 은닉하여 우리 해킹 장치를 교란하고 있습니다. 조건을 충족하는 사분면 구역을 논리적으로 분석해 주십시오!\"", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
     {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[사분면 분석]</strong><br><br>{poseidon}: \"경보 강도 최대치 출력! 변형 좌표 Q(a, -b)의 사분면 신호를 인증해 보아라! 인간의 나약한 뇌수로는 불가능할 것이다!\"", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
-    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": f"💥 <strong>[긴급 상황: 외부 선체 파손!]</strong><br><br>{poseidon}: \"방어 그리드 최종 활성화! 좌표 Q(-a, b)의 사분면을 계산하지 못하면 자폭 레이저가 가동된다! 영원한 심연으로 떨어져라!\"<br><br>{nereus}: \"경고! 우측 선체 장갑 30% 손실! 자폭 프로토콜이 시작되었습니다! 제발 빨리 정답을 입력해주십시오!\"", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'", "extra_class": "glitch-bg"},
+    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": f"💥 <strong>[긴급 상황: 외부 선체 파손!]</strong><br><br>{poseidon}: \"방어 그리드 최종 활성화! 좌표 Q(-a, b)의 사분면을 계산하지 못하면 자폭 레이저가 가동된다! 영원한 심연으로 떨어져라!\"<br><br>{nereus}: \"경고! 우측 선체 장갑 30% 손실! 자폭 프로토콜이 시작되었습니다! 제발 빨리 결제 전술을 선택하고 전송해주십시오!\"<br><br><div id='choice-container-q10' style='margin-top: 1rem; display: flex; gap: 1rem;'><button class='btn btn-secondary' onclick='makeChoiceQ10(1); event.stopPropagation();'>⚡ 발전기 오버클록</button><button class='btn btn-secondary' onclick='makeChoiceQ10(2); event.stopPropagation();'>🛡️ 방어막 과부하 전개</button></div><div id='chosen-story-q10' style='display: none; margin-top: 1rem;'></div>", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'", "extra_class": "glitch-bg"},
     {"qnum": 11, "title": "해저 수압의 변화", "story": f"🌊 <strong>[수압 경고]</strong><br><br>{nereus}: \"휴... 캡틴, 일단 치명적인 고비는 넘겼습니다. 하지만 외부 수압 그래프가 비정상적으로 요동치고 있습니다. 그래프 상에서 이동 거리 y가 평평하게 멈춘 구간이 뜻하는 기동 상태를 해석해 밸브를 안정화해주십시오.\"", "qtext": "<strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?", "placeholder": "예: 상승, 하강, 정지", "error": "그래프 해석 오류!", "ans_check": "ans === '정지'"},
     {"qnum": 12, "title": "해저 수압의 변화", "story": f"🌊 <strong>[깊이 예측]</strong><br><br>{nereus}: \"수온 냉각 파이프라인의 압력이 계속해서 떨어집니다... 10분 동안 100m 하강했을 때 5분 시점의 깊이를 예측해 펌프를 복구하십시오. 시간이 없습니다!\"", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "깊이 예측 실패!", "ans_check": "ans === '50'"},
     {"qnum": 13, "title": "해저 수압의 변화", "story": f"🌊 <strong>[그래프 방향]</strong><br><br>{poseidon}: \"발버둥 쳐 보아라! 내가 잠수정의 엔진 출력을 무작위로 조작해 두었다! 원점을 지나는 우상향 직선 그래프의 성질을 모른다면 이대로 심연에 곤두박질칠 것이다!\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "예: 증가, 감소", "error": "해석 오류!", "ans_check": "ans === '증가'"},
@@ -104,6 +104,7 @@ for i, q in enumerate(qs):
     qtext_hinted = qtext.replace('</strong>', f'</strong> {hint_btn_html}', 1)
     
     extra_class = q.get('extra_class', '')
+    qbox_id = 'id="q10-main-box" style="display:none;"' if qnum == 10 else ''
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel {extra_class}">
@@ -113,7 +114,7 @@ for i, q in enumerate(qs):
                 <div class="story-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
-            <div class="question-box">
+            <div class="question-box" {qbox_id}>
                 <div class="question-content">
                     {qtext_hinted}
                     <div class="input-group">
@@ -204,7 +205,12 @@ for q in qs:
             }} else {{
                 wrongCount++;
                 totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
                 if (wrongCount >= 3) {{
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! {zone_name} 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans{reset_qnum}').value = '';
@@ -240,12 +246,136 @@ glitch_css = '''
     50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
     100% { box-shadow: inset 0 0 10px #ef4444; }
 }
+.timer-warning {
+    animation: blink-red 0.2s 5;
+    font-size: 1.5rem !important;
+}
+@keyframes blink-red {
+    0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+    50% { color: #ffffff; text-shadow: none; }
+}
+.glitch-overlay-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(239, 68, 68, 0.15);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 10px solid #ef4444;
+    animation: pulse-border 0.2s infinite;
+}
+.glitch-overlay-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    color: #ef4444;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ef4444;
+    animation: shake 0.1s infinite;
+}
+.glitch-overlay-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+@keyframes pulse-border {
+    0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
+}
+.typing-cursor {
+    animation: cursor-blink 0.8s infinite;
+    font-weight: bold;
+    color: var(--accent);
+    margin-left: 2px;
+}
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
 </style>
+
+<!-- V3.0 UI Additions -->
+<div id="glitchOverlay" class="glitch-overlay-screen">
+    <div class="glitch-overlay-text">🚨 SYSTEM EXPLOITED 🚨</div>
+    <div class="glitch-overlay-sub">ACCESS DENIED - CODE ERROR</div>
+</div>
+
+<!-- Game Over Panel -->
+<div id="gameover" class="glass-panel">
+    <h1 style="color: #ef4444; text-shadow: 0 0 15px #ef4444;">미션 실패 (GAME OVER)</h1>
+    <h2>산소 고갈 및 수압 압착</h2>
+    <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/outro.png" alt="Game Over" class="panel-image" style="filter: grayscale(1) sepia(1) hue-rotate(-50deg);">
+    <div class="story-box">
+        <div class="story-text" style="color: #ef4444;">
+            [네레우스]: "캡틴... 에너지가... 완전히 고갈... 되었습니다... 수압이... 선체를... 지이익..."<br><br>
+            잠수정의 전원이 완전히 꺼지고 차가운 심해의 수압이 창문을 부수고 들어옵니다. 산소 공급 장치가 완전히 멈췄습니다. 탈출 좌표를 연산하지 못해 심연 속에 영원히 가라앉고 말았습니다. 다시 도전하세요!
+        </div>
+    </div>
+    <button class="btn" style="margin-top: 2rem; background: #ef4444; border-color: #ef4444;" onclick="location.reload()">처음부터 다시 시도하기</button>
+</div>
+
+<script>
+function showGlitchOverlay() {
+    const overlay = document.getElementById('glitchOverlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.style.display = 'none', 1500);
+    }
+}
+
+function triggerTimerWarning() {
+    document.querySelectorAll('.game-timer').forEach(el => {
+        el.classList.add('timer-warning');
+        setTimeout(() => el.classList.remove('timer-warning'), 1000);
+    });
+}
+
+function makeChoiceQ10(type) {
+    document.getElementById('choice-container-q10').style.display = 'none';
+    const textEl = document.getElementById('chosen-story-q10');
+    textEl.style.display = 'block';
+    if (type === 1) {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '오버클록 성공! 순간 전력이 200% 상승해 자폭 레이저 연산 장치를 무력화 시도 중입니다. 하지만 과부하 열기가 대단합니다! 어서 좌표 계산을 완료하십시오!'";
+    } else {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '방어막 전개! 레이저 충격을 분산하고 흡수하기 시작했습니다. 실드가 버티는 동안 좌표 계산을 신속하게 끝내야 합니다!'";
+    }
+    document.getElementById('q10-main-box').style.display = 'block';
+}
+</script>
 '''
 
 new_content = re.sub(r'<!-- Q1.*?(?=<script>)', lambda m: '<!-- Q1 -->\n' + panels_html + '\n    ', content, flags=re.DOTALL)
 new_content = re.sub(r'// Q1[\s\S]*?(?=window\.onload = \(\) => \{)', lambda m: '// Q1\n' + js_checks + '\n        ', new_content)
 new_content = new_content.replace('</style>', glitch_css)
+
+# startTimer 내 alert/reload를 게임오버 패널 전환으로 교체
+timer_replacement = '''
+        function startTimer() {
+            if (timerId) return;
+            updateTimerDisplay();
+            timerId = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    updateTimerDisplay();
+                    document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
+                    const goPanel = document.getElementById('gameover');
+                    if (goPanel) goPanel.classList.add('active');
+                    else {
+                        alert("⏰ 제한 시간 초과!");
+                        location.reload();
+                    }
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+'''
+new_content = re.sub(r'function startTimer\(\) \{[\s\S]*?\}', timer_replacement.strip(), new_content)
 
 with open(html_file, 'w', encoding='utf-8') as f:
     f.write(new_content)
