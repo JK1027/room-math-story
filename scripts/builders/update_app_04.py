@@ -1,6 +1,6 @@
 import re
-
 import os
+
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(os.path.dirname(current_dir))
 apps_dir = os.path.join(project_root, "apps")
@@ -11,26 +11,26 @@ with open(html_file, 'r', encoding='utf-8') as f:
 
 # Questions Data
 qs = [
-    {"qnum": 1, "title": "심해로 가는 좌표 (순서쌍과 좌표)", "story": "🌊 <strong>[목표 지점 확인]</strong><br><br>잠수정을 투하할 해수면 좌표를 계산해야 합니다. 조금이라도 좌표가 어긋나면 아틀란티스 유적으로 향하는 해류를 타지 못하고 암초에 부딪히게 됩니다.", "qtext": "<strong>Q1. [순서쌍 좌표 찍기]</strong><br>x좌표가 -5 이고, y좌표가 8 인 점의 <strong>좌표</strong>를 순서쌍 기호 괄호 ()를 사용하여 나타내시오.", "placeholder": "예: (3, 4)", "error": "투하 좌표가 어긋났습니다! 암초에 부딪힐 위험이 있습니다!", "ans_check": "ans === '-5,8'"},
-    {"qnum": 2, "title": "심해로 가는 좌표", "story": "🌊 <strong>[투하 지점 갱신]</strong><br><br>좋습니다, 첫 번째 투하 지점을 통과했습니다. 다음 기착지인 해저 화산 입구를 통과하려면 x축 위의 점을 입력해야 합니다.", "qtext": "<strong>Q2. [x축, y축 위의 점]</strong><br>x축 위에 있고 x좌표가 7인 점의 좌표를 나타내시오.", "placeholder": "예: (2, 0)", "error": "좌표 입력 오류! 수압 경고!", "ans_check": "ans === '7,0'"},
-    {"qnum": 3, "title": "심해로 가는 좌표", "story": "🌊 <strong>[기준점 확인]</strong><br><br>심해 내비게이션의 영점 조준이 필요합니다.", "qtext": "<strong>Q3. [원점의 좌표]</strong><br>두 좌표축이 만나는 원점 O의 좌표를 나타내시오.", "placeholder": "예: (x, y)", "error": "영점 조준 실패!", "ans_check": "ans === '0,0'"},
-    {"qnum": 4, "title": "심해로 가는 좌표", "story": "🌊 <strong>[추가 기준점]</strong><br><br>y축 방향의 해저 동굴 입구 좌표를 입력하세요.", "qtext": "<strong>Q4. [좌표 평면 위의 점]</strong><br>y축 위에 있고 y좌표가 -3인 점의 좌표를 나타내시오.", "placeholder": "예: (0, -5)", "error": "동굴 충돌 위험!", "ans_check": "ans === '0,-3'"},
-    {"qnum": 5, "title": "심해로 가는 좌표", "story": "🌊 <strong>[소용돌이 결계]</strong><br><br>레이더에 4개의 기둥 좌표가 찍혔습니다. 이 기둥들이 만드는 결계의 넓이를 구하세요.", "qtext": "<strong>Q5. [도형의 넓이]</strong><br>좌표평면 위에 네 기둥 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)를 이은 직사각형의 넓이를 구하시오.", "placeholder": "숫자만 입력", "error": "결계 돌파 실패!", "ans_check": "ans === '48'"},
-    {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[사분면 분석]</strong><br><br>해저 유적 내부로 진입했습니다. 이곳은 4개의 구역(사분면)으로 나뉘어 있습니다.", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력 (예: 1)", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
-    {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[추가 결계]</strong><br><br>두 번째 사분면 문을 엽니다.", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
-    {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[고급 사분면]</strong><br><br>조건에 맞는 사분면을 찾아야 합니다.", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
-    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[사분면 분석]</strong><br><br>결계의 성질을 이용해 새로운 좌표의 사분면을 예측해야 합니다.", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
-    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[결계 돌파]</strong><br><br>마지막 사분면 문을 열기 위해 부호를 반전시킨 좌표의 사분면을 알아내야 합니다.", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
-    {"qnum": 11, "title": "해저 수압의 변화", "story": "🌊 <strong>[수압 경고]</strong><br><br>수압 그래프를 분석합니다.", "qtext": "<strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?", "placeholder": "예: 상승, 하강, 정지", "error": "그래프 해석 오류!", "ans_check": "ans === '정지'"},
-    {"qnum": 12, "title": "해저 수압의 변화", "story": "🌊 <strong>[깊이 예측]</strong><br><br>일정한 속력으로 내려가는 잠수정의 깊이를 구합니다.", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "깊이 예측 실패!", "ans_check": "ans === '50'"},
-    {"qnum": 13, "title": "해저 수압의 변화", "story": "🌊 <strong>[그래프 방향]</strong><br><br>직선의 방향성을 파악합니다.", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "예: 증가, 감소", "error": "해석 오류!", "ans_check": "ans === '증가'"},
-    {"qnum": 14, "title": "해저 수압의 변화", "story": "🌊 <strong>[변화량 분석]</strong><br><br>정지 상태에서의 변화량을 확인합니다.", "qtext": "<strong>Q14. [그래프 해석 4]</strong><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?", "placeholder": "숫자만 입력", "error": "해석 오류!", "ans_check": "ans === '0'"},
-    {"qnum": 15, "title": "해저 수압의 변화", "story": "🌊 <strong>[산소 잔량]</strong><br><br>남은 산소의 양을 그래프로 나타낼 때의 개형을 맞춥니다.", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "예: 우하향, 우상향", "error": "산소 예측 실패!", "ans_check": "ans === '우하향'"},
-    {"qnum": 16, "title": "황금 문 톱니바퀴", "story": "⚙️ <strong>[정비례 회전]</strong><br><br>황금 문을 여는 톱니바퀴의 회전수 관계를 파악합니다.", "qtext": "<strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "톱니바퀴가 멈췄습니다!", "ans_check": "ans === '25'"},
-    {"qnum": 17, "title": "황금 문 톱니바퀴", "story": "⚙️ <strong>[비례 상수]</strong><br><br>함수식을 완성해야 다이얼이 돌아갑니다.", "qtext": "<strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "다이얼 번호 오류!", "ans_check": "ans === '-4'"},
-    {"qnum": 18, "title": "황금 문 톱니바퀴", "story": "💎 <strong>[보물 적재 경보]</strong><br><br>황금을 챙겨가려면 부력 장치와 무게의 반비례 관계를 알아야 합니다.", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 균형 붕괴!", "ans_check": "ans === '40'"},
-    {"qnum": 19, "title": "황금 문 톱니바퀴", "story": "💎 <strong>[반비례 상수]</strong><br><br>반비례 관계식을 알아냅니다.", "qtext": "<strong>Q19. [반비례 관계 2]</strong><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "식 계산 오류!", "ans_check": "ans === '20'"},
-    {"qnum": 20, "title": "황금 문 톱니바퀴", "story": "🔴 <strong>[최종 탈출 레이저]</strong><br><br>마지막 탈출구를 엽니다!", "qtext": "<strong>Q20. [최종 암호 해독]</strong><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "레이저 방어막에 막혔습니다!", "ans_check": "ans === '-4'"}
+    {"qnum": 1, "title": "심해로 가는 좌표 (순서쌍과 좌표)", "story": "🌊 <strong>[목표 지점 확인]</strong><br><br>[관제 AI 네레우스]: \"캡틴, 전방에 아틀란티스 유적 입구의 에너지 역장이 감지되었습니다. 진입을 위한 해수면 투하 좌표(순서쌍)를 정확히 입력해야 잠수정이 무사히 진입합니다!\"", "qtext": "<strong>Q1. [순서쌍 좌표 찍기]</strong><br>x좌표가 -5 이고, y좌표가 8 인 점의 <strong>좌표</strong>를 순서쌍 기호 괄호 ()를 사용하여 나타내시오.", "placeholder": "예: (3, 4)", "error": "투하 좌표가 어긋났습니다! 암초에 부딪힐 위험이 있습니다!", "ans_check": "ans === '-5,8'"},
+    {"qnum": 2, "title": "심해로 가는 좌표", "story": "🌊 <strong>[투하 지점 갱신]</strong><br><br>[유적 보안 센서]: \"경고! 미확인 잠수정 접근 중. 진입 축의 기준 신호를 정합하라. x축 위의 제어 포인트를 입력하지 않으면 수압 쇄도 밸브를 열겠다!\"", "qtext": "<strong>Q2. [x축, y축 위의 점]</strong><br>x축 위에 있고 x좌표가 7인 점의 좌표를 나타내시오.", "placeholder": "예: (2, 0)", "error": "좌표 입력 오류! 수압 경고!", "ans_check": "ans === '7,0'"},
+    {"qnum": 3, "title": "심해로 가는 좌표", "story": "🌊 <strong>[기준점 확인]</strong><br><br>[관제 AI 네레우스]: \"영점 조준 회로가 급격한 충격으로 손상되었습니다. 원점을 빠르게 동기화하여 기준 좌표를 복구해야 합니다!\"", "qtext": "<strong>Q3. [원점의 좌표]</strong><br>두 좌표축이 만나는 원점 O의 좌표를 나타내시오.", "placeholder": "예: (x, y)", "error": "영점 조준 실패!", "ans_check": "ans === '0,0'"},
+    {"qnum": 4, "title": "심해로 가는 좌표", "story": "🌊 <strong>[추가 기준점]</strong><br><br>[유적 보안 센서]: \"침입자 방화벽 2단계 작동. y축 해저 동굴의 궤도를 정확히 전송해 인증을 진행하라.\"", "qtext": "<strong>Q4. [좌표 평면 위의 점]</strong><br>y축 위에 있고 y좌표가 -3인 점의 좌표를 나타내시오.", "placeholder": "예: (0, -5)", "error": "동굴 충돌 위험!", "ans_check": "ans === '0,-3'"},
+    {"qnum": 5, "title": "심해로 가는 좌표", "story": "🌊 <strong>[소용돌이 결계]</strong><br><br>[관제 AI 네레우스]: \"적 잠수정들이 4개 기둥 좌표를 기준으로 에너지 가로막을 설치했습니다. 이 소용돌이 결계의 총 넓이를 알아내야 해제 루틴이 실행됩니다!\"", "qtext": "<strong>Q5. [도형의 넓이]</strong><br>좌표평면 위에 네 기둥 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)를 이은 직사각형의 넓이를 구하시오.", "placeholder": "숫자만 입력", "error": "결계 돌파 실패!", "ans_check": "ans === '48'"},
+    {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[사분면 분석]</strong><br><br>[유적 보안 센서]: \"사분면 방어 격자 기동. 기동점 (2, -5)의 정확한 위치 구역(사분면)을 탐색해 입력하라.\"", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력 (예: 1)", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
+    {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[추가 결계]</strong><br><br>[유적 보안 센서]: \"침입자 탐지 지속. 제2구역 결계 장벽 좌표 (-4, -7)의 사분면 영역을 해독하라.\"", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
+    {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[고급 사분면]</strong><br><br>[관제 AI 네레우스]: \"적 방어 AI 포세이돈이 좌표 P(a, b)의 부호 조건을 이용해 우리 해킹 장치를 교란하고 있습니다. 조건을 충족하는 사분면 구역을 분석하세요!\"", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
+    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[사분면 분석]</strong><br><br>[유적 보안 센서]: \"경보 강도 증가. 변형 좌표 Q(a, -b)의 사분면 신호를 인증하라.\"", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '3'"},
+    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": "🧭 <strong>[결계 돌파]</strong><br><br>[유적 보안 센서]: \"방어 그리드 최종 활성화. 좌표 Q(-a, b)의 사분면을 계산하지 못하면 자폭 레이저가 가동된다!\"", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'"},
+    {"qnum": 11, "title": "해저 수압의 변화", "story": "🌊 <strong>[수압 경고]</strong><br><br>[관제 AI 네레우스]: \"휴, 일단 고비는 넘겼습니다! 하지만 수압 그래프가 급격히 요동치고 있습니다. 그래프 상에서 이동 거리 y가 평평하게 멈춘 구간이 뜻하는 잠수정의 기동 상태를 해석해야 밸브를 제어할 수 있습니다!\"", "qtext": "<strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?", "placeholder": "예: 상승, 하강, 정지", "error": "그래프 해석 오류!", "ans_check": "ans === '정지'"},
+    {"qnum": 12, "title": "해저 수압의 변화", "story": "🌊 <strong>[깊이 예측]</strong><br><br>[관제 AI 네레우스]: \"수온 냉각 파이프라인의 압력이 내려갑니다. 10분 동안 100m 하강했을 때 5분 시점의 깊이를 예측해 펌프를 복구하십시오.\"", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "깊이 예측 실패!", "ans_check": "ans === '50'"},
+    {"qnum": 13, "title": "해저 수압의 변화", "story": "🌊 <strong>[그래프 방향]</strong><br><br>[관제 AI 네레우스]: \"비상 추진력을 제어하기 위해, 원점을 지나는 우상향 직선 그래프의 성질을 입력창에 전송하세요.\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "예: 증가, 감소", "error": "해석 오류!", "ans_check": "ans === '증가'"},
+    {"qnum": 14, "title": "해저 수압의 변화", "story": "🌊 <strong>[변화량 분석]</strong><br><br>[관제 AI 네레우스]: \"5분 동안 깊이가 고정되어 있습니다. 이 머문 시간 동안의 깊이 변화량을 릴레이에 입력하세요.\"", "qtext": "<strong>Q14. [그래프 해석 4]</strong><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?", "placeholder": "숫자만 입력", "error": "해석 오류!", "ans_check": "ans === '0'"},
+    {"qnum": 15, "title": "해저 수압의 변화", "story": "🌊 <strong>[산소 잔량]</strong><br><br>[관제 AI 네레우스]: \"비상 산소 탱크의 잔량 그래프 개형을 예상하십시오. 시간 흐름에 따른 모양이 우상향입니까, 우하향입니까?\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "예: 우하향, 우상향", "error": "산소 예측 실패!", "ans_check": "ans === '우하향'"},
+    {"qnum": 16, "title": "황금 문 톱니바퀴", "story": "⚙️ <strong>[정비례 회전]</strong><br><br>[유적 메인 중앙 코어]: \"최종 침입 관문. 황금 문의 톱니바퀴 동력 제어를 정비례 관계식을 통해 잠금 해제하라.\"", "qtext": "<strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "톱니바퀴가 멈췄습니다!", "ans_check": "ans === '25'"},
+    {"qnum": 17, "title": "황금 문 톱니바퀴", "story": "⚙️ <strong>[비례 상수]</strong><br><br>[유적 메인 중앙 코어]: \"회전 비례 상수 a값을 계산해 보정 코드를 칩에 업로드하라.\"", "qtext": "<strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "다이얼 번호 오류!", "ans_check": "ans === '-4'"},
+    {"qnum": 18, "title": "황금 문 톱니바퀴", "story": "💎 <strong>[보물 적재 경보]</strong><br><br>[관제 AI 네레우스]: \"아웃플로우 밸브의 부력 장치 수 x와 무게 y의 반비례 관계를 연산하여 안전 무게 상한선을 재설정하십시오!\"", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 균형 붕괴!", "ans_check": "ans === '40'"},
+    {"qnum": 19, "title": "황금 문 톱니바퀴", "story": "💎 <strong>[반비례 상수]</strong><br><br>[유적 메인 중앙 코어]: \"시스템 락다운 직전. 반비례 비례상수 a를 식에 주입하라.\"", "qtext": "<strong>Q19. [반비례 관계 2]</strong><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "식 계산 오류!", "ans_check": "ans === '20'"},
+    {"qnum": 20, "title": "황금 문 톱니바퀴", "story": "🔴 <strong>[최종 탈출 레이저]</strong><br><br>[관제 AI 네레우스]: \"마지막 탈출 통로의 역반사 궤적 좌표가 반비례 그래프 y = 12/x 와 점 (-3, k)를 지납니다. 최종 암호 k의 값을 입력해 포탈을 가동하십시오!\"", "qtext": "<strong>Q20. [최종 암호 해독]</strong><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "레이저 방어막에 막혔습니다!", "ans_check": "ans === '-4'"}
 ]
 
 # Generate panels
@@ -96,7 +96,7 @@ for i, q in enumerate(qs):
     next_stage = f"'panel_q{qnum+1}'" if qnum < 20 else "'outro'"
     next_progress = qnum*5
     
-    # 💡 힌트 버튼을 질문 제목 <strong>Q{qnum}. [제목]</strong> 바로 옆에 삽입
+    # 힌트 버튼을 질문 제목 <strong>Q{qnum}. [제목]</strong> 바로 옆에 삽입
     hint_btn_html = f'<button class="btn-hint" onclick="alert(\'💡 힌트: {q["hint"]}\')">💡 힌트</button>'
     qtext_hinted = qtext.replace('</strong>', f'</strong> {hint_btn_html}', 1)
     
@@ -104,7 +104,7 @@ for i, q in enumerate(qs):
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel">
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m1_04_coordinates/q{qnum}.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q{qnum}.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
@@ -119,7 +119,7 @@ for i, q in enumerate(qs):
             </div>
             <div class="error-msg" id="error{qnum}">{error}</div>
             <div class="btn-group">
-                <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 and "update_app_04.py"=="update_app_04.py" else '미궁 진입' if qnum==1 and "update_app_04.py"=="update_app_06.py" else '시스템 복구 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
+                <button class="btn" onclick="checkQ{qnum}()">{'잠항 시작' if qnum==1 else '다음으로' if qnum < 20 else '탈출하기'}</button>
             </div>
         </div>
 '''
@@ -131,7 +131,7 @@ outro_html = '''
         <div id="outro" class="glass-panel">
             <h1>탈출 성공!</h1>
             <h2>아틀란티스의 보물</h2>
-            <img src="assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">"패널에 숫자 '-4'를 입력하는 순간! 지잉- 하는 소리와 함께 해저 도시의 거대한 황금 문이 갈라집니다. 
                 남은 산소는 단 2분. 여러분은 황금 문을 연 성취감을 안고, 잠수정의 부력 장치를 가동하여 보물상자와 함께 해수면을 향해 솟구쳐 오릅니다. 
@@ -204,10 +204,8 @@ for q in qs:
 '''
     js_checks += js
 
-
 import re
 new_content = re.sub(r'<!-- Q1.*?(?=<script>)', lambda m: '<!-- Q1 -->\n' + panels_html + '\n    ', content, flags=re.DOTALL)
-
 new_content = re.sub(r'// Q1[\s\S]*?(?=window\.onload = \(\) => \{)', lambda m: '// Q1\n' + js_checks + '\n        ', new_content)
 
 with open(html_file, 'w', encoding='utf-8') as f:

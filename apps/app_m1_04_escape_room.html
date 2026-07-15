@@ -531,12 +531,44 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
+
+        /* 화면 진동 효과 */
+        @keyframes shakePage {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shakePage 0.3s ease-in-out;
+        }
+
+        /* 적색 레이저 섬광 효과 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 0, 0, 0);
+            pointer-events: none;
+            z-index: 9999;
+            transition: background 0.15s ease-out;
+        }
+        .laser-flash-active {
+            background: rgba(255, 0, 0, 0.15);
+            transition: none;
+        }
     </style>
 
     <!-- MathJax for LaTeX Rendering -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
+    <div class="laser-flash-overlay" id="laserFlash"></div>
 
     <div class="bubble" style="left: 15%; width: 10px; height: 10px; animation-duration: 8s; animation-delay: 1s;"></div>
     <div class="bubble" style="left: 35%; width: 15px; height: 15px; animation-duration: 12s; animation-delay: 0s;"></div>
@@ -589,7 +621,7 @@
             <h2>제 1구역: 심해로 가는 좌표 (순서쌍과 좌표) <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[목표 지점 확인]</strong><br><br>잠수정을 투하할 해수면 좌표를 계산해야 합니다. 조금이라도 좌표가 어긋나면 아틀란티스 유적으로 향하는 해류를 타지 못하고 암초에 부딪히게 됩니다.</div>
+                <div class="story-text">🌊 <strong>[목표 지점 확인]</strong><br><br>[관제 AI 네레우스]: "캡틴, 전방에 아틀란티스 유적 입구의 에너지 역장이 감지되었습니다. 진입을 위한 해수면 투하 좌표(순서쌍)를 정확히 입력해야 잠수정이 무사히 진입합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -611,7 +643,7 @@
             <h2>제 2구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[투하 지점 갱신]</strong><br><br>좋습니다, 첫 번째 투하 지점을 통과했습니다. 다음 기착지인 해저 화산 입구를 통과하려면 x축 위의 점을 입력해야 합니다.</div>
+                <div class="story-text">🌊 <strong>[투하 지점 갱신]</strong><br><br>[유적 보안 센서]: "경고! 미확인 잠수정 접근 중. 진입 축의 기준 신호를 정합하라. x축 위의 제어 포인트를 입력하지 않으면 수압 쇄도 밸브를 열겠다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -633,7 +665,7 @@
             <h2>제 3구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[기준점 확인]</strong><br><br>심해 내비게이션의 영점 조준이 필요합니다.</div>
+                <div class="story-text">🌊 <strong>[기준점 확인]</strong><br><br>[관제 AI 네레우스]: "영점 조준 회로가 급격한 충격으로 손상되었습니다. 원점을 빠르게 동기화하여 기준 좌표를 복구해야 합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -655,7 +687,7 @@
             <h2>제 4구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[추가 기준점]</strong><br><br>y축 방향의 해저 동굴 입구 좌표를 입력하세요.</div>
+                <div class="story-text">🌊 <strong>[추가 기준점]</strong><br><br>[유적 보안 센서]: "침입자 방화벽 2단계 작동. y축 해저 동굴의 궤도를 정확히 전송해 인증을 진행하라."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -677,7 +709,7 @@
             <h2>제 5구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[소용돌이 결계]</strong><br><br>레이더에 4개의 기둥 좌표가 찍혔습니다. 이 기둥들이 만드는 결계의 넓이를 구하세요.</div>
+                <div class="story-text">🌊 <strong>[소용돌이 결계]</strong><br><br>[관제 AI 네레우스]: "적 잠수정들이 4개 기둥 좌표를 기준으로 에너지 가로막을 설치했습니다. 이 소용돌이 결계의 총 넓이를 알아내야 해제 루틴이 실행됩니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -699,7 +731,7 @@
             <h2>제 6구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br>해저 유적 내부로 진입했습니다. 이곳은 4개의 구역(사분면)으로 나뉘어 있습니다.</div>
+                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br>[유적 보안 센서]: "사분면 방어 격자 기동. 기동점 (2, -5)의 정확한 위치 구역(사분면)을 탐색해 입력하라."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -721,7 +753,7 @@
             <h2>제 7구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[추가 결계]</strong><br><br>두 번째 사분면 문을 엽니다.</div>
+                <div class="story-text">🧭 <strong>[추가 결계]</strong><br><br>[유적 보안 센서]: "침입자 탐지 지속. 제2구역 결계 장벽 좌표 (-4, -7)의 사분면 영역을 해독하라."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -743,7 +775,7 @@
             <h2>제 8구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[고급 사분면]</strong><br><br>조건에 맞는 사분면을 찾아야 합니다.</div>
+                <div class="story-text">🧭 <strong>[고급 사분면]</strong><br><br>[관제 AI 네레우스]: "적 방어 AI 포세이돈이 좌표 P(a, b)의 부호 조건을 이용해 우리 해킹 장치를 교란하고 있습니다. 조건을 충족하는 사분면 구역을 분석하세요!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -765,7 +797,7 @@
             <h2>제 9구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br>결계의 성질을 이용해 새로운 좌표의 사분면을 예측해야 합니다.</div>
+                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br>[유적 보안 센서]: "경보 강도 증가. 변형 좌표 Q(a, -b)의 사분면 신호를 인증하라."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -787,7 +819,7 @@
             <h2>제 10구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[결계 돌파]</strong><br><br>마지막 사분면 문을 열기 위해 부호를 반전시킨 좌표의 사분면을 알아내야 합니다.</div>
+                <div class="story-text">🧭 <strong>[결계 돌파]</strong><br><br>[유적 보안 센서]: "방어 그리드 최종 활성화. 좌표 Q(-a, b)의 사분면을 계산하지 못하면 자폭 레이저가 가동된다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -809,7 +841,7 @@
             <h2>제 11구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[수압 경고]</strong><br><br>수압 그래프를 분석합니다.</div>
+                <div class="story-text">🌊 <strong>[수압 경고]</strong><br><br>[관제 AI 네레우스]: "휴, 일단 고비는 넘겼습니다! 하지만 수압 그래프가 급격히 요동치고 있습니다. 그래프 상에서 이동 거리 y가 평평하게 멈춘 구간이 뜻하는 잠수정의 기동 상태를 해석해야 밸브를 제어할 수 있습니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -831,7 +863,7 @@
             <h2>제 12구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[깊이 예측]</strong><br><br>일정한 속력으로 내려가는 잠수정의 깊이를 구합니다.</div>
+                <div class="story-text">🌊 <strong>[깊이 예측]</strong><br><br>[관제 AI 네레우스]: "수온 냉각 파이프라인의 압력이 내려갑니다. 10분 동안 100m 하강했을 때 5분 시점의 깊이를 예측해 펌프를 복구하십시오."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -853,7 +885,7 @@
             <h2>제 13구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[그래프 방향]</strong><br><br>직선의 방향성을 파악합니다.</div>
+                <div class="story-text">🌊 <strong>[그래프 방향]</strong><br><br>[관제 AI 네레우스]: "비상 추진력을 제어하기 위해, 원점을 지나는 우상향 직선 그래프의 성질을 입력창에 전송하세요."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -875,7 +907,7 @@
             <h2>제 14구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[변화량 분석]</strong><br><br>정지 상태에서의 변화량을 확인합니다.</div>
+                <div class="story-text">🌊 <strong>[변화량 분석]</strong><br><br>[관제 AI 네레우스]: "5분 동안 깊이가 고정되어 있습니다. 이 머문 시간 동안의 깊이 변화량을 릴레이에 입력하세요."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -897,7 +929,7 @@
             <h2>제 15구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[산소 잔량]</strong><br><br>남은 산소의 양을 그래프로 나타낼 때의 개형을 맞춥니다.</div>
+                <div class="story-text">🌊 <strong>[산소 잔량]</strong><br><br>[관제 AI 네레우스]: "비상 산소 탱크의 잔량 그래프 개형을 예상하십시오. 시간 흐름에 따른 모양이 우상향입니까, 우하향입니까?"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -919,7 +951,7 @@
             <h2>제 16구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">⚙️ <strong>[정비례 회전]</strong><br><br>황금 문을 여는 톱니바퀴의 회전수 관계를 파악합니다.</div>
+                <div class="story-text">⚙️ <strong>[정비례 회전]</strong><br><br>[유적 메인 중앙 코어]: "최종 침입 관문. 황금 문의 톱니바퀴 동력 제어를 정비례 관계식을 통해 잠금 해제하라."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -941,7 +973,7 @@
             <h2>제 17구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">⚙️ <strong>[비례 상수]</strong><br><br>함수식을 완성해야 다이얼이 돌아갑니다.</div>
+                <div class="story-text">⚙️ <strong>[비례 상수]</strong><br><br>[유적 메인 중앙 코어]: "회전 비례 상수 a값을 계산해 보정 코드를 칩에 업로드하라."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -963,7 +995,7 @@
             <h2>제 18구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">💎 <strong>[보물 적재 경보]</strong><br><br>황금을 챙겨가려면 부력 장치와 무게의 반비례 관계를 알아야 합니다.</div>
+                <div class="story-text">💎 <strong>[보물 적재 경보]</strong><br><br>[관제 AI 네레우스]: "아웃플로우 밸브의 부력 장치 수 x와 무게 y의 반비례 관계를 연산하여 안전 무게 상한선을 재설정하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -985,7 +1017,7 @@
             <h2>제 19구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">💎 <strong>[반비례 상수]</strong><br><br>반비례 관계식을 알아냅니다.</div>
+                <div class="story-text">💎 <strong>[반비례 상수]</strong><br><br>[유적 메인 중앙 코어]: "시스템 락다운 직전. 반비례 비례상수 a를 식에 주입하라."</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -1007,7 +1039,7 @@
             <h2>제 20구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔴 <strong>[최종 탈출 레이저]</strong><br><br>마지막 탈출구를 엽니다!</div>
+                <div class="story-text">🔴 <strong>[최종 탈출 레이저]</strong><br><br>[관제 AI 네레우스]: "마지막 탈출 통로의 역반사 궤적 좌표가 반비례 그래프 y = 12/x 와 점 (-3, k)를 지납니다. 최종 암호 k의 값을 입력해 포탈을 가동하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -1438,8 +1470,24 @@
             }, 300);
         }
 
+        function triggerLockdownAlert() {
+            // 1. 화면 전체 진동
+            const container = document.querySelector('.container');
+            if (container) {
+                container.classList.add('shake-effect');
+                setTimeout(() => container.classList.remove('shake-effect'), 300);
+            }
+            // 2. 레이저 섬광
+            const flash = document.getElementById('laserFlash');
+            if (flash) {
+                flash.classList.add('laser-flash-active');
+                setTimeout(() => flash.classList.remove('laser-flash-active'), 150);
+            }
+        }
+
         function showError(panelId, errorId) {
             playError(); 
+            triggerLockdownAlert();
             const panel = document.getElementById(panelId);
             const errMsg = document.getElementById(errorId);
             

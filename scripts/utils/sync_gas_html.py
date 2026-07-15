@@ -2,8 +2,10 @@ import os
 import glob
 import shutil
 
-apps_dir = r"c:\Coding\Projects\School\room-math-story\apps"
-gas_dir = r"c:\Coding\Projects\School\room-math-story\GAS\m1_project"
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+apps_dir = os.path.join(project_root, "apps")
+gas_dir = os.path.join(project_root, "GAS", "m1_project")
 
 # Ensure the m1_project directory exists
 os.makedirs(gas_dir, exist_ok=True)
