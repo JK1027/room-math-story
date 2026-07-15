@@ -34,13 +34,25 @@
             <h2>경우의 수와 확률</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/intro.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [딜러 로봇 잭팟-D]: "화려한 라스베이거스의 카지노, 악당 갬블러 '잭팟'이 카지노의 시스템을 조작해 모든 돈을 털어가려 합니다. 이를 막기 위해서는 주사위, 동전, 카드 게임 속에 숨겨진 확률의 법칙 20개를 정확히 계산해 그를 게임에서 파산시켜야 합니다! 운이 아닌 수학으로 승부하세요!"
             </div>
             </div>
-            <div class="btn-group">
-                <button class="btn" onclick="nextStage('intro', 'panel_q1', 0)">카드 배틀 시작</button>
+            
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
             </div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;">
+                <button class="btn" onclick="tryStartGame('m2_08')">미션 시작</button>
+            </div>
+
         </div>
 
         
@@ -49,7 +61,7 @@
             <h2>제 1구역: 딜러의 주사위 분석 1 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 잭팟의 딜러가 사용하는 6면 주사위가 테이블에 놓여 있습니다. 짝수의 눈이 나와 잭팟의 첫 베팅을 무너뜨리는 경우의 수를 계산해 입력하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 잭팟의 딜러가 사용하는 6면 주사위가 테이블에 놓여 있습니다. 짝수의 눈이 나와 잭팟의 첫 베팅을 무너뜨리는 경우의 수를 계산해 입력하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -72,7 +84,7 @@
             <h2>제 2구역: 쌍주사위의 전수 조합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 잭팟이 두 개의 주사위를 컵에 넣어 흔듭니다. 컵을 열었을 때 발생할 수 있는 전체 눈의 경우의 수(모든 조합)를 구하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 잭팟이 두 개의 주사위를 컵에 넣어 흔듭니다. 컵을 열었을 때 발생할 수 있는 전체 눈의 경우의 수(모든 조합)를 구하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -95,7 +107,7 @@
             <h2>제 3구역: 동전과 주사위의 링크 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 동전 1개와 주사위 1개를 룰렛 머신에 동시에 던집니다. 시스템 룰렛 판에 기록될 수 있는 모든 경우의 수는 몇 가지입니까?\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 동전 1개와 주사위 1개를 룰렛 머신에 동시에 던집니다. 시스템 룰렛 판에 기록될 수 있는 모든 경우의 수는 몇 가지입니까?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -118,7 +130,7 @@
             <h2>제 4구역: 잭팟의 히든카드 추적 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[잭팟-D]: \"치지직... 들리십니까...? 리퍼-R의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[잭팟-D]: \"치지직... 들리십니까...? 리퍼-R의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -141,7 +153,7 @@
             <h2>제 5구역: 주사위 합의 조작선 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[잭팟-D]: \"치지직... 들리십니까...? 리퍼-R의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[잭팟-D]: \"치지직... 들리십니까...? 리퍼-R의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -164,7 +176,7 @@
             <h2>제 6구역: 딜러의 위장 복장 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 제 2구역: 딜러의 선택입니다. 카지노 딜러의 단상에 상의 3벌과 하의 4벌의 제복이 있습니다. 딜러가 매칭해서 입을 수 있는 총 의상 조합의 수는?\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 제 2구역: 딜러의 선택입니다. 카지노 딜러의 단상에 상의 3벌과 하의 4벌의 제복이 있습니다. 딜러가 매칭해서 입을 수 있는 총 의상 조합의 수는?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -187,7 +199,7 @@
             <h2>제 7구역: 탈출 경로의 탐색 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 카지노 해킹 완수 후 네바다를 빠져나갈 탈출용 버스 노선 3가지와 기차 노선 2가지가 있습니다. 한 번에 한 수단만 고르는 경우의 수는?\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 카지노 해킹 완수 후 네바다를 빠져나갈 탈출용 버스 노선 3가지와 기차 노선 2가지가 있습니다. 한 번에 한 수단만 고르는 경우의 수는?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -210,7 +222,7 @@
             <h2>제 8구역: 경호원 보안 레이아웃 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 의심받지 않고 복도를 지나가야 합니다. 보초를 서고 있는 경호원 A, B, C 세 명을 문 앞에 일렬로 줄 세우는 총 경우의 수를 구하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 의심받지 않고 복도를 지나가야 합니다. 보초를 서고 있는 경호원 A, B, C 세 명을 문 앞에 일렬로 줄 세우는 총 경우의 수를 구하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -233,7 +245,7 @@
             <h2>제 9구역: 카지노 임원진 선출 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 잭팟의 사기 딜러 4명 중 의심 대상 1순위(대표)와 2순위(부대표)를 임의로 지목하여 보안 로그를 감시하는 모든 경우의 수는 몇 가지입니까?\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 잭팟의 사기 딜러 4명 중 의심 대상 1순위(대표)와 2순위(부대표)를 임의로 지목하여 보안 로그를 감시하는 모든 경우의 수는 몇 가지입니까?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -256,7 +268,7 @@
             <h2>제 10구역: 수사팀 구성 조합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[리퍼-R]: \"더는 참을 수 없군! 모든 데이터를 자폭 폭파하겠다! 5분 내로 전부 잿더미로 만들어주지!\"<br><br>[잭팟-D]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[리퍼-R]: \"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\"<br><br>[잭팟-D]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -279,7 +291,7 @@
             <h2>제 11구역: 확률의 기본 범위 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 제 3구역: 배팅의 수학입니다. 칩 환전기 콘솔입니다. 모든 수학적 확률 $p$가 나타낼 수 있는 값의 최소와 최대 제한 부등식을 정확하게 세우세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 제 3구역: 배팅의 수학입니다. 칩 환전기 콘솔입니다. 모든 수학적 확률 $p$가 나타낼 수 있는 값의 최소와 최대 제한 부등식을 정확하게 세우세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -302,7 +314,7 @@
             <h2>제 12구역: 치명적 잭팟의 실패율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 절대로 일어날 수 없는 조작 오류 사건(예: 주사위를 굴렸는데 0이나 7이 나옴)의 확률 값을 수치로 타이핑하여 락을 푸십시오.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 절대로 일어날 수 없는 조작 오류 사건(예: 주사위를 굴렸는데 0이나 7이 나옴)의 확률 값을 수치로 타이핑하여 락을 푸십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -325,7 +337,7 @@
             <h2>제 13구역: 동전 승부의 진실 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 잭팟이 칩을 걸고 던진 게임 동선에서, 앞면이 나올 수학적 기댓 확률을 분수 형태로 도출해 칩 제어 장치에 적용하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 잭팟이 칩을 걸고 던진 게임 동선에서, 앞면이 나올 수학적 기댓 확률을 분수 형태로 도출해 칩 제어 장치에 적용하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -348,7 +360,7 @@
             <h2>제 14구역: 소수 슬롯머신 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 슬롯 머신 휠의 6개 숫자 중 소수(2, 3, 5)가 걸려 잭팟의 사기 패턴의 흐름을 끊어낼 확률을 분수로 계산하십시오.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[잭팟-D]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 슬롯 머신 휠의 6개 숫자 중 소수(2, 3, 5)가 걸려 잭팟의 사기 패턴의 흐름을 끊어낼 확률을 분수로 계산하십시오.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -371,7 +383,7 @@
             <h2>제 15구역: 2 이하의 안전 룰 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">✨ <strong>[조력자 시스템 권한 100% 완전 복구]</strong> ✨<br><br>[잭팟-D]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[리퍼-R]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
+                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[조력자 시스템 권한 100% 완전 복구]</span></span></span></strong> ✨<br><br>[잭팟-D]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[리퍼-R]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -394,7 +406,7 @@
             <h2>제 16구역: 포커 덱의 홀수 확률 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 제 4구역: 잭팟 무력화입니다. 1부터 5까지 적힌 포커 덱 5장 중 한 장을 뽑을 때, 짝수(2, 4)가 아닌 홀수 카드를 뽑아 잭팟을 이길 확률은?\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 제 4구역: 잭팟 무력화입니다. 1부터 5까지 적힌 포커 덱 5장 중 한 장을 뽑을 때, 짝수(2, 4)가 아닌 홀수 카드를 뽑아 잭팟을 이길 확률은?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -417,7 +429,7 @@
             <h2>제 17구역: 비 올 확률의 대칭 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 기상 조작 레이저 시스템 연산 중, 오늘 비가 올 확률이 3/5로 매핑되어 있습니다. 시스템 과열을 막기 위해 비가 오지 않을 확률을 역산해 쏘세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 기상 조작 레이저 시스템 연산 중, 오늘 비가 올 확률이 3/5로 매핑되어 있습니다. 시스템 과열을 막기 위해 비가 오지 않을 확률을 역산해 쏘세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -440,7 +452,7 @@
             <h2>제 18구역: 색상 칩 주머니 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 딜러의 칩 주머니에 빨간 칩 3개와 파란 칩 2개가 보관되어 있습니다. 임의로 1개를 꺼내어 빨간 칩을 획득할 수 있는 확률을 구하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 딜러의 칩 주머니에 빨간 칩 3개와 파란 칩 2개가 보관되어 있습니다. 임의로 1개를 꺼내어 빨간 칩을 획득할 수 있는 확률을 구하세요.\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -463,7 +475,7 @@
             <h2>제 19구역: 더블 코인 플립 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 잭팟과의 최종 주화 던지기 내기입니다. 동전 2개를 동시에 하늘로 플립하여 두 동전 모두 앞면이 나와 게임에서 이길 연계 확률은?\"</div>
+                <div class="story-text" id="outro-dynamic-text">[리퍼-R]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 잭팟과의 최종 주화 던지기 내기입니다. 동전 2개를 동시에 하늘로 플립하여 두 동전 모두 앞면이 나와 게임에서 이길 연계 확률은?\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -486,7 +498,7 @@
             <h2>제 20구역: 마지막 선택의 순간 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[잭팟-D]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[리퍼-R]: \"안 돼... 내 제어권이... 소멸한다아아!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[잭팟-D]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[리퍼-R]: \"안 돼... 내 제어권이... 정지한다아아!\"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -511,7 +523,7 @@
             <h2>수학은 완벽한 행운을 이긴다</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_08_probability/outro.png" alt="Ending" class="panel-image">
             <div class="story-box">
-                <div class="story-text">
+                <div class="story-text" id="outro-dynamic-text">
                 [딜러 로봇 잭팟-D]: "마지막 오답 확률 80%를 계산해 내며 잭팟의 카드 패가 사기임을 만천하에 증명했습니다! 잭팟은 결국 파산하여 무릎을 꿇고, 카지노에는 정의가 구현되었습니다. 수학의 힘으로 완벽한 카지노의 위기를 물리쳤습니다!"
             </div>
             </div>
@@ -791,6 +803,42 @@ function cleanString(str) {
             renderChunk();
         }
 
+        
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = sname.value.trim();
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+            
+            nextStage('intro', 'panel_q1', 0);
+        }
+
         function nextStage(currentId, nextId, progressPercent) {
             if (currentId === 'intro') startTimer();
             if (nextId === 'outro') clearInterval(timerId);
@@ -839,6 +887,7 @@ function cleanString(str) {
                 }
             }, 300);
         }
+let totalWrongCount = 0;
 
         function checkQ1() {
             const ans = cleanString(document.getElementById('ans1').value);
@@ -848,7 +897,9 @@ function cleanString(str) {
                 nextStage('panel_q1', 'panel_q2', 5);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -867,7 +918,9 @@ function cleanString(str) {
                 nextStage('panel_q2', 'panel_q3', 10);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -886,7 +939,9 @@ function cleanString(str) {
                 nextStage('panel_q3', 'panel_q4', 15);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -905,7 +960,9 @@ function cleanString(str) {
                 nextStage('panel_q4', 'panel_q5', 20);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -924,7 +981,9 @@ function cleanString(str) {
                 nextStage('panel_q5', 'panel_q6', 25);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -943,7 +1002,9 @@ function cleanString(str) {
                 nextStage('panel_q6', 'panel_q7', 30);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -962,7 +1023,9 @@ function cleanString(str) {
                 nextStage('panel_q7', 'panel_q8', 35);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -981,7 +1044,9 @@ function cleanString(str) {
                 nextStage('panel_q8', 'panel_q9', 40);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1000,7 +1065,9 @@ function cleanString(str) {
                 nextStage('panel_q9', 'panel_q10', 45);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1019,7 +1086,9 @@ function cleanString(str) {
                 nextStage('panel_q10', 'panel_q11', 50);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1038,7 +1107,9 @@ function cleanString(str) {
                 nextStage('panel_q11', 'panel_q12', 55);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1057,7 +1128,9 @@ function cleanString(str) {
                 nextStage('panel_q12', 'panel_q13', 60);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1076,7 +1149,9 @@ function cleanString(str) {
                 nextStage('panel_q13', 'panel_q14', 65);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1095,7 +1170,9 @@ function cleanString(str) {
                 nextStage('panel_q14', 'panel_q15', 70);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1114,7 +1191,9 @@ function cleanString(str) {
                 nextStage('panel_q15', 'panel_q16', 75);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1133,7 +1212,9 @@ function cleanString(str) {
                 nextStage('panel_q16', 'panel_q17', 80);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1152,7 +1233,9 @@ function cleanString(str) {
                 nextStage('panel_q17', 'panel_q18', 85);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1171,7 +1254,9 @@ function cleanString(str) {
                 nextStage('panel_q18', 'panel_q19', 90);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1190,7 +1275,9 @@ function cleanString(str) {
                 nextStage('panel_q19', 'panel_q20', 95);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1209,7 +1296,9 @@ function cleanString(str) {
                 nextStage('panel_q20', 'outro', 100);
             } else {
                 wrongCount++;
+                totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
