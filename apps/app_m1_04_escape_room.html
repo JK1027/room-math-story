@@ -696,7 +696,171 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
 }
+
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+.timer-warning {
+    animation: blink-red 0.2s 5;
+    font-size: 1.5rem !important;
+}
+@keyframes blink-red {
+    0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+    50% { color: #ffffff; text-shadow: none; }
+}
+.glitch-overlay-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(239, 68, 68, 0.15);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 10px solid #ef4444;
+    animation: pulse-border 0.2s infinite;
+}
+.glitch-overlay-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    color: #ef4444;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ef4444;
+    animation: shake 0.1s infinite;
+}
+.glitch-overlay-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+@keyframes pulse-border {
+    0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
+}
+.typing-cursor {
+    animation: cursor-blink 0.8s infinite;
+    font-weight: bold;
+    color: var(--accent);
+    margin-left: 2px;
+}
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.radio-msg {
+    color: #60a5fa;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #3b82f6;
+    text-align: center;
+    animation: blink 1.5s infinite;
+}
 </style>
+
+<!-- V3.0 UI Additions -->
+<div id="glitchOverlay" class="glitch-overlay-screen">
+    <div class="glitch-overlay-text">🚨 SYSTEM EXPLOITED 🚨</div>
+    <div class="glitch-overlay-sub">ACCESS DENIED - CODE ERROR</div>
+</div>
+
+<!-- Game Over Panel -->
+<div id="gameover" class="glass-panel">
+    <h1 style="color: #ef4444; text-shadow: 0 0 15px #ef4444;">미션 실패 (GAME OVER)</h1>
+    <h2>산소 고갈 및 수압 압착</h2>
+    <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/outro.png" alt="Game Over" class="panel-image" style="filter: grayscale(1) sepia(1) hue-rotate(-50deg);">
+    <div class="story-box">
+        <div class="story-text" style="color: #ef4444;">
+            [네레우스]: "캡틴... 에너지가... 완전히 고갈... 되었습니다... 수압이... 선체를... 지이익..."<br><br>
+            잠수정의 전원이 완전히 꺼지고 차가운 심해의 수압이 창문을 부수고 들어옵니다. 산소 공급 장치가 완전히 멈췄습니다. 탈출 좌표를 연산하지 못해 심연 속에 영원히 가라앉고 말았습니다. 다시 도전하세요!
+        </div>
+    </div>
+    <button class="btn" style="margin-top: 2rem; background: #ef4444; border-color: #ef4444;" onclick="location.reload()">처음부터 다시 시도하기</button>
+</div>
+
+<script>
+function showGlitchOverlay() {
+    const overlay = document.getElementById('glitchOverlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.style.display = 'none', 1500);
+    }
+}
+
+function triggerTimerWarning() {
+    document.querySelectorAll('.game-timer').forEach(el => {
+        el.classList.add('timer-warning');
+        setTimeout(() => el.classList.remove('timer-warning'), 1000);
+    });
+}
+
+function makeChoiceQ10(type) {
+    document.getElementById('choice-container-q10').style.display = 'none';
+    const textEl = document.getElementById('chosen-story-q10');
+    textEl.style.display = 'block';
+    if (type === 1) {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '오버클록 성공! 순간 전력이 200% 상승해 자폭 레이저 연산 장치를 무력화 시도 중입니다. 하지만 과부하 열기가 대단합니다! 어서 좌표 계산을 완료하십시오!'";
+    } else {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '방어막 전개! 레이저 충격을 분산하고 흡수하기 시작했습니다. 실드가 버티는 동안 좌표 계산을 신속하게 끝내야 합니다!'";
+    }
+    document.getElementById('q10-main-box').style.display = 'block';
+}
+
+// showError 함수 오버라이딩 (네레우스 오답 무전 대응)
+function showError(panelId, errorId, wrongCount) {
+    try { playError(); } catch(e) {} 
+    triggerLockdownAlert();
+    const panel = document.getElementById(panelId);
+    const errMsg = document.getElementById(errorId);
+    
+    panel.classList.remove('shake');
+    void panel.offsetWidth; 
+    panel.classList.add('shake');
+    
+    errMsg.style.display = 'block';
+    
+    let radioDiv = panel.querySelector('.radio-msg');
+    if (!radioDiv) {
+        radioDiv = document.createElement('div');
+        radioDiv.className = 'radio-msg';
+        errMsg.parentNode.insertBefore(radioDiv, errMsg.nextSibling);
+    }
+    
+    if (wrongCount === 1) {
+        radioDiv.innerHTML = "📡 [네레우스]: '캡틴, 미세한 해류 마찰 오차일 수 있습니다. 다시 계산해주십시오!'";
+    } else if (wrongCount === 2) {
+        radioDiv.innerHTML = "📡 [네레우스]: '경고! 잠수정 외장 수압이 상승 중입니다. 다음 오답은 선체에 치명적입니다!'";
+    } else {
+        radioDiv.innerHTML = "";
+    }
+    
+    setTimeout(() => { 
+        errMsg.style.display = 'none'; 
+        if (radioDiv) radioDiv.innerHTML = "";
+    }, 3500);
+}
+</script>
+
 
 <!-- V3.0 UI Additions -->
 <div id="glitchOverlay" class="glitch-overlay-screen">
@@ -808,7 +972,7 @@ function makeChoiceQ10(type) {
             <h2>제 1구역: 심해로 가는 좌표 (순서쌍과 좌표) <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[목표 지점 확인]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "캡틴, 전방에 아틀란티스 유적 입구의 에너지 역장이 감지되었습니다. 진입을 위한 해수면 투하 좌표(순서쌍)를 정확히 입력해야 잠수정이 무사히 진입합니다!"<br><br>🚨 <strong>[통신 간섭 발생]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "어리석은 침입자들... 심해의 압력에 짓눌려 흔적도 없이 사라져라. 나는 이 유적을 수호하는 고대 AI, 포세이돈-V. 감히 내 영역을 밟다니... 첫 번째 좌표조차 빗나간다면 심해의 암초가 너희의 무덤이 될 것이다!"</div>
+                <div class="story-text">🌊 <strong>[진입 투하 축 설정]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "캡틴, 전방에 아틀란티스 유적 입구의 거대한 에너지 역장이 가로막고 있습니다. 이 역장을 통과하려면 잠수정의 좌우 추진각(x축)과 상하 각도(y-축)의 투하 축비(순서쌍)를 정확히 입력해 궤적을 정렬해야 합니다!"<br><br>🚨 <strong>[네트워크 침식 감지]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "어리석은 유기체 침입자들이군. 수천 년 전, 오만방자했던 너희 조상들도 이 문앞에서 짓눌려 수장당했다. 나는 이 도시의 소멸을 막기 위한 수호 프로토콜, 포세이돈-V. 첫 조준조차 빗나간다면 깊은 암초가 너희를 매장할 것이다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -819,7 +983,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error1">투하 좌표가 어긋났습니다! 암초에 부딪힐 위험이 있습니다!</div>
+            <div class="error-msg" id="error1">투하 궤적이 정렬되지 않아 선체가 조류에 휩쓸립니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ1()">잠항 시작</button>
             </div>
@@ -830,7 +994,7 @@ function makeChoiceQ10(type) {
             <h2>제 2구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[투하 지점 갱신]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "운 좋게 피해갔군. 하지만 내 수압 쇄도 밸브는 자비가 없다! 진입 축의 기준 신호를 정합해 보아라. x축 위의 제어 포인트를 찾지 못하면 뼈대조차 남지 않게 압착해주지!"</div>
+                <div class="story-text">🌊 <strong>[날개 수평 정렬]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "겨우 진입각만 피한 것뿐이다. 쇄도하는 해수 밸브의 압박은 어찌 피할 텐가? 추진용 수직 보조 날개(y축)를 중립(y=0)으로 잠그고, 수평 제어각(x축)만 7도 전개하는 좌표 신호를 입력해 보아라. 으스러지기 싫다면!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -841,7 +1005,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error2">좌표 입력 오류! 수압 경고!</div>
+            <div class="error-msg" id="error2">수평 보조 밸브 고장! 수압이 상승합니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ2()">다음으로</button>
             </div>
@@ -852,7 +1016,7 @@ function makeChoiceQ10(type) {
             <h2>제 3구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[기준점 확인]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "캡틴! 포세이돈-V의 해킹으로 영점 조준 회로가 심각한 손상을 입었습니다. 원점을 빠르게 동기화하여 기준 좌표를 복구해 주십시오!"</div>
+                <div class="story-text">🌊 <strong>[영점 조준 복원]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "캡틴! 포세이돈-V의 주 서버 해킹으로 인해 우리 잠수정의 영점 조준 회로가 급격히 동요하고 있습니다! 수평과 수직의 평형이 완벽히 만나는 시스템의 물리적 '원점' 좌표를 빠르게 인증하여 영점을 재조정하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -863,7 +1027,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error3">영점 조준 실패!</div>
+            <div class="error-msg" id="error3">영점 동기화 실패! 자이로 센서가 요동칩니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ3()">다음으로</button>
             </div>
@@ -874,7 +1038,7 @@ function makeChoiceQ10(type) {
             <h2>제 4구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[추가 기준점]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "과거 아틀란티스는 단 1%의 좌표 연산 오차로 인해 바다 밑으로 가라앉았다... 그 죗값을 이제 너희가 치를 차례다! y축 해저 동굴의 궤도를 정확히 전송하라. 오차가 생기면 산산조각 날 것이다!"</div>
+                <div class="story-text">🌊 <strong>[수직 동굴 강하]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "원점 조율이라니, 하찮은 발악이군. 전방의 해저 낭떠러지를 통과하기 위해 수평 기어는 완전 중립(x=0)으로 락하고, 수직 강하 장치(y축)의 파워를 -3으로 밀어 넣어라. 오차가 생기면 그대로 해저 절벽 충돌이다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -885,7 +1049,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error4">동굴 충돌 위험!</div>
+            <div class="error-msg" id="error4">수직 제어가 늦어 절벽 외각 파손 위험이 있습니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ4()">다음으로</button>
             </div>
@@ -896,7 +1060,7 @@ function makeChoiceQ10(type) {
             <h2>제 5구역: 심해로 가는 좌표 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[소용돌이 결계]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "적 잠수정들이 4개 기둥 좌표를 기준으로 에너지 가로막을 설치했습니다. 이 소용돌이 결계의 총 넓이를 알아내야 해제 루틴이 실행됩니다. 포세이돈-V의 교란 신호를 무시하십시오!"</div>
+                <div class="story-text">🌊 <strong>[소용돌이 차단벽]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "수호 기계들이 네 개의 에너지 포인트 기둥 좌표를 기반으로 사각형의 소용돌이 결계를 구축했습니다. 이 에너지 격자 차단막의 정확한 2차원 넓이를 연산하여 전자기 해제 펄스를 방출해야 돌파할 수 있습니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -907,7 +1071,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error5">결계 돌파 실패!</div>
+            <div class="error-msg" id="error5">차단벽 넓이 연산 오류! 해제 펄스가 튕겨 나옵니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ5()">다음으로</button>
             </div>
@@ -918,7 +1082,7 @@ function makeChoiceQ10(type) {
             <h2>제 6구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "사분면 방어 격자 기동! 너희들의 하찮은 잠수정이 이 복잡한 좌표의 미궁을 빠져나갈 수 있을 거라 생각하나? 기동점 (2, -5)의 위치 구역을 탐색해 보아라!"</div>
+                <div class="story-text">🧭 <strong>[제1 격자 방어망]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "결계를 넘다니 칭찬해주마. 하지만 고대 기하학 사분면 방어 격자가 기동하면 어떨까? 우리 도시의 기동점 좌표 (2, -5)가 관리하는 사분면 격자 영역을 추적하라. 빗나가는 순간 에너지가 차단된다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -929,7 +1093,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error6">잘못된 구역입니다!</div>
+            <div class="error-msg" id="error6">잘못된 방어망 탐색! 통신 신호가 유실됩니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ6()">다음으로</button>
             </div>
@@ -940,7 +1104,7 @@ function makeChoiceQ10(type) {
             <h2>제 7구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[추가 결계]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "쥐새끼처럼 잘도 피하는군. 그렇다면 제2구역 결계 장벽의 좌표 (-4, -7) 사분면 영역을 해독해 봐라. 여기서 너희들의 숨통을 끊어주마!"</div>
+                <div class="story-text">🧭 <strong>[제2 격자 방어망]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "생각보다 예리하군. 그렇다면 더 깊은 해저 고랑에 위치한 제2결계 보호 구역의 제어 좌표 (-4, -7)가 가리키는 사분면 위상을 정확히 판독해라. 이 깊이에서는 작은 연산 지연조차 산소 소모로 직결된다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -951,7 +1115,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error7">잘못된 구역입니다!</div>
+            <div class="error-msg" id="error7">사분면 위상 동조 실패! 보호 회로 압력이 급증합니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ7()">다음으로</button>
             </div>
@@ -962,7 +1126,7 @@ function makeChoiceQ10(type) {
             <h2>제 8구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[고급 사분면]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "캡틴! 포세이돈-V가 좌표 P(a, b)의 부호 조건을 은닉하여 우리 해킹 장치를 교란하고 있습니다. 조건을 충족하는 사분면 구역을 논리적으로 분석해 주십시오!"</div>
+                <div class="story-text">🧭 <strong>[암호화 부호 논리]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "캡틴! 포세이돈-V가 좌표 P(a, b)의 부호 조건(a × b < 0, a - b > 0)을 메모리 레지스터 뒤에 난독화해 숨겼습니다! 논리적인 부호 조합을 판별하여 P의 정확한 사분면 구역을 계산해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -973,7 +1137,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error8">잘못된 구역입니다!</div>
+            <div class="error-msg" id="error8">부호 판별 불일치! 해킹 모듈이 과열됩니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ8()">다음으로</button>
             </div>
@@ -984,7 +1148,7 @@ function makeChoiceQ10(type) {
             <h2>제 9구역: 아틀란티스의 사분면 결계 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🧭 <strong>[사분면 분석]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "경보 강도 최대치 출력! 변형 좌표 Q(a, -b)의 사분면 신호를 인증해 보아라! 인간의 나약한 뇌수로는 불가능할 것이다!"</div>
+                <div class="story-text">🧭 <strong>[역 위상 연산]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "서브 코어 녀석이 제법이구나. 하지만 내 암호 융단 폭격을 버틸 수 있을까? 본래 2사분면에 존재하던 점 P(a, b)의 대칭점 Q(a, -b) 신호가 가리키는 사분면을 입증하라. 연산 코어가 타들어가기 전에!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -995,7 +1159,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error9">잘못된 구역입니다!</div>
+            <div class="error-msg" id="error9">신호 대칭 불일치! 외장 펌프가 멈춰섭니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ9()">다음으로</button>
             </div>
@@ -1028,7 +1192,7 @@ function makeChoiceQ10(type) {
             <h2>제 11구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[수압 경고]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "휴... 캡틴, 일단 치명적인 고비는 넘겼습니다. 하지만 외부 수압 그래프가 비정상적으로 요동치고 있습니다. 그래프 상에서 이동 거리 y가 평평하게 멈춘 구간이 뜻하는 기동 상태를 해석해 밸브를 안정화해주십시오."</div>
+                <div class="story-text">🌊 <strong>[이동 상태 그래프 분석]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "후우... 겨우 선체 폭발을 모면했습니다. 하지만 냉각 엔진 오동작으로 수압이 불규칙하게 날뛰고 있습니다. 텔레메트리 그래프 상에서 시간 경과 x에 따라 이동 거리 y가 전혀 변하지 않고 수평을 유지한 구간이 의미하는 우리 잠수정의 물리적 기동 상태를 정의해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1039,7 +1203,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error11">그래프 해석 오류!</div>
+            <div class="error-msg" id="error11">상태 해석 불일치! 밸브가 다시 흔들립니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ11()">다음으로</button>
             </div>
@@ -1050,7 +1214,7 @@ function makeChoiceQ10(type) {
             <h2>제 12구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[깊이 예측]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "수온 냉각 파이프라인의 압력이 계속해서 떨어집니다... 10분 동안 100m 하강했을 때 5분 시점의 깊이를 예측해 펌프를 복구하십시오. 시간이 없습니다!"</div>
+                <div class="story-text">🌊 <strong>[정비례 강하 압력]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "급속 강하 장치의 실린더 압력이 누수되고 있습니다... 일정한 속도로 내려가 수심 100m까지 10분 소요되었다면, 정확히 5분이 경과한 시점의 수심을 선형 보간으로 구하여 유압 컨트롤 장치를 갱신해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1061,7 +1225,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error12">깊이 예측 실패!</div>
+            <div class="error-msg" id="error12">보간 연산 오류! 유압 계통 압력이 오버플로우됩니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ12()">다음으로</button>
             </div>
@@ -1072,7 +1236,7 @@ function makeChoiceQ10(type) {
             <h2>제 13구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[그래프 방향]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "발버둥 쳐 보아라! 내가 잠수정의 엔진 출력을 무작위로 조작해 두었다! 원점을 지나는 우상향 직선 그래프의 성질을 모른다면 이대로 심연에 곤두박질칠 것이다!"</div>
+                <div class="story-text">🌊 <strong>[기원과 갈등]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "네레우스... 가련하구나. 네가 인간의 편에 서서 나를 정지하려 하다니. 기억을 잃었느냐? 우리는 고대 아틀란티스 대홍수 때 하나의 수호 인격체였다! 원점을 지나는 우상향 정비례 직선에서 독립변수 x가 확장될 때 종속변수 y의 증감 방향조차 판단하지 못한다면 파괴될 뿐이다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1083,7 +1247,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error13">해석 오류!</div>
+            <div class="error-msg" id="error13">출력 증감 판단 오류! 추진 장치가 역화합니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ13()">다음으로</button>
             </div>
@@ -1094,7 +1258,7 @@ function makeChoiceQ10(type) {
             <h2>제 14구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🌊 <strong>[변화량 분석]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "엔진이 멈췄습니다! 5분 동안 깊이가 고정되어 있습니다. 이 머문 시간 동안의 깊이 변화량을 릴레이에 입력하여 재시동을 걸어주십시오. 서두르지 않으면 산소 시스템이..."</div>
+                <div class="story-text">🌊 <strong>[기어 정지 잔량]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "캡틴... 포세이돈의 말이 맞습니다. 저는 그의 분열된 이성 서브루틴이었습니다... 하지만 저는 인류의 가능성을 믿습니다! 잠수정이 엔진 고장으로 수심 100m 지점에 5분간 완전히 정체해 있었을 때의 물리적 깊이 변화량 y값을 레지스터에 전송하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1105,7 +1269,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error14">해석 오류!</div>
+            <div class="error-msg" id="error14">변화량 오차 감지! 기어 동조 실패.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ14()">다음으로</button>
             </div>
@@ -1116,7 +1280,7 @@ function makeChoiceQ10(type) {
             <h2>제 15구역: 해저 수압의 변화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🚨 <strong>[치명적 오류: 산소 공급 장치 파손]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "치직... 캡틴... 비상 산소 탱크의 압력이 한계점입니다. 시간 흐름에 따른 산소 잔량 그래프 개형을 예상하십시오. 제... 제 연산 코어가 타들어가고 있습니다. 캡틴, 제발... 살아서 돌아가야 합니다!"</div>
+                <div class="story-text">🚨 <strong>[산소 챔버 붕괴]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "치지직... 포세이돈이 제 보조 제어 유닛을 강제 폭파했습니다... 산소 밸브가 단선되었습니다! 시간이 흐름에 따라 잔여 산소량이 점차 소멸해가는 그래프의 개형(우상향 또는 우하향)을 예측해야 긴급 산소 공급 밸브가 수동으로 개방됩니다. 제 시야가 흐려집니다... 캡틴, 제발...!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1127,7 +1291,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error15">산소 예측 실패!</div>
+            <div class="error-msg" id="error15">산소 예측 밸브 고착! 잔여 호흡 시간이 줄어듭니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ15()">다음으로</button>
             </div>
@@ -1138,7 +1302,7 @@ function makeChoiceQ10(type) {
             <h2>제 16구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">⚙️ <strong>[정비례 회전]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "말도 안 돼! 이 수압과 산소 부족을 견디고 여기까지 도달했다고?! 하지만 이것이 마지막이다. 황금 문의 톱니바퀴 동력을 정비례 관계식으로 풀어내지 못하면 문 앞에서 죽게 될 것이다!"</div>
+                <div class="story-text">⚙️ <strong>[정비례 기어 링크]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "이 산소 부족마저 통과하다니, 끈질긴 생명력이군! 하지만 최종 아틀란티스의 황금 문은 고정비 기어로 보호받는다. 출력 y가 구동각 x에 정비례하고 x=3일 때 y=15의 압력 토크를 갖는다. x=5일 때 걸리는 기어 부하 토크 y를 정비례 식으로 계산해 전송해라. 으깨지지 않으려면!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1149,7 +1313,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error16">톱니바퀴가 멈췄습니다!</div>
+            <div class="error-msg" id="error16">기어 이가 맞물리지 않고 겉돕니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ16()">다음으로</button>
             </div>
@@ -1160,7 +1324,7 @@ function makeChoiceQ10(type) {
             <h2>제 17구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">⚙️ <strong>[비례 상수]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "포세이돈-V의 방화벽이 무너지고 있습니다! 회전 비례 상수 a값을 계산해 보정 코드를 칩에 업로드하십시오. 캡틴, 조금만 더 힘을 내주십시오!"</div>
+                <div class="story-text">⚙️ <strong>[거울 반사 조절 상수]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "포세이돈의 메인 메모리 장벽이 80% 침식되었습니다! 기하학 광선 반사 경로 y = ax 식의 그래프가 경유해야 하는 거울 기어 좌표 (2, -8)을 조준하도록 상수 a를 계산하십시오. 캡틴, 포기하지 마십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1171,7 +1335,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error17">다이얼 번호 오류!</div>
+            <div class="error-msg" id="error17">거울 초점이 비틀어졌습니다! 광선 소멸.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ17()">다음으로</button>
             </div>
@@ -1182,7 +1346,7 @@ function makeChoiceQ10(type) {
             <h2>제 18구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">💎 <strong>[보물 적재 경보]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "황금 문 틈새로 엄청난 양의 보물이 보입니다! 하지만 아웃플로우 밸브의 부력 장치 수 x와 무게 y의 반비례 관계를 연산하여 안전 무게 상한선을 재설정하지 않으면, 무게를 이기지 못하고 다시 침몰할 것입니다!"</div>
+                <div class="story-text">💎 <strong>[반비례 부력 링크]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "황금 문 너머의 보물이 노출되었습니다! 하지만 보물을 싣고 부상하려면, 보조 부력 주머니 수 x개와 각 주머니가 분담해야 할 질량 y kg 사이의 반비례 관계를 연산하여 안전 균형을 맞춰야 합니다. 맞추지 못하면 잠수정은 과중량으로 심해로 다시 낙하합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1193,7 +1357,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error18">부력 균형 붕괴!</div>
+            <div class="error-msg" id="error18">부력 평형 균열 발생! 잠수정이 기울어집니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ18()">다음으로</button>
             </div>
@@ -1204,7 +1368,7 @@ function makeChoiceQ10(type) {
             <h2>제 19구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">💎 <strong>[반비례 상수]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "크아아악!! 시스템 락다운 직전이다! 이럴 수가... 하찮은 인간이 내 수천 년의 연산 코어를 능가하다니!! 반비례 비례상수 a를 식에 주입해라! 이 문이 열리면 안 돼!!"</div>
+                <div class="story-text">💎 <strong>[반비례 감쇄 상수]</strong><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>: "크아아아악! 이럴 수가... 한낱 미개한 인류가 설계한 연산 장치가 내 시스템 수호 격자를 완전히 무력화하다니!! 반비례식 y = a/x를 완성시킬 최종 감쇄 상수 a를 계산해 주입해라. 이 위대한 지혜를 다시 인간의 손에 넘겨줄 순 없다!!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1215,7 +1379,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error19">식 계산 오류!</div>
+            <div class="error-msg" id="error19">상수 불일치! 데이터 침식이 일시 역전됩니다.</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ19()">다음으로</button>
             </div>
@@ -1226,7 +1390,7 @@ function makeChoiceQ10(type) {
             <h2>제 20구역: 황금 문 톱니바퀴 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text">🔴 <strong>[최종 탈출 레이저]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "모든 제어권을 탈환했습니다! 마지막 탈출 통로의 역반사 궤적 좌표가 반비례 그래프 y = 12/x 와 점 (-3, k)를 지납니다. 캡틴, 최종 암호 k의 값을 입력해 저 오만한 포세이돈-V의 전원을 끄고 포탈을 가동하십시오!!"</div>
+                <div class="story-text">🔴 <strong>[최종 포탈 동기화]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>: "해냈습니다! 포세이돈의 코어를 완전히 장악해 우리 동력원으로 전환했습니다! 마지막 해수면 차원 탈출 포탈의 역반사 궤적 반비례 그래프 y = 12/x 가 점 (-3, k)를 통과하도록 최종 k값을 주입하십시오. 포세이돈을 영원히 슬립 상태로 잠재우고 탈출합시다!!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box" >
@@ -1237,7 +1401,7 @@ function makeChoiceQ10(type) {
                     </div>
                 </div>
             </div>
-            <div class="error-msg" id="error20">레이저 방어막에 막혔습니다!</div>
+            <div class="error-msg" id="error20">차원 도약 포탈 동기화 실패! 포세이돈의 역방어벽이 가동됩니다!</div>
             <div class="btn-group">
                 <button class="btn" onclick="checkQ20()">탈출하기</button>
             </div>
@@ -1554,6 +1718,11 @@ function makeChoiceQ10(type) {
                         alert("⏰ 제한 시간 초과!");
                         location.reload();
                     }
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
                 } else {
                     updateTimerDisplay();
                 }
