@@ -254,7 +254,9 @@ end_panel_idx = content.find('        <script>', start_panel_idx)
 if start_panel_idx != -1 and end_panel_idx != -1:
     content = content[:start_panel_idx] + panels_html + content[end_panel_idx:]
 
-start_js_idx = content.find('        // Q1\n')
+start_js_idx = content.find('let totalWrongCount = 0;')
+if start_js_idx == -1:
+    start_js_idx = content.find('        // Q1\n')
 if start_js_idx == -1:
     start_js_idx = content.find('        // Q1\r\n')
 end_js_idx = content.find('        window.onload = () => {', start_js_idx)
