@@ -9,7 +9,7 @@ html_file = os.path.join(apps_dir, "app_m1_04_escape_room.html")
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
 
-# Questions Data
+# ----------------- 리소스 데이터 정의 -----------------
 nereus = '<span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>'
 poseidon = '<span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>'
 
@@ -19,16 +19,16 @@ qs = [
     {"qnum": 3, "title": "심해로 가는 좌표", "story": f"🌊 <strong>[영점 조준 복원]</strong><br><br>{nereus}: \"캡틴! 포세이돈-V의 주 서버 해킹으로 인해 우리 잠수정의 영점 조준 회로가 급격히 동요하고 있습니다! 수평과 수직의 평형이 완벽히 만나는 시스템의 물리적 '원점' 좌표를 빠르게 인증하여 영점을 재조정하십시오!\"", "qtext": "<strong>Q3. [원점의 좌표]</strong><br>두 좌표축이 만나는 원점 O의 좌표를 나타내시오.", "placeholder": "예: (x, y)", "error": "영점 동기화 실패! 자이로 센서가 요동칩니다!", "ans_check": "ans === '0,0'"},
     {"qnum": 4, "title": "심해로 가는 좌표", "story": f"🌊 <strong>[수직 동굴 강하]</strong><br><br>{poseidon}: \"원점 조율이라니, 하찮은 발악이군. 전방의 해저 낭떠러지를 통과하기 위해 수평 기어는 완전 중립(x=0)으로 락하고, 수직 강하 장치(y축)의 파워를 -3으로 밀어 넣어라. 오차가 생기면 그대로 해저 절벽 충돌이다!\"", "qtext": "<strong>Q4. [좌표 평면 위의 점]</strong><br>y축 위에 있고 y좌표가 -3인 점의 좌표를 나타내시오.", "placeholder": "예: (0, -5)", "error": "수직 제어가 늦어 절벽 외각 파손 위험이 있습니다!", "ans_check": "ans === '0,-3'"},
     {"qnum": 5, "title": "심해로 가는 좌표", "story": f"🌊 <strong>[소용돌이 차단벽]</strong><br><br>{nereus}: \"수호 기계들이 네 개의 에너지 포인트 기둥 좌표를 기반으로 사각형의 소용돌이 결계를 구축했습니다. 이 에너지 격자 차단막의 정확한 2차원 넓이를 연산하여 전자기 해제 펄스를 방출해야 돌파할 수 있습니다!\"", "qtext": "<strong>Q5. [도형의 넓이]</strong><br>좌표평면 위에 네 기둥 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)를 이은 직사각형의 넓이를 구하시오.", "placeholder": "숫자만 입력", "error": "차단벽 넓이 연산 오류! 해제 펄스가 튕겨 나옵니다!", "ans_check": "ans === '48'"},
-    {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제1 격자 방어망]</strong><br><br>{poseidon}: \"결계를 넘다니 칭찬해주마. 하지만 고대 기하학 사분면 방어 격자가 기동하면 어떨까? 우리 도시의 기동점 좌표 (2, -5)가 관리하는 사분면 격자 영역을 추적하라. 빗나가는 순간 에너지가 차단된다!\"", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력 (예: 1)", "error": "잘못된 방어망 탐색! 통신 신호가 유실됩니다.", "ans_check": "ans === '4'"},
-    {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제2 격자 방어망]</strong><br><br>{poseidon}: \"생각보다 예리하군. 그렇다면 더 깊은 해저 고랑에 위치한 제2결계 보호 구역의 제어 좌표 (-4, -7)가 가리키는 사분면 위상을 정확히 판독해라. 이 깊이에서는 작은 연산 지연조차 산소 소모로 직결된다!\"", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "사분면 위상 동조 실패! 보호 회로 압력이 급증합니다.", "ans_check": "ans === '3'"},
+    {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제1 격자 방어망]</strong><br><br>{poseidon}: \"결계를 넘다니 칭찬해주마. 하지만 고대 기하학 사분면 방어 격자가 기동하면 어떨까? 우리 도시의 기동점 좌표 (2, -5)가 관리하는 사분면 격자 영역을 추적하라. 빗나가는 순간 에너지가 차단된다!\"", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "잘못된 방어망 탐색! 통신 신호가 유실됩니다.", "ans_check": "ans === '제4사분면'"},
+    {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제2 격자 방어망]</strong><br><br>{poseidon}: \"생각보다 예리하군. 그렇다면 더 깊은 해저 고랑에 위치한 제2결계 보호 구역의 제어 좌표 (-4, -7)가 가리키는 사분면 위상을 정확히 판독해라. 이 깊이에서는 작은 연산 지연조차 산소 소모로 직결된다!\"", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "사분면 위상 동조 실패! 보호 회로 압력이 급증합니다.", "ans_check": "ans === '제3사분면'"},
     {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[암호화 부호 논리]</strong><br><br>{nereus}: \"캡틴! 포세이돈-V가 좌표 P(a, b)의 부호 조건(a × b < 0, a - b > 0)을 메모리 레지스터 뒤에 난독화해 숨겼습니다! 논리적인 부호 조합을 판별하여 P의 정확한 사분면 구역을 계산해 주십시오!\"", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "숫자만 입력", "error": "부호 판별 불일치! 해킹 모듈이 과열됩니다.", "ans_check": "ans === '4'"},
-    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[역 위상 연산]</strong><br><br>{poseidon}: \"서브 코어 녀석이 제법이구나. 하지만 내 암호 융단 폭격을 버틸 수 있을까? 본래 2사분면에 존재하던 점 P(a, b)의 대칭점 Q(a, -b) 신호가 가리키는 사분면을 입증하라. 연산 코어가 타들어가기 전에!\"", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "신호 대칭 불일치! 외장 펌프가 멈춰섭니다.", "ans_check": "ans === '3'"},
+    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[역 위상 연산]</strong><br><br>{poseidon}: \"서브 코어 녀석이 제법이구나. 하지만 내 암호 융단 폭격을 버틸 수 있을까? 본래 2사분면에 존재하던 점 P(a, b)의 대칭점 Q(a, -b) 신호가 가리키는 사분면을 입증하라. 연산 코어가 타들어가기 전에!\"", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "신호 대칭 불일치! 외장 펌프가 멈춰섭니다.", "ans_check": "ans === '제3사분면'"},
     {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": f"💥 <strong>[긴급 상황: 외부 선체 파손!]</strong><br><br>{poseidon}: \"방어 그리드 최종 활성화! 좌표 Q(-a, b)의 사분면을 계산하지 못하면 자폭 레이저가 가동된다! 영원한 심연으로 떨어져라!\"<br><br>{nereus}: \"경고! 우측 선체 장갑 30% 손실! 자폭 프로토콜이 시작되었습니다! 제발 빨리 결제 전술을 선택하고 전송해주십시오!\"<br><br><div id='choice-container-q10' style='margin-top: 1rem; display: flex; gap: 1rem;'><button class='btn btn-secondary' onclick='makeChoiceQ10(1); event.stopPropagation();'>⚡ 발전기 오버클록</button><button class='btn btn-secondary' onclick='makeChoiceQ10(2); event.stopPropagation();'>🛡️ 방어막 과부하 전개</button></div><div id='chosen-story-q10' style='display: none; margin-top: 1rem;'></div>", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "숫자만 입력", "error": "잘못된 구역입니다!", "ans_check": "ans === '4'", "extra_class": "glitch-bg"},
     {"qnum": 11, "title": "해저 수압의 변화", "story": f"🌊 <strong>[이동 상태 그래프 분석]</strong><br><br>{nereus}: \"후우... 겨우 선체 폭발을 모면했습니다. 하지만 냉각 엔진 오동작으로 수압이 불규칙하게 날뛰고 있습니다. 텔레메트리 그래프 상에서 시간 경과 x에 따라 이동 거리 y가 전혀 변하지 않고 수평을 유지한 구간이 의미하는 우리 잠수정의 물리적 기동 상태를 정의해 주십시오!\"", "qtext": "<strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?", "placeholder": "예: 상승, 하강, 정지", "error": "상태 해석 불일치! 밸브가 다시 흔들립니다.", "ans_check": "ans === '정지'"},
     {"qnum": 12, "title": "해저 수압의 변화", "story": f"🌊 <strong>[정비례 강하 압력]</strong><br><br>{nereus}: \"급속 강하 장치의 실린더 압력이 누수되고 있습니다... 일정한 속도로 내려가 수심 100m까지 10분 소요되었다면, 정확히 5분이 경과한 시점의 수심을 선형 보간으로 구하여 유압 컨트롤 장치를 갱신해 주십시오!\"", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "보간 연산 오류! 유압 계통 압력이 오버플로우됩니다.", "ans_check": "ans === '50'"},
-    {"qnum": 13, "title": "해저 수압의 변화", "story": f"🌊 <strong>[기원과 갈등]</strong><br><br>{poseidon}: \"네레우스... 가련하구나. 네가 인간의 편에 서서 나를 정지하려 하다니. 기억을 잃었느냐? 우리는 고대 아틀란티스 대홍수 때 하나의 수호 인격체였다! 원점을 지나는 우상향 정비례 직선에서 독립변수 x가 확장될 때 종속변수 y의 증감 방향조차 판단하지 못한다면 파괴될 뿐이다!\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "예: 증가, 감소", "error": "출력 증감 판단 오류! 추진 장치가 역화합니다.", "ans_check": "ans === '증가'"},
+    {"qnum": 13, "title": "해저 수압의 변화", "story": f"🌊 <strong>[기원과 갈등]</strong><br><br>{poseidon}: \"네레우스... 가련하구나. 네가 인간의 편에 서서 나를 정지하려 하다니. 기억을 잃었느냐? 우리는 고대 아틀란티스 대홍수 때 하나의 수호 인격체였다! 원점을 지나는 우상향 정비례 직선에서 독립변수 x가 확장될 때 종속변수 y의 증감 방향조차 판단하지 못한다면 파괴될 뿐이다!\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "선택지를 골라주세요", "options": ["증가한다", "감소한다", "변하지 않는다"], "error": "출력 증감 판단 오류! 추진 장치가 역화합니다.", "ans_check": "ans === '증가한다'"},
     {"qnum": 14, "title": "해저 수압의 변화", "story": f"🌊 <strong>[기어 정지 잔량]</strong><br><br>{nereus}: \"캡틴... 포세이돈의 말이 맞습니다. 저는 그의 분열된 이성 서브루틴이었습니다... 하지만 저는 인류의 가능성을 믿습니다! 잠수정이 엔진 고장으로 수심 100m 지점에 5분간 완전히 정체해 있었을 때의 물리적 깊이 변화량 y값을 레지스터에 전송하십시오!\"", "qtext": "<strong>Q14. [그래프 해석 4]</strong><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?", "placeholder": "숫자만 입력", "error": "변화량 오차 감지! 기어 동조 실패.", "ans_check": "ans === '0'"},
-    {"qnum": 15, "title": "해저 수압의 변화", "story": f"🚨 <strong>[산소 챔버 붕괴]</strong><br><br>{nereus}: \"치지직... 포세이돈이 제 보조 제어 유닛을 강제 폭파했습니다... 산소 밸브가 단선되었습니다! 시간이 흐름에 따라 잔여 산소량이 점차 소멸해가는 그래프의 개형(우상향 또는 우하향)을 예측해야 긴급 산소 공급 밸브가 수동으로 개방됩니다. 제 시야가 흐려집니다... 캡틴, 제발...!\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "예: 우하향, 우상향", "error": "산소 예측 밸브 고착! 잔여 호흡 시간이 줄어듭니다!", "ans_check": "ans === '우하향'", "extra_class": "glitch-bg"},
+    {"qnum": 15, "title": "해저 수압의 변화", "story": f"🚨 <strong>[산소 챔버 붕괴]</strong><br><br>{nereus}: \"치지직... 포세이돈이 제 보조 제어 유닛을 강제 폭파했습니다... 산소 밸브가 단선되었습니다! 시간이 흐름에 따라 잔여 산소량이 점차 소멸해가는 그래프의 개형(우상향 또는 우하향)을 예측해야 긴급 산소 공급 밸브가 수동으로 개방됩니다. 제 시야가 흐려집니다... 캡틴, 제발...!\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "선택지를 골라주세요", "options": ["우상향하는 모양", "우하향하는 모양", "수평인 모양"], "error": "산소 예측 밸브 고착! 잔여 호흡 시간이 줄어듭니다!", "ans_check": "ans === '우하향하는 모양'", "extra_class": "glitch-bg"},
     {"qnum": 16, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[정비례 기어 링크]</strong><br><br>{poseidon}: \"이 산소 부족마저 통과하다니, 끈질긴 생명력이군! 하지만 최종 아틀란티스의 황금 문은 고정비 기어로 보호받는다. 출력 y가 구동각 x에 정비례하고 x=3일 때 y=15의 압력 토크를 갖는다. x=5일 때 걸리는 기어 부하 토크 y를 정비례 식으로 계산해 전송해라. 으깨지지 않으려면!\"", "qtext": "<strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "기어 이가 맞물리지 않고 겉돕니다!", "ans_check": "ans === '25'"},
     {"qnum": 17, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[거울 반사 조절 상수]</strong><br><br>{nereus}: \"포세이돈의 메인 메모리 장벽이 80% 침식되었습니다! 기하학 광선 반사 경로 y = ax 식의 그래프가 경유해야 하는 거울 기어 좌표 (2, -8)을 조준하도록 상수 a를 계산하십시오. 캡틴, 포기하지 마십시오!\"", "qtext": "<strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "거울 초점이 비틀어졌습니다! 광선 소멸.", "ans_check": "ans === '-4'"},
     {"qnum": 18, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[반비례 부력 링크]</strong><br><br>{nereus}: \"황금 문 너머의 보물이 노출되었습니다! 하지만 보물을 싣고 부상하려면, 보조 부력 주머니 수 x개와 각 주머니가 분담해야 할 질량 y kg 사이의 반비례 관계를 연산하여 안전 균형을 맞춰야 합니다. 맞추지 못하면 잠수정은 과중량으로 심해로 다시 낙하합니다!\"", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 평형 균열 발생! 잠수정이 기울어집니다.", "ans_check": "ans === '40'"},
@@ -37,8 +37,6 @@ qs = [
 ]
 
 # Generate panels
-
-import re
 def generate_hint(qnum, qtext, ans_check):
     if qnum == 1:
         return "순서쌍은 (x좌표, y좌표) 형태로 나타내며, 괄호와 쉼표를 정확히 표시합니다. 주어진 문제에서 x좌표와 y좌표가 무엇인지 찾아 차례대로 적어보세요."
@@ -51,13 +49,13 @@ def generate_hint(qnum, qtext, ans_check):
     elif qnum == 5:
         return "직사각형의 가로 길이는 두 x좌표 사이의 거리이고, 세로 길이는 두 y좌표 사이의 거리입니다. 가로와 세로의 길이를 각각 구해 서로 곱해보세요."
     elif qnum == 6:
-        return "x좌표가 양수(+)이고, y좌표가 음수(-)인 점이 어느 위치에 있는지 생각해 보세요. 좌표평면의 네 영역 중 우하단에 해당하는 영역을 찾으면 됩니다."
+        return "선택지에서 제4사분면을 골라주세요. x좌표가 양수(+)이고, y좌표가 음수(-)인 영역입니다."
     elif qnum == 7:
-        return "x좌표가 음수(-), y좌표가 음수(-)인 점이 어느 위치에 있는지 생각해 보세요. 좌표평면의 네 영역 중 좌하단에 해당하는 영역을 찾으면 됩니다."
+        return "선택지에서 제3사분면을 골라주세요. x좌표와 y좌표가 모두 음수(-)인 영역입니다."
     elif qnum == 8:
         return "곱이 음수(a × b < 0)라는 것은 두 수의 부호가 서로 다름을 뜻합니다. 뺀 값(a - b > 0)이 양수라는 것은 어느 쪽이 더 크다는 뜻일까요? 두 조건으로 a와 b의 부호를 판별해 보세요."
     elif qnum == 9:
-        return "점 P가 제2사분면 위의 점일 때 a와 b의 부호를 먼저 정해봅니다. 그 후 -b의 부호가 어떻게 바뀌는지 알아내어 점 Q의 (x좌표, y좌표) 부호를 분석해 보세요."
+        return "선택지에서 제3사분면을 골라주세요. P(a,b)가 2사분면이면 a<0, b>0 입니다. Q(a, -b)는 a<0, -b<0 이므로 둘 다 음수입니다."
     elif qnum == 10:
         return "점 P가 제3사분면 위의 점일 때 a와 b의 부호를 먼저 정해봅니다. 그 후 -a의 부호가 어떻게 바뀌는지 알아내어 점 Q의 (x좌표, y좌표) 부호를 분석해 보세요."
     elif qnum == 11:
@@ -65,11 +63,11 @@ def generate_hint(qnum, qtext, ans_check):
     elif qnum == 12:
         return "일정한 속력으로 내려가므로 시간과 깊이는 정비례 관계입니다. 10분 동안 100m를 내려갔을 때, 절반의 시간인 5분 동안에는 몇 m를 내려갔을지 비례식을 세워 보세요."
     elif qnum == 13:
-        return "우상향하는 직선은 오른쪽 위를 향합니다. 따라서 그래프 상에서 오른쪽(x가 커지는 방향)으로 이동할 때, 그래프의 세로 높이(y값)는 어떻게 변하는지 관찰해 보세요."
+        return "선택지에서 '증가한다'를 골라주세요. 우상향하는 직선은 x축 값이 증가할 때 y축 값도 함께 올라갑니다."
     elif qnum == 14:
         return "수심 100m 지점에 5분 동안 계속 가만히 멈춰 있었다면, 멈춰 있는 동안 깊이(y값)가 변한 양은 얼마일지 생각해 보세요."
     elif qnum == 15:
-        return "시간(x)이 흐를수록 탱크 안에 남은 산소량(y)은 늘어날까요, 아니면 줄어들까요? 양의 변화에 따른 그래프의 방향(우상향 또는 우하향)을 결정해 보세요."
+        return "선택지에서 '우하향하는 모양'을 골라주세요. 시간이 흐름에 따라 남은 산소량이 점차 소모되어 줄어드므로 하향곡선을 그립니다."
     elif qnum == 16:
         return "y가 x에 정비례하므로 식 y = ax를 세울 수 있습니다. 먼저 주어진 x = 3, y = 15를 대입해 비례상수 a의 값을 구한 후, 완성된 식에 x = 5를 대입해 보세요."
     elif qnum == 17:
@@ -94,17 +92,31 @@ for i, q in enumerate(qs):
     placeholder = q['placeholder']
     error = q['error']
     
-    prev_stage = f"'panel_q{qnum-1}'" if qnum > 1 else "'intro'"
-    prev_progress = (qnum-1)*5
-    next_stage = f"'panel_q{qnum+1}'" if qnum < 20 else "'outro'"
-    next_progress = qnum*5
-    
-    # 힌트 버튼을 질문 제목 <strong>Q{qnum}. [제목]</strong> 바로 옆에 삽입
+    # 힌트 버튼을 질문 제목 바로 옆에 삽입
     hint_btn_html = f'<button class="btn-hint" onclick="alert(\'💡 힌트: {q["hint"]}\')">💡 힌트</button>'
     qtext_hinted = qtext.replace('</strong>', f'</strong> {hint_btn_html}', 1)
     
     extra_class = q.get('extra_class', '')
     qbox_id = 'id="q10-main-box" style="display:none;"' if qnum == 10 else ''
+    
+    # 객관식 vs 주관식 입력 폼 생성 분기
+    if "options" in q:
+        options_html = ""
+        for idx, opt in enumerate(q["options"]):
+            options_html += f'''
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group{qnum}" value="{opt}" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> {opt}
+                    </label>'''
+        input_html = f'''
+                    <div class="options-group" id="ans{qnum}_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        {options_html}
+                    </div>'''
+    else:
+        input_html = f'''
+                    <div class="input-group">
+                        <input type="text" id="ans{qnum}" placeholder="{placeholder}">
+                    </div>'''
+
     panel = f'''
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel {extra_class}">
@@ -117,9 +129,7 @@ for i, q in enumerate(qs):
             <div class="question-box" {qbox_id}>
                 <div class="question-content">
                     {qtext_hinted}
-                    <div class="input-group">
-                        <input type="text" id="ans{qnum}" placeholder="{placeholder}">
-                    </div>
+                    {input_html}
                 </div>
             </div>
             <div class="error-msg" id="error{qnum}">{error}</div>
@@ -194,10 +204,32 @@ for q in qs:
                     }
                 }'''
 
+    # 객관식 vs 주관식 입력값 읽기 JS 분기
+    if "options" in q:
+        get_ans_js = f'''
+            const checkedOpt = document.querySelector('input[name="ans_group{qnum}"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+        '''
+    else:
+        get_ans_js = f'''
+            const ans = cleanString(document.getElementById('ans{qnum}').value).replace('(','').replace(')','');
+        '''
+
+    # 리셋 대상이 객관식인지 주관식인지에 따라 초기화 JS 구성
+    reset_target_q = next((item for item in qs if item["qnum"] == reset_qnum), None)
+    if reset_target_q and "options" in reset_target_q:
+        reset_js = f'''
+                    document.querySelectorAll('input[name="ans_group{reset_qnum}"]').forEach(el => el.checked = false);
+        '''
+    else:
+        reset_js = f'''
+                    document.getElementById('ans{reset_qnum}').value = '';
+        '''
+
     js = f'''
         // Q{qnum}
         function checkQ{qnum}() {{
-            const ans = cleanString(document.getElementById('ans{qnum}').value).replace('(','').replace(')','');
+            {get_ans_js}
             if ({ans_check}) {{
                 wrongCount = 0;
                 {victory_call} {gas_end_call}
@@ -213,7 +245,7 @@ for q in qs:
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! {zone_name} 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans{reset_qnum}').value = '';
+                    {reset_js}
                     nextStage('panel_q{qnum}', 'panel_q{reset_qnum}', {reset_prog});
                 }} else {{
                     showError('panel_q{qnum}', 'error{qnum}', wrongCount);
@@ -222,8 +254,6 @@ for q in qs:
         }}
 '''
     js_checks += js
-
-import re
 
 glitch_css = '''
 .glitch-text { animation: shake 0.5s infinite; }
@@ -306,7 +336,9 @@ glitch_css = '''
     animation: blink 1.5s infinite;
 }
 </style>
+'''
 
+glitch_html_js = '''
 <!-- V3.0 UI Additions -->
 <div id="glitchOverlay" class="glitch-overlay-screen">
     <div class="glitch-overlay-text">🚨 SYSTEM EXPLOITED 🚨</div>
@@ -341,18 +373,6 @@ function triggerTimerWarning() {
         el.classList.add('timer-warning');
         setTimeout(() => el.classList.remove('timer-warning'), 1000);
     });
-}
-
-function makeChoiceQ10(type) {
-    document.getElementById('choice-container-q10').style.display = 'none';
-    const textEl = document.getElementById('chosen-story-q10');
-    textEl.style.display = 'block';
-    if (type === 1) {
-        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '오버클록 성공! 순간 전력이 200% 상승해 자폭 레이저 연산 장치를 무력화 시도 중입니다. 하지만 과부하 열기가 대단합니다! 어서 좌표 계산을 완료하십시오!'";
-    } else {
-        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '방어막 전개! 레이저 충격을 분산하고 흡수하기 시작했습니다. 실드가 버티는 동안 좌표 계산을 신속하게 끝내야 합니다!'";
-    }
-    document.getElementById('q10-main-box').style.display = 'block';
 }
 
 // showError 함수 오버라이딩 (네레우스 오답 무전 대응)
@@ -391,11 +411,6 @@ function showError(panelId, errorId, wrongCount) {
 </script>
 '''
 
-new_content = re.sub(r'<!-- Q1.*?(?=<script>)', lambda m: '<!-- Q1 -->\n' + panels_html + '\n    ', content, flags=re.DOTALL)
-new_content = re.sub(r'// Q1[\s\S]*?(?=window\.onload = \(\) => \{)', lambda m: '// Q1\n' + js_checks + '\n        ', new_content)
-new_content = new_content.replace('</style>', glitch_css)
-
-# startTimer 내 alert/reload를 게임오버 패널 전환으로 교체
 timer_replacement = '''
         function startTimer() {
             if (timerId) return;
@@ -418,6 +433,24 @@ timer_replacement = '''
             }, 1000);
         }
 '''
+
+# 1. 패널 치환 (<!-- Q1 --> 주석부터 <!-- 아웃트로 --> 패널의 닫는 div 태그까지)
+panel_pattern = r'<!-- Q1 -->[\s\S]*?<!-- 아웃트로 -->[\s\S]*?<div id="outro"[\s\S]*?</div>'
+new_content = re.sub(panel_pattern, '<!-- Q1 -->\n' + panels_html, content)
+
+# 2. JS 체크 함수 치환
+js_pattern = r'// Q1[\s\S]*?(?=window\.onload = \(\) => \{)'
+new_content = re.sub(js_pattern, '// Q1\n' + js_checks + '\n        ', new_content)
+
+# 3. glitch_css 주입 (중복 방지 조건)
+if ".glitch-text" not in new_content:
+    new_content = new_content.replace('</style>', glitch_css)
+
+# 4. glitch_html_js 주입 (중복 방지 조건)
+if "glitchOverlay" not in new_content:
+    new_content = new_content.replace('</body>', glitch_html_js + '\n</body>')
+
+# 5. 타이머 로직 교체
 new_content = re.sub(r'function startTimer\(\) \{[\s\S]*?\}', timer_replacement.strip(), new_content)
 
 with open(html_file, 'w', encoding='utf-8') as f:
