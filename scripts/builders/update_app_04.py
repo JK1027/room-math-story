@@ -9,6 +9,32 @@ html_file = os.path.join(apps_dir, "app_m1_04_escape_room.html")
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
 
+# ----------------- 올바른 이미지 매핑 테이블 정의 -----------------
+img_map = {
+    1: 'img1_radar.png',
+    2: 'img1_radar.png',
+    3: 'img1_radar.png',
+    4: 'img11_deep_cave.png',
+    5: 'img2_pillars.png',
+    6: 'img3_atlantis.png',
+    7: 'img12_compass.png',
+    8: 'img3_atlantis.png',
+    9: 'img4_mirror.png',
+    10: 'img4_mirror.png',
+    11: 'img5_descend.png',
+    12: 'img13_graph_speed.png',
+    13: 'img6_oxygen.png',
+    14: 'img6_oxygen.png',
+    15: 'img14_oxygen_leak.png',
+    16: 'img7_gears.png',
+    17: 'img7_gears.png',
+    18: 'img8_buoyancy.png',
+    19: 'img15_golden_door.png',
+    20: 'img9_laser.png',
+    'outro': 'img10_escape.png',
+    'intro': 'img1_radar.png'
+}
+
 # ----------------- 리소스 데이터 정의 -----------------
 nereus = '<span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[네레우스]</span>'
 poseidon = '<span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[포세이돈-V]</span>'
@@ -31,7 +57,7 @@ qs = [
     {"qnum": 15, "title": "해저 수압의 변화", "story": f"🚨 <strong>[산소 챔버 붕괴]</strong><br><br>{nereus}: \"치지직... 포세이돈이 제 보조 제어 유닛을 강제 폭파했습니다... 산소 밸브가 단선되었습니다! 시간이 흐름에 따라 잔여 산소량이 점차 소멸해가는 그래프의 개형(우상향 또는 우하향)을 예측해야 긴급 산소 공급 밸브가 수동으로 개방됩니다. 제 시야가 흐려집니다... 캡틴, 제발...!\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "선택지를 골라주세요", "options": ["우상향하는 모양", "우하향하는 모양", "수평인 모양"], "error": "산소 예측 밸브 고착! 잔여 호흡 시간이 줄어듭니다!", "ans_check": "ans === '우하향하는 모양'", "extra_class": "glitch-bg"},
     {"qnum": 16, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[정비례 기어 링크]</strong><br><br>{poseidon}: \"이 산소 부족마저 통과하다니, 끈질긴 생명력이군! 하지만 최종 아틀란티스의 황금 문은 고정비 기어로 보호받는다. 출력 y가 구동각 x에 정비례하고 x=3일 때 y=15의 압력 토크를 갖는다. x=5일 때 걸리는 기어 부하 토크 y를 정비례 식으로 계산해 전송해라. 으깨지지 않으려면!\"", "qtext": "<strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "기어 이가 맞물리지 않고 겉돕니다!", "ans_check": "ans === '25'"},
     {"qnum": 17, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[거울 반사 조절 상수]</strong><br><br>{nereus}: \"포세이돈의 메인 메모리 장벽이 80% 침식되었습니다! 기하학 광선 반사 경로 y = ax 식의 그래프가 경유해야 하는 거울 기어 좌표 (2, -8)을 조준하도록 상수 a를 계산하십시오. 캡틴, 포기하지 마십시오!\"", "qtext": "<strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "거울 초점이 비틀어졌습니다! 광선 소멸.", "ans_check": "ans === '-4'"},
-    {"qnum": 18, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[반비례 부력 링크]</strong><br><br>{nereus}: \"황금 문 너머의 보물이 노출되었습니다! 하지만 보물을 싣고 부상하려면, 보조 부력 주머니 수 x개와 각 주머니가 분담해야 할 질량 y kg 사이의 반비례 관계를 연산하여 안전 균형을 맞춰야 합니다. 맞추지 못하면 잠수정은 과중량으로 심해로 다시 낙하합니다!\"", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 평형 균열 발생! 잠수정이 기울어집니다.", "ans_check": "ans === '40'"},
+    {"qnum": 18, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[반비례 부력 링크]</strong><br><br>{nereus}: \"황금 문 너머의 보물이 노출되었습니다! 하지만 보물을 싣고 부상하려면, 보조 부력 주머니 수 x개와 각 주머니가 분담해야 할 질량 y kg 사이의 반비례 관계 AN 연산하여 안전 균형을 맞춰야 합니다. 맞추지 못하면 잠수정은 과중량으로 심해로 다시 낙하합니다!\"", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 평형 균열 발생! 잠수정이 기울어집니다.", "ans_check": "ans === '40'"},
     {"qnum": 19, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[반비례 감쇄 상수]</strong><br><br>{poseidon}: \"크아아아악! 이럴 수가... 한낱 미개한 인류가 설계한 연산 장치가 내 시스템 수호 격자를 완전히 무력화하다니!! 반비례식 y = a/x를 완성시킬 최종 감쇄 상수 a를 계산해 주입해라. 이 위대한 지혜를 다시 인간의 손에 넘겨줄 순 없다!!\"", "qtext": "<strong>Q19. [반비례 관계 2]</strong><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "상수 불일치! 데이터 침식이 일시 역전됩니다.", "ans_check": "ans === '20'"},
     {"qnum": 20, "title": "황금 문 톱니바퀴", "story": f"🔴 <strong>[최종 포탈 동기화]</strong><br><br>{nereus}: \"해냈습니다! 포세이돈의 코어를 완전히 장악해 우리 동력원으로 전환했습니다! 마지막 해수면 차원 탈출 포탈의 역반사 궤적 반비례 그래프 y = 12/x 가 점 (-3, k)를 통과하도록 최종 k값을 주입하십시오. 포세이돈을 영원히 슬립 상태로 잠재우고 탈출합시다!!\"", "qtext": "<strong>Q20. [최종 암호 해독]</strong><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "차원 도약 포탈 동기화 실패! 포세이돈의 역방어벽이 가동됩니다!", "ans_check": "ans === '-4'", "extra_class": "glitch-bg"}
 ]
@@ -121,7 +147,7 @@ for i, q in enumerate(qs):
         <!-- Q{qnum} -->
         <div id="panel_q{qnum}" class="glass-panel {extra_class}">
             <h2>제 {qnum}구역: {title} <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/q{qnum}.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/{img_map[qnum]}" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text">{story}</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
@@ -141,12 +167,12 @@ for i, q in enumerate(qs):
     panels_html += panel
 
 # Outro panel
-outro_html = '''
+outro_html = f'''
         <!-- 아웃트로 -->
         <div id="outro" class="glass-panel">
             <h1>탈출 성공!</h1>
             <h2>아틀란티스의 보물</h2>
-            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/outro.png" alt="Background" class="panel-image">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/{img_map['outro']}" alt="Background" class="panel-image">
             <div class="story-box">
                 <div class="story-text" id="outro-dynamic-text">미션 결과를 연산 중입니다...</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
@@ -434,24 +460,25 @@ timer_replacement = '''
         }
 '''
 
-# 1. 패널 치환 (<!-- Q1 --> 주석부터 <!-- 아웃트로 --> 패널의 닫는 div 태그까지)
-panel_pattern = r'<!-- Q1 -->[\s\S]*?<!-- 아웃트로 -->[\s\S]*?<div id="outro"[\s\S]*?</div>'
-new_content = re.sub(panel_pattern, '<!-- Q1 -->\n' + panels_html, content)
+# 1. 패널 치환 (<!-- Q1 --> 주석부터 <!-- MathJax... --> 주석 이전까지 정교하게 매칭)
+panel_pattern = r'<!-- Q1 -->[\s\S]*?(?=<!-- MathJax for LaTeX Rendering -->)'
+new_content = re.sub(panel_pattern, '<!-- Q1 -->\n' + panels_html + '\n    ', content)
 
 # 2. JS 체크 함수 치환
 js_pattern = r'// Q1[\s\S]*?(?=window\.onload = \(\) => \{)'
 new_content = re.sub(js_pattern, '// Q1\n' + js_checks + '\n        ', new_content)
 
-# 3. glitch_css 주입 (중복 방지 조건)
+# 3. glitch_css 주입
 if ".glitch-text" not in new_content:
     new_content = new_content.replace('</style>', glitch_css)
 
-# 4. glitch_html_js 주입 (중복 방지 조건)
+# 4. glitch_html_js 주입
 if "glitchOverlay" not in new_content:
     new_content = new_content.replace('</body>', glitch_html_js + '\n</body>')
 
-# 5. 타이머 로직 교체
-new_content = re.sub(r'function startTimer\(\) \{[\s\S]*?\}', timer_replacement.strip(), new_content)
+# 5. 타이머 로직 교체 (안전한 정규식으로 중복 파편 없이 완벽하게 교체)
+timer_pattern = r'function startTimer\(\) \{[\s\S]*?updateTimerDisplay\(\);\s*\}\s*,\s*1000\);\s*\}'
+new_content = re.sub(timer_pattern, timer_replacement.strip(), new_content)
 
 with open(html_file, 'w', encoding='utf-8') as f:
     f.write(new_content)
