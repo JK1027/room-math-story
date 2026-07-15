@@ -381,7 +381,29 @@
     50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
     100% { box-shadow: inset 0 0 10px #ef4444; }
 }
+
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
 </style>
+
 
     <!-- MathJax for LaTeX Rendering -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -1286,6 +1308,8 @@ function nextStage(currentId, nextId, progressPercent) {
 
 let totalWrongCount = 0;
 
+let totalWrongCount = 0;
+
         // Q1
         function checkQ1() {
             const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
@@ -1297,6 +1321,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1318,6 +1343,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1339,6 +1365,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1360,6 +1387,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1381,6 +1409,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans1').value = '';
@@ -1402,6 +1431,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans6').value = '';
@@ -1423,6 +1453,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans6').value = '';
@@ -1444,6 +1475,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans6').value = '';
@@ -1465,6 +1497,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans6').value = '';
@@ -1486,6 +1519,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans6').value = '';
@@ -1507,6 +1541,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans11').value = '';
@@ -1528,6 +1563,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans11').value = '';
@@ -1549,6 +1585,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans11').value = '';
@@ -1570,6 +1607,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans11').value = '';
@@ -1591,6 +1629,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans11').value = '';
@@ -1612,6 +1651,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans16').value = '';
@@ -1633,6 +1673,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans16').value = '';
@@ -1654,6 +1695,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans16').value = '';
@@ -1675,6 +1717,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans16').value = '';
@@ -1704,6 +1747,7 @@ let totalWrongCount = 0;
                 wrongCount++;
                 totalWrongCount++;
                 if (wrongCount >= 3) {
+                    showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
                     wrongCount = 0;
                     document.getElementById('ans16').value = '';

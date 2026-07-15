@@ -776,7 +776,335 @@
     text-align: center;
     animation: blink 1.5s infinite;
 }
+
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+.timer-warning {
+    animation: blink-red 0.2s 5;
+    font-size: 1.5rem !important;
+}
+@keyframes blink-red {
+    0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+    50% { color: #ffffff; text-shadow: none; }
+}
+.glitch-overlay-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(239, 68, 68, 0.15);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 10px solid #ef4444;
+    animation: pulse-border 0.2s infinite;
+}
+.glitch-overlay-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    color: #ef4444;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ef4444;
+    animation: shake 0.1s infinite;
+}
+.glitch-overlay-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+@keyframes pulse-border {
+    0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
+}
+.typing-cursor {
+    animation: cursor-blink 0.8s infinite;
+    font-weight: bold;
+    color: var(--accent);
+    margin-left: 2px;
+}
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.radio-msg {
+    color: #60a5fa;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #3b82f6;
+    text-align: center;
+    animation: blink 1.5s infinite;
+}
+
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+.timer-warning {
+    animation: blink-red 0.2s 5;
+    font-size: 1.5rem !important;
+}
+@keyframes blink-red {
+    0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+    50% { color: #ffffff; text-shadow: none; }
+}
+.glitch-overlay-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(239, 68, 68, 0.15);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 10px solid #ef4444;
+    animation: pulse-border 0.2s infinite;
+}
+.glitch-overlay-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    color: #ef4444;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ef4444;
+    animation: shake 0.1s infinite;
+}
+.glitch-overlay-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+@keyframes pulse-border {
+    0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
+}
+.typing-cursor {
+    animation: cursor-blink 0.8s infinite;
+    font-weight: bold;
+    color: var(--accent);
+    margin-left: 2px;
+}
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.radio-msg {
+    color: #60a5fa;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #3b82f6;
+    text-align: center;
+    animation: blink 1.5s infinite;
+}
 </style>
+
+<!-- V3.0 UI Additions -->
+<div id="glitchOverlay" class="glitch-overlay-screen">
+    <div class="glitch-overlay-text">🚨 SYSTEM EXPLOITED 🚨</div>
+    <div class="glitch-overlay-sub">ACCESS DENIED - CODE ERROR</div>
+</div>
+
+<!-- Game Over Panel -->
+<div id="gameover" class="glass-panel">
+    <h1 style="color: #ef4444; text-shadow: 0 0 15px #ef4444;">미션 실패 (GAME OVER)</h1>
+    <h2>산소 고갈 및 수압 압착</h2>
+    <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/outro.png" alt="Game Over" class="panel-image" style="filter: grayscale(1) sepia(1) hue-rotate(-50deg);">
+    <div class="story-box">
+        <div class="story-text" style="color: #ef4444;">
+            [네레우스]: "캡틴... 에너지가... 완전히 고갈... 되었습니다... 수압이... 선체를... 지이익..."<br><br>
+            잠수정의 전원이 완전히 꺼지고 차가운 심해의 수압이 창문을 부수고 들어옵니다. 산소 공급 장치가 완전히 멈췄습니다. 탈출 좌표를 연산하지 못해 심연 속에 영원히 가라앉고 말았습니다. 다시 도전하세요!
+        </div>
+    </div>
+    <button class="btn" style="margin-top: 2rem; background: #ef4444; border-color: #ef4444;" onclick="location.reload()">처음부터 다시 시도하기</button>
+</div>
+
+<script>
+function showGlitchOverlay() {
+    const overlay = document.getElementById('glitchOverlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.style.display = 'none', 1500);
+    }
+}
+
+function triggerTimerWarning() {
+    document.querySelectorAll('.game-timer').forEach(el => {
+        el.classList.add('timer-warning');
+        setTimeout(() => el.classList.remove('timer-warning'), 1000);
+    });
+}
+
+function makeChoiceQ10(type) {
+    document.getElementById('choice-container-q10').style.display = 'none';
+    const textEl = document.getElementById('chosen-story-q10');
+    textEl.style.display = 'block';
+    if (type === 1) {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '오버클록 성공! 순간 전력이 200% 상승해 자폭 레이저 연산 장치를 무력화 시도 중입니다. 하지만 과부하 열기가 대단합니다! 어서 좌표 계산을 완료하십시오!'";
+    } else {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '방어막 전개! 레이저 충격을 분산하고 흡수하기 시작했습니다. 실드가 버티는 동안 좌표 계산을 신속하게 끝내야 합니다!'";
+    }
+    document.getElementById('q10-main-box').style.display = 'block';
+}
+
+// showError 함수 오버라이딩 (네레우스 오답 무전 대응)
+function showError(panelId, errorId, wrongCount) {
+    try { playError(); } catch(e) {} 
+    triggerLockdownAlert();
+    const panel = document.getElementById(panelId);
+    const errMsg = document.getElementById(errorId);
+    
+    panel.classList.remove('shake');
+    void panel.offsetWidth; 
+    panel.classList.add('shake');
+    
+    errMsg.style.display = 'block';
+    
+    let radioDiv = panel.querySelector('.radio-msg');
+    if (!radioDiv) {
+        radioDiv = document.createElement('div');
+        radioDiv.className = 'radio-msg';
+        errMsg.parentNode.insertBefore(radioDiv, errMsg.nextSibling);
+    }
+    
+    if (wrongCount === 1) {
+        radioDiv.innerHTML = "📡 [네레우스]: '캡틴, 미세한 해류 마찰 오차일 수 있습니다. 다시 계산해주십시오!'";
+    } else if (wrongCount === 2) {
+        radioDiv.innerHTML = "📡 [네레우스]: '경고! 잠수정 외장 수압이 상승 중입니다. 다음 오답은 선체에 치명적입니다!'";
+    } else {
+        radioDiv.innerHTML = "";
+    }
+    
+    setTimeout(() => { 
+        errMsg.style.display = 'none'; 
+        if (radioDiv) radioDiv.innerHTML = "";
+    }, 3500);
+}
+</script>
+
+
+<!-- V3.0 UI Additions -->
+<div id="glitchOverlay" class="glitch-overlay-screen">
+    <div class="glitch-overlay-text">🚨 SYSTEM EXPLOITED 🚨</div>
+    <div class="glitch-overlay-sub">ACCESS DENIED - CODE ERROR</div>
+</div>
+
+<!-- Game Over Panel -->
+<div id="gameover" class="glass-panel">
+    <h1 style="color: #ef4444; text-shadow: 0 0 15px #ef4444;">미션 실패 (GAME OVER)</h1>
+    <h2>산소 고갈 및 수압 압착</h2>
+    <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/outro.png" alt="Game Over" class="panel-image" style="filter: grayscale(1) sepia(1) hue-rotate(-50deg);">
+    <div class="story-box">
+        <div class="story-text" style="color: #ef4444;">
+            [네레우스]: "캡틴... 에너지가... 완전히 고갈... 되었습니다... 수압이... 선체를... 지이익..."<br><br>
+            잠수정의 전원이 완전히 꺼지고 차가운 심해의 수압이 창문을 부수고 들어옵니다. 산소 공급 장치가 완전히 멈췄습니다. 탈출 좌표를 연산하지 못해 심연 속에 영원히 가라앉고 말았습니다. 다시 도전하세요!
+        </div>
+    </div>
+    <button class="btn" style="margin-top: 2rem; background: #ef4444; border-color: #ef4444;" onclick="location.reload()">처음부터 다시 시도하기</button>
+</div>
+
+<script>
+function showGlitchOverlay() {
+    const overlay = document.getElementById('glitchOverlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.style.display = 'none', 1500);
+    }
+}
+
+function triggerTimerWarning() {
+    document.querySelectorAll('.game-timer').forEach(el => {
+        el.classList.add('timer-warning');
+        setTimeout(() => el.classList.remove('timer-warning'), 1000);
+    });
+}
+
+function makeChoiceQ10(type) {
+    document.getElementById('choice-container-q10').style.display = 'none';
+    const textEl = document.getElementById('chosen-story-q10');
+    textEl.style.display = 'block';
+    if (type === 1) {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '오버클록 성공! 순간 전력이 200% 상승해 자폭 레이저 연산 장치를 무력화 시도 중입니다. 하지만 과부하 열기가 대단합니다! 어서 좌표 계산을 완료하십시오!'";
+    } else {
+        textEl.innerHTML = "<span style='color:#60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>: '방어막 전개! 레이저 충격을 분산하고 흡수하기 시작했습니다. 실드가 버티는 동안 좌표 계산을 신속하게 끝내야 합니다!'";
+    }
+    document.getElementById('q10-main-box').style.display = 'block';
+}
+
+// showError 함수 오버라이딩 (네레우스 오답 무전 대응)
+function showError(panelId, errorId, wrongCount) {
+    try { playError(); } catch(e) {} 
+    triggerLockdownAlert();
+    const panel = document.getElementById(panelId);
+    const errMsg = document.getElementById(errorId);
+    
+    panel.classList.remove('shake');
+    void panel.offsetWidth; 
+    panel.classList.add('shake');
+    
+    errMsg.style.display = 'block';
+    
+    let radioDiv = panel.querySelector('.radio-msg');
+    if (!radioDiv) {
+        radioDiv = document.createElement('div');
+        radioDiv.className = 'radio-msg';
+        errMsg.parentNode.insertBefore(radioDiv, errMsg.nextSibling);
+    }
+    
+    if (wrongCount === 1) {
+        radioDiv.innerHTML = "📡 [네레우스]: '캡틴, 미세한 해류 마찰 오차일 수 있습니다. 다시 계산해주십시오!'";
+    } else if (wrongCount === 2) {
+        radioDiv.innerHTML = "📡 [네레우스]: '경고! 잠수정 외장 수압이 상승 중입니다. 다음 오답은 선체에 치명적입니다!'";
+    } else {
+        radioDiv.innerHTML = "";
+    }
+    
+    setTimeout(() => { 
+        errMsg.style.display = 'none'; 
+        if (radioDiv) radioDiv.innerHTML = "";
+    }, 3500);
+}
+</script>
+
 
 <!-- V3.0 UI Additions -->
 <div id="glitchOverlay" class="glitch-overlay-screen">
@@ -1718,6 +2046,16 @@ function makeChoiceQ10(type) {
                         alert("⏰ 제한 시간 초과!");
                         location.reload();
                     }
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
                 } else {
                     updateTimerDisplay();
                 }
