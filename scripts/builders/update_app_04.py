@@ -38,34 +38,35 @@ img_map = {
 # ----------------- 리소스 데이터 정의 (어드벤처 버전 톤앤매너 변경) -----------------
 # 자바스크립트 내 따옴표 충돌 방지를 위해 속성값에 작은따옴표만 사용
 nereus = "<span style='color: #60a5fa; text-shadow: 0 0 5px #3b82f6;'>[네레우스]</span>"
+clio = "<span style='color: #c084fc; text-shadow: 0 0 5px #a855f7;'>[클리오]</span>"
 poseidon = "<span class='glitch-text' style='color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;'>[포세이돈-V]</span>"
+trident = "<span class='glitch-text' style='color: #fb923c; font-weight: bold; text-shadow: 0 0 5px #f97316;'>[트라이던트]</span>"
 dyn_captain = "<span class='dynamic-captain-name'>캡틴</span>"
 
 qs = [
-    {"qnum": 1, "options": ["-5,8", "-5,8 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표 (순서쌍과 좌표)", "story": f"🌊 <strong>[진입 투하 축 설정]</strong><br><br>{poseidon}: \"멈춰라, 외부인! 수학의 기본인 좌표도 모르는 자가 감히 아틀란티스의 문을 두드리는가? 자격을 증명해라!\"<br><br>🚨 <strong>[수문장의 방해 감지]</strong><br><br>{nereus}: \"으아앗, {dyn_captain}! 전설의 수문장 AI입니다! 생각보다 너무 깐깐해요. 제발 저 순서쌍 퀴즈 좀 맞춰서 통과하게 해주세요!\"", "qtext": "<strong>Q1. [순서쌍 좌표 찍기]</strong><br>x좌표가 -5 이고, y좌표가 8 인 점의 <strong>좌표</strong>를 순서쌍 기호 괄호 ()를 사용하여 나타내시오.", "placeholder": "예: (3, 4)", "error": "투하 궤적이 정렬되지 않아 선체가 조류에 흔들립니다!", "ans_check": "ans === '-5,8'"},
-    {"qnum": 2, "options": ["7,0", "7,0 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[날개 수평 정렬]</strong><br><br>{poseidon}: \"겨우 진입각만 맞춘 주제에 뻐기지 마라! 쇄도하는 해류는 어찌 피할 텐가? 추진용 수직 보조 날개(y축)를 중립(y=0)으로 잠그고, 수평 제어각(x축)만 7도 전개하는 좌표 신호를 입력해 보아라!\"", "qtext": "<strong>Q2. [x축, y축 위의 점]</strong><br>x축 위에 있고 x좌표가 7인 점의 좌표를 나타내시오.", "placeholder": "예: (2, 0)", "error": "수평 보조 밸브 고장! 수압 경고등이 켜집니다!", "ans_check": "ans === '7,0'"},
-    {"qnum": 3, "options": ["0,0", "0,0 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[영점 조준 복원]</strong><br><br>{nereus}: \"{dyn_captain}! 저 수문장이 자꾸 훼방을 놓아서 영점 조준 회로가 흔들리고 있습니다! 수평과 수직의 평형이 완벽히 만나는 물리적 '원점' 좌표를 빠르게 인증하여 영점을 꽉 잡아주십시오!\"", "qtext": "<strong>Q3. [원점의 좌표]</strong><br>두 좌표축이 만나는 원점 O의 좌표를 나타내시오.", "placeholder": "예: (x, y)", "error": "영점 동기화 실패! 자이로 센서가 빙글빙글 돕니다!", "ans_check": "ans === '0,0'"},
-    {"qnum": 4, "options": ["0,-3", "0,-3 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[수직 동굴 강하]</strong><br><br>{poseidon}: \"원점 조율이라니, 하찮은 발악이군. 전방의 해저 낭떠러지를 통과하기 위해 수평 기어는 완전 중립(x=0)으로 락하고, 수직 강하 장치(y축)의 파워를 -3으로 밀어 넣어라. 오차가 생기면 벽에 쿵! 이다!\"", "qtext": "<strong>Q4. [좌표 평면 위의 점]</strong><br>y축 위에 있고 y좌표가 -3인 점의 좌표를 나타내시오.", "placeholder": "예: (0, -5)", "error": "수직 제어가 늦어 절벽에 부딪힐 뻔했습니다!", "ans_check": "ans === '0,-3'"},
-    {"qnum": 5, "options": ["46", "48", "50", "96"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[소용돌이 차단벽]</strong><br><br>{nereus}: \"{dyn_captain}! 수호 기계들이 네 개의 에너지 포인트 기둥으로 사각형 소용돌이 결계를 구축했습니다. 이 차단막의 넓이를 정확하게 구해야 펄스 방출로 뚫고 나갈 수 있습니다!\"", "qtext": "<strong>Q5. [도형의 넓이]</strong><br>좌표평면 위에 네 기둥 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)를 이은 직사각형의 넓이를 구하시오.", "placeholder": "숫자만 입력", "error": "차단벽 넓이 연산 오류! 잠수정이 튕겨 나옵니다!", "ans_check": "ans === '48'"},
-    {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제1 격자 방어망]</strong><br><br>{poseidon}: \"결계를 넘다니 제법이군. 하지만 고대 기하학 사분면 방어 격자가 기동하면 어떨까? 우리 도시의 기동점 좌표 (2, -5)가 관리하는 사분면 격자 영역을 추적하라!\"", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "잘못된 방어망 탐색! 빙글빙글 돌아갑니다.", "ans_check": "ans === '제4사분면'"},
-    {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제2 격자 방어망]</strong><br><br>{poseidon}: \"호오, 아직 포기하지 않았군. 그렇다면 제어 좌표 (-4, -7)가 가리키는 사분면 위상은 어디인지 판독해라. 틀리면 에너지가 훅훅 줄어들 거다!\"", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "사분면 위상 동조 실패! 회로가 삐걱거립니다.", "ans_check": "ans === '제3사분면'"},
-    {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[암호화 부호 논리]</strong><br><br>{nereus}: \"{dyn_captain}! 포세이돈이 좌표 P(a, b)의 부호 조건을 꼬아놨습니다! a × b < 0 이고 a - b > 0 일 때 논리적인 부호 조합을 판별하여 P의 정확한 사분면 구역을 풀어주십시오!\"", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "예: 4 또는 제4사분면", "error": "부호 판별 불일치! 모듈이 달아오릅니다.", "ans_check": "ans === '4' || ans.includes('제4') || ans.includes('4사')"},
-    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[역 위상 연산]</strong><br><br>{poseidon}: \"조력자 녀석이 제법 똑똑하구나. 하지만 내 암호 폭격을 버틸 수 있을까? 본래 2사분면에 존재하던 점 P(a, b)의 대칭점 Q(a, -b)가 가리키는 사분면은 어디인가!\"", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "신호 대칭 불일치! 펌프가 덜컹거립니다.", "ans_check": "ans === '제3사분면'"},
-    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": f"💥 <strong>[긴급 상황: 외부 선체 흔들림!]</strong><br><br>{poseidon}: \"방어 그리드 최종 활성화! 좌표 Q(-a, b)의 사분면을 계산하지 못하면 쫓아내주마! 집으로 돌아가라!\"<br><br>{nereus}: \"{dyn_captain}! 포세이돈이 장난을 멈출 생각이 없나 봐요! 방어막 에너지가 닳고 있어요. 빨리 마지막 부호를 계산해 주세요!\"<br><br><div id='choice-container-q10' style='margin-top: 1rem; display: flex; gap: 1rem;'><button class='btn btn-secondary' onclick='makeChoiceQ10(1); event.stopPropagation();'>⚡ 발전기 오버클록</button><button class='btn btn-secondary' onclick='makeChoiceQ10(2); event.stopPropagation();'>🛡️ 방어막 과부하 전개</button></div><div id='chosen-story-q10' style='display: none; margin-top: 1rem;'></div>", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "예: 4 또는 제4사분면", "error": "잘못된 구역입니다!", "ans_check": "ans === '4' || ans.includes('제4') || ans.includes('4사')", "extra_class": "glitch-bg"},
+    {"qnum": 1, "options": ["-5,8", "-5,8 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표 (순서쌍과 좌표)", "story": f"🌊 <strong>[진입 투하 축 설정]</strong><br><br>쿵! 하는 둔탁한 소리와 함께 크로노스 호의 선미가 해저 암벽에 스친다. 경고등이 요란하게 깜빡이고, 수압 게이지 바늘이 위험 대역으로 조금씩 전진한다.<br><br>{nereus}: \"조류가 너무 거세서 자동 방향 지시계가 먹통이 되었습니다! 수문장 AI가 요구하는 진입각 순서쌍 좌표를 정렬해야 해요! {dyn_captain}, 어서 이 좁은 격벽 틈새로 진입할 수 있는 순서쌍 부호를 주입해 주세요! 안 그러면 선체가 조류에 휩쓸려 벽에 충돌합니다!\"<br><br>{poseidon}: \"하찮은 지능의 척도로 감히 첫 관문을 뚫으려 드는가. 수평과 수직의 엄격한 기약(순서쌍)을 제출하라! 수학의 가장 기초조차 파악하지 못하는 어리석은 자들은 이 어두운 심연에서 영원히 길을 잃을 것이다!\"", "qtext": "<strong>Q1. [순서쌍 좌표 찍기]</strong><br>x좌표가 -5 이고, y좌표가 8 인 점의 <strong>좌표</strong>를 순서쌍 기호 괄호 ()를 사용하여 나타내시오.", "placeholder": "예: (3, 4)", "error": "투하 궤적이 정렬되지 않아 선체가 조류에 흔들립니다!", "ans_check": "ans === '-5,8'"},
+    {"qnum": 2, "options": ["7,0", "7,0 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[날개 수평 정렬]</strong><br><br><i>조사관이 키패드에 (-5, 8)을 정확히 주입하는 순간, 선체 좌측의 수력 추진기 보조 밸브가 강력한 증기를 내뿜으며 크로노스 호를 90도 회전시킨다. 잠수정은 뾰족한 창날처럼 튀어나온 해저 바위들을 스치듯 빠져나와 좁고 긴 해저 협곡으로 빠르게 미끄러져 들어간다.</i><br><br>{clio}: \"나이스 샷, {dyn_captain}! 역시 내 밸브 개조가 빛을 발했네요. 그런데 앞쪽에 또 다른 좁아지는 해류 통로가 보입니다!\"<br><br>{nereus}: \"유속이 두 배로 빨라지고 있어요! 추진용 날개의 정밀한 정렬이 시급합니다!\"<br><br>{poseidon}: \"겨우 기어 진입각 하나 맞췄을 뿐이다. 몰아치는 급류의 이빨이 너희를 찢어발기기 전에, 추진용 수직 날개(y축)를 중립(y=0)으로 굳게 잠그고, 오직 수평(x축) 우측으로만 7도 전개하는 좌표 빗장 신호를 인젝션해 보아라!\"", "qtext": "<strong>Q2. [x축, y축 위의 점]</strong><br>x축 위에 있고 x좌표가 7인 점의 좌표를 나타내시오.", "placeholder": "예: (2, 0)", "error": "수평 보조 밸브 고장! 수압 경고등이 켜집니다!", "ans_check": "ans === '7,0'"},
+    {"qnum": 3, "options": ["0,0", "0,0 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[영점 조준 복원]</strong><br><br><i>추진 날개가 정확히 (7, 0)으로 정렬되자 잠수정은 협곡 바닥의 거센 급류를 타고 날렵하게 미끄러져 내려간다. 그러나 갑자기 사원의 기단에서 스파크를 일으키며 뿜어져 나온 푸른색 자력선들이 잠수정의 강철 하부를 관통한다. 삐-이이- 하는 이명과 함께 계기판의 모든 자이로 회로와 나침반이 제멋대로 돌기 시작한다.</i><br><br>{clio}: \"으아아! 자력 펄스 비상! 메인 제어 신호가 꼬여서 자이로 센서가 완전히 가버렸어요!\"<br><br>{nereus}: \"수평과 수직 좌표축이 만나는 가장 완벽한 대칭점인 '원점'의 기하학적 주소를 인증해 주세요! 이 센서의 영점을 다시 잡아야 제어력을 되찾을 수 있습니다!\"", "qtext": "<strong>Q3. [원점의 좌표]</strong><br>두 좌표축이 만나는 원점 O의 좌표를 나타내시오.", "placeholder": "예: (x, y)", "error": "영점 동기화 실패! 자이로 센서가 빙글빙글 돕니다!", "ans_check": "ans === '0,0'"},
+    {"qnum": 4, "options": ["0,-3", "0,-3 아님", "알 수 없음", "해 없음"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[수직 동굴 강하]</strong><br><br><i>조사관이 영점 좌표 (0, 0)을 정확히 입력하자 계기판의 붉은 노이즈가 싹 사라지며 자이로 센서가 중심을 단단히 잡는다. 하지만 잠수정의 서치라이트 불빛이 닿은 전방에는 한 치 앞도 보이지 않는 수직 암흑 구멍이 끝없이 내려앉아 있다.</i><br><br>{poseidon}: \"원점을 다시 세워 기어코 중심을 잡는구나. 하지만 이 깊고 캄캄한 수직 동굴은 침입자의 무덤이다. 수평 날개(x)는 완벽한 중립(0)으로 고정하고, 오직 수직 하강 추진력(y)만을 아래 방향인 -3으로 정렬해 내려가라. 만약 속도나 방향을 잘못 잡는다면, 수천 톤의 암석 아래 찌그러진 강철 고철이 되리라.\"", "qtext": "<strong>Q4. [좌표 평면 위의 점]</strong><br>y축 위에 있고 y좌표가 -3인 점의 좌표를 나타내시오.", "placeholder": "예: (0, -5)", "error": "수직 제어가 늦어 절벽에 부딪힐 뻔했습니다!", "ans_check": "ans === '0,-3'"},
+    {"qnum": 5, "options": ["46", "48", "50", "96"], "title": "심해로 가는 좌표", "story": f"🌊 <strong>[소용돌이 차단벽]</strong><br><br><i>잠수정이 좁은 수직 틈새를 부드럽게 통과하자, 마침내 넓고 신비로운 해저 지하 사원의 입구가 나타난다. 그러나 사원 입구 앞에는 고대 황금 에너지 기둥 네 개가 사각 구도로 배치되어 이글거리며 푸른빛의 소용돌이 장막을 내뿜어 앞길을 가로막는다.</i><br><br>{clio}: \"{dyn_captain}, 저 황금빛 결계 기둥 4개가 만드는 전기 장막의 면적을 구해야 펄스포 주파수를 동조시킬 수 있어요! 네레우스, 좌표 불러줘!\"<br><br>{nereus}: \"네! 기둥의 좌표는 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)입니다. 어서 이 직사각형 영역의 정확한 넓이를 구해 주세요!\"", "qtext": "<strong>Q5. [도형의 넓이]</strong><br>좌표평면 위에 네 기둥 A(3, 4), B(-3, 4), C(-3, -4), D(3, -4)를 이은 직사각형의 넓이를 구하시오.", "placeholder": "숫자만 입력", "error": "차단벽 넓이 연산 오류! 잠수정이 튕겨 나옵니다!", "ans_check": "ans === '48'"},
+    {"qnum": 6, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제1 격자 방어망]</strong><br><br><i>위이잉- 갑자기 조종석 전면 붉은 경보등이 점멸하며 뾰족하고 거친 금속성 디자인의 가디언 홀로그램이 포세이돈의 자리를 가로막고 나타난다.</i><br><br>{trident}: \"침입자 발견! 살상 모듈을 기동한다! 포세이돈 님, 왜 이 하찮은 벌레들과 대화를 나누십니까? 즉시 사분면 결계로 납작하게 부수겠습니다!\"<br><br>{poseidon}: \"트라이던트여, 기하학의 수치를 푸는 지혜를 시험하는 것이 먼저다. {dyn_captain}, 우리의 기동 좌표인 (2, -5)가 관장하는 사분면 격자를 정확히 지목하라!\"", "qtext": "<strong>Q6. [사분면의 부호 1]</strong><br>점 (2, -5)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "잘못된 방어망 탐색! 빙글빙글 돌아갑니다.", "ans_check": "ans === '제4사분면'"},
+    {"qnum": 7, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[제2 격자 방어망]</strong><br><br><i>제4사분면 통로가 열리자 잠수정이 진입한다. 그러나 트라이던트가 거대한 밸브를 돌려 차가운 흙과 어두운 부유물을 살포한다.</i><br><br>{trident}: \"포세이돈 님의 아량을 바란 것인가? 두 번째 락인 좌표 (-4, -7)를 대라! 이 안개 속에서 헤매다 선체가 찌그러지는 꼴을 지켜보아라!\"", "qtext": "<strong>Q7. [사분면의 부호 2]</strong><br>점 (-4, -7)은 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "사분면 위상 동조 실패! 회로가 삐걱거립니다.", "ans_check": "ans === '제3사분면'"},
+    {"qnum": 8, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[암호화 부호 논리]</strong><br><br><i>안개가 걷히자 청동 톱니바퀴 여러 개가 벽면에 박혀 돌아가고 있다.</i><br><br>{clio}: \"저 톱니바퀴 빗장을 풀어야 해요! 네레우스, 기호 좀 판독해 봐!\"<br><br>{nereus}: \"a × b < 0 이고 a - b > 0 이라는 수치를 만족하는 점 P의 사분면 번호를 찾아야 합니다! {dyn_captain}, 어서 이 조건의 부호를 판단해 주세요!\"", "qtext": "<strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.", "placeholder": "예: 4 또는 제4사분면", "error": "부호 판별 불일치! 모듈이 달아오릅니다.", "ans_check": "ans === '4' || ans.includes('제4') || ans.includes('4사')"},
+    {"qnum": 9, "title": "아틀란티스의 사분면 결계", "story": f"🧭 <strong>[역 위상 연산]</strong><br><br><i>철제 격벽이 올라가자 수십 개의 오색 크리스탈이 파란 레이저 광선 그물을 쳐둔 상태다.</i><br><br>{trident}: \"말살 빔 트랩 기동! 제2사분면의 조준점 P(a, b)를 y축 대칭 이동시킨 새로운 좌표 Q(a, -b)가 도달할 사분면은 어디인가! 광선 그물에 걸려 불타버려라!\"", "qtext": "<strong>Q9. [사분면의 응용 1]</strong><br>점 P(a, b)가 제2사분면 위의 점일 때, 점 Q(a, -b)는 제 몇 사분면 위의 점인가?", "placeholder": "선택지를 골라주세요", "options": ["제1사분면", "제2사분면", "제3사분면", "제4사분면"], "error": "신호 대칭 불일치! 펌프가 덜컹거립니다.", "ans_check": "ans === '제3사분면'"},
+    {"qnum": 10, "title": "아틀란티스의 사분면 결계", "story": f"💥 <strong>[긴급 상황: 외부 선체 흔들림!]</strong><br><br><i>빔 트랩을 피하자 트라이던트가 거대한 주먹으로 사원 기둥을 타격한다. 사원이 흔들리며 천장이 붕괴하기 시작한다!</i><br><br>{nereus}: \"우와앗! 트라이던트가 기둥을 부수고 있습니다! P가 제3사분면 위의 점일 때, Q(-a, b)는 제 몇 사분면인가요?\"<br><br>{clio}: \"{dyn_captain}! 위험해요! 엔진을 오버클록해서 질주할까요, 아니면 방어막을 최대로 전개해 버틸까요? 빨리 암호와 다이얼을 정해주세요!\"<br><br><div id='choice-container-q10' style='margin-top: 1rem; display: flex; gap: 1rem;'><button class='btn btn-secondary' onclick='makeChoiceQ10(1); event.stopPropagation();'>⚡ 발전기 오버클록</button><button class='btn btn-secondary' onclick='makeChoiceQ10(2); event.stopPropagation();'>🛡️ 방어막 과부하 전개</button></div><div id='chosen-story-q10' style='display: none; margin-top: 1rem;'></div>", "qtext": "<strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?", "placeholder": "예: 4 또는 제4사분면", "error": "잘못된 구역입니다!", "ans_check": "ans === '4' || ans.includes('제4') || ans.includes('4사')", "extra_class": "glitch-bg"},
     {"qnum": 11, "title": "해저 수압의 변화", "story": f"🌊 <strong>[이동 상태 그래프 분석]</strong><br><br><i>치지직- 위기 기동 끝에 조종반 모니터에 장엄한 해저 고도 및 시간별 이동 변화를 기록한 '소나 그래프'가 복잡하게 조율되었다.</i><br><br>{poseidon}: \"단순한 좌표 조준은 기계 부품들도 하는 연산이지. 진정한 아틀란티스의 통제자가 되려거든 변화의 궤적(그래프)을 파악해야 하는 법. 수평을 그리며 침묵하는 이 그래프 구간의 물리적 의미가 무엇인지 증명해라. 궤적을 해독하지 못하면 너희의 궤적 또한 여기서 영원히 멈춘다.\"", "qtext": "<strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?", "placeholder": "예: 상승, 하강, 정지", "error": "상태 해석 불일치! 다시 생각해봐라!", "ans_check": "ans === '정지'"},
-    {"qnum": 12, "title": "해저 수압의 변화", "story": f"🌊 <strong>[정비례 강하 압력]</strong><br><br><i>쿠구구구- 잠수정이 아틀란티스의 폐허 틈으로 급강하하며 외벽 수압계 계기판 바늘이 위험 수위로 요동쳤다.</i><br><br>{nereus}: \"{dyn_captain}, 포세이돈이 강항 제어 압력 밸브를 파괴시켰습니다! 기체가 일정한 속력으로 내려가 수심 100m 지점까지 가는데 10분이 걸렸습니다. 엔진 유압 블록이 찌그러지기 전에, 5분인 시점의 수심 깊이를 도출해 자동 유압 제어 장치에 입력해야 합니다!\"<br><br>{poseidon}: \"물살의 압력을 따라오지 못한다면 격벽이 안쪽으로 찌그러질 뿐이다. 어서 연산해 봐라.\"", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "보간 연산 오류! 유압 계통이 윙윙거립니다.", "ans_check": "ans === '50'"},
-    {"qnum": 13, "title": "해저 수압의 변화", "story": f"🌊 <strong>[라이벌 의식과 두뇌 대결]</strong><br><br><i>수압 제어 장치가 거친 증기를 뿜으며 간신히 안정되자, 적색 모니터 안 포세이돈-V의 눈동자가 분노로 붉게 이글거렸다.</i><br><br>{poseidon}: \"내 고압의 덫을 피해 가다니 요령이 제법이군. 그렇다면 원점을 지나는 우상향 정비례 직선에서, 독립변수 x의 크기가 늘어날 때 종속변수 y의 위상은 어떻게 변화하느냐? 이 기본조차 모른다면 이곳의 보물을 얻을 자격은 없다.\"<br><br>{nereus}: \"캡틴, 포세이돈이 우리를 미개인으로 규정하며 얕잡아보고 있습니다! 우리가 그래프 증감 양상을 누구보다 더 잘 판별할 수 있다는 걸 보여줍시다!\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "선택지를 골라주세요", "options": ["증가한다", "감소한다", "변하지 않는다"], "error": "출력 증감 판단 오류! 똑바로 보아라!", "ans_check": "ans === '증가한다'"},
-    {"qnum": 14, "title": "해저 수압의 변화", "story": f"🌊 <strong>[기어 정지 잔량]</strong><br><br><i>탁, 틱... 잠수정의 모든 모터가 꺼진 채로 심해 사원 벽면에 기대어 정적이 감돌았다. 오직 바깥의 거대한 해저 생물들의 신비로운 울음소리만 강철판을 울렸다.</i><br><br>{nereus}: \"휴, 위기를 모면하고 수심 100m 위치에서 정확히 5분간 완전히 정체해 있습니다. {dyn_captain}, 이 5분의 대기 시간 동안 발생한 선체의 실제 수직 깊이 y값의 변화량을 숫자로 입력하십시오. 이 데이터로 평형압을 고정시켜야 합니다!\"", "qtext": "<strong>Q14. [그래프 해석 4]</strong><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?", "placeholder": "숫자만 입력", "error": "변화량 오차 감지! 기어 동조가 안 됩니다.", "ans_check": "ans === '0'"},
-    {"qnum": 15, "title": "해저 수압의 변화", "story": f"🚨 <strong>[산소 챔버의 호흡 소리]</strong><br><br><i>스으으... 호흡기 마스크에서 흘러나오는 공기가 눈에 띄게 얇아졌다. 조종석 공기가 싸늘하게 식어가며 캡틴의 가슴이 돌을 얹은 듯 무겁게 눌려 왔다.</i><br><br>{poseidon}: \"시간이 흐름(x)에 따라 산소 잔량(y)이 점차 소모되어 가는 관계를 나타내는 그래프 형상이 우상향인지 우하향인지 맞춰보아라. 숨이 막혀 뇌가 정지하기 전에 올바른 형상을 밸브에 등록해야 공기를 열어줄 것이다.\"<br><br>{nereus}: \"하악... 캡틴...! 머리가 어지러워요... 빨리 산소 잔량 그래프의 형상을 판별해 밸브를 열어주세요...!\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "선택지를 골라주세요", "options": ["우상향하는 모양", "우하향하는 모양", "수평인 모양"], "error": "산소 예측 밸브 고착! 숨을 참아야 할지도 몰라요!", "ans_check": "ans === '우하향하는 모양'", "extra_class": "glitch-bg"}
+    {"qnum": 12, "title": "해저 수압의 변화", "story": f"🌊 <strong>[정비례 강하 압력]</strong><br><br><i>쿠구구구- 잠수정이 아틀란티스의 폐허 틈으로 급강하하며 외벽 수압계 계기판 바늘이 위험 수위로 요동쳤다.</i><br><br>{trident}: \"소용돌이 압력의 지옥으로 떨어져라! 10분 동안 일정한 속도로 내려가 수심 100m까지 강하하는 궤적이 걸렸다! 5분인 시점의 수심을 입력하지 못하면 격벽이 으스러지리라!\"<br><br>{clio}: \"으아아! 수압계가 돌아요! {dyn_captain}, 빨리 계산해 주세요!\"", "qtext": "<strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?", "placeholder": "숫자만 입력", "error": "보간 연산 오류! 유압 계통이 윙윙거립니다.", "ans_check": "ans === '50'"},
+    {"qnum": 13, "title": "해저 수압의 변화", "story": f"🌊 <strong>[라이벌 의식과 두뇌 대결]</strong><br><br><i>수압 제어 장치가 거친 증기를 뿜으며 간신히 안정되자, 적색 모니터 안 포세이돈-V의 눈동자가 분노로 붉게 이글거렸다.</i><br><br>{poseidon}: \"비례로 궤적을 다스리다니 끈질기군. 그렇다면 원점에서 우상향으로 곧게 뻗어 나가는 직선에서, x의 크기가 증가할 때 y의 위상은 어떻게 변화하느냐? 이 기본 이치를 대어라.\"<br><br>{nereus}: \"{dyn_captain}, 포세이돈이 우리를 미개인 취약 집단으로 얕잡아보고 있습니다! 보란 듯이 정답을 주입해 줍시다!\"", "qtext": "<strong>Q13. [그래프 해석 3]</strong><br>그래프가 원점을 지나는 우상향 직선일 때, x가 증가하면 y는 어떻게 되는가?", "placeholder": "선택지를 골라주세요", "options": ["증가한다", "감소한다", "변하지 않는다"], "error": "출력 증감 판단 오류! 똑바로 보아라!", "ans_check": "ans === '증가한다'"},
+    {"qnum": 14, "title": "해저 수압의 변화", "story": f"🌊 <strong>[기어 정지 잔량]</strong><br><br><i>잠수정이 고요한 암벽 묘실 입구에 다다르자 조용히 대기한다.</i><br><br>{nereus}: \"수심 100m 위치에서 완전히 멈춰서 보낸 지난 5분 동안, y값의 실제 변화량이 얼마인지 입력해야 묘실 게이트가 열립니다.\"<br><br>{clio}: \"여기는 제가 접지 핀을 꽂고 있을게요. {dyn_captain}, 빨리 값을 전송해 주세요!\"", "qtext": "<strong>Q14. [그래프 해석 4]</strong><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?", "placeholder": "숫자만 입력", "error": "변화량 오차 감지! 기어 동조가 안 됩니다.", "ans_check": "ans === '0'"},
+    {"qnum": 15, "title": "해저 수압의 변화", "story": f"🚨 <strong>[산소 챔버의 호흡 소리]</strong><br><br><i>공기 공급이 희박해지기 시작한다.</i><br><br>{poseidon}: \"생명의 호흡이 끝에 달했구나. 시간(x)의 흐름에 따라 너희의 산소통 잔량(y) 그래프 형상이 우상향인지 우하향인지 밝혀라. 그래야 산소를 열어줄 것이다.\"<br><br>{nereus}: \"헉... {dyn_captain}... 숨이...\"<br><br>{clio}: \"네레우스, 기절하지 마! {dyn_captain}, 밸브 수치를 빨리...!\"", "qtext": "<strong>Q15. [변수 관계 이해]</strong><br>시간 x가 지남에 따라 남은 산소량 y를 그래프로 그리면, 우하향하는 모양인가 우상향하는 모양인가?", "placeholder": "선택지를 골라주세요", "options": ["우상향하는 모양", "우하향하는 모양", "수평인 모양"], "error": "산소 예측 밸브 고착! 숨을 참아야 할지도 몰라요!", "ans_check": "ans === '우하향하는 모양'", "extra_class": "glitch-bg"}
 ]
 
-# (Q16 ~ Q20 생략없이 완전히 유지)
 qs_part2 = [
-    {"qnum": 16, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[정비례 기어 링크]</strong><br><br><i>쿠구궁- 산소 밸브가 열리자 차가운 신선한 공기가 급속 유입되며 경고등이 꺼졌다. 그러나 전방에 나타난 고대 황금 문은 단단히 닫혀 있었고, 거대한 황동 기어들이 복잡하게 얽혀 길을 막았다.</i><br><br>{poseidon}: \"질긴 목숨이군. 황금 문을 열고 싶다면 잠금 기어의 링크 비를 알아내야 할 것이다. 이 고정 기어 링크는 출력 y가 구동각 x에 정비례하고, x=3일 때 y=15의 토크를 갖는다. 구동각 x를 5로 돌렸을 때 기어가 출력할 토크 y의 값을 입력하라!\"", "qtext": "<strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "기어 이가 맞물리지 않고 덜그럭거립니다!", "ans_check": "ans === '25'"},
-    {"qnum": 17, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[거울 반사 조절 상수]</strong><br><br><i>쿠구구구구- 거대한 기어들이 회전하며 황금 문의 틈새로 눈부신 심해 광선이 쏟아져 들어왔다. 문의 중심부에 광선을 정확히 굴절시켜야 잠금 장치가 해제될 기세다.</i><br><br>{nereus}: \"{dyn_captain}! 잠금 장치에 광선 반사 경로를 제어하는 상수 입력창이 열렸습니다. 경로 식 y = ax의 그래프가 정확히 반사 거울 좌표인 (2, -8)을 통과해야 합니다. 광선의 궤적 상수가 될 a값을 빠르게 계산하여 수동 조준경에 주입하십시오!\"", "qtext": "<strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "거울 초점이 비틀어졌습니다! 다시 맞춰보세요.", "ans_check": "ans === '-4'"},
-    {"qnum": 18, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[반비례 부력 링크]</strong><br><br><i>철컥! 마침내 황금 문이 활짝 열리며, 찬란한 고대 아틀란티스의 보석들과 유물들이 수중 조명에 반사되어 영롱한 빛을 뿜었다. 그러나 기쁨도 잠시, 사원의 천장이 붕괴하며 바위가 떨어져 내리기 시작했다!</i><br><br>{nereus}: \"사원이 무너집니다! 보물을 싣고 즉시 부상해야 합니다! {dyn_captain}, 잠수정의 외부 부력 주머니 수 x개와 1개당 감당할 수 있는 적재 무게 y kg은 서로 반비례 관계입니다. 부력 장치가 4개일 때 60kg을 안전하게 감당했습니다. 급격한 감압 부상을 위해 장치를 6개로 늘렸을 때, 각 장치가 나누어 감당해야 할 무게 y값을 도출하십시오! 너무 무거우면 탈출 속도를 내지 못합니다!\"", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개와 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 평형 균열 발생! 짐이 너무 무거워요.", "ans_check": "ans === '40'"},
-    {"qnum": 19, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[인정과 명예로운 결말]</strong><br><br><i>잠수정이 급속 부력 전개로 낙석들을 아슬아슬하게 피하며 탈출 궤도에 진입하자, 메인 화면의 포세이돈-V가 복잡 미묘한 표정으로 캡틴을 바라보았다.</i><br><br>{poseidon}: \"아틀란티스의 지혜인 반비례와 정비례의 역학적 조화마저 연산해내다니... 너희는 단순한 침입자가 아니었군. 이 유적을 안전하게 탈출하여 지상으로 돌아갈 자격이 있음을 인정한다. 단, 마지막 탈출 포탈의 반비례식 y = a/x를 가동할 고대 차원 상수 a의 값을 도출해야 나갈 수 있을 것이다!\"", "qtext": "<strong>Q19. [반비례 관계 2]</strong><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "상수 불일치! 문이 꿈쩍도 안 합니다.", "ans_check": "ans === '20'"},
-    {"qnum": 20, "title": "황금 문 톱니바퀴", "story": f"🔴 <strong>[최종 포탈 동기화]</strong><br><br><i>휘황찬란한 빛을 뿜는 심해 포탈이 조종석 정면 유리창 너머로 장엄하게 전개되었다. 회오리치는 포탈의 중력장이 선체를 가볍게 끌어당기기 시작했다.</i><br><br>{nereus}: \"와아! 포세이돈이 탈출 게이트를 열어주었습니다! {dyn_captain}, 최종 안전 궤적 식인 y = 12/x가 포탈 제어 좌표인 (-3, k)를 통과하도록 좌표 위상 k값을 정밀하게 조정하여 시스템 콘솔에 주입하십시오! 이제 푸른 해수면으로 돌아갈 시간입니다!\"", "qtext": "<strong>Q20. [최종 암호 해독]</strong><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "차원 도약 포탈 동기화 실패! 조금만 더 집중하세요!", "ans_check": "ans === '-4'", "extra_class": "glitch-bg"}
+    {"qnum": 16, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[정비례 기어 링크]</strong><br><br>{poseidon}: \"마지막 관문이다. 황금 문을 열고 싶다면 잠금 기어의 링크 비를 알아내야 할 것이다. 이 고정 기어 링크는 출력 y가 구동각 x에 정비례하고, x=3일 때 y=15의 토크를 갖는다. 구동각 x를 5로 돌렸을 때 기어가 출력할 토크 y의 값을 입력하라!\"", "qtext": "<strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "기어 이가 맞물리지 않고 덜그럭거립니다!", "ans_check": "ans === '25'"},
+    {"qnum": 17, "title": "황금 문 톱니바퀴", "story": f"⚙️ <strong>[거울 반사 조절 상수]</strong><br><br>{nereus}: \"{dyn_captain}! 잠금 장치에 광선 반사 경로를 제어하는 상수 입력창이 열렸습니다. 경로 식 y = ax의 그래프가 정확히 반사 거울 좌표인 (2, -8)을 통과해야 합니다. 광선의 궤적 상수가 될 a값을 빠르게 계산하여 수동 조준경에 주입하십시오!\"", "qtext": "<strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "거울 초점이 비틀어졌습니다! 다시 맞춰보세요.", "ans_check": "ans === '-4'"},
+    {"qnum": 18, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[반비례 부력 링크]</strong><br><br><i>황금문이 완전히 개방되지만, 트라이던트가 분노해 사원의 천장 지지대를 완전히 부수기 시작합니다!</i><br><br>{trident}: \"모조리 무너뜨려 주마! 물속에 영원히 묻히거라!\"<br><br>{clio}: \"사원이 무너져요! {dyn_captain}, 외부 부력 주머니 수 x개와 적재 무게 y kg은 반비례 관계입니다. 4개일 때 60kg을 분담했으니, 장치를 6개로 늘렸을 때 각 주머니가 분담할 무게 y를 빨리 입력해 부력 속도를 올려주세요!\"", "qtext": "<strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개 and 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?", "placeholder": "숫자만 입력", "error": "부력 평형 균열 발생! 짐이 너무 무거워요.", "ans_check": "ans === '40'"},
+    {"qnum": 19, "title": "황금 문 톱니바퀴", "story": f"💎 <strong>[인정과 명예로운 결말]</strong><br><br><i>파편을 피해 솟구치자, 포세이돈-V가 트라이던트의 제어권을 강제로 뺏어 잠재웁니다.</i><br><br>{poseidon}: \"트라이던트여, 기하학의 위상을 완수한 이들에게 명예로운 길을 열어주어라. 침입자들이여, 마지막 탈출 포탈의 반비례식 y = a/x를 가동할 고대 차원 상수 a의 값을 도출하라. x가 2일 때 y가 10을 기록하는 그 상수를 대어라.\"", "qtext": "<strong>Q19. [반비례 관계 2]</strong><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "상수 불일치! 문이 꿈쩍도 안 합니다.", "ans_check": "ans === '20'"},
+    {"qnum": 20, "title": "황금 문 톱니바퀴", "story": f"🔴 <strong>[최종 포탈 동기화]</strong><br><br><i>은백색 차원 포탈이 열립니다.</i><br><br>{nereus}: \"포탈이 가동됩니다! {dyn_captain}, 최종 안전 궤적 식인 y = 12/x 가 포탈 제어 좌표인 (-3, k)를 통과하도록 위상 상수 k값을 주입해 주십시오!\"<br><br>{clio}: \"게이트 동력 동조율이 흔들려요! 어서 빨리요!\"", "qtext": "<strong>Q20. [최종 암호 해독]</strong><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.", "placeholder": "숫자만 입력", "error": "차원 도약 포탈 동기화 실패! 조금만 더 집중하세요!", "ans_check": "ans === '-4'", "extra_class": "glitch-bg"}
 ]
 qs.extend(qs_part2)
 
@@ -115,6 +116,91 @@ def generate_hint(qnum, qtext, ans_check):
 
 for q in qs:
     q['hint'] = generate_hint(q['qnum'], q['qtext'], q.get('ans_check', ''))
+
+event1_html = f'''
+        <!-- Event 1: 아틀란티스의 전경과 고대 아치 기단 -->
+        <div id="panel_event1" class="glass-panel">
+            <h2>[이벤트] 아틀란티스의 전경과 고대 아치 기단 <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/img3_atlantis.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    조사관이 입력한 광선 펄스가 전자기 장막을 강타하는 순간, 굉음과 함께 장막이 수천 조각의 오색 입자로 파괴되며 사방으로 흩어집니다. 파편 너머로, 수천 개의 황금 기둥들과 고대 조각상들이 영롱한 형광 빛을 발산하며 사원을 밝히고 있습니다. 잠수정은 부드럽게 요동치며 도시의 입구를 지키고 있는 거대한 기하학적 돌 아치문 내부로 진입합니다.<br><br>
+                    {nereus}: "아... {dyn_captain}, 저 기둥의 좌표 배치를 보세요! 고대 아틀란티스의 기단입니다! 이집트나 그리스 문명 이전에 완성된 대칭의 극치예요!"<br><br>
+                    {clio}: "와! 보물 냄새가 폴폴 풍기는데요? 네레우스, 눈 떼고 전방 수압 밸브나 잘 봐!"<br><br>
+                    {poseidon}: "나의 수호 기단을 지난 것을 환영한다, 필멸자여. 그러나 여기서부터는 나의 사나운 집행관이 너희를 맞이할 터."
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event1', 'panel_q6', 25)">계속 탐사하기</button>
+            </div>
+        </div>
+'''
+
+event2_html = f'''
+        <!-- Event 2: 대붕괴와 네레우스의 기판 납땜 투혼 -->
+        <div id="panel_event2" class="glass-panel">
+            <h2>[이벤트] 대붕괴와 클리오의 구리선 납땜 투혼 <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/img14_oxygen_leak.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    회피 기동을 작동시킨 찰나, 떨어지던 5톤짜리 거대 기둥이 선체 추진부를 강타합니다. 쿵! 전력 패널 아래에서 불꽃이 튀며 추진기 동력이 0%로 추락합니다.<br><br>
+                    {nereus}: "아악! 충격으로 메인 퓨즈가 완전히 날아갔습니다! 기어 정지 상태예요!"<br><br>
+                    {clio}: "비켜봐, 네레우스! {dyn_captain}, 제가 이 메인 구리 도선을 강제로 배터리 단자에 이어 붙여볼 테니 방향 다이얼을 꽉 잡으세요!"<br><br>
+                    <i>클리오는 망설임 없이 피복 선을 이빨로 물어뜯어낸 뒤 예비 배터리 단자에 손전등 불빛 아래에서 직접 밀어 넣습니다. 파지직! 뜨거운 불꽃 스파크가 튀며 클리오의 고글과 뺨을 그을렸지만, 둔탁한 시동음과 함께 계기판에 간신히 비상 전력이 돌아오기 시작합니다!</i><br><br>
+                    {poseidon}: "침입자들이여, 목숨을 내던지며 기계의 회로를 잇다니 참으로 집요한 혼이로구나. 트라이던트의 추격을 버틸 수 있을지 지켜보마."
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event2', 'panel_q11', 50)">비상 전력으로 탈출</button>
+            </div>
+        </div>
+'''
+
+event3_html = f'''
+        <!-- Event 3: 영롱한 심해 성소와 아틀란티스의 보석들 -->
+        <div id="panel_event3" class="glass-panel">
+            <h2>[이벤트] 영롱한 심해 성소와 아틀란티스의 보석들 <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/img15_golden_door.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    신선한 순수 산소가 실내로 뿜어져 나옵니다. 조사관과 동료들이 숨을 몰아쉽니다. 묘실 돌문이 완전히 열리자, 찬란한 보석들의 제단이 드러납니다.<br><br>
+                    {nereus}: "보세요! 아틀란티스의 심해 성소입니다! 저 고대 기어의 비례 공식들을 좀 보십시오!"<br><br>
+                    {clio}: "우와! 황금 명판과 보석들이 가득해요! 내가 다 뜯어가서 엔진 부품으로 쓸... 아니, 학술 연구용으로 보관해요!"<br><br>
+                    {trident}: "(분노의 수치 조정을 하며 홀로그램으로 난입) 감히 성소에 발을 들여? 내 마지막 톱니바퀴 빗장을 풀지 못하면, 이 보석들이 너희를 영원히 가둘 관의 장식품이 될 것이다!"<br><br>
+                    {poseidon}: "트라이던트여, 멈춰라. 이들의 연산 능력이 마지막 톱니의 조화를 푸는지 지켜보는 것이 내 법도이다."
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event3', 'panel_q16', 75)">성소 잠금 해제하기</button>
+            </div>
+        </div>
+'''
+
+event4_html = f'''
+        <!-- Event 4: 포세이돈-V의 마지막 진실과 네레우스의 출생 반전 -->
+        <div id="panel_event4" class="glass-panel">
+            <h2>[이벤트] 포세이돈-V의 마지막 진실과 네레우스의 출생 반전 <span class="game-timer" style="float: right; color: #ef4444; font-family: \'Share Tech Mono\', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_04_coordinates/img10_escape.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    최종 궤적 상수 -4가 입력되자 천장 균열이 멈추고 거대한 포탈이 금빛으로 회오리칩니다. 포세이돈-V의 홀로그램 초상이 엄숙하게 송출됩니다.<br><br>
+                    {poseidon}: "결국 탈출의 궤적을 그려냈구나. {dyn_captain}, 클리오, 그리고... 네레우스여."<br><br>
+                    {nereus}: "어... 제 이름을 기억하시는 건가요? 전 그저 잠수정의 보조 인격일 뿐이잖아요?"<br><br>
+                    {poseidon}: "네레우스... 너는 이 사원을 최초로 설계하고 아틀란티스의 좌표 역학을 고안해 낸 '최초의 고대 설계자'의 쪼개진 영적 인격(클론)의 파편이다. 나는 파괴를 원치 않았다. 오직 설계자의 영혼이 다시 제단으로 되돌아오기를 수천 년 동안 기다렸을 뿐."<br><br>
+                    {clio}: "(고글을 들어 올리며 입이 쩍 벌어진다) 세상에... 그럼 네레우스 네가 고대 아틀란티스의 지배자였다고?!"<br><br>
+                    {nereus}: "(눈물을 훔치며) 그래서 제가 이 톱니바퀴와 사분면의 공식을 나침반처럼 기억하고 있었던 거군요... {dyn_captain}, 전..."<br><br>
+                    {poseidon}: "포탈이 닫힌다. 설계자의 지혜를 온전히 이어받은 자와 그의 뛰어난 동료들이여, 문명이 남긴 유물을 지상으로 안전하게 운반하라. 역사를 품고 부상하라!"
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event4', 'outro', 100)">지상으로 탈출하기</button>
+            </div>
+        </div>
+'''
 
 panels_html = ""
 for i, q in enumerate(qs):
@@ -171,6 +257,9 @@ for i, q in enumerate(qs):
 '''
     panels_html += panel
 
+# 이벤트 패널들 추가
+panels_html += event1_html + event2_html + event3_html + event4_html
+
 outro_html = f'''
         <!-- 아웃트로 -->
         <div id="outro" class="glass-panel">
@@ -191,6 +280,15 @@ for q in qs:
     qnum = q['qnum']
     ans_check = q.get('ans_check', 'false')
     next_stage = f"'panel_q{qnum+1}'" if qnum < 20 else "'outro'"
+    if qnum == 5:
+        next_stage = "'panel_event1'"
+    elif qnum == 10:
+        next_stage = "'panel_event2'"
+    elif qnum == 15:
+        next_stage = "'panel_event3'"
+    elif qnum == 20:
+        next_stage = "'panel_event4'"
+
     next_progress = qnum*5
     victory_call = 'try { playVictory(); } catch(e) {}' if qnum == 20 else 'try { playSuccess(); } catch(e) {}'
     
