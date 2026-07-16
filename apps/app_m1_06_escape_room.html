@@ -629,7 +629,51 @@
     50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
     100% { box-shadow: inset 0 0 10px #ef4444; }
 }
+
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+
+        .radio-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+        .radio-label:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        input[type="radio"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
 </style>
+
 
 
 
@@ -702,8 +746,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q1. [다각형의 대각선 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 한 꼭짓점에서 그을 수 있는 대각선의 개수 공식은 n-3 입니다.')">💡 힌트</button><br>한 꼭짓점에서 그을 수 있는 대각선의 개수가 5개인 다각형의 이름을 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans1" placeholder="예: 육각형">
+                    
+                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="팔각형"> 팔각형
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="팔각형 아님"> 팔각형 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -726,8 +783,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q2. [다각형의 대각선 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 총 대각선 수 공식인 n(n-3)/2 에 10을 대입하여 계산합니다.')">💡 힌트</button><br>십각형 모양의 기둥 배치에서 모든 기둥끼리 서로 빛을 교차 연결하려고 한다. 총 대각선의 개수를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans2" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="37"> 37
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="33"> 33
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="70"> 70
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="35"> 35
+                    </label>
                     </div>
                 </div>
             </div>
@@ -750,8 +820,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q3. [삼각형의 외각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 삼각형의 한 외각의 크기는 그와 이웃하지 않는 두 내각의 크기의 합과 같습니다.')">💡 힌트</button><br>삼각형 반사판에서 두 내각이 각각 45도, 60도일 때, 나머지 한 내각의 외각의 크기를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans3" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="105"> 105
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="103"> 103
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="210"> 210
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="107"> 107
+                    </label>
                     </div>
                 </div>
             </div>
@@ -774,8 +857,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q4. [삼각형의 외각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 외각의 총합은 항상 360도입니다. 비례배분을 이용하여 가장 큰 비율(4)을 차지하는 외각을 구합니다.')">💡 힌트</button><br>삼각형의 세 외각의 비가 2:3:4일 때, 가장 큰 외각의 크기를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans4" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="160"> 160
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="162"> 162
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="158"> 158
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="320"> 320
+                    </label>
                     </div>
                 </div>
             </div>
@@ -798,8 +894,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q5. [다각형의 내각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: n각형의 내각의 총합 공식은 180 * (n-2) 입니다. 이 값이 900이 되는 n을 찾습니다.')">💡 힌트</button><br>내각의 크기의 합이 900도인 다각형의 꼭짓점의 개수를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans5" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="5"> 5
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="14"> 14
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="7"> 7
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="9"> 9
+                    </label>
                     </div>
                 </div>
             </div>
@@ -822,8 +931,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q6. [다각형의 외각의 합]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형이 몇 각형이든 상관없이 모든 외각의 크기의 총합은 항상 360도입니다.')">💡 힌트</button><br>모든 다각형의 외각의 크기의 합은 항상 일정합니다. 그 크기는 몇 도인가?
-                    <div class="input-group">
-                        <input type="text" id="ans6" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="720"> 720
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="362"> 362
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="358"> 358
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="360"> 360
+                    </label>
                     </div>
                 </div>
             </div>
@@ -846,8 +968,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q7. [정다각형의 외각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정n각형의 한 외각 크기는 360 / n 입니다. 이 값이 36이 되는 n을 구해 정다각형 이름을 적습니다.')">💡 힌트</button><br>한 외각의 크기가 36도인 정다각형의 이름을 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans7" placeholder="예: 정오각형">
+                    
+                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="정십각형"> 정십각형
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="정십각형 아님"> 정십각형 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -870,8 +1005,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q8. [정다각형의 내각 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정팔각형의 내각 총합인 180 * (8-2) = 1080도를 꼭짓점 개수인 8로 나누어 한 내각을 구합니다.')">💡 힌트</button><br>정팔각형의 한 내각의 크기를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans8" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="133"> 133
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="137"> 137
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="135"> 135
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="270"> 270
+                    </label>
                     </div>
                 </div>
             </div>
@@ -894,8 +1042,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q9. [정다각형의 내각 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 내각이 150도이면 한 외각은 30도입니다. 외각의 합이 360도이므로 정십이각형임을 구한 뒤 총 대각선 공식을 적용합니다.')">💡 힌트</button><br>한 내각의 크기가 150도인 정다각형의 대각선의 총 개수를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans9" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="52"> 52
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="56"> 56
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="108"> 108
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="54"> 54
+                    </label>
                     </div>
                 </div>
             </div>
@@ -918,8 +1079,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q10. [내각과 외각의 비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 내각과 한 외각의 합은 180도입니다. 이를 4:1로 비례배분하여 한 외각을 구하고 다각형 이름을 유추합니다.')">💡 힌트</button><br>한 내각과 한 외각의 크기의 비가 4:1인 정다각형의 이름을 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans10" placeholder="예: 정육각형">
+                    
+                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="정십각형"> 정십각형
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="정십각형 아님"> 정십각형 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -1613,7 +1787,7 @@ let totalWrongCount = 0;
 
         // Q1
         function checkQ1() {
-            const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '팔각형') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1625,7 +1799,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -1635,7 +1809,7 @@ let totalWrongCount = 0;
 
         // Q2
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '35') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1647,7 +1821,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -1657,7 +1831,7 @@ let totalWrongCount = 0;
 
         // Q3
         function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '105') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1669,7 +1843,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1679,7 +1853,7 @@ let totalWrongCount = 0;
 
         // Q4
         function checkQ4() {
-            const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '160') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1691,7 +1865,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1701,7 +1875,7 @@ let totalWrongCount = 0;
 
         // Q5
         function checkQ5() {
-            const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '7') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1713,7 +1887,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1723,7 +1897,7 @@ let totalWrongCount = 0;
 
         // Q6
         function checkQ6() {
-            const ans = cleanString(document.getElementById('ans6').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '360') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1735,7 +1909,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q6', 'panel_q6', 25);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1745,7 +1919,7 @@ let totalWrongCount = 0;
 
         // Q7
         function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '정십각형') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1757,7 +1931,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q7', 'panel_q6', 25);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1767,7 +1941,7 @@ let totalWrongCount = 0;
 
         // Q8
         function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '135') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1779,7 +1953,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q8', 'panel_q6', 25);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1789,7 +1963,7 @@ let totalWrongCount = 0;
 
         // Q9
         function checkQ9() {
-            const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '54') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1801,7 +1975,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q9', 'panel_q6', 25);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1811,7 +1985,7 @@ let totalWrongCount = 0;
 
         // Q10
         function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '정십각형') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1823,7 +1997,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q10', 'panel_q6', 25);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);

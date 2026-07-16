@@ -5,7 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>요정 숲의 불균형: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#07150f;--glass-bg:rgba(10,30,20,0.75);--glass-border:rgba(50,205,50,0.25);--accent:#32cd32;--accent-hover:#5cfc5c;--text-main:#f0fbf0;--text-muted:#9abfa0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(50,205,50,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(34,139,34,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(50,205,50,0.4);border-left:1px solid rgba(50,205,50,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(50,205,50,0.1),inset 0 0 20px rgba(50,205,50,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(50,205,50,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(10,20,15,0.5);border:1px solid rgba(50,205,50,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(50,205,50,0.05);border:1px dashed rgba(50,205,50,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(10,20,15,0.8);border:1px solid rgba(50,205,50,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(50,205,50,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(50,205,50,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(50,205,50,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
+    <style>:root{--bg-main:#07150f;--glass-bg:rgba(10,30,20,0.75);--glass-border:rgba(50,205,50,0.25);--accent:#32cd32;--accent-hover:#5cfc5c;--text-main:#f0fbf0;--text-muted:#9abfa0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(50,205,50,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(34,139,34,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(50,205,50,0.4);border-left:1px solid rgba(50,205,50,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(50,205,50,0.1),inset 0 0 20px rgba(50,205,50,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(50,205,50,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(10,20,15,0.5);border:1px solid rgba(50,205,50,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(50,205,50,0.05);border:1px dashed rgba(50,205,50,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(10,20,15,0.8);border:1px solid rgba(50,205,50,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(50,205,50,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(50,205,50,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(50,205,50,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
+        .radio-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+        .radio-label:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        input[type="radio"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -96,8 +118,18 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q2. [부등식의 해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>다음 중 $x=2$가 해인 부등식은?<br>(1) $2x - 1 &lt; 0$<br>(2) $3x \\ge 6$<br>(3) $-x &gt; 0$
-                    <div class="input-group">
-                        <input type="text" id="ans2" placeholder="예: (2) 또는 2">
+                    
+                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="$2x"> $2x
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="$3x"> $3x
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="$-x"> $-x
+                    </label>
                     </div>
                 </div>
             </div>
@@ -119,8 +151,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q3. [미만의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>$x$는 5 미만이다를 부등호로 나타내시오.
-                    <div class="input-group">
-                        <input type="text" id="ans3" placeholder="예: x<5">
+                    
+                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="X<5"> X<5
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="X<5 아님"> X<5 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -280,8 +325,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q10. [음수 나눗셈 연습]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>$-3x &gt; 9$ 양변을 -3으로 나누면 부등식은 어떻게 되는가?
-                    <div class="input-group">
-                        <input type="text" id="ans10" placeholder="예: x<-3">
+                    
+                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="X<-3"> X<-3
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="X<-3 아님"> X<-3 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -326,8 +384,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q12. [이항 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $3x + 1 \\le 7$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans12" placeholder="예: x<=2">
+                    
+                    <div class="options-group" id="ans12_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group12" value="X<=2"> X<=2
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group12" value="X<=2 아님"> X<=2 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group12" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group12" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -349,8 +420,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q13. [복합 이항]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $5x - 2 &lt; 3x + 8$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans13" placeholder="예: x<5">
+                    
+                    <div class="options-group" id="ans13_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="X<5"> X<5
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="X<5 아님"> X<5 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -372,8 +456,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q14. [음수 계수 이항]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $-2x + 5 \\ge x - 4$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans14" placeholder="예: x<=3">
+                    
+                    <div class="options-group" id="ans14_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group14" value="X<=3"> X<=3
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group14" value="X<=3 아님"> X<=3 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group14" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group14" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -441,8 +538,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q17. [식 세우기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 하려고 한다. 부등식을 세우시오.
-                    <div class="input-group">
-                        <input type="text" id="ans17" placeholder="예: 800x+1000<=6000">
+                    
+                    <div class="options-group" id="ans17_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group17" value="800X+1000<=6000"> 800X+1000<=6000
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group17" value="800X+1000<=6000 아님"> 800X+1000<=6000 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group17" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group17" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -952,7 +1062,7 @@ function cleanString(str) {
 let totalWrongCount = 0;
 
         function checkQ1() {
-            const ans = cleanString(document.getElementById('ans1').value);
+            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X>=3' || ans === 'X\\GE3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -964,7 +1074,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -973,7 +1083,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value);
+            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '(2)' || ans === '2' || ans === '②') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -985,7 +1095,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -994,7 +1104,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value);
+            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X<5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1006,7 +1116,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1027,7 +1137,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1048,7 +1158,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1069,7 +1179,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q6', 'panel_q1', 0);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1090,7 +1200,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q7', 'panel_q1', 0);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1111,7 +1221,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q8', 'panel_q1', 0);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1132,7 +1242,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q9', 'panel_q1', 0);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1141,7 +1251,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value);
+            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X<-3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1153,7 +1263,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q10', 'panel_q1', 0);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);
@@ -1162,7 +1272,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ11() {
-            const ans = cleanString(document.getElementById('ans11').value);
+            const checkedOpt = document.querySelector('input[name="ans_group11"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X>2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1174,7 +1284,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q11', 'panel_q1', 0);
                 } else {
                     showError('panel_q11', 'error11', wrongCount);
@@ -1183,7 +1293,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ12() {
-            const ans = cleanString(document.getElementById('ans12').value);
+            const checkedOpt = document.querySelector('input[name="ans_group12"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X<=2' || ans === 'X\\LE2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1195,7 +1305,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q12', 'panel_q1', 0);
                 } else {
                     showError('panel_q12', 'error12', wrongCount);
@@ -1204,7 +1314,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ13() {
-            const ans = cleanString(document.getElementById('ans13').value);
+            const checkedOpt = document.querySelector('input[name="ans_group13"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X<5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1216,7 +1326,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q13', 'panel_q1', 0);
                 } else {
                     showError('panel_q13', 'error13', wrongCount);
@@ -1225,7 +1335,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ14() {
-            const ans = cleanString(document.getElementById('ans14').value);
+            const checkedOpt = document.querySelector('input[name="ans_group14"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X<=3' || ans === 'X\\LE3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1237,7 +1347,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q14', 'panel_q1', 0);
                 } else {
                     showError('panel_q14', 'error14', wrongCount);
@@ -1246,7 +1356,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ15() {
-            const ans = cleanString(document.getElementById('ans15').value);
+            const checkedOpt = document.querySelector('input[name="ans_group15"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X>3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1258,7 +1368,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q15', 'panel_q1', 0);
                 } else {
                     showError('panel_q15', 'error15', wrongCount);
@@ -1279,7 +1389,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q16', 'panel_q1', 0);
                 } else {
                     showError('panel_q16', 'error16', wrongCount);
@@ -1288,7 +1398,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ17() {
-            const ans = cleanString(document.getElementById('ans17').value);
+            const checkedOpt = document.querySelector('input[name="ans_group17"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '800X+1000<=6000' || ans === '800X+1000\\LE6000') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1300,7 +1410,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q17', 'panel_q1', 0);
                 } else {
                     showError('panel_q17', 'error17', wrongCount);
@@ -1321,7 +1431,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q18', 'panel_q1', 0);
                 } else {
                     showError('panel_q18', 'error18', wrongCount);
@@ -1342,7 +1452,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q19', 'panel_q1', 0);
                 } else {
                     showError('panel_q19', 'error19', wrongCount);
@@ -1363,7 +1473,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q20', 'panel_q1', 0);
                 } else {
                     showError('panel_q20', 'error20', wrongCount);

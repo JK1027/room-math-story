@@ -5,7 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>무한을 달리는 사이버 스피드웨이: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#09090e;--glass-bg:rgba(13,15,30,0.75);--glass-border:rgba(0,240,255,0.2);--accent:#00f0ff;--accent-hover:#39f5ff;--text-main:#e2e8f0;--text-muted:#94a3b8;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(0,240,255,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(139,92,246,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(0,240,255,0.35);border-left:1px solid rgba(0,240,255,0.35);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(0,240,255,0.1),inset 0 0 20px rgba(0,240,255,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(0,240,255,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg,rgba(13,25,48,0.6) 0%,rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:110px;max-height:110px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:10px;right:15px;background:rgba(0,240,255,0.15);border:1px solid rgba(0,240,255,0.3);color:var(--accent);padding:4px 10px;font-size:0.75rem;border-radius:6px;cursor:pointer;transition:all 0.2s;z-index:10;}.story-log-trigger:hover{background:rgba(0,240,255,0.3);box-shadow:0 0 10px rgba(0,240,255,0.5);}.question-box{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:inset 0 0 15px rgba(255,255,255,0.02);}.question-content{font-size:1.1rem;line-height:1.7;color:#cbd5e1;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(0,240,255,0.2);padding:1rem;border-radius:12px;color:#fff;font-size:1.1rem;font-family:'Share Tech Mono',monospace;text-align:center;transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(0,240,255,0.3),inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#ff4a4a;text-align:center;margin-bottom:1rem;font-size:0.95rem;display:none;text-shadow:0 0 10px rgba(255,74,74,0.3);}.btn-group{display:flex;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 0.8s ease,transform 0.8s ease;pointer-events:none;}.btn{background:linear-gradient(135deg,rgba(0,240,255,0.2) 0%,rgba(0,240,255,0.05) 100%);border:1px solid var(--accent);color:var(--accent);padding:1rem 3rem;font-size:1.1rem;font-weight:900;border-radius:16px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);text-shadow:0 0 10px rgba(0,240,255,0.5);box-shadow:0 4px 15px rgba(0,240,255,0.1);letter-spacing:1px;}.btn:hover{background:linear-gradient(135deg,var(--accent) 0%,rgba(0,240,255,0.6) 100%);color:#000;box-shadow:0 0 25px rgba(0,240,255,0.6);scale:1.03;text-shadow:none;}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.sound-toggle{position:absolute;top:20px;right:20px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:6px 12px;font-size:0.8rem;border-radius:8px;cursor:pointer;transition:all 0.2s;z-index:100;}.sound-toggle:hover{background:rgba(255,255,255,0.1);}.progress-container{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--accent),#a78bfa);box-shadow:0 0 10px var(--accent);transition:width 0.5s ease-in-out;}@keyframes blink{50%{opacity:0;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:999;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#0d0f1e;border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,240,255,0.2);}.log-content h2{text-align:left;font-size:1.3rem;margin-bottom:1rem;border-bottom:1px solid rgba(0,240,255,0.15);padding-bottom:0.5rem;color:var(--accent);}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer::-webkit-scrollbar{width:6px;}#logContainer::-webkit-scrollbar-thumb{background:rgba(0,240,255,0.3);border-radius:3px;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:transform 0.2s;}.close-log:hover{transform:scale(1.2);}@media (max-width:768px){.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}.story-box{height:80px;max-height:80px;}.story-text{font-size:0.9rem;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
+    <style>:root{--bg-main:#09090e;--glass-bg:rgba(13,15,30,0.75);--glass-border:rgba(0,240,255,0.2);--accent:#00f0ff;--accent-hover:#39f5ff;--text-main:#e2e8f0;--text-muted:#94a3b8;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(0,240,255,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(139,92,246,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(0,240,255,0.35);border-left:1px solid rgba(0,240,255,0.35);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(0,240,255,0.1),inset 0 0 20px rgba(0,240,255,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(0,240,255,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg,rgba(13,25,48,0.6) 0%,rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:110px;max-height:110px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:10px;right:15px;background:rgba(0,240,255,0.15);border:1px solid rgba(0,240,255,0.3);color:var(--accent);padding:4px 10px;font-size:0.75rem;border-radius:6px;cursor:pointer;transition:all 0.2s;z-index:10;}.story-log-trigger:hover{background:rgba(0,240,255,0.3);box-shadow:0 0 10px rgba(0,240,255,0.5);}.question-box{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;box-shadow:inset 0 0 15px rgba(255,255,255,0.02);}.question-content{font-size:1.1rem;line-height:1.7;color:#cbd5e1;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;background:rgba(0,0,0,0.4);border:1px solid rgba(0,240,255,0.2);padding:1rem;border-radius:12px;color:#fff;font-size:1.1rem;font-family:'Share Tech Mono',monospace;text-align:center;transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(0,240,255,0.3),inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#ff4a4a;text-align:center;margin-bottom:1rem;font-size:0.95rem;display:none;text-shadow:0 0 10px rgba(255,74,74,0.3);}.btn-group{display:flex;justify-content:center;opacity:0;transform:translateY(10px);transition:opacity 0.8s ease,transform 0.8s ease;pointer-events:none;}.btn{background:linear-gradient(135deg,rgba(0,240,255,0.2) 0%,rgba(0,240,255,0.05) 100%);border:1px solid var(--accent);color:var(--accent);padding:1rem 3rem;font-size:1.1rem;font-weight:900;border-radius:16px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);text-shadow:0 0 10px rgba(0,240,255,0.5);box-shadow:0 4px 15px rgba(0,240,255,0.1);letter-spacing:1px;}.btn:hover{background:linear-gradient(135deg,var(--accent) 0%,rgba(0,240,255,0.6) 100%);color:#000;box-shadow:0 0 25px rgba(0,240,255,0.6);scale:1.03;text-shadow:none;}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.sound-toggle{position:absolute;top:20px;right:20px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:6px 12px;font-size:0.8rem;border-radius:8px;cursor:pointer;transition:all 0.2s;z-index:100;}.sound-toggle:hover{background:rgba(255,255,255,0.1);}.progress-container{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--accent),#a78bfa);box-shadow:0 0 10px var(--accent);transition:width 0.5s ease-in-out;}@keyframes blink{50%{opacity:0;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:999;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#0d0f1e;border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;box-shadow:0 0 40px rgba(0,240,255,0.2);}.log-content h2{text-align:left;font-size:1.3rem;margin-bottom:1rem;border-bottom:1px solid rgba(0,240,255,0.15);padding-bottom:0.5rem;color:var(--accent);}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer::-webkit-scrollbar{width:6px;}#logContainer::-webkit-scrollbar-thumb{background:rgba(0,240,255,0.3);border-radius:3px;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:transform 0.2s;}.close-log:hover{transform:scale(1.2);}@media (max-width:768px){.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}.story-box{height:80px;max-height:80px;}.story-text{font-size:0.9rem;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
+        .radio-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+        .radio-label:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        input[type="radio"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -64,8 +86,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q1. [유리수와 소수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button><br>$\frac{3}{4}$ 을 소수로 나타내시오.
-                    <div class="input-group">
-                        <input type="text" id="ans1" placeholder="예: 0.5">
+                    
+                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="0.75"> 0.75
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="0.75 아님"> 0.75 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -87,8 +122,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q2. [유한소수의 뜻]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button><br>소수점 아래 0이 아닌 숫자가 유한 번 나타나는 소수를 무엇이라 하는가?
-                    <div class="input-group">
-                        <input type="text" id="ans2" placeholder="네 글자 입력 (예: 무한소수)">
+                    
+                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="유한소수"> 유한소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="순환소수"> 순환소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="순환하지 않는 무한소수"> 순환하지 않는 무한소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="정수"> 정수
+                    </label>
                     </div>
                 </div>
             </div>
@@ -110,8 +158,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q3. [유한소수 판별 조건]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 순서쌍은 괄호나 띄어쓰기 없이 숫자와 쉼표로만 입력하거나 (x,y) 형태로 정확히 입력해보세요.')">💡 힌트</button><br>분수를 유한소수로 나타낼 수 있으려면 기약분수로 나타내었을 때 분모의 소인수가 무엇무엇뿐이어야 하는가? (숫자만 쉼표로 구분)
-                    <div class="input-group">
-                        <input type="text" id="ans3" placeholder="예: 2, 5">
+                    
+                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="4"> 4
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="2"> 2
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="0"> 0
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="10"> 10
+                    </label>
                     </div>
                 </div>
             </div>
@@ -133,8 +194,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q4. [유한소수 판별 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button><br>$\frac{7}{20}$ 은 유한소수인가, 무한소수인가?
-                    <div class="input-group">
-                        <input type="text" id="ans4" placeholder="유한소수 또는 무한소수 입력">
+                    
+                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="유한소수"> 유한소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="순환소수"> 순환소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="순환하지 않는 무한소수"> 순환하지 않는 무한소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="정수"> 정수
+                    </label>
                     </div>
                 </div>
             </div>
@@ -156,8 +230,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q5. [유한소수 판별 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button><br>$\frac{13}{30}$ 은 유한소수인가, 무한소수인가?
-                    <div class="input-group">
-                        <input type="text" id="ans5" placeholder="유한소수 또는 무한소수 입력">
+                    
+                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="무한소수"> 무한소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="무한소수 아님"> 무한소수 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -179,8 +266,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q6. [순환소수의 뜻]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button><br>무한소수 중 일정한 숫자의 배열이 끝없이 되풀이되는 소수를 무엇이라 하는가?
-                    <div class="input-group">
-                        <input type="text" id="ans6" placeholder="네 글자 입력">
+                    
+                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="유한소수"> 유한소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="순환소수"> 순환소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="순환하지 않는 무한소수"> 순환하지 않는 무한소수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="정수"> 정수
+                    </label>
                     </div>
                 </div>
             </div>
@@ -202,8 +302,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q7. [순환소수 표현 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 5글자)')">💡 힌트</button><br>0.3333... 을 순환마디에 점을 찍어 간단히 나타낸 기호를 대괄호 형식을 사용하여 쓰시오.
-                    <div class="input-group">
-                        <input type="text" id="ans7" placeholder="예: 0.[3] 또는 0.(3)">
+                    
+                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="0.[3]"> 0.[3]
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="0.[3] 아님"> 0.[3] 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -225,8 +338,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q8. [순환마디 구하기 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>1.252525... 의 순환마디를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans8" placeholder="예: 25">
+                    
+                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="27"> 27
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="50"> 50
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="25"> 25
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="23"> 23
+                    </label>
                     </div>
                 </div>
             </div>
@@ -248,8 +374,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q9. [순환소수 표현 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 7글자)')">💡 힌트</button><br>0.4565656... 을 대괄호 형식을 사용하여 간단히 나타내시오.
-                    <div class="input-group">
-                        <input type="text" id="ans9" placeholder="예: 0.4[56]">
+                    
+                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="0.4[56]"> 0.4[56]
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="0.4[56] 아님"> 0.4[56] 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -478,8 +617,15 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q19. [유리수의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 1글자)')">💡 힌트</button><br>모든 순환소수는 유리수이다. ( O / X )
-                    <div class="input-group">
-                        <input type="text" id="ans19" placeholder="O 또는 X 입력">
+                    
+                    <div class="options-group" id="ans19_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group19" value="O"> O
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group19" value="X"> X
+                    </label>
                     </div>
                 </div>
             </div>
@@ -903,7 +1049,7 @@ function cleanString(str) {
 let totalWrongCount = 0;
 
         function checkQ1() {
-            const ans = cleanString(document.getElementById('ans1').value);
+            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '0.75') {
                 wrongCount = 0;
                 playSuccess();
@@ -915,7 +1061,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -924,7 +1070,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value);
+            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '유한소수') {
                 wrongCount = 0;
                 playSuccess();
@@ -936,7 +1082,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -945,7 +1091,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value);
+            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if ((ans.includes('2') && ans.includes('5')) || ans === '2또는5' || ans === '2,5') {
                 wrongCount = 0;
                 playSuccess();
@@ -957,7 +1103,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -966,7 +1112,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ4() {
-            const ans = cleanString(document.getElementById('ans4').value);
+            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '유한소수') {
                 wrongCount = 0;
                 playSuccess();
@@ -978,7 +1124,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -987,7 +1133,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ5() {
-            const ans = cleanString(document.getElementById('ans5').value);
+            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '무한소수') {
                 wrongCount = 0;
                 playSuccess();
@@ -999,7 +1145,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1008,7 +1154,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ6() {
-            const ans = cleanString(document.getElementById('ans6').value);
+            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '순환소수') {
                 wrongCount = 0;
                 playSuccess();
@@ -1020,7 +1166,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q6', 'panel_q1', 0);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1029,7 +1175,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value);
+            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '0.[3]' || ans === '0.(3)' || ans === '0.3') {
                 wrongCount = 0;
                 playSuccess();
@@ -1041,7 +1187,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q7', 'panel_q1', 0);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1050,7 +1196,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value);
+            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '25') {
                 wrongCount = 0;
                 playSuccess();
@@ -1062,7 +1208,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q8', 'panel_q1', 0);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1071,7 +1217,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ9() {
-            const ans = cleanString(document.getElementById('ans9').value);
+            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '0.4[56]' || ans === '0.4(56)' || ans === '0.456') {
                 wrongCount = 0;
                 playSuccess();
@@ -1083,7 +1229,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q9', 'panel_q1', 0);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1104,7 +1250,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q10', 'panel_q1', 0);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);
@@ -1125,7 +1271,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q11', 'panel_q1', 0);
                 } else {
                     showError('panel_q11', 'error11', wrongCount);
@@ -1146,7 +1292,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q12', 'panel_q1', 0);
                 } else {
                     showError('panel_q12', 'error12', wrongCount);
@@ -1167,7 +1313,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q13', 'panel_q1', 0);
                 } else {
                     showError('panel_q13', 'error13', wrongCount);
@@ -1188,7 +1334,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q14', 'panel_q1', 0);
                 } else {
                     showError('panel_q14', 'error14', wrongCount);
@@ -1209,7 +1355,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q15', 'panel_q1', 0);
                 } else {
                     showError('panel_q15', 'error15', wrongCount);
@@ -1230,7 +1376,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q16', 'panel_q1', 0);
                 } else {
                     showError('panel_q16', 'error16', wrongCount);
@@ -1251,7 +1397,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q17', 'panel_q1', 0);
                 } else {
                     showError('panel_q17', 'error17', wrongCount);
@@ -1272,7 +1418,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q18', 'panel_q1', 0);
                 } else {
                     showError('panel_q18', 'error18', wrongCount);
@@ -1281,7 +1427,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ19() {
-            const ans = cleanString(document.getElementById('ans19').value);
+            const checkedOpt = document.querySelector('input[name="ans_group19"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'O' || ans === 'o' || ans === '오') {
                 wrongCount = 0;
                 playSuccess();
@@ -1293,7 +1439,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q19', 'panel_q1', 0);
                 } else {
                     showError('panel_q19', 'error19', wrongCount);
@@ -1314,7 +1460,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q20', 'panel_q1', 0);
                 } else {
                     showError('panel_q20', 'error20', wrongCount);

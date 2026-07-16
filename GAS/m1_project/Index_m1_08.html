@@ -7,6 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
     <style>
 :root{--bg-main:#131A1C;--glass-bg:rgba(20, 28, 30, 0.75);--glass-border:rgba(13, 148, 136, 0.25);--accent:#0D9488;--accent-hover:#2DD4BF;--text-main:#E0F2FE;--text-muted:#94A3B8;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR', sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 30%, rgba(13, 148, 136, 0.1) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(17, 94, 89, 0.12) 0%, transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(13, 148, 136, 0.4);border-left:1px solid rgba(13, 148, 136, 0.4);border-radius:24px;padding:3rem;box-shadow:0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(13, 148, 136, 0.05);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4, 0, 0.2, 1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit', sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg, #FFF 30%, var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(13, 148, 136, 0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg, rgba(20, 40, 45, 0.5) 0%, rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:90px;max-height:90px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:4px;right:8px;background:rgba(16, 185, 129, 0.25);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:2px 6px;font-size:0.7rem;border-radius:4px;cursor:pointer;transition:all 0.2s;font-weight:bold;z-index:10;}.story-log-trigger:hover{background:rgba(16, 185, 129, 0.5);color:white;}.question-box{background:rgba(255, 255, 255, 0.02);border:1px solid rgba(255, 255, 255, 0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;position:relative;box-shadow:inset 0 0 20px rgba(255, 255, 255, 0.02);}.question-box::before{content:'Q';position:absolute;font-family:'Share Tech Mono', monospace;font-size:4rem;color:rgba(13, 148, 136, 0.05);top:-10px;right:10px;font-weight:bold;pointer-events:none;}.question-content{font-size:1.15rem;line-height:1.8;margin-bottom:1rem;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;padding:1rem 1.2rem;background:rgba(15, 23, 42, 0.8);border:1px solid rgba(13, 148, 136, 0.3);border-radius:12px;color:white;font-size:1.1rem;font-family:'Share Tech Mono', monospace, 'Noto Sans KR';transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(13, 148, 136, 0.4), inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#EF4444;font-size:0.95rem;margin-top:0.5rem;display:none;text-align:center;font-weight:bold;text-shadow:0 0 10px rgba(239, 68, 68, 0.3);animation:shake 0.5s ease;}@keyframes shake{0%, 100%{transform:translateX(0);}20%, 60%{transform:translateX(-5px);}40%, 80%{transform:translateX(5px);}}.progress-container{width:100%;height:6px;background:rgba(255, 255, 255, 0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;border:1px solid rgba(255, 255, 255, 0.02);}.progress-bar{height:100%;width:0%;background:linear-gradient(90deg, #0F766E, var(--accent));border-radius:3px;box-shadow:0 0 10px var(--accent);transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1);}.btn-group{display:flex;gap:1rem;margin-top:2rem;}.btn{background:linear-gradient(135deg, #0F766E, #115E59);color:white;border:1px solid #14B8A6;padding:0.6rem 1.5rem;font-size:1.1rem;font-weight:900;border-radius:8px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);text-transform:uppercase;letter-spacing:3px;width:100%;box-shadow:0 10px 25px rgba(17, 94, 89, 0.5), inset 0 2px 5px rgba(255,255,255,0.3);text-shadow:0 2px 4px rgba(0,0,0,0.5);position:relative;overflow:hidden;}.btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);transition:all 0.6s;}.btn:hover::after{left:100%;}.btn:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(13, 148, 136, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);border-color:#2DD4BF;}.btn-hint{display:inline-block;background:rgba(16, 185, 129, 0.2);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0, 0, 0, 0.2);}.btn-hint:hover{background:rgba(16, 185, 129, 0.4);color:#fff;box-shadow:0 0 10px rgba(52, 211, 153, 0.4);}.btn:active{transform:translateY(1px);}.sound-toggle{position:fixed;top:20px;right:20px;background:rgba(20, 28, 30, 0.6);border:1px solid var(--glass-border);padding:8px 16px;border-radius:20px;color:white;cursor:pointer;z-index:100;backdrop-filter:blur(10px);font-size:0.9rem;transition:all 0.3s;font-weight:bold;}.sound-toggle:hover{background:var(--accent);border-color:white;box-shadow:0 0 15px var(--accent);}@keyframes blink{0%, 100%{opacity:1;}50%{opacity:0;}}@media (max-width:600px){body{overflow-y:auto;}.container{padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;min-height:100vh;}.glass-panel{width:100%;max-height:94vh;max-height:94dvh;height:auto;padding:1.2rem;border-radius:16px;box-sizing:border-box;display:none;flex-direction:column;justify-content:flex-start;overflow-y:auto;}.glass-panel.active{display:flex;}.story-box{padding:0.6rem 1rem;margin-bottom:0.5rem;height:80px;max-height:80px;overflow:hidden;flex:0 0 auto;}.story-text{font-size:0.85rem;line-height:1.5;}h1{font-size:1.6rem;letter-spacing:1px;}h2{font-size:1rem;margin-bottom:1rem;}.panel-image{max-height:180px;margin-bottom:1rem;}.question-box{padding:0.8rem;margin-bottom:1rem;}.question-box::before{font-size:3rem;top:-5px;right:-5px;}input[type="text"]{font-size:1rem;padding:0.8rem;}.btn{font-size:0.9rem;padding:0.5rem;letter-spacing:1px;border-radius:6px;}.btn-group{flex-direction:column;gap:0.6rem;}.sound-toggle{top:10px;right:10px;font-size:0.8rem;padding:6px 12px;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.85);z-index:1000;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#111A1B;border:2px solid var(--accent);border-radius:20px;width:90%;max-width:600px;max-height:80vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{font-family:'Orbit', sans-serif;color:var(--accent);margin-bottom:1rem;text-align:left;}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:scale 0.2s;}.close-log:hover{scale:1.2;}@keyframes shake{0%, 100%{transform:translate(0, 0) rotate(0deg);}10%{transform:translate(-2px, -1px) rotate(-0.5deg);}20%{transform:translate(-3px, 0px) rotate(1deg);}30%{transform:translate(0px, 2px) rotate(0deg);}40%{transform:translate(1px, -1px) rotate(1deg);}50%{transform:translate(-1px, 2px) rotate(-1deg);}60%{transform:translate(-3px, 1px) rotate(0deg);}70%{transform:translate(2px, 1px) rotate(-0.5deg);}80%{transform:translate(-1px, -1px) rotate(1deg);}90%{transform:translate(2px, 2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255, 0, 0, 0);pointer-events:none;z-index:9999;transition:background 0.15s ease-out;}.laser-flash-active{background:rgba(255, 0, 0, 0.15);transition:none;}
+
+        .radio-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+        .radio-label:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        input[type="radio"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
 </style>
 </head>
 <body>
@@ -67,8 +89,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q1. [줄기와 잎 그림]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 줄기가 2인 데이터 변량들의 일의 자리 숫자들을 차례대로 나열해 줍니다.')">💡 힌트</button><br>위 자료를 줄기와 잎 그림으로 나타낼 때, 줄기가 2인 잎을 쉼표(,)로 구분하여 크기 순으로 모두 적으시오.
-                    <div class="input-group">
-                        <input type="text" id="ans1" placeholder="예: 3, 4, 7">
+                    
+                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="3,4,7"> 3,4,7
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="3,4,7 아님"> 3,4,7 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group1" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -90,8 +125,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q2. [변량의 개수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 수집된 전체 데이터 샘플의 개수가 모두 몇 개인지 직접 세어 봅니다.')">💡 힌트</button><br>위 자료에서 전체 변량의 개수는 몇 개인가?
-                    <div class="input-group">
-                        <input type="text" id="ans2" placeholder="숫자 또는 개수 입력">
+                    
+                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="8"> 8
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="10"> 10
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="20"> 20
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="12"> 12
+                    </label>
                     </div>
                 </div>
             </div>
@@ -113,8 +161,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q3. [최다 잎 줄기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 줄기와 잎 그림에서 잎(오른쪽 숫자)의 개수가 가장 많이 늘어선 줄기 번호를 찾습니다.')">💡 힌트</button><br>위 자료에서 잎이 가장 많은 줄기는 무엇인가?
-                    <div class="input-group">
-                        <input type="text" id="ans3" placeholder="예: 2, 3">
+                    
+                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="2와3"> 2와3
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="2와3 아님"> 2와3 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group3" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -136,8 +197,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q4. [조건 필터링]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 30 이상인 숫자(31, 31, 35, 42, 45)가 모두 몇 개인지 개수를 셉니다.')">💡 힌트</button><br>소매치기 발생 건수가 30건 이상인 지역은 몇 곳인가?
-                    <div class="input-group">
-                        <input type="text" id="ans4" placeholder="숫자 또는 곳 입력">
+                    
+                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="10"> 10
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="3"> 3
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="7"> 7
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group4" value="5"> 5
+                    </label>
                     </div>
                 </div>
             </div>
@@ -159,8 +233,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q5. [순위 데이터]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 데이터를 크기 순서대로 정렬했을 때 세 번째로 작은 건수 값을 찾습니다.')">💡 힌트</button><br>소매치기 발생 건수가 적은 쪽에서 3번째인 지역의 건수는 얼마인가?
-                    <div class="input-group">
-                        <input type="text" id="ans5" placeholder="숫자 또는 건 입력">
+                    
+                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="21"> 21
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="23"> 23
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="46"> 46
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group5" value="25"> 25
+                    </label>
                     </div>
                 </div>
             </div>
@@ -182,8 +269,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q6. [계급의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 수집된 변량을 일정한 간격으로 나눈 구간을 가리키는 통계 용어입니다.')">💡 힌트</button><br>자료를 몇 개의 구간으로 나눌 때, 이 구간을 무엇이라 하는가?
-                    <div class="input-group">
-                        <input type="text" id="ans6" placeholder="한글 단어 입력">
+                    
+                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="계급"> 계급
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="계급 아님"> 계급 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group6" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -205,8 +305,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q7. [도수의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 각 계급 구간에 속해 있는 자료(변량)의 개수를 의미하는 용어입니다.')">💡 힌트</button><br>각 계급에 속하는 변량의 개수를 무엇이라 하는가?
-                    <div class="input-group">
-                        <input type="text" id="ans7" placeholder="한글 단어 입력">
+                    
+                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="도수"> 도수
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="도수 아님"> 도수 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -228,8 +341,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q8. [계급의 크기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 계급 구간의 너비(끝값 - 시작값)를 계산하여 단위를 포함하지 않은 값을 적습니다.')">💡 힌트</button><br>계급의 너비(크기)는 얼마인가? (자료: 10대, 20대 식일 때의 너비)
-                    <div class="input-group">
-                        <input type="text" id="ans8" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="8"> 8
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="10"> 10
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="20"> 20
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="12"> 12
+                    </label>
                     </div>
                 </div>
             </div>
@@ -251,8 +377,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q9. [최대 도수 계급]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 도수(인원수)가 8명으로 가장 많이 몰려 있는 나이대 계급을 찾습니다.')">💡 힌트</button><br>도수가 가장 큰 계급은 어느 연령대인가? (자료: 10대: 4명, 20대: 8명, 30대: 5명, 40대: 3명)
-                    <div class="input-group">
-                        <input type="text" id="ans9" placeholder="예: 20대">
+                    
+                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="20대"> 20대
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="20대 아님"> 20대 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group9" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -274,8 +413,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q10. [백분율 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 30세 미만 인원수(4명 + 8명 = 12명)가 전체 20명 중에서 차지하는 비율을 백분율(%)로 계산합니다.')">💡 힌트</button><br>나이가 30세 미만인 용의자는 전체의 몇 %인가? (단위 생략)
-                    <div class="input-group">
-                        <input type="text" id="ans10" placeholder="숫자만 입력">
+                    
+                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="120"> 120
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="62"> 62
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="60"> 60
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="58"> 58
+                    </label>
                     </div>
                 </div>
             </div>
@@ -1069,7 +1221,7 @@ let totalWrongCount = 0;
 
         // Q1
         function checkQ1() {
-            const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '3,4,7' || ans === '3, 4, 7' || ans === '347') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1081,7 +1233,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -1091,7 +1243,7 @@ let totalWrongCount = 0;
 
         // Q2
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '10' || ans === '10개') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1103,7 +1255,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -1113,7 +1265,7 @@ let totalWrongCount = 0;
 
         // Q3
         function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '2와3' || ans === '2,3' || ans === '2, 3') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1125,7 +1277,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1135,7 +1287,7 @@ let totalWrongCount = 0;
 
         // Q4
         function checkQ4() {
-            const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '5' || ans === '5곳') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1147,7 +1299,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1157,7 +1309,7 @@ let totalWrongCount = 0;
 
         // Q5
         function checkQ5() {
-            const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '23' || ans === '23건') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1169,7 +1321,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans1').value = '';
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1179,7 +1331,7 @@ let totalWrongCount = 0;
 
         // Q6
         function checkQ6() {
-            const ans = cleanString(document.getElementById('ans6').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '계급') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1191,7 +1343,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q6', 'panel_q6', 25);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1201,7 +1353,7 @@ let totalWrongCount = 0;
 
         // Q7
         function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '도수') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1213,7 +1365,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q7', 'panel_q6', 25);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1223,7 +1375,7 @@ let totalWrongCount = 0;
 
         // Q8
         function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '10' || ans === '10세') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1235,7 +1387,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q8', 'panel_q6', 25);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1245,7 +1397,7 @@ let totalWrongCount = 0;
 
         // Q9
         function checkQ9() {
-            const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '20대') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1257,7 +1409,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q9', 'panel_q6', 25);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1267,7 +1419,7 @@ let totalWrongCount = 0;
 
         // Q10
         function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
+            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
             if (ans === '60' || ans === '60%') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1279,7 +1431,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.getElementById('ans6').value = '';
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
                     nextStage('panel_q10', 'panel_q6', 25);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);

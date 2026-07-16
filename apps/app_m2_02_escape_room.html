@@ -5,7 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기계 도시 기어즈의 폭주: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#1e1a17;--glass-bg:rgba(40,30,25,0.75);--glass-border:rgba(212,118,55,0.25);--accent:#d47637;--accent-hover:#f28f4f;--text-main:#fdf8f4;--text-muted:#b09c91;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(212,118,55,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(139,92,26,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(212,118,55,0.4);border-left:1px solid rgba(212,118,55,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(212,118,55,0.1),inset 0 0 20px rgba(212,118,55,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(212,118,55,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(212,118,55,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(20,15,12,0.5);border:1px solid rgba(212,118,55,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(20,15,12,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(212,118,55,0.05);border:1px dashed rgba(212,118,55,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(20,15,12,0.8);border:1px solid rgba(212,118,55,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(212,118,55,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#a45320 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(212,118,55,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,118,55,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(20,15,12,0.6);border:1px solid rgba(212,118,55,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(212,118,55,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,8,7,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(212,118,55,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(20,15,12,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
+    <style>:root{--bg-main:#1e1a17;--glass-bg:rgba(40,30,25,0.75);--glass-border:rgba(212,118,55,0.25);--accent:#d47637;--accent-hover:#f28f4f;--text-main:#fdf8f4;--text-muted:#b09c91;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(212,118,55,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(139,92,26,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(212,118,55,0.4);border-left:1px solid rgba(212,118,55,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(212,118,55,0.1),inset 0 0 20px rgba(212,118,55,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(212,118,55,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(212,118,55,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(20,15,12,0.5);border:1px solid rgba(212,118,55,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(20,15,12,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(212,118,55,0.05);border:1px dashed rgba(212,118,55,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(20,15,12,0.8);border:1px solid rgba(212,118,55,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(212,118,55,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#a45320 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(212,118,55,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(212,118,55,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(20,15,12,0.6);border:1px solid rgba(212,118,55,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(212,118,55,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,8,7,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(212,118,55,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(20,15,12,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
+        .radio-label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-align: left;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s ease;
+        }
+        .radio-label:hover {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        input[type="radio"] {
+            margin-right: 0.8rem;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -96,8 +118,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q2. [지수의 거듭제곱]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 4글자)')">💡 힌트</button><br>$(x^2)^5$ 를 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans2" placeholder="예: x^10">
+                    
+                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="X^10"> X^10
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="X^10 아님"> X^10 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group2" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -211,8 +246,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q7. [음수 항의 거듭제곱]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 8글자)')">💡 힌트</button><br>$(-2x^2y)^3$ 을 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans7" placeholder="예: -8x^6y^3">
+                    
+                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="-8X^6Y^3"> -8X^6Y^3
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="-8X^6Y^3 아님"> -8X^6Y^3 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group7" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -234,8 +282,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q8. [단항식의 나눗셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 5글자)')">💡 힌트</button><br>$12x^4y^2 \div 3x^2y$ 를 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans8" placeholder="예: 4x^2y">
+                    
+                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="4X^2Y"> 4X^2Y
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="4X^2Y 아님"> 4X^2Y 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group8" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -280,8 +341,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q10. [단항식 곱셈과 나눗셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>$4x^2 \times (-3xy) \div 2x^2y$ 를 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans10" placeholder="예: -6x">
+                    
+                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="-6X"> -6X
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="-6X 아님"> -6X 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group10" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -303,8 +377,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q11. [다항식의 덧셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 5글자)')">💡 힌트</button><br>$(2x + 3y) + (4x - y)$ 를 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans11" placeholder="예: 6x+2y">
+                    
+                    <div class="options-group" id="ans11_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group11" value="6X+2Y"> 6X+2Y
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group11" value="6X+2Y 아님"> 6X+2Y 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group11" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group11" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -349,8 +436,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q13. [괄호가 있는 다항식 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 5글자)')">💡 힌트</button><br>$3(x - 2y) + 2(2x + y)$ 를 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans13" placeholder="예: 7x-4y">
+                    
+                    <div class="options-group" id="ans13_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="7X-4Y"> 7X-4Y
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="7X-4Y 아님"> 7X-4Y 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group13" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -395,8 +495,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q15. [이차식의 덧셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 9글자)')">💡 힌트</button><br>$(3x^2 - 2x + 1) + (-x^2 + 5x - 3)$ 을 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans15" placeholder="예: 2x^2+3x-2">
+                    
+                    <div class="options-group" id="ans15_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group15" value="2X^2+3X-2"> 2X^2+3X-2
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group15" value="2X^2+3X-2 아님"> 2X^2+3X-2 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group15" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group15" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -418,8 +531,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q16. [단항식과 다항식의 곱셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 8글자)')">💡 힌트</button><br>$2x(3x - 4y)$ 를 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans16" placeholder="예: 6x^2-8xy">
+                    
+                    <div class="options-group" id="ans16_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group16" value="6X^2-8XY"> 6X^2-8XY
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group16" value="6X^2-8XY 아님"> 6X^2-8XY 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group16" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group16" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -464,8 +590,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q18. [분배법칙 복합 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 9글자)')">💡 힌트</button><br>$-3x(2x - 5) + 4x^2$ 을 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans18" placeholder="예: -2x^2+15x">
+                    
+                    <div class="options-group" id="ans18_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group18" value="-2X^2+15X"> -2X^2+15X
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group18" value="-2X^2+15X 아님"> -2X^2+15X 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group18" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group18" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -487,8 +626,21 @@
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q19. [음수로 나누는 다항식 나눗셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 6글자)')">💡 힌트</button><br>$(4x^2y - 8xy^2) \div (-2xy)$ 를 간단히 하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans19" placeholder="예: -2x+4y">
+                    
+                    <div class="options-group" id="ans19_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group19" value="-2X+4Y"> -2X+4Y
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group19" value="-2X+4Y 아님"> -2X+4Y 아님
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group19" value="알 수 없음"> 알 수 없음
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="ans_group19" value="해 없음"> 해 없음
+                    </label>
                     </div>
                 </div>
             </div>
@@ -973,7 +1125,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value);
+            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === 'X^10' || ans === 'X**10') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1078,7 +1230,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value);
+            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '-8X^6Y^3' || ans === '-8X**6Y**3' || ans === '-8(X^6)(Y^3)') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1099,7 +1251,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value);
+            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '4X^2Y' || ans === '4X**2Y' || ans === '4(X^2)Y') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1141,7 +1293,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value);
+            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '-6X') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1162,7 +1314,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ11() {
-            const ans = cleanString(document.getElementById('ans11').value);
+            const checkedOpt = document.querySelector('input[name="ans_group11"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '6X+2Y' || ans === '2Y+6X') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1204,7 +1356,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ13() {
-            const ans = cleanString(document.getElementById('ans13').value);
+            const checkedOpt = document.querySelector('input[name="ans_group13"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '7X-4Y' || ans === '-4Y+7X') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1246,7 +1398,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ15() {
-            const ans = cleanString(document.getElementById('ans15').value);
+            const checkedOpt = document.querySelector('input[name="ans_group15"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '2X^2+3X-2' || ans === '2X**2+3X-2' || ans === '-2+3X+2X^2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1267,7 +1419,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ16() {
-            const ans = cleanString(document.getElementById('ans16').value);
+            const checkedOpt = document.querySelector('input[name="ans_group16"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '6X^2-8XY' || ans === '6X**2-8XY' || ans === '-8XY+6X^2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1309,7 +1461,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ18() {
-            const ans = cleanString(document.getElementById('ans18').value);
+            const checkedOpt = document.querySelector('input[name="ans_group18"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '-2X^2+15X' || ans === '-2X**2+15X' || ans === '15X-2X^2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1330,7 +1482,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ19() {
-            const ans = cleanString(document.getElementById('ans19').value);
+            const checkedOpt = document.querySelector('input[name="ans_group19"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
             if (ans === '-2X+4Y' || ans === '4Y-2X') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
