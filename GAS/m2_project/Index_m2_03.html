@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>요정 숲의 불균형: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#07150f;--glass-bg:rgba(10,30,20,0.75);--glass-border:rgba(50,205,50,0.25);--accent:#32cd32;--accent-hover:#5cfc5c;--text-main:#f0fbf0;--text-muted:#9abfa0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(50,205,50,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(34,139,34,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(50,205,50,0.4);border-left:1px solid rgba(50,205,50,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(50,205,50,0.1),inset 0 0 20px rgba(50,205,50,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(50,205,50,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(10,20,15,0.5);border:1px solid rgba(50,205,50,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(50,205,50,0.05);border:1px dashed rgba(50,205,50,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(10,20,15,0.8);border:1px solid rgba(50,205,50,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(50,205,50,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(50,205,50,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(50,205,50,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
-        .radio-label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-align: left;
-            padding: 0.5rem 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
-        }
-        .radio-label:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-        }
-        input[type="radio"] {
-            margin-right: 0.8rem;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-</style>
+    <style>:root{--bg-main:#07150f;--glass-bg:rgba(10,30,20,0.75);--glass-border:rgba(50,205,50,0.25);--accent:#32cd32;--accent-hover:#5cfc5c;--text-main:#f0fbf0;--text-muted:#9abfa0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(50,205,50,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(34,139,34,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(50,205,50,0.4);border-left:1px solid rgba(50,205,50,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(50,205,50,0.1),inset 0 0 20px rgba(50,205,50,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(50,205,50,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(10,20,15,0.5);border:1px solid rgba(50,205,50,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(50,205,50,0.05);border:1px dashed rgba(50,205,50,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(10,20,15,0.8);border:1px solid rgba(50,205,50,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(50,205,50,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(50,205,50,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(50,205,50,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
     <!-- MathJax for LaTeX Rendering -->
     <script>
     window.MathJax = {
@@ -89,7 +67,7 @@
             <h2>제 1구역: 마법 저울의 눈금 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? ⚖️ <strong>[저울 작동 테스트]</strong><br><br>[숲의 정령 실프-F]: \"숲을 구하기 위해 마법 저울의 해를 부등식으로 표기하여 가동해 주십시오.<br> 'x는 3보다 크거나 같다'를 부등호로 나타내십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "하찮은 침입자여! 요정 숲의 마력 저울에 칠흑의 불균형 봉인을 걸었다. 너희가 이 부등식의 경계를 올바르게 판정해 낼 것 같으냐?"<br><br><i>쿠구구궁- 이끼 낀 고대 돌탁자 위에 거대한 천칭 마법 저울이 솟아오르며 한쪽으로 요란하게 기웁니다. 저울의 경계선을 맞추어 제어 핀을 배치해야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "요정 숲의 에너지 밸런스를 잡기 위해, 'x는 3보다 크거나 같다'의 기하학 부등호 수식을 콘솔에 입력하십시오! 첫 장벽을 무너뜨려야 합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -112,24 +90,14 @@
             <h2>제 2구역: 저울의 해 찾기 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? ⚖️ <strong>[해의 판정]</strong><br><br>[숲의 정령 실프-F]: \"저울 눈금판에 균형 해를 찾아 입력하십시오. 주어진 보기 중에서 $x=2$가 해인 부등식을 지목하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "우연히 저울을 굴렸군. 하지만 진짜 마력 해를 지목하지 못한다면, 오염된 연쇄 전류가 네놈들을 순식간에 휘감아 버릴 것이다!"<br><br><i>저울 바닥의 이끼들이 검게 타들어가며 보라색 노이즈 스파크가 사방으로 튑니다. 보기 중 x=2가 참이 되는 완벽한 해를 골라 다이얼을 정렬해 주십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "조사관님! $x=2$가 성립하는 정합 부등식 번호를 짚어 에너지 폭주를 상쇄하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2. [부등식의 해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>다음 중 $x=2$가 해인 부등식은?<br>(1) $2x - 1 &lt; 0$<br>(2) $3x \\ge 6$<br>(3) $-x &gt; 0$
-                    
-                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="$2x"> $2x
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="$3x"> $3x
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="$-x"> $-x
-                    </label>
+                    <strong>Q2. [부등식의 해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>다음 중 $x=2$가 해인 부등식은?<br>(1) $2x - 1 &lt; 0$<br>(2) $3x \ge 6$<br>(3) $-x &gt; 0$
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="예: (2) 또는 2">
                     </div>
                 </div>
             </div>
@@ -145,27 +113,14 @@
             <h2>제 3구역: 미만의 눈금 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? ⚖️ <strong>[경계값 분석]</strong><br><br>[숲의 정령 실프-F]: \"안개가 다시 차오릅니다. 'x는 5 미만이다'의 수학 기호를 저울에 기입하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "마법 저울의 지지 한도를 비틀어 두었다. 5에 채 미치지 못하고 부스러질 필멸자 녀석들!"<br><br><i>천장에서 검은 마력 안개가 자욱하게 뿜어져 나오며 시야를 뿌옇게 가리기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "안개가 시야를 갉아먹고 있습니다! 'x는 5 미만이다'의 부등식 기호를 정밀하게 조율해 안개 포트를 정화하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q3. [미만의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>$x$는 5 미만이다를 부등호로 나타내시오.
-                    
-                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="X<5"> X<5
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="X<5 아님"> X<5 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="예: x<5">
                     </div>
                 </div>
             </div>
@@ -181,7 +136,7 @@
             <h2>제 4구역: 자연수 해 결합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[실프-F]: \"치지직... 들리십니까...? 다크-엘프의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[마법 장벽 역류 및 노이즈 발생]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "치지직... 조사관님! 다크-엘프가 저울 통신선을 차단하고 방해 코드를 심었습니다! ⚙️ [자연수 해의 판별]<br><br>저울 수식 $x + 2 &lt; 5$ 를 만족하는 진짜 자연수 해를 쉼표로 나열하여 방해 코드를 무력화하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -204,12 +159,12 @@
             <h2>제 5구역: 한계 질량 구하기 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[실프-F]: \"치지직... 들리십니까...? 다크-엘프의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[제단 돌벽 하강 경보]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "치지직... 제어 회로 복구율 45%! 위에서 떨어지는 돌판의 한계 질량이 부등식 $2x \le 8$ 에 연동되어 내려오고 있습니다! 이를 만족하는 최대 정수 값을 입력해 돌벽의 하강을 저지해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5. [해의 최대값]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>부등식 $2x \\le 8$ 을 만족하는 가장 큰 정수를 구하시오.
+                    <strong>Q5. [해의 최대값]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>부등식 $2x \le 8$ 을 만족하는 가장 큰 정수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans5" placeholder="예: 4">
                     </div>
@@ -227,7 +182,7 @@
             <h2>제 6구역: 저울의 덧셈 성질 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! ⚖️ <strong>[양변에 더하기]</strong><br><br>[숲의 정령 실프-F]: \"2구역 저울의 성질 구역입니다. $a &lt; b$ 일 때, 양변에 똑같이 2를 더한 $a + 2$ 와 $b + 2$ 의 대소 관계를 입력하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "자연수를 넘어서 기하학적 저울의 절대 대칭 성질을 건드렸다. 양변에 똑같은 질량을 얹었을 때의 수평 관계를 예측할 수 있을까?"<br><br><i>저울 좌우 플레이트에서 청색 불꽃이 피어오릅니다. 양변에 똑같이 2를 더해 대칭시켰을 때의 대소 관계식을 정확히 선언해야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "제2구역 저울 성질 동조화입니다! $a &lt; b$ 일 때, $a+2$ 와 $b+2$ 의 정합 관계식을 입력해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -250,7 +205,7 @@
             <h2>제 7구역: 저울의 곱셈 성질 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! ⚖️ <strong>[양변에 양수 곱하기]</strong><br><br>[숲의 정령 실프-F]: \"$a &lt; b$ 일 때, 양변에 똑같이 양수 3을 곱한 $3a$ 와 $3b$ 의 대소 관계를 저울에 설정하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "더하기 정도는 상식이로군. 그렇다면 양변의 크기를 동시에 3배로 팽창시켰을 때는 어떨까? 거대해진 저울의 균형추가 흔들려 으스러지리라!"<br><br><i>황동 천칭이 기괴한 마찰음을 내며 더 무겁게 삐걱거리기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "에너지가 3배로 팽창했습니다! 양수 3을 곱했을 때의 새로운 부등식 기호 $3a$ 와 $3b$ 의 관계를 록 패널에 새기십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -273,7 +228,7 @@
             <h2>제 8구역: 음수 곱셈의 반전 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! ⚖️ <strong>[양변에 음수 곱하기]</strong><br><br>[숲의 정령 실프-F]: \"주의하십시오! $a &lt; b$ 일 때, 양변에 똑같이 음수 -2를 곱한 $-2a$ 와 $-2b$ 의 대소 관계를 입력하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "크크크... 진짜 지옥은 지금부터다. 음의 기류를 흘려보내 저울의 방향을 통째로 꼬아버리겠다!"<br><br><i>파지직- 저울대에 어두운 보랏빛 마력이 흘러들어가며, 바늘의 방향 지시가 정반대로 요동치기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "비상! 음수 -2가 곱해지면서 부등식 에너지의 방향이 틀어졌습니다! $-2a$ 와 $-2b$ 의 올바른 대소 관계를 역연산해 입력하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -296,7 +251,7 @@
             <h2>제 9구역: 방향 반전 법칙 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! ⚖️ <strong>[부등호 방향의 진실]</strong><br><br>[숲의 정령 실프-F]: \"음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가? 단답으로 입력해 저울의 봉인을 푸십시오. (바뀐다 / 그대로다)\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "방향이 바뀐다는 원리를 알았다면, 이 음수 나눗셈의 절대 규칙을 단답형 단어로 증명해 봐라! 기하학의 금기를 어길 수 있을쏘냐!"<br><br><i>천장 덩굴들이 촉수처럼 뻗어 나와 출구를 단단히 틀어막습니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "조사관님! 음수를 곱하거나 나눌 때 부등호의 성질이 어떻게 변하는지, 세 글자의 핵심 선언 단어를 주입하여 덩굴을 후퇴시키십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -319,27 +274,14 @@
             <h2>제 10구역: 음수 나눗셈의 완성 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[다크-엘프]: \"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\"<br><br>[실프-F]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
+                <div class="story-text" id="outro-dynamic-text">💥 <strong>[비상 로그: 숲의 마력 코어 자폭 포맷 가동!]</strong> 💥<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "더는 참을 수 없군! 모든 고대 숲의 데이터를 파괴하고 시스템을 리셋하겠다! 5분 뒤 이 일대의 모든 마나 셀이 자폭 개시하리라!"<br><br><i>위이이잉- 경보 룬 문자들이 주위 벽면에서 붉게 깜빡이며 진동하기 시작합니다. 음수 나눗셈 부등식 수치 $-3x > 9$ 를 풀어 락을 정지시켜야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "비상! 노심 열량 임계치 돌파! 양변을 -3으로 나눈 최종 부등식 해를 전송하십시오! 제가 정화 배리어를 최대로 작동시켜 지연시키겠습니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q10. [음수 나눗셈 연습]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>$-3x &gt; 9$ 양변을 -3으로 나누면 부등식은 어떻게 되는가?
-                    
-                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="X<-3"> X<-3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="X<-3 아님"> X<-3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="예: x<-3">
                     </div>
                 </div>
             </div>
@@ -355,7 +297,7 @@
             <h2>제 11구역: 마법진 1차 해제 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[실프-F]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚖️ <strong>[일차부등식 풀이]</strong><br><br>[숲의 정령 실프-F]: \"3구역 불균형 해소 마법진입니다. 일차부등식 $2x - 4 &gt; 0$ 의 해를 풀어 입력하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "후... 자폭 유예 시간 3분 확보! 하지만 아직 3구역의 숲 정화 마법진 록들이 가로막고 있습니다! ⚙️ [일차부등식 1단계]"<br><br><i>콘솔 상단의 이끼 낀 돌 마법진의 틈새로 부등식 $2x - 4 > 0$ 포트가 빛납니다. 이 식을 이항 연산한 정확한 해를 주입하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -378,27 +320,14 @@
             <h2>제 12구역: 마법진 2차 해제 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[실프-F]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚖️ <strong>[이항과 음수 나눗셈]</strong><br><br>[숲의 정령 실프-F]: \"이항을 이용하여 일차부등식 $3x + 1 \\le 7$ 의 해를 구하십시오. 차분하게 상수를 옮기십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "1단계 록 해제 성공! 다음 2단계는 상수 이항의 정확성을 체크합니다! ⚙️ [이항과 부등호 유지]"<br><br><i>파랑색 마나 기류가 부등식 $3x + 1 \le 7$ 의 이항 정합 각도를 요구합니다. 해를 계산해 전송하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12. [이항 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $3x + 1 \\le 7$ 의 해를 구하시오.
-                    
-                    <div class="options-group" id="ans12_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group12" value="X<=2"> X<=2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group12" value="X<=2 아님"> X<=2 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group12" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group12" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q12. [이항 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $3x + 1 \le 7$ 의 해를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans12" placeholder="예: x<=2">
                     </div>
                 </div>
             </div>
@@ -414,27 +343,14 @@
             <h2>제 13구역: 양변 이항 결합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[실프-F]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚖️ <strong>[양변의 미지수 정리]</strong><br><br>[숲의 정령 실프-F]: \"미지수가 양변에 존재합니다. $5x - 2 &lt; 3x + 8$ 을 이항하여 깔끔한 부등식 해로 도출하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "정화 마법진 복구율 80%! 양변의 미지수와 상수를 각각 정방향 이항 결합하여 정화 빔을 발사해야 합니다! ⚙️ [양변 이항 정리]"<br><br><i>마법진 중앙에 $5x - 2 < 3x + 8$ 의 기하학 도식이 회전하며, x의 참 범위를 밸런서에 대기시킵니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q13. [복합 이항]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $5x - 2 &lt; 3x + 8$ 의 해를 구하시오.
-                    
-                    <div class="options-group" id="ans13_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="X<5"> X<5
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="X<5 아님"> X<5 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans13" placeholder="예: x<5">
                     </div>
                 </div>
             </div>
@@ -450,27 +366,14 @@
             <h2>제 14구역: 음수 계수 이항 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[실프-F]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! ⚖️ <strong>[음수 계수 처리]</strong><br><br>[숲의 정령 실프-F]: \"중요한 고비입니다! 일차부등식 $-2x + 5 \\ge x - 4$ 의 해를 구하십시오. 마지막 나눗셈의 부등호 반전에 유의하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "이제 정화 마법진 마지막 3단계입니다! 음수 계수의 복합 연산 코드를 전송하십시오! ⚙ [최종 계수 반전 제어]"<br><br><i>지이잉- 마법진의 메인 차단막 슬롯이 멈추며 부등식 $-2x + 5 \ge x - 4$ 의 최종 해를 매핑할 준비를 합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14. [음수 계수 이항]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $-2x + 5 \\ge x - 4$ 의 해를 구하시오.
-                    
-                    <div class="options-group" id="ans14_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="X<=3"> X<=3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="X<=3 아님"> X<=3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q14. [음수 계수 이항]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $-2x + 5 \ge x - 4$ 의 해를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans14" placeholder="예: x<=3">
                     </div>
                 </div>
             </div>
@@ -486,7 +389,7 @@
             <h2>제 15구역: 괄호 마법진 돌파 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[조력자 시스템 권한 100% 완전 복구]</span></span></span></strong> ✨<br><br>[실프-F]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[다크-엘프]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
+                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F 요정 제단 권한 100% 완전 복구]</span></strong> ✨<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "해독 완료, 조사관님! 숲의 메인 룬 제단 통제권을 완벽하게 환수했습니다! 이제 다크-엘프의 검은 기류를 차단합니다. 괄호가 적용된 부등식 $2(x - 1) &gt; 4$ 의 해를 주입하여 락을 파쇄하십시오!"<br><br><i>제단 중앙에 아름다운 에메랄드빛 마나 분수가 솟구치며 주변의 검은 가스가 일제히 소멸합니다.</i><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "내 핵심 룬 제어 락이 무너지다니...! 최종 실생활 억제 사슬로 숲의 중심부에 가두어 주마!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -509,7 +412,7 @@
             <h2>제 16구역: 연속하는 자연수 씨앗 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⚖️ <strong>[자연수 씨앗 분배]</strong><br><br>[숲의 정령 실프-F]: \"4구역 생명의 씨앗 분배 장치입니다. 연속하는 두 자연수의 합이 15보다 크다고 할 때, 이를 만족하는 가장 작은 두 자연수를 쉼표로 적으십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "생명의 숲을 재생시키는 자연수의 씨앗 조화비를 알아맞히지 못하면, 싹조차 틔우지 못하고 고사하리라!"<br><br><i>바닥의 씨앗 분배기 함이 어긋나며 쇠마찰음을 냅니다. 연속하는 두 자연수의 합이 15보다 큰 최소 조합을 입력창에 정확히 대십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -532,27 +435,14 @@
             <h2>제 17구역: 장미 꽃잎 제단 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⚖️ <strong>[제단 비용 부등식]</strong><br><br>[숲의 정령 실프-F]: \"한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 맞추는 부등식을 세우십시오. (공백 없이 입력)\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "제단의 가중 밸런서를 흐트러뜨렸다. 한 송이 800원짜리 장미 x송이와 포장비 1000원을 더해 6000원 한도를 초과하지 않는 제단 예산 부등식을 완성해 봐라!"<br><br><i>장미꽃 제단의 황동 저울 밸브가 위험 수위로 가파르게 돌아갑니다. 정확한 한도 식을 입력창에 투사하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q17. [식 세우기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 하려고 한다. 부등식을 세우시오.
-                    
-                    <div class="options-group" id="ans17_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group17" value="800X+1000<=6000"> 800X+1000<=6000
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group17" value="800X+1000<=6000 아님"> 800X+1000<=6000 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group17" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group17" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans17" placeholder="예: 800x+1000<=6000">
                     </div>
                 </div>
             </div>
@@ -568,7 +458,7 @@
             <h2>제 18구역: 장미의 최대 송이 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⚖️ <strong>[최대 장미 수량]</strong><br><br>[숲의 정령 실프-F]: \"이전 제단의 부등식을 바탕으로, 살 수 있는 장미의 최대 송이수를 계산해 제단 바구니에 입력하십시오.\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "식을 세웠다 한들, 한도 내에서 제단에 최대로 바칠 수 있는 장미 수량을 오차 없이 계수해 올리지 못하면 마법 제단이 무너지리라!"<br><br><i>부등식을 만족하는 장미의 실질적 최대 송이수를 다이얼 창에 입력해 예산 장벽을 여십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -591,7 +481,7 @@
             <h2>제 19구역: 동생의 저금 역전 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[다크-엘프]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! ⚖️ <strong>[저금 역전 시기]</strong><br><br>[숲의 정령 실프-F]: \"형의 저금통에는 20000원, 동생은 10000원이 있습니다. 다음 달부터 매월 형은 2000원, 동생은 3000원씩 저금합니다. 동생이 형보다 많아지는 것은 몇 개월 후입니까?\"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "시간이 갈수록 쌓여가는 형제의 저금 에너지 역전 공식이다! 동생이 형보다 부등식 상으로 자금이 많아지는 시점을 연산해 낼 수 있겠느냐!"<br><br><i>형 20000원(매월 2000원 저금), 동생 10000원(매월 3000원 저금) 조건의 역전 개월 상수를 계산하십시오!</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -614,7 +504,7 @@
             <h2>제 20구역: 생명의 숲 최소 면적 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="assets/m2_03_inequalities/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[실프-F]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[다크-엘프]: \"안 돼... 내 제어권이... 정지한다아아!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 탈출 요정 포탈 해제]</strong> 🔮<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "조사관님! 이제 숲의 사막 바깥 지상으로 통하는 마지막 고대 포탈 게이트만 남았습니다! 제 마지막 정령 에너지를 기압 단자에 집중하겠습니다! 요정 숲의 활성화 최소 면적 초과 수치를 입력해 포탈 게이트를 여십시오! 이제 숲으로 돌아갈 시간입니다!"<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "안 돼... 내 최종 어둠의 결계가... 완전히 해제당해 정지한다아앗!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -1062,8 +952,8 @@ function cleanString(str) {
 let totalWrongCount = 0;
 
         function checkQ1() {
-            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === 'X>=3' || ans === 'X\\GE3') {
+            const ans = cleanString(document.getElementById('ans1').value);
+            if (ans === 'X>=3' || ans === 'X\GE3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 nextStage('panel_q1', 'panel_q2', 5);
@@ -1074,7 +964,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -1083,7 +973,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ2() {
-            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans2').value);
             if (ans === '(2)' || ans === '2' || ans === '②') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1095,7 +985,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -1104,7 +994,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ3() {
-            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans3').value);
             if (ans === 'X<5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1116,7 +1006,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1137,7 +1027,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1158,7 +1048,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1179,7 +1069,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q6', 'panel_q1', 0);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1200,7 +1090,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q7', 'panel_q1', 0);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1221,7 +1111,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q8', 'panel_q1', 0);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1242,7 +1132,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q9', 'panel_q1', 0);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1251,7 +1141,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ10() {
-            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans10').value);
             if (ans === 'X<-3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1263,7 +1153,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q10', 'panel_q1', 0);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);
@@ -1272,7 +1162,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ11() {
-            const checkedOpt = document.querySelector('input[name="ans_group11"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans11').value);
             if (ans === 'X>2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1284,7 +1174,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q11', 'panel_q1', 0);
                 } else {
                     showError('panel_q11', 'error11', wrongCount);
@@ -1293,8 +1183,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ12() {
-            const checkedOpt = document.querySelector('input[name="ans_group12"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === 'X<=2' || ans === 'X\\LE2') {
+            const ans = cleanString(document.getElementById('ans12').value);
+            if (ans === 'X<=2' || ans === 'X\LE2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 nextStage('panel_q12', 'panel_q13', 60);
@@ -1305,7 +1195,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q12', 'panel_q1', 0);
                 } else {
                     showError('panel_q12', 'error12', wrongCount);
@@ -1314,7 +1204,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ13() {
-            const checkedOpt = document.querySelector('input[name="ans_group13"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans13').value);
             if (ans === 'X<5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1326,7 +1216,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q13', 'panel_q1', 0);
                 } else {
                     showError('panel_q13', 'error13', wrongCount);
@@ -1335,8 +1225,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ14() {
-            const checkedOpt = document.querySelector('input[name="ans_group14"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === 'X<=3' || ans === 'X\\LE3') {
+            const ans = cleanString(document.getElementById('ans14').value);
+            if (ans === 'X<=3' || ans === 'X\LE3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 nextStage('panel_q14', 'panel_q15', 70);
@@ -1347,7 +1237,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q14', 'panel_q1', 0);
                 } else {
                     showError('panel_q14', 'error14', wrongCount);
@@ -1356,7 +1246,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ15() {
-            const checkedOpt = document.querySelector('input[name="ans_group15"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans15').value);
             if (ans === 'X>3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1368,7 +1258,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q15', 'panel_q1', 0);
                 } else {
                     showError('panel_q15', 'error15', wrongCount);
@@ -1389,7 +1279,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q16', 'panel_q1', 0);
                 } else {
                     showError('panel_q16', 'error16', wrongCount);
@@ -1398,8 +1288,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ17() {
-            const checkedOpt = document.querySelector('input[name="ans_group17"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === '800X+1000<=6000' || ans === '800X+1000\\LE6000') {
+            const ans = cleanString(document.getElementById('ans17').value);
+            if (ans === '800X+1000<=6000' || ans === '800X+1000\LE6000') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 nextStage('panel_q17', 'panel_q18', 85);
@@ -1410,7 +1300,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q17', 'panel_q1', 0);
                 } else {
                     showError('panel_q17', 'error17', wrongCount);
@@ -1431,7 +1321,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q18', 'panel_q1', 0);
                 } else {
                     showError('panel_q18', 'error18', wrongCount);
@@ -1452,7 +1342,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q19', 'panel_q1', 0);
                 } else {
                     showError('panel_q19', 'error19', wrongCount);
@@ -1473,7 +1363,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q20', 'panel_q1', 0);
                 } else {
                     showError('panel_q20', 'error20', wrongCount);

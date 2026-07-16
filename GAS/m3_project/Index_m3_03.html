@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>시간의 이차방정식 톱니바퀴 탑: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#060f1e;--glass-bg:rgba(10,20,35,0.75);--glass-border:rgba(37,99,243,0.25);--accent:#2563eb;--accent-hover:#60a5fa;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(37,99,235,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(37,99,235,0.4);border-left:1px solid rgba(37,99,235,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(37,99,235,0.15),inset 0 0 20px rgba(37,99,235,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(37,99,235,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(37,99,235,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(37,99,235,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(37,99,235,0.05);border:1px dashed rgba(37,99,235,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(37,99,235,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(37,99,235,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(37,99,235,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(37,99,235,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(37,99,235,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(37,99,235,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
-        .radio-label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-align: left;
-            padding: 0.5rem 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
-        }
-        .radio-label:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-        }
-        input[type="radio"] {
-            margin-right: 0.8rem;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-</style>
+    <style>:root{--bg-main:#060f1e;--glass-bg:rgba(10,20,35,0.75);--glass-border:rgba(37,99,243,0.25);--accent:#2563eb;--accent-hover:#60a5fa;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(37,99,235,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(37,99,235,0.4);border-left:1px solid rgba(37,99,235,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(37,99,235,0.15),inset 0 0 20px rgba(37,99,235,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(37,99,235,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(37,99,235,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(37,99,235,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(37,99,235,0.05);border:1px dashed rgba(37,99,235,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(37,99,235,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(37,99,235,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(37,99,235,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(37,99,235,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(37,99,235,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(37,99,235,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
 </head>
 <body>
     <button class="sound-ctrl" onclick="toggleMute()">
@@ -68,17 +46,17 @@
         
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
-            <h2>제 1구역: 스테이지 1</h2>
+            <h2>제 1구역: 시간 기어의 차수 판별</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "크하하! 시간의 톱니바퀴 탑을 완전히 멈추어 두었다! 탑의 기하학적 2차 운동 법칙조차 감지하지 못하는 둔재들아, 영원히 멈춘 시간 속에 고정되거라!"<br><br><i>째깍... 무거운 태엽 기어 판 위로 네 갈래의 시간 조향 방정식 보드가 회전하기 시작합니다. 진짜 이차방정식에 해당하는 기어 번호를 선별하십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "조사관님, 시계탑의 메인 동력축을 깨워야 합니다! 보기 중 정합하는 이차방정식 번호(숫자)를 기입창에 주입해 동조율을 회복하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 다음 보기 중 이차방정식인 것의 번호를 쓰시오.
+                    <strong>Q1. [이차방정식 판별]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>다음 보기 중 이차방정식인 것의 번호를 쓰시오.<br>(1) $2x - 5 = 0$<br>(2) $x^2 - 3x + 2 = 0$<br>(3) $x^3 + x^2 - 1 = 0$<br>(4) $x^2 - (x^2 - 2x) = 0$
                     <div class="input-group">
-                        <input type="text" id="ans1" placeholder="정답 입력">
+                        <input type="text" id="ans1" placeholder="번호 입력 (예: 2)">
                     </div>
                 </div>
             </div>
@@ -90,30 +68,17 @@
 
         <!-- Q2 -->
         <div id="panel_q2" class="glass-panel">
-            <h2>제 2구역: 스테이지 2</h2>
+            <h2>제 2구역: 동력축 대칭 회전</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "첫 동력 기어를 물렸군. 하지만 대칭형 운동 공식 $x^2 - 4 = 0$ 의 양방향 회전 근들을 완벽히 대지 못하면 톱니가 으스러질 것이다!"<br><br><i>끼이이익- 청동 기어가 좌우로 강하게 요동치며 마찰 불꽃을 일으킵니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "기어의 양방향 회전 주파수를 검출하십시오! 기호 $\pm$를 포함해 두 근의 수치(예: $\pm2$)를 콘솔에 입력하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² - 4 = 0 의 두 근을 구하시오. (± 기호를 사용하여 구하시오. 예: ±2)
-                    
-                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="±2"> ±2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="±2 아님"> ±2 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q2. [이차방정식의 기본 해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 - 4 = 0$ 의 두 근을 구하시오. (단, 답이 2개인 경우 ± 기호를 사용해 나타내시오. 예: ±2)
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -125,30 +90,17 @@
 
         <!-- Q3 -->
         <div id="panel_q3" class="glass-panel">
-            <h2>제 3구역: 스테이지 3</h2>
+            <h2>제 3구역: 시간의 한 근 동조</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "시계추의 2초 동조 데이터 $x=2$ 를 주입해 두었다. 이 데이터에 상응하는 비틀림 상수 $a$를 정렬하지 못하면, 모래시계 밸브가 터져 나갈 것이다!"<br><br><i>계기판 압력 바늘이 $a$ 마커 지점을 향해 바르르 떨립니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "안심하십시오, 조사관님. 근의 대입 원리를 이용하여 식 $x^2 - ax + 6 = 0$ 에서 미지수 $a$의 값을 도출하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> x=2 가 이차방정식 x² - ax + 6 = 0 의 한 근일 때, 상수 a의 값을 구하시오.
-                    
-                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="10"> 10
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="3"> 3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="7"> 7
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="5"> 5
-                    </label>
+                    <strong>Q3. [근의 대입과 상수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>$x=2$ 가 이차방정식 $x^2 - ax + 6 = 0$ 의 한 근일 때, 상수 $a$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -160,30 +112,17 @@
 
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
-            <h2>제 4구역: 스테이지 4</h2>
+            <h2>제 4구역: 분할 인수의 해</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[크로노스-C]: \"치지직... 들리십니까...? 시간의-방랑자의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[시계탑 태엽장치 크로스 동조 노이즈 발생]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "치직... 캡틴! 두 인수로 분할 락이 걸린 톱니바퀴 식 $(x-3)(x+2) = 0$ 의 회전 주기 값을 추출해 주십시오! ⚙️ [두 근의 크로스 매핑]<br><br>두 근을 작은 수부터 쉼표로 연결해 입력하여 기어 회전을 해제하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 (x-3)(x+2) = 0 의 두 근을 구하시오. (작은 수부터 쉼표로 구분하여 적으시오. 예: -2, 3)
-                    
-                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="-2,3"> -2,3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="-2,3 아님"> -2,3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q4. [인수분해된 식의 해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $(x-3)(x+2) = 0$ 의 두 근을 구하시오. (작은 수부터 쉼표로 구분하여 적으시오. 예: -2, 3)
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -195,30 +134,17 @@
 
         <!-- Q5 -->
         <div id="panel_q5" class="glass-panel">
-            <h2>제 5구역: 스테이지 5</h2>
+            <h2>제 5구역: 이차식 동조율 인수분해</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[크로노스-C]: \"치지직... 들리십니까...? 시간의-방랑자의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[시계탑 중앙 축 연료 밸브 과열 점등]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "치지직... 보조 융합 밸브 $x^2 - 5x + 6 = 0$ 이 기동됩니다! ⚙️ [이차식의 해 인수분해]<br><br>두 일차식의 곱 형태로 분해해 얻어지는 회전값 두 개를 작은 수부터 쉼표로 연결해 기입하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² - 5x + 6 = 0 의 두 근을 구하시오. (작은 수부터 적으시오. 예: 2, 3)
-                    
-                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="2,3"> 2,3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="2,3 아님"> 2,3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q5. [인수분해를 이용한 풀이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 - 5x + 6 = 0$ 의 두 근을 구하시오. (작은 수부터 적으시오. 예: 2, 3)
+                    <div class="input-group">
+                        <input type="text" id="ans5" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -230,30 +156,17 @@
 
         <!-- Q6 -->
         <div id="panel_q6" class="glass-panel">
-            <h2>제 6구역: 스테이지 6</h2>
+            <h2>제 6구역: 중첩된 시간의 근(중근)</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "제2막: 제곱의 힘이다. 두 시간 기어의 궤적이 완전히 포개져 중첩되는 중근 공식 $x^2 - 8x + 16 = 0$을 가동했다. 겹쳐 버린 시간의 좌표 값을 단 하나로 짚어낼 수 있겠나?"<br><br><i>드르륵- 두 시계바늘이 정확히 겹친 채 꼼짝도 하지 않습니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "중근 제어 입력 작동! 완전제곱 형태로 압축되는 단일 중근(정수)을 입력하여 시계추의 고정을 해제하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² - 8x + 16 = 0 의 근을 구하시오.
-                    
-                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="2"> 2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="8"> 8
-                    </label>
+                    <strong>Q6. [중근 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 - 8x + 16 = 0$ 의 근을 구하시오. (숫자만 입력)
+                    <div class="input-group">
+                        <input type="text" id="ans6" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -265,30 +178,17 @@
 
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
-            <h2>제 7구역: 스테이지 7</h2>
+            <h2>제 7구역: 중근 가용 계수 산출</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "이차 기어 $x^2 + ax + 9 = 0$ 이 흔들림 없이 하나의 궤적으로만 돌게 정밀 조율할 양수 부하 $a$의 값을 구해봐라!"<br><br><i>회전 밸런서 지시기가 과진동으로 흔들리며 스파크를 일으킵니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "중근 형성 조건 연산! 양수 계수 $a$의 값을 대입하여 밸런서 기어의 균형을 완벽히 수평으로 맞추십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² + ax + 9 = 0 이 중근을 가질 때, 양수 a의 값을 구하시오.
-                    
-                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="12"> 12
-                    </label>
+                    <strong>Q7. [중근을 가질 조건]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 + ax + 9 = 0$ 이 중근을 가질 때, 양수 $a$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans7" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -300,30 +200,17 @@
 
         <!-- Q8 -->
         <div id="panel_q8" class="glass-panel">
-            <h2>제 8구역: 스테이지 8</h2>
+            <h2>제 8구역: 완전제곱 궤적의 근</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "근호가 잔류하는 비대칭 시계추 진동 식 $(x-2)^2 = 5$ 다! 좌우로 삐져나오는 이 진폭 근을 정확히 계측해 낼 수 있겠나?"<br><br><i>시계추 끝의 레이저 스포일러가 격렬하게 좌우로 진동합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "제곱근 정의 활용! 기호 $\pm$와 루트 $\sqrt{}$를 사용해 $(x-2)^2 = 5$의 정확한 근(예: $2\pm\sqrt{5}$)을 입력창에 전송하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 (x-2)² = 5 의 근을 구하시오. (기호 ±와 루트를 사용하여 나타내시오. 예: 2±√5)
-                    
-                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="±2√5"> ±2√5
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="±2√5 아님"> ±2√5 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q8. [완전제곱식을 이용한 풀이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $(x-2)^2 = 5$ 의 근을 구하시오. (기호 ±와 루트를 사용하여 공백 없이 나타내시오. 예: 2±√5)
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -335,30 +222,17 @@
 
         <!-- Q9 -->
         <div id="panel_q9" class="glass-panel">
-            <h2>제 9구역: 스테이지 9</h2>
+            <h2>제 9구역: 완전제곱식 유도 변형</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "이차 기어 $x^2 - 6x + 2 = 0$ 을 완전제곱 표준 폼 $(x-p)^2 = q$ 로 압축 변형할 때, 설계 압축 상수들의 합 $p+q$를 구해라!"<br><br><i>메인 모니터 패널에 수식 기하 도면이 회전하며 정밀 치수를 유도합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "상수항 이항 및 양변 보정 연산! 두 조절 상수 $p$와 $q$의 합을 입력하여 톱니 조립을 완성하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² - 6x + 2 = 0 을 (x-p)² = q 꼴로 고칠 때, 두 상수 p, q에 대하여 p+q의 값을 구하시오.
-                    
-                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="16"> 16
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="10"> 10
-                    </label>
+                    <strong>Q9. [완전제곱식 만들기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 - 6x + 2 = 0$ 을 $(x-p)^2 = q$ 꼴로 고칠 때, 두 상수 $p, q$에 대하여 $p+q$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans9" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -370,30 +244,17 @@
 
         <!-- Q10 -->
         <div id="panel_q10" class="glass-panel">
-            <h2>제 10구역: 스테이지 10</h2>
+            <h2>제 10구역: 공식 분모 계수 정합</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[시간의-방랑자]: \"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\"<br><br>[크로노스-C]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
+                <div class="story-text" id="outro-dynamic-text">💥 <strong>[비상 로그: 시계탑 코어 증기 터빈 압력 임계치 도달 및 강제 자폭 작동!]</strong> 💥<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "네 녀석들의 시간은 이제 끝났다! 탑의 메인 증기 보일러를 터뜨려 무로 되돌려주마! 5분 뒤 모든 밸브가 파열되리라!"<br><br><i>쉬이이익- 밸브 틈새로 고압의 하얀 증기가 새어 나와 시야를 가립니다. 근의 공식 분모 계수를 정확히 대입해 가스 방출을 멈추십시오!</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "보일러실 차단막 정렬 시도! 식 $x^2 - 3x + 1 = 0$ 의 근의 공식 연산에서 분모 자리에 들어갈 알맞은 정수를 입력하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 근의 공식을 사용하여 이차방정식 x² - 3x + 1 = 0 의 근을 구할 때, 분모에 들어갈 값을 구하시오.
-                    
-                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="2"> 2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="0"> 0
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="10"> 10
-                    </label>
+                    <strong>Q10. [근의 공식의 적용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>근의 공식을 사용하여 이차방정식 $x^2 - 3x + 1 = 0$ 의 근을 구할 때, 분모에 들어갈 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -405,15 +266,15 @@
 
         <!-- Q11 -->
         <div id="panel_q11" class="glass-panel">
-            <h2>제 11구역: 스테이지 11</h2>
+            <h2>제 11구역: 근의 공식 실전 해독</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[크로노스-C]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "후... 과압 가스 차단 성공! 이제 제3막 근의 열쇠 결계를 파쇄할 순간입니다! ⚙️ [공식 적용 근 해독]"<br><br><i>식 $x^2 - 4x - 1 = 0$ 의 정확한 해를 짝수 공식을 이용해 간결한 기호(공백 없이 예: $2\pm\sqrt{5}$)로 입력 장치에 기입하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² - 4x - 1 = 0 의 근을 구하시오. (근의 공식을 활용하여 나타내시오. 예: 2±√5)
+                    <strong>Q11. [근의 공식 활용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 - 4x - 1 = 0$ 의 근을 구하시오. (근의 공식을 활용하여 공백 없이 나타내시오. 예: 2±√5)
                     <div class="input-group">
                         <input type="text" id="ans11" placeholder="정답 입력">
                     </div>
@@ -427,17 +288,17 @@
 
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
-            <h2>제 12구역: 스테이지 12</h2>
+            <h2>제 12구역: 분수 근의 조합</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[크로노스-C]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "2단계 기어 락입니다! 대각 크로스 분수 근들이 조합된 식 $2x^2 + 5x - 3 = 0$ 의 두 근을 계측하십시오! ⚙️ [분수 근 추출]"<br><br><i>두 근을 구하여 작은 수부터 쉼표로 연결하되, 분수는 슬래시(/)를 사용하여 입력창에 대입해 주십시오. (예: $-3,1/2$)</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 2x² + 5x - 3 = 0 의 두 근을 구하시오. (작은 수부터 적으시오. 분수는 슬래시로 표현하시오. 예: -3, 1/2)
+                    <strong>Q12. [계수가 양수인 이차방정식]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $2x^2 + 5x - 3 = 0$ 의 두 근을 구하시오. (작은 수부터 적으시오. 분수는 슬래시로 표현하시오. 예: -3, 1/2)
                     <div class="input-group">
-                        <input type="text" id="ans12" placeholder="수식 입력 (예: 1/2 또는 8:27=10:x)">
+                        <input type="text" id="ans12" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -449,15 +310,15 @@
 
         <!-- Q13 -->
         <div id="panel_q13" class="glass-panel">
-            <h2>제 13구역: 스테이지 13</h2>
+            <h2>제 13구역: 전개형 기어의 통합 해</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[크로노스-C]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "3단계 해치입니다! 분산 배치된 기어 공식 $(x-1)(x-2) = 6$ 의 흩어진 눈금들을 한 변으로 모아 진짜 두 근을 구하십시오! ⚙️ [전개 후 인수분해]"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 (x-1)(x-2) = 6 의 두 근을 구하시오. (작은 수부터 적으시오. 예: -1, 4)
+                    <strong>Q13. [식의 정리 후 풀이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $(x-1)(x-2) = 6$ 의 두 근을 구하시오. (작은 수부터 쉼표로 구분하여 적으시오. 예: -1, 4)
                     <div class="input-group">
                         <input type="text" id="ans13" placeholder="정답 입력">
                     </div>
@@ -471,30 +332,17 @@
 
         <!-- Q14 -->
         <div id="panel_q14" class="glass-panel">
-            <h2>제 14구역: 스테이지 14</h2>
+            <h2>제 14구역: 두 근의 역추적 작성</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[크로노스-C]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "4단계 게이트입니다! 시간의 궤도 반경 두 근 $-2$ 와 $5$를 역합성하여 시계 동력 엔진의 메인 이차방정식 식을 조립하십시오! ⚙️ [방정식 역생성]"<br><br><i>엔진 작동 슬롯에 공백 없이 대문자로 조립 식(예: $X^2-3X-10=0$)을 입력하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 두 근이 -2와 5 이고 x²의 계수가 1인 이차방정식을 구하시오. (예: x²-3x-10=0)
-                    
-                    <div class="options-group" id="ans14_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="X²-3X-10=0"> X²-3X-10=0
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="X²-3X-10=0 아님"> X²-3X-10=0 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q14. [이차방정식 세우기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>두 근이 -2와 5 이고 $x^2$의 계수가 1인 이차방정식을 구하시오. (공백 없이 대문자로 예: X^2-3X-10=0)
+                    <div class="input-group">
+                        <input type="text" id="ans14" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -506,15 +354,15 @@
 
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
-            <h2>제 15구역: 스테이지 15</h2>
+            <h2>제 15구역: 양의 궤적 축 선별</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[조력자 시스템 권한 100% 완전 복구]</span></span></span></strong> ✨<br><br>[크로노스-C]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[시간의-방랑자]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
+                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C 시계탑 메인 전력 코어 100% 완전 장악]</span></strong> ✨<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "동조 완료! 시계탑 전체 기어의 회전 제동기와 기압 보정판을 완벽히 흡수했습니다! 이제 시간 방랑자의 물리 왜곡 격벽을 파쇄합니다. 방정식 $x^2 + 4x - 5 = 0$ 의 두 근 중 양의 궤적 축(정수)을 전송하여 격벽 출구를 개방하십시오!"<br><br><i>탑 중앙 시계바늘 홀로그램이 파랗게 동조 정렬되며 출구 문고리가 찰칵 풀립니다.</i><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "중앙 룸을 뚫었군! 하지만 회전 톱니바퀴의 기하학적 최종 활용 트랩은 넘지 못하리라!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² + 4x - 5 = 0 의 두 근 중 양수인 근을 구하시오.
+                    <strong>Q15. [양수인 근 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 + 4x - 5 = 0$ 의 두 근 중 양수인 근을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans15" placeholder="정답 입력">
                     </div>
@@ -528,15 +376,15 @@
 
         <!-- Q16 -->
         <div id="panel_q16" class="glass-panel">
-            <h2>제 16구역: 스테이지 16</h2>
+            <h2>제 16구역: 상수 유도 제거 회선</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "상수항이 0으로 격하된 회선 $x^2 - 2x = 0$ 이다! 공통인수 묶기조차 헷갈려 헤매다 탑의 무게추에 깔리게 될 것이다!"<br><br><i>육중한 쇠사슬 뭉치가 아래로 찌익 내려오며 압박해 옵니다. 작은 수부터 쉼표로 두 근을 대입하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² - 2x = 0 의 두 근을 구하시오. (작은 수부터 적으시오. 예: 0, 2)
+                    <strong>Q16. [공통인수를 이용한 풀이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 - 2x = 0$ 의 두 근을 구하시오. (작은 수부터 적으시오. 예: 0, 2)
                     <div class="input-group">
                         <input type="text" id="ans16" placeholder="정답 입력">
                     </div>
@@ -550,15 +398,15 @@
 
         <!-- Q17 -->
         <div id="panel_q17" class="glass-panel">
-            <h2>제 17구역: 스테이지 17</h2>
+            <h2>제 17구역: 정수 회전축 필터링</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "방정식 $3x^2 - 7x + 2 = 0$ 의 두 가닥 궤도 중, 오직 깨끗한 '정수' 궤도만을 필터에 주입해야 락이 유지될 것이다!"<br><br><i>초록색 잉크 실린더 내부 액체 높이가 출렁이며 정수 피스톤 밸브 입력을 요구합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 3x² - 7x + 2 = 0 의 두 근 중 정수인 근을 구하시오.
+                    <strong>Q17. [해의 조건 판별]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $3x^2 - 7x + 2 = 0$ 의 두 근 중 정수인 근을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans17" placeholder="정답 입력">
                     </div>
@@ -572,15 +420,15 @@
 
         <!-- Q18 -->
         <div id="panel_q18" class="glass-panel">
-            <h2>제 18구역: 스테이지 18</h2>
+            <h2>제 18구역: 완전 정합의 중근</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "완벽하게 수평 정렬을 이루어 하나의 점으로 압축되는 기어 공식 $x^2 - 6x + 9 = 0$의 최종 중근 좌표를 입력해 봐라!"<br><br><i>시계 문자판 중심의 원형 홀더가 깜빡이며 정밀 보정 정수를 대기시킵니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button> 이차방정식 x² - 6x + 9 = 0 의 중근을 구하시오.
+                    <strong>Q18. [완전제곱식과 중근]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>이차방정식 $x^2 - 6x + 9 = 0$ 의 중근을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans18" placeholder="정답 입력">
                     </div>
@@ -594,15 +442,15 @@
 
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
-            <h2>제 19구역: 스테이지 19</h2>
+            <h2>제 19구역: 연속 기어의 크기</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[시간의-방랑자]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "서로 맞물려 째깍이는 연속된 두 태엽 톱니수의 곱이 56개다. 이 중 에너지가 더 강한 큰 태엽의 톱니 개수 정수를 입력해라!"<br><br><i>두 톱니바퀴 마찰면에 화재 경보 불빛이 스파크 형태로 점멸합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> 연속하는 두 자연수의 곱이 56일 때, 두 자연수 중 큰 수를 구하시오.
+                    <strong>Q19. [이차방정식의 실생활 활용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>연속하는 두 자연수의 곱이 56일 때, 두 자연수 중 큰 수를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans19" placeholder="정답 입력">
                     </div>
@@ -616,15 +464,15 @@
 
         <!-- Q20 -->
         <div id="panel_q20" class="glass-panel">
-            <h2>제 20구역: 스테이지 20</h2>
+            <h2>제 20구역: 최종 제동 도달 시간</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_03/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[크로노스-C]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[시간의-방랑자]: \"안 돼... 내 제어권이... 정지한다아아!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 시계탑 태엽 복원 및 탈출]</strong> 🔮<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[크로노스-C]</span>: "조사관님! 이제 시계탑 꼭대기 하늘문으로 나가는 마지막 탈출용 피스톤 밸브만 남았습니다! 제 모든 태엽 동력을 가속 제동기에 투입하겠습니다! 물체 궤적 높이 공식 $30t - 5t^2 = 40$의 잔여 고도 40m가 되는 최종 도달 시간(초)을 작은 수부터 쉼표로 연결해 기입하십시오! 시계탑이 다시 정상 시간으로 작동해 째깍이기 시작합니다!"<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[시간의-방랑자]</span>: "안 돼... 내 시간 정지 결계 루프가... 완전히 정상 회전 톱니에 톱니가 맞물려 해제되다니...!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button> 지면에서 초속 30m로 똑바로 쏘아 올린 물체의 t초 후의 높이가 30t - 5t² (m)이다. 이 물체의 높이가 40m가 되는 시점은 몇 초 후인지 모두 구하시오. (오름차순으로 적으시오. 예: 2, 4)
+                    <strong>Q20. [이차방정식 최종 활용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 방정식을 ax² + bx + c = 0 꼴로 정리한 후 인수분해하거나 근의 공식을 사용하세요.')">💡 힌트</button><br>지면에서 초속 30m로 똑바로 쏘아 올린 물체의 $t$초 후의 높이가 $30t - 5t^2$ (m)이다. 이 물체의 높이가 40m가 되는 시점은 몇 초 후인지 모두 구하시오. (오름차순으로 쉼표로 구분하여 적으시오. 예: 2, 4)
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="정답 입력">
                     </div>
@@ -1061,7 +909,7 @@ let totalWrongCount = 0;
 
         function checkQ1() {
             const ans = cleanString(document.getElementById('ans1').value);
-            if (ans === '') {
+            if (ans === '2' || ans === '(2)' || ans === '2번') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1086,7 +934,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ2() {
-            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans2').value);
             if (ans === '±2' || ans === '+-2' || ans === '2,-2' || ans === '-2,2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1112,7 +960,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ3() {
-            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans3').value);
             if (ans === '5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1138,7 +986,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ4() {
-            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans4').value);
             if (ans === '-2,3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1164,7 +1012,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ5() {
-            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans5').value);
             if (ans === '2,3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1190,7 +1038,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ6() {
-            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans6').value);
             if (ans === '4') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1216,7 +1064,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ7() {
-            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans7').value);
             if (ans === '6') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1242,8 +1090,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ8() {
-            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === '±2√5' || ans === '+-2√5' || ans === '2√5,-2√5' || ans === '-2√5,2√5') {
+            const ans = cleanString(document.getElementById('ans8').value);
+            if (ans === '2±√5' || ans === '2+-√5' || ans === '2+√5,2-√5' || ans === '2-√5,2+√5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1268,7 +1116,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ9() {
-            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans9').value);
             if (ans === '8') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1294,7 +1142,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ10() {
-            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans10').value);
             if (ans === '2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1321,7 +1169,7 @@ let totalWrongCount = 0;
 
         function checkQ11() {
             const ans = cleanString(document.getElementById('ans11').value);
-            if (ans === '±2√5' || ans === '+-2√5' || ans === '2√5,-2√5' || ans === '-2√5,2√5') {
+            if (ans === '2±√5' || ans === '2+-√5' || ans === '2+√5,2-√5' || ans === '2-√5,2+√5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1398,8 +1246,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ14() {
-            const checkedOpt = document.querySelector('input[name="ans_group14"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === 'X²-3X-10=0') {
+            const ans = cleanString(document.getElementById('ans14').value);
+            if (ans === 'X²-3X-10=0' || ans === 'X^2-3X-10=0') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 

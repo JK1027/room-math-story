@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>포물선 궤도의 사이버 드론 관제실: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#0d0e22;--glass-bg:rgba(18,19,45,0.75);--glass-border:rgba(99,102,241,0.25);--accent:#6366f1;--accent-hover:#818cf8;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(99,102,241,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(99,102,241,0.4);border-left:1px solid rgba(99,102,241,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(99,102,241,0.15),inset 0 0 20px rgba(99,102,241,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(99,102,241,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(99,102,241,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(99,102,241,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(99,102,241,0.05);border:1px dashed rgba(99,102,241,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(99,102,241,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(99,102,241,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(99,102,241,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(99,102,241,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(99,102,241,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(99,102,241,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(99,102,241,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
-        .radio-label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-align: left;
-            padding: 0.5rem 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
-        }
-        .radio-label:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-        }
-        input[type="radio"] {
-            margin-right: 0.8rem;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-</style>
+    <style>:root{--bg-main:#0d0e22;--glass-bg:rgba(18,19,45,0.75);--glass-border:rgba(99,102,241,0.25);--accent:#6366f1;--accent-hover:#818cf8;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(99,102,241,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(99,102,241,0.4);border-left:1px solid rgba(99,102,241,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(99,102,241,0.15),inset 0 0 20px rgba(99,102,241,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(99,102,241,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(99,102,241,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(99,102,241,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(99,102,241,0.05);border:1px dashed rgba(99,102,241,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(99,102,241,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(99,102,241,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(99,102,241,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(99,102,241,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(99,102,241,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(99,102,241,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(99,102,241,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
 </head>
 <body>
     <button class="sound-ctrl" onclick="toggleMute()">
@@ -68,17 +46,17 @@
         
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
-            <h2>제 1구역: 스테이지 1</h2>
+            <h2>제 1구역: 사이버 비행 함수 감지</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "크하하! 도시 상공의 관제 레이더망을 전부 오염시켰다! 2차 곡선형 비행 공식조차 구별하지 못하는 구형 관제 컴퓨터들은 일제히 교신 단절 상태로 추락할 것이다!"<br><br><i>지이이잉- 디지털 콘솔 스크린에 네 종류의 드론 궤적 주파수 식들이 요동치며 나타납니다. 이차함수를 만족하는 올바른 포물선 궤도 번호를 선별하십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "관제 조사관님, 중앙 통제 장치를 깨워 주십시오! 이차함수 법칙을 따르는 고유 궤도 번호(숫자)를 기입창에 주입해 레이더를 작동시켜야 합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 다음 보기 중 y가 x에 대한 이차함수인 것의 번호를 쓰시오.
+                    <strong>Q1. [이차함수 판별]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>다음 보기 중 $y$가 $x$에 대한 이차함수인 것의 번호를 쓰시오.<br>(1) $y = 3x - 1$<br>(2) $y = x^2 - 4$<br>(3) $y = rac{2}{x}$<br>(4) $y = 2^x$
                     <div class="input-group">
-                        <input type="text" id="ans1" placeholder="정답 입력">
+                        <input type="text" id="ans1" placeholder="번호 입력 (예: 2)">
                     </div>
                 </div>
             </div>
@@ -90,15 +68,15 @@
 
         <!-- Q2 -->
         <div id="panel_q2" class="glass-panel">
-            <h2>제 2구역: 스테이지 2</h2>
+            <h2>제 2구역: 기본 비행 코어 꼭짓점</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "기본 궤도 레이더를 켰군. 하지만 비행 고도가 0인 비행 기본형 $y=3x^2$ 그래프의 꼭짓점 좌표를 판독할 코드가 입력되지 않았다! 충돌 위험 80%다!"<br><br><i>벽면의 디지털 네비게이션 지시기가 점차 아래로 처지며 비정상 경로 진입음을 보냅니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "비행 코어 축 보정 가동! 기본형 $y=3x^2$ 의 원점 꼭짓점 좌표를 괄호를 포함(예: (0,0))하여 입력창에 주입해 경로를 동조해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=3x² 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 적으시오. 예: (0,0))
+                    <strong>Q2. [기본형의 꼭짓점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=3x^2$ 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 공백 없이 적으시오. 예: (0,0))
                     <div class="input-group">
                         <input type="text" id="ans2" placeholder="정답 입력">
                     </div>
@@ -112,30 +90,17 @@
 
         <!-- Q3 -->
         <div id="panel_q3" class="glass-panel">
-            <h2>제 3구역: 스테이지 3</h2>
+            <h2>제 3구역: 중앙 조향 대칭축</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "이번엔 음의 대칭축이다! 아래로 급강하하는 포물선 궤도 $y=-2x^2$ 의 정중앙 대칭축 방정식을 정확히 규정해 봐라!"<br><br><i>드르륵- 드론 조종 피스톤 밸브가 중앙 정렬 상태에서 왼쪽으로 흔들립니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "대칭 조향 축 보정 시작! 축의 방정식 수식(예: x=0)을 기입창에 대입하여 좌우 밸런스를 즉시 동조하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=-2x² 그래프의 대칭축(축의 방정식)을 구하시오. (예: x=0)
-                    
-                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="X=0"> X=0
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="X=0 아님"> X=0 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q3. [기본형의 대칭축]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=-2x^2$ 그래프의 대칭축(축의 방정식)을 구하시오. (공백 없이 예: x=0)
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -147,30 +112,17 @@
 
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
-            <h2>제 4구역: 스테이지 4</h2>
+            <h2>제 4구역: 궤도 통과 계수 유도</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[이글-E]: \"치지직... 들리십니까...? 재머-J의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[드론 자이로 가속 센서 전자기 노이즈 필터링]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "치직... 캡틴! 드론 자이로 센서가 궤적 상의 좌표 $(2,8)$ 을 안전하게 관통할 수 있도록 가속도 상수 $a$를 산출해야 합니다! ⚙️ [좌표 통과 계수 대입]<br><br>식 $y=ax^2$ 에 좌표를 대입하여 $a$의 값을 도출하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=ax² 의 그래프가 점 (2,8) 을 지날 때, 상수 a의 값을 구하시오.
-                    
-                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="2"> 2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="0"> 0
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="10"> 10
-                    </label>
+                    <strong>Q4. [좌표의 대입]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=ax^2$ 의 그래프가 점 $(2,8)$ 을 지날 때, 상수 $a$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -182,30 +134,17 @@
 
         <!-- Q5 -->
         <div id="panel_q5" class="glass-panel">
-            <h2>제 5구역: 스테이지 5</h2>
+            <h2>제 5구역: y축 방향 수직 천이</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[이글-E]: \"치지직... 들리십니까...? 재머-J의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[드론 수직 상승 추진 로터 가동]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "치지직... 도시 고층 빌딩 충돌 방지 고도 보정 작동! ⚙️ [y축 방향 3 평행이동]<br><br>수직 고도를 3만큼 상승 조정한 드론 비행 포물선 식(공백 없이 예: y=x^+3)을 대입해 충돌선을 상승시키십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=x² 의 그래프를 y축의 양의 방향으로 3만큼 평행이동한 그래프의 식을 구하시오. (예: y=x²+3)
-                    
-                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="Y=X²+3"> Y=X²+3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="Y=X²+3 아님"> Y=X²+3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q5. [y축 평행이동]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=x^2$ 의 그래프를 $y$축의 양의 방향으로 3만큼 평행이동한 그래프의 식을 구하시오. (공백 없이 대문자로 예: y=x^2+3)
+                    <div class="input-group">
+                        <input type="text" id="ans5" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -217,15 +156,15 @@
 
         <!-- Q6 -->
         <div id="panel_q6" class="glass-panel">
-            <h2>제 6구역: 스테이지 6</h2>
+            <h2>제 6구역: 수평 비행 평행이동</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "제2막: 평행이동의 궤적이다. 수평 궤도를 1만큼 천이시켜서 묶은 표준식 $y=3(x-1)^2$ 이다. 이 꼭짓점 좌표를 오차 없이 입력할 수 있겠나?"<br><br><i>드론 조향 레이저 포인터가 수평 방향으로 1단위 꺾여 정렬됩니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "수평 꼭짓점 복원 시도! 괄호를 포함하여 꼭짓점 좌표(예: (1,0))를 입력 장치에 기입하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=3(x-1)² 그래프의 꼭짓점 좌표를 구하시오. (예: (1,0))
+                    <strong>Q6. [x축 평행이동 꼭짓점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=3(x-1)^2$ 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 공백 없이 적으시오. 예: (1,0))
                     <div class="input-group">
                         <input type="text" id="ans6" placeholder="정답 입력">
                     </div>
@@ -239,15 +178,15 @@
 
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
-            <h2>제 7구역: 스테이지 7</h2>
+            <h2>제 7구역: 복합 입체 꼭짓점 좌표</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "그렇다면 수평으로 2, 수직으로 4만큼 동시에 천이시킨 복합 궤도 $y=-(x-2)^2 + 4$ 의 마스터 꼭짓점은 과연 어디일까?"<br><br><i>계기판 모니터 도면에 녹색 드론 기단이 두 방향 좌표선 중앙으로 가쁘게 움직입니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "복합 평행이동 꼭짓점 정렬! 괄호를 포함하여 $(p,q)$ 형태의 좌표(예: (2,4))를 입력하여 궤도를 고정하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=-(x-2)² + 4 그래프의 꼭짓점 좌표를 구하시오. (예: (2,4))
+                    <strong>Q7. [표준형의 꼭짓점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=-(x-2)^2 + 4$ 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 공백 없이 적으시오. 예: (2,4))
                     <div class="input-group">
                         <input type="text" id="ans7" placeholder="정답 입력">
                     </div>
@@ -261,30 +200,17 @@
 
         <!-- Q8 -->
         <div id="panel_q8" class="glass-panel">
-            <h2>제 8구역: 스테이지 8</h2>
+            <h2>제 8구역: 표준형 대칭축</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "이차 포물선 비행축 $y=2(x+3)^2 - 5$ 의 중앙 대칭 보조축이다. 이 축의 노선이 이탈하면 날개 밸런스가 파열될 것이다!"<br><br><i>드론 추진기 모터 회전수가 양쪽으로 불균등하게 분배되어 흔들리기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "대칭축 방정식 동조화! 축의 공식(예: x=-3)을 기입창에 주입해 날개 추진 각도를 수평으로 고정하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=2(x+3)² - 5 그래프의 대칭축의 방정식을 구하시오. (예: x=-3)
-                    
-                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="X=-3"> X=-3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="X=-3 아님"> X=-3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q8. [표준형의 대칭축]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=2(x+3)^2 - 5$ 그래프의 대칭축의 방정식을 구하시오. (공백 없이 예: x=-3)
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -296,30 +222,17 @@
 
         <!-- Q9 -->
         <div id="panel_q9" class="glass-panel">
-            <h2>제 9구역: 스테이지 9</h2>
+            <h2>제 9구역: 레이저 레이더 원점 절편</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "관제탑의 정면 수직 레이저 기준축과 교차하는 궤도 높이를 계측해 봐라. 식 $y=(x-1)^2 + 2$ 의 y축 도킹 좌표이다!"<br><br><i>수직 도킹 통과선 눈금자가 위아래로 미세하게 눈금 번호를 대기시킵니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "레이더 수직 교점 연산! $x=0$을 대입하여 y축과 마주치는 도킹 수치 정수를 출력창에 전송하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=(x-1)² + 2 그래프가 y축과 만나는 점의 y좌표를 구하시오.
-                    
-                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="1"> 1
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="3"> 3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="5"> 5
-                    </label>
+                    <strong>Q9. [y축과의 교점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=(x-1)^2 + 2$ 그래프가 $y$축과 만나는 점의 $y$좌표를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans9" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -331,30 +244,17 @@
 
         <!-- Q10 -->
         <div id="panel_q10" class="glass-panel">
-            <h2>제 10구역: 스테이지 10</h2>
+            <h2>제 10구역: 중앙 반전 궤도</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[재머-J]: \"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\"<br><br>[이글-E]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
+                <div class="story-text" id="outro-dynamic-text">💥 <strong>[비상 로그: 관제 코어 냉각 회로 정지 및 강제 셧다운 시퀀스 가동!]</strong> 💥<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "끈질긴 녀석들! 모든 관제 데이터를 오버플로우로 포맷하겠다! 5분 뒤 모든 시스템 캐시가 소멸되리라!"<br><br><i>경보 사운드가 시끄럽게 울리며 붉은 연기가 스며 나오기 시작합니다. 대칭 반전 식을 전송해 자폭 회로를 우회 차단하십시오!</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "냉각 기류 복구 시도! 식 $y=-x^2$ 과 가로 x축을 기준으로 대칭인 반사 반전 궤도 식(공백 없이 대문자)을 기입해 자폭을 정지시키십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=-x² 의 그래프와 x축에 대하여 서로 대칭인 그래프의 식을 구하시오. (예: y=x²)
-                    
-                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="Y=X²"> Y=X²
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="Y=X² 아님"> Y=X² 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q10. [대칭인 그래프]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=-x^2$ 의 그래프와 $x$축에 대하여 서로 대칭인 그래프의 식을 구하시오. (공백 없이 대문자로 예: y=x^2)
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -366,30 +266,17 @@
 
         <!-- Q11 -->
         <div id="panel_q11" class="glass-panel">
-            <h2>제 11구역: 스테이지 11</h2>
+            <h2>제 11구역: 일반 궤도의 기하 분석</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이글-E]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "후... 자폭 정지 3분 연장 성공! 이제 제3막 일반 비행 궤도의 정밀 해석에 들어갑니다! ⚙️ [일반형 식의 합성 보정]"<br><br><i>이차식 일반 폼 $y=x^2 - 4x + 7$ 을 표준 폼 $y=a(x-p)^2+q$ 로 변환하여 도출되는 세 조절 변수 $a, p, q$의 합산 정수를 입력해 주십시오!</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=x² - 4x + 7 을 표준형 y=a(x-p)²+q 꼴로 나타낼 때, 세 상수 a, p, q에 대하여 a+p+q의 값을 구하시오.
-                    
-                    <div class="options-group" id="ans11_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="12"> 12
-                    </label>
+                    <strong>Q11. [일반형을 표준형으로 변형]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=x^2 - 4x + 7$ 을 표준형 $y=a(x-p)^2+q$ 꼴로 나타낼 때, 세 상수 $a, p, q$에 대하여 $a+p+q$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans11" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -401,15 +288,15 @@
 
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
-            <h2>제 12구역: 스테이지 12</h2>
+            <h2>제 12구역: 일반형 꼭짓점 도출</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이글-E]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "2단계 일반 꼭짓점 정렬 록입니다! 비행 궤도 식 $y=x^2 - 6x + 5$ 의 꼭짓점 좌표를 해독해 주십시오! ⚙️ [이차식 꼭짓점]"<br><br><i>괄호를 포함하여 쉼표로 연결된 꼭짓점 좌표(예: (3,-4))를 입력창에 전송하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=x² - 6x + 5 그래프의 꼭짓점 좌표를 구하시오. (예: (3,-4))
+                    <strong>Q12. [일반형의 꼭짓점]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=x^2 - 6x + 5$ 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 공백 없이 적으시오. 예: (3,-4))
                     <div class="input-group">
                         <input type="text" id="ans12" placeholder="정답 입력">
                     </div>
@@ -423,30 +310,17 @@
 
         <!-- Q13 -->
         <div id="panel_q13" class="glass-panel">
-            <h2>제 13구역: 스테이지 13</h2>
+            <h2>제 13구역: 가로 활주로 교점</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이글-E]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "3단계 해치 관문입니다! 드론 비행선이 가로 x축 활주로와 교차 접지하는 두 교점의 x좌표 수치를 도출해 주십시오! ⚙️ [x축과의 교점]"<br><br><i>식 $y=x^2 + 2x - 3$ 이 x축과 마주치는 두 좌표를 작은 수부터 쉼표로 연결해 기입하십시오! (예: -3,1)</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=x² + 2x - 3 그래프가 x축과 만나는 두 점의 x좌표를 구하시오. (작은 수부터 적으시오. 예: -3, 1)
-                    
-                    <div class="options-group" id="ans13_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="-3,1"> -3,1
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="-3,1 아님"> -3,1 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group13" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q13. [x축과의 교점의 x좌표]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=x^2 + 2x - 3$ 그래프가 $x$축과 만나는 두 점의 $x$좌표를 구하시오. (작은 수부터 적으시오. 예: -3, 1)
+                    <div class="input-group">
+                        <input type="text" id="ans13" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -458,30 +332,17 @@
 
         <!-- Q14 -->
         <div id="panel_q14" class="glass-panel">
-            <h2>제 14구역: 스테이지 14</h2>
+            <h2>제 14구역: 최고 정밀 고도 계측</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이글-E]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "4단계 관문입니다! 복합식 $y=-2x^2 + 8x - 5$ 포물선의 꼭짓점 수직 y좌표 최고 고도 상수를 계측하십시오! ⚙️ [꼭짓점 y좌표]"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=-2x² + 8x - 5 그래프의 꼭짓점의 y좌표를 구하시오.
-                    
-                    <div class="options-group" id="ans14_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="1"> 1
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="3"> 3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group14" value="5"> 5
-                    </label>
+                    <strong>Q14. [꼭짓점의 y좌표]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=-2x^2 + 8x - 5$ 그래프의 꼭짓점의 $y$좌표를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans14" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -493,30 +354,17 @@
 
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
-            <h2>제 15구역: 스테이지 15</h2>
+            <h2>제 15구역: 중앙 조향 대칭축 복원</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[조력자 시스템 권한 100% 완전 복구]</span></span></span></strong> ✨<br><br>[이글-E]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[재머-J]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
+                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E 드론 관제 컴퓨터 권한 100% 완전 장악]</span></strong> ✨<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "동기화 완료! 관제탑의 모든 드론 모터 출력과 무선 레이더 주파수를 장악했습니다! 이제 재머의 비행 왜곡 격벽을 역동조화합니다. 식 $y=x^2 - 4x$ 의 조향 대칭축 공식을 전송해 격벽을 무력화하십시오!"<br><br><i>메인 비행 차트 스크린이 노란색 포물선 궤도선들로 깔끔하게 동조 정렬됩니다.</i><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "중앙 제어국을 뚫다니...! 최종 한계 고도의 이차 포물선 활용 트랩은 결코 넘지 못하리라!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=x² - 4x 그래프의 대칭축의 방정식을 구하시오. (예: x=2)
-                    
-                    <div class="options-group" id="ans15_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group15" value="X=2"> X=2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group15" value="X=2 아님"> X=2 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group15" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group15" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q15. [일반형의 대칭축]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=x^2 - 4x$ 그래프의 대칭축의 방정식을 구하시오. (공백 없이 예: x=2)
+                    <div class="input-group">
+                        <input type="text" id="ans15" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -528,15 +376,15 @@
 
         <!-- Q16 -->
         <div id="panel_q16" class="glass-panel">
-            <h2>제 16구역: 스테이지 16</h2>
+            <h2>제 16구역: 포물선 조향 극성</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "아래로 볼록한 U자형 비행 슬롯이다! 궤도식 $y=ax^2+bx+c$ 에서 이 조향 극성을 결정하는 계수 $a$의 부호 범위를 기호로 선언해 봐라!"<br><br><i>제어반 기판의 방향 조절 지시등이 깜빡입니다. 부등호 기호를 포함해 입력하십시오. (예: >0)</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=ax²+bx+c 의 그래프 모양이 아래로 볼록할 때, a의 값의 부호를 쓰시오. (기호를 써서 나타내시오. 예: >0)
+                    <strong>Q16. [이차함수 그래프의 볼록한 방향]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=ax^2+bx+c$ 의 그래프 모양이 아래로 볼록할 때, $a$의 값의 부호를 쓰시오. (기호를 포함해 예: >0)
                     <div class="input-group">
                         <input type="text" id="ans16" placeholder="정답 입력">
                     </div>
@@ -550,17 +398,17 @@
 
         <!-- Q17 -->
         <div id="panel_q17" class="glass-panel">
-            <h2>제 17구역: 스테이지 17</h2>
+            <h2>제 17구역: 원점 통과 빔 참거짓</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "식 $y=x^2 + 2x$ 의 레이더 빔이 원점 $(0,0)$ 을 안전 지대로 통과하는지 진위를 판단해라! 참 또는 거짓 둘 중 하나다!"<br><br><i>콘솔에 참 / 거짓 스위치 2개가 교차 가동음을 냅니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> "이차함수 y=x² + 2x 의 그래프는 항상 원점(0,0)을 지난다." 이 명제가 맞으면 참, 틀리면 거짓을 쓰시오.
+                    <strong>Q17. [함수와 원점 통과]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>"이차함수 $y=x^2 + 2x$ 의 그래프는 항상 원점$(0,0)$을 지난다." 이 명제가 맞으면 참, 틀리면 거짓을 쓰시오.
                     <div class="input-group">
-                        <input type="text" id="ans17" placeholder="정답 입력">
+                        <input type="text" id="ans17" placeholder="참 또는 거짓 입력">
                     </div>
                 </div>
             </div>
@@ -572,15 +420,15 @@
 
         <!-- Q18 -->
         <div id="panel_q18" class="glass-panel">
-            <h2>제 18구역: 스테이지 18</h2>
+            <h2>제 18구역: y축 접지 도킹 고도</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "이차함수 $y=x^2 - 2x - 3$ 이 y축과 만나는 최종 접지 고도 수치를 입력창에 전송해 봐라!"<br><br><i>y축 접지 레벨 바늘이 하강선 마커에 도달해 깜빡입니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 이차함수 y=x² - 2x - 3 그래프가 y축과 만나는 점의 y좌표를 구하시오.
+                    <strong>Q18. [일반형의 y절편]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>이차함수 $y=x^2 - 2x - 3$ 그래프가 $y$축과 만나는 점의 $y$좌표를 구하시오. (음수 마이너스 포함 입력)
                     <div class="input-group">
                         <input type="text" id="ans18" placeholder="정답 입력">
                     </div>
@@ -594,15 +442,15 @@
 
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
-            <h2>제 19구역: 스테이지 19</h2>
+            <h2>제 19구역: 최저 안착 한도 고도</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[재머-J]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "상승 포물선 비행로 $y=3(x-2)^2 + 1$ 이다! 드론이 도달할 수 있는 가장 최저 안착 한도 고도(최솟값)를 선언해 봐라!"<br><br><i>최저 안전 착륙 한도선 경보기가 삐- 삐- 가동 지연을 일으킵니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button> 이차함수 y=3(x-2)² + 1 의 최솟값을 구하시오.
+                    <strong>Q19. [이차함수의 최솟값]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 이차함수 y = a(x-p)² + q 꼴로 고치면 꼭짓점의 좌표가 (p, q)가 됨을 활용해 보세요.')">💡 힌트</button><br>이차함수 $y=3(x-2)^2 + 1$ 의 최솟값을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans19" placeholder="정답 입력">
                     </div>
@@ -616,15 +464,15 @@
 
         <!-- Q20 -->
         <div id="panel_q20" class="glass-panel">
-            <h2>제 20구역: 스테이지 20</h2>
+            <h2>제 20구역: 최고 회피 고도 정합</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_04/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[이글-E]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[재머-J]: \"안 돼... 내 제어권이... 정지한다아아!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 포물선 궤도 안전 정렬 및 해제]</strong> 🔮<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[이글-E]</span>: "조사관님! 이제 관제탑 비행 게이트 밖 하늘로 나가는 마지막 최고 회피 고도 밸브만 남았습니다! 제 모든 레이더 조종 전력을 관제 시스템에 연동하겠습니다! 포물선 궤도 식 $y = -x^2 + 4x$ 가 나타내는 비행선 최고 정점 높이(y좌표 최댓값)를 입력하여 게이트 문을 여십시오! 탈출할 순간입니다!"<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[재머-J]</span>: "안 돼... 내 포물선 해킹 결계가... 완전 제어 정점 데이터에 차단되어 소멸하다니...!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20.</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button> 보안 드론의 회피 포물선 비행 궤도 식은 y = -x² + 4x 이다. 이 드론이 도달할 수 있는 가장 높은 지점의 높이(y좌표)를 구하시오.
+                    <strong>Q20. [이차함수의 최댓값 활용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: x축의 좌표를 먼저, y축의 좌표를 나중에 (x, y) 형태로 생각해보세요.')">💡 힌트</button><br>보안 드론의 회피 포물선 비행 궤도 식은 $y = -x^2 + 4x$ 이다. 이 드론이 도달할 수 있는 가장 높은 지점의 높이($y$좌표)를 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="정답 입력">
                     </div>
@@ -1061,7 +909,7 @@ let totalWrongCount = 0;
 
         function checkQ1() {
             const ans = cleanString(document.getElementById('ans1').value);
-            if (ans === '') {
+            if (ans === '2' || ans === '(2)' || ans === '2번') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1087,7 +935,7 @@ let totalWrongCount = 0;
 
         function checkQ2() {
             const ans = cleanString(document.getElementById('ans2').value);
-            if (ans === '') {
+            if (ans === '(0,0)' || ans === '0,0') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1112,7 +960,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ3() {
-            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans3').value);
             if (ans === 'X=0') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1138,7 +986,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ4() {
-            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans4').value);
             if (ans === '2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1164,8 +1012,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ5() {
-            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === 'Y=X²+3') {
+            const ans = cleanString(document.getElementById('ans5').value);
+            if (ans === 'Y=X²+3' || ans === 'Y=X^2+3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1191,7 +1039,7 @@ let totalWrongCount = 0;
 
         function checkQ6() {
             const ans = cleanString(document.getElementById('ans6').value);
-            if (ans === '') {
+            if (ans === '(1,0)' || ans === '1,0') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1217,7 +1065,7 @@ let totalWrongCount = 0;
 
         function checkQ7() {
             const ans = cleanString(document.getElementById('ans7').value);
-            if (ans === '') {
+            if (ans === '(2,4)' || ans === '2,4') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1242,7 +1090,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ8() {
-            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans8').value);
             if (ans === 'X=-3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1268,7 +1116,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ9() {
-            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans9').value);
             if (ans === '3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1294,8 +1142,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ10() {
-            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === 'Y=X²') {
+            const ans = cleanString(document.getElementById('ans10').value);
+            if (ans === 'Y=X²' || ans === 'Y=X^2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1320,7 +1168,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ11() {
-            const checkedOpt = document.querySelector('input[name="ans_group11"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans11').value);
             if (ans === '6') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1347,7 +1195,7 @@ let totalWrongCount = 0;
 
         function checkQ12() {
             const ans = cleanString(document.getElementById('ans12').value);
-            if (ans === '') {
+            if (ans === '(3,-4)' || ans === '3,-4') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1372,7 +1220,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ13() {
-            const checkedOpt = document.querySelector('input[name="ans_group13"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans13').value);
             if (ans === '-3,1') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1398,7 +1246,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ14() {
-            const checkedOpt = document.querySelector('input[name="ans_group14"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans14').value);
             if (ans === '3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1424,7 +1272,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ15() {
-            const checkedOpt = document.querySelector('input[name="ans_group15"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans15').value);
             if (ans === 'X=2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;

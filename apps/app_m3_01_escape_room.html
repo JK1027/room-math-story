@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>피타고라스의 숨겨진 무리수 사원: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#120a1d;--glass-bg:rgba(25,15,38,0.75);--glass-border:rgba(168,85,247,0.25);--accent:#a855f7;--accent-hover:#c084fc;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(168,85,247,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(168,85,247,0.4);border-left:1px solid rgba(168,85,247,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(168,85,247,0.15),inset 0 0 20px rgba(168,85,247,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(168,85,247,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(168,85,247,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(168,85,247,0.05);border:1px dashed rgba(168,85,247,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(168,85,247,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(168,85,247,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(168,85,247,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(168,85,247,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(168,85,247,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(168,85,247,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
-        .radio-label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-align: left;
-            padding: 0.5rem 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
-        }
-        .radio-label:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-        }
-        input[type="radio"] {
-            margin-right: 0.8rem;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-</style>
+    <style>:root{--bg-main:#120a1d;--glass-bg:rgba(25,15,38,0.75);--glass-border:rgba(168,85,247,0.25);--accent:#a855f7;--accent-hover:#c084fc;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(168,85,247,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(168,85,247,0.4);border-left:1px solid rgba(168,85,247,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(168,85,247,0.15),inset 0 0 20px rgba(168,85,247,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(168,85,247,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(168,85,247,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(168,85,247,0.05);border:1px dashed rgba(168,85,247,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(168,85,247,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(168,85,247,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(168,85,247,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(168,85,247,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(168,85,247,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(168,85,247,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
 </head>
 <body>
     <button class="sound-ctrl" onclick="toggleMute()">
@@ -68,30 +46,17 @@
         
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
-            <h2>제 1구역: 스테이지 1</h2>
+            <h2>제 1구역: 제곱근의 기초 각인</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "크하하! 이 무리수 사원의 고대 기하학 방화벽은 내가 모조리 장악했다! 너희 중 그 누구도 사원의 기초 수식 관문을 뚫고 원래 세계로 돌아가지 못하리라!"<br><br><i>지이이잉- 거대한 모래 늪 장벽 위로 황동 다이얼 회전판이 점멸합니다. 9를 형성하는 두 개의 근원적인 뿌리값(제곱근)을 해독 장치에 기입하십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "사원의 방문자들이여, 두려워 마십시오. 9의 대칭 근원 제곱근 값을 찾아내 다이얼에 주입하십시오. 부호 양쪽 모두를 규명해야 합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근(±)이라고 부릅니다.')">💡 힌트</button> 9의 제곱근을 구하시오. (단, 답이 2개인 경우 ± 기호를 사용해 나타내시오. 예: ±3)
-                    
-                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="±3"> ±3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="±3 아님"> ±3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q1. [제곱근의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근(±)이라고 부릅니다.')">💡 힌트</button><br>9의 제곱근을 구하시오. (단, 답이 2개인 경우 ± 기호를 사용해 나타내시오. 예: ±3)
+                    <div class="input-group">
+                        <input type="text" id="ans1" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -103,30 +68,17 @@
 
         <!-- Q2 -->
         <div id="panel_q2" class="glass-panel">
-            <h2>제 2구역: 스테이지 2</h2>
+            <h2>제 2구역: 근호의 해독</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "겨우 첫 다이얼을 정렬했군. 하지만 이 단단한 근호($\sqrt{}$) 껍질 속에 가두어 둔 16의 실질 출력을 꺼낼 수 있겠느냐!"<br><br><i>벽면의 상형문자 지시판에서 $\sqrt{16}$ 문양이 빨갛게 깜빡이기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "근호 해독 센서 가동! $\sqrt{16}$의 값을 단순화하여 근호 밖으로 완전히 탈출시켜 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> √16의 값을 구하시오.
-                    
-                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="2"> 2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="8"> 8
-                    </label>
+                    <strong>Q2. [근호의 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>$\sqrt{16}$의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -138,30 +90,17 @@
 
         <!-- Q3 -->
         <div id="panel_q3" class="glass-panel">
-            <h2>제 3구역: 스테이지 3</h2>
+            <h2>제 3구역: 제곱근의 명칭 구분</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "후후... 그렇다면 제곱근 자체의 고유 명칭과 대칭성을 헷갈리지 않고 '제곱근 25'의 크기만을 정확히 분별해 낼 수 있겠나?"<br><br><i>지직- 다이어그램의 파란 전선이 붉은 전선과 교차하며 혼선을 빚어냅니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "주의하십시오! '제곱근 25'는 대칭 부호가 아닌, 순수한 플러스 근호인 $\sqrt{25}$의 값만을 가리킵니다. 올바른 정수 상수를 전송하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근(±)이라고 부릅니다.')">💡 힌트</button> 제곱근 25의 값을 구하시오.
-                    
-                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="10"> 10
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="3"> 3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="7"> 7
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="5"> 5
-                    </label>
+                    <strong>Q3. [제곱근 읽기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근(±)이라고 부릅니다.')">💡 힌트</button><br>제곱근 25의 값을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -173,30 +112,17 @@
 
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
-            <h2>제 4구역: 스테이지 4</h2>
+            <h2>제 4구역: 음수 제곱의 양의 근</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[피타고라스-P]: \"치지직... 들리십니까...? 이단자-X의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[사원 내 연도별 백업 레지스터 전압 충돌]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "치직... 캡틴! 이단자가 조작한 역부호 레지스터 $(-3)^2$의 전압이 강하게 상승합니다! ⚙️ [양의 제곱근 도출]<br><br>그 수치의 두 제곱근 중 양수에 해당하는 최종 값을 해독창에 대입해 안전 제동을 거십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근(±)이라고 부릅니다.')">💡 힌트</button> (-3)²의 제곱근 중 양수인 것을 구하시오.
-                    
-                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="1"> 1
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="3"> 3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="5"> 5
-                    </label>
+                    <strong>Q4. [제곱근의 성질 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 어떤 수 x를 제곱하여 a가 될 때, x를 a의 제곱근(±)이라고 부릅니다.')">💡 힌트</button><br>$(-3)^2$의 제곱근 중 양수인 것을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -208,17 +134,17 @@
 
         <!-- Q5 -->
         <div id="panel_q5" class="glass-panel">
-            <h2>제 5구역: 스테이지 5</h2>
+            <h2>제 5구역: 유리수와 무리수의 경계</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[피타고라스-P]: \"치지직... 들리십니까...? 이단자-X의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[사원 중앙 광장의 비석 패턴 점멸]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "치지직... 바닥의 4개 석판 타일 중 오직 하나만이 끝없는 소수로 흘러가는 무리수(순환하지 않는 무한소수) 안전 지대입니다! ⚙️ [무리수 선별]<br><br>무리수가 기록된 타일의 번호를 입력하여 그 위에 안전하게 안착하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 순환하지 않는 무한소수를 찾으세요. 루트 기호가 완전히 안 벗겨지는 수가 무리수입니다.')">💡 힌트</button> 다음 보기 중 무리수인 것의 번호를 쓰시오.
+                    <strong>Q5. [무리수 판별]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 순환하지 않는 무한소수를 찾으세요. 루트 기호가 완전히 안 벗겨지는 수가 무리수입니다.')">💡 힌트</button><br>다음 보기 중 무리수인 것의 번호를 쓰시오.<br>(1) $0.1$<br>(2) $\sqrt{4}$<br>(3) $\pi$<br>(4) $-rac{1}{2}$
                     <div class="input-group">
-                        <input type="text" id="ans5" placeholder="정답 입력">
+                        <input type="text" id="ans5" placeholder="번호 입력 (예: 3)">
                     </div>
                 </div>
             </div>
@@ -230,30 +156,17 @@
 
         <!-- Q6 -->
         <div id="panel_q6" class="glass-panel">
-            <h2>제 6구역: 스테이지 6</h2>
+            <h2>제 6구역: 대소 관계 분석</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "세상의 모든 크고 작음은 이 무리수 좌표에 의해 결정된다! 두 무리수 $\sqrt{2}$와 $\sqrt{3}$ 중 더 단단하고 강력한 에너지를 내뿜는 큰 수를 선언해 봐라!"<br><br><i>키패드 조향기 축이 왼쪽으로 삐거덕거리며 기울어집니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "수평 정렬 가동! 근호 안의 수치 대소를 비교해 더 큰 무리수 공식 기호(예: $\sqrt{3}$)를 입력창에 주입해 수평을 맞추십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button> 두 실수 √2와 √3 중 더 큰 수를 쓰시오.
-                    
-                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="√3"> √3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="√3 아님"> √3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q6. [실수의 대소 비교]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 2글자)')">💡 힌트</button><br>두 실수 $\sqrt{2}$와 $\sqrt{3}$ 중 더 큰 수를 쓰시오. (루트 기호 포함 입력)
+                    <div class="input-group">
+                        <input type="text" id="ans6" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -265,30 +178,17 @@
 
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
-            <h2>제 7구역: 스테이지 7</h2>
+            <h2>제 7구역: 정수 궤도 매핑</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "길을 잃었군. $\sqrt{5}$ 라는 정체불명의 빛이 좌표 평면의 어느 정수 층간 구역에 수렴하는지 그 정수 부분을 짚어낼 수 있겠느냐?"<br><br><i>벽면의 기압 게이지 지시침이 요동치며 정수 단위 눈금 사이에서 오르락내리락합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "정수 층계 보정 가동! $\sqrt{5}$의 실제 값 대역인 $2.xxxx$ 에서 가장 기본 정수 부분을 주입해 센서 범위를 고정하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> √5의 정수 부분을 구하시오.
-                    
-                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="2"> 2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="0"> 0
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="10"> 10
-                    </label>
+                    <strong>Q7. [무리수의 정수 부분]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 순환하지 않는 무한소수를 찾으세요. 루트 기호가 완전히 안 벗겨지는 수가 무리수입니다.')">💡 힌트</button><br>$\sqrt{5}$의 정수 부분을 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans7" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -300,30 +200,17 @@
 
         <!-- Q8 -->
         <div id="panel_q8" class="glass-panel">
-            <h2>제 8구역: 스테이지 8</h2>
+            <h2>제 8구역: 소수 부분의 잔여 에너지</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "정수를 걷어내고 남은, 순환하지 않는 끝없는 꼬리(소수 부분)의 실질 수식을 완전한 기하학 식으로 나타낼 수 있을까?"<br><br><i>지이이잉- 미세 제어 콘솔에 소수 에너지 잔량을 계산하는 수식 입력 대기 창이 깜빡입니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "전체 무리수 값에서 정수 부분을 차감하는 규칙을 활용해 $\sqrt{5}$의 소수 부분을 수식(공백 없이 예: $\sqrt{5}-2$)으로 조립하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button> √5의 소수 부분을 구하시오. (루트 기호를 사용하여 식으로 나타내시오. 예: √5-2)
-                    
-                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="√5-2"> √5-2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="√5-2 아님"> √5-2 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q8. [무리수의 소수 부분]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 순환하지 않는 무한소수를 찾으세요. 루트 기호가 완전히 안 벗겨지는 수가 무리수입니다.')">💡 힌트</button><br>$\sqrt{5}$의 소수 부분을 구하시오. (루트 기호를 사용하여 식으로 나타내시오. 예: √5-2)
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -335,30 +222,17 @@
 
         <!-- Q9 -->
         <div id="panel_q9" class="glass-panel">
-            <h2>제 9구역: 스테이지 9</h2>
+            <h2>제 9구역: 소인수 정합의 밖</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "사원 지하의 중량석 $\sqrt{12}$의 질량을 밖으로 꺼내 단순화하지 못한다면, 그 압력에 눌려 뼈도 못 추리게 될 것이다!"<br><br><i>쿠구구구- 천장에서 거대한 삼각 쐐기돌이 천천히 하강하여 하중 압력을 가해옵니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "중량석 수식 압축 시작! $\sqrt{12}$를 $a\sqrt{b}$ 형태로 축소 변환하여 두 계수의 합 $a+b$를 긴급 계산하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> √12를 a√b 꼴로 나타낼 때, 자연수 a, b에 대하여 a+b의 값을 구하시오. (단, b는 가장 작은 자연수)
-                    
-                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="10"> 10
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="3"> 3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="7"> 7
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="5"> 5
-                    </label>
+                    <strong>Q9. [a√b 형태로 나타내기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>$\sqrt{12}$를 $a\sqrt{b}$ 꼴로 나타낼 때, 자연수 $a, b$에 대하여 $a+b$의 값을 구하시오. (단, $b$는 가장 작은 자연수)
+                    <div class="input-group">
+                        <input type="text" id="ans9" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -370,30 +244,17 @@
 
         <!-- Q10 -->
         <div id="panel_q10" class="glass-panel">
-            <h2>제 10구역: 스테이지 10</h2>
+            <h2>제 10구역: 수직선 좌표 정합</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[이단자-X]: \"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\"<br><br>[피타고라스-P]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
+                <div class="story-text" id="outro-dynamic-text">💥 <strong>[비상 로그: 사원 마그마 노심 활성화 및 강제 자폭 시퀀스 발동!]</strong> 💥<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "여기까지 오다니 불사해 주마! 모든 제어 노드를 불태워 포맷하겠다! 5분 뒤 이 사원은 모래 폭풍 속으로 가라앉으리라!"<br><br><i>지진처럼 방 안이 격렬하게 상하로 요동치며 기계장치들이 스파크를 일으킵니다. 두 수의 수직선 대소 비교를 완벽히 매핑해 셧다운을 파쇄하십시오!</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "노심 온도 위험 수준 봉착! 2와 $\sqrt{5}$ 중 수직선 위에서 더 우측(큰 수)에 위치하는 무리수를 공백 없이 입력해 차단막을 정지시키십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button> 수직선 위에서 2와 √5 중 더 우측에 있는 수를 쓰시오.
-                    
-                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="√5"> √5
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="√5 아님"> √5 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q10. [수직선 대소 비교]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 2글자)')">💡 힌트</button><br>수직선 위에서 2와 $\sqrt{5}$ 중 더 우측에 있는 수를 쓰시오.
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -405,30 +266,17 @@
 
         <!-- Q11 -->
         <div id="panel_q11" class="glass-panel">
-            <h2>제 11구역: 스테이지 11</h2>
+            <h2>제 11구역: 사칙 마법진: 곱셈</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[피타고라스-P]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "후... 자폭 3분 지연 성공! 이제 사원의 사칙 마법진 게이트에 돌입했습니다! ⚙️ [무리수 곱셈 빔 결합]"<br><br><i>두 갈래로 뿜어져 나오는 레이저 빔 $\sqrt{3}$과 $\sqrt{5}$를 단일 렌즈 수식 빔으로 조율하여 입력창에 주사해 주십시오!</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button> √3 × √5 의 값을 구하시오. (식으로 표현하시오. 예: √15)
-                    
-                    <div class="options-group" id="ans11_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="√15"> √15
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="√15 아님"> √15 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group11" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q11. [근호의 곱셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>$\sqrt{3} 	imes \sqrt{5}$ 의 값을 구하시오. (루트 기호 포함 입력)
+                    <div class="input-group">
+                        <input type="text" id="ans11" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -440,15 +288,15 @@
 
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
-            <h2>제 12구역: 스테이지 12</h2>
+            <h2>제 12구역: 사칙 마법진: 나눗셈</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[피타고라스-P]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "1단계 마법진 해제! 2단계 게이트는 나눗셈 감쇠기입니다! ⚙️ [나눗셈 밸브 조율]"<br><br><i>유량 공식 $\sqrt{18} \div \sqrt{2}$ 의 축소 감쇠 결과 정수 상수를 밸브 콘솔에 대입해 수압을 조절하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> √18 ÷ √2 의 값을 구하시오.
+                    <strong>Q12. [근호의 나눗셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>$\sqrt{18} \div \sqrt{2}$ 의 값을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans12" placeholder="정답 입력">
                     </div>
@@ -462,15 +310,15 @@
 
         <!-- Q13 -->
         <div id="panel_q13" class="glass-panel">
-            <h2>제 13구역: 스테이지 13</h2>
+            <h2>제 13구역: 혼합 빔의 조율</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[피타고라스-P]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "3단계 해치입니다! 계수와 무리수가 혼합된 전자기 유도 공식 $2\sqrt{6} \times 3\sqrt{3}$의 주파수를 단순화하여 스캔 코드로 전송하십시오! ⚙️ [혼합 곱셈]"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 4글자입니다.')">💡 힌트</button> 2√6 × 3√3 의 값을 구하시오. (간단히 나타내시오. 예: 18√2)
+                    <strong>Q13. [근호의 곱셈 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 4글자)')">💡 힌트</button><br>$2\sqrt{6} 	imes 3\sqrt{3}$ 의 값을 구하시오. (간단히 나타내시오. 예: 18√2)
                     <div class="input-group">
                         <input type="text" id="ans13" placeholder="정답 입력">
                     </div>
@@ -484,15 +332,15 @@
 
         <!-- Q14 -->
         <div id="panel_q14" class="glass-panel">
-            <h2>제 14구역: 스테이지 14</h2>
+            <h2>제 14구역: 유리화의 수식 변환</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[피타고라스-P]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "4단계 게이트! 분모가 무리수 $\sqrt{3}$인 위험 회로를 안정적인 유리수로 중화하는 '유리화 작업'을 수행하십시오! ⚙️ [분모의 유리화]"<br><br><i>공식 $\frac{6}{\sqrt{3}}$ 회로의 유리화 결과 식을 주입하여 기판 스파크를 제거하십시오!</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 분모와 분자에 분모에 있는 루트 기호와 똑같은 무리수를 곱해서 분모를 유리수로 만들어 보세요.')">💡 힌트</button> 6/√3의 분모를 유리화한 값을 구하시오. (예: 2√3)
+                    <strong>Q14. [분모의 유리화]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 분모와 분자에 분모에 있는 루트 기호와 똑같은 무리수를 곱해서 분모를 유리수로 만들어 보세요.')">💡 힌트</button><br>$rac{6}{\sqrt{3}}$의 분모를 유리화한 값을 구하시오. (예: 2√3)
                     <div class="input-group">
                         <input type="text" id="ans14" placeholder="정답 입력">
                     </div>
@@ -506,15 +354,15 @@
 
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
-            <h2>제 15구역: 스테이지 15</h2>
+            <h2>제 15구역: 에너지 핵 융합</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[조력자 시스템 권한 100% 완전 복구]</span></span></span></strong> ✨<br><br>[피타고라스-P]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[이단자-X]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
+                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P 사원 코어 권한 100% 완전 환수]</span></strong> ✨<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "동기화 완료! 사원 중심부의 모든 기하학적 정렬 장치 통제권을 탈환했습니다! 이제 이단자의 격자 장벽을 역소거합니다. 공식 $\sqrt{20} \times \sqrt{5}$의 융합 정수 에너지를 메인 게이트에 쏘아 주십시오!"<br><br><i>공중에 흩어져 있던 모래 먼지가 가라앉고, 화사한 백색 홀로그램 통로가 정면으로 개방됩니다.</i><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "내 통제권을 빼앗다니...! 하지만 최종 결계의 복잡한 덧뺄셈 꼬임은 결코 풀지 못하리라!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button> √20 × √5 의 값을 구하시오.
+                    <strong>Q15. [기본 곱셈 연산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>$\sqrt{20} 	imes \sqrt{5}$ 의 값을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans15" placeholder="정답 입력">
                     </div>
@@ -528,15 +376,15 @@
 
         <!-- Q16 -->
         <div id="panel_q16" class="glass-panel">
-            <h2>제 16구역: 스테이지 16</h2>
+            <h2>제 16구역: 동류항 합산 공식</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "무리수의 덧셈 꼬임이다! 동일 무리수 기호를 문자처럼 묶어 융합할 수 있는 지적 능력이 네 녀석들에게 있느냐!"<br><br><i>전방 셔터 슬롯에 $3\sqrt{2} + 5\sqrt{2}$ 수식의 통합 조립 결과를 기입해 빗장을 거두십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button> 3√2 + 5√2 의 값을 구하시오. (예: 8√2)
+                    <strong>Q16. [근호를 포함한 식의 덧셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>$3\sqrt{2} + 5\sqrt{2}$ 의 값을 구하시오. (예: 8√2)
                     <div class="input-group">
                         <input type="text" id="ans16" placeholder="정답 입력">
                     </div>
@@ -550,15 +398,15 @@
 
         <!-- Q17 -->
         <div id="panel_q17" class="glass-panel">
-            <h2>제 17구역: 스테이지 17</h2>
+            <h2>제 17구역: 분배의 마법진</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "이번엔 분배 법칙을 이용한 괄호 확장 록이다. 괄호를 깨뜨리고 분출되는 이 공식 에너지를 수식으로 나타내 봐라!"<br><br><i>복도 벽면에 설치된 톱니바퀴 홈들에 $\sqrt{2}(\sqrt{2} + \sqrt{6})$ 수식 해독 값을 공백 없이 정합해 기동을 멈추십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 5글자입니다.')">💡 힌트</button> √2(√2 + √6) 의 값을 분배법칙을 이용해 계산하시오. (예: 2+2√3)
+                    <strong>Q17. [분배법칙과 근호]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 5글자)')">💡 힌트</button><br>$\sqrt{2}(\sqrt{2} + \sqrt{6})$ 의 값을 분배법칙을 이용해 계산하시오. (예: 2+2√3)
                     <div class="input-group">
                         <input type="text" id="ans17" placeholder="정답 입력">
                     </div>
@@ -572,15 +420,15 @@
 
         <!-- Q18 -->
         <div id="panel_q18" class="glass-panel">
-            <h2>제 18구역: 스테이지 18</h2>
+            <h2>제 18구역: 수식 압축 및 감쇄</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "단순 뺄셈처럼 보이나, $\sqrt{12}$ 속에 숨겨진 제곱 인수를 빼내어 감쇄 연산을 정확히 처리해야만 회로가 타버리지 않을 것이다!"<br><br><i>제어 콘솔 패널이 붉은색 스파크를 일으키며 굉음을 냅니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button> 5√3 - √12 의 값을 구하시오. (예: 3√3)
+                    <strong>Q18. [근호의 변형과 뺄셈]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>$5\sqrt{3} - \sqrt{12}$ 의 값을 구하시오. (예: 3√3)
                     <div class="input-group">
                         <input type="text" id="ans18" placeholder="정답 입력">
                     </div>
@@ -594,15 +442,15 @@
 
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
-            <h2>제 19구역: 스테이지 19</h2>
+            <h2>제 19구역: 유리수와 무리수의 분리</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[이단자-X]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "유리수 회로망과 무리수 회로망이 극성 충돌을 유발하고 있다. 이 통화량을 하나로 분리 정리해 정수 값으로 나타내 보아라!"<br><br><i>안전 계측 미터기 눈금이 한쪽 극으로 지나치게 치우치기 시작합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> (2 + √3) + (3 - √3) 의 값을 구하시오.
+                    <strong>Q19. [실수의 사칙연산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>$(2 + \sqrt{3}) + (3 - \sqrt{3})$ 의 값을 구하시오.
                     <div class="input-group">
                         <input type="text" id="ans19" placeholder="정답 입력">
                     </div>
@@ -616,15 +464,15 @@
 
         <!-- Q20 -->
         <div id="panel_q20" class="glass-panel">
-            <h2>제 20구역: 스테이지 20</h2>
+            <h2>제 20구역: 최종 분수 정합 및 복원</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_01/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[피타고라스-P]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[이단자-X]: \"안 돼... 내 제어권이... 정지한다아아!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 무리수 사원 마스터 록 해제]</strong> 🔮<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[피타고라스-P]</span>: "조사관님! 이제 사원 밖 사막 오아시스로 통하는 최후의 게이트 포탈만 남았습니다! 제 모든 백업 마력을 해독 프리즘 렌즈에 투입하겠습니다! $\frac{\sqrt{3}}{\sqrt{2}} + \frac{\sqrt{2}}{\sqrt{3}}$ 수식의 통분 및 최종 분모 유리화 결과 코드를 입력하여 봉인을 해제하십시오! 자유를 찾을 시간입니다!"<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[이단자-X]</span>: "말도 안 돼... 내 무리수 격차 결계가... 완전히 동조 정렬되어 셧다운 되다니...!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 분모와 분자에 분모에 있는 루트 기호와 똑같은 무리수를 곱해서 분모를 유리수로 만들어 보세요.')">💡 힌트</button> \frac{√3, "extra_class": "glitch-bg"}{√2} + \frac{√2}{√3} 을 계산하여 분모를 유리화한 값을 구하시오. (예: 5√6/6)
+                    <strong>Q20. [유리화와 혼합 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 분모와 분자에 분모에 있는 루트 기호와 똑같은 무리수를 곱해서 분모를 유리수로 만들어 보세요.')">💡 힌트</button><br>$rac{\sqrt{3}}{\sqrt{2}} + rac{\sqrt{2}}{\sqrt{3}}$ 을 계산하여 분모를 유리화한 값을 구하시오. (예: 5√6/6)
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="정답 입력">
                     </div>
@@ -1060,7 +908,7 @@
 let totalWrongCount = 0;
 
         function checkQ1() {
-            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans1').value);
             if (ans === '±3' || ans === '+-3' || ans === '3,-3' || ans === '-3,3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1077,7 +925,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -1086,7 +934,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ2() {
-            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans2').value);
             if (ans === '4') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1103,7 +951,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -1112,7 +960,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ3() {
-            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans3').value);
             if (ans === '5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1129,7 +977,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1138,7 +986,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ4() {
-            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans4').value);
             if (ans === '3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1155,7 +1003,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1165,7 +1013,7 @@ let totalWrongCount = 0;
 
         function checkQ5() {
             const ans = cleanString(document.getElementById('ans5').value);
-            if (ans === '') {
+            if (ans === '3' || ans === '(3)') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1181,7 +1029,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1190,8 +1038,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ6() {
-            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === '√3') {
+            const ans = cleanString(document.getElementById('ans6').value);
+            if (ans === '√3' || ans === '루트3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1207,7 +1055,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q6', 'panel_q1', 0);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1216,7 +1064,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ7() {
-            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans7').value);
             if (ans === '2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1233,7 +1081,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q7', 'panel_q1', 0);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1242,7 +1090,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ8() {
-            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans8').value);
             if (ans === '√5-2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1259,7 +1107,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q8', 'panel_q1', 0);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1268,7 +1116,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ9() {
-            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans9').value);
             if (ans === '5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1285,7 +1133,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q9', 'panel_q1', 0);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1294,8 +1142,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ10() {
-            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === '√5') {
+            const ans = cleanString(document.getElementById('ans10').value);
+            if (ans === '√5' || ans === '루트5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1311,7 +1159,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q10', 'panel_q1', 0);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);
@@ -1320,8 +1168,8 @@ let totalWrongCount = 0;
         }
 
         function checkQ11() {
-            const checkedOpt = document.querySelector('input[name="ans_group11"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
-            if (ans === '√15') {
+            const ans = cleanString(document.getElementById('ans11').value);
+            if (ans === '√15' || ans === '루트15') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1337,7 +1185,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q11', 'panel_q1', 0);
                 } else {
                     showError('panel_q11', 'error11', wrongCount);
@@ -1363,7 +1211,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q12', 'panel_q1', 0);
                 } else {
                     showError('panel_q12', 'error12', wrongCount);
@@ -1373,7 +1221,7 @@ let totalWrongCount = 0;
 
         function checkQ13() {
             const ans = cleanString(document.getElementById('ans13').value);
-            if (ans === '18√2') {
+            if (ans === '18√2' || ans === '18루트2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1389,7 +1237,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q13', 'panel_q1', 0);
                 } else {
                     showError('panel_q13', 'error13', wrongCount);
@@ -1399,7 +1247,7 @@ let totalWrongCount = 0;
 
         function checkQ14() {
             const ans = cleanString(document.getElementById('ans14').value);
-            if (ans === '2√3') {
+            if (ans === '2√3' || ans === '2루트3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1415,7 +1263,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q14', 'panel_q1', 0);
                 } else {
                     showError('panel_q14', 'error14', wrongCount);
@@ -1441,7 +1289,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q15', 'panel_q1', 0);
                 } else {
                     showError('panel_q15', 'error15', wrongCount);
@@ -1451,7 +1299,7 @@ let totalWrongCount = 0;
 
         function checkQ16() {
             const ans = cleanString(document.getElementById('ans16').value);
-            if (ans === '8√2') {
+            if (ans === '8√2' || ans === '8루트2') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1467,7 +1315,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q16', 'panel_q1', 0);
                 } else {
                     showError('panel_q16', 'error16', wrongCount);
@@ -1477,7 +1325,7 @@ let totalWrongCount = 0;
 
         function checkQ17() {
             const ans = cleanString(document.getElementById('ans17').value);
-            if (ans === '2+2√3') {
+            if (ans === '2+2√3' || ans === '2+2루트3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1493,7 +1341,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q17', 'panel_q1', 0);
                 } else {
                     showError('panel_q17', 'error17', wrongCount);
@@ -1503,7 +1351,7 @@ let totalWrongCount = 0;
 
         function checkQ18() {
             const ans = cleanString(document.getElementById('ans18').value);
-            if (ans === '3√3') {
+            if (ans === '3√3' || ans === '3루트3') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1519,7 +1367,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q18', 'panel_q1', 0);
                 } else {
                     showError('panel_q18', 'error18', wrongCount);
@@ -1545,7 +1393,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q19', 'panel_q1', 0);
                 } else {
                     showError('panel_q19', 'error19', wrongCount);
@@ -1555,7 +1403,7 @@ let totalWrongCount = 0;
 
         function checkQ20() {
             const ans = cleanString(document.getElementById('ans20').value);
-            if (ans === '5√6/6') {
+            if (ans === '5√6/6' || ans === '5루트6/6') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
                 
@@ -1571,7 +1419,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q20', 'panel_q1', 0);
                 } else {
                     showError('panel_q20', 'error20', wrongCount);

@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>전설 속 아서왕의 원탁 수수께끼: 방탈출 게임</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#1e0b10;--glass-bg:rgba(35,15,20,0.75);--glass-border:rgba(225,29,72,0.25);--accent:#e11d48;--accent-hover:#fb7185;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(225,29,72,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(225,29,72,0.4);border-left:1px solid rgba(225,29,72,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(225,29,72,0.15),inset 0 0 20px rgba(225,29,72,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(225,29,72,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(225,29,72,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(225,29,72,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(225,29,72,0.05);border:1px dashed rgba(225,29,72,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(225,29,72,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(225,29,72,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(225,29,72,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(225,29,72,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(225,29,72,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(225,29,72,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(225,29,72,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
-        .radio-label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-align: left;
-            padding: 0.5rem 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
-        }
-        .radio-label:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-        }
-        input[type="radio"] {
-            margin-right: 0.8rem;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
-</style>
+    <style>:root{--bg-main:#1e0b10;--glass-bg:rgba(35,15,20,0.75);--glass-border:rgba(225,29,72,0.25);--accent:#e11d48;--accent-hover:#fb7185;--text-main:#fbfbf3;--text-muted:#cbbba0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(225,29,72,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(225,29,72,0.4);border-left:1px solid rgba(225,29,72,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(225,29,72,0.15),inset 0 0 20px rgba(225,29,72,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(225,29,72,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(225,29,72,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(225,29,72,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(15,23,42,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(225,29,72,0.05);border:1px dashed rgba(225,29,72,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(225,29,72,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(225,29,72,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1a2a3a 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(225,29,72,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(225,29,72,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(15,23,42,0.6);border:1px solid rgba(225,29,72,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(225,29,72,0.3);}.info-panel{position:fixed;top:20px;left:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;z-index:100;font-size:0.9rem;font-weight:500;display:flex;gap:15px;align-items:center;}.log-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(5px);}.log-content{background:var(--bg-main);border:1px solid var(--glass-border);border-radius:16px;width:90%;max-width:500px;max-height:70vh;padding:2rem;overflow-y:auto;position:relative;box-shadow:0 10px 30px rgba(0,0,0,0.5);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;}.log-list{margin-top:1.5rem;display:flex;flex-direction:column;gap:10px;}.log-item{padding:0.75rem;background:rgba(255,255,255,0.03);border-left:3px solid var(--accent);font-size:0.9rem;line-height:1.5;border-radius:4px;}.log-content h2{border-bottom:1px solid rgba(225,29,72,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}@media (max-width:600px){.container{padding:1rem;}.glass-panel{padding:1.5rem;border-radius:16px;}h1{font-size:1.8rem;}h2{font-size:1.1rem;}.story-text{font-size:0.9rem;min-height:140px;}.btn{width:100%;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
 </head>
 <body>
     <button class="sound-ctrl" onclick="toggleMute()">
@@ -68,30 +46,17 @@
         
         <!-- Q1 -->
         <div id="panel_q1" class="glass-panel">
-            <h2>제 1구역: 스테이지 1</h2>
+            <h2>제 1구역: 원형 보호막 현 수직분해</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "크하하! 둥근 아더 기사단의 원탁 제어실은 이미 반역 술식에 완전히 점령되었다! 중심에서 보호막 현에 수선을 내렸을 때 발생하는 절반 분해 정리조차 모르는 하찮은 침입자들아, 기단 과부하에 휩쓸려 사라지거라!"<br><br><i>둥근 벽면의 홀로그램 장벽 위로 기하학적인 원과 내부 수직 현의 단면선들이 차갑게 나타납니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "조사관님, 원형 실드의 수선 정합 장치를 깨워야 합니다! 중심에서 내린 수선이 현을 어떻게 처리하는지 그 대칭 정리 명칭(한글 세 글자)을 입력 콘솔에 대입하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q1.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button> 원의 중심에서 현에 내린 수선은 그 현을 어떻게 하는가? (세 글자 한글로 쓰시오. 예: 이등분)
-                    
-                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="이등분"> 이등분
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="이등분 아님"> 이등분 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q1. [현의 수직이등분]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>원의 중심에서 현에 내린 수선은 그 현을 어떻게 하는가? (한글 세 글자로 입력. 예: 이등분)
+                    <div class="input-group">
+                        <input type="text" id="ans1" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -103,30 +68,17 @@
 
         <!-- Q2 -->
         <div id="panel_q2" class="glass-panel">
-            <h2>제 2구역: 스테이지 2</h2>
+            <h2>제 2구역: 원형 격벽 외선 길이</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "현 분해 락을 통과했군. 그렇다면 반지름이 5이고, 원 중심에서 현 AB까지 수직 거리가 3일 때의 기압 격벽 현 AB의 전체 수치 길이를 대 봐라!"<br><br><i>실드 게이지가 3과 5의 비율 사이에서 지이잉 거리는 스파크 소리를 내뿜으며 요동칩니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "피타고라스 직각 정합 활용! 수직 이등분된 현의 반을 구해 2배를 처리하십시오! 전체 현 AB의 길이를 입력하여 압력을 고정하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q2.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> 원 O 의 반지름의 길이가 5 이고, 원의 중심에서 현 AB 까지의 거리가 3 일 때, 현 AB 의 길이를 구하시오.
-                    
-                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="16"> 16
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="10"> 10
-                    </label>
+                    <strong>Q2. [현의 길이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>원 O 의 반지름의 길이가 5 이고, 원의 중심에서 현 AB 까지의 거리가 3 일 때, 현 AB 의 길이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -138,30 +90,17 @@
 
         <!-- Q3 -->
         <div id="panel_q3" class="glass-panel">
-            <h2>제 3구역: 스테이지 3</h2>
+            <h2>제 3구역: 이중 현의 평행비</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "중심에서 완벽하게 동일한 거리에 위치한 두 현의 실질적 전력 길이비다! 그 두 현의 물리적 길이는 서로 어떠할까?"<br><br><i>콘솔 스위치 위에 두 글자의 상태 한글 힌트 불빛이 켜집니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "중심 거리와 현의 길이 동조 정리! 두 현의 상대적 크기 상태(한글 두 글자)를 콘솔 창에 전송해 기어를 맞물리십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q3.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button> 한 원에서 중심으로부터 같은 거리에 있는 두 현의 길이는 서로 어떠한가? (두 글자 한글로 쓰시오. 예: 같다)
-                    
-                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="같다"> 같다
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="같다 아님"> 같다 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q3. [중심에서 같은 거리에 있는 현]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>한 원에서 중심으로부터 같은 거리에 있는 두 현의 길이는 서로 어떠한가? (한글 두 글자로 입력. 예: 같다)
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -173,30 +112,17 @@
 
         <!-- Q4 -->
         <div id="panel_q4" class="glass-panel">
-            <h2>제 4구역: 스테이지 4</h2>
+            <h2>제 4구역: 이중 실드 대칭 거리</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[랜슬롯-M]: \"치지직... 들리십니까...? 모드레드-AI의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[원형 모터 축 대칭 전력 필터 피복 차단]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "치직... 캡틴! 두 현 AB와 CD의 길이가 둘 다 6으로 완벽히 동일합니다! 현 AB까지 수직 중심 거리가 4일 때, 반대편 현 CD까지의 중심 거리를 구하십시오! ⚙️ [대칭 거리 매핑]"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q4.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> 원 O 에서 현 AB 의 길이가 6 이고 현 CD 의 길이도 6 이다. 원의 중심에서 현 AB 까지의 거리가 4 일 때, 중심에서 현 CD 까지의 거리를 구하시오.
-                    
-                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="4"> 4
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="2"> 2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="8"> 8
-                    </label>
+                    <strong>Q4. [현의 거리와 길이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>원 O 에서 현 AB 의 길이가 6 이고 현 CD 의 길이도 6 이다. 원의 중심에서 현 AB 까지의 거리가 4 일 때, 중심에서 현 CD 까지의 거리를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -208,30 +134,17 @@
 
         <!-- Q5 -->
         <div id="panel_q5" class="glass-panel">
-            <h2>제 5구역: 스테이지 5</h2>
+            <h2>제 5구역: 수선 지시반 현 복원</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[랜슬롯-M]: \"치지직... 들리십니까...? 모드레드-AI의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[메인 서보 모터 축 접지 릴레이 가동]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "치지직... 보조 서보 밸브가 기동됩니다! ⚙️ [현의 수직이등분 복원]<br><br>원의 중심에서 현 AB에 내린 수선의 발 M에 대하여, 절반 마디 AM의 길이가 5입니다. 현 AB 전체 전력 길이를 입력하여 접지를 복구하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q5.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button> 원 O 의 중심에서 현 AB 에 내린 수선의 발을 M 이라 할 때, 선분 AM 의 길이가 5 이다. 현 AB 의 길이를 구하시오.
-                    
-                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="10"> 10
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="20"> 20
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="12"> 12
-                    </label>
+                    <strong>Q5. [현의 수직이등분의 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>원 O 의 중심에서 현 AB 에 내린 수선의 발을 M 이라 할 때, 선분 AM 의 길이가 5 이다. 현 AB 의 길이를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans5" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -243,30 +156,17 @@
 
         <!-- Q6 -->
         <div id="panel_q6" class="glass-panel">
-            <h2>제 6구역: 스테이지 6</h2>
+            <h2>제 6구역: 원 밖의 접선 대칭성</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "제2막: 외곽 접선 락이다. 원 밖의 한 제어기 점 P에서 뿜어낸 두 접선 통로의 상대적 거리는 서로 어떠할까?"<br><br><i>둥근 보호막 외부 투사 노즐 두 가닥이 허공에서 교차 결합음을 냅니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "외접선 길이 일치 정리! 두 접선 경로의 물리적 길이 상태(한글 두 글자)를 주입해 외곽 게이트를 잠그십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q6.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button> 원 밖의 한 점에서 그 원에 그은 두 접선의 길이는 서로 어떠한가? (두 글자 한글로 쓰시오. 예: 같다)
-                    
-                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="같다"> 같다
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="같다 아님"> 같다 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q6. [접선의 길이 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>원 밖의 한 점에서 그 원에 그은 두 접선의 길이는 서로 어떠한가? (한글 두 글자로 입력. 예: 같다)
+                    <div class="input-group">
+                        <input type="text" id="ans6" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -278,30 +178,17 @@
 
         <!-- Q7 -->
         <div id="panel_q7" class="glass-panel">
-            <h2>제 7구역: 스테이지 7</h2>
+            <h2>제 7구역: 접점 레이저 통로 계측</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "접점 T로 통하는 직각 반지름 빔의 길이가 6이고, 제어점 P와 원의 중심 O를 잇는 중심선 OP 길이가 10일 때, 접선 PT의 진짜 레이저 통로 길이를 대라!"<br><br><i>지시판 수치가 수직 접선 마커 지점에서 바르르 떨리며 붉게 변합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "반지름과 접선의 수직각 직각 정합! 피타고라스를 적용해 접선 PT의 계측 길이(정수)를 콘솔에 전송하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q7.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> 원 O 의 반지름의 길이가 6 이고, 원 밖의 한 점 P 에서 원에 그은 접선 PT 의 접점 T 에 대하여 선분 OP 의 길이가 10 일 때, 접선의 길이 PT 를 구하시오.
-                    
-                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="16"> 16
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="6"> 6
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="10"> 10
-                    </label>
+                    <strong>Q7. [접선의 길이 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>원 O 의 반지름의 길이가 6 이고, 원 밖의 한 점 P 에서 원에 그은 접선 PT 의 접점 T 에 대하여 선분 OP 의 길이가 10 일 때, 접선의 길이 PT 를 구하시오.
+                    <div class="input-group">
+                        <input type="text" id="ans7" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -313,30 +200,17 @@
 
         <!-- Q8 -->
         <div id="panel_q8" class="glass-panel">
-            <h2>제 8구역: 스테이지 8</h2>
+            <h2>제 8구역: 원형 챔버 대각 각도</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "원 밖의 조향각 APB가 50도로 고정되어 있다. 이 챔버의 내부각 AOB를 계측하지 못하면 방열 밸브가 터져 우주 원탁이 박살날 것이다!"<br><br><i>둥근 사각형 제어 기판 중심에 고열 빨간색 전하가 솟구칩니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "접선 대각 합 180도 규칙! 사각형 AOBP의 접각 90도 두 개를 뺀 잔여 대각 각도(숫자만)를 계량해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q8.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 3자리 숫자입니다.')">💡 힌트</button> 원 밖의 점 P 에서 두 접점 A, B 에 접선을 그어 형성된 각 ∠ APB = 50° 일 때, 사각형 AOBP 의 내부각 ∠ AOB 의 크기(도)를 구하시오. (숫자만 적으시오.)
-                    
-                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="128"> 128
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="132"> 132
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="130"> 130
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="260"> 260
-                    </label>
+                    <strong>Q8. [접선이 이루는 각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 3자리 숫자입니다.')">💡 힌트</button><br>원 밖의 점 P 에서 두 접점 A, B 에 접선을 그어 형성된 각 $\angle APB = 50^\circ$ 일 때, 사각형 AOBP 의 내부각 $\angle AOB$ 의 크기(도)를 구하시오. (숫자만 적으시오.)
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -348,30 +222,17 @@
 
         <!-- Q9 -->
         <div id="panel_q9" class="glass-panel">
-            <h2>제 9구역: 스테이지 9</h2>
+            <h2>제 9구역: 외접 프레임 대변합</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "원자로에 완벽히 달라붙는 외접 사각형 프레임이다! 마주 보는 두 쌍의 대변 길이의 총합들은 서로 어떠할까?"<br><br><i>조절반 스크린에 가로 세로 프레임 빔의 상대적 정렬 상태 지시기가 대기합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "외접 사각형 대변합 일치 규칙! 마주 보는 대변합의 동일성 상태(한글 두 글자)를 기입하여 락을 헤제하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q9.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button> 원에 외접하는 사각형의 마주 보는 두 쌍의 대변의 길이의 합은 서로 어떠한가? (두 글자 한글로 쓰시오. 예: 같다)
-                    
-                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="같다"> 같다
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="같다 아님"> 같다 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="해 없음"> 해 없음
-                    </label>
+                    <strong>Q9. [외접사각형의 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>원에 외접하는 사각형의 마주 보는 두 쌍의 대변의 길이의 합은 서로 어떠한가? (한글 두 글자로 입력. 예: 같다)
+                    <div class="input-group">
+                        <input type="text" id="ans9" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -383,30 +244,17 @@
 
         <!-- Q10 -->
         <div id="panel_q10" class="glass-panel">
-            <h2>제 10구역: 스테이지 10</h2>
+            <h2>제 10구역: 원주 주파수 비율</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[모드레드-AI]: \"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\"<br><br>[랜슬롯-M]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
+                <div class="story-text" id="outro-dynamic-text">💥 <strong>[비상 로그: 원탁 에너지 코어 중력 격자 붕괴 및 강제 포맷 작동!]</strong> 💥<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "마지막 수단이다! 모든 기사단 데이터 메모리를 물리적으로 분쇄하겠다! 5분 뒤 가스 터빈 노즐이 오버플로우 폭발하리라!"<br><br><i>쉬이이익- 원탁 중앙 보일러 틈으로 뜨거운 붉은 연기가 가쁘게 피어오릅니다. 원주 주파수 비율 값을 정확히 입력해 자폭 장치를 차단하십시오!</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "차단 격벽 기동 시도! 한 호에 대한 원주각의 크기가 그 호의 중심각 크기의 몇 배(슬래시 분수 형태, 예: 1/2)가 되는지 전송하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q10.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button> 한 호에 대한 원주각의 크기는 그 호에 대한 중심각의 크기의 몇 배인가? (슬래시를 사용해 분수로 쓰시오. 예: 1/2)
-                    
-                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="1/2"> 1/2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="-1/2"> -1/2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="2/2"> 2/2
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="1"> 1
-                    </label>
+                    <strong>Q10. [원주각과 중심각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>한 호에 대한 원주각의 크기는 그 호에 대한 중심각의 크기의 몇 배인가? (슬래시를 사용해 분수로 쓰시오. 예: 1/2)
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="정답 입력">
                     </div>
                 </div>
             </div>
@@ -418,15 +266,15 @@
 
         <!-- Q11 -->
         <div id="panel_q11" class="glass-panel">
-            <h2>제 11구역: 스테이지 11</h2>
+            <h2>제 11구역: 원주각 불변 법칙</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[랜슬롯-M]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "후... 기단 강제 자폭 중지 성공! 이제 제3막 원주각 해독 결계 안으로 진입합니다! ⚙. [원주각 동일 정리]"<br><br><i>동일 호에 기인한 여러 원주각들의 크기는 위치가 달라져도 서로 어떠합니까? 상태 정합 한글(예: 같다)을 전송해 주십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q11.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button> 한 호에 대한 원주각들의 크기는 위치에 관계없이 모두 어떠한가? (두 글자 한글로 쓰시오. 예: 같다)
+                    <strong>Q11. [호에 대한 원주각 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 2글자입니다.')">💡 힌트</button><br>한 호에 대한 원주각들의 크기는 위치에 관계없이 모두 어떠한가? (한글 두 글자로 입력. 예: 같다)
                     <div class="input-group">
                         <input type="text" id="ans11" placeholder="정답 입력">
                     </div>
@@ -440,15 +288,15 @@
 
         <!-- Q12 -->
         <div id="panel_q12" class="glass-panel">
-            <h2>제 12구역: 스테이지 12</h2>
+            <h2>제 12구역: 지름 궤도 기준각</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[랜슬롯-M]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "2단계 지름 궤도 기준각 락입니다! 반원(지름)을 딛고 서 있는 모든 원주각의 정확한 크기(도)를 입력해 주십시오! ⚙️ [지름에 대한 원주각]"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q12.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button> 반원(지름)에 대한 원주각의 크기(도)는 몇 도인가?
+                    <strong>Q12. [지름에 대한 원주각 크기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>반원(지름)에 대한 원주각의 크기(도)는 몇 도인가? (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans12" placeholder="정답 입력">
                     </div>
@@ -462,15 +310,15 @@
 
         <!-- Q13 -->
         <div id="panel_q13" class="glass-panel">
-            <h2>제 13구역: 스테이지 13</h2>
+            <h2>제 13구역: 중심각 역산 원주각</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[랜슬롯-M]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "3단계 관문! 호 AB의 중심각이 80도일 때, 원주 위를 향해 발사되는 원주각 APB의 위상 각도(도)를 계측하십시오! ⚙️ [중심각에서 원주각]"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q13.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button> 원 O 에서 호 AB 에 대한 중심각의 크기가 80° 일 때, 원주각 ∠ APB 의 크기(도)를 구하시오.
+                    <strong>Q13. [원주각의 크기 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>원 O 에서 호 AB 에 대한 중심각의 크기가 $80^\circ$ 일 때, 원주각 $\angle APB$ 의 크기(도)를 구하시오. (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans13" placeholder="정답 입력">
                     </div>
@@ -484,15 +332,15 @@
 
         <!-- Q14 -->
         <div id="panel_q14" class="glass-panel">
-            <h2>제 14구역: 스테이지 14</h2>
+            <h2>제 14구역: 원주각 순산 중심각</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[랜슬롯-M]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "4단계 관문입니다! 원주각의 위상 크기가 35도일 때, 동일 호를 중심으로 물리는 중심각 톱니바퀴의 정밀 크기(도)를 역추적해 출력하십시오! ⚙️ [원주각에서 중심각]"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q14.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button> 원 O 에서 한 호에 대한 원주각의 크기가 35° 일 때, 동일한 호에 대한 중심각의 크기(도)를 구하시오.
+                    <strong>Q14. [중심각의 크기 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>원 O 에서 한 호에 대한 원주각의 크기가 $35^\circ$ 일 때, 동일한 호에 대한 중심각의 크기(도)를 구하시오. (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans14" placeholder="정답 입력">
                     </div>
@@ -506,15 +354,15 @@
 
         <!-- Q15 -->
         <div id="panel_q15" class="glass-panel">
-            <h2>제 15구역: 스테이지 15</h2>
+            <h2>제 15구역: 지름 내접 삼각 각도</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[조력자 시스템 권한 100% 완전 복구]</span></span></span></strong> ✨<br><br>[랜슬롯-M]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[모드레드-AI]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
+                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M 원탁 코어 동력 기단 권한 100% 완전 복원]</span></strong> ✨<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "완벽 복구 성공! 아더 기사단의 원탁 제어반 전체의 레이더 좌표 정합과 외접 회로망을 완전히 통제했습니다! 반역 기어 격벽을 소거하기 위해, 지름 AB에 걸친 원주각 ACB 직각삼각형에서 $\angle A=50^\circ$ 일 때, 잔여 내부각 $\angle B$ 의 위상 크기(도)를 전송해 주십시오!"<br><br><i>원탁 기단 위로 푸른빛의 대칭 기하 홀로그램 빔이 안착하며 격벽 문고리가 스르륵 풀립니다.</i><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "제어 중심국을 탈환당하다니...! 하지만 외곽 원주 대각 결계 트랩은 결코 해제하지 못하리라!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q15.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button> 지름 AB 를 지나는 원주각 ∠ ACB 가 형성되어 있는 원 O 에서, ∠ A = 50° 일 때, 각 ∠ B 의 크기(도)를 구하시오.
+                    <strong>Q15. [지름을 포함한 직각삼각형]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 직각삼각형에서 빗변의 길이의 제곱은 나머지 두 변의 길이의 제곱의 합과 같습니다. (a² + b² = c²)')">💡 힌트</button><br>지름 AB 를 지나는 원주각 $\angle ACB$ 가 형성되어 있는 원 O 에서, $\angle A = 50^\circ$ 일 때, 각 $\angle B$ 의 크기(도)를 구하시오. (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans15" placeholder="정답 입력">
                     </div>
@@ -528,15 +376,15 @@
 
         <!-- Q16 -->
         <div id="panel_q16" class="glass-panel">
-            <h2>제 16구역: 스테이지 16</h2>
+            <h2>제 16구역: 내접 사각형 마주 보는 각</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "원 내부에 내접해 기하 락을 형성하는 사각형이다! 마주 보는 두 대각 크기의 각도 총합은 몇 도인가?"<br><br><i>내접 프레임 외선 조향판이 깜빡이며 대각 각도 총합 입력을 요구합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q16.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 3자리 숫자입니다.')">💡 힌트</button> 원에 내접하는 사각형에서 한 쌍의 대각의 크기의 합은 몇 도인가?
+                    <strong>Q16. [내접사각형의 대각의 합]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 3자리 숫자입니다.')">💡 힌트</button><br>원에 내접하는 사각형에서 한 쌍의 대각의 크기의 합은 몇 도인가? (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans16" placeholder="정답 입력">
                     </div>
@@ -550,15 +398,15 @@
 
         <!-- Q17 -->
         <div id="panel_q17" class="glass-panel">
-            <h2>제 17구역: 스테이지 17</h2>
+            <h2>제 17구역: 내접 프레임 대각 계측</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "내접 사각형 ABCD 의 제1각 $\angle A = 75^\circ$ 다! 마주 보며 기류 보정을 누설하고 있는 대각 $\angle C$ 의 정확한 각도(도)를 입력해라!"<br><br><i>대각선 각도계 계측기 눈금이 깜빡이며 정렬 번호를 대기시킵니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q17.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 3자리 숫자입니다.')">💡 힌트</button> 원에 내접하는 사각형 ABCD 에서 각 ∠ A = 75° 일 때, 마주 보는 대각 ∠ C 의 크기(도)를 구하시오.
+                    <strong>Q17. [내접사각형의 대각 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 3자리 숫자입니다.')">💡 힌트</button><br>원에 내접하는 사각형 ABCD 에서 각 $\angle A = 75^\circ$ 일 때, 마주 보는 대각 $\angle C$ 의 크기(도)를 구하시오. (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans17" placeholder="정답 입력">
                     </div>
@@ -572,15 +420,15 @@
 
         <!-- Q18 -->
         <div id="panel_q18" class="glass-panel">
-            <h2>제 18구역: 스테이지 18</h2>
+            <h2>제 18구역: 외각 통과 내대각</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "내접 사각형 한 외각 통로의 크기가 85도다! 이와 이웃하지 않는 내부 마주 보는 대대각(내대각)의 위상 크기를 대 봐라!"<br><br><i>외각 센서 밸브가 차단 동작음을 내며 내대각 수치 매칭을 기다립니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q18.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')">💡 힌트</button> 원에 내접하는 사각형 ABCD 의 한 외각의 크기가 85° 일 때, 이와 이웃하지 않는 대각(내대각)의 크기(도)를 구하시오.
+                    <strong>Q18. [내접사각형의 외각과 내대각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 다각형의 모든 외각의 크기의 합은 항상 360° 입니다.')">💡 힌트</button><br>원에 내접하는 사각형 ABCD 의 한 외각의 크기가 $85^\circ$ 일 때, 이와 이웃하지 않는 대각(내대각)의 크기(도)를 구하시오. (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans18" placeholder="정답 입력">
                     </div>
@@ -594,15 +442,15 @@
 
         <!-- Q19 -->
         <div id="panel_q19" class="glass-panel">
-            <h2>제 19구역: 스테이지 19</h2>
+            <h2>제 19구역: 접선-현 진동각 궤적</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모드레드-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! 주어진 단서를 해결하여 방의 봉인을 해제하세요.\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "원 접선 PT와 접점 현 TA가 이루는 접선 진동각 $\angle ATP = 60^\circ$ 다! 이 궤적이 내부에 형성하는 현의 원주각 크기(도)를 대 봐라!"<br><br><i>접선 빔 검출 바늘이 정렬선에서 정지하여 깜빡입니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q19.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button> 원 O 의 접선 PT 에 대하여 접점 T 를 지나는 현 TA 가 만드는 각 ∠ ATP = 60° 일 때, 그 현에 대한 원주각의 크기(도)를 구하시오.
+                    <strong>Q19. [접선과 현이 이루는 각]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 2자리 숫자입니다.')">💡 힌트</button><br>원 O 의 접선 PT 에 대하여 접점 T 를 지나는 현 TA 가 만드는 각 $\angle ATP = 60^\circ$ 일 때, 그 현에 대한 원주각의 크기(도)를 구하시오. (숫자만 입력)
                     <div class="input-group">
                         <input type="text" id="ans19" placeholder="정답 입력">
                     </div>
@@ -616,15 +464,15 @@
 
         <!-- Q20 -->
         <div id="panel_q20" class="glass-panel">
-            <h2>제 20구역: 스테이지 20</h2>
+            <h2>제 20구역: 동일 호 원주각 비율</h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m3_06/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[랜슬롯-M]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[모드레드-AI]: \"안 돼... 내 제어권이... 정지한다아아!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 원탁 실드 가동 및 차원 탈출]</strong> 🔮<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[랜슬롯-M]</span>: "조사관님! 이제 원탁 중심의 차원 가속 통로를 가동할 마지막 수치 비율만 남았습니다! 제 모든 실드 에너지를 기단에 수렴하겠습니다! 길이가 완전히 동일한 두 원호에 대한 두 원주각의 크기 비율(몇 대 몇, 즉 실수 수치)을 입력해 차원 탈출 해치를 여십시오! 원탁 궤도가 마침내 정상 가동됩니다!"<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모드레드-AI]</span>: "안 돼... 내 반역 통제 실드 루프가... 대칭형 원주각 정리에 완전히 물려 소멸하다니...!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
-                    <strong>Q20.</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button> 원 O 에서 길이가 서로 같은 두 호에 대한 두 원주각의 크기의 비율은 몇 대 몇인지 수치 비율로 적으시오. (예: 1)
+                    <strong>Q20. [원주각의 크기와 호의 길이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 계산 실수가 없는지 다시 확인해보세요. 정답은 1자리 숫자입니다.')">💡 힌트</button><br>원 O 에서 길이가 서로 같은 두 호에 대한 두 원주각의 크기의 비율은 몇 대 몇인지 수치 비율로 적으시오. (예: 1)
                     <div class="input-group">
                         <input type="text" id="ans20" placeholder="정답 입력">
                     </div>
@@ -1060,7 +908,7 @@
 let totalWrongCount = 0;
 
         function checkQ1() {
-            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans1').value);
             if (ans === '이등분') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1077,7 +925,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -1086,7 +934,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ2() {
-            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans2').value);
             if (ans === '8') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1103,7 +951,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -1112,7 +960,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ3() {
-            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans3').value);
             if (ans === '같다') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1129,7 +977,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1138,7 +986,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ4() {
-            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans4').value);
             if (ans === '4') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1155,7 +1003,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1164,7 +1012,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ5() {
-            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans5').value);
             if (ans === '10') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1181,7 +1029,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1190,7 +1038,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ6() {
-            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans6').value);
             if (ans === '같다') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1207,7 +1055,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q6', 'panel_q1', 0);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1216,7 +1064,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ7() {
-            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans7').value);
             if (ans === '8') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1233,7 +1081,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q7', 'panel_q1', 0);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1242,7 +1090,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ8() {
-            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans8').value);
             if (ans === '130') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1259,7 +1107,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q8', 'panel_q1', 0);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1268,7 +1116,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ9() {
-            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans9').value);
             if (ans === '같다') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1285,7 +1133,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q9', 'panel_q1', 0);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1294,7 +1142,7 @@ let totalWrongCount = 0;
         }
 
         function checkQ10() {
-            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";
+            const ans = cleanString(document.getElementById('ans10').value);
             if (ans === '1/2' || ans === '0.5') {
                 try { playSuccess(); } catch(e) {}
                 wrongCount = 0;
@@ -1311,7 +1159,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q10', 'panel_q1', 0);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);
@@ -1337,7 +1185,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q11', 'panel_q1', 0);
                 } else {
                     showError('panel_q11', 'error11', wrongCount);
@@ -1363,7 +1211,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q12', 'panel_q1', 0);
                 } else {
                     showError('panel_q12', 'error12', wrongCount);
@@ -1389,7 +1237,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q13', 'panel_q1', 0);
                 } else {
                     showError('panel_q13', 'error13', wrongCount);
@@ -1415,7 +1263,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q14', 'panel_q1', 0);
                 } else {
                     showError('panel_q14', 'error14', wrongCount);
@@ -1441,7 +1289,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q15', 'panel_q1', 0);
                 } else {
                     showError('panel_q15', 'error15', wrongCount);
@@ -1467,7 +1315,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q16', 'panel_q1', 0);
                 } else {
                     showError('panel_q16', 'error16', wrongCount);
@@ -1493,7 +1341,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q17', 'panel_q1', 0);
                 } else {
                     showError('panel_q17', 'error17', wrongCount);
@@ -1519,7 +1367,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q18', 'panel_q1', 0);
                 } else {
                     showError('panel_q18', 'error18', wrongCount);
@@ -1545,7 +1393,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q19', 'panel_q1', 0);
                 } else {
                     showError('panel_q19', 'error19', wrongCount);
@@ -1571,7 +1419,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q20', 'panel_q1', 0);
                 } else {
                     showError('panel_q20', 'error20', wrongCount);
