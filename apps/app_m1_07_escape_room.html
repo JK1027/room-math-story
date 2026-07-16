@@ -550,7 +550,29 @@
             transform: scale(1.2);
             cursor: pointer;
         }
+
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
 </style>
+
 
 
 
@@ -1628,7 +1650,7 @@ let totalWrongCount = 0;
 
         // Q1
         function checkQ1() {
-            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
             if (ans === '각기둥') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1640,7 +1662,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -1650,7 +1672,7 @@ let totalWrongCount = 0;
 
         // Q2
         function checkQ2() {
-            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans2').value).replace('(','').replace(')','');
             if (ans === '10') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1662,7 +1684,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -1672,7 +1694,7 @@ let totalWrongCount = 0;
 
         // Q3
         function checkQ3() {
-            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans3').value).replace('(','').replace(')','');
             if (ans === '12') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1684,7 +1706,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1694,7 +1716,7 @@ let totalWrongCount = 0;
 
         // Q4
         function checkQ4() {
-            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
             if (ans === '6') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1706,7 +1728,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1716,7 +1738,7 @@ let totalWrongCount = 0;
 
         // Q5
         function checkQ5() {
-            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
             if (ans === '정사면체') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1728,7 +1750,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1738,7 +1760,7 @@ let totalWrongCount = 0;
 
         // Q6
         function checkQ6() {
-            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans6').value).replace('(','').replace(')','');
             if (ans === '회전체') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1750,7 +1772,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q6', 'panel_q6', 25);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1760,7 +1782,7 @@ let totalWrongCount = 0;
 
         // Q7
         function checkQ7() {
-            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans7').value).replace('(','').replace(')','');
             if (ans === '직사각형') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1772,7 +1794,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q7', 'panel_q6', 25);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1782,7 +1804,7 @@ let totalWrongCount = 0;
 
         // Q8
         function checkQ8() {
-            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans8').value).replace('(','').replace(')','');
             if (ans === '원') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1794,7 +1816,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q8', 'panel_q6', 25);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1804,7 +1826,7 @@ let totalWrongCount = 0;
 
         // Q9
         function checkQ9() {
-            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
             if (ans === '원뿔') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1816,7 +1838,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q9', 'panel_q6', 25);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1826,7 +1848,7 @@ let totalWrongCount = 0;
 
         // Q10
         function checkQ10() {
-            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
             if (ans === '원') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1838,7 +1860,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q10', 'panel_q6', 25);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);

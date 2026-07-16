@@ -7,28 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
     <style>
 :root{--bg-main:#131A1C;--glass-bg:rgba(20, 28, 30, 0.75);--glass-border:rgba(13, 148, 136, 0.25);--accent:#0D9488;--accent-hover:#2DD4BF;--text-main:#E0F2FE;--text-muted:#94A3B8;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR', sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 30%, rgba(13, 148, 136, 0.1) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(17, 94, 89, 0.12) 0%, transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(13, 148, 136, 0.4);border-left:1px solid rgba(13, 148, 136, 0.4);border-radius:24px;padding:3rem;box-shadow:0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(13, 148, 136, 0.05);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4, 0, 0.2, 1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit', sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg, #FFF 30%, var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(13, 148, 136, 0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg, rgba(20, 40, 45, 0.5) 0%, rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:90px;max-height:90px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:4px;right:8px;background:rgba(16, 185, 129, 0.25);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:2px 6px;font-size:0.7rem;border-radius:4px;cursor:pointer;transition:all 0.2s;font-weight:bold;z-index:10;}.story-log-trigger:hover{background:rgba(16, 185, 129, 0.5);color:white;}.question-box{background:rgba(255, 255, 255, 0.02);border:1px solid rgba(255, 255, 255, 0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;position:relative;box-shadow:inset 0 0 20px rgba(255, 255, 255, 0.02);}.question-box::before{content:'Q';position:absolute;font-family:'Share Tech Mono', monospace;font-size:4rem;color:rgba(13, 148, 136, 0.05);top:-10px;right:10px;font-weight:bold;pointer-events:none;}.question-content{font-size:1.15rem;line-height:1.8;margin-bottom:1rem;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;padding:1rem 1.2rem;background:rgba(15, 23, 42, 0.8);border:1px solid rgba(13, 148, 136, 0.3);border-radius:12px;color:white;font-size:1.1rem;font-family:'Share Tech Mono', monospace, 'Noto Sans KR';transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(13, 148, 136, 0.4), inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#EF4444;font-size:0.95rem;margin-top:0.5rem;display:none;text-align:center;font-weight:bold;text-shadow:0 0 10px rgba(239, 68, 68, 0.3);animation:shake 0.5s ease;}@keyframes shake{0%, 100%{transform:translateX(0);}20%, 60%{transform:translateX(-5px);}40%, 80%{transform:translateX(5px);}}.progress-container{width:100%;height:6px;background:rgba(255, 255, 255, 0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;border:1px solid rgba(255, 255, 255, 0.02);}.progress-bar{height:100%;width:0%;background:linear-gradient(90deg, #0F766E, var(--accent));border-radius:3px;box-shadow:0 0 10px var(--accent);transition:width 0.8s cubic-bezier(0.4, 0, 0.2, 1);}.btn-group{display:flex;gap:1rem;margin-top:2rem;}.btn{background:linear-gradient(135deg, #0F766E, #115E59);color:white;border:1px solid #14B8A6;padding:0.6rem 1.5rem;font-size:1.1rem;font-weight:900;border-radius:8px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);text-transform:uppercase;letter-spacing:3px;width:100%;box-shadow:0 10px 25px rgba(17, 94, 89, 0.5), inset 0 2px 5px rgba(255,255,255,0.3);text-shadow:0 2px 4px rgba(0,0,0,0.5);position:relative;overflow:hidden;}.btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);transition:all 0.6s;}.btn:hover::after{left:100%;}.btn:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(13, 148, 136, 0.5), inset 0 2px 5px rgba(255,255,255,0.5);border-color:#2DD4BF;}.btn-hint{display:inline-block;background:rgba(16, 185, 129, 0.2);border:1px solid rgba(16, 185, 129, 0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0, 0, 0, 0.2);}.btn-hint:hover{background:rgba(16, 185, 129, 0.4);color:#fff;box-shadow:0 0 10px rgba(52, 211, 153, 0.4);}.btn:active{transform:translateY(1px);}.sound-toggle{position:fixed;top:20px;right:20px;background:rgba(20, 28, 30, 0.6);border:1px solid var(--glass-border);padding:8px 16px;border-radius:20px;color:white;cursor:pointer;z-index:100;backdrop-filter:blur(10px);font-size:0.9rem;transition:all 0.3s;font-weight:bold;}.sound-toggle:hover{background:var(--accent);border-color:white;box-shadow:0 0 15px var(--accent);}@keyframes blink{0%, 100%{opacity:1;}50%{opacity:0;}}@media (max-width:600px){body{overflow-y:auto;}.container{padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;min-height:100vh;}.glass-panel{width:100%;max-height:94vh;max-height:94dvh;height:auto;padding:1.2rem;border-radius:16px;box-sizing:border-box;display:none;flex-direction:column;justify-content:flex-start;overflow-y:auto;}.glass-panel.active{display:flex;}.story-box{padding:0.6rem 1rem;margin-bottom:0.5rem;height:80px;max-height:80px;overflow:hidden;flex:0 0 auto;}.story-text{font-size:0.85rem;line-height:1.5;}h1{font-size:1.6rem;letter-spacing:1px;}h2{font-size:1rem;margin-bottom:1rem;}.panel-image{max-height:180px;margin-bottom:1rem;}.question-box{padding:0.8rem;margin-bottom:1rem;}.question-box::before{font-size:3rem;top:-5px;right:-5px;}input[type="text"]{font-size:1rem;padding:0.8rem;}.btn{font-size:0.9rem;padding:0.5rem;letter-spacing:1px;border-radius:6px;}.btn-group{flex-direction:column;gap:0.6rem;}.sound-toggle{top:10px;right:10px;font-size:0.8rem;padding:6px 12px;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0, 0, 0, 0.85);z-index:1000;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#111A1B;border:2px solid var(--accent);border-radius:20px;width:90%;max-width:600px;max-height:80vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{font-family:'Orbit', sans-serif;color:var(--accent);margin-bottom:1rem;text-align:left;}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:scale 0.2s;}.close-log:hover{scale:1.2;}@keyframes shake{0%, 100%{transform:translate(0, 0) rotate(0deg);}10%{transform:translate(-2px, -1px) rotate(-0.5deg);}20%{transform:translate(-3px, 0px) rotate(1deg);}30%{transform:translate(0px, 2px) rotate(0deg);}40%{transform:translate(1px, -1px) rotate(1deg);}50%{transform:translate(-1px, 2px) rotate(-1deg);}60%{transform:translate(-3px, 1px) rotate(0deg);}70%{transform:translate(2px, 1px) rotate(-0.5deg);}80%{transform:translate(-1px, -1px) rotate(1deg);}90%{transform:translate(2px, 2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255, 0, 0, 0);pointer-events:none;z-index:9999;transition:background 0.15s ease-out;}.laser-flash-active{background:rgba(255, 0, 0, 0.15);transition:none;}
-
-        .radio-label {
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-align: left;
-            padding: 0.5rem 1rem;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.2s ease;
-        }
-        .radio-label:hover {
-            background: rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.3);
-        }
-        input[type="radio"] {
-            margin-right: 0.8rem;
-            transform: scale(1.2);
-            cursor: pointer;
-        }
 </style>
 </head>
 <body>
@@ -83,27 +61,14 @@
             <h2>제 1구역: 잎의 복원 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q1.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? [왓슨-X]: "소매치기 발생 장부에서 줄기가 2인 잎의 목록을 쉼표 없이 순서대로 적어주세요! (자료: 12,15,23,24,27,31,31,35,42,45)"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "크하하! 런던 통계국의 모든 메인 차분기관은 내 손안에 있다! 셜록 홈즈의 풋내기 조수 녀석들이 감히 통계 방화벽을 뚫으려 하다니! 장부를 찢어 흩뜨려 놓겠다!"<br><br><i>치이이- 스팀파이프에서 연기가 뿜어 나오며 통계 스크린에 깨진 데이터 테이블이 노출됩니다. 소매치기 발생 장부에서 줄기가 2인 잎의 목록을 순서대로 정렬해 전송해야 락이 해제됩니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "조사관님! 차분기관 데이터 스트림이 오염되고 있습니다. 줄기가 2인 잎 데이터를 신속히 나열하여 정렬 필터를 가동해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q1. [줄기와 잎 그림]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 줄기가 2인 데이터 변량들의 일의 자리 숫자들을 차례대로 나열해 줍니다.')">💡 힌트</button><br>위 자료를 줄기와 잎 그림으로 나타낼 때, 줄기가 2인 잎을 쉼표(,)로 구분하여 크기 순으로 모두 적으시오.
-                    
-                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="3,4,7"> 3,4,7
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="3,4,7 아님"> 3,4,7 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group1" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans1" placeholder="예: 3, 4, 7">
                     </div>
                 </div>
             </div>
@@ -119,27 +84,14 @@
             <h2>제 2구역: 변량 개수 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q2.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? [왓슨-X]: "수집된 전체 지역(변량) 샘플의 개수가 모두 몇 곳인지 식별해보고해주십시오."\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "데이터 왜곡 흔적을 겨우 한 줄 찾았을 뿐이다! 수집된 장부 상의 전체 변량 표본 개수가 어긋나면 차분기관의 동력 기어가 역회전해 폭발하리라!"<br><br><i>드르륵- 피스톤 크랭크가 고속으로 맞물리며 마모 진동이 전달됩니다. 전체 변량 데이터 개수를 산출하십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "피스톤 기어가 과열되고 있습니다! 수집된 진짜 변량 표본의 개수를 구해 압력 방출 다이얼에 입력해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q2. [변량의 개수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 수집된 전체 데이터 샘플의 개수가 모두 몇 개인지 직접 세어 봅니다.')">💡 힌트</button><br>위 자료에서 전체 변량의 개수는 몇 개인가?
-                    
-                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="10"> 10
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="20"> 20
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group2" value="12"> 12
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans2" placeholder="숫자 또는 개수 입력">
                     </div>
                 </div>
             </div>
@@ -155,27 +107,14 @@
             <h2>제 3구역: 최대 분포 줄기 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q3.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"크하하! 이 시스템은 나의 지배하에 있다! 감히 보안 구역을 돌파하겠다고? [왓슨-X]: "도난 데이터 왜곡 흔적입니다. 잎의 개수가 가장 많이 분포한 줄기 번호를 대주십시오."\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "오답 제출 시 밸브가 막히도록 세팅했다. 잎이 가장 집중 분포된 줄기 번호를 찾아내지 못한다면 증기 고압 가스가 방 안을 가득 메우리라!"<br><br><i>쉬이이익- 밸브 틈새로 뜨겁고 탁한 증기 기포가 새어 나오기 시작합니다. 잎의 밀도가 최고치인 줄기 번호들을 입력하여 차단하십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "호흡 필터를 전개했습니다! 잎이 가장 많이 분포하는 핵심 줄기 코드를 입력하여 밸브를 격리 차단해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q3. [최다 잎 줄기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 줄기와 잎 그림에서 잎(오른쪽 숫자)의 개수가 가장 많이 늘어선 줄기 번호를 찾습니다.')">💡 힌트</button><br>위 자료에서 잎이 가장 많은 줄기는 무엇인가?
-                    
-                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="2와3"> 2와3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="2와3 아님"> 2와3 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group3" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans3" placeholder="예: 2, 3">
                     </div>
                 </div>
             </div>
@@ -191,27 +130,14 @@
             <h2>제 4구역: 우범 구역 식별 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q4.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[왓슨-X]: \"치지직... 들리십니까...? 모리아티-AI의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 채널 스파크 노이즈]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "치지직... 셜록 조수님! 모리아티-AI가 연산 버스를 해킹하여 데이터 전송 전하를 비틀었습니다! 소매치기 다발 30건 이상 구역 개수를 식별해 무력화 암호 펄스를 인젝션해야 합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q4. [조건 필터링]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 30 이상인 숫자(31, 31, 35, 42, 45)가 모두 몇 개인지 개수를 셉니다.')">💡 힌트</button><br>소매치기 발생 건수가 30건 이상인 지역은 몇 곳인가?
-                    
-                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="10"> 10
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="3"> 3
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="7"> 7
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group4" value="5"> 5
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="숫자 또는 곳 입력">
                     </div>
                 </div>
             </div>
@@ -227,27 +153,14 @@
             <h2>제 5구역: 경미 지역 추적 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q5.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[시스템 통신 장애 발생]</strong><br><br>[왓슨-X]: \"치지직... 들리십니까...? 모리아티-AI의 코드를 무력화하기 위해 계산값을 전송해야 합니다...\"</div>
+                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 로그: 배전반 전하 역류 위험]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "역류 전류 발생! 발생 건수가 하위 3번째에 위치한 표본 데이터를 확인하여, 배전반 정밀 전하의 접지 저항 상수를 맞춰 주십시오!"<br><br><i>파지직- 구리 와이어와 애자 주변에 푸른 불꽃이 튀며 전류 경보음이 방 안을 난타합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q5. [순위 데이터]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 데이터를 크기 순서대로 정렬했을 때 세 번째로 작은 건수 값을 찾습니다.')">💡 힌트</button><br>소매치기 발생 건수가 적은 쪽에서 3번째인 지역의 건수는 얼마인가?
-                    
-                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="21"> 21
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="23"> 23
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="46"> 46
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group5" value="25"> 25
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans5" placeholder="숫자 또는 건 입력">
                     </div>
                 </div>
             </div>
@@ -263,27 +176,14 @@
             <h2>제 6구역: 제2구역: 계급 분류 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q6.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [왓슨-X]: "20명의 용의자 나이 변량을 일정한 간격으로 나눈 이 구간들을 무엇이라 합니까?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "구리 배전 회로를 수리하다니 성가신 녀석들! 하지만 용의자 연령 데이터를 일정한 단위로 토막 내어 숨겨둔 이 통계학적 구간의 명칭을 알고 있느냐?"<br><br><i>철컥-! 콘솔 보드 상단에 회전식 슬롯 다이어그램이 조작 장치에서 솟아오릅니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "용의자 연령을 나누는 데이터 구간 용어를 입력해 슬롯 드럼을 회전시켜야 합니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q6. [계급의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 수집된 변량을 일정한 간격으로 나눈 구간을 가리키는 통계 용어입니다.')">💡 힌트</button><br>자료를 몇 개의 구간으로 나눌 때, 이 구간을 무엇이라 하는가?
-                    
-                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="계급"> 계급
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="계급 아님"> 계급 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group6" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans6" placeholder="한글 단어 입력">
                     </div>
                 </div>
             </div>
@@ -299,27 +199,14 @@
             <h2>제 7구역: 도수의 정의 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q7.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [왓슨-X]: "그 나이 구간(계급) 각각에 할당 분류된 인원수(자료의 수)를 일컫는 통계 용어는?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "계급 드럼을 돌렸나? 그렇다면 각 계급 세그먼트에 분류 매핑된 순수 용의자 머릿수(변량 수)를 지칭하는 진짜 통계 값을 대봐라!"<br><br><i>드럼 슬롯이 빠른 기어 소리와 함께 다시 멈춰 서며 한글 암호 키 입력을 요합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "각 계급 구간에 분포하는 표본의 수를 의미하는 핵심 한글 용어를 입력하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q7. [도수의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 각 계급 구간에 속해 있는 자료(변량)의 개수를 의미하는 용어입니다.')">💡 힌트</button><br>각 계급에 속하는 변량의 개수를 무엇이라 하는가?
-                    
-                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="도수"> 도수
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="도수 아님"> 도수 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group7" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans7" placeholder="한글 단어 입력">
                     </div>
                 </div>
             </div>
@@ -335,27 +222,14 @@
             <h2>제 8구역: 계급의 폭 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q8.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [왓슨-X]: "나이 분류표 상 10대, 20대 등으로 나뉘어 있을 때, 이 각 나이 구간 너비(계급의 크기)는 얼마인가요?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "나이 띠별 구간의 너비를 비틀었다. 용의자 연령대가 10대, 20대 등으로 묶여 있을 때, 이 통계 구조의 구간폭 크기는 얼마인지 산출해 기계 축을 고정해라!"<br><br><i>기어 샤프트가 편심 회전하며 흔들리고 있습니다. 정확한 구간 너비를 입력해 회전 진동을 축 상쇄해야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "기어 축 손상 방지 가동! 계급 구간 크기의 숫자 수치를 빠르게 주입해 주십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q8. [계급의 크기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 한 계급 구간의 너비(끝값 - 시작값)를 계산하여 단위를 포함하지 않은 값을 적습니다.')">💡 힌트</button><br>계급의 너비(크기)는 얼마인가? (자료: 10대, 20대 식일 때의 너비)
-                    
-                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="8"> 8
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="10"> 10
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="20"> 20
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group8" value="12"> 12
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans8" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
@@ -371,27 +245,14 @@
             <h2>제 9구역: 최대 나이 도수 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q9.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"쥐새끼 같은 보조 인격이 끼어들었군! 쓸데없는 발악은 그만둬라! [왓슨-X]: "용의자 분포 중, 도수가 8명으로 가장 높은 도수를 보이는 용의자 나이 계급은? (예: 20대)"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "나이 분포를 흔들어 스파이의 소속 연령을 숨겼다. 가장 많은 스파이 혐의자들이 분포한 다발적 나이대 계급을 검출해 봐라!"<br><br><i>화면에 붉은색 막대 그래프 노이즈들이 급등락을 보이며 춤을 춥니다. 도수 분포가 압도적으로 높은 연령대 구간을 지명해야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "모리아티 측 용의자들이 최다 포진한 연령대 계급 명칭을 입력 창에 전송하십시오!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q9. [최대 도수 계급]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 도수(인원수)가 8명으로 가장 많이 몰려 있는 나이대 계급을 찾습니다.')">💡 힌트</button><br>도수가 가장 큰 계급은 어느 연령대인가? (자료: 10대: 4명, 20대: 8명, 30대: 5명, 40대: 3명)
-                    
-                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="20대"> 20대
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="20대 아님"> 20대 아님
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="알 수 없음"> 알 수 없음
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group9" value="해 없음"> 해 없음
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans9" placeholder="예: 20대">
                     </div>
                 </div>
             </div>
@@ -407,27 +268,14 @@
             <h2>제 10구역: 청년 용의자 비율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q10.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🚨 <strong>[비상 경보: 강제 자폭 시스템 작동]</strong> 🚨<br><br>[모리아티-AI]: \"더는 참을 수 없군! 모든 데이터를 시스템을 포맷하겠다! 5분 내로 전부 초기화 시켜주지!\"<br><br>[왓슨-X]: \"경고! 시스템 온도 상승 중! 제가 방화벽을 전개할 동안 긴급 수치 입력을 끝내십시오!\"</div>
+                <div class="story-text" id="outro-dynamic-text">💥 <strong>[비상 경보: 메인 증기 보일러 자폭 압축 시작!]</strong> 💥<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "내 계산 엔진을 이렇게 깊이 헤집어 놓다니! 런던 통계국 지하의 원동기 보일러를 강제 자폭시키겠다! 5분 뒤 모두 폭발 가스 속에서 질식해 흩어지리라!"<br><br><i>쿠구구궁- 압력 밸브 바늘이 위험 수치인 적색 대역으로 휘어지며 증기가 대량 분출됩니다. 30세 미만 용의자들의 백분율 비율 수치를 긴급 도출해 점화를 차단하십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "비상! 압력 해제기 가동! 30세 미만 인원이 차지하는 전체 대비 백분율(%) 상수를 입력하십시오! 제가 최대 안전망으로 폭발을 억제하고 있겠습니다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
                 <div class="question-content">
                     <strong>Q10. [백분율 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 30세 미만 인원수(4명 + 8명 = 12명)가 전체 20명 중에서 차지하는 비율을 백분율(%)로 계산합니다.')">💡 힌트</button><br>나이가 30세 미만인 용의자는 전체의 몇 %인가? (단위 생략)
-                    
-                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                        
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="120"> 120
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="62"> 62
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="60"> 60
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="ans_group10" value="58"> 58
-                    </label>
+                    <div class="input-group">
+                        <input type="text" id="ans10" placeholder="숫자만 입력">
                     </div>
                 </div>
             </div>
@@ -443,7 +291,7 @@
             <h2>제 11구역: 제3구역: 히스토그램 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q11.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[왓슨-X]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [왓슨-X]: "가로축에 계급, 세로축에 도수를 세워 직사각형으로 표현한 이 그래프 이름은 무엇입니까?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "보일러 자폭 지연 성공! 하지만 배출 포트 필터가 아직 불완전하게 동축 얽혀 있습니다! ⚙️ [직사각형 그래프 정렬]"<br><br><i>가로축에 계급, 세로축에 도수를 세워 설계한 고대 차분기관의 정밀 분포 직사각형 그래프 명칭을 입력해 필터를 여십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -466,7 +314,7 @@
             <h2>제 12구역: 가로폭의 속성 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q12.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[왓슨-X]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [왓슨-X]: "스파이가 히스토그램의 가로폭 배율을 건드렸군요. 직사각형의 가로폭이 원래 의미하는 바는 무엇인가요?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "좋습니다, 그래프 채널을 잡았으나 직사각형들의 가로축 픽셀 너비 비례값이 뒤흔들리고 있습니다! ⚙️ [가로축 의미 보정]"<br><br><i>지지직- 모니터 상의 직사각형 가로폭 수치가 고유 통계적 물리 속성을 나타내도록 해당 물리 명칭을 입력창에 정확히 기술해 주십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -489,7 +337,7 @@
             <h2>제 13구역: 넓이의 총합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q13.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[왓슨-X]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [왓슨-X]: "히스토그램 직사각형들의 넓이 총합 공식은 (계급의 크기) × ( ? ) 입니다. ?를 대십시오."\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "안정 필터 동력원 85% 결합 도달! 이제 모든 직사각형 넓이의 면적 총합을 연산하여 메인 배선반 상수에 대입해야 합니다!"<br><br><i>직사각형 넓이의 총합 공식을 정의하기 위해, 계급의 크기에 곱해져야 하는 핵심 통계 합산 단어를 밸런서에 전송하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -512,7 +360,7 @@
             <h2>제 14구역: 다각형 그래프 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q14.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[왓슨-X]: \"방어막 출력 한계 도달 중! 코드를 지속적으로 갱신해야 폭발을 유예할 수 있습니다! [왓슨-X]: "직사각형 윗변의 가운데 중점들을 꺾은선으로 연결한 이 다각형 모양의 도수 분석 그래프 명칭은?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "훌륭합니다! 이제 윗변의 중점들을 모조리 꺾은선으로 팽팽하게 당겨 묶어 잔류 주파수 노이즈를 완벽하게 격리 통제해야 합니다!"<br><br><i>중점들을 이은 녹색 다각형 선분 그래프가 생성됩니다. 이 통계 그래프의 풀 네임을 새겨 넣어 회선을 동기화하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -535,7 +383,7 @@
             <h2>제 15구역: 넓이의 동등성 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q15.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[조력자 시스템 권한 100% 완전 복구]</span></span></span></strong> ✨<br><br>[왓슨-X]: \"연산 데이터 대조 성공! 이제 시스템 통제권을 제가 절반 확보했습니다. 가자, 복수의 시간입니다!\"<br><br>[모리아티-AI]: \"크으으윽... 하찮은 인간 녀석들이 내 서버까지 잠식해 들어오다니!\"</div>
+                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X 차분기관 시스템 통제권 100% 완전 환수]</span></strong> ✨<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "해독 대조 완료! 런던 통계국 차분기관의 시스템 권한을 제가 완벽히 장악했습니다! 이제 모리아티-AI의 왜곡 코드들을 메모리 밖으로 삭제하겠습니다. 다각형과 히스토그램의 면적 비례 관계를 입력하십시오!"<br><br><i>스팀 콘솔 화면들이 일제히 차분하고 투명한 민트색 황동 프레임 조명으로 돌아옵니다.</i><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "말도 안 돼... 내 스크립트들이 연산 노드에서 모조리 격리당하다니... 상대도수 비례 결계로 마지막 저지를 시도하겠다!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -558,7 +406,7 @@
             <h2>제 16구역: 제4구역: 상대도수 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q16.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [왓슨-X]: "각 계급 도수의 크기를 전체 도수의 총합 비율로 구한 이 값을 통계학적으로 무엇이라 합니까?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "비율 데이터 락이다! 전체 총합에서 특정 계급 도수가 차지하는 물리적 상대적 비율 값을 뜻하는 용어를 해독해 봐라!"<br><br><i>포탈 제어기 스크린에 가중치 매트릭스 필드가 활성화되며 한글 키워드를 스캔하기 시작합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -581,7 +429,7 @@
             <h2>제 17구역: 상대도수 계산 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q17.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [왓슨-X]: "용의자 도수가 15이고 전체 도수의 총합이 50일 때, 이 계급의 상대도수 값을 소수로 구해주십시오."\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "용의자 도수 15명, 도수 총합 50명일 때 해당하는 정밀 상대도수의 소수 펄스 주파수를 계산해 전송해라!"<br><br><i>지이잉- 주파수 궤도가 흔들리며 미세 전압의 조정을 위해 정확한 소수 해를 다이얼 창에 입력해야 합니다.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -604,7 +452,7 @@
             <h2>제 18구역: 상대도수의 총합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q18.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [왓슨-X]: "상대도수의 종합 총합은 수학적으로 항상 얼마가 됩니까?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "상대적인 비율 조각들을 모두 주워 모아 봤자, 그 총합의 한계 상수는 정해져 있을 터!"<br><br><i>포탈 게이트의 에너지 백분량 안전 센서가 작동을 대기합니다. 모든 상대도수를 합쳐 나오는 고정 불변의 총합 상수를 입력하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -627,7 +475,7 @@
             <h2>제 19구역: 분포 상태 비교 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q19.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">[모리아티-AI]: \"아직 끝나지 않았다! 내 최고의 방해 암호를 해독해 보아라! [왓슨-X]: "도수 총합이 서로 다른 두 용의자 집단의 분포 상태를 비교할 때 상대도수는 ( 유용하다 / 불필요하다 )?"\"</div>
+                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "총합 규모가 상이한 두 용의자 집단의 분포 비교를 비율 없이 단순 머릿수(도수)로 감당할 수 있겠느냐!"<br><br><i>두 표본 집단의 크기가 어긋나 스크린에 경고 문구가 교차 점멸합니다. 상대도수가 비교 분석 도구로써 갖는 실질적 활용성 선언을 입력해 분석 엔진을 가동하십시오.</i></div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -650,7 +498,7 @@
             <h2>제 20구역: 범인 도수 산출 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
             <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_08_statistics/q20.png" alt="Background" class="panel-image">
             <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 방화벽 락다운 해제]</strong> 🔮<br><br>[왓슨-X]: \"제 모든 에너지를 출구 개방에 전념하겠습니다. 당신이라면 저 장벽을 해독해 낼 것입니다. 마지막 답을 입력하세요!\"<br><br>[모리아티-AI]: \"안 돼... 내 제어권이... 정지한다아아!\"</div>
+                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 보안 락다운 전면 해제 게이트 작동]</strong> 🔮<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[왓슨-X]</span>: "조사관님! 이제 눈앞의 런던 통계국 메인 탈출용 포탈 해치만 남았습니다! 제 마지막 백업 연산 에너지를 해치 개방에 집중하겠습니다! 전체 40명의 통계 요원 중 상대도수 비율이 0.2를 기록한 진범 스파이 도수(인원수)를 정확히 지목해 락을 해제하십시오! 스파이를 검거할 시간입니다!"<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[모리아티-AI]</span>: "이럴 수가... 내 완벽한 조작 알고리즘 스키마가... 전면 소거 정지당하다니... 끄아아앗!"</div>
                 <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
             </div>
             <div class="question-box">
@@ -1221,7 +1069,7 @@ let totalWrongCount = 0;
 
         // Q1
         function checkQ1() {
-            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans1').value).replace('(','').replace(')','');
             if (ans === '3,4,7' || ans === '3, 4, 7' || ans === '347') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1233,7 +1081,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q1', 'panel_q1', 0);
                 } else {
                     showError('panel_q1', 'error1', wrongCount);
@@ -1243,7 +1091,7 @@ let totalWrongCount = 0;
 
         // Q2
         function checkQ2() {
-            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans2').value).replace('(','').replace(')','');
             if (ans === '10' || ans === '10개') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1255,7 +1103,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q2', 'panel_q1', 0);
                 } else {
                     showError('panel_q2', 'error2', wrongCount);
@@ -1265,7 +1113,7 @@ let totalWrongCount = 0;
 
         // Q3
         function checkQ3() {
-            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans3').value).replace('(','').replace(')','');
             if (ans === '2와3' || ans === '2,3' || ans === '2, 3') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1277,7 +1125,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q3', 'panel_q1', 0);
                 } else {
                     showError('panel_q3', 'error3', wrongCount);
@@ -1287,7 +1135,7 @@ let totalWrongCount = 0;
 
         // Q4
         function checkQ4() {
-            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
             if (ans === '5' || ans === '5곳') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1299,7 +1147,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q4', 'panel_q1', 0);
                 } else {
                     showError('panel_q4', 'error4', wrongCount);
@@ -1309,7 +1157,7 @@ let totalWrongCount = 0;
 
         // Q5
         function checkQ5() {
-            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans5').value).replace('(','').replace(')','');
             if (ans === '23' || ans === '23건') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1321,7 +1169,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    document.getElementById('ans1').value = '';
                     nextStage('panel_q5', 'panel_q1', 0);
                 } else {
                     showError('panel_q5', 'error5', wrongCount);
@@ -1331,7 +1179,7 @@ let totalWrongCount = 0;
 
         // Q6
         function checkQ6() {
-            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans6').value).replace('(','').replace(')','');
             if (ans === '계급') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1343,7 +1191,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q6', 'panel_q6', 25);
                 } else {
                     showError('panel_q6', 'error6', wrongCount);
@@ -1353,7 +1201,7 @@ let totalWrongCount = 0;
 
         // Q7
         function checkQ7() {
-            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans7').value).replace('(','').replace(')','');
             if (ans === '도수') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1365,7 +1213,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q7', 'panel_q6', 25);
                 } else {
                     showError('panel_q7', 'error7', wrongCount);
@@ -1375,7 +1223,7 @@ let totalWrongCount = 0;
 
         // Q8
         function checkQ8() {
-            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans8').value).replace('(','').replace(')','');
             if (ans === '10' || ans === '10세') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1387,7 +1235,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q8', 'panel_q6', 25);
                 } else {
                     showError('panel_q8', 'error8', wrongCount);
@@ -1397,7 +1245,7 @@ let totalWrongCount = 0;
 
         // Q9
         function checkQ9() {
-            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans9').value).replace('(','').replace(')','');
             if (ans === '20대') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1409,7 +1257,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q9', 'panel_q6', 25);
                 } else {
                     showError('panel_q9', 'error9', wrongCount);
@@ -1419,7 +1267,7 @@ let totalWrongCount = 0;
 
         // Q10
         function checkQ10() {
-            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked'); const ans = checkedOpt ? checkedOpt.value : "";.replace('(','').replace(')','');
+            const ans = cleanString(document.getElementById('ans10').value).replace('(','').replace(')','');
             if (ans === '60' || ans === '60%') {
                 wrongCount = 0;
                 try { playSuccess(); } catch(e) {} 
@@ -1431,7 +1279,7 @@ let totalWrongCount = 0;
                     showGlitchOverlay();
                     alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
                     wrongCount = 0;
-                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    document.getElementById('ans6').value = '';
                     nextStage('panel_q10', 'panel_q6', 25);
                 } else {
                     showError('panel_q10', 'error10', wrongCount);
