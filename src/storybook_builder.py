@@ -48,9 +48,9 @@ def format_markdown_to_html(text: str) -> str:
 
 class StorybookBuilder(Builder):
     """
-    [Storyboard PDF-like Grid 빌더] chapterXX.md 모델을 읽어 
-    전통적인 2단 스토리보드(좌측: 이미지/일러스트 지시, 우측: 대사/명세 표) 격자 레이아웃을 생성합니다.
-    인쇄(PDF 저장) 시 최적의 페이지 나눔(Page Break)을 지원합니다.
+    [Storyboard Slider 빌더] chapterXX.md 모델을 읽어 
+    좌우 2단 와이드 그리드(좌측 이미지 확대 500px) 및 Page Up/Down 키보드 기반 슬라이더 전환식
+    스토리보드 뷰어 HTML을 생성합니다.
     """
     
     def build(self, chapter: Chapter, grade_str: str, unit_code: str) -> bool:
@@ -74,13 +74,13 @@ class StorybookBuilder(Builder):
         
         html_content = []
         
-        # HTML Header & WebApp Matching Grid CSS
+        # HTML Header & WebApp Matching Slider CSS
         html_content.append(f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스토리보드 검토(PDF형): {chapter.title}</title>
+    <title>스토리보드(슬라이더): {chapter.title}</title>
     <!-- 웹앱 동일 구글 폰트 로드 -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     
@@ -122,114 +122,110 @@ class StorybookBuilder(Builder):
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden; /* 스크롤바 감추고 씬단위 통제 */
+            display: flex;
+            flex-direction: column;
         }}
         
         .container {{
-            max-width: 1200px;
+            max-width: 1350px;
+            width: 100%;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 20px;
             box-sizing: border-box;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }}
         
         header {{
-            text-align: center;
-            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: var(--bg-glass);
-            backdrop-filter: blur(8px);
             border: 1px solid var(--border-glass);
-            border-radius: 8px;
-            padding: 24px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            border-radius: 6px;
+            padding: 12px 24px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }}
         
         .grade-tag {{
-            display: inline-block;
             font-family: 'Orbitron', sans-serif;
             color: var(--primary-neon);
             font-weight: 700;
             font-size: 0.95rem;
             letter-spacing: 0.15em;
-            margin-bottom: 6px;
             text-shadow: var(--text-glow);
         }}
         
         h1 {{
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.85rem;
+            font-size: 1.4rem;
             margin: 0;
             font-weight: 700;
             color: #ffffff;
             text-shadow: var(--text-glow);
         }}
-        
-        .meta-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-top: 20px;
+
+        /* ─── 슬라이드 카드 래퍼 및 카드 정의 ─── */
+        .storyboard-viewport {{
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }}
         
-        .meta-card {{
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid var(--border-glass);
-            border-radius: 4px;
-            padding: 10px;
-            text-align: center;
-        }}
-        
-        .meta-label {{
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 2px;
-        }}
-        
-        .meta-val {{
-            font-size: 1rem;
-            font-weight: 700;
-            color: #ffffff;
-        }}
-        
-        /* ─── 2단 스토리보드 그리드 카드 ─── */
         .storyboard-card {{
-            display: grid;
-            grid-template-columns: 360px 1fr;
-            gap: 30px;
+            display: none; /* JS에 의해 active 상태만 block */
+            grid-template-columns: 500px 1fr; /* 왼쪽 이미지 영역 대폭 확대 */
+            gap: 40px;
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
             border-radius: 8px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 35px;
             box-sizing: border-box;
-            page-break-inside: avoid; /* PDF 출력 시 페이지 끊김 방지 */
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto; /* 내용이 너무 길어지면 카드 내 스크롤 */
         }}
         
-        /* 좌측: 비주얼/이미지 영역 */
+        .storyboard-card.active {{
+            display: grid;
+        }}
+        
+        /* 좌측: 대형 비주얼 영역 */
         .storyboard-left {{
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            border-right: 1px dashed var(--border-glass);
+            padding-right: 25px;
         }}
         
-        /* 우측: 명세/지문 영역 */
+        /* 우측: 상세 내용 영역 */
         .storyboard-right {{
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
         }}
         
         h2 {{
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
             margin-top: 0;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: var(--primary-neon);
             text-shadow: var(--text-glow);
             border-bottom: 1px solid var(--border-glass);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }}
         
         .story-p {{
@@ -241,22 +237,22 @@ class StorybookBuilder(Builder):
             color: #e5e7eb;
             white-space: pre-line;
             line-height: 1.7;
-            margin-top: auto; /* 대사는 카드 아래쪽에 배치하여 흐름 고정 */
+            margin-top: 15px;
         }}
         
-        /* 테이블 명세 스타일 */
+        /* 테이블 양식 */
         .quiz-details {{
             border-collapse: collapse;
             width: 100%;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
+            font-size: 0.88rem;
+            margin-bottom: 15px;
             border-top: 1px solid var(--border-glass);
             border-bottom: 1px solid var(--border-glass);
         }}
         
         .quiz-details td {{
-            padding: 10px 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 9px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
             vertical-align: top;
             color: #e5e7eb;
         }}
@@ -272,7 +268,7 @@ class StorybookBuilder(Builder):
             width: 110px;
         }}
         
-        /* 이미지 프리뷰 양식 */
+        /* 대형 삽화 디자인 */
         .img-frame {{
             width: 100%;
             text-align: center;
@@ -281,21 +277,20 @@ class StorybookBuilder(Builder):
         .img-preview {{
             width: 100%;
             height: auto;
-            max-height: 250px;
+            max-height: 380px; /* 고화질 웅장한 이미지 높이 설정 */
             object-fit: contain;
             border: 1px solid var(--border-glass);
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
-            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            border-radius: 6px;
             background: #020617;
         }}
         
         .img-caption {{
             font-family: 'Share Tech Mono', monospace;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            margin-top: 8px;
-            letter-spacing: 0.03em;
-            line-height: 1.3;
+            margin-top: 12px;
+            line-height: 1.4;
         }}
         
         .choices-list {{
@@ -322,65 +317,76 @@ class StorybookBuilder(Builder):
             border: 1px solid rgba(239, 68, 68, 0.25);
             text-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
         }}
+
+        /* ─── 하단 컨트롤러 패널 ─── */
+        .control-bar {{
+            background: var(--bg-glass);
+            border-top: 1px solid var(--border-glass);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.4);
+        }}
         
-        /* ─── PDF 인쇄 최적화 규칙 ─── */
-        @media print {{
-            body {{
-                background: #ffffff !important;
-                color: #000000 !important;
-            }}
-            .container {{
-                max-width: 100% !important;
-                padding: 10px !important;
-            }}
-            header {{
-                background: #ffffff !important;
-                color: #000000 !important;
-                border: 1px solid #cccccc !important;
-                box-shadow: none !important;
-                page-break-after: avoid;
-            }}
-            .meta-card {{
-                background: #ffffff !important;
-                border: 1px solid #cccccc !important;
-            }}
-            .meta-val, h1, h2, .grade-tag {{
-                color: #000000 !important;
-                text-shadow: none !important;
-            }}
-            .storyboard-card {{
-                grid-template-columns: 280px 1fr !important;
-                background: #ffffff !important;
-                border: 1px solid #999999 !important;
-                box-shadow: none !important;
-                color: #000000 !important;
-                page-break-inside: avoid !important;
-                margin-bottom: 25px !important;
-                padding: 20px !important;
-            }}
-            .story-p {{
-                background: #f9f9f9 !important;
-                border: 1px solid #cccccc !important;
-                color: #111111 !important;
-            }}
-            .quiz-details td {{
-                color: #111111 !important;
-                border-bottom: 1px solid #dddddd !important;
-            }}
-            .img-preview {{
-                border: 1px solid #cccccc !important;
-            }}
+        .nav-btn {{
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: #ffffff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }}
+        
+        .nav-btn:hover {{
+            background: var(--primary-neon);
+            color: #000000;
+            box-shadow: var(--text-glow);
+        }}
+        
+        .indicator {{
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--primary-neon);
+            text-shadow: var(--text-glow);
+        }}
+        
+        .jump-select {{
+            background: #020617;
+            border: 1px solid var(--border-glass);
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 0.88rem;
+            outline: none;
+            cursor: pointer;
         }}
 
         /* 모바일 대응 */
-        @media (max-width: 900px) {{
+        @media (max-width: 950px) {{
             .storyboard-card {{
                 grid-template-columns: 1fr !important;
-                gap: 20px;
-                padding: 20px;
+                max-height: 70vh;
             }}
-            .img-preview {{
-                max-height: 300px;
+            .storyboard-left {{
+                border-right: none;
+                border-bottom: 1px dashed var(--border-glass);
+                padding-right: 0;
+                padding-bottom: 20px;
+            }}
+            body {{
+                overflow: auto;
+                height: auto;
+            }}
+            .control-bar {{
+                position: sticky;
+                bottom: 0;
             }}
         }}
     </style>
@@ -389,46 +395,31 @@ class StorybookBuilder(Builder):
     <div class="container">
         <header>
             <span class="grade-tag">{grade_str.upper()} / {unit_code.upper()}</span>
-            <h1>{chapter.title}</h1>
-            <div class="meta-grid">
-                <div class="meta-card">
-                    <div class="meta-label">TEMPLATE</div>
-                    <div class="meta-val">{chapter.template}</div>
-                </div>
-                <div class="meta-card">
-                    <div class="meta-label">HERO</div>
-                    <div class="meta-val">{chapter.hero}</div>
-                </div>
-                <div class="meta-card">
-                    <div class="meta-label">HELPER</div>
-                    <div class="meta-val">{chapter.helper}</div>
-                </div>
-                <div class="meta-card">
-                    <div class="meta-label">VILLAIN</div>
-                    <div class="meta-val">{chapter.villain}</div>
-                </div>
-            </div>
+            <h1>{chapter.title} (Storyboard)</h1>
+            <div class="indicator" id="top-indicator">SCENE 1 / 26</div>
         </header>
 
-        <!-- INTRO -->
-        <div class="storyboard-card">
-            <div class="storyboard-left">
-                <div class="img-frame">
-                    <img class="img-preview" src="{assets_relative_path}/{chapter.intro_image}" alt="Intro Image">
-                    <div class="img-caption">
-                        <strong>[ILLUSTRATION 00] INTRO SCENE</strong><br>
-                        지시: {chapter.title}에 안착한 인트로 배경 화면
+        <div class="storyboard-viewport">
+            <!-- INTRO (Index 0) -->
+            <div class="storyboard-card active" data-index="0" data-title="오프닝 & 인트로">
+                <div class="storyboard-left">
+                    <div class="img-frame">
+                        <img class="img-preview" src="{assets_relative_path}/{chapter.intro_image}" alt="Intro Image">
+                        <div class="img-caption">
+                            <strong>[ILLUSTRATION 00] INTRO SCENE</strong><br>
+                            지시: {chapter.title}에 안착한 오프닝 인트로 배경 일러스트
+                        </div>
                     </div>
                 </div>
+                <div class="storyboard-right">
+                    <h2>🎬 [오프닝 & 인트로]</h2>
+                    <div class="story-p">{format_markdown_to_html(chapter.intro_story)}</div>
+                </div>
             </div>
-            <div class="storyboard-right">
-                <h2>🎬 [오프닝 & 인트로]</h2>
-                <div class="story-p">{format_markdown_to_html(chapter.intro_story)}</div>
-            </div>
-        </div>
 """)
 
-        # QUESTIONS 1 ~ 20
+        # QUESTIONS 1 ~ 20 (Index 1 ~ 20)
+        scene_count = 1
         for idx, q in enumerate(chapter.questions, 1):
             choices_html = ""
             if q.choices:
@@ -444,104 +435,175 @@ class StorybookBuilder(Builder):
             ans_display = f"Type: {ans_spec.get('type')} / Values: {ans_spec.get('values', [])}"
             
             html_content.append(f"""
-        <!-- Q{q.qnum} -->
-        <div class="storyboard-card">
-            <div class="storyboard-left">
-                <div class="img-frame">
-                    <img class="img-preview" src="{assets_relative_path}/{q.image}" alt="Q{q.qnum} Image">
-                    <div class="img-caption">
-                        <strong>[ILLUSTRATION {q.qnum:02d}] ZONE {q.qnum}</strong><br>
-                        지시: {q.title} 관련 퍼즐 삽화 도판
+            <!-- Q{q.qnum} (Index {scene_count}) -->
+            <div class="storyboard-card" data-index="{scene_count}" data-title="Q{q.qnum}: {q.title}">
+                <div class="storyboard-left">
+                    <div class="img-frame">
+                        <img class="img-preview" src="{assets_relative_path}/{q.image}" alt="Q{q.qnum} Image">
+                        <div class="img-caption">
+                            <strong>[ILLUSTRATION {q.qnum:02d}] ZONE {q.qnum}</strong><br>
+                            지시: {q.title} 관련 수수께끼 도판 이미지
+                        </div>
                     </div>
                 </div>
+                <div class="storyboard-right">
+                    <h2>🧩 Q{q.qnum}: {q.title} {extra_class_badge}</h2>
+                    <table class="quiz-details">
+                        <tr>
+                            <td class="field-name">퀴즈 질문</td>
+                            <td><strong>{q.qtext}</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">선택지</td>
+                            <td>{choices_html}</td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">정답 조건</td>
+                            <td><code>{ans_display}</code></td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">플레이스홀더</td>
+                            <td>{q.placeholder}</td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">힌트</td>
+                            <td style="color:var(--accent-neon)">💡 {q.hint}</td>
+                        </tr>
+                    </table>
+                    <div class="story-p">{format_markdown_to_html(q.story)}</div>
+                </div>
             </div>
-            <div class="storyboard-right">
-                <h2>🧩 Q{q.qnum}: {q.title} {extra_class_badge}</h2>
-                <table class="quiz-details">
-                    <tr>
-                        <td class="field-name">퀴즈 질문</td>
-                        <td><strong>{q.qtext}</strong></td>
-                    </tr>
-                    <tr>
-                        <td class="field-name">선택지</td>
-                        <td>{choices_html}</td>
-                    </tr>
-                    <tr>
-                        <td class="field-name">정답 조건</td>
-                        <td><code>{ans_display}</code></td>
-                    </tr>
-                    <tr>
-                        <td class="field-name">플레이스홀더</td>
-                        <td>{q.placeholder}</td>
-                    </tr>
-                    <tr>
-                        <td class="field-name">에러 메시지</td>
-                        <td>{q.error_message}</td>
-                    </tr>
-                    <tr>
-                        <td class="field-name">힌트</td>
-                        <td style="color:var(--accent-neon)">💡 {q.hint}</td>
-                    </tr>
-                </table>
-                <div class="story-p">{format_markdown_to_html(q.story)}</div>
-            </div>
-        </div>
 """)
+            scene_count += 1
 
-        # EVENTS 1 ~ 4
+        # EVENTS 1 ~ 4 (Index 21 ~ 24)
         for idx, ev in enumerate(chapter.events, 1):
             html_content.append(f"""
-        <!-- EVENT{ev.evnum} -->
-        <div class="storyboard-card">
-            <div class="storyboard-left">
-                <div class="img-frame">
-                    <img class="img-preview" src="{assets_relative_path}/{ev.image}" alt="Event{ev.evnum} Image">
-                    <div class="img-caption">
-                        <strong>[ILLUSTRATION EVENT {ev.evnum:02d}]</strong><br>
-                        지시: {ev.title} 돌발 상황 이벤트 배경
+            <!-- EVENT{ev.evnum} (Index {scene_count}) -->
+            <div class="storyboard-card" data-index="{scene_count}" data-title="EVENT {ev.evnum}: {ev.title}">
+                <div class="storyboard-left">
+                    <div class="img-frame">
+                        <img class="img-preview" src="{assets_relative_path}/{ev.image}" alt="Event{ev.evnum} Image">
+                        <div class="img-caption">
+                            <strong>[ILLUSTRATION EVENT {ev.evnum:02d}]</strong><br>
+                            지시: {ev.title} 돌발 상황 이벤트 배경
+                        </div>
                     </div>
                 </div>
+                <div class="storyboard-right">
+                    <h2>🎬 EVENT {ev.evnum}: {ev.title}</h2>
+                    <table class="quiz-details">
+                        <tr>
+                            <td class="field-name">버튼 텍스트</td>
+                            <td>{ev.btn_text}</td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">다음 스테이지</td>
+                            <td><code>{ev.next_stage}</code></td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">진행도</td>
+                            <td>{ev.progress}%</td>
+                        </tr>
+                    </table>
+                    <div class="story-p">{format_markdown_to_html(ev.story)}</div>
+                </div>
             </div>
-            <div class="storyboard-right">
-                <h2>🎬 EVENT {ev.evnum}: {ev.title}</h2>
-                <table class="quiz-details">
-                    <tr>
-                        <td class="field-name">버튼 텍스트</td>
-                        <td>{ev.btn_text}</td>
-                    </tr>
-                    <tr>
-                        <td class="field-name">다음 스테이지</td>
-                        <td><code>{ev.next_stage}</code></td>
-                    </tr>
-                    <tr>
-                        <td class="field-name">진행도</td>
-                        <td>{ev.progress}%</td>
-                    </tr>
-                </table>
-                <div class="story-p">{format_markdown_to_html(ev.story)}</div>
-            </div>
-        </div>
 """)
+            scene_count += 1
 
-        # OUTRO
+        # OUTRO (Index 25)
         html_content.append(f"""
-        <!-- OUTRO -->
-        <div class="storyboard-card">
-            <div class="storyboard-left">
-                <div class="img-frame">
-                    <img class="img-preview" src="{assets_relative_path}/{chapter.outro_image}" alt="Outro Image">
-                    <div class="img-caption">
-                        <strong>[ILLUSTRATION 21] OUTRO SCENE</strong><br>
-                        지시: 미션 성공 후 아웃트로 엔딩 연출
+            <!-- OUTRO (Index {scene_count}) -->
+            <div class="storyboard-card" data-index="{scene_count}" data-title="엔딩 & 아웃트로">
+                <div class="storyboard-left">
+                    <div class="img-frame">
+                        <img class="img-preview" src="{assets_relative_path}/{chapter.outro_image}" alt="Outro Image">
+                        <div class="img-caption">
+                            <strong>[ILLUSTRATION 21] OUTRO SCENE</strong><br>
+                            지시: 미션 성공 후 아웃트로 엔딩 연출 일러스트
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="storyboard-right">
-                <h2>🎬 [엔딩 & 아웃트로]</h2>
-                <div class="story-p">{format_markdown_to_html(chapter.outro_story)}</div>
+                <div class="storyboard-right">
+                    <h2>🎬 [엔딩 & 아웃트로]</h2>
+                    <div class="story-p">{format_markdown_to_html(chapter.outro_story)}</div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- 하단 컨트롤러 패널 -->
+    <div class="control-bar">
+        <button class="nav-btn" id="prev-btn">◀ PREV</button>
+        
+        <div>
+            <select class="jump-select" id="jump-select">
+                <!-- JS로 동적 생성 -->
+            </select>
+        </div>
+        
+        <button class="nav-btn" id="next-btn">NEXT ▶</button>
+    </div>
+
+    <!-- ─── 슬라이드 넘김 제어 스크립트 ─── -->
+    <script>
+        const cards = document.querySelectorAll('.storyboard-card');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const topIndicator = document.getElementById('top-indicator');
+        const jumpSelect = document.getElementById('jump-select');
+        
+        let currentIndex = 0;
+        const total = cards.length;
+        
+        // 1. 드롭다운 씬 목록 채우기
+        cards.forEach((card, idx) => {{
+            const opt = document.createElement('option');
+            opt.value = idx;
+            opt.textContent = `[${{idx + 1}}/${{total}}] ${{card.getAttribute('data-title')}}`;
+            jumpSelect.appendChild(opt);
+        }});
+        
+        // 2. 씬 전환 함수
+        function showScene(index) {{
+            if (index < 0 || index >= total) return;
+            
+            cards.forEach(card => card.classList.remove('active'));
+            cards[index].classList.add('active');
+            
+            currentIndex = index;
+            topIndicator.textContent = `SCENE ${{currentIndex + 1}} / ${{total}}`;
+            jumpSelect.value = currentIndex;
+            
+            // 포커스 해제 (키보드 버블링 방지)
+            jumpSelect.blur();
+        }}
+        
+        // 3. 버튼 클릭 이벤트
+        prevBtn.addEventListener('click', () => {{
+            if (currentIndex > 0) showScene(currentIndex - 1);
+        }});
+        
+        nextBtn.addEventListener('click', () => {{
+            if (currentIndex < total - 1) showScene(currentIndex + 1);
+        }});
+        
+        jumpSelect.addEventListener('change', (e) => {{
+            showScene(parseInt(e.target.value, 10));
+        }});
+        
+        // 4. ⌨️ 키보드 단축키 연동 (Page Up / Page Down / 방향키)
+        document.addEventListener('keydown', (e) => {{
+            if (e.key === 'PageUp' || e.key === 'ArrowUp' || e.key === 'ArrowLeft') {{
+                e.preventDefault();
+                if (currentIndex > 0) showScene(currentIndex - 1);
+            }} else if (e.key === 'PageDown' || e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {{
+                e.preventDefault();
+                if (currentIndex < total - 1) showScene(currentIndex + 1);
+            }}
+        }});
+    </script>
 </body>
 </html>
 """)
