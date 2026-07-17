@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>(중1) 방탈출 게임</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
+    <style>:root{--bg-main:#18120F;--glass-bg:rgba(30,20,15,0.75);--glass-border:rgba(229,169,60,0.25);--accent:#E5A93C;--accent-hover:#F2C063;--text-main:#F4EBE1;--text-muted:#A89F91;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 20% 30%,rgba(229,169,60,0.1) 0%,transparent 40%),radial-gradient(circle at 80% 70%,rgba(139,92,26,0.15) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(229,169,60,0.4);border-left:1px solid rgba(229,169,60,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 40px rgba(0,0,0,0.9),inset 0 0 20px rgba(229,169,60,0.05);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(229,169,60,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:2rem;font-weight:500;letter-spacing:1px;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{position:relative;background:linear-gradient(90deg,rgba(55,40,30,0.5) 0%,rgba(0,0,0,0.3) 100%);border-left:4px solid var(--accent);padding:0.8rem 1.2rem;margin-bottom:1.5rem;border-radius:0 12px 12px 0;box-shadow:0 4px 15px rgba(0,0,0,0.4);height:90px;max-height:90px;overflow:hidden;box-sizing:border-box;}.story-text{width:100%;height:100%;overflow:hidden;line-height:1.6;font-size:1.02rem;color:var(--text-main);text-align:justify;}.story-log-trigger{position:absolute;bottom:4px;right:8px;background:rgba(16,185,129,0.25);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:2px 6px;font-size:0.7rem;border-radius:4px;cursor:pointer;transition:all 0.2s;font-weight:bold;z-index:10;}.story-log-trigger:hover{background:rgba(16,185,129,0.5);color:white;}.question-box{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;position:relative;box-shadow:inset 0 0 20px rgba(255,255,255,0.02);}.question-box::before{content:'Q';position:absolute;font-family:'Share Tech Mono',monospace;font-size:4rem;color:rgba(229,169,60,0.05);top:-10px;right:10px;font-weight:bold;pointer-events:none;}.question-content{font-size:1.15rem;line-height:1.8;margin-bottom:1rem;}.input-group{margin-top:1rem;}input[type="text"]{width:100%;padding:1rem 1.2rem;background:rgba(15,23,42,0.8);border:1px solid rgba(229,169,60,0.3);border-radius:12px;color:white;font-size:1.1rem;font-family:'Share Tech Mono',monospace,'Noto Sans KR';transition:all 0.3s;box-shadow:inset 0 2px 4px rgba(0,0,0,0.5);}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 15px rgba(229,169,60,0.4),inset 0 2px 4px rgba(0,0,0,0.5);}.error-msg{color:#EF4444;font-size:0.95rem;margin-top:0.5rem;display:none;text-align:center;font-weight:bold;text-shadow:0 0 10px rgba(239,68,68,0.3);animation:shake 0.5s ease;}@keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-5px);}40%,80%{transform:translateX(5px);}}.progress-container{width:100%;height:6px;background:rgba(255,255,255,0.05);border-radius:3px;margin-bottom:2rem;overflow:hidden;display:none;border:1px solid rgba(255,255,255,0.02);}.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#B95C1A,var(--accent));border-radius:3px;box-shadow:0 0 10px var(--accent);transition:width 0.8s cubic-bezier(0.4,0,0.2,1);}.btn-group{display:flex;gap:1rem;margin-top:2rem;}.btn{background:linear-gradient(135deg,#A16207,#78350F);color:white;border:1px solid #D97706;padding:0.6rem 1.5rem;font-size:1.1rem;font-weight:900;border-radius:8px;cursor:pointer;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);text-transform:uppercase;letter-spacing:3px;width:100%;box-shadow:0 10px 25px rgba(120,53,15,0.5),inset 0 2px 5px rgba(255,255,255,0.3);text-shadow:0 2px 4px rgba(0,0,0,0.5);position:relative;overflow:hidden;}.btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transition:all 0.6s;}.btn:hover::after{left:100%;}.btn:hover{transform:translateY(-2px);box-shadow:0 15px 30px rgba(229,169,60,0.5),inset 0 2px 5px rgba(255,255,255,0.5);border-color:#F59E0B;}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.btn:active{transform:translateY(1px);}.sound-toggle{position:fixed;top:20px;right:20px;background:rgba(30,20,15,0.6);border:1px solid var(--glass-border);padding:8px 16px;border-radius:20px;color:white;cursor:pointer;z-index:100;backdrop-filter:blur(10px);font-size:0.9rem;transition:all 0.3s;font-weight:bold;}.sound-toggle:hover{background:var(--accent);border-color:white;box-shadow:0 0 15px var(--accent);}@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}@media (max-width:600px){body{overflow-y:auto;}.container{padding:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;min-height:100vh;}.glass-panel{width:100%;max-height:94vh;max-height:94dvh;height:auto;padding:1.2rem;border-radius:16px;box-sizing:border-box;display:none;flex-direction:column;justify-content:flex-start;overflow-y:auto;}.glass-panel.active{display:flex;}.story-box{padding:0.6rem 1rem;margin-bottom:0.5rem;height:80px;max-height:80px;overflow:hidden;flex:0 0 auto;}.story-text{font-size:0.85rem;line-height:1.5;}h1{font-size:1.6rem;letter-spacing:1px;}h2{font-size:1rem;margin-bottom:1rem;}.panel-image{max-height:180px;margin-bottom:1rem;}.question-box{padding:0.8rem;margin-bottom:1rem;}.question-box::before{font-size:3rem;top:-5px;right:-5px;}input[type="text"]{font-size:1rem;padding:0.8rem;}.btn{font-size:0.9rem;padding:0.5rem;letter-spacing:1px;border-radius:6px;}.btn-group{flex-direction:column;gap:0.6rem;}.sound-toggle{top:10px;right:10px;font-size:0.8rem;padding:6px 12px;}}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:1000;justify-content:center;align-items:center;backdrop-filter:blur(10px);}.log-content{background:#1e140f;border:2px solid var(--accent);border-radius:20px;width:90%;max-width:600px;max-height:80vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{font-family:'Orbit',sans-serif;color:var(--accent);margin-bottom:1rem;text-align:left;}#logContainer{overflow-y:auto;flex-grow:1;margin-bottom:1.5rem;padding-right:10px;font-size:0.95rem;line-height:1.8;color:#cbd5e1;}#logContainer strong{color:var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:transparent;border:none;color:#ef4444;font-size:1.5rem;cursor:pointer;transition:scale 0.2s;}.close-log:hover{scale:1.2;}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+.timer-warning {
+    animation: blink-red 0.2s 5;
+    font-size: 1.5rem !important;
+}
+@keyframes blink-red {
+    0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+    50% { color: #ffffff; text-shadow: none; }
+}
+.glitch-overlay-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(239, 68, 68, 0.15);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 10px solid #ef4444;
+    animation: pulse-border 0.2s infinite;
+}
+.glitch-overlay-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    color: #ef4444;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ef4444;
+    animation: shake 0.1s infinite;
+}
+.glitch-overlay-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+@keyframes pulse-border {
+    0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
+}
+.typing-cursor {
+    animation: cursor-blink 0.8s infinite;
+    font-weight: bold;
+    color: var(--accent);
+    margin-left: 2px;
+}
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.radio-msg {
+    color: #60a5fa;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #3b82f6;
+    text-align: center;
+    animation: blink 1.5s infinite;
+}
+</style>
+
+</head>
+<body>
+
+    <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔊 소리 켜짐</button>
+
+    <div class="container">
+        
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- 0. 인트로 -->
+        <div id="intro" class="glass-panel active">
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/intro.png" alt="Background" class="panel-image">
+            <h1>앙부일구와 자격루</h1>
+            <h2>멈춰버린 조선의 시간을 돌려라</h2>
+            <div class="story-box">
+                <div class="story-text" id="outro-dynamic-text">
+                    여러분은 국립중앙박물관에서 낡은 해시계를 만졌다가 1434년 조선 시대 장영실의 공방으로 타임슬립했습니다.<br><br>
+                    장영실은 일식 예측을 실패해 참형에 처해질 위기입니다!<br><br>
+                    공방 곳곳에 숨겨진 수학 단서를 20개 해결해 앙부일구와 자격루를 복구하고 일식의 정확한 시각을 계산하여 역사를 되돌리세요!
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            
+            <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+            
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+            </div>
+            <div class="btn-group" style="margin-top: 2rem; width:100%;">
+                <button class="btn" onclick="tryStartGame('m1_01')">시스템 복구 가동</button>
+            </div>
+        </div>
+
+        <!-- Q1 -->
+
+        <!-- Q1 -->
+        <div id="panel_q1" class="glass-panel ">
+            <h2>제 1구역: 공방 서갑 열기 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q1.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "크하하! 1442년의 역사적인 일식은 영원히 암흑 속에 묻힐 것이다! 감히 장영실의 공방에서 앙부일구의 조화를 되찾으려 하다니 하찮은 머리들이로군."
+
+스르릉- 공방 구석의 낡은 놋쇠 자물쇠가 달린 서랍장이 검붉은 주술의 사기(邪氣)로 격리되었습니다. 자물쇠 표면에는 '10 이하의 소수 개수'를 정렬하라는 기이한 놋쇠 눈금판이 깜빡입니다.
+
+[자격(自擊)]: "어이구, <span class='dynamic-captain-name'>조사관</span>님! 자격루의 정령인 제가 흑영의 주술을 차단하고 있습니다! 어서 서랍을 열고 내부의 청동 태엽을 확보해야 합니다!"
+- **[일러스트 지시 - 1. q1]:** 공방 서갑 열기 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q1. [소수와 합성수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 10 이하의 소수(1보다 크고 1과 자기 자신만을 약수로 가지는 수)를 나열해 보세요. (예: 2, 3...)')">💡 힌트</button><br>10 이하의 자연수 중 소수는 모두 몇 개인가?
+                    
+                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="4" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 4
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="6" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 6
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="2" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 2
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="8" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 8
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error1">자물쇠가 굳게 닫혀 있습니다! 숫자를 다시 세어 보십시오.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ1()">잠항 시작</button>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div id="panel_q2" class="glass-panel ">
+            <h2>제 2구역: 비밀 궤짝 수색 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q2.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "첫 빗장을 푼 것 정도로 자만하지 마라! 이 나무 궤짝은 음양의 조화만큼이나 정밀한 기역 빗장으로 잠겨 있으니!"
+
+서랍이 열리자 둔탁한 놋쇠 마찰음과 함께 상패 형태의 고대 나무 궤짝이 천천히 솟아올랐습니다. 표면에 붉은 살기(殺氣)가 서리며 수십 개의 청동 다이얼이 회전하기 시작합니다.
+
+[자격(自擊)]: "<span class='dynamic-captain-name'>조사관</span>님! 15 이하의 모든 소수를 도출하여 그 총합을 나무 궤짝의 숫자 빗장에 맞추어야 합니다! 어서요!"
+- **[일러스트 지시 - 2. q2]:** 비밀 궤짝 수색 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q2. [소수의 합]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 15 이하의 소수는 2, 3, 5, 7, 11, 13 입니다. 이 수들을 모두 합해 보세요.')">💡 힌트</button><br>15 이하의 소수의 합을 구하시오.
+                    
+                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="82" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 82
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="41" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 41
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="43" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 43
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="39" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 39
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error2">금고에서 불길한 경고음이 납니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ2()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div id="panel_q3" class="glass-panel ">
+            <h2>제 3구역: 壁面 문양 해독 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q3.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "조선의 시간은 내 어둠 아래 멈출 것이다. 한지에 깃든 수의 수수께끼를 해독할 수 있겠느냐? 잘못 건드리는 순간 사기에 휩싸여 소멸하리라!"
+
+스산한 바람이 불며 벽면에 붙어 있는 한지 조각이 붉은색 글자로 불타오릅니다. 네 개의 숫자 중 합성수가 아닌 진짜 소수를 가려내야 합니다.
+
+[자격(自擊)]: "<span class='dynamic-captain-name'>조사관</span>님! 흑영의 살기 어린 붉은 침이 <span class='dynamic-captain-name'>조사관</span>님의 기운을 정조준하고 있습니다. 합성수가 아닌 순수한 수만을 골라 결속을 해제하십시오!"
+- **[일러스트 지시 - 3. q3]:** 壁面 문양 해독 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q3. [합성수 판별]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 합성수는 1보다 큰 자연수 중 소수가 아닌 수(약수가 3개 이상인 수)입니다. 보기 중 약수가 1과 자기 자신뿐인 소수를 찾아보세요.')">💡 힌트</button><br>다음 중 합성수가 아닌 것은?<br>(1) 9 &nbsp;&nbsp;(2) 15 &nbsp;&nbsp;(3) 17 &nbsp;&nbsp;(4) 21
+                    
+                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group3" value="9" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 9
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group3" value="15" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 15
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group3" value="17" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 17
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group3" value="21" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 21
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error3">벽에서 먼지가 떨어집니다! 잘못 선택했습니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ3()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div id="panel_q4" class="glass-panel ">
+            <h2>제 4구역: 비밀 통로 개방 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q4.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[수로 내부 장치 전하 스파크 발생]
+
+[자격(自擊)]: "치직... <span class='dynamic-captain-name'>조사관</span>님... 제 목소리가 들리십니까? 흑영의 사악한 기운이 자격루의 수로를 틀어막고 있습니다! 가장 작은 소수와 가장 작은 합성수를 더해 수로의 차단막을 우회해 열어주십시오! 빨리!"
+
+쿠구구궁- 천장에서 흙먼지가 떨어지며 굳게 잠겨 있던 돌문 틈새로 붉은 화마의 불꽃이 이글거리기 시작합니다.
+- **[일러스트 지시 - 4. q4]:** 비밀 통로 개방 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q4. [소수와 합성수의 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 가장 작은 소수는 2이고, 1보다 큰 자연수 중 소수가 아닌 가장 작은 합성수는 4입니다. 두 값을 더해보세요.')">💡 힌트</button><br>가장 작은 소수와 가장 작은 합성수의 합을 구하시오.
+                    
+                    <div class="options-group" id="ans4_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group4" value="4" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 4
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group4" value="6" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 6
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group4" value="8" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 8
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group4" value="12" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 12
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error4">계단이 흔들립니다! 함정이 작동하기 전 정답을 입력하세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ4()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div id="panel_q5" class="glass-panel ">
+            <h2>제 5구역: 수은 수조 활성화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q5.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🚨 [수로 내부의 가열된 수은 상승] 🚨
+
+[자격(自擊)]: "제어 기단의 기운 복구율 45%...! 수은 시계의 배출 밸브가 압력을 견지 못하고 폭발하기 직전입니다! 20 이상 30 이하의 소수 개수를 구하여 수은 압력의 수평 마디에 주입해야 수은의 폭발적 역류를 막을 수 있습니다!"
+
+구리 관 너머로 끓어오르는 은빛 수은 액체가 붉은색 파이프를 타고 무섭게 치솟고 있습니다.
+- **[일러스트 지시 - 5. q5]:** 수은 수조 활성화 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q5. [소수 찾기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 20과 30 사이의 소수를 직접 하나씩 판별해 봅니다. (21은 3x7, 22는 2x11... 23은 소수...)')">💡 힌트</button><br>20 이상 30 이하의 소수는 모두 몇 개인가?
+                    
+                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group5" value="4" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 4
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group5" value="2" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 2
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group5" value="0" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 0
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group5" value="10" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 10
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error5">수은이 역류하려고 합니다! 신속하게 개수를 맞추십시오.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ5()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div id="panel_q6" class="glass-panel ">
+            <h2>제 6구역: 앙부일구 영침 정렬 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q6.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "하찮은 정령이 잔머리를 굴리는구나! 앙부일구의 그림자 바늘을 구부려 일식의 태양 빛을 영원히 어둠 속에 파묻어 버리겠다!"
+
+중앙의 거대한 청동 앙부일구 영침(해시계 바늘)이 기괴한 마찰음을 내며 뒤틀리기 시작했습니다. 태양 빛의 그림자 각도를 맞추기 위해 영침 정렬 기어를 제어해야 합니다.
+
+[자격(自擊)]: "<span class='dynamic-captain-name'>조사관</span>님! 60을 소인수분해하여 나타나는 2의 지수 값을 기어 톱니수에 대입해야 뒤틀리는 영침을 올바른 각도로 고정할 수 있습니다!"
+- **[일러스트 지시 - 6. q6]:** 앙부일구 영침 정렬 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q6. [지수 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 60을 소수의 곱으로 쪼개어 나타냅니다. $60 = 2^2 \times 3 \times 5$ 입니다. 여기서 소인수 2 위에 쓰인 지수를 찾아보세요.')">💡 힌트</button><br>60을 소인수분해할 때, 2의 지수는 얼마인가?
+                    
+                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="4" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 4
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="2" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 2
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="0" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 0
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="10" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 10
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error6">조준 실패! 그림자가 어긋납니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ6()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div id="panel_q7" class="glass-panel ">
+            <h2>제 7구역: 청동 반사판 정렬 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q7.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "그림자의 눈금을 쫓아봤자 결코 일식의 비밀을 풀지 못할 것이다. 놋쇠 톱니의 물림을 완전히 무너뜨려 주마!"
+
+영침 끝에서 반사된 눈부신 황동색 광선이 천장의 정밀 거울 궤도로 투사되었습니다. 천장의 청동 반사판을 회전시켜 빛을 중앙 제어 노심에 정밀하게 반사해야 합니다.
+
+[자격(自擊)]: "태양의 고도 동력을 상징하는 $2^3 \times 3^2$의 거듭제곱 값을 계산해 조향 기어의 눈금판에 입력하십시오. 청동 반사판이 정렬될 것입니다!"
+- **[일러스트 지시 - 7. q7]:** 청동 반사판 정렬 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q7. [거듭제곱의 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 거듭제곱을 풀어서 곱셈식으로 변환하세요. $2^3 = 2 \times 2 \times 2 = 8$, $3^2 = 3 \times 3 = 9$ 입니다. 두 결과값을 곱해보세요.')">💡 힌트</button><br>$2^3 \times 3^2$ 의 값을 구하시오.
+                    
+                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="70" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 70
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="72" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 72
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="74" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 74
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="144" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 144
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error7">거울 각도가 틀렸습니다! 빛이 소멸합니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ7()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div id="panel_q8" class="glass-panel ">
+            <h2>제 8구역: 청동 빗장 제어 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q8.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "두 번째 관문까지 통과하다니 집요하군. 하지만 180의 소인수들이 가로막은 철벽 빗장은 어림없다!"
+
+두 번째 청동 반사 빛이 중앙 청동 암호판의 기하학 격자 빗장에 도달했습니다. 180의 소인수들의 결합 수치를 해독해 철벽 빗장을 풀어야 합니다.
+
+[자격(自擊)]: "<span class='dynamic-captain-name'>조사관</span>님! 180의 소인수들을 모두 구하여 그 합을 빗장 해제 상수로 입력하십시오! 어서요!"
+- **[일러스트 지시 - 8. q8]:** 청동 빗장 제어 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q8. [소인수의 합]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 180을 소인수분해하면 $180 = 2^2 \times 3^2 \times 5$ 입니다. 여기서 소인수(밑에 쓰인 소수들)인 2, 3, 5를 더해 보세요.')">💡 힌트</button><br>180의 소인수를 모두 더한 값을 구하시오.
+                    
+                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="8" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 8
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="10" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 10
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="20" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 20
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="12" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 12
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error8">암호판이 잠겨 움직이지 않습니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ8()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div id="panel_q9" class="glass-panel ">
+            <h2>제 9구역: 톱니 기어 동기화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q9.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "기어의 톱니들이 모두 뭉개져도 상관없다! 맞물리는 놋쇠 톱니을 꼬아 파괴해 버리겠다!"
+
+청동 제어판 이면의 기하학 톱니바퀴들이 엉키며 거친 마찰음과 연기를 뿜기 시작합니다. 72의 약수 개수만큼의 기어 이빨을 세어 동기화해야 멈춥니다.
+
+[자격(自擊)]: "비상! 톱니 기어의 마찰 한계 한도 도달! 72의 약수 개수를 구해 톱니 마찰 제어 상수로 주입해 정상 회전으로 복구하십시오!"
+- **[일러스트 지시 - 9. q9]:** 톱니 기어 동기화 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q9. [약수의 개수 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 72를 소인수분해하면 $72 = 2^3 \times 3^2$ 입니다. 각 지수에 1을 더해 서로 곱해 보세요. 즉, $(3+1) \times (2+1)$ 을 계산합니다.')">💡 힌트</button><br>72의 약수의 개수를 구하시오.
+                    
+                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="14" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 14
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="24" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 24
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="10" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 10
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="12" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 12
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error9">기어 맞물림 이상! 톱니 개수가 맞지 않습니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ9()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div id="panel_q10" class="glass-panel glitch-bg">
+            <h2>제 10구역: 정화의 결계 가동 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q10.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">💥 [비상: 흑영의 사기 폭주 및 기단 파열 직전!] 💥
+
+[흑영(黑影)]: "더는 참을 수 없군! 모든 흔적을 깨끗이 지워주마! 5분 뒤 이 공방 전체를 어둠 속에 파묻어 버리겠다!"
+
+붉은 화마의 불길이 방 전체를 감싸 안으며 수은 수조의 압력 바늘이 폭발 직전까지 회전합니다. 정화의 결계로 파열을 막아야 합니다.
+
+[자격(自擊)]: "<span class='dynamic-captain-name'>조사관</span>님! 자격루 온도가 한계치를 넘었습니다! 약수의 개수 15개를 목표로 하는 미지수 $3^4 \times 5^a$의 지수 a 값을 찾아 입력하십시오! 제가 정화의 결계로 파열을 유예하겠습니다!"
+- **[일러스트 지시 - 10. q10]:** 정화의 결계 가동 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" id="q10-main-box" style="display:none;">
+                <div class="question-content">
+                    <strong>Q10. [약수의 개수 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 약수의 개수는 각 지수에 1을 더한 값들의 곱이므로, $(4+1) \times (a+1) = 15$ 가 성립합니다. 즉, $5 \times (a+1) = 15$ 식을 만족하는 a를 찾으세요.')">💡 힌트</button><br>$3^4 \times 5^a$ 의 약수의 개수가 15개일 때, a의 값을 구하시오.
+                    
+                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="4" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 4
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="2" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 2
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="0" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 0
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="10" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 10
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error10">동기화 실패! 시간이 어긋납니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ10()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div id="panel_q11" class="glass-panel ">
+            <h2>제 11구역: 가마 수조 배출 밸브 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q11.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[자격(自擊)]: "정화 결계의 출력 한계 도달! <span class='dynamic-captain-name'>조사관</span>님, 수치를 끊임없이 주입해 폭발 압력을 우회해야 합니다!"
+
+육중한 쇠사슬 음과 함께 지하 자격루 물통 제어용 압축 가마 수조가 개방되었습니다. 물을 정확한 양으로 내보내기 위해 24와 36의 최대공약수 값으로 배출 밸브를 열어야 합니다.
+
+[흑영(黑影)]: "폭발을 늦춰봤자 결국 수장될 뿐이다. 거대한 수압에 짓눌려 수조 바닥에 처박히거라!"
+- **[일러스트 지시 - 11. q11]:** 가마 수조 배출 밸브 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q11. [최대공약수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 24와 36을 소인수분해하여 공통된 소인수 중 지수가 같거나 작은 것을 선택해 곱해 봅니다. ($24=2^3 \times 3$, $36=2^2 \times 3^2$ 이므로 최대공약수는 $2^2 \times 3 = 12$)')">💡 힌트</button><br>24와 36의 최대공약수를 구하시오.
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans11" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error11">수압 이상! 물통이 파열될 위험이 있습니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ11()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div id="panel_q12" class="glass-panel ">
+            <h2>제 12구역: 물레바퀴 동력 동조 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q12.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[자격(自擊)]: "휴, 수압은 안정되었으나 동력 전달 톱니바퀴의 맞물림이 어긋나 삐걱거립니다!"
+
+콸콸콸- 수조의 물이 흐르면서 지하의 물레바퀴 톱니들이 격렬하게 요동칩니다. 동력 톱니바퀴 15와 25가 서로 헛돌지 않고 완전히 밀착하도록 최소공배수 속도로 회전 주기를 매칭해야 합니다.
+
+[흑영(黑影)]: "기어가 맞물리지 않는 한, 모든 기계 장치는 멈추어 썩어갈 것이다. 발버둥 쳐 보아라!"
+- **[일러스트 지시 - 12. q12]:** 물레바퀴 동력 동조 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q12. [최소공배수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 15와 25를 소인수분해하여 모든 소인수 중 지수가 크거나 같은 것을 골라 모두 곱해 봅니다. ($15 = 3 \times 5$, $25 = 5^2$ 이므로 최소공배수는 $3 \times 5^2 = 75$)')">💡 힌트</button><br>15와 25의 최소공배수를 구하시오.
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans12" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error12">속도 불일치! 기어가 헛돕니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ12()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div id="panel_q13" class="glass-panel ">
+            <h2>제 13구역: 부표 대 수평 조정 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q13.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[자격(自擊)]: "자격루 동력원 80% 복구! 부표 대의 수평을 조절해야 기계가 정상으로 환원됩니다!"
+
+치익- 탁-! 부표 대가 거친 물보라를 일으키며 상하로 왕복 운동을 개시했습니다. 두 거듭제곱 수 $2^2 \times 3$ 과 $2 \times 3^2 \times 5$ 의 최대공약수 값을 도출해 수평 한계값에 맞추십시오!
+- **[일러스트 지시 - 13. q13]:** 부표 대 수평 조정 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q13. [거듭제곱의 최대공약수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 공통인 소인수 2와 3에서 지수가 작은 쪽을 고릅니다. 즉, $2^1 \times 3^1$ 이 최대공약수가 되며, 이를 계산하여 숫자로 적으세요.')">💡 힌트</button><br>두 수 $2^2 \times 3$, $2 \times 3^2 \times 5$ 의 최대공약수를 구하시오. (숫자로 환산)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans13" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error13">압축 피스톤 불균형! 진동이 커집니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ13()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div id="panel_q14" class="glass-panel ">
+            <h2>제 14구역: 수로 배관 정화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q14.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[자격(自擊)]: "수로 배관의 이물질로 물길이 막혀 압력이 역류하고 있습니다! 제어가 불가능합니다!"
+
+쿠르릉- 자격루 배수로가 막혀 내부 수조의 물이 자격루실 바닥까지 흘러넘치기 시작합니다. 12와 18의 공약수 개수만큼 고압 수력 배출 밸브를 작동시켜 관로를 뚫어내야 합니다!
+- **[일러스트 지시 - 14. q14]:** 수로 배관 정화 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q14. [공약수의 개수]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 두 수의 최대공약수의 약수의 개수가 공약수의 개수와 같습니다. 12와 18의 최대공약수인 6의 약수 개수(1, 2, 3, 6)를 구해보세요.')">💡 힌트</button><br>두 수 12, 18의 공약수의 개수는 모두 몇 개인가?
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans14" placeholder="숫자 또는 개수 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error14">배수가 막혔습니다! 수조가 넘치려 합니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ14()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div id="panel_q15" class="glass-panel glitch-bg">
+            <h2>제 15구역: 자격루 영적 전력 복구 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q15.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">**[자격루의 령 - 자격의 영적 전원 100% 완전 환원]**
+
+[자격(自擊)]: "정답입니다, <span class='dynamic-captain-name'>조사관</span>님! 자격루의 모든 제어 기단 권한이 완전히 환원되었습니다. 이제 흑영의 탁한 기운을 공방 밖으로 밀어내겠습니다! 역습의 시간입니다!"
+
+청동 기단의 수백 개 놋쇠 장치들이 오색 빛깔로 빛나며 힘차게 돌아가기 시작합니다.
+
+[흑영(黑影)]: "내 사악한 기운이... 장영실의 기계 장치에 정화당하다니... 말도 안 돼! 최종 방어 결계로 막아주마!"
+- **[일러스트 지시 - 15. q15]:** 자격루 영적 전력 복구 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q15. [최소공배수의 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 밀실 중앙 서버 복구 공식 "두 수의 곱 = 최대공약수 x 최소공배수" 라는 수학적 성질을 이용합니다. 즉, $300 = 5 \times 최소공배수$ 식을 만족하는 해를 계산하세요.')">💡 힌트</button><br>두 수의 곱이 300이고 최대공약수가 5일 때, 이 두 수의 최소공배수를 구하시오.
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans15" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error15">부력 균형 붕괴! 부표가 가라앉습니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ15()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q16 -->
+        <div id="panel_q16" class="glass-panel ">
+            <h2>제 16구역: 혼천의 복원 타일 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q16.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "공방을 탈출해도 끝이 아니다. 일식의 태양을 관측하지 못하도록 혼천의의 청동 반사판을 조각조각 부셔놓으마!"
+
+일식 관측용 대형 혼천의 반사경을 조준하는 벽면 기하학 제어판이 부서지며 타일들이 쏟아져 내렸습니다. 가로 18, 세로 24의 벽면을 가장 큰 정사각형 황동판 타일로 빈틈없이 복구해야 렌즈 문이 열립니다!
+- **[일러스트 지시 - 16. q16]:** 혼천의 복원 타일 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q16. [최대공약수 활용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 벽면을 빈틈없이 쪼갤 때 타일 한 변의 길이는 가로(18)와 세로(24)의 공약수여야 하며, 가능한 가장 큰 타일이 되려면 최대공약수를 찾아야 합니다.')">💡 힌트</button><br>가로 18cm, 세로 24cm인 직사각형 벽을 가능한 큰 정사각형 타일로 빈틈없이 채우려 한다. 타일 한 변의 길이를 구하시오. (단위 생략)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans16" placeholder="숫자 또는 cm 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error16">타일 배치 실패! 벽면이 무너집니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ16()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q17 -->
+        <div id="panel_q17" class="glass-panel ">
+            <h2>제 17구역: 혼천의 기어 빗장 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q17.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "태양과 달이 만나는 찰나의 순간... 톱니바퀴의 속도를 제어하지 못하면 너희의 시간도 영원히 멈출 뿐이다!"
+
+태엽 장치가 굉음을 내며 혼천의 거울을 조정하는 톱니바퀴 A, B가 흔들리기 시작합니다. 톱니수가 각각 12개, 18개인 기어가 처음으로 다시 동일 지점에서 맞물리도록 기어 A의 회전 바퀴 수를 도출해 빗장을 거십시오!
+- **[일러스트 지시 - 17. q17]:** 혼천의 기어 빗장 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q17. [최소공배수 활용 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 두 톱니바퀴가 처음으로 다시 제자리에서 맞물리는 총 톱니수는 12와 18의 최소공배수인 36개입니다. 기어 A(톱니수 12개)가 이 36개의 톱니만큼 돌려면 회전 수 36 / 12 를 계산하세요.')">💡 힌트</button><br>톱니수가 각각 12개, 18개인 두 톱니바퀴 A, B가 맞물려 돌 때, 처음으로 다시 같은 톱니에서 맞물리려면 A는 몇 바퀴를 돌아야 하는가?
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans17" placeholder="숫자 또는 바퀴 수 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error17">기어 스펙이 안 맞습니다! 회전이 멈춥니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ17()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q18 -->
+        <div id="panel_q18" class="glass-panel ">
+            <h2>제 18구역: 태양 관측 렌즈 경통 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q18.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "끝이 다가오는군. 하지만 마지막 수의 덫은 결코 뚫지 못할 것이다. 어둠 속에 파묻혀 타들어 가는 일식을 맞이해라!"
+
+관측창 안으로 강렬한 태양 에너지가 유입되어 구리 렌즈 경통이 벌겋게 달아오릅니다. 37을 나누면 1이 남고, 46을 나누면 2가 남는 최대 간격 상수를 조준 제어판에 입력해야 필터 거울이 태양열을 차단합니다!
+- **[일러스트 지시 - 18. q18]:** 태양 관측 렌즈 경통 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q18. [최대공약수 활용 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 37을 나누었을 때 1이 남는다는 것은 36(= 37-1)이 나누어떨어진다는 뜻이고, 46을 나누어 2가 남는다는 것은 44(= 46-2)가 나누어떨어진다는 뜻입니다. 즉, 36과 44의 최대공약수를 찾습니다.')">💡 힌트</button><br>어떤 수로 37을 나누면 1이 남고, 46을 나누면 2가 남는다. 이러한 수 중 가장 큰 수를 구하시오.
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans18" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error18">렌즈 초점이 맞지 않아 일식이 보이지 않습니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ18()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q19 -->
+        <div id="panel_q19" class="glass-panel ">
+            <h2>제 19구역: 대고 신호기 동기화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q19.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[흑영(黑影)]: "일식의 장엄한 암흑이 시작된다. 백성들에게 알릴 신호의 일치를 어긋나게 하겠다. 어서 계산해 보아라!"
+
+일식의 시작을 도성에 알릴 놋쇠 인형의 대고(북) 신호기가 거칠게 흔들리며 대기합니다. 10분, 15분 간격으로 동기화되어 움직이는 신호 종과 북이 오전 9시 정각 출발 이후 처음으로 완벽히 동시에 타격을 시작할 '시간(분)'을 찾아 동기화 입력칸에 주입하십시오!
+- **[일러스트 지시 - 19. q19]:** 대고 신호기 동기화 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q19. [최소공배수 활용 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 출발 주기 10과 15의 공배수 간격으로 동시에 출발하며, 처음으로 다시 동시에 출발하는 시점은 10과 15의 최소공배수인 30분 뒤가 됩니다.')">💡 힌트</button><br>버스 A는 10분, 버스 B는 15분 간격으로 출발한다. 오전 9시에 동시에 출발했다면, 다음으로 처음 동시에 출발하는 시각은 9시 몇 분인가? (분만 입력)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans19" placeholder="숫자 또는 분 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error19">북 신호가 어긋나 백성들이 혼란에 빠집니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ19()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q20 -->
+        <div id="panel_q20" class="glass-panel glitch-bg">
+            <h2>제 20구역: 최종 탈출 격벽 봉인 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/q20.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🔮 [최종 차단벽 봉인 완벽 해제] 🔮
+
+[자격(自擊)]: "<span class='dynamic-captain-name'>조사관</span>님! 이제 마지막 출구 봉인 격벽 하나만 남았습니다! 제 영적 기운이 모두 소모되기 전에, 3, 4, 5로 나누어 항상 2가 남는 가장 작은 세 자리 자연수를 제어판에 입력하십시오! 이제 역사를 정상으로 되돌릴 시간입니다!"
+
+[흑영(黑影)]: "이럴 수가... 내 핵심 차단벽이 완전히 무너지다니... 안 돼에에에!"
+- **[일러스트 지시 - 20. q20]:** 최종 탈출 격벽 봉인 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q20. [최소공배수 활용 3]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 3, 4, 5로 나누어떨어지는 가장 작은 자연수는 최소공배수인 60입니다. 어느 수로 나누어도 2가 남는 수는 $60 \times k + 2$ 형태이므로, k를 대입하여 가장 작은 세 자리 수인 $60 \times 2 + 2$ 를 계산하세요.')">💡 힌트</button><br>3, 4, 5 어느 수로 나누어도 2가 남는 가장 작은 세 자리 자연수를 구하시오.
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans20" placeholder="숫자만 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error20">암호 실패! 일식 예측 보고가 불가능합니다!</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ20()">탈출하기</button>
+            </div>
+        </div>
+
+        <!-- Event 1: 청동 물레방아 수류 가동 -->
+        <div id="panel_event1" class="glass-panel">
+            <h2>[이벤트] 청동 물레방아 수류 가동 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/event1.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    120도의 동조 신호가 톱니 빗장 기어들을 맞춰 누르자, 회전을 정지하고 벽면 락이 열립니다. 황동 실린더 위로 눈부신 노란색 홀로그램이 피어오릅니다.
+- **자격(自擊):** "정교한 수학적 균형입니다! 자격루와 앙부일구의 제어 부품 1차가 복원되었습니다. 완벽한 조화의 아름다움입니다."
+- **흑영(黑影):** "감히 마스터의 장치를 열어보는가! 다음 방화벽이 너희를 용융하리라!"
+- **[일러스트 지시 - Event 1]:** 둥근 테이블 위로 마나 홀로그램이 서서히 회전하며 자전하는 장면.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event1', 'panel_q6', 25)">계속 전진하기</button>
+            </div>
+        </div>
+
+        <!-- Event 2: 수은 압력 밸브 비상 리셋 -->
+        <div id="panel_event2" class="glass-panel">
+            <h2>[이벤트] 수은 압력 밸브 비상 리셋 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/event2.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    조건과 수식이 맞추어 주입되자, 광선 빔들이 일렬 동축 정렬되어 차단 빗장을 고정합니다. 분출되던 가열 증기가 잦아듭니다.
+- **자격(自擊):** "자폭 주파수 오버라이드에 성공해 비상 리셋을 완료했습니다. 기지 온도 상승이 멈췄습니다!"
+- **기아로:** "삐- 전력 강제 셧다운. 자폭 시퀀스 유예됨. 빗장을 격리하겠다."
+- **[일러스트 지시 - Event 2]:** 푸르스름한 배리어 실드가 터빈을 포근히 둘러싸 안전하게 식혀나가는 긴장 해소 뷰.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event2', 'panel_q11', 50)">비상 전력 가동</button>
+            </div>
+        </div>
+
+        <!-- Event 3: 조선식 기단 비밀 함 열기 -->
+        <div id="panel_event3" class="glass-panel">
+            <h2>[이벤트] 조선식 기단 비밀 함 열기 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/event3.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    수학적 연산이 완료되자 중앙 코어 유리 돔의 붉은 노이즈가 부서지며 맑고 깨끗한 공기가 실내에 뿜어져 나옵니다.
+- **자격(自擊):** "시스템 완전 복구율 100%! 이제 빌런 흑영(黑影)의 메인 락 제단을 강제로 분리하고 걸작 복원 제단을 기동합니다!"
+- **흑영(黑影):** "최종 마스터 합동 결계를 전개한다! 이 아름다운 유산은 너희의 몫이 아니다!"
+- **[일러스트 지시 - Event 3]:** 거대한 황동 기어들이 석조 격벽 틈새로 맞물려 열리고 보라색 마나 광원을 발하는 복합 제단이 솟아오르는 풍경.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event3', 'panel_q16', 75)">제단 활성화</button>
+            </div>
+        </div>
+
+        <!-- Event 4: 앙부일구 영침 봉인 해제 -->
+        <div id="panel_event4" class="glass-panel">
+            <h2>[이벤트] 앙부일구 영침 봉인 해제 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/event4.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    마지막 정답이 해제되며, 기지를 감싸던 적색 장벽선들이 찬란한 오색 입자로 바스러지며 탈출용 차원 포탈로 화합니다.
+- **자격(自擊):** "탐사 완료! 가방에 복원된 자격루와 앙부일구의 제어 부품을 챙겨 포탈로 도약하십시오!"
+- **흑영(黑影):** "수학 계승 완료. 무결한 지식을 조사관에게 위임한다. 게이트웨이를 연다."
+- **[일러스트 지시 - Event 4]:** 찬란한 금빛 녹색 차원 링 포탈 정면에서, 머리를 깊이 숙여 배웅하는 백색 렌즈 구체 로봇과 환하게 미소 짓는 조력자의 모습.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event4', 'outro', 100)">지상으로 탈출</button>
+            </div>
+        </div>
+
+        <!-- 아웃트로 -->
+        <div id="outro" class="glass-panel">
+            <h1>탈출 성공!</h1>
+            <h2>소인수분해 - 장영실의 자격루실</h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/outro.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text" id="outro-dynamic-text">미션 결과를 연산 중입니다...</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
+        </div>
+
+    </div>
+    <script>
+        function tryStartGame(unitId) {
+            const sid = document.getElementById('studentId');
+            const sname = document.getElementById('studentName');
+            if(sid && sname) {
+                if(!sid.value.trim() || !sname.value.trim()) {
+                    alert('학번과 이름을 모두 입력해주세요!');
+                    return;
+                }
+
+            // 이름 동적 개인화 처리 (복성 예외 처리 반영 및 전역 변수 바인딩)
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    const doubleLastNames = ["제갈", "황보", "사공", "남궁", "서문", "독고", "선우"];
+                    let firstName = rawName;
+                    if (rawName.length > 2) {
+                        let prefix2 = rawName.substring(0, 2);
+                        if (doubleLastNames.includes(prefix2)) {
+                            firstName = rawName.substring(2);
+                        } else {
+                            firstName = rawName.substring(1);
+                        }
+                    }
+                    window.playerFirstName = firstName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+
+            // 이름 동적 개인화 처리
+            try {
+                let rawName = "";
+                if (typeof sname !== 'undefined' && sname) {
+                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
+                } else if (typeof studentName !== 'undefined') {
+                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
+                }
+                if (!rawName) {
+                    const nameInput = document.getElementById('studentName');
+                    if (nameInput) rawName = nameInput.value.trim();
+                }
+                if (rawName) {
+                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
+                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                        if (!el.hasAttribute("data-original-role")) {
+                            el.setAttribute("data-original-role", originalRole);
+                        }
+                        el.innerHTML = firstName + " " + originalRole;
+                    });
+                    // 아웃트로 동적 텍스트 내 개인화 처리
+                    let outroTextEl = document.getElementById("outro-dynamic-text");
+                    if (outroTextEl) {
+                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
+                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
+                            if (!el.hasAttribute("data-original-role")) {
+                                el.setAttribute("data-original-role", originalRole);
+                            }
+                            el.innerHTML = firstName + " " + originalRole;
+                        });
+                    }
+                }
+            } catch(e) { console.error("이름 개인화 에러:", e); }
+
+                // GAS 로직
+                try {
+                    if(typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run
+                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
+                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
+                    }
+                } catch(e) { console.warn('GAS 연동 안됨:', e); }
+            }
+            
+            // 브라우저 오디오 엔진 시작 (외부 링크 의존 없음)
+            try {
+                if (!isMuted) {
+                    initAudio();
+                    startBGM();
+                }
+            } catch(e) {}
+            
+            nextStage('intro', 'panel_q1', 5);
+        }
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+
+        let timeLeft = 40 * 60;
+        let timerId = null;
+
+        function updateTimerDisplay() {
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            let timeStr = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
+            document.querySelectorAll('.game-timer').forEach(el => el.innerText = timeStr);
+        }
+
+        function startTimer() {
+            if (timerId) return;
+            updateTimerDisplay();
+            timerId = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timerId);
+                    updateTimerDisplay();
+                    alert("⏰ 제한 시간 40분이 초과되었습니다! 미궁에 영원히 갇혔습니다...");
+                    location.reload();
+                } else {
+                    updateTimerDisplay();
+                }
+            }, 1000);
+        }
+
+        let isMuted = false;
+        let audioCtx = null;
+        let bgmOsc = null;
+        let bgmGain = null;
+        let bgmLfo = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSynth(freq, type, duration, vol) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function stopBGM() {
+            try {
+                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
+                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
+            } catch(e){}
+        }
+
+        function startBGM() {
+            if (isMuted) return;
+            try {
+                initAudio();
+                if(bgmOsc) return;
+                bgmOsc = audioCtx.createOscillator();
+                bgmGain = audioCtx.createGain();
+                bgmOsc.type = 'triangle';
+                bgmOsc.frequency.setValueAtTime(55.00, audioCtx.currentTime);
+                bgmGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                bgmOsc.connect(bgmGain);
+                bgmGain.connect(audioCtx.destination);
+                bgmOsc.start();
+                
+                bgmLfo = audioCtx.createOscillator();
+                bgmLfo.type = 'sine';
+                bgmLfo.frequency.setValueAtTime(0.15, audioCtx.currentTime); 
+                const lfoGain = audioCtx.createGain();
+                lfoGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                bgmLfo.connect(lfoGain);
+                lfoGain.connect(bgmGain.gain);
+                bgmLfo.start();
+            } catch(e) {}
+        }
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            const btn = document.getElementById('soundToggle');
+            if (isMuted) {
+                if(btn) btn.innerText = '🔇 소리 꺼짐';
+                stopBGM();
+            } else {
+                if(btn) btn.innerText = '🔊 소리 켜짐';
+                startBGM();
+            }
+        }
+
+        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
+        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
+        function playSuccess() { 
+            playSynth(523.25, 'sine', 0.15, 0.7); 
+            setTimeout(()=>playSynth(659.25, 'sine', 0.15, 0.7), 150); 
+            setTimeout(()=>playSynth(783.99, 'sine', 0.3, 0.7), 300); 
+        }
+        function playError() {
+            playSynth(150, 'sawtooth', 0.3, 0.6);
+            setTimeout(()=>playSynth(100, 'sawtooth', 0.4, 0.6), 200);
+        }
+        function playVictory() {
+            stopBGM();
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
+            });
+        }
+
+        let wrongCount = 0;
+function cleanString(str) {
+            return str.replace(/\s+/g, '').toLowerCase();
+        }
+
+        // 엔터키 정답 제출 바인딩
+        document.addEventListener('keydown', function(e) {
+            if (e.target && e.target.id.startsWith('ans') && e.key === 'Enter') {
+                const qnum = e.target.id.replace('ans', '');
+                const activePanel = e.target.closest('.glass-panel');
+                if (activePanel) {
+                    const btn = activePanel.querySelector('.btn-group .btn');
+                    if (btn) btn.click();
+                }
+            }
+        });
+
+        // 오디오 로드 에러 복구/예외 방어선
+        window.addEventListener('DOMContentLoaded', () => {
+            const audios = [
+                document.getElementById('bgm'),
+                document.getElementById('sndClick'),
+                document.getElementById('sndTick'),
+                document.getElementById('sndSuccess'),
+                document.getElementById('sndError'),
+                document.getElementById('sndVictory')
+            ];
+            audios.forEach(audio => {
+                if (audio) {
+                    audio.addEventListener('error', (e) => {
+                        console.warn(`사운드 리소스 로드 실패: ${audio.id}`);
+                    });
+                }
+            });
+        });
+
+        function showError(panelId, errorId, currentWrongCount) {
+            try { playError(); } catch(e) {}
+            const panel = document.getElementById(panelId);
+            const err = document.getElementById(errorId);
+            err.style.display = 'block';
+            
+            if (currentWrongCount !== undefined) {
+                if (!err.dataset.origText) {
+                    err.dataset.origText = err.innerText;
+                }
+                err.innerText = err.dataset.origText + " (오답 횟수: " + currentWrongCount + "/3)";
+            }
+            err.classList.remove('shake');
+            void err.offsetWidth;
+            err.classList.add('shake');
+            setTimeout(() => {
+                err.style.display = 'none';
+            }, 3000);
+        }
+
+        let storyHistory = [];
+        function openLog() {
+            try { playClick(); } catch(e) {}
+            const modal = document.getElementById('storyLogModal');
+            const container = document.getElementById('logContainer');
+            if (storyHistory.length === 0) {
+                container.innerHTML = "기록이 존재하지 않습니다.";
+            } else {
+                container.innerHTML = storyHistory.join("<br><br>");
+            }
+            modal.style.display = 'flex';
+        }
+        function closeLog() {
+            try { playClick(); } catch(e) {}
+            document.getElementById('storyLogModal').style.display = 'none';
+        }
+
+        let typeWriterTimeout;
+        
+        function splitSentences(text) {
+            let result = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                if (char === '.' || char === '!' || char === '?') {
+                    const nextChar = text.charAt(i + 1);
+                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
+                        result.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
+                    }
+                }
+            }
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) {
+                result.push(finalChunk);
+            }
+            return result;
+        }
+
+        function typeWriterHTML(element, speed = 25, onComplete = null) {
+            let isComplete = false;
+            let currentChunkIndex = 0;
+            let chunks = [];
+            const textEl = element.querySelector('.story-text');
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
+            function triggerComplete() {
+                if(!isComplete) {
+                    isComplete = true;
+                    element.style.cursor = 'default';
+                    if(onComplete) onComplete();
+                }
+            }
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
+            if (!textEl.hasAttribute('data-raw-html')) {
+                textEl.setAttribute('data-raw-html', htmlContent);
+            }
+            let rawLines = htmlContent.split(/<br\s*\/?>/i);
+            for(let line of rawLines) {
+                let sentences = splitSentences(line);
+                for(let s of sentences) {
+                    if(s.trim()) chunks.push(s.trim());
+                }
+            }
+            if(chunks.length === 0) {
+                triggerComplete();
+                return;
+            }
+            let i = 0;
+            let textStr = '';
+            let typingFinished = false;
+            element.style.cursor = 'pointer';
+            
+            function renderChunk() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                i = 0;
+                textStr = '';
+                typingFinished = false;
+                let chunkText = chunks[currentChunkIndex];
+                const currentPanel = element.closest('.glass-panel');
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
+                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                if (!storyHistory.includes(logEntry)) {
+                    storyHistory.push(logEntry);
+                }
+                if(currentChunkIndex < chunks.length - 1) {
+                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                }
+                textEl.innerHTML = '';
+                
+                function type() {
+                    if (i < chunkText.length) {
+                        if (chunkText.charAt(i) === '<') {
+                            const endTag = chunkText.indexOf('>', i);
+                            if (endTag !== -1) {
+                                textStr += chunkText.substring(i, endTag + 1);
+                                i = endTag + 1;
+                            } else {
+                                textStr += chunkText.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            textStr += chunkText.charAt(i);
+                            i++;
+                        }
+                        textEl.innerHTML = textStr;
+                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
+                            try { playTick(); } catch(e) {}
+                        }
+                        typeWriterTimeout = setTimeout(type, speed);
+                    } else {
+                        textEl.innerHTML = chunkText;
+                        typingFinished = true;
+                        if(currentChunkIndex === chunks.length - 1) {
+                            triggerComplete();
+                        }
+                    }
+                }
+                type();
+            }
+            element.onclick = () => {
+                if (!typingFinished) {
+                    clearTimeout(typeWriterTimeout);
+                    let chunkText = chunks[currentChunkIndex];
+                    if(currentChunkIndex < chunks.length - 1) {
+                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    }
+                    textEl.innerHTML = chunkText;
+                    typingFinished = true;
+                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
+                } else {
+                    if (currentChunkIndex < chunks.length - 1) {
+                        currentChunkIndex++;
+                        renderChunk();
+                    }
+                }
+            };
+            renderChunk();
+        }
+
+        function nextStage(currentId, nextId, progressPercent) {
+            if (currentId === 'intro') startTimer();
+            if (nextId === 'outro') clearInterval(timerId);
+            try { playClick(); } catch(e) {}
+            if(currentId === 'intro') {
+                try { startBGM(); } catch(e) {}
+            }
+
+            const currentEl = document.getElementById(currentId);
+            const nextEl = document.getElementById(nextId);
+            const progContainer = document.getElementById('progressContainer');
+            const progBar = document.getElementById('progressBar');
+
+            if (currentEl) currentEl.classList.remove('active');
+    
+            setTimeout(() => {
+                if(nextId !== 'intro' && progContainer) progContainer.style.display = 'block';
+                if(progBar) progBar.style.width = progressPercent + '%';
+                if(nextEl) {
+                    nextEl.classList.add('active');
+            
+                    const toHide = nextEl.querySelectorAll('.question-box, .btn-group');
+                    toHide.forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(10px)';
+                        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                        el.style.pointerEvents = 'none';
+                    });
+            
+                    const storyBox = nextEl.querySelector('.story-box');
+                    if(storyBox) {
+                        typeWriterHTML(storyBox, 25, () => {
+                            toHide.forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                                el.style.pointerEvents = 'auto';
+                            });
+                        });
+                    } else {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
+                    }
+                }
+            }, 300);
+        }
+
+        // Q1
+let totalWrongCount = 0;
+
+        // Q1
+        function checkQ1() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '4' || ans === '4개') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q1', 'panel_q2', 5);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q1', 'panel_q1', 0);
+                } else {
+                    showError('panel_q1', 'error1', wrongCount);
+                }
+            }
+        }
+
+        // Q2
+        function checkQ2() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '41') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q2', 'panel_q3', 10);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q2', 'panel_q1', 0);
+                } else {
+                    showError('panel_q2', 'error2', wrongCount);
+                }
+            }
+        }
+
+        // Q3
+        function checkQ3() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '3' || ans === '17' || ans === '(3)') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q3', 'panel_q4', 15);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q3', 'panel_q1', 0);
+                } else {
+                    showError('panel_q3', 'error3', wrongCount);
+                }
+            }
+        }
+
+        // Q4
+        function checkQ4() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group4"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '6') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q4', 'panel_q5', 20);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q4', 'panel_q1', 0);
+                } else {
+                    showError('panel_q4', 'error4', wrongCount);
+                }
+            }
+        }
+
+        // Q5
+        function checkQ5() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '2' || ans === '2개') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q5', 'panel_event1', 25);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q5', 'panel_q1', 0);
+                } else {
+                    showError('panel_q5', 'error5', wrongCount);
+                }
+            }
+        }
+
+        // Q6
+        function checkQ6() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '2') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q6', 'panel_q7', 30);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q6', 'panel_q6', 25);
+                } else {
+                    showError('panel_q6', 'error6', wrongCount);
+                }
+            }
+        }
+
+        // Q7
+        function checkQ7() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '72') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q7', 'panel_q8', 35);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q7', 'panel_q6', 25);
+                } else {
+                    showError('panel_q7', 'error7', wrongCount);
+                }
+            }
+        }
+
+        // Q8
+        function checkQ8() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '10') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q8', 'panel_q9', 40);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q8', 'panel_q6', 25);
+                } else {
+                    showError('panel_q8', 'error8', wrongCount);
+                }
+            }
+        }
+
+        // Q9
+        function checkQ9() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '12') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q9', 'panel_q10', 45);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q9', 'panel_q6', 25);
+                } else {
+                    showError('panel_q9', 'error9', wrongCount);
+                }
+            }
+        }
+
+        // Q10
+        function checkQ10() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '2') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q10', 'panel_event2', 50);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q10', 'panel_q6', 25);
+                } else {
+                    showError('panel_q10', 'error10', wrongCount);
+                }
+            }
+        }
+
+        // Q11
+        function checkQ11() {
+            
+            const ans = cleanString(document.getElementById('ans11').value).replace('(','').replace(')','');
+            if (ans === '12') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q11', 'panel_q12', 55);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q11', 'panel_q11', 50);
+                } else {
+                    showError('panel_q11', 'error11', wrongCount);
+                }
+            }
+        }
+
+        // Q12
+        function checkQ12() {
+            
+            const ans = cleanString(document.getElementById('ans12').value).replace('(','').replace(')','');
+            if (ans === '75') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q12', 'panel_q13', 60);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q12', 'panel_q11', 50);
+                } else {
+                    showError('panel_q12', 'error12', wrongCount);
+                }
+            }
+        }
+
+        // Q13
+        function checkQ13() {
+            
+            const ans = cleanString(document.getElementById('ans13').value).replace('(','').replace(')','');
+            if (ans === '6') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q13', 'panel_q14', 65);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q13', 'panel_q11', 50);
+                } else {
+                    showError('panel_q13', 'error13', wrongCount);
+                }
+            }
+        }
+
+        // Q14
+        function checkQ14() {
+            
+            const ans = cleanString(document.getElementById('ans14').value).replace('(','').replace(')','');
+            if (ans === '4' || ans === '4개') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q14', 'panel_q15', 70);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q14', 'panel_q11', 50);
+                } else {
+                    showError('panel_q14', 'error14', wrongCount);
+                }
+            }
+        }
+
+        // Q15
+        function checkQ15() {
+            
+            const ans = cleanString(document.getElementById('ans15').value).replace('(','').replace(')','');
+            if (ans === '60') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q15', 'panel_event3', 75);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans11').value = '';
+                    nextStage('panel_q15', 'panel_q11', 50);
+                } else {
+                    showError('panel_q15', 'error15', wrongCount);
+                }
+            }
+        }
+
+        // Q16
+        function checkQ16() {
+            
+            const ans = cleanString(document.getElementById('ans16').value).replace('(','').replace(')','');
+            if (ans === '6' || ans === '6cm') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q16', 'panel_q17', 80);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q16', 'panel_q16', 75);
+                } else {
+                    showError('panel_q16', 'error16', wrongCount);
+                }
+            }
+        }
+
+        // Q17
+        function checkQ17() {
+            
+            const ans = cleanString(document.getElementById('ans17').value).replace('(','').replace(')','');
+            if (ans === '3' || ans === '3바퀴') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q17', 'panel_q18', 85);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q17', 'panel_q16', 75);
+                } else {
+                    showError('panel_q17', 'error17', wrongCount);
+                }
+            }
+        }
+
+        // Q18
+        function checkQ18() {
+            
+            const ans = cleanString(document.getElementById('ans18').value).replace('(','').replace(')','');
+            if (ans === '4') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q18', 'panel_q19', 90);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q18', 'panel_q16', 75);
+                } else {
+                    showError('panel_q18', 'error18', wrongCount);
+                }
+            }
+        }
+
+        // Q19
+        function checkQ19() {
+            
+            const ans = cleanString(document.getElementById('ans19').value).replace('(','').replace(')','');
+            if (ans === '30' || ans === '30분') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q19', 'panel_q20', 95);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q19', 'panel_q16', 75);
+                } else {
+                    showError('panel_q19', 'error19', wrongCount);
+                }
+            }
+        }
+
+        // Q20
+        function checkQ20() {
+            
+            const ans = cleanString(document.getElementById('ans20').value).replace('(','').replace(')','');
+            if (ans === '122') {
+                wrongCount = 0;
+                try { playVictory(); } catch(e) {} 
+                // GAS 기록 종료 호출
+                try {
+                    if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run.recordEnd(window.userRecordRow, 'm1_01');
+                    }
+                } catch(e) {
+                    console.warn("구글 시트 종료 기록 실패:", e);
+                }
+                
+                // 멀티 엔딩 처리
+                let outroDiv = document.getElementById("outro-dynamic-text");
+                if (outroDiv) {
+                    let firstName = window.playerFirstName || "조사관";
+                    if (totalWrongCount < 5) {
+                        outroDiv.innerHTML = "미션을 완벽하게 달성했습니다!<br><br><span style='color: #c084fc; text-shadow: 0 0 5px #a855f7;'>[자격(自擊)]</span>: '" + firstName + "님! 고대의 보물을 찾았습니다. 미션 대성공!'";
+                    } else {
+                        outroDiv.innerHTML = "간신히 관문을 통과했습니다!<br><br><span style='color: #c084fc; text-shadow: 0 0 5px #a855f7;'>[자격(自擊)]</span>: '" + firstName + "님! 상처투성이 탈출이었지만 간신히 미션을 성공시켰습니다!'";
+                    }
+                }
+                nextStage('panel_q20', 'panel_event4', 100);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q20', 'panel_q16', 75);
+                } else {
+                    showError('panel_q20', 'error20', wrongCount);
+                }
+            }
+        }
+
+
+                window.onload = () => {
+            const introPanel = document.getElementById('intro');
+            const introStoryBox = introPanel.querySelector('.story-box');
+            if (introStoryBox) typeWriterHTML(introStoryBox, 25);
+        };
+    </script>
+
+    <div id="storyLogModal" class="log-modal">
+        <div class="log-content">
+            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
+            <h2>📜 지나온 역사 기록</h2>
+            <div id="logContainer">기록이 없습니다.</div>
+        </div>
+    </div>
+
+
+<!-- V3.0 UI Additions -->
+<div id="glitchOverlay" class="glitch-overlay-screen">
+    <div class="glitch-overlay-text">🚨 SYSTEM EXPLOITED 🚨</div>
+    <div class="glitch-overlay-sub">ACCESS DENIED - CODE ERROR</div>
+</div>
+
+<!-- Game Over Panel -->
+<div id="gameover" class="glass-panel">
+    <h1 style="color: #ef4444; text-shadow: 0 0 15px #ef4444;">미션 실패 (GAME OVER)</h1>
+    <h2>산소 고갈!</h2>
+    <img src="https://jk1027.github.io/room-math-story/apps/assets/m1_01_prime_factorization/outro.png" alt="Game Over" class="panel-image" style="filter: grayscale(1) sepia(1) hue-rotate(-50deg);">
+    <div class="story-box">
+        <div class="story-text" style="color: #ef4444;">
+            시간이 모두 초과되었습니다. 아쉽게도 탈출 조건을 맞추지 못했습니다. 끈기를 내어 처음부터 다시 도전하세요!
+        </div>
+    </div>
+    <button class="btn" style="margin-top: 2rem; background: #ef4444; border-color: #ef4444;" onclick="location.reload()">처음부터 다시 시도하기</button>
+</div>
+
+</body>
+</html>

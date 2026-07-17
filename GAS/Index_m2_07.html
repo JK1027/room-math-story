@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>거울 나라의 축소 광선: 방탈출 게임</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
+    <style>:root{--bg-main:#0b111e;--glass-bg:rgba(15,23,42,0.75);--glass-border:rgba(0,240,255,0.25);--accent:#00f0ff;--accent-hover:#33f3ff;--text-main:#f0fbfb;--text-muted:#9abfb5;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(0,240,255,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(15,23,42,0.3) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(0,240,255,0.4);border-left:1px solid rgba(0,240,255,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(0,240,255,0.15),inset 0 0 20px rgba(0,240,255,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(0,240,255,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(15,23,42,0.5);border:1px solid rgba(0,240,255,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(0,240,255,0.05);border:1px dashed rgba(0,240,255,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(0,240,255,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(0,240,255,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(0,240,255,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,240,255,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(0,240,255,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}
+.glitch-text { animation: shake 0.5s infinite; }
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+.glitch-bg { animation: bg-glitch 0.3s linear infinite; }
+@keyframes bg-glitch {
+    0% { box-shadow: inset 0 0 10px #ef4444; }
+    50% { box-shadow: inset 0 0 50px #ef4444; border: 2px solid #ef4444; }
+    100% { box-shadow: inset 0 0 10px #ef4444; }
+}
+.timer-warning {
+    animation: blink-red 0.2s 5;
+    font-size: 1.5rem !important;
+}
+@keyframes blink-red {
+    0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+    50% { color: #ffffff; text-shadow: none; }
+}
+.glitch-overlay-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(239, 68, 68, 0.15);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    box-sizing: border-box;
+    border: 10px solid #ef4444;
+    animation: pulse-border 0.2s infinite;
+}
+.glitch-overlay-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 3rem;
+    color: #ef4444;
+    font-weight: bold;
+    text-shadow: 0 0 20px #ef4444;
+    animation: shake 0.1s infinite;
+}
+.glitch-overlay-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 1rem;
+}
+@keyframes pulse-border {
+    0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+    50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
+}
+.typing-cursor {
+    animation: cursor-blink 0.8s infinite;
+    font-weight: bold;
+    color: var(--accent);
+    margin-left: 2px;
+}
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.radio-msg {
+    color: #60a5fa;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #3b82f6;
+    text-align: center;
+    animation: blink 1.5s infinite;
+}
+</style>
+
+    <!-- MathJax for LaTeX Rendering -->
+    <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+    <button class="sound-ctrl" onclick="toggleSound()">
+        🔊 소리 켜짐
+    </button>
+
+    <div class="container">
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Intro Panel -->
+        <div id="intro" class="glass-panel active">
+            <h1>거울 나라의 축소 광선</h1>
+            <h2>도형의 닮음 (평행선과 선분의 비)</h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/intro.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text" id="outro-dynamic-text">
+                [체스 퀸 AI 앨리스-Q]: "실수로 거울 나라의 축소 광선을 맞은 여러분! 몸집이 장난감만 해졌습니다. 원래 크기로 돌아가려면 거울 성에 숨겨진 '닮음비'와 '비례식'에 관련된 20개의 퍼즐을 풀어 해독 광선을 가동해야 합니다. 축소된 몸이 굳기 전에 45분 안에 서둘러야 합니다!"
+            </div>
+            </div>
+            
+            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="margin-bottom: 1rem;">
+                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
+                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+                <div>
+                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
+                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
+                </div>
+            </div>
+                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
+                ⚠️ <b>주의사항</b><br>
+                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
+                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
+            </div>
+
+            <div class="btn-group" style="margin-top: 2rem; width:100%;">
+                <button class="btn" onclick="tryStartGame('m2_07')">미션 시작</button>
+            </div>
+
+        </div>
+
+        
+        <!-- Q1 -->
+
+        <!-- Q1 -->
+        <div id="panel_q1" class="glass-panel ">
+            <h2>제 1구역: 닮음의 문양 계측 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q1.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "크하하! 거울 성문 안쪽으로 한 걸음도 들여놓지 못한다! 축소 광선을 맞아 장난감만 해진 몸뚱이로 문고리에 짓눌려 으스러져라!"
+
+지이이잉- 눈앞의 거울 성문 표면에 크기와 비율이 다른 두 개의 마법 기하학 문양이 빛나기 시작합니다. 이 두 도형의 대칭/축소 관계를 나타내는 수학 용어를 주입해야 합니다.
+
+[앨리스-Q]: "조사관님, 몸집이 줄어들어 문고리가 아득히 높습니다! 한 도형을 확대하거나 축소하여 포개질 때 성립하는 이 일치 관계 용어(두 글자)를 전송해 성문을 여십시오!"
+- **[일러스트 지시 - 1. q1]:** 닮음의 문양 계측 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q1. [닮음의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>한 도형을 일정한 비율로 확대하거나 축소한 도형이 다른 도형과 합동이 될 때, 두 도형은 서로 ( ? )인 관계에 있다고 한다.
+                    
+                    <div class="options-group" id="ans1_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="닮음" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 닮음
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="합동" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 합동
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="대칭" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 대칭
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group1" value="닮음비" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 닮음비
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error1">틀렸습니다. 대칭과 축소의 기본 관계 단어입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ1()">잠항 시작</button>
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div id="panel_q2" class="glass-panel ">
+            <h2>제 2구역: 축소의 배율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q2.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "너희의 작아진 몸뚱이와 원래의 신체 선분 길이 사이의 축소 척도를 읽어낼 지능이 있느냐? 비율조차 모르는 하찮은 인형들이여!"
+
+벽면의 유리 파이프를 통해 붉은색 축소 용액이 흐르고, 해독 렌즈의 대응 핀이 위아래로 흔들리기 시작합니다.
+
+[앨리스-Q]: "해독 광선 충전을 위해 선분 길이의 비율을 상징하는 단어가 필요합니다! 대응하는 변의 길이비 명칭(세 글자)을 선언하십시오!"
+- **[일러스트 지시 - 2. q2]:** 축소의 배율 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q2. [닮음비의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>서로 닮은 두 평면도형에서 대응하는 선분의 길이의 비를 무엇이라 하는가?
+                    
+                    <div class="options-group" id="ans2_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="닮음" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 닮음
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="합동" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 합동
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="대칭" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 대칭
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group2" value="닮음비" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 닮음비
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error2">틀렸습니다. 닮음인 두 도형의 선분 길이의 비입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ2()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div id="panel_q3" class="glass-panel ">
+            <h2>제 3구역: 원형 거울의 굴절 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q3.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "내 거울 나라에 흩어진 모든 원형 거울들을 모조리 뒤틀어 놓았다. 반사각이 다른 이 원들이 닮음 형태인지 판명할 수 있겠나?"
+
+파지직- 벽면의 크고 작은 비눗방울 모양 원형 거울들이 보랏빛 전류 노이즈를 내며 점멸합니다.
+
+[앨리스-Q]: "원의 닮음 영속성 판정 단계입니다! 모든 원이 항상 대칭적으로 닮은 도형을 유지하는지의 진위(O/X)를 즉시 입력하십시오!"
+- **[일러스트 지시 - 3. q3]:** 원형 거울의 굴절 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q3. [원의 닮음]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>두 원은 항상 닮은 도형인가? ( O / X )
+                    
+                    <div class="options-group" id="ans3_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group3" value="O" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> O
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group3" value="X" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> X
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error3">틀렸습니다. 모든 원은 중심에서 테두리까지 비율이 균일합니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ3()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div id="panel_q4" class="glass-panel ">
+            <h2>제 4구역: 축소된 액자의 가로 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q4.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[거울 파편의 굴절로 인한 통신 왜곡 발생]
+
+[앨리스-Q]: "치직... 캡틴! 전방의 액자 문틀이 비례식 $2:3 = 4:x$ 배율로 비틀어졌습니다! ⚙️ [액자의 가로축 복원비 계측]
+
+비례식을 만족하는 큰 액자의 가로 길이 값을 도출해 액자 틀을 일치시키십시오!"
+- **[일러스트 지시 - 4. q4]:** 축소된 액자의 가로 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q4. [비례식의 연산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>닮음비가 2:3인 두 직사각형이 있다. 작은 직사각형의 가로가 4cm일 때, 큰 직사각형의 가로는 몇 cm인가? (숫자만 입력)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans4" placeholder="단위 없이 숫자만 또는 '6cm' 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error4">틀렸습니다. 비례식 $2:3 = 4:x$를 해결해보세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ4()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div id="panel_q5" class="glass-panel ">
+            <h2>제 5구역: 체스판 타일의 닮음 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q5.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[체스판 바닥 타일 함몰 격동]
+
+[앨리스-Q]: "치지직... 타일 함정이 가동됩니다! 크기가 서로 다른 모든 정사각형 타일들이 항상 기하학적으로 닮아 있는지(O/X)를 판정해 딛고 설 안전 타일을 고르십시오!"
+- **[일러스트 지시 - 5. q5]:** 체스판 타일의 닮음 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q5. [정사각형의 닮음]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>모든 정사각형은 항상 서로 닮은 도형인가? ( O / X )
+                    
+                    <div class="options-group" id="ans5_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group5" value="O" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> O
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group5" value="X" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> X
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error5">틀렸습니다. 정사각형은 네 변의 길이가 같고 네 각이 90도로 고정되어 있습니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ5()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q6 -->
+        <div id="panel_q6" class="glass-panel ">
+            <h2>제 6구역: 세 변의 닮음 조건 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q6.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "도형의 뼈대를 이루는 세 변의 비를 전부 비틀었다. 원래의 안정화 코드로 정렬할 닮음 조건(영문 3글자)을 증명해 봐라!"
+
+드르륵- 벽면에 삼각형 세 쌍의 길이 비율 지시선이 황동색 불빛으로 회전합니다.
+
+[앨리스-Q]: "삼각형의 세 쌍의 변의 비례가 일치할 때 적용되는 닮음 판정 기호(영문 대문자)를 키패드에 기입하십시오!"
+- **[일러스트 지시 - 6. q6]:** 세 변의 닮음 조건 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q6. [삼각형의 닮음 조건 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>삼각형의 세 쌍의 대응하는 변의 길이의 비가 같을 때의 닮음 조건을 쓰시오. (영문 대문자)
+                    
+                    <div class="options-group" id="ans6_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="SSS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SSS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="SAS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SAS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="AA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> AA
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group6" value="ASA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> ASA
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error6">기호가 올바르지 않습니다. Side-Side-Side의 약자입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ6()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div id="panel_q7" class="glass-panel ">
+            <h2>제 7구역: 변과 사잇각의 조건 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q7.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "각도 하나와 주변의 두 변의 비를 뒤엉켜 놨다. 이 비대칭 기하학 락을 풀 닮음 코드(영문 3글자)를 짚어낼 수 있을까?"
+
+보랏빛 레이저 슬롯이 이리저리 교차하며 삼각형의 사잇각 대역을 스캔합니다.
+
+[앨리스-Q]: "두 변의 비가 일정하고 사잇각이 같을 때 성립하는 고유의 닮음 조건을 전송하십시오!"
+- **[일러스트 지시 - 7. q7]:** 변과 사잇각의 조건 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q7. [삼각형의 닮음 조건 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>삼각형의 두 쌍의 대응하는 변의 길이의 비가 같고, 그 끼인각의 크기가 같을 때의 닮음 조건을 쓰시오.
+                    
+                    <div class="options-group" id="ans7_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="SSS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SSS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="SAS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SAS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="AA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> AA
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group7" value="ASA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> ASA
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error7">기호가 올바르지 않습니다. Side-Angle-Side의 약자입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ7()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q8 -->
+        <div id="panel_q8" class="glass-panel ">
+            <h2>제 8구역: 두 각의 닮음 조건 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q8.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "변의 길이 정보를 모두 지워 버렸다! 각도 두 개만 가지고 이 문을 열어젖힐 닮음 기호(영문 2글자)가 과연 존재할까?"
+
+철컥-! 콘솔의 모든 수치 미터기가 영(0)으로 떨어지고 모퉁이 각 지시기 2개만 점등됩니다.
+
+[앨리스-Q]: "두 개의 내각 크기가 같으면 성립하는 가장 대표적인 삼각형 닮음 약어 기호를 신속히 입력하십시오!"
+- **[일러스트 지시 - 8. q8]:** 두 각의 닮음 조건 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q8. [삼각형의 닮음 조건 3]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>삼각형의 두 쌍의 대응하는 각의 크기가 같을 때의 닮음 조건을 쓰시오.
+                    
+                    <div class="options-group" id="ans8_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="SSS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SSS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="SAS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SAS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="AA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> AA
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group8" value="ASA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> ASA
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error8">기호가 올바르지 않습니다. Angle-Angle의 약자입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ8()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div id="panel_q9" class="glass-panel ">
+            <h2>제 9구역: 정삼각형의 정합비 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q9.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "60도 내각으로 고정된 정삼각형 방이다. 어떤 닮음 공식 조건에 의해 이 방의 수평이 강제로 맞춰지는지 증명하라!"
+
+지이이잉- 정삼각형 격실 셔터 밸브 단자에 기하학 조건 기호가 요구됩니다.
+
+[앨리스-Q]: "정삼각형의 세 각이 60도로 동일하게 동조되는 성질을 가진 닮음 조건 기호(AA)를 입력하여 게이트를 통과하십시오!"
+- **[일러스트 지시 - 9. q9]:** 정삼각형의 정합비 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q9. [정삼각형의 닮음]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>한 각이 60도인 두 정삼각형은 무조건 어떤 닮음 조건에 의해 닮음인가?
+                    
+                    <div class="options-group" id="ans9_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="SSS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SSS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="SAS" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> SAS
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="AA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> AA
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group9" value="ASA" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> ASA
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error9">조건이 틀렸습니다. 세 각의 크기가 모두 60도로 동일하게 되는 성질을 생각하세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ9()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q10 -->
+        <div id="panel_q10" class="glass-panel glitch-bg">
+            <h2>제 10구역: 수선 궤적의 쪼개짐 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q10.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">💥 [비상 로그: 거울 성 제어 콘솔 마력 오버플로우 및 자폭 작동!] 💥
+
+[붉은-여왕]: "하찮은 인간들, 축소된 채로 이 차원의 균열과 함께 산산조각이 나거라! 5분 뒤 모든 해독 렌즈 코어가 과열 폭발하리라!"
+
+경보 혼 문자가 공중에 홀로그램으로 붉게 흩날리며 진동합니다. 수선을 내려 쪼개진 두 직각삼각형 간의 핵심 기하학 관계를 선언해 자폭을 긴급 유예하십시오.
+
+[앨리스-Q]: "노심 마력 95% 돌파! 직각삼각형 빗변에 수선을 내렸을 때 분할 생성되는 두 작은 삼각형 간의 기하학적 용어(두 글자)를 긴급 입력하십시오!"
+- **[일러스트 지시 - 10. q10]:** 수선 궤적의 쪼개짐 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" id="q10-main-box" style="display:none;">
+                <div class="question-content">
+                    <strong>Q10. [직각삼각형의 닮음]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>직각삼각형 내부에서 직각인 꼭짓점에서 빗변에 수선을 내렸을 때 만들어지는 두 개의 작은 직각삼각형은 서로 ( ? ) 관계이다.
+                    
+                    <div class="options-group" id="ans10_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="닮음" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 닮음
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="합동" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 합동
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="대칭" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 대칭
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group10" value="닮음비" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 닮음비
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error10">틀렸습니다. 크기는 다르지만 모양이 똑같습니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ10()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div id="panel_q11" class="glass-panel ">
+            <h2>제 11구역: 평행 관계의 사다리 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q11.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[앨리스-Q]: "휴... 자폭 지연 3분 확보! 하지만 아직 3구역 평행 비례 사다리 록이 가로막고 있습니다! ⚙️ [중점 연결 기하 락]"
+
+사다리의 양옆 중점을 연결한 가로 선분 MN과 맨 밑단 BC 기둥 간의 기하학적 위치 관계 용어(두 글자)를 입력하여 사다리를 내리십시오.
+- **[일러스트 지시 - 11. q11]:** 평행 관계의 사다리 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q11. [중점연결정리와 위치]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>삼각형 ABC에서 변 AB의 중점 M, 변 AC의 중점 N을 이은 선분 MN은 변 BC와 어떤 위치 관계에 있는가? (두 글자)
+                    
+                    <div class="options-group" id="ans11_group" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                        
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group11" value="평행" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 평행
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group11" value="수직" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 수직
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group11" value="일치" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 일치
+                    </label>
+                    <label class="radio-label" style="display: block; margin-bottom: 0.8rem; font-size: 1.1rem; cursor: pointer; text-align: left; padding: 0.5rem 1rem; background: rgba(255,255,255,0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                        <input type="radio" name="ans_group11" value="꼬인 위치" style="margin-right: 0.8rem; transform: scale(1.2); cursor: pointer;"> 꼬인 위치
+                    </label>
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error11">틀렸습니다. 두 기둥이 나란히 뻗어 있습니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ11()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q12 -->
+        <div id="panel_q12" class="glass-panel ">
+            <h2>제 12구역: 중점 연결의 길이 비 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q12.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[앨리스-Q]: "1단계 사다리 잠금 오프! 2단계 게이트는 중점 연결 선분의 길이 비례 계수를 판독합니다! ⚙️ [길이비 연산]"
+
+선분 MN의 길이가 밑변 BC의 길이의 몇 분의 몇(분수)에 해당하는지 슬래시(/)를 사용하여 입력하십시오.
+- **[일러스트 지시 - 12. q12]:** 중점 연결의 길이 비 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q12. [중점연결정리와 길이비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>삼각형 중점 연결 정리에서 선분 MN의 길이는 선분 BC의 길이의 ( 몇 분의 몇 ) 인가? (예: 1/2)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans12" placeholder="예: 1/2 또는 절반">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error12">틀렸습니다. 중점을 연결했으므로 크기가 절반으로 축소됩니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ12()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div id="panel_q13" class="glass-panel ">
+            <h2>제 13구역: 평행 차단막의 닮음 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q13.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[앨리스-Q]: "3단계 해치 게이트입니다! 삼각형 변에 나란하게 배치된 가로 레이저 장벽의 궤적 법칙을 판명해야 합니다! ⚙️ [평행선 분할비]"
+
+가로지르는 평행 장벽에 의해 분리된 상단 작은 삼각형이 큰 삼각형과 맺는 관계(두 글자)를 전송해 레이저 출력을 우회시키십시오.
+- **[일러스트 지시 - 13. q13]:** 평행 차단막의 닮음 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q13. [평행선과 닮음]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>삼각형의 한 변에 평행한 선분을 그어 다른 두 변과 만나게 하면, 새로 만들어진 작은 삼각형은 원래 삼각형과 ( ? ) 관계이다.
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans13" placeholder="두 글자 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error13">틀렸습니다. 세 각의 크기가 같은 비례형 삼각형입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ13()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q14 -->
+        <div id="panel_q14" class="glass-panel ">
+            <h2>제 14구역: 평행 빔의 등가 비율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q14.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[앨리스-Q]: "마지막 사다리 조절 해치 4단계입니다! 평행선 사이를 교차하는 두 사선에 의해 잘린 선분들의 비례 관계를 계측하십시오! ⚙️ [대응 선분 길이비]"
+
+잘려 나간 양 사선의 대응 선분비가 서로 어떠한지 단답(같다 / 다르다)으로 콘솔에 기록하십시오.
+- **[일러스트 지시 - 14. q14]:** 평행 빔의 등가 비율 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q14. [평행선 사이의 선분비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>평행한 세 직선이 두 직선과 만날 때, 잘린 대응하는 선분의 길이의 비는 서로 ( 같다 / 다르다 ).
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans14" placeholder="같다 또는 다르다 입력">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error14">틀렸습니다. 평행선 사이의 선분 비례 공식을 생각하세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ14()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q15 -->
+        <div id="panel_q15" class="glass-panel glitch-bg">
+            <h2>제 15구역: 질량 중심의 분할비 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q15.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">✨ [앨리스-Q 거울 방 제어 시스템 권한 100% 완전 환수] ✨
+
+[앨리스-Q]: "해독 대조 성공! 거울 방의 모든 해독 프리즘과 리플렉터 배율을 완벽히 흡수했습니다! 이제 붉은 여왕의 차원 붕괴 주파수를 차단합니다. 무게중심이 중선을 분할하는 황금비 수치(예: 2:1)를 입력하십시오!"
+
+전방 렌즈 빔 제어 창이 화사한 노란색 격자망으로 재정렬되며 축소 전류가 진정됩니다.
+
+[붉은-여왕]: "내 핵심 렌즈 통제망이 전멸당하다니...! 최종 입체 차원비로 발사 각도를 가두어 주마!"
+- **[일러스트 지시 - 15. q15]:** 질량 중심의 분할비 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q15. [무게중심의 성질]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>삼각형의 무게중심은 세 중선의 길이를 꼭짓점으로부터 각각 몇 대 몇의 비율로 나누는가? (예: 2:1)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans15" placeholder="예: 2:1 또는 2대1">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error15">비율이 올바르지 않습니다. 위쪽이 아래쪽보다 두 배 더 깁니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ15()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q16 -->
+        <div id="panel_q16" class="glass-panel ">
+            <h2>제 16구역: 넓이의 차원비 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q16.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "닮음비 m:n의 거울 표면적(넓이) 비율 공식이다! 제곱식 차원 계수를 맞춰 렌즈 표면을 터뜨려 봐라!"
+
+해독 렌즈 표면 코팅막이 과열 팽창으로 쩍쩍 금이 가려 합니다. 거듭제곱 기호(^)를 사용해 기하학 넓이비 공식을 기입하십시오.
+- **[일러스트 지시 - 16. q16]:** 넓이의 차원비 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q16. [닮음비와 넓이비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>두 평면도형의 닮음비가 $m:n$ 일 때, 넓이의 비는 얼마인가? (거듭제곱 기호 ^ 사용)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans16" placeholder="예: m^2:n^2">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error16">비율 식이 잘못되었습니다. 넓이의 비는 닮음비의 제곱의 비입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ16()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q17 -->
+        <div id="panel_q17" class="glass-panel ">
+            <h2>제 17구역: 정육면체 거울 상자의 표면적 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q17.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "닮음비 1:2의 두 정육면체 에너지 팩이다! 이 상자들의 겉넓이 비율을 맞추지 못하면 전압이 역류하여 합선되리라!"
+
+변전 스위치 격자판이 황색 스파크를 튀기며 작동 지연음을 냅니다.
+- **[일러스트 지시 - 17. q17]:** 정육면체 거울 상자의 표면적 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q17. [입체도형의 겉넓이비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>두 정육면체의 닮음비가 1:2 일 때, 넓이(겉넓이)의 비는 얼마인가? (예: 1:4)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans17" placeholder="예: 1:4 또는 1대4">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error17">틀렸습니다. 닮음비가 1:2이면 넓이의 비는 제곱의 비입니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ17()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q18 -->
+        <div id="panel_q18" class="glass-panel ">
+            <h2>제 18구역: 부피의 차원비 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q18.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "이번엔 공간 체적(부피)의 차원비다. 닮음비 m:n 일 때의 입체 공간 비례를 세제곱 기호(^)를 사용해 맞추어라!"
+
+메인 빔 렌즈 경통이 팽창음과 함께 뜨겁게 달아오릅니다.
+- **[일러스트 지시 - 18. q18]:** 부피의 차원비 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q18. [닮음비와 부피비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>두 입체도형의 닮음비가 $m:n$ 일 때, 부피의 비는 얼마인가? (세제곱 기호 ^ 사용)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans18" placeholder="예: m^3:n^3">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error18">부피의 비는 닮음비의 세제곱에 비례합니다.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ18()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q19 -->
+        <div id="panel_q19" class="glass-panel ">
+            <h2>제 19구역: 거울 구슬의 체적비 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q19.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">[붉은-여왕]: "1:3 닮음비를 지닌 거울 구슬 제어 장치의 체적 부피 비율 상수를 연산판에 도출해 봐라!"
+
+구슬 모양 축소 필터 유도관의 지시창이 깜빡이며, 두 구슬 파츠의 최종 부피 비례를 요구합니다.
+- **[일러스트 지시 - 19. q19]:** 거울 구슬의 체적비 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q19. [구슬의 부피비]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>닮음비가 1:3 인 두 구슬의 부피의 비는 얼마인가? (예: 1:27)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans19" placeholder="예: 1:27">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error19">틀렸습니다. 1과 3을 각각 세제곱하여 비율을 구하세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ19()">다음으로</button>
+            </div>
+        </div>
+
+        <!-- Q20 -->
+        <div id="panel_q20" class="glass-panel glitch-bg">
+            <h2>제 20구역: 광선 증폭의 최종 비례식 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/q20.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">🔮 [최종 거울 게이트 닮음 비례식 해제] 🔮
+
+[앨리스-Q]: "조사관님! 이제 원래의 거대한 몸집으로 돌아가는 최후의 광선 발사대 렌즈만 남았습니다! 제 모든 마나 증폭 에너지를 발사 패널에 연동하겠습니다! 컵의 닮음비 2:3을 활용한 최종 부피 비례식을 입력해 격벽 해독 게이트를 여십시오! 탈출 시간입니다!"
+
+[붉은-여왕]: "안 돼... 내 거울 속 축소 매트릭스가... 완전히 해제 정지되어 파쇄되다니...!"
+- **[일러스트 지시 - 20. q20]:** 광선 증폭의 최종 비례식 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="question-box" >
+                <div class="question-content">
+                    <strong>Q20. [부피 활용 비례식]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.')">💡 힌트</button><br>작은 컵의 부피가 10mL이다. 닮음비가 2:3인 큰 컵이 있다면, 큰 컵의 부피(x)를 구하기 위한 비례식을 세워보시오. (공백 없이 입력)
+                    
+                    <div class="input-group">
+                        <input type="text" id="ans20" placeholder="예: 8:27=10:x">
+                    </div>
+                </div>
+            </div>
+            <div class="error-msg" id="error20">비례식 세팅 실패! 부피비는 닮음비의 세제곱인 8:27임을 이용해 10:x와 연계해 세우세요.</div>
+            <div class="btn-group">
+                <button class="btn" onclick="checkQ20()">탈출하기</button>
+            </div>
+        </div>
+
+        <!-- Event 1: 동력 기어 가동 -->
+        <div id="panel_event1" class="glass-panel">
+            <h2>[이벤트] 동력 기어 가동 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/event1.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    120도의 동조 신호가 톱니 빗장 기어들을 맞춰 누르자, 회전을 정지하고 벽면 락이 열립니다. 황동 실린더 위로 눈부신 노란색 홀로그램이 피어오릅니다.
+- **앨리스-Q:** "정교한 수학적 균형입니다! 거울 게이트 닮음 비례 비약 1차가 복원되었습니다. 완벽한 조화의 아름다움입니다."
+- **붉은-여왕:** "감히 마스터의 장치를 열어보는가! 다음 방화벽이 너희를 용융하리라!"
+- **[일러스트 지시 - Event 1]:** 둥근 테이블 위로 마나 홀로그램이 서서히 회전하며 자전하는 장면.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event1', 'panel_q6', 25)">계속 전진하기</button>
+            </div>
+        </div>
+
+        <!-- Event 2: 비상 차단 장치 리셋 -->
+        <div id="panel_event2" class="glass-panel">
+            <h2>[이벤트] 비상 차단 장치 리셋 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/event2.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    조건과 수식이 맞추어 주입되자, 광선 빔들이 일렬 동축 정렬되어 차단 빗장을 고정합니다. 분출되던 가열 증기가 잦아듭니다.
+- **앨리스-Q:** "자폭 주파수 오버라이드에 성공해 비상 리셋을 완료했습니다. 기지 온도 상승이 멈췄습니다!"
+- **기아로:** "삐- 전력 강제 셧다운. 자폭 시퀀스 유예됨. 빗장을 격리하겠다."
+- **[일러스트 지시 - Event 2]:** 푸르스름한 배리어 실드가 터빈을 포근히 둘러싸 안전하게 식혀나가는 긴장 해소 뷰.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event2', 'panel_q11', 50)">비상 전력 가동</button>
+            </div>
+        </div>
+
+        <!-- Event 3: 핵심 복원 제단 활성화 -->
+        <div id="panel_event3" class="glass-panel">
+            <h2>[이벤트] 핵심 복원 제단 활성화 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/event3.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    수학적 연산이 완료되자 중앙 코어 유리 돔의 붉은 노이즈가 부서지며 맑고 깨끗한 공기가 실내에 뿜어져 나옵니다.
+- **앨리스-Q:** "시스템 완전 복구율 100%! 이제 빌런 붉은-여왕의 메인 락 제단을 강제로 분리하고 걸작 복원 제단을 기동합니다!"
+- **붉은-여왕:** "최종 마스터 합동 결계를 전개한다! 이 아름다운 유산은 너희의 몫이 아니다!"
+- **[일러스트 지시 - Event 3]:** 거대한 황동 기어들이 석조 격벽 틈새로 맞물려 열리고 보라색 마나 광원을 발하는 복합 제단이 솟아오르는 풍경.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event3', 'panel_q16', 75)">제단 활성화</button>
+            </div>
+        </div>
+
+        <!-- Event 4: 탈출 차원 포탈 개방 -->
+        <div id="panel_event4" class="glass-panel">
+            <h2>[이벤트] 탈출 차원 포탈 개방 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/event4.png" alt="Event" class="panel-image">
+            <div class="story-box">
+                <div class="story-text">
+                    마지막 정답이 해제되며, 기지를 감싸던 적색 장벽선들이 찬란한 오색 입자로 바스러지며 탈출용 차원 포탈로 화합니다.
+- **앨리스-Q:** "탐사 완료! 가방에 복원된 거울 게이트 닮음 비례 비약을 챙겨 포탈로 도약하십시오!"
+- **붉은-여왕:** "수학 계승 완료. 무결한 지식을 조사관에게 위임한다. 게이트웨이를 연다."
+- **[일러스트 지시 - Event 4]:** 찬란한 금빛 녹색 차원 링 포탈 정면에서, 머리를 깊이 숙여 배웅하는 백색 렌즈 구체 로봇과 환하게 미소 짓는 조력자의 모습.
+                </div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" onclick="nextStage('panel_event4', 'outro', 100)">지상으로 탈출</button>
+            </div>
+        </div>
+
+        <!-- 아웃트로 -->
+        <div id="outro" class="glass-panel">
+            <h1>탈출 성공!</h1>
+            <h2>도형의 닮음 - 캡틴 키드의 보물선</h2>
+            <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/outro.png" alt="Background" class="panel-image">
+            <div class="story-box">
+                <div class="story-text" id="outro-dynamic-text">미션 결과를 연산 중입니다...</div>
+                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
+            </div>
+            <button class="btn" style="margin-top: 2rem;" onclick="location.reload()">다시 도전하기</button>
+        </div>
+
+    </div>
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let isMuted = false;
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            document.querySelector('.sound-ctrl').innerText = isMuted ? "🔇 소리 꺼짐" : "🔊 소리 켜짐";
+        }
+
+        function playClick() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        function playTick() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.03);
+        }
+
+        function playSuccess() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+            osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
+            osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
+            
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.25);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.35);
+        }
+
+        function playError() {
+            if (isMuted) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(180, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.25);
+            
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.25);
+        }
+
+        let storyHistory = [];
+        
+        function openLog() {
+            const modal = document.getElementById('storyLogModal');
+            const container = document.getElementById('logContainer');
+            container.innerHTML = storyHistory.map(log => `<div class="log-item">${log}</div>`).join('') || '<div class="log-item">기록된 이전 대사가 없습니다.</div>';
+            modal.style.display = 'flex';
+        }
+        
+        function closeLog() {
+            document.getElementById('storyLogModal').style.display = 'none';
+        }
+
+        // Q1
+let totalWrongCount = 0;
+
+        // Q1
+        function checkQ1() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group1"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '닮음') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q1', 'panel_q2', 5);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q1', 'panel_q1', 0);
+                } else {
+                    showError('panel_q1', 'error1', wrongCount);
+                }
+            }
+        }
+
+        // Q2
+        function checkQ2() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group2"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '닮음비') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q2', 'panel_q3', 10);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q2', 'panel_q1', 0);
+                } else {
+                    showError('panel_q2', 'error2', wrongCount);
+                }
+            }
+        }
+
+        // Q3
+        function checkQ3() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group3"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === 'O' || ans === '오') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q3', 'panel_q4', 15);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q3', 'panel_q1', 0);
+                } else {
+                    showError('panel_q3', 'error3', wrongCount);
+                }
+            }
+        }
+
+        // Q4
+        function checkQ4() {
+            
+            const ans = cleanString(document.getElementById('ans4').value).replace('(','').replace(')','');
+            if (ans === '6' || ans === '6CM') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q4', 'panel_q5', 20);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q4', 'panel_q1', 0);
+                } else {
+                    showError('panel_q4', 'error4', wrongCount);
+                }
+            }
+        }
+
+        // Q5
+        function checkQ5() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group5"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === 'O' || ans === '오') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q5', 'panel_event1', 25);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 1구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group1"]').forEach(el => el.checked = false);
+                    nextStage('panel_q5', 'panel_q1', 0);
+                } else {
+                    showError('panel_q5', 'error5', wrongCount);
+                }
+            }
+        }
+
+        // Q6
+        function checkQ6() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group6"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === 'SSS') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q6', 'panel_q7', 30);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q6', 'panel_q6', 25);
+                } else {
+                    showError('panel_q6', 'error6', wrongCount);
+                }
+            }
+        }
+
+        // Q7
+        function checkQ7() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group7"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === 'SAS') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q7', 'panel_q8', 35);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q7', 'panel_q6', 25);
+                } else {
+                    showError('panel_q7', 'error7', wrongCount);
+                }
+            }
+        }
+
+        // Q8
+        function checkQ8() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group8"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === 'AA') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q8', 'panel_q9', 40);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q8', 'panel_q6', 25);
+                } else {
+                    showError('panel_q8', 'error8', wrongCount);
+                }
+            }
+        }
+
+        // Q9
+        function checkQ9() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group9"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === 'AA' || ans === 'AA닮음') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q9', 'panel_q10', 45);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q9', 'panel_q6', 25);
+                } else {
+                    showError('panel_q9', 'error9', wrongCount);
+                }
+            }
+        }
+
+        // Q10
+        function checkQ10() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group10"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '닮음') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q10', 'panel_event2', 50);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 2구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group6"]').forEach(el => el.checked = false);
+                    nextStage('panel_q10', 'panel_q6', 25);
+                } else {
+                    showError('panel_q10', 'error10', wrongCount);
+                }
+            }
+        }
+
+        // Q11
+        function checkQ11() {
+            
+            const checkedOpt = document.querySelector('input[name="ans_group11"]:checked');
+            const ans = checkedOpt ? checkedOpt.value : "";
+            if (ans === '평행') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q11', 'panel_q12', 55);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group11"]').forEach(el => el.checked = false);
+                    nextStage('panel_q11', 'panel_q11', 50);
+                } else {
+                    showError('panel_q11', 'error11', wrongCount);
+                }
+            }
+        }
+
+        // Q12
+        function checkQ12() {
+            
+            const ans = cleanString(document.getElementById('ans12').value).replace('(','').replace(')','');
+            if (ans === '1/2' || ans === '절반' || ans === '0.5') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q12', 'panel_q13', 60);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group11"]').forEach(el => el.checked = false);
+                    nextStage('panel_q12', 'panel_q11', 50);
+                } else {
+                    showError('panel_q12', 'error12', wrongCount);
+                }
+            }
+        }
+
+        // Q13
+        function checkQ13() {
+            
+            const ans = cleanString(document.getElementById('ans13').value).replace('(','').replace(')','');
+            if (ans === '닮음') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q13', 'panel_q14', 65);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group11"]').forEach(el => el.checked = false);
+                    nextStage('panel_q13', 'panel_q11', 50);
+                } else {
+                    showError('panel_q13', 'error13', wrongCount);
+                }
+            }
+        }
+
+        // Q14
+        function checkQ14() {
+            
+            const ans = cleanString(document.getElementById('ans14').value).replace('(','').replace(')','');
+            if (ans === '같다') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q14', 'panel_q15', 70);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group11"]').forEach(el => el.checked = false);
+                    nextStage('panel_q14', 'panel_q11', 50);
+                } else {
+                    showError('panel_q14', 'error14', wrongCount);
+                }
+            }
+        }
+
+        // Q15
+        function checkQ15() {
+            
+            const ans = cleanString(document.getElementById('ans15').value).replace('(','').replace(')','');
+            if (ans.replace(/\s+/g, '') === '2:1' || ans.replace(/\s+/g, '') === '2대1') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q15', 'panel_event3', 75);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 3구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.querySelectorAll('input[name="ans_group11"]').forEach(el => el.checked = false);
+                    nextStage('panel_q15', 'panel_q11', 50);
+                } else {
+                    showError('panel_q15', 'error15', wrongCount);
+                }
+            }
+        }
+
+        // Q16
+        function checkQ16() {
+            
+            const ans = cleanString(document.getElementById('ans16').value).replace('(','').replace(')','');
+            if (ans.replace(/\s+/g, '') === 'M^2:N^2' || ans.replace(/\s+/g, '') === 'M2:N2' || ans.replace(/\s+/g, '') === 'M^2대N^2') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q16', 'panel_q17', 80);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q16', 'panel_q16', 75);
+                } else {
+                    showError('panel_q16', 'error16', wrongCount);
+                }
+            }
+        }
+
+        // Q17
+        function checkQ17() {
+            
+            const ans = cleanString(document.getElementById('ans17').value).replace('(','').replace(')','');
+            if (ans.replace(/\s+/g, '') === '1:4' || ans.replace(/\s+/g, '') === '1대4') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q17', 'panel_q18', 85);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q17', 'panel_q16', 75);
+                } else {
+                    showError('panel_q17', 'error17', wrongCount);
+                }
+            }
+        }
+
+        // Q18
+        function checkQ18() {
+            
+            const ans = cleanString(document.getElementById('ans18').value).replace('(','').replace(')','');
+            if (ans.replace(/\s+/g, '') === 'M^3:N^3' || ans.replace(/\s+/g, '') === 'M3:N3' || ans.replace(/\s+/g, '') === 'M^3대N^3') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q18', 'panel_q19', 90);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q18', 'panel_q16', 75);
+                } else {
+                    showError('panel_q18', 'error18', wrongCount);
+                }
+            }
+        }
+
+        // Q19
+        function checkQ19() {
+            
+            const ans = cleanString(document.getElementById('ans19').value).replace('(','').replace(')','');
+            if (ans.replace(/\s+/g, '') === '1:27' || ans.replace(/\s+/g, '') === '1대27') {
+                wrongCount = 0;
+                try { playSuccess(); } catch(e) {} 
+                nextStage('panel_q19', 'panel_q20', 95);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q19', 'panel_q16', 75);
+                } else {
+                    showError('panel_q19', 'error19', wrongCount);
+                }
+            }
+        }
+
+        // Q20
+        function checkQ20() {
+            
+            const ans = cleanString(document.getElementById('ans20').value).replace('(','').replace(')','');
+            if (ans.replace(/\s+/g, '') === '8:27=10:X' || ans.replace(/\s+/g, '') === '10:X=8:27') {
+                wrongCount = 0;
+                try { playVictory(); } catch(e) {} 
+                // GAS 기록 종료 호출
+                try {
+                    if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run.recordEnd(window.userRecordRow, 'm2_07');
+                    }
+                } catch(e) {
+                    console.warn("구글 시트 종료 기록 실패:", e);
+                }
+                
+                // 멀티 엔딩 처리
+                let outroDiv = document.getElementById("outro-dynamic-text");
+                if (outroDiv) {
+                    let firstName = window.playerFirstName || "조사관";
+                    if (totalWrongCount < 5) {
+                        outroDiv.innerHTML = "미션을 완벽하게 달성했습니다!<br><br><span style='color: #c084fc; text-shadow: 0 0 5px #a855f7;'>[앨리스-Q]</span>: '" + firstName + "님! 고대의 보물을 찾았습니다. 미션 대성공!'";
+                    } else {
+                        outroDiv.innerHTML = "간신히 관문을 통과했습니다!<br><br><span style='color: #c084fc; text-shadow: 0 0 5px #a855f7;'>[앨리스-Q]</span>: '" + firstName + "님! 상처투성이 탈출이었지만 간신히 미션을 성공시켰습니다!'";
+                    }
+                }
+                nextStage('panel_q20', 'panel_event4', 100);
+            } else {
+                wrongCount++;
+                totalWrongCount++;
+                timeLeft -= 60;
+                if (timeLeft < 0) timeLeft = 0;
+                updateTimerDisplay();
+                triggerTimerWarning();
+                if (wrongCount >= 3) {
+                    showGlitchOverlay();
+                    alert("🚨 3회 오답 패널티! 4구역 처음으로 이동됩니다.");
+                    wrongCount = 0;
+                    document.getElementById('ans16').value = '';
+                    nextStage('panel_q20', 'panel_q16', 75);
+                } else {
+                    showError('panel_q20', 'error20', wrongCount);
+                }
+            }
+        }
+
+
+                window.onload = () => {
+            const introPanel = document.getElementById('intro');
+            const introStoryBox = introPanel.querySelector('.story-box');
+            if (introStoryBox) typeWriterHTML(introStoryBox, 25);
+        };
+    </script>
+
+    <div id="storyLogModal" class="log-modal">
+        <div class="log-content">
+            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
+            <h2>📜 지나온 스토리 기록</h2>
+            <div id="logContainer" class="log-list">기록이 없습니다.</div>
+        </div>
+    </div>
+
+<!-- V3.0 UI Additions -->
+<div id="glitchOverlay" class="glitch-overlay-screen">
+    <div class="glitch-overlay-text">🚨 SYSTEM EXPLOITED 🚨</div>
+    <div class="glitch-overlay-sub">ACCESS DENIED - CODE ERROR</div>
+</div>
+
+<!-- Game Over Panel -->
+<div id="gameover" class="glass-panel">
+    <h1 style="color: #ef4444; text-shadow: 0 0 15px #ef4444;">미션 실패 (GAME OVER)</h1>
+    <h2>산소 고갈!</h2>
+    <img src="https://jk1027.github.io/room-math-story/apps/assets/m2_07_geometry2/outro.png" alt="Game Over" class="panel-image" style="filter: grayscale(1) sepia(1) hue-rotate(-50deg);">
+    <div class="story-box">
+        <div class="story-text" style="color: #ef4444;">
+            시간이 모두 초과되었습니다. 아쉽게도 탈출 조건을 맞추지 못했습니다. 끈기를 내어 처음부터 다시 도전하세요!
+        </div>
+    </div>
+    <button class="btn" style="margin-top: 2rem; background: #ef4444; border-color: #ef4444;" onclick="location.reload()">처음부터 다시 시도하기</button>
+</div>
+
+</body>
+</html>
