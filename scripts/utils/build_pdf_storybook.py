@@ -2,15 +2,32 @@ import os
 import re
 import subprocess
 import sys
+import argparse
 from pathlib import Path
+
+# ----------------- 단원별 설정 사전 -----------------
+UNIT_CONFIGS = {
+    "m1_04": {
+        "script_name": "m1_04_atlantis_script.md",
+        "assets_folder": "m1_04_coordinates",
+        "title": "중1 4단원: 좌표와 그래프 - 심해의 구도자",
+        "main_title": "[오프닝 & 인트로] 아틀란티스 신전의 부름",
+        "outro_title": "[엔딩 & 아웃트로] 심해 탈출 성공",
+        "hud_title": "COORDINATES & GRAPHS"
+    },
+    "m1_05": {
+        "script_name": "m1_05_geometry_script.md",
+        "assets_folder": "m1_05_basic_geometry",
+        "title": "중1 5단원: 기본 도형 - 다빈치의 비밀 작업실",
+        "main_title": "[오프닝 & 인트로] 다빈치의 비밀 작업실",
+        "outro_title": "[엔딩 & 아웃트로] 기하학의 비밀 복원",
+        "hud_title": "BASIC GEOMETRY"
+    }
+}
 
 # ----------------- 경로 설정 -----------------
 project_root = r"c:\Coding\Projects\School\room-math-story"
-storyboard_path = os.path.join(project_root, "data", "storyboards", "m1_04_storyboard.md")
-script_path = os.path.join(project_root, "stories", "중1", "m1_04_atlantis_script.md")
-assets_dir = os.path.join(project_root, "apps", "assets", "m1_04_coordinates")
 html_temp_path = os.path.join(project_root, "scratch", "temp_storybook.html")
-pdf_output_path = os.path.join(project_root, "data", "storyboards", "m1_04_storyboard.pdf")
 
 # ----------------- 데이터 파싱 -----------------
 
@@ -119,6 +136,8 @@ def load_storyboard(file_path):
                 ev_data["title"] = line_str.replace('- 제목:', '').strip()
             elif line_str.startswith('- 버튼 텍스트:'):
                 ev_data["btn_text"] = line_str.replace('- 버튼 텍스트:', '').strip()
+            elif line_str.startswith('- BUTTON_TEXT:'):  # 대소문자 방지
+                ev_data["btn_text"] = line_str.replace('- BUTTON_TEXT:', '').strip()
             elif line_str.startswith('- 다음 스테이지:'):
                 ev_data["next_stage"] = line_str.replace('- 다음 스테이지:', '').strip()
             elif line_str.startswith('- 달성도:'):
@@ -134,27 +153,37 @@ def load_storyboard(file_path):
 # ----------------- HTML 스타일 가공 -----------------
 
 def apply_character_styles(text):
+    # 캐릭터 스팬 정의
     nereus = "<span style='color: #60a5fa; text-shadow: 0 0 3px #3b82f6; font-weight: bold;'>[네레우스]</span>"
     clio = "<span style='color: #c084fc; text-shadow: 0 0 3px #a855f7; font-weight: bold;'>[클리오]</span>"
     poseidon = "<span style='color: #f43f5e; text-shadow: 0 0 3px #f43f5e; font-weight: bold;'>[포세이돈-V]</span>"
     trident = "<span style='color: #fb923c; text-shadow: 0 0 3px #f97316; font-weight: bold;'>[트라이던트]</span>"
     captain = "<span style='color: #34d399; text-shadow: 0 0 3px #059669; font-weight: bold;'>[캡틴]</span>"
+    
+    # 5단원 캐릭터
+    codex = "<span style='color: #ef4444; text-shadow: 0 0 3px #ef4444; font-weight: bold;'>[코덱스-L]</span>"
+    davinci = "<span style='color: #60a5fa; text-shadow: 0 0 3px #3b82f6; font-weight: bold;'>[다빈치-메모리]</span>"
 
     text = text.replace("{nereus}", nereus).replace("[네레우스]", nereus)
     text = text.replace("{clio}", clio).replace("[클리오]", clio)
     text = text.replace("{poseidon}", poseidon).replace("[포세이돈-V]", poseidon)
     text = text.replace("{trident}", trident).replace("[트라이던트]", trident)
     text = text.replace("{dyn_captain}", captain).replace("캡틴", captain).replace("[캡틴]", captain)
+    text = text.replace("{codex}", codex).replace("[코덱스-L]", codex)
+    text = text.replace("{davinci}", davinci).replace("[다빈치-메모리]", davinci)
     
-    # 대화 패턴 치환 (예: - **포세이돈-V:** "..." 또는 포세이돈-V: "...")
+    # 대화 패턴 치환
     text = re.sub(r'-\s*\*\*포세이돈-V:\*\*|-\s*\*\*포세이돈-V\*\*:', f'{poseidon}', text)
     text = re.sub(r'-\s*\*\*네레우스:\*\*|-\s*\*\*네레우스\*\*:', f'{nereus}', text)
     text = re.sub(r'-\s*\*\*클리오:\*\*|-\s*\*\*클리오\*\*:', f'{clio}', text)
     text = re.sub(r'-\s*\*\*트라이던트:\*\*|-\s*\*\*트라이던트\*\*:', f'{trident}', text)
     text = re.sub(r'-\s*\*\*조사관\s*\(플레이어\):\*\*|-\s*\*\*조사관\*\*:', f'{captain}', text)
+    text = re.sub(r'-\s*\*\*코덱스-L:\*\*|-\s*\*\*코덱스-L\*\*:', f'{codex}', text)
+    text = re.sub(r'-\s*\*\*다빈치-메모리:\*\*|-\s*\*\*다빈치-메모리\*\*:', f'{davinci}', text)
     
     # 일반 텍스트 내 캐릭터명 치환
     text = text.replace("네레우스:", nereus).replace("클리오:", clio).replace("포세이돈-V:", poseidon).replace("트라이던트:", trident)
+    text = text.replace("코덱스-L:", codex).replace("다빈치-메모리:", davinci)
     
     return text
 
@@ -162,14 +191,13 @@ def format_story_content(text):
     lines = [line.strip() for line in text.split('\n') if line.strip()]
     formatted = []
     for line in lines:
-        # 이탈릭 묘사문 처리 (예: *...* 또는 i 태그)
         if line.startswith('*') and line.endswith('*'):
             line = f"<em style='color: #94a3b8; font-style: italic;'>{line[1:-1]}</em>"
         elif line.startswith('<i>') and line.endswith('</i>'):
             line = f"<em style='color: #94a3b8; font-style: italic;'>{line[3:-4]}</em>"
         
         # 기호 장식 제거 및 캐릭터 스타일
-        if line.startswith('🌊') or line.startswith('🧭') or line.startswith('⚙️') or line.startswith('💎') or line.startswith('💥') or line.startswith('🚨') or line.startswith('🔴'):
+        if any(line.startswith(emoji) for emoji in ['🌊', '🧭', '⚙️', '💎', '💥', '🚨', '🔴', '📐', '✂️', '🖼️', '🔮', '⚠️']):
             line = f"<strong style='color: #38bdf8; display: block; margin-top: 8px; margin-bottom: 8px; font-size: 1.05rem;'>{line}</strong>"
         else:
             line = apply_character_styles(line)
@@ -188,10 +216,10 @@ def format_script_text(text):
             formatted_lines.append(f"<div style='margin-top:14px; font-size:0.8rem; color:#f59e0b; background:rgba(245,158,11,0.08); padding:8px 12px; border-left:3px solid #f59e0b; border-radius:4px;'><strong>🎨 일러스트 가이드:</strong> {clean_line}</div>")
             continue
             
-        # 선체 상태
-        if "선체 상태:" in line:
-            clean_line = line.replace("- **선체 상태:**", "").replace("`", "").strip()
-            formatted_lines.append(f"<div style='font-family:\"Share Tech Mono\", monospace; font-size:0.85rem; color:#ef4444; background:rgba(239,68,68,0.08); padding:6px 12px; border: 1px solid rgba(239,68,68,0.2); border-radius:4px; margin-bottom:12px;'>📟 <strong>선체 시스템 상태:</strong> {clean_line}</div>")
+        # 선체 상태 (혹은 상태 표시)
+        if "선체 상태:" in line or "선체 상태" in line:
+            clean_line = line.replace("- **선체 상태:**", "").replace("- **선체 상태**:", "").replace("`", "").strip()
+            formatted_lines.append(f"<div style='font-family:\"Share Tech Mono\", monospace; font-size:0.85rem; color:#ef4444; background:rgba(239,68,68,0.08); padding:6px 12px; border: 1px solid rgba(239,68,68,0.2); border-radius:4px; margin-bottom:12px;'>📟 <strong>시스템 상태:</strong> {clean_line}</div>")
             continue
             
         # 스토리 전개
@@ -238,12 +266,32 @@ def find_browser():
 # ----------------- 메인 로직 -----------------
 
 def main():
-    print("Parsing files...")
+    parser = argparse.ArgumentParser(description="Generate PDF storyboard book.")
+    parser.add_argument('--unit', type=str, default='m1_04', help='Unit ID (e.g. m1_04, m1_05)')
+    args = parser.parse_args()
+    
+    unit = args.unit
+    if unit not in UNIT_CONFIGS:
+        print(f"Error: Unit '{unit}' is not configured in build_pdf_storybook.py")
+        sys.exit(1)
+        
+    config = UNIT_CONFIGS[unit]
+    
+    storyboard_path = os.path.join(project_root, "data", "storyboards", f"{unit}_storyboard.md")
+    script_path = os.path.join(project_root, "stories", "중1", config["script_name"])
+    assets_dir = os.path.join(project_root, "apps", "assets", config["assets_folder"])
+    pdf_output_path = os.path.join(project_root, "data", "storyboards", f"{unit}_storyboard.pdf")
+    
+    print(f"Parsing files for unit {unit}...")
+    if not os.path.exists(storyboard_path) or not os.path.exists(script_path):
+        print(f"Error: Required storyboard or script files for {unit} do not exist.")
+        print(f"Storyboard: {storyboard_path}")
+        print(f"Script: {script_path}")
+        sys.exit(1)
+        
     intro_raw, outro_raw = load_intro_outro(script_path)
     img_map, qs, events = load_storyboard(storyboard_path)
     
-    # 퀴즈 및 이벤트 순서쌍
-    # Q1~Q5 -> EVENT1 -> Q6~Q10 -> EVENT2 -> Q11~Q15 -> EVENT3 -> Q16~Q20 -> EVENT4
     pages_html = []
     
     # Page 1: Intro
@@ -263,7 +311,7 @@ def main():
           <span class="hud-title">SYSTEM INITIATING...</span>
           <span class="hud-status">STATUS: ONLINE</span>
         </div>
-        <h2>[오프닝 & 인트로] 아틀란티스 신전의 부름</h2>
+        <h2>{config["main_title"]}</h2>
         <div class="story-content">
           {intro_html_text}
         </div>
@@ -280,7 +328,6 @@ def main():
         if not os.path.exists(img_path):
             img_path = os.path.join(assets_dir, f"q{qnum}.png")
         if not os.path.exists(img_path):
-            # 기본 대체 이미지
             img_path = os.path.join(assets_dir, "img1_radar.png")
             
         img_uri = Path(img_path).as_uri()
@@ -300,10 +347,10 @@ def main():
           </div>
           <div class="text-area">
             <div class="hud-header">
-              <span class="hud-title">COORDINATES & GRAPHS</span>
+              <span class="hud-title">{config["hud_title"]}</span>
               <span class="hud-status">STAGE {qnum}/20</span>
             </div>
-            <h2>Q{qnum}. {q.get("title", "심해의 미스터리")}</h2>
+            <h2>Q{qnum}. {q.get("title", "기하학의 수수께끼")}</h2>
             <div class="story-content">
               {story_html}
             </div>
@@ -393,9 +440,9 @@ def main():
       <div class="text-area">
         <div class="hud-header">
           <span class="hud-title">MISSION ACCOMPLISHED</span>
-          <span class="hud-status">STATUS: ESCAPED</span>
+          <span class="hud-status">STATUS: COMPLETED</span>
         </div>
-        <h2>[엔딩 & 아웃트로] 심해 탈출 성공</h2>
+        <h2>{config["outro_title"]}</h2>
         <div class="story-content">
           {outro_html_text}
         </div>
@@ -408,7 +455,7 @@ def main():
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>중1 4단원 대본집 이미지북</title>
+  <title>{config["title"]}</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Share+Tech+Mono&display=swap');
     
@@ -637,7 +684,6 @@ def main():
     print(f"Printing to PDF: {pdf_output_path}...")
     
     # PDF 출력 명령 실행
-    # --no-pdf-header-footer 는 머리글/바닥글(날짜, 제목, URL 등)을 생략하게 해준다.
     cmd = [
         browser_path,
         "--headless",
