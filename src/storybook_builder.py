@@ -1,8 +1,50 @@
 import os
+import re
 from pathlib import Path
 from src.models import Chapter
 from src.base import Builder
 from scripts.config import paths
+
+def format_markdown_to_html(text: str) -> str:
+    """마크다운의 볼드, 백틱, 리스트 문법을 인게임 사이버 네온 태그로 안전하게 치환합니다."""
+    if not text:
+        return ""
+    
+    # 1. 윈도우 줄바꿈 규격화
+    text = text.replace('\r\n', '\n')
+    
+    # 2. 마크다운 볼드 치환: **텍스트** -> 강조 네온
+    text = re.sub(
+        r'\*\*(.*?)\*\*', 
+        r'<strong style="color: var(--primary-neon); text-shadow: var(--text-glow);">\1</strong>', 
+        text
+    )
+    
+    # 3. 마크다운 백틱 치환: `텍스트` -> 모달 인코드형 뱃지
+    text = re.sub(
+        r'`(.*?)`', 
+        r'<code style="background: rgba(255, 255, 255, 0.08); color: var(--primary-neon); border: 1px solid var(--border-glass); padding: 2px 6px; border-radius: 4px; font-family: monospace;">\1</code>', 
+        text
+    )
+    
+    # 4. 불릿 리스트 치환: - 텍스트 -> 인게임 상태 블록 라인
+    text = re.sub(
+        r'^\s*-\s+(.*?)$', 
+        r'<div style="margin-left: 15px; margin-bottom: 6px; color: var(--accent-neon); font-family: \'Share Tech Mono\', monospace;">▪ \1</div>', 
+        text, 
+        flags=re.MULTILINE
+    )
+    
+    # 5. 인게임 캐릭터 대사 말머리 [화자]: 강조 색상 이식
+    text = re.sub(
+        r'\[(.*?)(?:_dyn)?\]:', 
+        r'<span style="color: var(--primary-neon); font-weight: bold; text-shadow: var(--text-glow)">[\1]:</span>', 
+        text
+    )
+    
+    # 6. 줄바꿈 -> <br> 변환
+    text = text.replace('\n', '<br>')
+    return text
 
 class StorybookBuilder(Builder):
     """
@@ -364,7 +406,7 @@ class StorybookBuilder(Builder):
             </div>
             
             <h4 style="margin-bottom: 8px; font-family:'Orbitron', sans-serif; color: var(--text-muted)">📖 SCENARIO DIALOGUE</h4>
-            <div class="story-p">{q.story}</div>
+            <div class="story-p">{format_markdown_to_html(q.story)}</div>
         </div>
 """)
 
@@ -395,7 +437,7 @@ class StorybookBuilder(Builder):
             </div>
             
             <h4 style="margin-bottom: 8px; font-family:'Orbitron', sans-serif; color: var(--text-muted)">📖 EVENT SCENARIO</h4>
-            <div class="story-p">{ev.story}</div>
+            <div class="story-p">{format_markdown_to_html(ev.story)}</div>
         </div>
 """)
 
@@ -408,7 +450,7 @@ class StorybookBuilder(Builder):
                 <img class="img-preview" src="{assets_relative_path}/{chapter.outro_image}" alt="Outro Image">
                 <div class="img-caption">[ILLUSTRATION 21] OUTRO SUCCESS ENDING SCENE</div>
             </div>
-            <div class="story-p">{chapter.outro_story}</div>
+            <div class="story-p">{format_markdown_to_html(chapter.outro_story)}</div>
         </div>
     </div>
 </body>
