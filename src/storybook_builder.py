@@ -418,7 +418,25 @@ class StorybookBuilder(Builder):
             </div>
 """)
 
-        # QUESTIONS 1 ~ 20 (Index 1 ~ 20)
+        # ── 이벤트 삽입 위치 맵 구성 ──────────────────────────
+        # next_stage가 'panel_qN' 형식이면 N번 퀴즈 직전에 이벤트를 삽입,
+        # 'outro' 또는 그 외이면 마지막 퀴즈 뒤에 삽입.
+        # event_map[after_qnum] = [ev, ...] 형태로 구성.
+        import re as _re
+        event_map = {}  # key: int (직전 q.qnum) → value: list[Event]
+        late_events = []  # outro 또는 파싱 불가 이벤트
+        for ev in chapter.events:
+            m = _re.search(r'panel_q(\d+)', ev.next_stage)
+            if m:
+                # panel_qN → N번 퀴즈 시작 직전에 삽입 = N-1번 퀴즈 직후
+                next_qnum = int(m.group(1))
+                after_qnum = next_qnum - 1  # 0이면 인트로 직후(edge case)
+                event_map.setdefault(after_qnum, []).append(ev)
+            else:
+                # outro 또는 기타 → 마지막 퀴즈 직후
+                late_events.append(ev)
+
+        # ── QUESTIONS + 중간 EVENTS 인터리브 렌더링 ─────────────
         scene_count = 1
         for idx, q in enumerate(chapter.questions, 1):
             choices_html = ""
@@ -476,8 +494,44 @@ class StorybookBuilder(Builder):
 """)
             scene_count += 1
 
-        # EVENTS 1 ~ 4 (Index 21 ~ 24)
-        for idx, ev in enumerate(chapter.events, 1):
+            # 이 퀴즈 직후에 삽입할 이벤트가 있으면 렌더링
+            for ev in event_map.get(q.qnum, []):
+                html_content.append(f"""
+            <!-- EVENT{ev.evnum} (Index {scene_count}) -->
+            <div class="storyboard-card" data-index="{scene_count}" data-title="EVENT {ev.evnum}: {ev.title}">
+                <div class="storyboard-left">
+                    <div class="img-frame">
+                        <img class="img-preview" src="{assets_relative_path}/{ev.image}" alt="Event{ev.evnum} Image">
+                        <div class="img-caption">
+                            <strong>[ILLUSTRATION EVENT {ev.evnum:02d}]</strong><br>
+                            지시: {ev.title} 돌발 상황 이벤트 배경
+                        </div>
+                    </div>
+                </div>
+                <div class="storyboard-right">
+                    <h2>🎬 EVENT {ev.evnum}: {ev.title}</h2>
+                    <div class="story-p">{format_markdown_to_html(ev.story)}</div>
+                    <table class="quiz-details">
+                        <tr>
+                            <td class="field-name">버튼 텍스트</td>
+                            <td>{ev.btn_text}</td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">다음 스테이지</td>
+                            <td><code>{ev.next_stage}</code></td>
+                        </tr>
+                        <tr>
+                            <td class="field-name">진행도</td>
+                            <td>{ev.progress}%</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+""")
+                scene_count += 1
+
+        # ── LATE EVENTS (outro 또는 기타) ────────────────────────
+        for ev in late_events:
             html_content.append(f"""
             <!-- EVENT{ev.evnum} (Index {scene_count}) -->
             <div class="storyboard-card" data-index="{scene_count}" data-title="EVENT {ev.evnum}: {ev.title}">
