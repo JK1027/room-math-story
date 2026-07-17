@@ -278,15 +278,56 @@ def main():
     args = parser.parse_args()
     
     unit = args.unit
-    if unit not in UNIT_CONFIGS:
-        print(f"Error: Unit '{unit}' is not configured in build_pdf_storybook.py")
-        sys.exit(1)
-        
-    config = UNIT_CONFIGS[unit]
+    grade_dir = "중1" if "m1_" in unit else ("중2" if "m2_" in unit else "중3")
     
+    if unit in UNIT_CONFIGS:
+        config = UNIT_CONFIGS[unit]
+        script_name = config["script_name"]
+        assets_folder = config["assets_folder"]
+        title = config["title"]
+        main_title = config["main_title"]
+        outro_title = config["outro_title"]
+        hud_title = config["hud_title"]
+    else:
+        # Autodetect
+        stories_grade_path = os.path.join(project_root, "stories", grade_dir)
+        script_name = None
+        if os.path.exists(stories_grade_path):
+            for fname in os.listdir(stories_grade_path):
+                if fname.startswith(unit) and fname.endswith(".md") and "script" in fname:
+                    script_name = fname
+                    break
+        if not script_name:
+            script_name = f"{unit}_script.md"
+            
+        assets_parent = os.path.join(project_root, "apps", "assets")
+        assets_folder = None
+        if os.path.exists(assets_parent):
+            for dname in os.listdir(assets_parent):
+                if dname.startswith(unit) and os.path.isdir(os.path.join(assets_parent, dname)):
+                    assets_folder = dname
+                    break
+        if not assets_folder:
+            assets_folder = unit
+            
+        clean_name = assets_folder.replace(f"{unit}_", "").replace("_", " ").title()
+        title = f"{unit.upper()}: {clean_name}"
+        main_title = f"[오프닝 & 인트로] 탐사 개시"
+        outro_title = f"[엔딩 & 아웃트로] 탐사 완료"
+        hud_title = clean_name.upper()
+        
+        config = {
+            "script_name": script_name,
+            "assets_folder": assets_folder,
+            "title": title,
+            "main_title": main_title,
+            "outro_title": outro_title,
+            "hud_title": hud_title
+        }
+        
     storyboard_path = os.path.join(project_root, "data", "storyboards", f"{unit}_storyboard.md")
-    script_path = os.path.join(project_root, "stories", "중1", config["script_name"])
-    assets_dir = os.path.join(project_root, "apps", "assets", config["assets_folder"])
+    script_path = os.path.join(project_root, "stories", grade_dir, script_name)
+    assets_dir = os.path.join(project_root, "apps", "assets", assets_folder)
     pdf_output_path = os.path.join(project_root, "data", "storyboards", f"{unit}_storyboard.pdf")
     
     print(f"Parsing files for unit {unit}...")
