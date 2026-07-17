@@ -5,6 +5,14 @@ import sys
 import argparse
 from pathlib import Path
 
+try:
+    from scripts.utils.optimize_assets import optimize_all_assets
+except ImportError:
+    try:
+        from optimize_assets import optimize_all_assets
+    except ImportError:
+        optimize_all_assets = None
+
 CURRENT_UNIT = "m1_05"
 
 THEME_METADATA = {
@@ -306,6 +314,13 @@ def find_browser():
 # ----------------- 메인 로직 -----------------
 
 def main():
+    # 이미지 최적화 파이프라인 자동 실행 (해시 기반 증분)
+    if optimize_all_assets:
+        try:
+            optimize_all_assets()
+        except Exception as e:
+            print(f"Warning: Auto asset optimization failed: {e}")
+            
     global CURRENT_UNIT
     parser = argparse.ArgumentParser(description="Generate PDF storyboard book.")
     parser.add_argument('--unit', type=str, default='m1_04', help='Unit ID (e.g. m1_04, m1_05)')
