@@ -6,7 +6,7 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 
 STORIES_DIR = ROOT_DIR / "stories"
 STORYBOARDS_DIR = ROOT_DIR / "storyboards"
-APPS_DIR = ROOT_DIR / "apps"
+TEMPLATES_DIR = ROOT_DIR / "templates"
 GAS_DIR = ROOT_DIR / "gas"
 ARCHIVE_DIR = ROOT_DIR / "archive"
 LEGACY_DRAFTS_DIR = ARCHIVE_DIR / "drafts"
@@ -30,7 +30,7 @@ def story_path(grade: str, script_name: str) -> Path:
 
 def html_output_path(unit: str) -> Path:
     """Returns the output HTML file path for a compiled app."""
-    return APPS_DIR / f"app_{unit}_escape_room.html"
+    return ROOT_DIR / "build" / "webapps" / f"app_{unit}_escape_room.html"
 
 def pdf_output_path(grade: str, unit: str) -> Path:
     """Returns the output PDF file path for a compiled storyboard."""

@@ -7,7 +7,7 @@ _cur = os.path.dirname(os.path.abspath(__file__))
 _root = os.path.dirname(_cur)
 if _root not in sys.path:
     sys.path.append(_root)
-from src.pipeline.runner import run_pipeline
+from src.runner import run_pipeline
 
 # 23개 단원 리스트 정의
 ALL_UNITS = [

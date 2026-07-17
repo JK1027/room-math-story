@@ -12,7 +12,7 @@ _root = os.path.dirname(_cur)
 if _root not in sys.path:
     sys.path.append(_root)
 from scripts.config import paths
-from src.pipeline.runner import run_pipeline
+from src.runner import run_pipeline
 
 WATCH_DIRS = [
     paths.STORIES_DIR
