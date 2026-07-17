@@ -214,7 +214,9 @@ def main():
     parser.add_argument('--json', action='store_true', help='Output results as a structured JSON string')
     args = parser.parse_args()
     
-    storyboard_root = paths.STORYBOARDS_DIR
+    storyboard_root = paths.ROOT_DIR / "storyboards" / "generated"
+    if not storyboard_root.exists():
+        storyboard_root = paths.STORYBOARDS_DIR
     total_errors = []
     
     # Load grade metadata dictionaries

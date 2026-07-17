@@ -206,7 +206,7 @@ def main():
             if not unit:
                 continue
                 
-            if unit in ["m1_03", "m1_04", "m1_05"]:
+            if unit in ["m1_01", "m1_03", "m1_04", "m1_05"]:
                 print(f"Skipping customized storyboard: {filename}")
                 continue
                 

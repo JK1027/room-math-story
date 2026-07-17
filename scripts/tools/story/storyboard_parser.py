@@ -12,7 +12,9 @@ def load_storyboard_qs(unit):
     from scripts.config import paths
     
     grade_dir = "grade1" if "m1_" in unit else ("grade2" if "m2_" in unit else "grade3")
-    storyboard_path = str(paths.storyboard_path(grade_dir, unit))
+    storyboard_path = str(paths.ROOT_DIR / "storyboards" / "generated" / grade_dir / f"{unit}_storyboard.md")
+    if not os.path.exists(storyboard_path):
+        storyboard_path = str(paths.storyboard_path(grade_dir, unit))
         
     if not os.path.exists(storyboard_path):
         raise FileNotFoundError(f"Storyboard file not found for unit '{unit}' at {storyboard_path}")
