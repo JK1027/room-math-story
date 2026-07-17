@@ -6,9 +6,9 @@
 
 ## 1. 현재 메타 상태 (Current Meta State)
 ```yaml
-revision: 2               # 현재 수정 회차 번호 (최초 초고는 0)
+revision: 3               # 현재 수정 회차 번호 (최초 초고는 0)
 current_step: "complete"  # [ready | architect | writer | review | score | director | fix | qa | complete]
-last_updated: "2026-07-17T16:25:00+09:00"
+last_updated: "2026-07-17T17:30:00+09:00"
 qa_status: "PASS"         # [PENDING | FAIL | PASS]
 ```
 
@@ -40,6 +40,14 @@ qa_status: "PASS"         # [PENDING | FAIL | PASS]
 - **최종 점수**: 77점 (80점 만점)
 - **조치 사항**: 조선 시대 자격루실 배경 설정 붕괴 교정(선체 조종석, 백색 렌즈 로봇 등), 수식 깨짐 복구, 맞춤법 및 조사 교정, QA PASS 승인
 
+### Rev 3: 중1 5단원 피드백 반영 및 QA 검수 단계 (Feedback & QA - Ch 5)
+- **Architect 완료 여부**: true
+- **Writer 완료 여부**: true
+- **산출물 위치**: `stories/grade1/m1_05_script.md`
+- **리뷰 수합 개수**: 0개 (이슈 완전 해결)
+- **최종 점수**: 80점 (80점 만점)
+- **조치 사항**: 타 단원(Ch 1) 조력자 기아로와 명칭 겹침 방지를 위해 중간 빌런명을 '기가스-G'로 변경, 캡틴 동적 바인딩 변수 {dyn_captain} 전격 반영, 대화 말괄호 표준 형식 [캐릭터]: "대사" 적용, QA PASS 승인
+
 ---
 
 ## 3. 수정 히스토리 및 피드백 추적 (Fix History & Feedback Track)
@@ -53,7 +61,7 @@ revision_history:
       - issue_id: 2 (우주선명을 '스페이스 익스플로러 호'로 통일하여 '오라클-호' 혼용 문제 해결)
       - issue_id: 3 (플레이어 호칭을 '관제 조사관/조사관'으로 통일하여 '캡틴', '승무원' 등의 혼용 문제 해결)
       - issue_id: 4 (한글 조사 오류 '관제 조사관는' -> '관제 조사관은', '보이드-V이' -> '보이드-V가', '제어 코드을' -> '제어 코드를' 수정)
-      - issue_id: 5 (인트로 및 기타 장면에서 가독성을 높이기 위해 줄바꿈 및 문장 재배치)
+      - issue_id: 5 (인트로 및 장면들에서 가독성을 높이기 위해 줄바꿈 및 문장 재배치)
     reviewer_re_evaluation:
       puzzle: "수학적 연산은 정확히 설계되었으며, 서사적으로도 긴밀하게 연결되었음 (해결)"
       settings: "캐릭터 및 우주선의 명칭이 정해진 바이블 규칙에 완전히 부합하도록 교정되어 개연성 회복 (해결)"
@@ -70,4 +78,15 @@ revision_history:
       puzzle: "LaTex 수식 깨짐 현상이 완전히 해결되어 가독성 확보 (해결)"
       settings: "타 단원(Ch 3)의 로봇 및 우주선 묘사가 조선 공방 자격루실에 맞춰 완전히 교정되었음 (해결)"
       grammar: "오탈자 및 한글 조사 호응이 말끔하게 교정되었음 (해결)"
+
+  - rev: 3
+    modified_scenes: [All Scenes (Q1 ~ Q20 & Event Scenes & Outro)]
+    fixed_issues:
+      - issue_id: 10 (중1 5단원 중간 빌런 기아로의 이름을 중2 1단원 조력자 기아로와 구분하기 위해 기가스-G로 변경)
+      - issue_id: 11 (하드코딩된 '캡틴' 호칭을 '{dyn_captain}'로 일괄 치환하여 캡틴 동적 바인딩 규칙 준수)
+      - issue_id: 12 (대화 패턴 파싱 안정성을 위해 '- **캐릭터:**' 형식을 '[캐릭터]:'의 표준 대사 포맷으로 통일)
+    reviewer_re_evaluation:
+      puzzle: "수학적 작도 및 합동 조건 연산의 정의가 무결하게 표현되었음 (해결)"
+      settings: "캐릭터명 중복 오염이 완벽히 정화되었으며 SF/르네상스 판타지 설정과 고유 기하 유물이 유기적으로 어우러짐 (해결)"
+      grammar: "대화 형식 파싱 정합성 및 동적 캡틴 명칭 규격이 100% 확보되었음 (해결)"
 ```
