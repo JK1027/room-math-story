@@ -448,6 +448,7 @@ class StorybookBuilder(Builder):
                 </div>
                 <div class="storyboard-right">
                     <h2>🧩 Q{q.qnum}: {q.title} {extra_class_badge}</h2>
+                    <div class="story-p">{format_markdown_to_html(q.story)}</div>
                     <table class="quiz-details">
                         <tr>
                             <td class="field-name">퀴즈 질문</td>
@@ -470,7 +471,6 @@ class StorybookBuilder(Builder):
                             <td style="color:var(--accent-neon)">💡 {q.hint}</td>
                         </tr>
                     </table>
-                    <div class="story-p">{format_markdown_to_html(q.story)}</div>
                 </div>
             </div>
 """)
@@ -492,6 +492,7 @@ class StorybookBuilder(Builder):
                 </div>
                 <div class="storyboard-right">
                     <h2>🎬 EVENT {ev.evnum}: {ev.title}</h2>
+                    <div class="story-p">{format_markdown_to_html(ev.story)}</div>
                     <table class="quiz-details">
                         <tr>
                             <td class="field-name">버튼 텍스트</td>
@@ -506,7 +507,6 @@ class StorybookBuilder(Builder):
                             <td>{ev.progress}%</td>
                         </tr>
                     </table>
-                    <div class="story-p">{format_markdown_to_html(ev.story)}</div>
                 </div>
             </div>
 """)
