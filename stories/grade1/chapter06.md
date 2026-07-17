@@ -35,7 +35,9 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '팔각형'
+type: exact
+values:
+  - "팔각형"
 
 ### Placeholder
 예: 육각형
@@ -72,7 +74,9 @@ q2.png
 - 35
 
 ### Answer
-ans === '35'
+type: exact
+values:
+  - "35"
 
 ### Placeholder
 숫자만 입력
@@ -109,7 +113,9 @@ q3.png
 - 107
 
 ### Answer
-ans === '105'
+type: exact
+values:
+  - "105"
 
 ### Placeholder
 숫자만 입력
@@ -146,7 +152,9 @@ q4.png
 - 320
 
 ### Answer
-ans === '160'
+type: exact
+values:
+  - "160"
 
 ### Placeholder
 숫자만 입력
@@ -181,7 +189,9 @@ q5.png
 - 9
 
 ### Answer
-ans === '7'
+type: exact
+values:
+  - "7"
 
 ### Placeholder
 숫자만 입력
@@ -218,7 +228,9 @@ q6.png
 - 360
 
 ### Answer
-ans === '360'
+type: exact
+values:
+  - "360"
 
 ### Placeholder
 숫자만 입력
@@ -255,7 +267,9 @@ q7.png
 - 해 없음
 
 ### Answer
-ans === '정십각형'
+type: exact
+values:
+  - "정십각형"
 
 ### Placeholder
 예: 정오각형
@@ -292,7 +306,9 @@ q8.png
 - 270
 
 ### Answer
-ans === '135'
+type: exact
+values:
+  - "135"
 
 ### Placeholder
 숫자만 입력
@@ -329,7 +345,9 @@ q9.png
 - 54
 
 ### Answer
-ans === '54'
+type: exact
+values:
+  - "54"
 
 ### Placeholder
 숫자만 입력
@@ -366,7 +384,9 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === '정십각형'
+type: exact
+values:
+  - "정십각형"
 
 ### Placeholder
 예: 정육각형
@@ -402,7 +422,9 @@ q11.png
 <strong>Q11. [호의 길이와 중심각 1]</strong><br>한 원에서 부채꼴의 호의 길이는 중심각의 크기에 어떻게 비례하는가?
 
 ### Answer
-ans === '정비례'
+type: exact
+values:
+  - "정비례"
 
 ### Placeholder
 예: 정비례, 반비례
@@ -431,7 +453,9 @@ q12.png
 <strong>Q12. [호의 길이와 중심각 2]</strong><br>중심각이 40도일 때 호의 길이가 6cm라면, 중심각이 160도일 때 호의 길이를 구하시오.
 
 ### Answer
-ans === '24'
+type: exact
+values:
+  - "24"
 
 ### Placeholder
 숫자만 입력
@@ -460,7 +484,9 @@ q13.png
 <strong>Q13. [부채꼴의 넓이와 중심각]</strong><br>부채꼴의 넓이가 원의 넓이의 1/6일 때, 이 부채꼴의 중심각의 크기를 구하시오.
 
 ### Answer
-ans === '60'
+type: exact
+values:
+  - "60"
 
 ### Placeholder
 숫자만 입력
@@ -489,7 +515,9 @@ q14.png
 <strong>Q14. [현의 길이]</strong><br>중심각의 크기가 같은 두 부채꼴의 현의 길이는 서로 같은가?
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 예: 같다, 다르다
@@ -518,7 +546,9 @@ q15.png
 <strong>Q15. [현과 중심각의 비례]</strong><br>현의 길이는 중심각의 크기에 정비례하는가?
 
 ### Answer
-ans === '아니다'
+type: exact
+values:
+  - "아니다"
 
 ### Placeholder
 예: 그렇다, 아니다
@@ -554,7 +584,9 @@ q16.png
 <strong>Q16. [원주 계산]</strong><br>반지름의 길이가 5cm인 원의 둘레의 길이를 구하시오. (원주율은 π, 입력시 '파이'로 기재)
 
 ### Answer
-ans === '10파이'
+type: exact
+values:
+  - "10파이"
 
 ### Placeholder
 예: 5파이
@@ -583,7 +615,9 @@ q17.png
 <strong>Q17. [호의 길이 계산]</strong><br>반지름의 길이가 9cm이고 중심각의 크기가 120도인 부채꼴의 호의 길이를 구하시오.
 
 ### Answer
-ans === '6파이'
+type: exact
+values:
+  - "6파이"
 
 ### Placeholder
 예: 3파이
@@ -612,7 +646,9 @@ q18.png
 <strong>Q18. [부채꼴의 넓이 계산]</strong><br>반지름의 길이가 6cm이고 중심각의 크기가 60도인 부채꼴 모양 홈의 넓이를 구하시오.
 
 ### Answer
-ans === '6파이'
+type: exact
+values:
+  - "6파이"
 
 ### Placeholder
 예: 2파이
@@ -641,7 +677,9 @@ q19.png
 <strong>Q19. [중심각 없이 넓이 구하기]</strong><br>반지름의 길이가 10cm이고 호의 길이가 5π cm인 부채꼴 모양 석문의 넓이를 계산하시오.
 
 ### Answer
-ans === '25파이'
+type: exact
+values:
+  - "25파이"
 
 ### Placeholder
 예: 10파이
@@ -670,7 +708,9 @@ q20.png
 <strong>Q20. [색칠한 부분의 넓이]</strong><br>반지름이 8cm인 반원에서 반지름이 4cm인 반원 두 개를 뺀 색칠된 부분의 넓이를 구하시오.
 
 ### Answer
-ans === '16파이'
+type: exact
+values:
+  - "16파이"
 
 ### Placeholder
 예: 12파이

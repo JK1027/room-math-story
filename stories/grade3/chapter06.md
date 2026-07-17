@@ -35,7 +35,9 @@ q1.png
 - 무한분
 
 ### Answer
-ans === '이등분'
+type: exact
+values:
+  - "이등분"
 
 ### Placeholder
 정답 입력
@@ -72,7 +74,9 @@ q2.png
 - 10
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 정답 입력
@@ -109,7 +113,9 @@ q3.png
 - 두배다
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 정답 입력
@@ -146,7 +152,9 @@ q4.png
 - 8
 
 ### Answer
-ans === '4'
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 정답 입력
@@ -181,7 +189,9 @@ q5.png
 - 12
 
 ### Answer
-ans === '10'
+type: exact
+values:
+  - "10"
 
 ### Placeholder
 정답 입력
@@ -218,7 +228,9 @@ q6.png
 - 두배다
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 정답 입력
@@ -255,7 +267,9 @@ q7.png
 - 10
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 정답 입력
@@ -292,7 +306,9 @@ q8.png
 - 260
 
 ### Answer
-ans === '130'
+type: exact
+values:
+  - "130"
 
 ### Placeholder
 정답 입력
@@ -329,7 +345,9 @@ q9.png
 - 두배다
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 정답 입력
@@ -366,7 +384,10 @@ q10.png
 - 0.5
 
 ### Answer
-ans === '1/2' || ans === '0.5'
+type: any_of
+values:
+  - "1/2"
+  - "0.5"
 
 ### Placeholder
 정답 입력
@@ -402,7 +423,9 @@ q11.png
 <strong>Q11. [호에 대한 원주각 성질]</strong><br>한 호에 대한 원주각들의 크기는 위치에 관계없이 모두 어떠한가? (한글 두 글자로 입력. 예: 같다)
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 정답 입력
@@ -431,7 +454,9 @@ q12.png
 <strong>Q12. [지름에 대한 원주각 크기]</strong><br>반원(지름)에 대한 원주각의 크기(도)는 몇 도인가? (숫자만 입력)
 
 ### Answer
-ans === '90'
+type: exact
+values:
+  - "90"
 
 ### Placeholder
 정답 입력
@@ -458,7 +483,9 @@ q13.png
 <strong>Q13. [원주각의 크기 구하기]</strong><br>원 O 에서 호 AB 에 대한 중심각의 크기가 $80^\circ$ 일 때, 원주각 $\angle APB$ 의 크기(도)를 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '40'
+type: exact
+values:
+  - "40"
 
 ### Placeholder
 정답 입력
@@ -485,7 +512,9 @@ q14.png
 <strong>Q14. [중심각의 크기 구하기]</strong><br>원 O 에서 한 호에 대한 원주각의 크기가 $35^\circ$ 일 때, 동일한 호에 대한 중심각의 크기(도)를 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '70'
+type: exact
+values:
+  - "70"
 
 ### Placeholder
 정답 입력
@@ -512,7 +541,9 @@ q15.png
 <strong>Q15. [지름을 포함한 직각삼각형]</strong><br>지름 AB 를 지나는 원주각 $\angle ACB$ 가 형성되어 있는 원 O 에서, $\angle A = 50^\circ$ 일 때, 각 $\angle B$ 의 크기(도)를 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '40'
+type: exact
+values:
+  - "40"
 
 ### Placeholder
 정답 입력
@@ -548,7 +579,9 @@ q16.png
 <strong>Q16. [내접사각형의 대각의 합]</strong><br>원에 내접하는 사각형에서 한 쌍의 대각의 크기의 합은 몇 도인가? (숫자만 입력)
 
 ### Answer
-ans === '180'
+type: exact
+values:
+  - "180"
 
 ### Placeholder
 정답 입력
@@ -577,7 +610,9 @@ q17.png
 <strong>Q17. [내접사각형의 대각 계산]</strong><br>원에 내접하는 사각형 ABCD 에서 각 $\angle A = 75^\circ$ 일 때, 마주 보는 대각 $\angle C$ 의 크기(도)를 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '105'
+type: exact
+values:
+  - "105"
 
 ### Placeholder
 정답 입력
@@ -606,7 +641,9 @@ q18.png
 <strong>Q18. [내접사각형의 외각과 내대각]</strong><br>원에 내접하는 사각형 ABCD 의 한 외각의 크기가 $85^\circ$ 일 때, 이와 이웃하지 않는 대각(내대각)의 크기(도)를 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '85'
+type: exact
+values:
+  - "85"
 
 ### Placeholder
 정답 입력
@@ -635,7 +672,9 @@ q19.png
 <strong>Q19. [접선과 현이 이루는 각]</strong><br>원 O 의 접선 PT 에 대하여 접점 T 를 지나는 현 TA 가 만드는 각 $\angle ATP = 60^\circ$ 일 때, 그 현에 대한 원주각의 크기(도)를 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '60'
+type: exact
+values:
+  - "60"
 
 ### Placeholder
 정답 입력
@@ -664,7 +703,9 @@ q20.png
 <strong>Q20. [원주각의 크기와 호의 길이]</strong><br>원 O 에서 길이가 서로 같은 두 호에 대한 두 원주각의 크기의 비율은 몇 대 몇인지 수치 비율로 적으시오. (예: 1)
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 정답 입력

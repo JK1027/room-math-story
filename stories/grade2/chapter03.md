@@ -35,7 +35,10 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === 'X>=3' || ans === 'X\GE3'
+type: any_of
+values:
+  - "X>=3"
+  - "X\GE3"
 
 ### Placeholder
 예: x>=3
@@ -71,7 +74,11 @@ q2.png
 - $-x
 
 ### Answer
-ans === '(2)' || ans === '2' || ans === '②'
+type: any_of
+values:
+  - "(2)"
+  - "2"
+  - "②"
 
 ### Placeholder
 예: (2) 또는 2
@@ -108,7 +115,9 @@ q3.png
 - 해 없음
 
 ### Answer
-ans === 'X<5'
+type: exact
+values:
+  - "X<5"
 
 ### Placeholder
 예: x<5
@@ -139,7 +148,11 @@ q4.png
 <strong>Q4. [조건을 만족하는 해]</strong><br>부등식 $x + 2 &lt; 5$ 를 만족하는 자연수 $x$를 모두 구하시오.
 
 ### Answer
-ans === '1,2' || ans === '1,2개' || ans === '1과2'
+type: any_of
+values:
+  - "1,2"
+  - "1,2개"
+  - "1과2"
 
 ### Placeholder
 예: 1,2
@@ -170,7 +183,10 @@ q5.png
 <strong>Q5. [해의 최대값]</strong><br>부등식 $2x \le 8$ 을 만족하는 가장 큰 정수를 구하시오.
 
 ### Answer
-ans === '4' || ans === '4개'
+type: any_of
+values:
+  - "4"
+  - "4개"
 
 ### Placeholder
 예: 4
@@ -199,7 +215,10 @@ q6.png
 <strong>Q6. [부등식의 성질 1]</strong><br>$a &lt; b$ 일 때, $a + 2$ 와 $b + 2$ 의 대소를 비교하시오.
 
 ### Answer
-ans === 'A+2<B+2' || ans === 'B+2>A+2'
+type: any_of
+values:
+  - "A+2<B+2"
+  - "B+2>A+2"
 
 ### Placeholder
 예: a+2<b+2
@@ -230,7 +249,10 @@ q7.png
 <strong>Q7. [부등식의 성질 2]</strong><br>$a &lt; b$ 일 때, $3a$ 와 $3b$ 의 대소를 비교하시오.
 
 ### Answer
-ans === '3A<3B' || ans === '3B>3A'
+type: any_of
+values:
+  - "3A<3B"
+  - "3B>3A"
 
 ### Placeholder
 예: 3a<3b
@@ -261,7 +283,10 @@ q8.png
 <strong>Q8. [부등식의 성질 3]</strong><br>$a &lt; b$ 일 때, $-2a$ 와 $-2b$ 의 대소 관계를 부등호로 나타내시오.
 
 ### Answer
-ans === '-2A>-2B' || ans === '-2B<-2A'
+type: any_of
+values:
+  - "-2A>-2B"
+  - "-2B<-2A"
 
 ### Placeholder
 예: -2a>-2b
@@ -292,7 +317,11 @@ q9.png
 <strong>Q9. [부등호의 핵심 법칙]</strong><br>음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가?
 
 ### Answer
-ans === '바뀐다' || ans === '변한다' || ans === '바뀜'
+type: any_of
+values:
+  - "바뀐다"
+  - "변한다"
+  - "바뀜"
 
 ### Placeholder
 바뀐다 또는 그대로다 입력
@@ -329,7 +358,9 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === 'X<-3'
+type: exact
+values:
+  - "X<-3"
 
 ### Placeholder
 예: x<-3
@@ -371,7 +402,9 @@ q11.png
 - 해 없음
 
 ### Answer
-ans === 'X>2'
+type: exact
+values:
+  - "X>2"
 
 ### Placeholder
 예: x>2
@@ -406,7 +439,10 @@ q12.png
 - 해 없음
 
 ### Answer
-ans === 'X<=2' || ans === 'X\LE2'
+type: any_of
+values:
+  - "X<=2"
+  - "X\LE2"
 
 ### Placeholder
 예: x<=2
@@ -441,7 +477,9 @@ q13.png
 - 해 없음
 
 ### Answer
-ans === 'X<5'
+type: exact
+values:
+  - "X<5"
 
 ### Placeholder
 예: x<5
@@ -476,7 +514,10 @@ q14.png
 - 해 없음
 
 ### Answer
-ans === 'X<=3' || ans === 'X\LE3'
+type: any_of
+values:
+  - "X<=3"
+  - "X\LE3"
 
 ### Placeholder
 예: x<=3
@@ -511,7 +552,9 @@ q15.png
 - 해 없음
 
 ### Answer
-ans === 'X>3'
+type: exact
+values:
+  - "X>3"
 
 ### Placeholder
 예: x>3
@@ -547,7 +590,10 @@ q16.png
 <strong>Q16. [자연수 응용]</strong><br>연속하는 두 자연수의 합이 15보다 크다고 할 때, 이를 만족하는 가장 작은 두 자연수를 구하시오.
 
 ### Answer
-ans === '8,9' || ans === '8과9'
+type: any_of
+values:
+  - "8,9"
+  - "8과9"
 
 ### Placeholder
 예: 8,9
@@ -582,7 +628,10 @@ q17.png
 - 해 없음
 
 ### Answer
-ans === '800X+1000<=6000' || ans === '800X+1000\LE6000'
+type: any_of
+values:
+  - "800X+1000<=6000"
+  - "800X+1000\LE6000"
 
 ### Placeholder
 예: 800x+1000<=6000
@@ -611,7 +660,10 @@ q18.png
 <strong>Q18. [최대값 구하기]</strong><br>Q17 조건에서 장미는 최대 몇 송이까지 살 수 있는가?
 
 ### Answer
-ans === '6' || ans === '6송이'
+type: any_of
+values:
+  - "6"
+  - "6송이"
 
 ### Placeholder
 예: 6 또는 6송이
@@ -640,7 +692,11 @@ q19.png
 <strong>Q19. [실생활 활용]</strong><br>몇 개월 후부터 동생의 저금액이 형의 저금액보다 많아지는지 구하시오.
 
 ### Answer
-ans === '11' || ans === '11개월' || ans === '11개월후'
+type: any_of
+values:
+  - "11"
+  - "11개월"
+  - "11개월후"
 
 ### Placeholder
 예: 11 또는 11개월
@@ -669,7 +725,10 @@ q20.png
 <strong>Q20. [최종 면적 구하기]</strong><br>요정 숲의 남은 면적은 최소 얼마 초과인가?
 
 ### Answer
-ans === '30' || ans === '30초과'
+type: any_of
+values:
+  - "30"
+  - "30초과"
 
 ### Placeholder
 숫자만 또는 초과 입력 (예: 30)

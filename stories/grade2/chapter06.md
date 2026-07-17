@@ -35,7 +35,9 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '이등변삼각형'
+type: exact
+values:
+  - "이등변삼각형"
 
 ### Placeholder
 이등변삼각형 입력
@@ -72,7 +74,9 @@ q2.png
 - 해 없음
 
 ### Answer
-ans === '밑각'
+type: exact
+values:
+  - "밑각"
 
 ### Placeholder
 두 글자 입력
@@ -109,7 +113,10 @@ q3.png
 - 68
 
 ### Answer
-ans === '70' || ans === '70도'
+type: any_of
+values:
+  - "70"
+  - "70도"
 
 ### Placeholder
 숫자만 입력
@@ -147,7 +154,9 @@ q4.png
 - ASA
 
 ### Answer
-ans.includes('RHS') && ans.includes('RHA')
+type: exact
+values:
+  - "ans.includes(RHS) && ans.includes(RHA)"
 
 ### Placeholder
 예: RHS, RHA
@@ -185,7 +194,9 @@ q5.png
 - ASA
 
 ### Answer
-ans.includes('RHA')
+type: exact
+values:
+  - "ans.includes(RHA)"
 
 ### Placeholder
 알파벳 기호 입력
@@ -220,7 +231,9 @@ q6.png
 - 수심
 
 ### Answer
-ans === '외심'
+type: exact
+values:
+  - "외심"
 
 ### Placeholder
 두 글자 입력
@@ -251,7 +264,9 @@ q7.png
 <strong>Q7. [둔각삼각형의 외심 위치]</strong><br>둔각삼각형의 외심은 삼각형의 ( 내부 / 외부 )에 위치한다.
 
 ### Answer
-ans === '외부'
+type: exact
+values:
+  - "외부"
 
 ### Placeholder
 내부 또는 외부 입력
@@ -282,7 +297,9 @@ q8.png
 <strong>Q8. [직각삼각형의 외심 위치]</strong><br>직각삼각형의 외심은 빗변의 ( ? )에 위치한다. (두 글자)
 
 ### Answer
-ans === '중점'
+type: exact
+values:
+  - "중점"
 
 ### Placeholder
 두 글자 입력
@@ -319,7 +336,9 @@ q9.png
 - 수심
 
 ### Answer
-ans === '내심'
+type: exact
+values:
+  - "내심"
 
 ### Placeholder
 두 글자 입력
@@ -350,7 +369,9 @@ q10.png
 <strong>Q10. [내심의 성질]</strong><br>삼각형의 내심에서 세 ( ? )에 이르는 거리는 같다. (한 글자)
 
 ### Answer
-ans === '변'
+type: exact
+values:
+  - "변"
 
 ### Placeholder
 한 글자 입력
@@ -392,7 +413,9 @@ q11.png
 - 해 없음
 
 ### Answer
-ans === '평행사변형'
+type: exact
+values:
+  - "평행사변형"
 
 ### Placeholder
 다섯 글자 입력
@@ -421,7 +444,9 @@ q12.png
 <strong>Q12. [평행사변형의 성질 1]</strong><br>평행사변형에서 마주 보는 대변의 길이는 서로 ( 같다 / 다르다 ).
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -450,7 +475,9 @@ q13.png
 <strong>Q13. [평행사변형의 성질 2]</strong><br>평행사변형에서 마주 보는 두 대각의 크기는 서로 ( 같다 / 다르다 ).
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -479,7 +506,9 @@ q14.png
 <strong>Q15. [평행사변형의 성질 3]</strong><br>평행사변형의 두 대각선은 서로 다른 것을 ( ? ) 한다. (네 글자)
 
 ### Answer
-ans.includes('이등분')
+type: exact
+values:
+  - "ans.includes(이등분)"
 
 ### Placeholder
 네 글자 입력
@@ -512,7 +541,9 @@ q15.png
 - 해 없음
 
 ### Answer
-ans === '평행사변형'
+type: exact
+values:
+  - "평행사변형"
 
 ### Placeholder
 다섯 글자 입력
@@ -548,7 +579,9 @@ q16.png
 <strong>Q16. [직사각형의 정의]</strong><br>네 내각의 크기가 모두 90도로 같은 사각형을 무엇이라 하는가?
 
 ### Answer
-ans === '직사각형'
+type: exact
+values:
+  - "직사각형"
 
 ### Placeholder
 세 글자 입력
@@ -577,7 +610,9 @@ q17.png
 <strong>Q17. [직사각형의 대각선 성질]</strong><br>직사각형의 두 대각선의 길이는 서로 ( 같다 / 다르다 ).
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -606,7 +641,9 @@ q18.png
 <strong>Q18. [마름모의 정의]</strong><br>네 변의 길이가 모두 같은 사각형을 무엇이라 하는가?
 
 ### Answer
-ans === '마름모'
+type: exact
+values:
+  - "마름모"
 
 ### Placeholder
 세 글자 입력
@@ -639,7 +676,11 @@ q19.png
 - X
 
 ### Answer
-ans === 'O' || ans === '오' || ans === 'TRUE'
+type: any_of
+values:
+  - "O"
+  - "오"
+  - "TRUE"
 
 ### Placeholder
 O 또는 X 입력
@@ -668,7 +709,9 @@ q20.png
 <strong>Q20. [정사각형의 정의]</strong><br>네 변의 길이가 같고 네 각의 크기가 모두 같은 사각형의 이름은 무엇인가? (세 글자)
 
 ### Answer
-ans === '정사각형'
+type: exact
+values:
+  - "정사각형"
 
 ### Placeholder
 세 글자 입력

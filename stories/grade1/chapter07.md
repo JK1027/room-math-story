@@ -35,7 +35,9 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '각기둥'
+type: exact
+values:
+  - "각기둥"
 
 ### Placeholder
 예: 각뿔
@@ -70,7 +72,9 @@ q2.png
 - 12
 
 ### Answer
-ans === '10'
+type: exact
+values:
+  - "10"
 
 ### Placeholder
 숫자만 입력
@@ -105,7 +109,9 @@ q3.png
 - 12
 
 ### Answer
-ans === '12'
+type: exact
+values:
+  - "12"
 
 ### Placeholder
 숫자만 입력
@@ -140,7 +146,9 @@ q4.png
 - 12
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 숫자만 입력
@@ -175,7 +183,9 @@ q5.png
 - 해 없음
 
 ### Answer
-ans === '정사면체'
+type: exact
+values:
+  - "정사면체"
 
 ### Placeholder
 예: 정육면체
@@ -212,7 +222,9 @@ q6.png
 - 해 없음
 
 ### Answer
-ans === '회전체'
+type: exact
+values:
+  - "회전체"
 
 ### Placeholder
 예: 다면체
@@ -249,7 +261,9 @@ q7.png
 - 해 없음
 
 ### Answer
-ans === '직사각형'
+type: exact
+values:
+  - "직사각형"
 
 ### Placeholder
 예: 사각형
@@ -286,7 +300,9 @@ q8.png
 - 해 없음
 
 ### Answer
-ans === '원'
+type: exact
+values:
+  - "원"
 
 ### Placeholder
 예: 타원
@@ -323,7 +339,9 @@ q9.png
 - 해 없음
 
 ### Answer
-ans === '원뿔'
+type: exact
+values:
+  - "원뿔"
 
 ### Placeholder
 예: 원기둥
@@ -360,7 +378,9 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === '원'
+type: exact
+values:
+  - "원"
 
 ### Placeholder
 예: 타원
@@ -396,7 +416,9 @@ q11.png
 <strong>Q11. [각기둥의 겉넓이]</strong><br>밑면이 가로 3cm, 세로 4cm인 직사각형이고, 높이가 5cm인 직육면체의 겉넓이를 구하시오.
 
 ### Answer
-ans === '94'
+type: exact
+values:
+  - "94"
 
 ### Placeholder
 숫자만 입력
@@ -425,7 +447,9 @@ q12.png
 <strong>Q12. [원기둥의 겉넓이]</strong><br>밑면의 반지름이 2cm이고 높이가 6cm인 원기둥의 겉넓이를 구하시오.
 
 ### Answer
-ans === '32파이'
+type: exact
+values:
+  - "32파이"
 
 ### Placeholder
 예: 10파이
@@ -454,7 +478,9 @@ q13.png
 <strong>Q13. [사각뿔의 겉넓이]</strong><br>밑면이 한 변의 길이가 4cm인 정사각형이고, 옆면의 삼각형의 높이가 5cm인 정사각뿔의 겉넓이를 구하시오.
 
 ### Answer
-ans === '56'
+type: exact
+values:
+  - "56"
 
 ### Placeholder
 숫자만 입력
@@ -483,7 +509,9 @@ q14.png
 <strong>Q14. [원뿔의 겉넓이]</strong><br>밑면의 반지름이 3cm이고, 모선의 길이가 5cm인 원뿔의 겉넓이를 구하시오.
 
 ### Answer
-ans === '24파이'
+type: exact
+values:
+  - "24파이"
 
 ### Placeholder
 예: 10파이
@@ -512,7 +540,9 @@ q15.png
 <strong>Q15. [구의 겉넓이]</strong><br>반지름의 길이가 3cm인 구의 겉넓이를 구하시오.
 
 ### Answer
-ans === '36파이'
+type: exact
+values:
+  - "36파이"
 
 ### Placeholder
 예: 10파이
@@ -548,7 +578,9 @@ q16.png
 <strong>Q16. [각기둥의 부피]</strong><br>밑면의 넓이가 20cm²이고 높이가 8cm인 각기둥의 부피를 구하시오.
 
 ### Answer
-ans === '160'
+type: exact
+values:
+  - "160"
 
 ### Placeholder
 숫자만 입력
@@ -577,7 +609,9 @@ q17.png
 <strong>Q17. [원기둥의 부피]</strong><br>밑면의 반지름이 4cm이고 높이가 5cm인 원기둥의 부피를 구하시오.
 
 ### Answer
-ans === '80파이'
+type: exact
+values:
+  - "80파이"
 
 ### Placeholder
 예: 10파이
@@ -606,7 +640,9 @@ q18.png
 <strong>Q18. [원뿔의 부피]</strong><br>밑면의 반지름이 3cm이고 높이가 4cm인 원뿔의 부피를 구하시오.
 
 ### Answer
-ans === '12파이'
+type: exact
+values:
+  - "12파이"
 
 ### Placeholder
 예: 10파이
@@ -635,7 +671,9 @@ q19.png
 <strong>Q19. [구의 부피]</strong><br>반지름의 길이가 3cm인 구의 부피를 구하시오.
 
 ### Answer
-ans === '36파이'
+type: exact
+values:
+  - "36파이"
 
 ### Placeholder
 예: 10파이
@@ -664,7 +702,9 @@ q20.png
 <strong>Q20. [부피의 비]</strong><br>밑면의 반지름과 높이가 모두 같은 원뿔, 구, 원기둥의 부피의 비를 구하시오.
 
 ### Answer
-ans === '1:2:3'
+type: exact
+values:
+  - "1:2:3"
 
 ### Placeholder
 예: 1:2:3

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수학 방탈출 게임</title>
+    <!-- 구글 폰트 및 외부 리소스 -->
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-neon: #00f2fe;
+            --accent-neon: #4facfe;
+            --danger-neon: #ef4444;
+            --bg-glass: rgba(10, 25, 47, 0.7);
+            --border-glass: rgba(0, 242, 254, 0.2);
+            --text-glow: 0 0 10px rgba(0, 242, 254, 0.5);
+        }
+
+        /* ─── 학년/단원별 테마별 CSS 확장 바인딩 ─── */
+        body.theme-atlantis {
+            background: radial-gradient(circle at center, #0a2540 0%, #001020 100%);
+            --primary-neon: #60a5fa;
+            --accent-neon: #3b82f6;
+        }
+        body.theme-da_vinci {
+            background: radial-gradient(circle at center, #3e2723 0%, #1a0c00 100%);
+            --primary-neon: #d97706;
+            --accent-neon: #f59e0b;
+        }
+        body.theme-space {
+            background: radial-gradient(circle at center, #1e1b4b 0%, #030712 100%);
+            --primary-neon: #a855f7;
+            --accent-neon: #c084fc;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #030712;
+            color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 게임 전용 뷰포트 컨테이너 */
+        #game-viewport {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
+            background: #020617;
+            border: 2px solid var(--primary-neon);
+            box-shadow: 0 0 25px var(--primary-neon);
+            border-radius: 16px;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        /* 공통 글래스모피즘 패널 구조 */
+        .glass-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .glass-panel.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            font-size: 1.5rem;
+            color: var(--primary-neon);
+            text-shadow: var(--text-glow);
+            border-bottom: 2px solid var(--border-glass);
+            padding-bottom: 10px;
+        }
+
+        /* 타이머 영역 */
+        .game-timer {
+            float: right;
+            color: var(--danger-neon);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.4rem;
+            text-shadow: 0 0 8px var(--danger-neon);
+        }
+
+        .panel-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-glass);
+            margin: 15px 0;
+        }
+
+        /* 스토리 및 지문 */
+        .story-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 12px 18px;
+            max-height: 100px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .story-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #e5e7eb;
+        }
+
+        .story-log-trigger {
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            background: transparent;
+            border: none;
+            color: var(--accent-neon);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* 퀴즈 문제 구역 */
+        .question-box {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 4px solid var(--primary-neon);
+        }
+
+        .question-content {
+            font-size: 1rem;
+            color: #f9fafb;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            border-radius: 6px;
+            padding: 10px;
+            color: #ffffff;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 10px var(--primary-neon);
+        }
+
+        /* 객관식 라디오 레이아웃 */
+        .radio-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s;
+        }
+        
+        .radio-label:hover {
+            background: rgba(0, 242, 254, 0.08);
+            border-color: var(--primary-neon);
+        }
+
+        /* 버튼 및 그룹 */
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--primary-neon);
+            color: var(--primary-neon);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            padding: 10px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            text-shadow: var(--text-glow);
+            box-shadow: inset 0 0 5px rgba(0, 242, 254, 0.2);
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--primary-neon);
+            color: #020617;
+            box-shadow: 0 0 15px var(--primary-neon);
+            text-shadow: none;
+        }
+
+        .btn-hint {
+            background: transparent;
+            border: 1px solid var(--accent-neon);
+            color: var(--accent-neon);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-left: 6px;
+        }
+
+        /* 에러 메시지 */
+        .error-msg {
+            color: var(--danger-neon);
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 6px;
+            display: none;
+            text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+            text-align: center;
+        }
+
+        .radio-msg {
+            color: var(--accent-neon);
+            font-size: 0.9rem;
+            margin-top: 4px;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+            text-align: center;
+        }
+
+        /* 락다운 오버레이 */
+        .glitch-overlay-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(239, 68, 68, 0.15);
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            border: 10px solid var(--danger-neon);
+        }
+        .glitch-overlay-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2.8rem;
+            color: var(--danger-neon);
+            text-shadow: 0 0 20px var(--danger-neon);
+        }
+
+        /* 모달 로그 오버레이 */
+        #logModal {
+            display: none;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%; max-width: 500px;
+            background: rgba(10, 20, 30, 0.95);
+            border: 2px solid var(--primary-neon);
+            border-radius: 12px;
+            padding: 20px;
+            z-index: 10000;
+            color: #ffffff;
+        }
+
+        /* 쉐이크 흔들림 효과 */
+        .shake { animation: shake-act 0.4s; }
+        @keyframes shake-act {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-viewport">
+        <!-- 런타임에 이 컨테이너 하위로 패널들이 렌더링되거나 제어됩니다. -->
+        <div id="panels-container"></div>
+    </div>
+
+    <!-- 락다운 및 공통 모달 -->
+    <div id="glitchOverlay" class="glitch-overlay-screen">
+        <div class="glitch-overlay-text">🚨 SYSTEM ERROR 🚨</div>
+        <div style="color: white; margin-top: 10px;">ACCESS TEMPORARILY LOCKDOWN</div>
+    </div>
+
+    <div id="logModal">
+        <h3>📜 지나간 이전 스토리 로그</h3>
+        <div id="logContent" style="max-height: 250px; overflow-y: auto; font-size: 0.9rem; line-height: 1.5;"></div>
+        <button class="btn" style="margin-top: 15px; width: 100%;" onclick="closeLog()">닫기</button>
+    </div>
+
+    <!-- ─── GameRuntime 공통 자바스크립트 엔진 ─── -->
+    <script>
+        // 전역 다이얼로그 로그 저장
+        const storyLogHistory = [];
+
+        const GameRuntime = {
+            data: null,
+            timerId: null,
+            timeLeft: 2400,
+            currentWrongCount: 0,
+            totalWrongCount: 0,
+            activePanelId: 'panel_intro',
+
+            start: function(gameData) {
+                this.data = gameData;
+                this.timeLeft = gameData.timer_limit_sec || 2400;
+                
+                // CSS 테마 적용
+                document.body.className = 'theme-' + (gameData.theme || 'atlantis');
+                
+                this.render();
+                this.bindEvents();
+                this.showPanel('panel_intro');
+            },
+
+            showPanel: function(panelId) {
+                document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById(panelId);
+                if (target) {
+                    target.classList.add('active');
+                    this.activePanelId = panelId;
+                }
+                
+                // 오프닝을 넘어가 게임에 들어가는 시점에 타이머 자동 시작
+                if (panelId === 'panel_q1') {
+                    this.startTimer();
+                }
+            },
+
+            render: function() {
+                const container = document.getElementById('panels-container');
+                container.innerHTML = '';
+                
+                const assetsBase = `https://jk1027.github.io/room-math-story/assets/units/${this.data.unit_code}`;
+                
+                // 1. INTRO PANEL
+                const introHtml = `
+                    <div id="panel_intro" class="glass-panel active">
+                        <h2>SYSTEM INITIATION</h2>
+                        <img src="${assetsBase}/${this.data.intro.image}" class="panel-image" alt="Intro">
+                        <div class="story-box">
+                            <div class="story-text">${this.data.intro.story}</div>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn" onclick="GameRuntime.showPanel('panel_q1')">미션 개시</button>
+                        </div>
+                    </div>`;
+                container.insertAdjacentHTML('beforeend', introHtml);
+                storyLogHistory.push(`[오프닝]: ${this.data.intro.story}`);
+
+                // 2. Q1 ~ Q20 PANELS
+                this.data.questions.forEach((q, idx) => {
+                    const nextStage = idx === 19 ? 'panel_event4' : 
+                                     (q.qnum === 5 ? 'panel_event1' : 
+                                      (q.qnum === 10 ? 'panel_event2' : 
+                                       (q.qnum === 15 ? 'panel_event3' : `panel_q${q.qnum + 1}`)));
+                    
+                    const btnText = q.qnum === 1 ? '잠항 시작' : (q.qnum === 20 ? '탈출하기' : '다음으로');
+                    
+                    let inputHtml = '';
+                    if (q.choices && q.choices.length > 0) {
+                        let optionsHtml = '';
+                        q.choices.forEach(opt => {
+                            optionsHtml += `
+                                <label class="radio-label">
+                                    <input type="radio" name="ans_group${q.qnum}" value="${opt}"> ${opt}
+                                </label>`;
+                        });
+                        inputHtml = `<div class="options-group" id="ans${q.qnum}_group">${optionsHtml}</div>`;
+                    } else {
+                        inputHtml = `
+                            <div class="input-group">
+                                <input type="text" id="ans${q.qnum}" placeholder="${q.placeholder}">
+                            </div>`;
+                    }
+
+                    const qHtml = `
+                        <div id="panel_q${q.qnum}" class="glass-panel ${q.extra_class || ''}">
+                            <h2>제 ${q.qnum}구역: ${q.title} <span class="game-timer">40:00</span></h2>
+                            <img src="${assetsBase}/${q.image}" class="panel-image" alt="Q${q.qnum}">
+                            <div class="story-box">
+                                <div class="story-text">${q.story}</div>
+                                <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
+                            </div>
+                            <div class="question-box">
+                                <div class="question-content">
+                                    <strong>${q.qtext}</strong>
+                                    <button class="btn-hint" onclick="alert('💡 힌트: ${q.hint}')">💡 힌트</button>
+                                    ${inputHtml}
+                                </div>
+                            </div>
+                            <div class="error-msg" id="error${q.qnum}">${q.error_message}</div>
+                            <div class="btn-group">
+                                <button class="btn" onclick="GameRuntime.submitAnswer(${q.qnum})">${btnText}</button>
+                            </div>
+                        </div>`;
+                    container.insertAdjacentHTML('beforeend', qHtml);
+                    storyLogHistory.push(`[제 ${q.qnum}구역]: ${q.story}`);
+                });
+
+                // 3. EVENT 1 ~ 4 PANELS
+                this.data.events.forEach(ev => {
+                    const evHtml = `
+                        <div id="panel_event${ev.evnum}" class="glass-panel">
+                            <h2>[돌발] ${ev.title} <span class="game-timer">40:00</span></h2>
+                            <img src="${assetsBase}/${ev.image}" class="panel-image" alt="Event">
+                            <div class="story-box">
+                                <div class="story-text">${ev.story}</div>
+                                <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
+                            </div>
+                            <div class="btn-group">
+                                <button class="btn" onclick="GameRuntime.triggerStageTransition('panel_event${ev.evnum}', '${ev.next_stage}', ${ev.progress})">${ev.btn_text}</button>
+                            </div>
+                        </div>`;
+                    container.insertAdjacentHTML('beforeend', evHtml);
+                    storyLogHistory.push(`[돌발 이벤트 ${ev.evnum}]: ${ev.story}`);
+                });
+
+                // 4. OUTRO PANEL
+                const outroHtml = `
+                    <div id="outro" class="glass-panel">
+                        <h1 style="color:var(--primary-neon); text-align:center;">미션 성공!</h1>
+                        <h2>${this.data.title}</h2>
+                        <img src="${assetsBase}/${this.data.outro.image}" class="panel-image" alt="Outro">
+                        <div class="story-box">
+                            <div class="story-text" id="outro-dynamic-text">미션 결과를 산출 중입니다...</div>
+                            <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
+                        </div>
+                        <button class="btn" style="margin-top: 20px; width:100%;" onclick="location.reload()">다시 도전하기</button>
+                    </div>`;
+                container.insertAdjacentHTML('beforeend', outroHtml);
+                
+                // 5. GAMEOVER PANEL
+                const gameOverHtml = `
+                    <div id="gameover" class="glass-panel">
+                        <h1 style="color:var(--danger-neon); text-align:center;">미션 실패 (GAME OVER)</h1>
+                        <img src="${assetsBase}/${this.data.outro.image}" class="panel-image" alt="GameOver" style="filter:grayscale(1);">
+                        <div class="story-box">
+                            <div class="story-text" style="color:var(--danger-neon);">${this.data.outro.story_failure}</div>
+                        </div>
+                        <button class="btn" style="margin-top: 20px; width:100%; background:var(--danger-neon); color:white;" onclick="location.reload()">다시 시도하기</button>
+                    </div>`;
+                container.insertAdjacentHTML('beforeend', gameOverHtml);
+            },
+
+            bindEvents: function() {
+                // 필요시 리로드나 키다운 방지 등 공통화 처리
+                window.addEventListener('beforeunload', (e) => {
+                    if (this.activePanelId !== 'panel_intro' && this.activePanelId !== 'outro' && this.activePanelId !== 'gameover') {
+                        e.preventDefault();
+                        e.returnValue = '';
+                    }
+                });
+            },
+
+            startTimer: function() {
+                if (this.timerId) return;
+                this.updateTimerDisplay();
+                this.timerId = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timerId);
+                        this.showPanel('gameover');
+                    }
+                }, 1000);
+            },
+
+            updateTimerDisplay: function() {
+                const minutes = Math.floor(this.timeLeft / 60);
+                const seconds = this.timeLeft % 60;
+                const timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                document.querySelectorAll('.game-timer').forEach(el => {
+                    el.innerText = timeStr;
+                });
+            },
+
+            submitAnswer: function(qnum) {
+                const q = this.data.questions[qnum - 1];
+                let userAns = '';
+                
+                if (q.choices && q.choices.length > 0) {
+                    const checked = document.querySelector(`input[name="ans_group${qnum}"]:checked`);
+                    userAns = checked ? checked.value : '';
+                } else {
+                    const inputEl = document.getElementById(`ans${qnum}`);
+                    userAns = inputEl ? inputEl.value.trim() : '';
+                }
+
+                const isCorrect = this.checkAnswer(q.answer, userAns);
+                
+                if (isCorrect) {
+                    this.currentWrongCount = 0;
+                    try { playSuccess(); } catch(e) {}
+                    
+                    const nextStage = qnum === 20 ? 'panel_event4' : 
+                                     (qnum === 5 ? 'panel_event1' : 
+                                      (qnum === 10 ? 'panel_event2' : 
+                                       (qnum === 15 ? 'panel_event3' : `panel_q${qnum + 1}`))
+                                     );
+                                     
+                    const nextProgress = qnum * 5;
+                    this.triggerStageTransition(`panel_q${qnum}`, nextStage, nextProgress);
+                } else {
+                    this.currentWrongCount++;
+                    this.totalWrongCount++;
+                    this.timeLeft -= 60; // 오답시 60초 감소 페널티
+                    if (this.timeLeft < 0) this.timeLeft = 0;
+                    this.updateTimerDisplay();
+                    
+                    // 패널 흔들기 효과
+                    const panel = document.getElementById(`panel_q${qnum}`);
+                    if (panel) {
+                        panel.classList.remove('shake');
+                        void panel.offsetWidth;
+                        panel.classList.add('shake');
+                    }
+
+                    const errMsg = document.getElementById(`error${qnum}`);
+                    if (errMsg) {
+                        errMsg.style.display = 'block';
+                        setTimeout(() => errMsg.style.display = 'none', 3000);
+                    }
+
+                    // 3회 오답 시 구역 초기화
+                    if (this.currentWrongCount >= 3) {
+                        this.currentWrongCount = 0;
+                        document.getElementById('glitchOverlay').style.display = 'flex';
+                        setTimeout(() => document.getElementById('glitchOverlay').style.display = 'none', 1500);
+                        
+                        let resetQnum, resetProg, zoneName;
+                        if (qnum <= 5) {
+                            resetQnum, resetProg, zoneName = 1, 0, "1구역";
+                        } else if (qnum <= 10) {
+                            resetQnum, resetProg, zoneName = 6, 25, "2구역";
+                        } else if (qnum <= 15) {
+                            resetQnum, resetProg, zoneName = 11, 50, "3구역";
+                        } else {
+                            resetQnum, resetProg, zoneName = 16, 75, "4구역";
+                        }
+
+                        alert(`🚨 3회 오답! ${zoneName}의 처음인 제 ${resetQnum}구역으로 강제 이송됩니다.`);
+                        // 입력 초기화
+                        const resetInput = document.getElementById(`ans${resetQnum}`);
+                        if (resetInput) resetInput.value = '';
+                        document.querySelectorAll(`input[name="ans_group${resetQnum}"]`).forEach(el => el.checked = false);
+                        
+                        this.triggerStageTransition(`panel_q${qnum}`, `panel_q${resetQnum}`, resetProg);
+                    }
+                }
+            },
+
+            checkAnswer: function(spec, ans) {
+                if (!spec || !spec.type || !spec.values) return false;
+                
+                const cleanAns = ans.trim();
+                
+                if (spec.type === 'exact') {
+                    return spec.values.includes(cleanAns);
+                } else if (spec.type === 'any_of') {
+                    return spec.values.includes(cleanAns);
+                } else if (spec.type === 'normalized_exact') {
+                    const normUser = cleanAns.replace(/\s+/g, '').toUpperCase();
+                    return spec.values.some(v => v.replace(/\s+/g, '').toUpperCase() === normUser);
+                }
+                
+                return false;
+            },
+
+            triggerStageTransition: function(currentId, nextId, progress) {
+                // 최종 성공 도달 시
+                if (nextId === 'outro') {
+                    clearInterval(this.timerId);
+                    try { playVictory(); } catch(e) {}
+                    
+                    // 구글 앱스 스크립트 종료 처리 호출
+                    try {
+                        if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                            google.script.run.recordEnd(window.userRecordRow, this.data.unit_code);
+                        }
+                    } catch(e) {
+                        console.warn("GAS recordEnd failed:", e);
+                    }
+
+                    // 멀티엔딩 텍스트 분기
+                    const outroTextEl = document.getElementById('outro-dynamic-text');
+                    if (outroTextEl) {
+                        const firstName = window.playerFirstName || this.data.hero;
+                        if (this.totalWrongCount < 5) {
+                            outroTextEl.innerHTML = `정말 놀라운 수학적 능력이로군!<br><br><strong>[${this.data.helper}]</strong>: "${firstName}님! 완벽합니다. 오답이 5회 미만입니다. 고대의 유물을 완전히 정화하여 회수했습니다!"<br><br><b>[칭호 획득: 마스터 스페셜리스트]</b>`;
+                        } else {
+                            outroTextEl.innerHTML = `간신히 관문을 통과했습니다.<br><br><strong>[${this.data.helper}]</strong>: "휴, ${firstName}님, 간신히 보물을 챙겼습니다. 탈출 장치를 가동해 이곳을 떠납시다!"<br><br>미션 성공!`;
+                        }
+                    }
+                }
+                
+                this.showPanel(nextId);
+                
+                // GAS 진행도 리포트
+                try {
+                    if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run.recordProgress(window.userRecordRow, progress);
+                    }
+                } catch(e) {
+                    console.warn("GAS progress report failed:", e);
+                }
+            }
+        };
+
+        // 모달 이전 대사 다이얼로그 열기
+        function openLog() {
+            const modal = document.getElementById('logModal');
+            const content = document.getElementById('logContent');
+            if (modal && content) {
+                content.innerHTML = storyLogHistory.map(line => `<p style='border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;'>${line}</p>`).join('');
+                modal.style.display = 'block';
+            }
+        }
+
+        function closeLog() {
+            const modal = document.getElementById('logModal');
+            if (modal) modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

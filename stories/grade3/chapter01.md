@@ -35,7 +35,12 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '±3' || ans === '+-3' || ans === '3,-3' || ans === '-3,3'
+type: any_of
+values:
+  - "±3"
+  - "+-3"
+  - "3,-3"
+  - "-3,3"
 
 ### Placeholder
 정답 입력
@@ -72,7 +77,9 @@ q2.png
 - 8
 
 ### Answer
-ans === '4'
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 정답 입력
@@ -109,7 +116,9 @@ q3.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 정답 입력
@@ -146,7 +155,9 @@ q4.png
 - 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 정답 입력
@@ -183,7 +194,10 @@ q5.png
 - (4)
 
 ### Answer
-ans === '3' || ans === '(3)'
+type: any_of
+values:
+  - "3"
+  - "(3)"
 
 ### Placeholder
 번호 입력 (예: 3)
@@ -220,7 +234,10 @@ q6.png
 - 해 없음
 
 ### Answer
-ans === '√3' || ans === '루트3'
+type: any_of
+values:
+  - "√3"
+  - "루트3"
 
 ### Placeholder
 정답 입력
@@ -257,7 +274,9 @@ q7.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -294,7 +313,9 @@ q8.png
 - 해 없음
 
 ### Answer
-ans === '√5-2'
+type: exact
+values:
+  - "√5-2"
 
 ### Placeholder
 정답 입력
@@ -331,7 +352,9 @@ q9.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 정답 입력
@@ -368,7 +391,10 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === '√5' || ans === '루트5'
+type: any_of
+values:
+  - "√5"
+  - "루트5"
 
 ### Placeholder
 정답 입력
@@ -410,7 +436,10 @@ q11.png
 - 해 없음
 
 ### Answer
-ans === '√15' || ans === '루트15'
+type: any_of
+values:
+  - "√15"
+  - "루트15"
 
 ### Placeholder
 정답 입력
@@ -439,7 +468,9 @@ q12.png
 <strong>Q12. [근호의 나눗셈]</strong><br>$\sqrt{18} \div \sqrt{2}$ 의 값을 구하시오.
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 정답 입력
@@ -468,7 +499,10 @@ q13.png
 <strong>Q13. [근호의 곱셈 2]</strong><br>$2\sqrt{6} 	imes 3\sqrt{3}$ 의 값을 구하시오. (간단히 나타내시오. 예: 18√2)
 
 ### Answer
-ans === '18√2' || ans === '18루트2'
+type: any_of
+values:
+  - "18√2"
+  - "18루트2"
 
 ### Placeholder
 정답 입력
@@ -495,7 +529,10 @@ q14.png
 <strong>Q14. [분모의 유리화]</strong><br>$rac{6}{\sqrt{3}}$의 분모를 유리화한 값을 구하시오. (예: 2√3)
 
 ### Answer
-ans === '2√3' || ans === '2루트3'
+type: any_of
+values:
+  - "2√3"
+  - "2루트3"
 
 ### Placeholder
 정답 입력
@@ -524,7 +561,9 @@ q15.png
 <strong>Q15. [기본 곱셈 연산]</strong><br>$\sqrt{20} 	imes \sqrt{5}$ 의 값을 구하시오.
 
 ### Answer
-ans === '10'
+type: exact
+values:
+  - "10"
 
 ### Placeholder
 정답 입력
@@ -560,7 +599,10 @@ q16.png
 <strong>Q16. [근호를 포함한 식의 덧셈]</strong><br>$3\sqrt{2} + 5\sqrt{2}$ 의 값을 구하시오. (예: 8√2)
 
 ### Answer
-ans === '8√2' || ans === '8루트2'
+type: any_of
+values:
+  - "8√2"
+  - "8루트2"
 
 ### Placeholder
 정답 입력
@@ -589,7 +631,10 @@ q17.png
 <strong>Q17. [분배법칙과 근호]</strong><br>$\sqrt{2}(\sqrt{2} + \sqrt{6})$ 의 값을 분배법칙을 이용해 계산하시오. (예: 2+2√3)
 
 ### Answer
-ans === '2+2√3' || ans === '2+2루트3'
+type: any_of
+values:
+  - "2+2√3"
+  - "2+2루트3"
 
 ### Placeholder
 정답 입력
@@ -618,7 +663,10 @@ q18.png
 <strong>Q18. [근호의 변형과 뺄셈]</strong><br>$5\sqrt{3} - \sqrt{12}$ 의 값을 구하시오. (예: 3√3)
 
 ### Answer
-ans === '3√3' || ans === '3루트3'
+type: any_of
+values:
+  - "3√3"
+  - "3루트3"
 
 ### Placeholder
 정답 입력
@@ -647,7 +695,9 @@ q19.png
 <strong>Q19. [실수의 사칙연산]</strong><br>$(2 + \sqrt{3}) + (3 - \sqrt{3})$ 의 값을 구하시오.
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 정답 입력
@@ -676,7 +726,10 @@ q20.png
 <strong>Q20. [유리화와 혼합 계산]</strong><br>$rac{\sqrt{3}}{\sqrt{2}} + rac{\sqrt{2}}{\sqrt{3}}$ 을 계산하여 분모를 유리화한 값을 구하시오. (예: 5√6/6)
 
 ### Answer
-ans === '5√6/6' || ans === '5루트6/6'
+type: any_of
+values:
+  - "5√6/6"
+  - "5루트6/6"
 
 ### Placeholder
 정답 입력

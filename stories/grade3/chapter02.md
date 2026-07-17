@@ -35,7 +35,9 @@ q1.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 정답 입력
@@ -72,7 +74,10 @@ q2.png
 - 해 없음
 
 ### Answer
-ans === 'X²+6X+9' || ans === 'X^2+6X+9'
+type: any_of
+values:
+  - "X²+6X+9"
+  - "X^2+6X+9"
 
 ### Placeholder
 정답 입력
@@ -109,7 +114,10 @@ q3.png
 - 해 없음
 
 ### Answer
-ans === '4A²-4AB+B²' || ans === '4A^2-4AB+B^2'
+type: any_of
+values:
+  - "4A²-4AB+B²"
+  - "4A^2-4AB+B^2"
 
 ### Placeholder
 정답 입력
@@ -146,7 +154,10 @@ q4.png
 - 해 없음
 
 ### Answer
-ans === 'X²-16' || ans === 'X^2-16'
+type: any_of
+values:
+  - "X²-16"
+  - "X^2-16"
 
 ### Placeholder
 정답 입력
@@ -183,7 +194,9 @@ q5.png
 - -15
 
 ### Answer
-ans === '-15'
+type: exact
+values:
+  - "-15"
 
 ### Placeholder
 정답 입력
@@ -218,7 +231,9 @@ q6.png
 - -2
 
 ### Answer
-ans === '-1'
+type: exact
+values:
+  - "-1"
 
 ### Placeholder
 정답 입력
@@ -254,7 +269,11 @@ q7.png
 - (3)
 
 ### Answer
-ans === '1' || ans === '(1)' || ans === '1번'
+type: any_of
+values:
+  - "1"
+  - "(1)"
+  - "1번"
 
 ### Placeholder
 번호 입력 (예: 1)
@@ -291,7 +310,9 @@ q8.png
 - 해 없음
 
 ### Answer
-ans === '2AB'
+type: exact
+values:
+  - "2AB"
 
 ### Placeholder
 정답 입력
@@ -322,7 +343,10 @@ q9.png
 <strong>Q9. [완전제곱식 인수분해]</strong><br>$x^2 + 6x + 9$ 를 인수분해한 식을 구하시오. (공백 없이 대문자로 예: (X+3)^2)
 
 ### Answer
-ans === '(X+3)^2' || ans === '(X+3)²'
+type: any_of
+values:
+  - "(X+3)^2"
+  - "(X+3)²"
 
 ### Placeholder
 정답 입력
@@ -359,7 +383,9 @@ q10.png
 - 23
 
 ### Answer
-ans === '25'
+type: exact
+values:
+  - "25"
 
 ### Placeholder
 정답 입력
@@ -395,7 +421,10 @@ q11.png
 <strong>Q11. [제곱의 차 인수분해]</strong><br>$a^2 - 16$ 을 인수분해한 식을 구하시오. (공백 없이 대문자로 예: (A+4)(A-4))
 
 ### Answer
-ans === '(A+4)(A-4)' || ans === '(A-4)(A+4)'
+type: any_of
+values:
+  - "(A+4)(A-4)"
+  - "(A-4)(A+4)"
 
 ### Placeholder
 정답 입력
@@ -424,7 +453,10 @@ q12.png
 <strong>Q13. [복합 합차 인수분해]</strong><br>$x^2 - 4y^2$ 을 인수분해한 식을 구하시오. (공백 없이 대문자로 예: (X+2Y)(X-2Y))
 
 ### Answer
-ans === '(X+2Y)(X-2Y)' || ans === '(X-2Y)(X+2Y)'
+type: any_of
+values:
+  - "(X+2Y)(X-2Y)"
+  - "(X-2Y)(X+2Y)"
 
 ### Placeholder
 정답 입력
@@ -453,7 +485,10 @@ q13.png
 <strong>Q13. [이차식의 인수분해 1]</strong><br>$x^2 + 5x + 6$ 을 인수분해한 식을 구하시오. (공백 없이 대문자로 예: (X+2)(X+3))
 
 ### Answer
-ans === '(X+2)(X+3)' || ans === '(X+3)(X+2)'
+type: any_of
+values:
+  - "(X+2)(X+3)"
+  - "(X+3)(X+2)"
 
 ### Placeholder
 정답 입력
@@ -480,7 +515,10 @@ q14.png
 <strong>Q14. [이차식의 인수분해 2]</strong><br>$x^2 - 8x + 12$ 를 인수분해한 식을 구하시오. (공백 없이 대문자로 예: (X-2)(X-6))
 
 ### Answer
-ans === '(X-2)(X-6)' || ans === '(X-6)(X-2)'
+type: any_of
+values:
+  - "(X-2)(X-6)"
+  - "(X-6)(X-2)"
 
 ### Placeholder
 정답 입력
@@ -507,7 +545,10 @@ q15.png
 <strong>Q15. [대각선 인수분해]</strong><br>$2x^2 + 7x + 3$ 을 인수분해한 식을 구하시오. (공백 없이 대문자로 예: (2X+1)(X+3))
 
 ### Answer
-ans === '(2X+1)(X+3)' || ans === '(X+3)(2X+1)'
+type: any_of
+values:
+  - "(2X+1)(X+3)"
+  - "(X+3)(2X+1)"
 
 ### Placeholder
 정답 입력
@@ -549,7 +590,10 @@ q16.png
 - 5
 
 ### Answer
-ans === '3(X+2)(X-2)' || ans === '3(X-2)(X+2)'
+type: any_of
+values:
+  - "3(X+2)(X-2)"
+  - "3(X-2)(X+2)"
 
 ### Placeholder
 정답 입력
@@ -578,7 +622,9 @@ q17.png
 <strong>Q17. [인수분해와 수치 계산]</strong><br>인수분해 공식을 활용하여 $99^2 - 1$ 의 값을 구하시오. (최종 정수 계산 값만 입력)
 
 ### Answer
-ans === '9800'
+type: exact
+values:
+  - "9800"
 
 ### Placeholder
 정답 입력
@@ -607,7 +653,9 @@ q18.png
 <strong>Q18. [식의 대입 계산]</strong><br>$x=98$ 일 때, 식 $x^2 + 4x + 4$ 의 값을 구하시오.
 
 ### Answer
-ans === '10000'
+type: exact
+values:
+  - "10000"
 
 ### Placeholder
 정답 입력
@@ -636,7 +684,9 @@ q19.png
 <strong>Q19. [식의 값 구하기]</strong><br>$a+b=5, a-b=3$ 일 때, $a^2 - b^2$ 의 값을 구하시오.
 
 ### Answer
-ans === '15'
+type: exact
+values:
+  - "15"
 
 ### Placeholder
 정답 입력
@@ -671,7 +721,9 @@ q20.png
 - 해 없음
 
 ### Answer
-ans === '2X-2'
+type: exact
+values:
+  - "2X-2"
 
 ### Placeholder
 정답 입력

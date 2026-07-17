@@ -35,7 +35,9 @@ q1.png
 - 닮음비
 
 ### Answer
-ans === '닮음'
+type: exact
+values:
+  - "닮음"
 
 ### Placeholder
 두 글자 입력
@@ -72,7 +74,9 @@ q2.png
 - 닮음비
 
 ### Answer
-ans === '닮음비'
+type: exact
+values:
+  - "닮음비"
 
 ### Placeholder
 세 글자 입력
@@ -107,7 +111,10 @@ q3.png
 - X
 
 ### Answer
-ans === 'O' || ans === '오'
+type: any_of
+values:
+  - "O"
+  - "오"
 
 ### Placeholder
 O 또는 X 입력
@@ -138,7 +145,10 @@ q4.png
 <strong>Q4. [비례식의 연산]</strong><br>닮음비가 2:3인 두 직사각형이 있다. 작은 직사각형의 가로가 4cm일 때, 큰 직사각형의 가로는 몇 cm인가? (숫자만 입력)
 
 ### Answer
-ans === '6' || ans === '6CM'
+type: any_of
+values:
+  - "6"
+  - "6CM"
 
 ### Placeholder
 단위 없이 숫자만 또는 '6cm' 입력
@@ -173,7 +183,10 @@ q5.png
 - X
 
 ### Answer
-ans === 'O' || ans === '오'
+type: any_of
+values:
+  - "O"
+  - "오"
 
 ### Placeholder
 O 또는 X 입력
@@ -208,7 +221,9 @@ q6.png
 - ASA
 
 ### Answer
-ans === 'SSS'
+type: exact
+values:
+  - "SSS"
 
 ### Placeholder
 영문 세 글자 입력 (예: SSS)
@@ -245,7 +260,9 @@ q7.png
 - ASA
 
 ### Answer
-ans === 'SAS'
+type: exact
+values:
+  - "SAS"
 
 ### Placeholder
 영문 세 글자 입력 (예: SAS)
@@ -282,7 +299,9 @@ q8.png
 - ASA
 
 ### Answer
-ans === 'AA'
+type: exact
+values:
+  - "AA"
 
 ### Placeholder
 영문 두 글자 입력 (예: AA)
@@ -319,7 +338,10 @@ q9.png
 - ASA
 
 ### Answer
-ans === 'AA' || ans === 'AA닮음'
+type: any_of
+values:
+  - "AA"
+  - "AA닮음"
 
 ### Placeholder
 예: AA닮음
@@ -356,7 +378,9 @@ q10.png
 - 닮음비
 
 ### Answer
-ans === '닮음'
+type: exact
+values:
+  - "닮음"
 
 ### Placeholder
 두 글자 입력
@@ -398,7 +422,9 @@ q11.png
 - 꼬인 위치
 
 ### Answer
-ans === '평행'
+type: exact
+values:
+  - "평행"
 
 ### Placeholder
 두 글자 입력 (예: 평행)
@@ -427,7 +453,11 @@ q12.png
 <strong>Q12. [중점연결정리와 길이비]</strong><br>삼각형 중점 연결 정리에서 선분 MN의 길이는 선분 BC의 길이의 ( 몇 분의 몇 ) 인가? (예: 1/2)
 
 ### Answer
-ans === '1/2' || ans === '절반' || ans === '0.5'
+type: any_of
+values:
+  - "1/2"
+  - "절반"
+  - "0.5"
 
 ### Placeholder
 예: 1/2 또는 절반
@@ -456,7 +486,9 @@ q13.png
 <strong>Q13. [평행선과 닮음]</strong><br>삼각형의 한 변에 평행한 선분을 그어 다른 두 변과 만나게 하면, 새로 만들어진 작은 삼각형은 원래 삼각형과 ( ? ) 관계이다.
 
 ### Answer
-ans === '닮음'
+type: exact
+values:
+  - "닮음"
 
 ### Placeholder
 두 글자 입력
@@ -485,7 +517,9 @@ q14.png
 <strong>Q14. [평행선 사이의 선분비]</strong><br>평행한 세 직선이 두 직선과 만날 때, 잘린 대응하는 선분의 길이의 비는 서로 ( 같다 / 다르다 ).
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -514,7 +548,9 @@ q15.png
 <strong>Q15. [무게중심의 성질]</strong><br>삼각형의 무게중심은 세 중선의 길이를 꼭짓점으로부터 각각 몇 대 몇의 비율로 나누는가? (예: 2:1)
 
 ### Answer
-ans.replace(/\s+/g, '') === '2:1' || ans.replace(/\s+/g, '') === '2대1'
+type: normalized_exact
+values:
+  - "2:1"
 
 ### Placeholder
 예: 2:1 또는 2대1
@@ -550,7 +586,9 @@ q16.png
 <strong>Q16. [닮음비와 넓이비]</strong><br>두 평면도형의 닮음비가 $m:n$ 일 때, 넓이의 비는 얼마인가? (거듭제곱 기호 ^ 사용)
 
 ### Answer
-ans.replace(/\s+/g, '') === 'M^2:N^2' || ans.replace(/\s+/g, '') === 'M2:N2' || ans.replace(/\s+/g, '') === 'M^2대N^2'
+type: normalized_exact
+values:
+  - "M^2:N^2"
 
 ### Placeholder
 예: m^2:n^2
@@ -579,7 +617,9 @@ q17.png
 <strong>Q17. [입체도형의 겉넓이비]</strong><br>두 정육면체의 닮음비가 1:2 일 때, 넓이(겉넓이)의 비는 얼마인가? (예: 1:4)
 
 ### Answer
-ans.replace(/\s+/g, '') === '1:4' || ans.replace(/\s+/g, '') === '1대4'
+type: normalized_exact
+values:
+  - "1:4"
 
 ### Placeholder
 예: 1:4 또는 1대4
@@ -608,7 +648,9 @@ q18.png
 <strong>Q18. [닮음비와 부피비]</strong><br>두 입체도형의 닮음비가 $m:n$ 일 때, 부피의 비는 얼마인가? (세제곱 기호 ^ 사용)
 
 ### Answer
-ans.replace(/\s+/g, '') === 'M^3:N^3' || ans.replace(/\s+/g, '') === 'M3:N3' || ans.replace(/\s+/g, '') === 'M^3대N^3'
+type: normalized_exact
+values:
+  - "M^3:N^3"
 
 ### Placeholder
 예: m^3:n^3
@@ -637,7 +679,9 @@ q19.png
 <strong>Q19. [구슬의 부피비]</strong><br>닮음비가 1:3 인 두 구슬의 부피의 비는 얼마인가? (예: 1:27)
 
 ### Answer
-ans.replace(/\s+/g, '') === '1:27' || ans.replace(/\s+/g, '') === '1대27'
+type: normalized_exact
+values:
+  - "1:27"
 
 ### Placeholder
 예: 1:27
@@ -666,7 +710,9 @@ q20.png
 <strong>Q20. [부피 활용 비례식]</strong><br>작은 컵의 부피가 10mL이다. 닮음비가 2:3인 큰 컵이 있다면, 큰 컵의 부피(x)를 구하기 위한 비례식을 세워보시오. (공백 없이 입력)
 
 ### Answer
-ans.replace(/\s+/g, '') === '8:27=10:X' || ans.replace(/\s+/g, '') === '10:X=8:27'
+type: normalized_exact
+values:
+  - "8:27=10:X"
 
 ### Placeholder
 예: 8:27=10:x

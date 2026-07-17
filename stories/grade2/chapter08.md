@@ -35,7 +35,9 @@ q1.png
 - 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -72,7 +74,9 @@ q2.png
 - 38
 
 ### Answer
-ans === '36'
+type: exact
+values:
+  - "36"
 
 ### Placeholder
 숫자만 입력
@@ -109,7 +113,9 @@ q3.png
 - 12
 
 ### Answer
-ans === '12'
+type: exact
+values:
+  - "12"
 
 ### Placeholder
 숫자만 입력
@@ -146,7 +152,9 @@ q4.png
 - 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -183,7 +191,9 @@ q5.png
 - 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -220,7 +230,9 @@ q6.png
 - 12
 
 ### Answer
-ans === '12'
+type: exact
+values:
+  - "12"
 
 ### Placeholder
 숫자만 입력
@@ -257,7 +269,9 @@ q7.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 숫자만 입력
@@ -294,7 +308,9 @@ q8.png
 - 12
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 숫자만 입력
@@ -331,7 +347,9 @@ q9.png
 - 12
 
 ### Answer
-ans === '12'
+type: exact
+values:
+  - "12"
 
 ### Placeholder
 숫자만 입력
@@ -368,7 +386,9 @@ q10.png
 - 12
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 숫자만 입력
@@ -404,7 +424,9 @@ q11.png
 <strong>Q11. [확률의 기본 성질 1]</strong><br>어떤 사건이 일어날 확률을 $p$라고 할 때, $p$의 범위는 어떻게 되는가? (공백 없이 입력)
 
 ### Answer
-ans.replace(/\s+/g, '') === '0<=P<=1' || ans.replace(/\s+/g, '') === '0<=P<=1.0'
+type: normalized_exact
+values:
+  - "0<=P<=1"
 
 ### Placeholder
 예: 0<=p<=1
@@ -433,7 +455,9 @@ q12.png
 <strong>Q12. [확률의 기본 성질 2]</strong><br>절대로 일어날 수 없는 사건의 확률은 얼마인가? (정수 입력)
 
 ### Answer
-ans === '0'
+type: exact
+values:
+  - "0"
 
 ### Placeholder
 숫자만 입력
@@ -462,7 +486,10 @@ q13.png
 <strong>Q13. [기본 확률 구하기]</strong><br>동전 한 개를 던질 때 앞면이 나올 확률을 구하시오. (분수 형태로 입력)
 
 ### Answer
-ans === '1/2' || ans === '0.5'
+type: any_of
+values:
+  - "1/2"
+  - "0.5"
 
 ### Placeholder
 분수 형태로 입력 (예: 1/2)
@@ -491,7 +518,10 @@ q14.png
 <strong>Q14. [소수의 확률]</strong><br>주사위 한 개를 던질 때 소수의 눈이 나올 확률을 구하시오. (분수 형태로 입력)
 
 ### Answer
-ans === '1/2' || ans === '0.5'
+type: any_of
+values:
+  - "1/2"
+  - "0.5"
 
 ### Placeholder
 분수 형태로 입력 (예: 1/2)
@@ -520,7 +550,9 @@ q15.png
 <strong>Q15. [이하의 확률]</strong><br>주사위 한 개를 던질 때, 2 이하의 눈이 나올 확률을 구하시오. (기약분수로 입력)
 
 ### Answer
-ans === '1/3'
+type: exact
+values:
+  - "1/3"
 
 ### Placeholder
 분수 형태로 입력 (예: 1/3)
@@ -556,7 +588,10 @@ q16.png
 <strong>Q16. [여사건의 확률 1]</strong><br>1부터 5까지 적힌 5장의 카드 중 1장을 뽑을 때, 짝수가 아닐 확률을 구하시오. (분수 형태로 입력)
 
 ### Answer
-ans === '3/5' || ans === '0.6'
+type: any_of
+values:
+  - "3/5"
+  - "0.6"
 
 ### Placeholder
 분수 형태로 입력 (예: 3/5)
@@ -585,7 +620,10 @@ q17.png
 <strong>Q17. [여사건의 확률 2]</strong><br>비가 올 확률이 $rac{3}{5}$ 일 때, 비가 오지 않을 확률을 구하시오. (분수 형태로 입력)
 
 ### Answer
-ans === '2/5' || ans === '0.4'
+type: any_of
+values:
+  - "2/5"
+  - "0.4"
 
 ### Placeholder
 분수 형태로 입력 (예: 2/5)
@@ -614,7 +652,10 @@ q18.png
 <strong>Q18. [공 꺼내기 확률]</strong><br>주머니에 빨간 공 3개와 파란 공 2개가 들어 있다. 임의로 1개를 꺼낼 때 빨간 공이 나올 확률은? (분수 형태로 입력)
 
 ### Answer
-ans === '3/5' || ans === '0.6'
+type: any_of
+values:
+  - "3/5"
+  - "0.6"
 
 ### Placeholder
 분수 형태로 입력 (예: 3/5)
@@ -643,7 +684,10 @@ q19.png
 <strong>Q19. [동시 일어나는 확률]</strong><br>동전 2개를 동시에 던질 때, 모두 앞면이 나올 확률을 구하시오. (분수 형태로 입력)
 
 ### Answer
-ans === '1/4' || ans === '0.25'
+type: any_of
+values:
+  - "1/4"
+  - "0.25"
 
 ### Placeholder
 분수 형태로 입력 (예: 1/4)
@@ -672,7 +716,10 @@ q20.png
 <strong>Q20. [오답의 확률]</strong><br>객관식 5지 선다형 문제 1개를 임의로 찍었을 때, 틀릴 확률을 구하시오. (분수 형태로 입력)
 
 ### Answer
-ans === '4/5' || ans === '0.8'
+type: any_of
+values:
+  - "4/5"
+  - "0.8"
 
 ### Placeholder
 분수 형태로 입력 (예: 4/5)

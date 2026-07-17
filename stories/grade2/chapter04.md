@@ -35,7 +35,9 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '2개'
+type: exact
+values:
+  - "2개"
 
 ### Placeholder
 정답 입력
@@ -70,7 +72,9 @@ q2.png
 - $x^2
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -107,7 +111,10 @@ q3.png
 - 2
 
 ### Answer
-ans === '2' || ans === '2개'
+type: any_of
+values:
+  - "2"
+  - "2개"
 
 ### Placeholder
 정답 입력
@@ -144,7 +151,10 @@ q4.png
 - 해 없음
 
 ### Answer
-ans === '2개' || ans === '2'
+type: any_of
+values:
+  - "2개"
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -181,7 +191,9 @@ q5.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -216,7 +228,9 @@ q6.png
 - 해 없음
 
 ### Answer
-ans === '연립일차방정식'
+type: exact
+values:
+  - "연립일차방정식"
 
 ### Placeholder
 정답 입력
@@ -253,7 +267,9 @@ q7.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -290,7 +306,9 @@ q8.png
 - 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 정답 입력
@@ -327,7 +345,9 @@ q9.png
 - 해 없음
 
 ### Answer
-ans === '교점'
+type: exact
+values:
+  - "교점"
 
 ### Placeholder
 정답 입력
@@ -364,7 +384,9 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === '대입법'
+type: exact
+values:
+  - "대입법"
 
 ### Placeholder
 정답 입력
@@ -400,7 +422,9 @@ q11.png
 <strong>Q11. [가감법의 정의]</strong><br>연립방정식을 풀 때 두 방정식을 더하거나 빼서 미지수를 없애는 방법을 무엇이라 하는가?
 
 ### Answer
-ans === '가감법'
+type: exact
+values:
+  - "가감법"
 
 ### Placeholder
 정답 입력
@@ -429,7 +453,9 @@ q12.png
 <strong>Q12. [대입법 연습]</strong><br>$\begin{cases} y = 2x \ x + y = 6 \end{cases}$ 을 대입법으로 풀 때, $x$의 값을 구하시오.
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -458,7 +484,9 @@ q13.png
 <strong>Q13. [소거 기호 판정]</strong><br>$\begin{cases} 2x + y = 7 \ 2x - y = 1 \end{cases}$ 을 가감법으로 풀기 위해 두 식을 어떻게 조작(더해야 / 빼야)하는지 쓰시오.
 
 ### Answer
-ans === '더해야'
+type: exact
+values:
+  - "더해야"
 
 ### Placeholder
 정답 입력
@@ -487,7 +515,9 @@ q14.png
 <strong>Q14. [가감법 실제 연산]</strong><br>Q13의 연립방정식 $\begin{cases} 2x + y = 7 \ 2x - y = 1 \end{cases}$ 을 풀어 $x$의 값을 구하시오.
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -514,7 +544,9 @@ q15.png
 <strong>Q15. [복합 연립방정식 연산]</strong><br>연립방정식 $\begin{cases} x + 2y = 4 \ 3x + 2y = 8 \end{cases}$ 을 풀어 $x$의 값을 구하시오.
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -550,7 +582,10 @@ q16.png
 <strong>Q16. [다리 개수 식 세우기]</strong><br>토끼와 닭이 섞여 있는 우리에 머리가 모두 10개, 다리가 모두 28개이다. 토끼를 $x$마리, 닭을 $y$마리라 할 때, 다리 수에 대한 방정식 중 토끼 다리의 개수 항(4x)을 쓰시오.
 
 ### Answer
-ans === '4X' || ans === '4*X'
+type: any_of
+values:
+  - "4X"
+  - "4*X"
 
 ### Placeholder
 예: 4x
@@ -579,7 +614,10 @@ q17.png
 <strong>Q17. [토끼 마리 수 해 도출]</strong><br>Q16의 연립방정식을 풀어 토끼($x$)는 몇 마리인지 구하시오. (예: 4마리)
 
 ### Answer
-ans === '4마리' || ans === '4'
+type: any_of
+values:
+  - "4마리"
+  - "4"
 
 ### Placeholder
 정답 입력
@@ -608,7 +646,9 @@ q18.png
 <strong>Q18. [동전 개수 기호]</strong><br>100원짜리 동전 $x$개와 500원짜리 동전 $y$개를 합하여 10개, 금액이 2600원일 때, 동전 개수에 대한 방정식 중 100원짜리 동전 개수의 미지수 기호(x)를 입력하시오.
 
 ### Answer
-ans === 'X'
+type: exact
+values:
+  - "X"
 
 ### Placeholder
 예: x
@@ -637,7 +677,10 @@ q19.png
 <strong>Q19. [동전 수량 구하기]</strong><br>Q18의 연립방정식을 풀어 100원짜리 동전($x$)은 몇 개인가? (예: 6개)
 
 ### Answer
-ans === '6개' || ans === '6'
+type: any_of
+values:
+  - "6개"
+  - "6"
 
 ### Placeholder
 정답 입력
@@ -666,7 +709,10 @@ q20.png
 <strong>Q20. [나이 연립방정식 활용]</strong><br>현재 아버지와 아들의 나이의 합은 50세이고, 5년 후에는 아버지의 나이가 아들의 나이의 3배가 된다. 현재 아들의 나이를 구하시오. (예: 10세)
 
 ### Answer
-ans === '10세' || ans === '10'
+type: any_of
+values:
+  - "10세"
+  - "10"
 
 ### Placeholder
 정답 입력

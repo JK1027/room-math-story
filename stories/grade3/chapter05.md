@@ -34,7 +34,9 @@ q1.png
 - 탄젠트
 
 ### Answer
-ans === '사인'
+type: exact
+values:
+  - "사인"
 
 ### Placeholder
 정답 입력
@@ -71,7 +73,10 @@ q2.png
 - 1
 
 ### Answer
-ans === '1/2' || ans === '0.5'
+type: any_of
+values:
+  - "1/2"
+  - "0.5"
 
 ### Placeholder
 정답 입력
@@ -108,7 +113,9 @@ q3.png
 - 1
 
 ### Answer
-ans === '√2/2'
+type: exact
+values:
+  - "√2/2"
 
 ### Placeholder
 정답 입력
@@ -145,7 +152,9 @@ q4.png
 - 3
 
 ### Answer
-ans === '√3'
+type: exact
+values:
+  - "√3"
 
 ### Placeholder
 정답 입력
@@ -182,7 +191,10 @@ q5.png
 - 0.8
 
 ### Answer
-ans === '4/5' || ans === '0.8'
+type: any_of
+values:
+  - "4/5"
+  - "0.8"
 
 ### Placeholder
 정답 입력
@@ -219,7 +231,9 @@ q6.png
 - √3/2
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 정답 입력
@@ -256,7 +270,9 @@ q7.png
 - √2/2
 
 ### Answer
-ans === '0'
+type: exact
+values:
+  - "0"
 
 ### Placeholder
 정답 입력
@@ -293,7 +309,9 @@ q8.png
 - 0
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 정답 입력
@@ -330,7 +348,9 @@ q9.png
 - √3/2
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 정답 입력
@@ -367,7 +387,9 @@ q10.png
 - 0
 
 ### Answer
-ans === '√3'
+type: exact
+values:
+  - "√3"
 
 ### Placeholder
 정답 입력
@@ -403,7 +425,9 @@ q11.png
 <strong>Q11. [기본 삼각비 5]</strong><br>$\tan 0^\circ$ 의 값을 구하시오.
 
 ### Answer
-ans === '0'
+type: exact
+values:
+  - "0"
 
 ### Placeholder
 정답 입력
@@ -432,7 +456,10 @@ q12.png
 <strong>Q12. [삼각비의 곱셈 계산]</strong><br>$\sin 45^\circ \times \cos 45^\circ$ 의 값을 구하시오. (슬래시를 사용해 분수로 나타내시오. 예: 1/2)
 
 ### Answer
-ans === '1/2' || ans === '0.5'
+type: any_of
+values:
+  - "1/2"
+  - "0.5"
 
 ### Placeholder
 정답 입력
@@ -461,7 +488,9 @@ q13.png
 <strong>Q13. [유리화된 삼각비]</strong><br>$\tan 30^\circ$ 의 값을 구하시오. (루트와 분수를 사용해 공백 없이 나타내시오. 예: √3/3)
 
 ### Answer
-ans === '√3/3'
+type: exact
+values:
+  - "√3/3"
 
 ### Placeholder
 정답 입력
@@ -490,7 +519,9 @@ q14.png
 <strong>Q14. [빗변과 높이의 계산]</strong><br>직각삼각형 ABC 에서 $\angle C = 90^\circ$ 이고 빗변 $AB = 10$, $\angle A = 30^\circ$ 일 때, 높이 $BC$ 의 길이를 구하시오.
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 정답 입력
@@ -517,7 +548,9 @@ q15.png
 <strong>Q15. [밑변과 탄젠트 응용]</strong><br>직각삼각형 ABC 에서 $\angle C = 90^\circ$ 이고 밑변 $AC = 8$, $\angle A = 45^\circ$ 일 때, 대변 $BC$ 의 길이를 구하시오.
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 정답 입력
@@ -553,7 +586,9 @@ q16.png
 <strong>Q16. [삼각형의 넓이 계산 1]</strong><br>두 변의 길이가 각각 4, 6이고 그 사잇각이 $30^\circ$ 인 삼각형의 넓지를 구하시오.
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 정답 입력
@@ -582,7 +617,9 @@ q17.png
 <strong>Q17. [삼각형의 넓이 계산 2]</strong><br>두 변의 길이가 각각 6, 8이고 그 사잇각이 $45^\circ$ 인 삼각형의 넓이를 구하시오. (루트를 사용해 공백 없이 나타내시오. 예: 12√2)
 
 ### Answer
-ans === '12√2'
+type: exact
+values:
+  - "12√2"
 
 ### Placeholder
 정답 입력
@@ -611,7 +648,9 @@ q18.png
 <strong>Q18. [둔각삼각형의 넓이]</strong><br>두 변의 길이가 각각 4, 5이고 그 사잇각이 $120^\circ$ 인 둔각삼각형의 넓이를 구하시오. (루트를 사용해 공백 없이 나타내시오. 예: 5√3)
 
 ### Answer
-ans === '5√3'
+type: exact
+values:
+  - "5√3"
 
 ### Placeholder
 정답 입력
@@ -640,7 +679,9 @@ q19.png
 <strong>Q19. [평행사변형의 넓이]</strong><br>이웃한 두 변의 길이가 5, 8이고 그 사잇각이 $60^\circ$ 인 평행사변형의 넓이를 구하시오. (루트를 사용해 공백 없이 나타내시오. 예: 20√3)
 
 ### Answer
-ans === '20√3'
+type: exact
+values:
+  - "20√3"
 
 ### Placeholder
 정답 입력
@@ -669,7 +710,9 @@ q20.png
 <strong>Q20. [삼각비의 높이 측정 활용]</strong><br>관측소 돔탑 밑동에서 10m 떨어진 지점에서 돔탑 꼭대기를 올려다본 각도가 $30^\circ$ 일 때, 돔탑의 높이를 구하시오. (루트와 분수를 사용해 공백 없이 나타내시오. 예: 10√3/3)
 
 ### Answer
-ans === '10√3/3'
+type: exact
+values:
+  - "10√3/3"
 
 ### Placeholder
 정답 입력

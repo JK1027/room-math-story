@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Tuple
+from typing import Tuple, Dict, Any
 
 @dataclass(frozen=True)
 class Question:
@@ -8,7 +8,7 @@ class Question:
     image: str
     qtext: str
     choices: Tuple[str, ...]
-    answer: str
+    answer: Dict[str, Any]
     placeholder: str
     error_message: str
     hint: str

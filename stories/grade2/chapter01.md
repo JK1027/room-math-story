@@ -35,7 +35,9 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '0.75'
+type: exact
+values:
+  - "0.75"
 
 ### Placeholder
 예: 0.5
@@ -72,7 +74,9 @@ q2.png
 - 정수
 
 ### Answer
-ans === '유한소수'
+type: exact
+values:
+  - "유한소수"
 
 ### Placeholder
 네 글자 입력 (예: 무한소수)
@@ -109,7 +113,10 @@ q3.png
 - 10
 
 ### Answer
-(ans.includes('2') && ans.includes('5')) || ans === '2또는5' || ans === '2,5'
+type: any_of
+values:
+  - "2또는5"
+  - "2,5"
 
 ### Placeholder
 예: 2, 5
@@ -146,7 +153,9 @@ q4.png
 - 정수
 
 ### Answer
-ans === '유한소수'
+type: exact
+values:
+  - "유한소수"
 
 ### Placeholder
 유한소수 또는 무한소수 입력
@@ -183,7 +192,9 @@ q5.png
 - 해 없음
 
 ### Answer
-ans === '무한소수'
+type: exact
+values:
+  - "무한소수"
 
 ### Placeholder
 유한소수 또는 무한소수 입력
@@ -218,7 +229,9 @@ q6.png
 - 정수
 
 ### Answer
-ans === '순환소수'
+type: exact
+values:
+  - "순환소수"
 
 ### Placeholder
 네 글자 입력
@@ -255,7 +268,11 @@ q7.png
 - 해 없음
 
 ### Answer
-ans === '0.[3]' || ans === '0.(3)' || ans === '0.3'
+type: any_of
+values:
+  - "0.[3]"
+  - "0.(3)"
+  - "0.3"
 
 ### Placeholder
 예: 0.[3] 또는 0.(3)
@@ -292,7 +309,9 @@ q8.png
 - 23
 
 ### Answer
-ans === '25'
+type: exact
+values:
+  - "25"
 
 ### Placeholder
 예: 25
@@ -329,7 +348,11 @@ q9.png
 - 해 없음
 
 ### Answer
-ans === '0.4[56]' || ans === '0.4(56)' || ans === '0.456'
+type: any_of
+values:
+  - "0.4[56]"
+  - "0.4(56)"
+  - "0.456"
 
 ### Placeholder
 예: 0.4[56]
@@ -360,7 +383,9 @@ q10.png
 <strong>Q10. [순환마디 구하기 2]</strong><br>분수 $\frac{1}{3}$ 을 소수로 나타낼 때, 순환마디는 무엇인가?
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -396,7 +421,9 @@ q11.png
 <strong>Q11. [순환소수를 분수로 1]</strong><br>순환소수 $0.\dot{7}$ 을 기약분수로 나타내시오.
 
 ### Answer
-ans === '7/9'
+type: exact
+values:
+  - "7/9"
 
 ### Placeholder
 슬래시(/)를 사용하여 입력 (예: 7/9)
@@ -425,7 +452,10 @@ q12.png
 <strong>Q12. [순환소수를 분수로 2]</strong><br>$0.\dot{4}\dot{5}$ 를 기약분수로 나타내시오.
 
 ### Answer
-ans === '5/11' || ans === '45/99'
+type: any_of
+values:
+  - "5/11"
+  - "45/99"
 
 ### Placeholder
 예: 5/11
@@ -454,7 +484,9 @@ q13.png
 <strong>Q13. [소수점 아래 정리]</strong><br>순환소수 $x = 0.\dot{3}$ 을 분수로 고치기 위해 $10x - x$ 의 식을 이용한다. 이때 $9x$ 의 값은 얼마인가?
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -483,7 +515,9 @@ q14.png
 <strong>Q14. [순환소수를 분수로 3]</strong><br>$1.\dot{2}$ 를 기약분수로 나타내시오.
 
 ### Answer
-ans === '11/9'
+type: exact
+values:
+  - "11/9"
 
 ### Placeholder
 예: 11/9
@@ -512,7 +546,9 @@ q15.png
 <strong>Q15. [마스터 포트 해킹]</strong><br>순환소수 $x = 0.2\dot{5}$ 를 기약분수로 나타내시오.
 
 ### Answer
-ans === '23/90'
+type: exact
+values:
+  - "23/90"
 
 ### Placeholder
 예: 23/90
@@ -548,7 +584,9 @@ q16.png
 <strong>Q16. [분모 결정 공식]</strong><br>$0.1\dot{2}\dot{3}$ 을 분수로 고칠 때 분모에 들어갈 숫자는 얼마인가?
 
 ### Answer
-ans === '990'
+type: exact
+values:
+  - "990"
 
 ### Placeholder
 숫자만 입력
@@ -577,7 +615,9 @@ q17.png
 <strong>Q17. [기약분수 조율]</strong><br>$0.1\dot{2}\dot{3}$ 을 분수로 고칠 때 분자에 들어갈 식은 $123 - 1$ 이다. 계산한 최종 기약분수를 구하시오.
 
 ### Answer
-ans === '61/495'
+type: exact
+values:
+  - "61/495"
 
 ### Placeholder
 예: 61/495
@@ -606,7 +646,12 @@ q18.png
 <strong>Q18. [유리수 대소 비교]</strong><br>$0.\dot{3}$ 과 $0.3$ 중 어느 쪽이 더 큰가?
 
 ### Answer
-ans === '0.[3]' || ans === '0.(3)' || ans === '0.3(dot)' || ans === '0.333...'
+type: any_of
+values:
+  - "0.[3]"
+  - "0.(3)"
+  - "0.3(dot)"
+  - "0.333..."
 
 ### Placeholder
 예: 0.[3] 또는 0.(3)
@@ -639,7 +684,11 @@ q19.png
 - X
 
 ### Answer
-ans === 'O' || ans === 'o' || ans === '오'
+type: any_of
+values:
+  - "O"
+  - "o"
+  - "오"
 
 ### Placeholder
 O 또는 X 입력
@@ -668,7 +717,9 @@ q20.png
 <strong>Q20. [순환소수의 극한]</strong><br>$0.\dot{9}$ 를 분수로 나타내면 얼마인가?
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 숫자만 입력

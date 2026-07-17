@@ -41,7 +41,9 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '면'
+type: exact
+values:
+  - "면"
 
 ### Placeholder
 정답 입력
@@ -79,7 +81,10 @@ q2.png
 - 2
 
 ### Answer
-ans === '1' || ans === '1개'
+type: any_of
+values:
+  - "1"
+  - "1개"
 
 ### Placeholder
 예: 1개
@@ -111,7 +116,9 @@ q3.png
 - 해 없음
 
 ### Answer
-ans.includes('반직선')
+type: exact
+values:
+  - "ans.includes(반직선)"
 
 ### Placeholder
 정답 입력
@@ -143,7 +150,9 @@ q4.png
 - 해 없음
 
 ### Answer
-ans === '평각'
+type: exact
+values:
+  - "평각"
 
 ### Placeholder
 정답 입력
@@ -175,7 +184,10 @@ q5.png
 - 122
 
 ### Answer
-ans === '120' || ans === '120도'
+type: any_of
+values:
+  - "120"
+  - "120도"
 
 ### Placeholder
 단위 없이 숫자만 입력 또는 '120도' 입력
@@ -207,7 +219,9 @@ q6.png
 - 해 없음
 
 ### Answer
-ans === '맞꼭지각'
+type: exact
+values:
+  - "맞꼭지각"
 
 ### Placeholder
 정답 입력
@@ -247,7 +261,9 @@ q7.png
 - 해 없음
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -279,7 +295,9 @@ q8.png
 <strong>Q8.</strong> 직선 l과 m이 평행하고 한 직선 n과 만날 때, 동위각의 크기는 서로 어떠한가?
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -311,7 +329,9 @@ q9.png
 <strong>Q9.</strong> 평행한 두 직선 사이를 가로지르는 선이 있을 때, 엇각의 크기는 서로 어떠한가?
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -343,7 +363,9 @@ q10.png
 <strong>Q10.</strong> 두 직선이 평행할 조건 중 하나는 동위각의 크기가 같거나 무엇의 크기가 같은 경우인가?
 
 ### Answer
-ans === '엇각'
+type: exact
+values:
+  - "엇각"
 
 ### Placeholder
 정답 입력
@@ -380,7 +402,9 @@ q11.png
 <strong>Q11.</strong> 눈금 없는 자와 컴퍼스만을 사용하여 도형을 그리는 것을 무엇이라 하는가?
 
 ### Answer
-ans === '작도'
+type: exact
+values:
+  - "작도"
 
 ### Placeholder
 정답 입력
@@ -412,7 +436,9 @@ q12.png
 <strong>Q12.</strong> 길이가 주어진 선분을 다른 직선 위로 옮길 때 주로 사용하는 도구는 무엇인가?
 
 ### Answer
-ans === '컴퍼스'
+type: exact
+values:
+  - "컴퍼스"
 
 ### Placeholder
 정답 입력
@@ -444,7 +470,9 @@ q13.png
 <strong>Q13.</strong> 삼각형의 세 변의 길이가 a, b, c (c가 가장 긴 변)일 때, c는 a+b보다 ( 커야 / 작아야 ) 삼각형이 만들어진다. 알맞은 말은?
 
 ### Answer
-ans === '작아야'
+type: exact
+values:
+  - "작아야"
 
 ### Placeholder
 커야 또는 작아야 입력
@@ -476,7 +504,9 @@ q14.png
 <strong>Q14.</strong> 다음 세 선분의 길이로 삼각형을 만들 수 있는가? (3cm, 4cm, 7cm) (예: 있다, 없다)
 
 ### Answer
-ans === '없다'
+type: exact
+values:
+  - "없다"
 
 ### Placeholder
 있다 또는 없다 입력
@@ -508,7 +538,9 @@ q15.png
 <strong>Q15.</strong> 두 변의 길이와 그 끼인각의 크기가 주어졌을 때, 삼각형을 작도할 수 있는가? (예: 있다, 없다)
 
 ### Answer
-ans === '있다'
+type: exact
+values:
+  - "있다"
 
 ### Placeholder
 있다 또는 없다 입력
@@ -543,7 +575,9 @@ q16.png
 <strong>Q16.</strong> 모양과 크기가 완전히 같아서 포개었을 때 완전히 겹쳐지는 두 도형을 서로 무엇이라 하는가?
 
 ### Answer
-ans === '합동'
+type: exact
+values:
+  - "합동"
 
 ### Placeholder
 정답 입력
@@ -581,7 +615,10 @@ q17.png
 - ASA
 
 ### Answer
-ans === 'SSS' || ans === 'SSS합동'
+type: any_of
+values:
+  - "SSS"
+  - "SSS합동"
 
 ### Placeholder
 영문 대문자 세 글자 입력
@@ -619,7 +656,10 @@ q18.png
 - ASA
 
 ### Answer
-ans === 'SAS' || ans === 'SAS합동'
+type: any_of
+values:
+  - "SAS"
+  - "SAS합동"
 
 ### Placeholder
 영문 대문자 세 글자 입력
@@ -657,7 +697,10 @@ q19.png
 - ASA
 
 ### Answer
-ans === 'ASA' || ans === 'ASA합동'
+type: any_of
+values:
+  - "ASA"
+  - "ASA합동"
 
 ### Placeholder
 영문 대문자 세 글자 입력
@@ -689,7 +732,10 @@ q20.png
 <strong>Q20.</strong> 직각삼각형에서 빗변의 길이와 한 예각의 크기가 같을 때의 합동 조건을 무엇이라 하는가?
 
 ### Answer
-ans === '합동' || ans === '합동이다'
+type: any_of
+values:
+  - "합동"
+  - "합동이다"
 
 ### Placeholder
 합동이다 또는 합동 입력

@@ -35,7 +35,11 @@ q1.png
 - (4)
 
 ### Answer
-ans === '2' || ans === '(2)' || ans === '2번'
+type: any_of
+values:
+  - "2"
+  - "(2)"
+  - "2번"
 
 ### Placeholder
 번호 입력 (예: 2)
@@ -72,7 +76,12 @@ q2.png
 - 해 없음
 
 ### Answer
-ans === '±2' || ans === '+-2' || ans === '2,-2' || ans === '-2,2'
+type: any_of
+values:
+  - "±2"
+  - "+-2"
+  - "2,-2"
+  - "-2,2"
 
 ### Placeholder
 정답 입력
@@ -109,7 +118,9 @@ q3.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 정답 입력
@@ -148,7 +159,9 @@ q4.png
 - 해 없음
 
 ### Answer
-ans === '-2,3'
+type: exact
+values:
+  - "-2,3"
 
 ### Placeholder
 정답 입력
@@ -187,7 +200,9 @@ q5.png
 - 해 없음
 
 ### Answer
-ans === '2,3'
+type: exact
+values:
+  - "2,3"
 
 ### Placeholder
 정답 입력
@@ -224,7 +239,9 @@ q6.png
 - 8
 
 ### Answer
-ans === '4'
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 정답 입력
@@ -256,7 +273,9 @@ q7.png
 - 12
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 정답 입력
@@ -293,7 +312,12 @@ q8.png
 - 해 없음
 
 ### Answer
-ans === '2±√5' || ans === '2+-√5' || ans === '2+√5,2-√5' || ans === '2-√5,2+√5'
+type: any_of
+values:
+  - "2±√5"
+  - "2+-√5"
+  - "2+√5,2-√5"
+  - "2-√5,2+√5"
 
 ### Placeholder
 정답 입력
@@ -330,7 +354,9 @@ q9.png
 - 10
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 정답 입력
@@ -367,7 +393,9 @@ q10.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -403,7 +431,12 @@ q11.png
 <strong>Q11. [근의 공식 활용]</strong><br>이차방정식 $x^2 - 4x - 1 = 0$ 의 근을 구하시오. (근의 공식을 활용하여 공백 없이 나타내시오. 예: 2±√5)
 
 ### Answer
-ans === '2±√5' || ans === '2+-√5' || ans === '2+√5,2-√5' || ans === '2-√5,2+√5'
+type: any_of
+values:
+  - "2±√5"
+  - "2+-√5"
+  - "2+√5,2-√5"
+  - "2-√5,2+√5"
 
 ### Placeholder
 정답 입력
@@ -432,7 +465,9 @@ q12.png
 <strong>Q12. [계수가 양수인 이차방정식]</strong><br>이차방정식 $2x^2 + 5x - 3 = 0$ 의 두 근을 구하시오. (작은 수부터 적으시오. 분수는 슬래시로 표현하시오. 예: -3, 1/2)
 
 ### Answer
-ans === '-3,1/2'
+type: exact
+values:
+  - "-3,1/2"
 
 ### Placeholder
 정답 입력
@@ -461,7 +496,9 @@ q13.png
 <strong>Q13. [식의 정리 후 풀이]</strong><br>이차방정식 $(x-1)(x-2) = 6$ 의 두 근을 구하시오. (작은 수부터 쉼표로 구분하여 적으시오. 예: -1, 4)
 
 ### Answer
-ans === '-1,4'
+type: exact
+values:
+  - "-1,4"
 
 ### Placeholder
 정답 입력
@@ -494,7 +531,10 @@ q14.png
 - 해 없음
 
 ### Answer
-ans === 'X²-3X-10=0' || ans === 'X^2-3X-10=0'
+type: any_of
+values:
+  - "X²-3X-10=0"
+  - "X^2-3X-10=0"
 
 ### Placeholder
 정답 입력
@@ -523,7 +563,9 @@ q15.png
 <strong>Q15. [양수인 근 구하기]</strong><br>이차방정식 $x^2 + 4x - 5 = 0$ 의 두 근 중 양수인 근을 구하시오.
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 정답 입력
@@ -559,7 +601,9 @@ q16.png
 <strong>Q16. [공통인수를 이용한 풀이]</strong><br>이차방정식 $x^2 - 2x = 0$ 의 두 근을 구하시오. (작은 수부터 적으시오. 예: 0, 2)
 
 ### Answer
-ans === '0,2'
+type: exact
+values:
+  - "0,2"
 
 ### Placeholder
 정답 입력
@@ -588,7 +632,9 @@ q17.png
 <strong>Q17. [해의 조건 판별]</strong><br>이차방정식 $3x^2 - 7x + 2 = 0$ 의 두 근 중 정수인 근을 구하시오.
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -617,7 +663,9 @@ q18.png
 <strong>Q18. [완전제곱식과 중근]</strong><br>이차방정식 $x^2 - 6x + 9 = 0$ 의 중근을 구하시오.
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 정답 입력
@@ -646,7 +694,9 @@ q19.png
 <strong>Q19. [이차방정식의 실생활 활용]</strong><br>연속하는 두 자연수의 곱이 56일 때, 두 자연수 중 큰 수를 구하시오.
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 정답 입력
@@ -675,7 +725,9 @@ q20.png
 <strong>Q20. [이차방정식 최종 활용]</strong><br>지면에서 초속 30m로 똑바로 쏘아 올린 물체의 $t$초 후의 높이가 $30t - 5t^2$ (m)이다. 이 물체의 높이가 40m가 되는 시점은 몇 초 후인지 모두 구하시오. (오름차순으로 쉼표로 구분하여 적으시오. 예: 2, 4)
 
 ### Answer
-ans === '2,4'
+type: exact
+values:
+  - "2,4"
 
 ### Placeholder
 정답 입력

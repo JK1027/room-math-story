@@ -35,7 +35,9 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '함수'
+type: exact
+values:
+  - "함수"
 
 ### Placeholder
 두 글자 입력
@@ -72,7 +74,9 @@ q2.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 숫자만 입력
@@ -109,7 +113,9 @@ q3.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 숫자만 입력
@@ -143,7 +149,10 @@ q4.png
 - $y
 
 ### Answer
-ans === '3' || ans === '(3)'
+type: any_of
+values:
+  - "3"
+  - "(3)"
 
 ### Placeholder
 번호만 입력 (예: 3)
@@ -180,7 +189,9 @@ q5.png
 - 해 없음
 
 ### Answer
-ans.replace(/\s+/g, '') === 'Y=4X-2'
+type: normalized_exact
+values:
+  - "Y=4X-2"
 
 ### Placeholder
 예: y = 4x - 2
@@ -215,7 +226,10 @@ q6.png
 - 해 없음
 
 ### Answer
-ans === 'X절편' || ans === '엑스절편'
+type: any_of
+values:
+  - "X절편"
+  - "엑스절편"
 
 ### Placeholder
 세 글자 입력
@@ -246,7 +260,9 @@ q7.png
 <strong>Q7. [y절편 구하기]</strong><br>일차함수 $y = 2x + 6$ 의 $y$절편을 구하시오.
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 숫자만 입력
@@ -272,7 +288,9 @@ q8.png
 <strong>Q8. [x절편 구하기 1]</strong><br>일차함수 $y = 2x + 6$ 의 $x$절편을 구하시오.
 
 ### Answer
-ans === '-3'
+type: exact
+values:
+  - "-3"
 
 ### Placeholder
 음수는 마이너스 기호 포함 입력
@@ -298,7 +316,9 @@ q9.png
 <strong>Q9. [x절편 구하기 2]</strong><br>일차함수 $y = -rac{1}{2}x + 4$ 의 $x$절편을 구하시오.
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 숫자만 입력
@@ -335,7 +355,9 @@ q10.png
 - 해 없음
 
 ### Answer
-ans.replace(/\s+/g, '') === 'Y=X+5'
+type: normalized_exact
+values:
+  - "Y=X+5"
 
 ### Placeholder
 예: y = x + 5
@@ -371,7 +393,9 @@ q11.png
 <strong>Q11. [x의 증가량에 따른 y의 증가량]</strong><br>일차함수 $y = 3x - 2$ 에서 $x$의 값이 1만큼 증가할 때 $y$의 값은 얼마나 증가하는가?
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -400,7 +424,10 @@ q12.png
 <strong>Q12. [기울기의 정의]</strong><br>일차함수 $y = ax + b$ 에서 기울기를 나타내는 문자는 무엇인가? (알파벳 소문자)
 
 ### Answer
-ans === 'A' || ans === 'a'
+type: any_of
+values:
+  - "A"
+  - "a"
 
 ### Placeholder
 알파벳 1글자 입력
@@ -429,7 +456,9 @@ q13.png
 <strong>Q13. [기울기 구하기]</strong><br>두 점 $(1, 3)$ 과 $(3, 7)$ 을 지나는 직선의 기울기를 구하시오.
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 숫자만 입력
@@ -464,7 +493,9 @@ q14.png
 - 해 없음
 
 ### Answer
-ans.replace(/\s+/g, '') === 'Y=-2X+1'
+type: normalized_exact
+values:
+  - "Y=-2X+1"
 
 ### Placeholder
 예: y = -2x + 1
@@ -493,7 +524,9 @@ q15.png
 <strong>Q15. [기울기의 부호와 그래프 방향]</strong><br>일차함수 $y = -3x + 4$ 의 그래프는 오른쪽 ( 위 / 아래 ) 로 향하는 직선이다.
 
 ### Answer
-ans === '아래'
+type: exact
+values:
+  - "아래"
 
 ### Placeholder
 위 또는 아래 입력
@@ -535,7 +568,9 @@ q16.png
 - 해 없음
 
 ### Answer
-ans.replace(/\s+/g, '') === 'Y=20-2X' || ans.replace(/\s+/g, '') === 'Y=-2X+20'
+type: normalized_exact
+values:
+  - "Y=20-2X"
 
 ### Placeholder
 예: y = 20 - 2x
@@ -564,7 +599,10 @@ q17.png
 <strong>Q17. [함수 활용 값 구하기 1]</strong><br>위 Q16의 양초가 완전히 다 타서 없어지는 것은 불을 붙인 지 몇 시간 후인가?
 
 ### Answer
-ans === '10' || ans === '10시간'
+type: any_of
+values:
+  - "10"
+  - "10시간"
 
 ### Placeholder
 예: 10시간
@@ -599,7 +637,9 @@ q18.png
 - 해 없음
 
 ### Answer
-ans.replace(/\s+/g, '') === 'Y=0.6X+331' || ans.replace(/\s+/g, '') === 'Y=331+0.6X'
+type: normalized_exact
+values:
+  - "Y=0.6X+331"
 
 ### Placeholder
 예: y = 0.6x + 331
@@ -628,7 +668,11 @@ q19.png
 <strong>Q19. [함수 활용 값 구하기 2]</strong><br>기온이 15도일 때, 소리의 속력을 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '340' || ans === '340M/S' || ans === '초속340M'
+type: any_of
+values:
+  - "340"
+  - "340M/S"
+  - "초속340M"
 
 ### Placeholder
 예: 340
@@ -657,7 +701,10 @@ q20.png
 <strong>Q20. [일차함수 최종 활용]</strong><br>처음 물통에 50L의 물이 들어 있고 매분 3L씩 물을 빼낸다. 물이 20L가 남는 것은 몇 분 후인지 구하시오. (숫자만 입력)
 
 ### Answer
-ans === '10' || ans === '10분'
+type: any_of
+values:
+  - "10"
+  - "10분"
 
 ### Placeholder
 예: 10

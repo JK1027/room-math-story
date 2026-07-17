@@ -35,7 +35,10 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '3a^2b' || ans === '3ba^2'
+type: any_of
+values:
+  - "3a^2b"
+  - "3ba^2"
 
 ### Placeholder
 예: 5x^2y
@@ -72,7 +75,10 @@ q2.png
 - 해 없음
 
 ### Answer
-ans === '5x+1000' || ans === '1000+5x'
+type: any_of
+values:
+  - "5x+1000"
+  - "1000+5x"
 
 ### Placeholder
 예: 3x+500
@@ -109,7 +115,9 @@ q3.png
 - -2
 
 ### Answer
-ans === '-1'
+type: exact
+values:
+  - "-1"
 
 ### Placeholder
 숫자만 입력
@@ -146,7 +154,9 @@ q4.png
 - -5
 
 ### Answer
-ans === '-5'
+type: exact
+values:
+  - "-5"
 
 ### Placeholder
 숫자만 입력
@@ -181,7 +191,9 @@ q5.png
 - 해 없음
 
 ### Answer
-ans === '8x-12'
+type: exact
+values:
+  - "8x-12"
 
 ### Placeholder
 예: 5x-7
@@ -216,7 +228,9 @@ q6.png
 - 해 없음
 
 ### Answer
-ans === '3x-2'
+type: exact
+values:
+  - "3x-2"
 
 ### Placeholder
 예: 2x-5
@@ -253,7 +267,9 @@ q7.png
 - 해 없음
 
 ### Answer
-ans === 'x-6'
+type: exact
+values:
+  - "x-6"
 
 ### Placeholder
 예: 2x-8
@@ -290,7 +306,9 @@ q8.png
 - -2x
 
 ### Answer
-ans === '4'
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 숫자만 입력
@@ -327,7 +345,9 @@ q9.png
 - 해 없음
 
 ### Answer
-ans === 'x+2'
+type: exact
+values:
+  - "x+2"
 
 ### Placeholder
 예: 3x-4
@@ -364,7 +384,9 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === '4x-7'
+type: exact
+values:
+  - "4x-7"
 
 ### Placeholder
 예: 3x+5
@@ -400,7 +422,9 @@ q11.png
 <strong>Q11. [방정식의 이해]</strong><br>다음 식 중 미지수 x에 따라 참도 되고 거짓도 되는 <strong>방정식</strong>인 것의 번호를 쓰시오.<br>(1) 2x + 3 &nbsp;&nbsp;(2) x + x = 2x &nbsp;&nbsp;(3) 3x - 1 = 5 &nbsp;&nbsp;(4) 3 < 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -431,7 +455,9 @@ q12.png
 <strong>Q12. [일차방정식 1]</strong><br>방정식 x - 4 = 6 의 해를 구하시오.
 
 ### Answer
-ans === '10'
+type: exact
+values:
+  - "10"
 
 ### Placeholder
 숫자만 입력
@@ -462,7 +488,9 @@ q13.png
 <strong>Q13. [일차방정식 2]</strong><br>방정식 2x + 5 = 11 의 해를 구하시오.
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -491,7 +519,9 @@ q14.png
 <strong>Q14. [일차방정식 3]</strong><br>방정식 3x - 2 = x + 6 의 해를 구하시오.
 
 ### Answer
-ans === '4'
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 숫자만 입력
@@ -520,7 +550,9 @@ q15.png
 <strong>Q15. [비례식 풀이]</strong><br>비례식 (x - 1) : 2 = (2x + 1) : 5 을 만족하는 해 x의 값을 구하시오.
 
 ### Answer
-ans === '7'
+type: exact
+values:
+  - "7"
 
 ### Placeholder
 숫자만 입력
@@ -556,7 +588,9 @@ q16.png
 <strong>Q16. [연속하는 세 수]</strong><br>연속하는 세 자연수의 합이 36일 때, 세 자연수 중 가장 큰 자연수를 구하시오.
 
 ### Answer
-ans === '13'
+type: exact
+values:
+  - "13"
 
 ### Placeholder
 숫자만 입력
@@ -585,7 +619,9 @@ q17.png
 <strong>Q17. [식의 활용 1]</strong><br>어떤 수의 3배에서 5를 뺀 수는 어떤 수의 2배보다 4만큼 크다. 이 어떤 수를 구하시오.
 
 ### Answer
-ans === '9'
+type: exact
+values:
+  - "9"
 
 ### Placeholder
 숫자만 입력
@@ -614,7 +650,9 @@ q18.png
 <strong>Q18. [과부족 문제]</strong><br>요원들에게 산소 팩을 나누어 주는데, 한 명에게 4개씩 주면 3개가 남고, 5개씩 주면 2개가 부족하다. 요원 수(명)를 구하시오.
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 숫자만 입력
@@ -643,7 +681,10 @@ q19.png
 <strong>Q19. [거리 속력 시간]</strong><br>해치까지 가는데 시속 4km로 걸어가면 시속 12km로 호버보드를 타고 가는 것보다 20분 늦게 도착한다. 총 통로 거리(km)를 구하시오.
 
 ### Answer
-ans === '2' || ans === '2km'
+type: any_of
+values:
+  - "2"
+  - "2km"
 
 ### Placeholder
 숫자만 입력
@@ -672,7 +713,10 @@ q20.png
 <strong>Q20. [나이에 관한 문제]</strong><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?
 
 ### Answer
-ans === '3' || ans === '3년'
+type: any_of
+values:
+  - "3"
+  - "3년"
 
 ### Placeholder
 숫자만 입력

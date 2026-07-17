@@ -35,7 +35,11 @@ q1.png
 - (4)
 
 ### Answer
-ans === '2' || ans === '(2)' || ans === '2번'
+type: any_of
+values:
+  - "2"
+  - "(2)"
+  - "2번"
 
 ### Placeholder
 번호 입력 (예: 2)
@@ -74,7 +78,10 @@ q2.png
 - 해 없음
 
 ### Answer
-ans === '(0,0)' || ans === '0,0'
+type: any_of
+values:
+  - "(0,0)"
+  - "0,0"
 
 ### Placeholder
 정답 입력
@@ -111,7 +118,9 @@ q3.png
 - 해 없음
 
 ### Answer
-ans === 'X=0'
+type: exact
+values:
+  - "X=0"
 
 ### Placeholder
 정답 입력
@@ -148,7 +157,9 @@ q4.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 정답 입력
@@ -185,7 +196,10 @@ q5.png
 - 해 없음
 
 ### Answer
-ans === 'Y=X²+3' || ans === 'Y=X^2+3'
+type: any_of
+values:
+  - "Y=X²+3"
+  - "Y=X^2+3"
 
 ### Placeholder
 정답 입력
@@ -216,7 +230,10 @@ q6.png
 <strong>Q6. [x축 평행이동 꼭짓점]</strong><br>이차함수 $y=3(x-1)^2$ 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 공백 없이 적으시오. 예: (1,0))
 
 ### Answer
-ans === '(1,0)' || ans === '1,0'
+type: any_of
+values:
+  - "(1,0)"
+  - "1,0"
 
 ### Placeholder
 정답 입력
@@ -247,7 +264,10 @@ q7.png
 <strong>Q7. [표준형의 꼭짓점]</strong><br>이차함수 $y=-(x-2)^2 + 4$ 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 공백 없이 적으시오. 예: (2,4))
 
 ### Answer
-ans === '(2,4)' || ans === '2,4'
+type: any_of
+values:
+  - "(2,4)"
+  - "2,4"
 
 ### Placeholder
 정답 입력
@@ -284,7 +304,9 @@ q8.png
 - 해 없음
 
 ### Answer
-ans === 'X=-3'
+type: exact
+values:
+  - "X=-3"
 
 ### Placeholder
 정답 입력
@@ -321,7 +343,9 @@ q9.png
 - 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 정답 입력
@@ -358,7 +382,10 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === 'Y=X²' || ans === 'Y=X^2'
+type: any_of
+values:
+  - "Y=X²"
+  - "Y=X^2"
 
 ### Placeholder
 정답 입력
@@ -400,7 +427,9 @@ q11.png
 - 12
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 정답 입력
@@ -429,7 +458,10 @@ q12.png
 <strong>Q12. [일반형의 꼭짓점]</strong><br>이차함수 $y=x^2 - 6x + 5$ 그래프의 꼭짓점 좌표를 구하시오. (괄호를 포함하여 공백 없이 적으시오. 예: (3,-4))
 
 ### Answer
-ans === '(3,-4)' || ans === '3,-4'
+type: any_of
+values:
+  - "(3,-4)"
+  - "3,-4"
 
 ### Placeholder
 정답 입력
@@ -466,7 +498,9 @@ q13.png
 - 해 없음
 
 ### Answer
-ans === '-3,1'
+type: exact
+values:
+  - "-3,1"
 
 ### Placeholder
 정답 입력
@@ -501,7 +535,9 @@ q14.png
 - 5
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 정답 입력
@@ -534,7 +570,9 @@ q15.png
 - 해 없음
 
 ### Answer
-ans === 'X=2'
+type: exact
+values:
+  - "X=2"
 
 ### Placeholder
 정답 입력
@@ -570,7 +608,9 @@ q16.png
 <strong>Q16. [이차함수 그래프의 볼록한 방향]</strong><br>이차함수 $y=ax^2+bx+c$ 의 그래프 모양이 아래로 볼록할 때, $a$의 값의 부호를 쓰시오. (기호를 포함해 예: >0)
 
 ### Answer
-ans === '>0'
+type: exact
+values:
+  - ">0"
 
 ### Placeholder
 정답 입력
@@ -599,7 +639,9 @@ q17.png
 <strong>Q17. [함수와 원점 통과]</strong><br>"이차함수 $y=x^2 + 2x$ 의 그래프는 항상 원점$(0,0)$을 지난다." 이 명제가 맞으면 참, 틀리면 거짓을 쓰시오.
 
 ### Answer
-ans === '참'
+type: exact
+values:
+  - "참"
 
 ### Placeholder
 참 또는 거짓 입력
@@ -628,7 +670,9 @@ q18.png
 <strong>Q18. [일반형의 y절편]</strong><br>이차함수 $y=x^2 - 2x - 3$ 그래프가 $y$축과 만나는 점의 $y$좌표를 구하시오. (음수 마이너스 포함 입력)
 
 ### Answer
-ans === '-3'
+type: exact
+values:
+  - "-3"
 
 ### Placeholder
 정답 입력
@@ -657,7 +701,9 @@ q19.png
 <strong>Q19. [이차함수의 최솟값]</strong><br>이차함수 $y=3(x-2)^2 + 1$ 의 최솟값을 구하시오.
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 정답 입력
@@ -686,7 +732,9 @@ q20.png
 <strong>Q20. [이차함수의 최댓값 활용]</strong><br>보안 드론의 회피 포물선 비행 궤도 식은 $y = -x^2 + 4x$ 이다. 이 드론이 도달할 수 있는 가장 높은 지점의 높이($y$좌표)를 구하시오.
 
 ### Answer
-ans === '4'
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 정답 입력

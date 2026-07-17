@@ -40,7 +40,11 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '3,4,7' || ans === '3, 4, 7' || ans === '347'
+type: any_of
+values:
+  - "3,4,7"
+  - "3, 4, 7"
+  - "347"
 
 ### Placeholder
 예: 3, 4, 7
@@ -77,7 +81,10 @@ q2.png
 - 12
 
 ### Answer
-ans === '10' || ans === '10개'
+type: any_of
+values:
+  - "10"
+  - "10개"
 
 ### Placeholder
 숫자 또는 개수 입력
@@ -114,7 +121,11 @@ q3.png
 - 해 없음
 
 ### Answer
-ans === '2와3' || ans === '2,3' || ans === '2, 3'
+type: any_of
+values:
+  - "2와3"
+  - "2,3"
+  - "2, 3"
 
 ### Placeholder
 예: 2, 3
@@ -151,7 +162,10 @@ q4.png
 - 5
 
 ### Answer
-ans === '5' || ans === '5곳'
+type: any_of
+values:
+  - "5"
+  - "5곳"
 
 ### Placeholder
 숫자 또는 곳 입력
@@ -186,7 +200,10 @@ q5.png
 - 25
 
 ### Answer
-ans === '23' || ans === '23건'
+type: any_of
+values:
+  - "23"
+  - "23건"
 
 ### Placeholder
 숫자 또는 건 입력
@@ -223,7 +240,9 @@ q6.png
 - 해 없음
 
 ### Answer
-ans === '계급'
+type: exact
+values:
+  - "계급"
 
 ### Placeholder
 한글 단어 입력
@@ -260,7 +279,9 @@ q7.png
 - 해 없음
 
 ### Answer
-ans === '도수'
+type: exact
+values:
+  - "도수"
 
 ### Placeholder
 한글 단어 입력
@@ -297,7 +318,10 @@ q8.png
 - 12
 
 ### Answer
-ans === '10' || ans === '10세'
+type: any_of
+values:
+  - "10"
+  - "10세"
 
 ### Placeholder
 숫자만 입력
@@ -334,7 +358,9 @@ q9.png
 - 해 없음
 
 ### Answer
-ans === '20대'
+type: exact
+values:
+  - "20대"
 
 ### Placeholder
 예: 20대
@@ -371,7 +397,10 @@ q10.png
 - 58
 
 ### Answer
-ans === '60' || ans === '60%'
+type: any_of
+values:
+  - "60"
+  - "60%"
 
 ### Placeholder
 숫자만 입력
@@ -407,7 +436,9 @@ q11.png
 <strong>Q11. [히스토그램]</strong><br>도수분포표를 바탕으로 가로축에 계급, 세로축에 도수를 나타내어 직사각형 모양으로 그린 그래프를 무엇이라 하는가?
 
 ### Answer
-ans === '히스토그램'
+type: exact
+values:
+  - "히스토그램"
 
 ### Placeholder
 한글 그래프 이름 입력
@@ -436,7 +467,12 @@ q12.png
 <strong>Q12. [히스토그램 가로]</strong><br>히스토그램에서 직사각형의 가로의 길이는 무엇을 의미하는가?
 
 ### Answer
-ans === '계급의크기' || ans === '계급의 크기' || ans === '계급의너비' || ans === '계급의 너비'
+type: any_of
+values:
+  - "계급의크기"
+  - "계급의 크기"
+  - "계급의너비"
+  - "계급의 너비"
 
 ### Placeholder
 예: 계급의 크기
@@ -465,7 +501,12 @@ q13.png
 <strong>Q13. [히스토그램 넓이 공식]</strong><br>히스토그램에서 직사각형의 넓이의 합은 (계급의 크기) × ( ? ) 이다. ?에 들어갈 알맞은 말은?
 
 ### Answer
-ans === '도수의총합' || ans === '도수의 총합' || ans === '도수의합' || ans === '도수의 합'
+type: any_of
+values:
+  - "도수의총합"
+  - "도수의 총합"
+  - "도수의합"
+  - "도수의 합"
 
 ### Placeholder
 한글 단어 입력
@@ -494,7 +535,9 @@ q14.png
 <strong>Q14. [도수분포다각형]</strong><br>히스토그램의 각 직사각형 윗변의 중점을 차례로 선분으로 연결한 그래프를 무엇이라 하는가?
 
 ### Answer
-ans === '도수분포다각형'
+type: exact
+values:
+  - "도수분포다각형"
 
 ### Placeholder
 한글 그래프 이름 입력
@@ -523,7 +566,9 @@ q15.png
 <strong>Q15. [넓이의 성질]</strong><br>도수분포다각형과 가로축으로 둘러싸인 부분의 넓이는 히스토그램의 직사각형들의 넓이의 합과 어떠한가?
 
 ### Answer
-ans === '같다'
+type: exact
+values:
+  - "같다"
 
 ### Placeholder
 같다 또는 다르다 입력
@@ -559,7 +604,9 @@ q16.png
 <strong>Q16. [상대도수의 정의]</strong><br>각 계급의 도수를 도수의 총합으로 나눈 비율을 무엇이라 하는가?
 
 ### Answer
-ans === '상대도수'
+type: exact
+values:
+  - "상대도수"
 
 ### Placeholder
 한글 단어 입력
@@ -588,7 +635,9 @@ q17.png
 <strong>Q17. [상대도수 계산]</strong><br>어떤 계급의 도수가 15, 도수의 총합이 50일 때, 이 계급의 상대도수를 구하시오. (소수로 기재)
 
 ### Answer
-ans === '0.3'
+type: exact
+values:
+  - "0.3"
 
 ### Placeholder
 예: 0.5
@@ -617,7 +666,9 @@ q18.png
 <strong>Q18. [상대도수 총합]</strong><br>상대도수의 총합은 항상 얼마인가?
 
 ### Answer
-ans === '1'
+type: exact
+values:
+  - "1"
 
 ### Placeholder
 숫자만 입력
@@ -646,7 +697,9 @@ q19.png
 <strong>Q19. [상대도수의 활용]</strong><br>상대도수는 도수의 총합이 다른 두 집단의 분포 상태를 비교할 때 어떠한가? (유용하다 / 불필요하다)
 
 ### Answer
-ans === '유용하다'
+type: exact
+values:
+  - "유용하다"
 
 ### Placeholder
 유용하다 또는 불필요하다 입력
@@ -675,7 +728,10 @@ q20.png
 <strong>Q20. [도수 구하기]</strong><br>상대도수가 0.2이고 전체 도수가 40명일 때, 이 계급의 도수를 구하시오.
 
 ### Answer
-ans === '8' || ans === '8명'
+type: any_of
+values:
+  - "8"
+  - "8명"
 
 ### Placeholder
 숫자만 입력

@@ -102,7 +102,7 @@ def parse_chapter(filepath: str) -> ParseResult:
         image = extract_section_text(q_block, "### Image", ["### Question"])
         qtext = extract_section_text(q_block, "### Question", ["### Choices", "### Answer"])
         choices_raw = extract_section_text(q_block, "### Choices", ["### Answer"])
-        answer = extract_section_text(q_block, "### Answer", ["### Placeholder"])
+        answer_raw = extract_section_text(q_block, "### Answer", ["### Placeholder"])
         placeholder = extract_section_text(q_block, "### Placeholder", ["### Error Message"])
         error_msg = extract_section_text(q_block, "### Error Message", ["### Hint"])
         hint = extract_section_text(q_block, "### Hint", ["### Story", "### Extra Class"])
@@ -116,8 +116,19 @@ def parse_chapter(filepath: str) -> ParseResult:
             errors.append(f"Q{qnum}: '### Title' is missing.")
         if not qtext:
             errors.append(f"Q{qnum}: '### Question' text is missing.")
-        if not answer:
-            errors.append(f"Q{qnum}: '### Answer' validation formula is missing.")
+            
+        answer_data = {}
+        if not answer_raw:
+            errors.append(f"Q{qnum}: '### Answer' validation config is missing.")
+        else:
+            try:
+                # 백슬래시 (\ge 등) 문자열이 YAML 큰따옴표 내에서 잘못 이스케이프 해독되어 터지는 것을 방어
+                safe_yaml = answer_raw.replace('\\', '\\\\')
+                answer_data = yaml.safe_load(safe_yaml) or {}
+                if not isinstance(answer_data, dict) or "type" not in answer_data:
+                    errors.append(f"Q{qnum}: '### Answer' must specify a valid YAML dictionary containing 'type' and 'values'.")
+            except Exception as e:
+                errors.append(f"Q{qnum}: Failed to parse answer YAML spec: {e}")
             
         questions.append(Question(
             qnum=qnum,
@@ -125,7 +136,7 @@ def parse_chapter(filepath: str) -> ParseResult:
             image=image,
             qtext=qtext,
             choices=choices,
-            answer=answer,
+            answer=answer_data,
             placeholder=placeholder,
             error_message=error_msg,
             hint=hint,

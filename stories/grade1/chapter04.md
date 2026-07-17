@@ -39,7 +39,9 @@ img1_radar.png
 - 해 없음
 
 ### Answer
-ans === '-5,8'
+type: exact
+values:
+  - "-5,8"
 
 ### Placeholder
 예: (3, 4)
@@ -76,7 +78,9 @@ img12_compass.png
 - 해 없음
 
 ### Answer
-ans === '7,0'
+type: exact
+values:
+  - "7,0"
 
 ### Placeholder
 예: (2, 0)
@@ -110,7 +114,9 @@ intro.png
 - 해 없음
 
 ### Answer
-ans === '0,0'
+type: exact
+values:
+  - "0,0"
 
 ### Placeholder
 예: (x, y)
@@ -144,7 +150,9 @@ img11_deep_cave.png
 - 해 없음
 
 ### Answer
-ans === '0,-3'
+type: exact
+values:
+  - "0,-3"
 
 ### Placeholder
 예: (0, -5)
@@ -176,7 +184,9 @@ img2_pillars.png
 - 96
 
 ### Answer
-ans === '48'
+type: exact
+values:
+  - "48"
 
 ### Placeholder
 숫자만 입력
@@ -208,7 +218,9 @@ img3_atlantis.png
 - 제4사분면
 
 ### Answer
-ans === '제4사분면'
+type: exact
+values:
+  - "제4사분면"
 
 ### Placeholder
 선택지를 골라주세요
@@ -243,7 +255,9 @@ img12_compass.png
 - 제4사분면
 
 ### Answer
-ans === '제3사분면'
+type: exact
+values:
+  - "제3사분면"
 
 ### Placeholder
 선택지를 골라주세요
@@ -271,7 +285,9 @@ img3_atlantis.png
 <strong>Q8. [사분면의 이해]</strong><br>점 P(a, b)에 대하여 a × b < 0 이고 a - b > 0 일 때, 점 P는 제 몇 사분면 위에 있는지 구하시오.
 
 ### Answer
-ans === '4' || ans.includes('제4') || ans.includes('4사')
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 예: 4 또는 제4사분면
@@ -306,7 +322,9 @@ img4_mirror.png
 - 제4사분면
 
 ### Answer
-ans === '제3사분면'
+type: exact
+values:
+  - "제3사분면"
 
 ### Placeholder
 선택지를 골라주세요
@@ -334,7 +352,9 @@ event2.png
 <strong>Q10. [사분면의 응용 2]</strong><br>점 P(a, b)가 제3사분면 위의 점일 때, 점 Q(-a, b)는 제 몇 사분면 위의 점인가?
 
 ### Answer
-ans === '4' || ans.includes('제4') || ans.includes('4사')
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 예: 4 또는 제4사분면
@@ -366,7 +386,9 @@ img5_descend.png
 <strong>Q11. [그래프 해석 1]</strong><br>x분 동안 이동한 거리 y m를 나타낸 그래프가 수평을 유지한 구간은 잠수정이 무엇을 의미하는가?
 
 ### Answer
-ans === '정지'
+type: exact
+values:
+  - "정지"
 
 ### Placeholder
 예: 상승, 하강, 정지
@@ -393,7 +415,9 @@ img13_graph_speed.png
 <strong>Q12. [그래프 해석 2]</strong><br>잠수정이 수심 100m까지 10분 동안 일정한 속력으로 내려갔다. 5분일 때 수심은 몇 m인가?
 
 ### Answer
-ans === '50'
+type: exact
+values:
+  - "50"
 
 ### Placeholder
 숫자만 입력
@@ -427,7 +451,9 @@ img6_oxygen.png
 - 변하지 않는다
 
 ### Answer
-ans === '증가한다'
+type: exact
+values:
+  - "증가한다"
 
 ### Placeholder
 선택지를 골라주세요
@@ -455,7 +481,9 @@ event3.png
 <strong>Q14. [그래프 해석 4]</strong><br>수심 100m에서 5분간 머물렀다. 이 5분 동안 깊이 y값의 변화량은 얼마인가?
 
 ### Answer
-ans === '0'
+type: exact
+values:
+  - "0"
 
 ### Placeholder
 숫자만 입력
@@ -489,7 +517,9 @@ img14_oxygen_leak.png
 - 수평인 모양
 
 ### Answer
-ans === '우하향하는 모양'
+type: exact
+values:
+  - "우하향하는 모양"
 
 ### Placeholder
 선택지를 골라주세요
@@ -522,7 +552,9 @@ img7_gears.png
 <strong>Q16. [정비례 관계]</strong><br>y가 x에 정비례하고, x=3일 때 y=15이다. x=5일 때 y의 값을 구하시오.
 
 ### Answer
-ans === '25'
+type: exact
+values:
+  - "25"
 
 ### Placeholder
 숫자만 입력
@@ -549,7 +581,9 @@ img9_laser.png
 <strong>Q17. [정비례 함수식]</strong><br>y = ax의 그래프가 점 (2, -8)을 지날 때, 상수 a의 값을 구하시오.
 
 ### Answer
-ans === '-4'
+type: exact
+values:
+  - "-4"
 
 ### Placeholder
 숫자만 입력
@@ -576,7 +610,9 @@ img8_buoyancy.png
 <strong>Q18. [반비례 관계 1]</strong><br>부력 장치 x개 and 1개당 감당할 무게 y kg은 반비례한다. 4개를 달면 60kg을 감당할 때, 6개로 늘리면 몇 kg을 감당해야 하는가?
 
 ### Answer
-ans === '40'
+type: exact
+values:
+  - "40"
 
 ### Placeholder
 숫자만 입력
@@ -605,7 +641,9 @@ img15_golden_door.png
 <strong>Q19. [반비례 관계 2]</strong><br>y가 x에 반비례하고 x=2일 때 y=10이다. y = a/x에서 a의 값을 구하시오.
 
 ### Answer
-ans === '20'
+type: exact
+values:
+  - "20"
 
 ### Placeholder
 숫자만 입력
@@ -633,7 +671,9 @@ event4.png
 <strong>Q20. [최종 암호 해독]</strong><br>반비례 그래프 y = 12/x 가 점 (-3, k)를 지난다. 최종 암호 k의 값을 구하시오.
 
 ### Answer
-ans === '-4'
+type: exact
+values:
+  - "-4"
 
 ### Placeholder
 숫자만 입력

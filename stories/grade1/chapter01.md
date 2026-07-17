@@ -35,7 +35,10 @@ q1.png
 - 8
 
 ### Answer
-ans === '4' || ans === '4개'
+type: any_of
+values:
+  - "4"
+  - "4개"
 
 ### Placeholder
 숫자 또는 개수 입력
@@ -72,7 +75,9 @@ q2.png
 - 39
 
 ### Answer
-ans === '41'
+type: exact
+values:
+  - "41"
 
 ### Placeholder
 숫자만 입력
@@ -109,7 +114,11 @@ q3.png
 - 21
 
 ### Answer
-ans === '3' || ans === '17' || ans === '(3)'
+type: any_of
+values:
+  - "3"
+  - "17"
+  - "(3)"
 
 ### Placeholder
 보기 번호 또는 숫자 입력
@@ -146,7 +155,9 @@ q4.png
 - 12
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 숫자만 입력
@@ -183,7 +194,10 @@ q5.png
 - 10
 
 ### Answer
-ans === '2' || ans === '2개'
+type: any_of
+values:
+  - "2"
+  - "2개"
 
 ### Placeholder
 숫자 또는 개수 입력
@@ -220,7 +234,9 @@ q6.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 숫자만 입력
@@ -257,7 +273,9 @@ q7.png
 - 144
 
 ### Answer
-ans === '72'
+type: exact
+values:
+  - "72"
 
 ### Placeholder
 숫자만 입력
@@ -294,7 +312,9 @@ q8.png
 - 12
 
 ### Answer
-ans === '10'
+type: exact
+values:
+  - "10"
 
 ### Placeholder
 숫자만 입력
@@ -331,7 +351,9 @@ q9.png
 - 12
 
 ### Answer
-ans === '12'
+type: exact
+values:
+  - "12"
 
 ### Placeholder
 숫자만 입력
@@ -368,7 +390,9 @@ q10.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 숫자만 입력
@@ -404,7 +428,9 @@ q11.png
 <strong>Q11. [최대공약수]</strong><br>24와 36의 최대공약수를 구하시오.
 
 ### Answer
-ans === '12'
+type: exact
+values:
+  - "12"
 
 ### Placeholder
 숫자만 입력
@@ -435,7 +461,9 @@ q12.png
 <strong>Q12. [최소공배수]</strong><br>15와 25의 최소공배수를 구하시오.
 
 ### Answer
-ans === '75'
+type: exact
+values:
+  - "75"
 
 ### Placeholder
 숫자만 입력
@@ -466,7 +494,9 @@ q13.png
 <strong>Q13. [거듭제곱의 최대공약수]</strong><br>두 수 $2^2 \times 3$, $2 \times 3^2 \times 5$ 의 최대공약수를 구하시오. (숫자로 환산)
 
 ### Answer
-ans === '6'
+type: exact
+values:
+  - "6"
 
 ### Placeholder
 숫자만 입력
@@ -495,7 +525,10 @@ q14.png
 <strong>Q14. [공약수의 개수]</strong><br>두 수 12, 18의 공약수의 개수는 모두 몇 개인가?
 
 ### Answer
-ans === '4' || ans === '4개'
+type: any_of
+values:
+  - "4"
+  - "4개"
 
 ### Placeholder
 숫자 또는 개수 입력
@@ -524,7 +557,9 @@ q15.png
 <strong>Q15. [최소공배수의 성질]</strong><br>두 수의 곱이 300이고 최대공약수가 5일 때, 이 두 수의 최소공배수를 구하시오.
 
 ### Answer
-ans === '60'
+type: exact
+values:
+  - "60"
 
 ### Placeholder
 숫자만 입력
@@ -560,7 +595,10 @@ q16.png
 <strong>Q16. [최대공약수 활용]</strong><br>가로 18cm, 세로 24cm인 직사각형 벽을 가능한 큰 정사각형 타일로 빈틈없이 채우려 한다. 타일 한 변의 길이를 구하시오. (단위 생략)
 
 ### Answer
-ans === '6' || ans === '6cm'
+type: any_of
+values:
+  - "6"
+  - "6cm"
 
 ### Placeholder
 숫자 또는 cm 입력
@@ -589,7 +627,10 @@ q17.png
 <strong>Q17. [최소공배수 활용 1]</strong><br>톱니수가 각각 12개, 18개인 두 톱니바퀴 A, B가 맞물려 돌 때, 처음으로 다시 같은 톱니에서 맞물리려면 A는 몇 바퀴를 돌아야 하는가?
 
 ### Answer
-ans === '3' || ans === '3바퀴'
+type: any_of
+values:
+  - "3"
+  - "3바퀴"
 
 ### Placeholder
 숫자 또는 바퀴 수 입력
@@ -618,7 +659,9 @@ q18.png
 <strong>Q18. [최대공약수 활용 2]</strong><br>어떤 수로 37을 나누면 1이 남고, 46을 나누면 2가 남는다. 이러한 수 중 가장 큰 수를 구하시오.
 
 ### Answer
-ans === '4'
+type: exact
+values:
+  - "4"
 
 ### Placeholder
 숫자만 입력
@@ -647,7 +690,10 @@ q19.png
 <strong>Q19. [최소공배수 활용 2]</strong><br>버스 A는 10분, 버스 B는 15분 간격으로 출발한다. 오전 9시에 동시에 출발했다면, 다음으로 처음 동시에 출발하는 시각은 9시 몇 분인가? (분만 입력)
 
 ### Answer
-ans === '30' || ans === '30분'
+type: any_of
+values:
+  - "30"
+  - "30분"
 
 ### Placeholder
 숫자 또는 분 입력
@@ -676,7 +722,9 @@ q20.png
 <strong>Q20. [최소공배수 활용 3]</strong><br>3, 4, 5 어느 수로 나누어도 2가 남는 가장 작은 세 자리 자연수를 구하시오.
 
 ### Answer
-ans === '122'
+type: exact
+values:
+  - "122"
 
 ### Placeholder
 숫자만 입력

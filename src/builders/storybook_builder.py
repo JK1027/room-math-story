@@ -17,19 +17,8 @@ class StorybookBuilder(Builder):
         chapter_num = unit_code[3:5]
         output_file = output_dir / f"chapter{chapter_num}_storybook.html"
         
-        # 이미지 에셋 폴더명 결정
-        assets_folder = None
-        apps_assets_root = paths.APPS_DIR / "assets"
-        if apps_assets_root.exists():
-            for dname in os.listdir(apps_assets_root):
-                if dname.startswith(unit_code) and os.path.isdir(apps_assets_root / dname):
-                    assets_folder = dname
-                    break
-        if not assets_folder:
-            assets_folder = unit_code
-
-        # 리소스 URI/경로 매핑
-        assets_relative_path = f"../../apps/assets/{assets_folder}"
+        # 리소스 URI/경로 매핑 (일원화된 assets/units/ 경로를 추종)
+        assets_relative_path = f"../../assets/units/{unit_code}"
         
         html_content = []
         
@@ -262,6 +251,10 @@ class StorybookBuilder(Builder):
                 
             extra_class_badge = f'<span class="badge badge-accent">{q.extra_class}</span>' if q.extra_class else ""
             
+            # 구조화된 정답 포맷팅 출력
+            ans_spec = q.answer
+            ans_display = f"Type: {ans_spec.get('type')}<br>Values: {ans_spec.get('values', [])}"
+            
             html_content.append(f"""
         <!-- Q{q.qnum} -->
         <div class="section-card">
@@ -279,7 +272,7 @@ class StorybookBuilder(Builder):
                         </tr>
                         <tr>
                             <td class="field-name">정답 조건</td>
-                            <td><code>{q.answer}</code></td>
+                            <td><code>{ans_display}</code></td>
                         </tr>
                         <tr>
                             <td class="field-name">플레이스홀더</td>

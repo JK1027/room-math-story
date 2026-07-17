@@ -29,7 +29,10 @@ q1.png
 <strong>Q1. [지수의 곱셉]</strong><br>$a^3 	imes a^4$ 를 간단히 하시오.
 
 ### Answer
-ans === 'A^7' || ans === 'A**7'
+type: any_of
+values:
+  - "A^7"
+  - "A**7"
 
 ### Placeholder
 예: a^7
@@ -66,7 +69,10 @@ q2.png
 - 해 없음
 
 ### Answer
-ans === 'X^10' || ans === 'X**10'
+type: any_of
+values:
+  - "X^10"
+  - "X**10"
 
 ### Placeholder
 예: x^10
@@ -97,7 +103,11 @@ q3.png
 <strong>Q3. [지수의 나눗셈]</strong><br>$2^5 \div 2^2$ 를 간단히 하시오.
 
 ### Answer
-ans === '2^3' || ans === '2**3' || ans === '8'
+type: any_of
+values:
+  - "2^3"
+  - "2**3"
+  - "8"
 
 ### Placeholder
 예: 2^3 또는 8
@@ -128,7 +138,10 @@ q4.png
 <strong>Q4. [곱의 거듭제곱]</strong><br>$(3a)^2$ 를 간단히 하시오.
 
 ### Answer
-ans === '9A^2' || ans === '9A**2'
+type: any_of
+values:
+  - "9A^2"
+  - "9A**2"
 
 ### Placeholder
 예: 9a^2
@@ -157,7 +170,11 @@ q5.png
 <strong>Q5. [분수의 거듭제곱]</strong><br>$\left(rac{b}{a^2}
 
 ### Answer
-ans === 'B^3/A^6' || ans === 'B**3/A**6' || ans === '(B^3)/(A^6)'
+type: any_of
+values:
+  - "B^3/A^6"
+  - "B**3/A**6"
+  - "(B^3)/(A^6)"
 
 ### Placeholder
 예: b^3/a^6
@@ -186,7 +203,11 @@ q6.png
 <strong>Q6. [단항식의 곱셈]</strong><br>$3a^2 	imes 4ab$ 를 간단히 하시오.
 
 ### Answer
-ans === '12A^3B' || ans === '12A**3B' || ans === '12(A^3)B'
+type: any_of
+values:
+  - "12A^3B"
+  - "12A**3B"
+  - "12(A^3)B"
 
 ### Placeholder
 예: 12a^3b
@@ -223,7 +244,11 @@ q7.png
 - 해 없음
 
 ### Answer
-ans === '-8X^6Y^3' || ans === '-8X**6Y**3' || ans === '-8(X^6)(Y^3)'
+type: any_of
+values:
+  - "-8X^6Y^3"
+  - "-8X**6Y**3"
+  - "-8(X^6)(Y^3)"
 
 ### Placeholder
 예: -8x^6y^3
@@ -260,7 +285,11 @@ q8.png
 - 해 없음
 
 ### Answer
-ans === '4X^2Y' || ans === '4X**2Y' || ans === '4(X^2)Y'
+type: any_of
+values:
+  - "4X^2Y"
+  - "4X**2Y"
+  - "4(X^2)Y"
 
 ### Placeholder
 예: 4x^2y
@@ -291,7 +320,10 @@ q9.png
 <strong>Q9. [분수 단항식 나눗셈]</strong><br>$8a^3b^2 \div rac{2}{3}ab$ 를 간단히 하시오.
 
 ### Answer
-ans === '12A^2B' || ans === '12A**2B'
+type: any_of
+values:
+  - "12A^2B"
+  - "12A**2B"
 
 ### Placeholder
 예: 12a^2b
@@ -328,7 +360,9 @@ q10.png
 - 해 없음
 
 ### Answer
-ans === '-6X'
+type: exact
+values:
+  - "-6X"
 
 ### Placeholder
 예: -6x
@@ -370,7 +404,10 @@ q11.png
 - 해 없음
 
 ### Answer
-ans === '6X+2Y' || ans === '2Y+6X'
+type: any_of
+values:
+  - "6X+2Y"
+  - "2Y+6X"
 
 ### Placeholder
 예: 6x+2y
@@ -399,7 +436,10 @@ q12.png
 <strong>Q12. [다항식의 뺄셈]</strong><br>$(5a - 2b) - (3a - 4b)$ 를 간단히 하시오.
 
 ### Answer
-ans === '2A+2B' || ans === '2B+2A'
+type: any_of
+values:
+  - "2A+2B"
+  - "2B+2A"
 
 ### Placeholder
 예: 2a+2b
@@ -434,7 +474,10 @@ q13.png
 - 해 없음
 
 ### Answer
-ans === '7X-4Y' || ans === '-4Y+7X'
+type: any_of
+values:
+  - "7X-4Y"
+  - "-4Y+7X"
 
 ### Placeholder
 예: 7x-4y
@@ -463,7 +506,9 @@ q14.png
 <strong>Q14. [다항식의 기초 용어]</strong><br>다항식의 덧셈에서 문자와 차수가 각각 같은 항을 무엇이라 하는가?
 
 ### Answer
-ans === '동류항'
+type: exact
+values:
+  - "동류항"
 
 ### Placeholder
 한글 3글자 입력
@@ -498,7 +543,11 @@ q15.png
 - 해 없음
 
 ### Answer
-ans === '2X^2+3X-2' || ans === '2X**2+3X-2' || ans === '-2+3X+2X^2'
+type: any_of
+values:
+  - "2X^2+3X-2"
+  - "2X**2+3X-2"
+  - "-2+3X+2X^2"
 
 ### Placeholder
 예: 2x^2+3x-2
@@ -540,7 +589,11 @@ q16.png
 - 해 없음
 
 ### Answer
-ans === '6X^2-8XY' || ans === '6X**2-8XY' || ans === '-8XY+6X^2'
+type: any_of
+values:
+  - "6X^2-8XY"
+  - "6X**2-8XY"
+  - "-8XY+6X^2"
 
 ### Placeholder
 예: 6x^2-8xy
@@ -569,7 +622,10 @@ q17.png
 <strong>Q17. [다항식과 단항식의 나눗셈]</strong><br>$(6a^2b - 3ab^2) \div 3ab$ 를 간단히 하시오.
 
 ### Answer
-ans === '2A-B' || ans === '-B+2A'
+type: any_of
+values:
+  - "2A-B"
+  - "-B+2A"
 
 ### Placeholder
 예: 2a-b
@@ -604,7 +660,11 @@ q18.png
 - 해 없음
 
 ### Answer
-ans === '-2X^2+15X' || ans === '-2X**2+15X' || ans === '15X-2X^2'
+type: any_of
+values:
+  - "-2X^2+15X"
+  - "-2X**2+15X"
+  - "15X-2X^2"
 
 ### Placeholder
 예: -2x^2+15x
@@ -639,7 +699,10 @@ q19.png
 - 해 없음
 
 ### Answer
-ans === '-2X+4Y' || ans === '4Y-2X'
+type: any_of
+values:
+  - "-2X+4Y"
+  - "4Y-2X"
 
 ### Placeholder
 예: -2x+4y
@@ -668,7 +731,10 @@ q20.png
 <strong>Q20. [식의 계산 최종 복합형]</strong><br>$(15x^3 - 10x^2) \div 5x^2 + 3(x - 2)$ 를 간단히 하시오.
 
 ### Answer
-ans === '6X-8' || ans === '-8+6X'
+type: any_of
+values:
+  - "6X-8"
+  - "-8+6X"
 
 ### Placeholder
 예: 6x-8

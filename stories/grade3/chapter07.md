@@ -35,7 +35,9 @@ q1.png
 - 중앙값
 
 ### Answer
-ans === '대푯값'
+type: exact
+values:
+  - "대푯값"
 
 ### Placeholder
 정답 입력
@@ -72,7 +74,9 @@ q2.png
 - 편차
 
 ### Answer
-ans === '평균'
+type: exact
+values:
+  - "평균"
 
 ### Placeholder
 정답 입력
@@ -109,7 +113,9 @@ q3.png
 - 평균값
 
 ### Answer
-ans === '중앙값'
+type: exact
+values:
+  - "중앙값"
 
 ### Placeholder
 정답 입력
@@ -146,7 +152,9 @@ q4.png
 - 편차
 
 ### Answer
-ans === '최빈값'
+type: exact
+values:
+  - "최빈값"
 
 ### Placeholder
 정답 입력
@@ -183,7 +191,9 @@ q5.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 정답 입력
@@ -220,7 +230,9 @@ q6.png
 - 9
 
 ### Answer
-ans === '7'
+type: exact
+values:
+  - "7"
 
 ### Placeholder
 정답 입력
@@ -257,7 +269,9 @@ q7.png
 - 10
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 정답 입력
@@ -294,7 +308,9 @@ q8.png
 - 편차
 
 ### Answer
-ans === '중앙값'
+type: exact
+values:
+  - "중앙값"
 
 ### Placeholder
 정답 입력
@@ -331,7 +347,9 @@ q9.png
 - 제곱
 
 ### Answer
-ans === '편차'
+type: exact
+values:
+  - "편차"
 
 ### Placeholder
 정답 입력
@@ -368,7 +386,9 @@ q10.png
 - 2
 
 ### Answer
-ans === '0'
+type: exact
+values:
+  - "0"
 
 ### Placeholder
 정답 입력
@@ -404,7 +424,9 @@ q11.png
 <strong>Q11. [분산의 정의]</strong><br>편차의 제곱의 평균을 구하여 산포도를 나타내는 통계 값을 무엇이라 부르는가? (한글 두 글자로 입력. 예: 분산)
 
 ### Answer
-ans === '분산'
+type: exact
+values:
+  - "분산"
 
 ### Placeholder
 정답 입력
@@ -433,7 +455,9 @@ q12.png
 <strong>Q12. [표준편차의 정의]</strong><br>분산의 음이 아닌 양의 제곱근 값을 구하여 실제 변량과 단위를 맞춘 산포도 값을 무엇이라 하는가? (한글 네 글자로 입력. 예: 표준편차)
 
 ### Answer
-ans === '표준편차'
+type: exact
+values:
+  - "표준편차"
 
 ### Placeholder
 정답 입력
@@ -460,7 +484,9 @@ q13.png
 <strong>Q13. [산포도의 정의]</strong><br>자료들의 흩어진 정도를 나타내는 하나의 수치를 통틀어 무엇이라 하는가? (한글 세 글자로 입력. 예: 산포도)
 
 ### Answer
-ans === '산포도'
+type: exact
+values:
+  - "산포도"
 
 ### Placeholder
 정답 입력
@@ -487,7 +513,9 @@ q14.png
 <strong>Q14. [분산의 계산]</strong><br>세 변량 3, 5, 7 의 분산을 구하시오. (슬래시를 사용해 분수로 나타내시오. 예: 8/3)
 
 ### Answer
-ans === '8/3'
+type: exact
+values:
+  - "8/3"
 
 ### Placeholder
 정답 입력
@@ -514,7 +542,9 @@ q15.png
 <strong>Q15. [표준편차의 계산]</strong><br>네 변량 1, 3, 5, 7 의 표준편차를 구하시오. (루트 기호를 사용하여 나타내시오. 예: √5)
 
 ### Answer
-ans === '√5'
+type: exact
+values:
+  - "√5"
 
 ### Placeholder
 정답 입력
@@ -550,7 +580,9 @@ q16.png
 <strong>Q16. [산점도의 정의]</strong><br>두 변량의 상관관계를 한눈에 알아보기 위해 좌표평면 위에 점으로 나타낸 그림을 무엇이라 하는가? (한글 세 글자로 입력. 예: 산점도)
 
 ### Answer
-ans === '산점도'
+type: exact
+values:
+  - "산점도"
 
 ### Placeholder
 정답 입력
@@ -579,7 +611,9 @@ q17.png
 <strong>Q17. [양의 상관관계]</strong><br>한 변량 $x$의 값이 증가할 때, 다른 변량 $y$의 값도 대체로 증가하는 관계를 무슨 상관관계라 하는가? (공백 없이 한글 일곱 글자로 입력. 예: 양의상관관계)
 
 ### Answer
-ans === '양의상관관계'
+type: exact
+values:
+  - "양의상관관계"
 
 ### Placeholder
 정답 입력
@@ -608,7 +642,9 @@ q18.png
 <strong>Q18. [음의 상관관계]</strong><br>한 변량 $x$의 값이 증가할 때, 다른 변량 $y$의 값은 대체로 감소하는 관계를 무슨 상관관계라 하는가? (공백 없이 한글 일곱 글자로 입력. 예: 음의상관관계)
 
 ### Answer
-ans === '음의상관관계'
+type: exact
+values:
+  - "음의상관관계"
 
 ### Placeholder
 정답 입력
@@ -637,7 +673,9 @@ q19.png
 <strong>Q19. [상관관계가 없는 경우]</strong><br>"사람들의 키와 지능지수(IQ) 사이의 상관관계"는 어떤 관계가 있는지 쓰시오. (한글 세 글자로 입력. 예: 없다)
 
 ### Answer
-ans === '없다'
+type: exact
+values:
+  - "없다"
 
 ### Placeholder
 정답 입력
@@ -666,7 +704,9 @@ q20.png
 <strong>Q20. [상관관계 실생활 활용]</strong><br>"겨울철 실외 평균 기온과 각 가정의 가스 난방비 사이의 상관관계"는 어떤 관계가 있는지 쓰시오. (공백 없이 한글 일곱 글자로 입력. 예: 음의상관관계)
 
 ### Answer
-ans === '음의상관관계'
+type: exact
+values:
+  - "음의상관관계"
 
 ### Placeholder
 정답 입력

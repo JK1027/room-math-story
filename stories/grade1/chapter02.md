@@ -35,7 +35,10 @@ q1.png
 - 해 없음
 
 ### Answer
-ans === '-500m' || ans === '-500'
+type: any_of
+values:
+  - "-500m"
+  - "-500"
 
 ### Placeholder
 예: -300m
@@ -72,7 +75,11 @@ q2.png
 - 7
 
 ### Answer
-ans === '3' || ans === '1.5' || ans === '(3)'
+type: any_of
+values:
+  - "3"
+  - "1.5"
+  - "(3)"
 
 ### Placeholder
 보기 번호 입력
@@ -109,7 +116,9 @@ q3.png
 - 좌표평면
 
 ### Answer
-ans === '원점'
+type: exact
+values:
+  - "원점"
 
 ### Placeholder
 한글 단어 입력
@@ -146,7 +155,10 @@ q4.png
 - 9
 
 ### Answer
-ans === '7' || ans === '7개'
+type: any_of
+values:
+  - "7"
+  - "7개"
 
 ### Placeholder
 숫자 또는 개수 입력
@@ -183,7 +195,9 @@ q5.png
 - 5
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 숫자만 입력
@@ -220,7 +234,9 @@ q6.png
 - 12
 
 ### Answer
-ans === '10'
+type: exact
+values:
+  - "10"
 
 ### Placeholder
 숫자만 입력
@@ -257,7 +273,9 @@ q7.png
 - 10
 
 ### Answer
-ans === '8'
+type: exact
+values:
+  - "8"
 
 ### Placeholder
 숫자만 입력
@@ -294,7 +312,9 @@ q8.png
 - -2
 
 ### Answer
-ans === '-4'
+type: exact
+values:
+  - "-4"
 
 ### Placeholder
 해당 수 입력 (부호 포함)
@@ -331,7 +351,10 @@ q9.png
 - 5
 
 ### Answer
-ans === '5' || ans === '5개'
+type: any_of
+values:
+  - "5"
+  - "5개"
 
 ### Placeholder
 숫자 또는 개수 입력
@@ -368,7 +391,9 @@ q10.png
 - 10
 
 ### Answer
-ans === '2'
+type: exact
+values:
+  - "2"
 
 ### Placeholder
 숫자만 입력
@@ -404,7 +429,9 @@ q11.png
 <strong>Q11. [정수의 덧셈]</strong><br>(-5) + (+8) 의 값을 구하시오.
 
 ### Answer
-ans === '3'
+type: exact
+values:
+  - "3"
 
 ### Placeholder
 숫자만 입력
@@ -435,7 +462,9 @@ q12.png
 <strong>Q12. [정수의 뺄셈]</strong><br>(+3) - (-7) 의 값을 구하시오.
 
 ### Answer
-ans === '10'
+type: exact
+values:
+  - "10"
 
 ### Placeholder
 숫자만 입력
@@ -466,7 +495,9 @@ q13.png
 <strong>Q13. [유리수의 덧셈]</strong><br>(-2.5) + (-1.5) 의 값을 구하시오.
 
 ### Answer
-ans === '-4'
+type: exact
+values:
+  - "-4"
 
 ### Placeholder
 숫자만 입력 (부호 포함)
@@ -495,7 +526,9 @@ q14.png
 <strong>Q15. [정수의 덧뺄셈 혼합]</strong><br>5 - 9 + 3 의 값을 구하시오.
 
 ### Answer
-ans === '-1'
+type: exact
+values:
+  - "-1"
 
 ### Placeholder
 숫자만 입력 (부호 포함)
@@ -524,7 +557,9 @@ q15.png
 <strong>Q15. [식의 바른 계산]</strong><br>어떤 수에서 -3을 빼야 할 것을 잘못하여 더했더니 5가 되었다. 바르게 계산한 답을 구하시오.
 
 ### Answer
-ans === '11'
+type: exact
+values:
+  - "11"
 
 ### Placeholder
 숫자만 입력
@@ -560,7 +595,9 @@ q16.png
 <strong>Q16. [정수의 곱셈]</strong><br>(-4) × (+6) 의 값을 구하시오.
 
 ### Answer
-ans === '-24'
+type: exact
+values:
+  - "-24"
 
 ### Placeholder
 숫자만 입력 (부호 포함)
@@ -589,7 +626,9 @@ q17.png
 <strong>Q17. [정수의 나눗셈]</strong><br>(-15) ÷ (-3) 의 값을 구하시오.
 
 ### Answer
-ans === '5'
+type: exact
+values:
+  - "5"
 
 ### Placeholder
 숫자만 입력
@@ -618,7 +657,9 @@ q18.png
 <strong>Q18. [거듭제곱]</strong><br>$(-2)^3$ 의 값을 구하시오.
 
 ### Answer
-ans === '-8'
+type: exact
+values:
+  - "-8"
 
 ### Placeholder
 숫자만 입력 (부호 포함)
@@ -647,7 +688,9 @@ q19.png
 <strong>Q19. [유리수의 사칙혼합 1]</strong><br>$(-2) 	imes (-3) - (+10) \div (-2)$ 의 값을 구하시오.
 
 ### Answer
-ans === '11'
+type: exact
+values:
+  - "11"
 
 ### Placeholder
 숫자만 입력
@@ -676,7 +719,9 @@ q20.png
 <strong>Q20. [유리수의 사칙혼합 2]</strong><br>$12 - [ 5 - \{ (-2) 	imes 3 - 4 \} ]$ 의 값을 구하시오.
 
 ### Answer
-ans === '-3'
+type: exact
+values:
+  - "-3"
 
 ### Placeholder
 숫자만 입력 (부호 포함)

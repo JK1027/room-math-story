@@ -26,6 +26,31 @@ def read_file_safe(filepath):
     with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
         return f.read().replace('\r\n', '\n')
 
+def structurize_answer(ans_check: str) -> str:
+    """기존의 자바스크립트 수식 조건문을 분석하여 선언적 정답 검증 데이터 구조로 반환합니다."""
+    ans_check = ans_check.strip()
+    
+    # 1. 공백 제거 일치 (normalized_exact)
+    # 예: ans.replace(/\s+/g, '') === 'Y=4X-2'
+    norm_match = re.search(r"ans\.replace\(/\\s\+/g,\s*['\"]\s*['\"]\)\s*===\s*['\"]([^'\"]+)['\"]", ans_check)
+    if norm_match:
+        val = norm_match.group(1)
+        return f"type: normalized_exact\nvalues:\n  - \"{val}\""
+        
+    # 2. 다중 정답 혹은 단일 정답 일치 (any_of, exact)
+    # 예: ans === '4' || ans === '4개'
+    parts = re.findall(r"ans\s*===\s*['\"]([^'\"]+)['\"]", ans_check)
+    if parts:
+        if len(parts) == 1:
+            return f"type: exact\nvalues:\n  - \"{parts[0]}\""
+        else:
+            vals_str = "\n".join([f"  - \"{p}\"" for p in parts])
+            return f"type: any_of\nvalues:\n{vals_str}"
+            
+    # 3. 매칭 실패 시 fallback 정합성 처리
+    clean_val = ans_check.replace("ans ===", "").replace("ans===", "").replace("'", "").replace('"', "").strip()
+    return f"type: exact\nvalues:\n  - \"{clean_val}\""
+
 def parse_script_md(content):
     """기존 대본집 마크다운에서 인트로, 아웃트로, Q1~Q20의 스토리 지문, Event 1~4 지문을 추출합니다."""
     # 1. 인트로 파싱
@@ -157,7 +182,7 @@ outro_image: "{image_mapping.get('outro', 'outro.png')}"
                     
                 q_block += f"""
 ### Answer
-{ans_check}
+{structurize_answer(ans_check)}
 
 ### Placeholder
 {placeholder}
