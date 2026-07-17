@@ -1,7 +1,14 @@
 # -*- coding: utf-8 -*-
 import re
 
-import os; html_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'apps/app_m1_07_escape_room.html')
+import sys
+import os
+_cur = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(os.path.dirname(_cur))
+if _root not in sys.path:
+    sys.path.append(_root)
+from scripts.config import paths
+html_file = str(paths.html_output_path('m1_07'))
 
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()

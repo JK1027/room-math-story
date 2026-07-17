@@ -1,10 +1,18 @@
 import re
+import sys
+import os
+_cur = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(os.path.dirname(_cur))
+if _root not in sys.path:
+    sys.path.append(_root)
+from scripts.config import paths
+
 import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(os.path.dirname(current_dir))
 apps_dir = os.path.join(project_root, "apps")
-html_file = os.path.join(apps_dir, "app_m1_04_escape_room.html")
+html_file = str(paths.html_output_path('m1_04'))
 
 with open(html_file, 'r', encoding='utf-8') as f:
     content = f.read()
@@ -123,7 +131,7 @@ poseidon = "<span class='glitch-text' style='color: #ef4444; font-weight: bold; 
 trident = "<span class='glitch-text' style='color: #fb923c; font-weight: bold; text-shadow: 0 0 5px #f97316;'>[트라이던트]</span>"
 dyn_captain = "<span class='dynamic-captain-name'>캡틴</span>"
 
-storyboard_path = os.path.join(project_root, "data", "storyboards", "grade1", "m1_04_storyboard.md")
+storyboard_path = str(paths.storyboard_path('grade1', 'm1_04'))
 img_map, qs, events = load_storyboard(storyboard_path)
 
 # 지문 내 변수 치환 적용

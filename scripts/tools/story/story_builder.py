@@ -4,14 +4,19 @@ import shutil
 import sys
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# --- Central Configs Loading ---
+_cur = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(os.path.dirname(os.path.dirname(_cur)))
+if _root not in sys.path:
+    sys.path.append(_root)
+from scripts.config import paths
+
+PROJECT_ROOT = paths.ROOT_DIR
 project_root = str(PROJECT_ROOT)
-if project_root not in sys.path:
-    sys.path.append(project_root)
-builders_dir = os.path.join(project_root, "scripts", "builders")
-storyboards_dir = os.path.join(project_root, "data", "storyboards")
-stories_dir = os.path.join(project_root, "stories")
-assets_root = os.path.join(project_root, "apps", "assets")
+builders_dir = str(paths.ROOT_DIR / "scripts" / "builders")
+storyboards_dir = str(paths.STORYBOARDS_DIR)
+stories_dir = str(paths.STORIES_DIR)
+assets_root = str(paths.APPS_DIR / "assets")
 
 THEME_METADATA = {
     "m1_01": {"background": "장영실의 조선 공방 자격루실", "artifact": "자격루와 앙부일구의 제어 부품", "player": "조사관", "partner": None, "assistant": "자격(自擊)", "villain": "흑영(黑影)"},
@@ -115,8 +120,7 @@ def clean_html(text):
     return text.strip()
 
 def get_fallback_theme_name(unit, grade_str):
-    # stories/중{학년}/ 아래에서 unit 코드로 시작하는 텍스트 파일명 찾기
-    grade_dir = os.path.join(stories_dir, grade_str)
+    grade_dir = str(paths.story_dir(grade_str))
     if os.path.exists(grade_dir):
         for fn in os.listdir(grade_dir):
             if fn.startswith(unit) and fn.endswith(".txt"):
@@ -211,7 +215,7 @@ def main():
         theme_title = assets_folder.replace(f"{unit}_", "").replace("_", " ").title()
         
         # 1. 스토리보드 마크다운 생성
-        sb_path = os.path.join(storyboards_dir, f"{unit}_storyboard.md")
+        sb_path = str(paths.storyboard_path(grade_str, unit))
         
         sb_content = []
         sb_content.append(f"# {grade_str} {int(unit[3:5])}단원 대본집: {theme_title}")
@@ -280,7 +284,7 @@ def main():
             f.write('\n'.join(sb_content))
             
         # 2. 대본집(Scenario Script) 생성
-        script_path = os.path.join(stories_dir, grade_str, f"{unit}_script.md")
+        script_path = str(paths.story_path(grade_str, f"{unit}_script.md"))
         
         # 테마 메타데이터 추출
         meta = THEME_METADATA.get(unit, {

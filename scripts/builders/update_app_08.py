@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -
 import re
+import sys
+import os
+_cur = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(os.path.dirname(_cur))
+if _root not in sys.path:
+    sys.path.append(_root)
+from scripts.config import paths
+
 import os
 
 import os
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(os.path.dirname(current_dir))
 apps_dir = os.path.join(project_root, "apps")
-html_file = os.path.join(apps_dir, "app_m1_08_escape_room.html")
+html_file = str(paths.html_output_path('m1_08'))
 base_dir = apps_dir
 html_path = os.path.join(base_dir, html_file)
 

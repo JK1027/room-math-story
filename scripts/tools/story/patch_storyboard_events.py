@@ -2,10 +2,17 @@ import os
 import re
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
-project_root = str(PROJECT_ROOT)
-storyboards_root = os.path.join(project_root, "data", "storyboards")
-archive_dir = os.path.join(project_root, "stories", "archive")
+# --- Central Configs Loading ---
+import sys
+_cur = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(os.path.dirname(os.path.dirname(_cur)))
+if _root not in sys.path:
+    sys.path.append(_root)
+from scripts.config import paths
+from scripts.config.constants import SUPPORTED_GRADES
+
+storyboards_root = str(paths.STORYBOARDS_DIR)
+archive_dir = str(paths.ARCHIVE_DIR / "releases")
 
 # 초정밀 캐릭터 매핑 테이블
 unit_characters = {
@@ -186,8 +193,8 @@ def patch_file_events(filepath, unit, theme, assistant, villain):
         f.write(content)
 
 def main():
-    for grade in ["grade1", "grade2", "grade3"]:
-        grade_dir = os.path.join(storyboards_root, grade)
+    for grade in SUPPORTED_GRADES:
+        grade_dir = str(paths.storyboard_dir(grade))
         if not os.path.exists(grade_dir):
             continue
             

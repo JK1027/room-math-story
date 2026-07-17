@@ -3,14 +3,16 @@ import re
 from pathlib import Path
 
 def load_storyboard_qs(unit):
-    PROJECT_ROOT = Path(__file__).resolve().parents[3]
-    project_root = str(PROJECT_ROOT)
-    grade_dir = "grade1" if "m1_" in unit else ("grade2" if "m2_" in unit else "grade3")
-    storyboard_path = os.path.join(project_root, "data", "storyboards", grade_dir, f"{unit}_storyboard.md")
+    # --- Central Configs Loading ---
+    import sys
+    _cur = os.path.dirname(os.path.abspath(__file__))
+    _root = os.path.dirname(os.path.dirname(os.path.dirname(_cur)))
+    if _root not in sys.path:
+        sys.path.append(_root)
+    from scripts.config import paths
     
-    if not os.path.exists(storyboard_path):
-        # Fallback to old directory just in case
-        storyboard_path = os.path.join(project_root, "data", "storyboards", f"{unit}_storyboard.md")
+    grade_dir = "grade1" if "m1_" in unit else ("grade2" if "m2_" in unit else "grade3")
+    storyboard_path = str(paths.storyboard_path(grade_dir, unit))
         
     if not os.path.exists(storyboard_path):
         raise FileNotFoundError(f"Storyboard file not found for unit '{unit}' at {storyboard_path}")

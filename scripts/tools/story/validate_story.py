@@ -1,10 +1,55 @@
 import os
 import sys
 import re
+import time
+import json
+import argparse
 from pathlib import Path
+
+# --- Central Configs Loading ---
+_cur = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(os.path.dirname(os.path.dirname(_cur)))
+if _root not in sys.path:
+    sys.path.append(_root)
+from scripts.config import paths
+from scripts.config.constants import SUPPORTED_GRADES
 
 # 바이블 위반 금지어 (AI 관련 메타 단어 및 비속어 등)
 BANNED_KEYWORDS = ["chatgpt", "gpt", "인공지능", "openai", "bard", "gemini"]
+
+def load_metadata_yaml(filepath):
+    """Safe regex-based YAML parser for grade metadata.yaml files."""
+    data = {"units": {}}
+    if not os.path.exists(filepath):
+        return data
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Simple regex parser for our metadata format
+    units_block = re.search(r'units:\n([\s\S]*)', content)
+    if units_block:
+        units_content = units_block.group(1)
+        # Split by unit keys (e.g. m1_01:)
+        unit_blocks = re.findall(r'  (\w+):\n([\s\S]*?)(?=\n  \w+:|$)', units_content)
+        for u_id, u_body in unit_blocks:
+            unit_data = {"characters": {}}
+            for line in u_body.split('\n'):
+                line = line.strip()
+                if line.startswith('title:'):
+                    unit_data["title"] = line.replace('title:', '').strip().strip('"\'')
+                elif line.startswith('builder:'):
+                    unit_data["builder"] = line.replace('builder:', '').strip().strip('"\'')
+                elif line.startswith('storyboard:'):
+                    unit_data["storyboard"] = line.replace('storyboard:', '').strip().strip('"\'')
+                elif line.startswith('hero:'):
+                    unit_data["characters"]["hero"] = line.replace('hero:', '').strip().strip('"\'')
+                elif line.startswith('helper:'):
+                    unit_data["characters"]["helper"] = line.replace('helper:', '').strip().strip('"\'')
+                elif line.startswith('villain:'):
+                    unit_data["characters"]["villain"] = line.replace('villain:', '').strip().strip('"\'')
+            data["units"][u_id] = unit_data
+            
+    return data
 
 def check_bible_violations(text, file_name):
     """Checks for banned keywords in script text."""
@@ -15,7 +60,7 @@ def check_bible_violations(text, file_name):
             violations.append(f"Banned keyword '{kw}' found in {file_name}")
     return violations
 
-def validate_storyboard(file_path, project_root):
+def validate_storyboard(file_path, metadata=None):
     """
     Statically analyzes a single storyboard markdown file.
     Checks for:
@@ -34,6 +79,18 @@ def validate_storyboard(file_path, project_root):
     # Bible keyword check on the entire content
     violations = check_bible_violations(content, file_name)
     errors.extend(violations)
+    
+    # Metadata cross-verification
+    unit_id = file_name.replace("_storyboard.md", "")
+    if metadata and "units" in metadata and unit_id in metadata["units"]:
+        unit_meta = metadata["units"][unit_id]
+        expected_helper = unit_meta.get("characters", {}).get("helper")
+        expected_villain = unit_meta.get("characters", {}).get("villain")
+        
+        if expected_helper and expected_helper not in content:
+            errors.append(f"Helper character '{expected_helper}' defined in metadata was not found in storyboard {file_name}")
+        if expected_villain and expected_villain not in content:
+            errors.append(f"Villain character '{expected_villain}' defined in metadata was not found in storyboard {file_name}")
     
     # 1. Parse Image Mappings
     img_map = {}
@@ -56,7 +113,7 @@ def validate_storyboard(file_path, project_root):
     # Find active asset directory
     unit_id = file_name.replace("_storyboard.md", "")
     assets_dir = None
-    assets_root = project_root / "apps" / "assets"
+    assets_root = paths.APPS_DIR / "assets"
     
     if assets_root.exists():
         for dname in os.listdir(assets_root):
@@ -151,41 +208,78 @@ def validate_storyboard(file_path, project_root):
     return errors
 
 def main():
-    project_root = Path(__file__).resolve().parents[3]
-    storyboard_root = project_root / "data" / "storyboards"
+    start_time = time.time()
     
-    grades = ["grade1", "grade2", "grade3"]
+    parser = argparse.ArgumentParser(description="Storyboard Static Analyzer")
+    parser.add_argument('--json', action='store_true', help='Output results as a structured JSON string')
+    args = parser.parse_args()
+    
+    storyboard_root = paths.STORYBOARDS_DIR
     total_errors = []
     
-    print("=== Story Static Analyzer ===")
-    
+    # Load grade metadata dictionaries
+    grade_metadata = {}
+    for g in SUPPORTED_GRADES:
+        meta_file = paths.story_dir(g) / "metadata.yaml"
+        grade_metadata[g] = load_metadata_yaml(meta_file)
+        
     storyboard_files = []
-    for g in grades:
+    for g in SUPPORTED_GRADES:
         grade_dir = storyboard_root / g
         if grade_dir.exists():
             for f in os.listdir(grade_dir):
                 if f.endswith("_storyboard.md"):
-                    storyboard_files.append(grade_dir / f)
+                    storyboard_files.append((g, grade_dir / f))
                     
-    print(f"Found {len(storyboard_files)} active storyboards for validation.")
-    
-    for sb_file in sorted(storyboard_files):
-        print(f"Analyzing: {sb_file.name}...")
-        errors = validate_storyboard(sb_file, project_root)
+    results = []
+    for g, sb_file in sorted(storyboard_files, key=lambda x: x[1].name):
+        meta = grade_metadata.get(g)
+        errors = validate_storyboard(sb_file, meta)
         if errors:
-            print(f"   [FAIL] {len(errors)} anomalies detected:")
-            for err in errors:
-                print(f"      - {err}")
             total_errors.extend(errors)
+            results.append({
+                "file": sb_file.name,
+                "status": "FAIL",
+                "errors": len(errors)
+            })
+        else:
+            results.append({
+                "file": sb_file.name,
+                "status": "PASS",
+                "errors": 0
+            })
+            
+    duration = f"{time.time() - start_time:.2f}s"
+    
+    if args.json:
+        output_data = {
+            "status": "FAIL" if total_errors else "PASS",
+            "errors": len(total_errors),
+            "warnings": 0,
+            "duration": duration,
+            "details": results
+        }
+        print(json.dumps(output_data, ensure_ascii=False, indent=2))
+        sys.exit(1 if total_errors else 0)
+        
+    # Human-readable output fallback
+    print("=== Story Static Analyzer ===")
+    print(f"Found {len(storyboard_files)} active storyboards for validation.")
+    for res in results:
+        print(f"Analyzing: {res['file']}...")
+        if res['errors'] > 0:
+            print(f"   [FAIL] {res['errors']} anomalies detected.")
         else:
             print("   [PASS] Statically verified.")
             
     print("\n=== Validation Results ===")
     if total_errors:
         print(f"Total Validation Anomalies: {len(total_errors)}")
+        for idx, err in enumerate(total_errors, 1):
+            print(f"  {idx}. {err}")
         sys.exit(1)
     else:
-        print("[+] SUCCESS: All active storyboards passed pipeline verification!")
+        print(f"[+] SUCCESS: All active storyboards passed pipeline verification! (Duration: {duration})")
         sys.exit(0)
 
 if __name__ == "__main__":

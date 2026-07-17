@@ -23,12 +23,21 @@ def main():
         parser.print_help()
         sys.exit(1)
 
-    project_root = Path(__file__).resolve().parents[3]
-    archive_dir = project_root / "stories" / "archive"
-    legacy_draft_dir = project_root / "legacy" / "draft_stories"
-    stories_dir = project_root / "stories"
+    # --- Central Configs Loading ---
+    import sys
+    _cur = os.path.dirname(os.path.abspath(__file__))
+    _root = os.path.dirname(os.path.dirname(os.path.dirname(_cur)))
+    if _root not in sys.path:
+        sys.path.append(_root)
+    from scripts.config import paths
+    from scripts.config.constants import SUPPORTED_GRADES
 
-    grades = ["중1", "중2", "중3"] # 한글 폴더명 우선 대응
+    project_root = paths.ROOT_DIR
+    archive_dir = paths.ARCHIVE_DIR / "releases"
+    legacy_draft_dir = paths.LEGACY_DRAFTS_DIR
+    stories_dir = paths.STORIES_DIR
+
+    grades = SUPPORTED_GRADES
 
     if not archive_dir.exists():
         print(f"Archive directory not found: {archive_dir}")

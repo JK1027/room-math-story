@@ -5,7 +5,14 @@ import shutil
 import argparse
 from pathlib import Path
 
-def deploy_grade(grade_key, project_root, apps_dir):
+# --- Central Configs Loading ---
+_cur = os.path.dirname(os.path.abspath(__file__))
+_root = os.path.dirname(os.path.dirname(_cur))
+if _root not in sys.path:
+    sys.path.append(_root)
+from scripts.config import paths
+
+def deploy_grade(grade_key):
     """
     Deploys a specific grade's HTML templates to the corresponding GAS directory.
     grade_key: 'grade1', 'grade2', or 'grade3'
@@ -22,10 +29,10 @@ def deploy_grade(grade_key, project_root, apps_dir):
         return False
         
     prefix = cfg["prefix"]
-    gas_dir = os.path.join(project_root, "GAS", cfg["project"])
+    gas_dir = paths.GAS_DIR / cfg["project"]
     os.makedirs(gas_dir, exist_ok=True)
     
-    html_pattern = os.path.join(apps_dir, f"app_{prefix}_*_escape_room.html")
+    html_pattern = str(paths.APPS_DIR / f"app_{prefix}_*_escape_room.html")
     html_files = glob.glob(html_pattern)
     
     if not html_files:
@@ -60,9 +67,6 @@ def main():
     parser.add_argument('--target', type=str, choices=['grade1', 'grade2', 'grade3', 'all'],
                         help="Target deployment grade (grade1, grade2, grade3, or all)")
     args = parser.parse_args()
-    
-    project_root = Path(__file__).resolve().parents[2]
-    apps_dir = project_root / "apps"
     
     target = args.target
     
@@ -101,9 +105,9 @@ def main():
     
     if target == 'all':
         for gk in ['grade1', 'grade2', 'grade3']:
-            deploy_grade(gk, project_root, apps_dir)
+            deploy_grade(gk)
     else:
-        deploy_grade(target, project_root, apps_dir)
+        deploy_grade(target)
         
     print("Deployment cycle completed.")
 
