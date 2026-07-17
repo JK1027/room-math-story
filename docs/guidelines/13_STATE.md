@@ -4,11 +4,11 @@
 
 ---
 
-## 1. 현재 메타 상태 (Current Meta State)
+## 1. 현재 Meta 상태 (Current Meta State)
 ```yaml
-revision: 3               # 현재 수정 회차 번호 (최초 초고는 0)
+revision: 4               # 현재 수정 회차 번호 (최초 초고는 0)
 current_step: "complete"  # [ready | architect | writer | review | score | director | fix | qa | complete]
-last_updated: "2026-07-17T17:30:00+09:00"
+last_updated: "2026-07-17T17:40:00+09:00"
 qa_status: "PASS"         # [PENDING | FAIL | PASS]
 ```
 
@@ -47,6 +47,14 @@ qa_status: "PASS"         # [PENDING | FAIL | PASS]
 - **리뷰 수합 개수**: 0개 (이슈 완전 해결)
 - **최종 점수**: 80점 (80점 만점)
 - **조치 사항**: 타 단원(Ch 1) 조력자 기아로와 명칭 겹침 방지를 위해 중간 빌런명을 '기가스-G'로 변경, 캡틴 동적 바인딩 변수 {dyn_captain} 전격 반영, 대화 말괄호 표준 형식 [캐릭터]: "대사" 적용, QA PASS 승인
+
+### Rev 4: 중1 1단원 설정 붕괴 정밀 재교정 단계 (Feedback & QA - Ch 1 Refine)
+- **Architect 완료 여부**: true
+- **Writer 완료 여부**: true
+- **산출물 위치**: `stories/grade1/m1_01_script.md`
+- **리뷰 수합 개수**: 0개 (이슈 완전 해결)
+- **최종 점수**: 80점 (80점 만점)
+- **조치 사항**: 중1 1단원 자격루실 공방 테마에 잔존하던 중1 5단원의 컴퍼스, 작도, 합동 등 SF/서양 기하학 묘사 찌꺼기 및 4단원의 조종석 묘사를 완전 소거하고 전통 수력 동력 장치 묘사로 로컬라이징함. 한글 조사 교정 및 {dyn_captain} 동적 캡틴 명칭 적용, 최종 QA PASS 승인
 
 ---
 
@@ -89,4 +97,15 @@ revision_history:
       puzzle: "수학적 작도 및 합동 조건 연산의 정의가 무결하게 표현되었음 (해결)"
       settings: "캐릭터명 중복 오염이 완벽히 정화되었으며 SF/르네상스 판타지 설정과 고유 기하 유물이 유기적으로 어우러짐 (해결)"
       grammar: "대화 형식 파싱 정합성 및 동적 캡틴 명칭 규격이 100% 확보되었음 (해결)"
+
+  - rev: 4
+    modified_scenes: [All Scenes (Q1 ~ Q20 & Event Scenes & Outro)]
+    fixed_issues:
+      - issue_id: 13 (중1 1단원 조선 공방 자격루실에 잔존하던 5단원 '컴퍼스, 작도, 합동' 묘사 및 4단원 '선체 조종석' 오묘사 전면 교정)
+      - issue_id: 14 (한글 조사 오류 및 오탈자 '조사관는' -> '조사관은', '전성관관으로' -> '전성관으로', '안 돼어어어!' -> '안 돼에에에!' 수정)
+      - issue_id: 15 (플레이어 칭호를 '{dyn_captain}' 동적 바인딩 변수로 일괄 마이그레이션하여 캡틴 바인딩 규격 전격 적용)
+    reviewer_re_evaluation:
+      puzzle: "소수 판별 및 최대공약수/최소공배수의 기하 및 기계적 연산 관계가 명확히 서사화됨 (해결)"
+      settings: "SF 및 서양 과학 묘사 찌꺼기들이 전면 청소되고 조선 정밀 수력 장치 테마의 일관성이 100% 확보됨 (해결)"
+      grammar: "조사 호응 오류와 비표준 맞춤법이 완벽히 수정됨 (해결)"
 ```
