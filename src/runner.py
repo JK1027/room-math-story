@@ -27,9 +27,8 @@ def run_pipeline(grade_str: str, unit_code: str, build_storybook_flag: bool = Tr
     Parse → Validate → Build(Storybook/Game) E2E 실행을 수행하는 유일 게이트웨이입니다.
     """
     start_time = time.time()
-    chapter_num = unit_code[3:5]
-    chapter_file_name = f"chapter{chapter_num}.md"
-    chapter_path = paths.story_dir(grade_str) / chapter_file_name
+    chapter_path = paths.story_path(grade_str, unit_code)
+    chapter_file_name = chapter_path.name
     
     print(f"\n>>> Running Pipeline for {unit_code.upper()} ({chapter_file_name})")
     

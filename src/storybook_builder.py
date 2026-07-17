@@ -14,8 +14,8 @@ class StorybookBuilder(Builder):
         output_dir = paths.ROOT_DIR / "build" / "storybooks"
         output_dir.mkdir(parents=True, exist_ok=True)
         
-        chapter_num = unit_code[3:5]
-        output_file = output_dir / f"chapter{chapter_num}_storybook.html"
+        source_path = paths.story_path(grade_str, unit_code)
+        output_file = output_dir / f"{source_path.stem}_storybook.html"
         
         # 리소스 URI/경로 매핑 (일원화된 assets/units/ 경로를 추종)
         assets_relative_path = f"../../assets/units/{unit_code}"

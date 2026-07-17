@@ -11,6 +11,8 @@ GAS_DIR = ROOT_DIR / "gas"
 ARCHIVE_DIR = ROOT_DIR / "archive"
 LEGACY_DRAFTS_DIR = ARCHIVE_DIR / "drafts"
 
+import yaml
+
 # --- Path-Generation Helpers ---
 def story_dir(grade: str) -> Path:
     """Returns the stories folder for a given grade (e.g. grade1, grade2, grade3)."""
@@ -24,9 +26,20 @@ def storyboard_path(grade: str, unit: str) -> Path:
     """Returns the full path to a storyboard markdown file."""
     return storyboard_dir(grade) / f"{unit}_storyboard.md"
 
-def story_path(grade: str, script_name: str) -> Path:
-    """Returns the full path to a story script markdown file."""
-    return story_dir(grade) / script_name
+def story_path(grade: str, unit_code: str) -> Path:
+    """Returns the full path to the resolved story markdown file using metadata.yaml maps."""
+    meta_path = story_dir(grade) / "metadata.yaml"
+    filename = f"chapter{unit_code[3:5]}.md" # default fallback
+    
+    if meta_path.exists():
+        try:
+            with open(meta_path, 'r', encoding='utf-8') as f:
+                meta = yaml.safe_load(f) or {}
+                filename = meta.get("units", {}).get(unit_code, {}).get("file", filename)
+        except Exception:
+            pass
+            
+    return story_dir(grade) / filename
 
 def html_output_path(unit: str) -> Path:
     """Returns the output HTML file path for a compiled app."""
