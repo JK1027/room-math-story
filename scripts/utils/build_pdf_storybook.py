@@ -158,19 +158,23 @@ def apply_character_styles(text):
     clio = "<span style='color: #c084fc; text-shadow: 0 0 3px #a855f7; font-weight: bold;'>[클리오]</span>"
     poseidon = "<span style='color: #f43f5e; text-shadow: 0 0 3px #f43f5e; font-weight: bold;'>[포세이돈-V]</span>"
     trident = "<span style='color: #fb923c; text-shadow: 0 0 3px #f97316; font-weight: bold;'>[트라이던트]</span>"
-    captain = "<span style='color: #34d399; text-shadow: 0 0 3px #059669; font-weight: bold;'>[캡틴]</span>"
+    captain = "<span style='color: #34d399; text-shadow: 0 0 3px #059669; font-weight: bold;'>[탐사대장]</span>"
     
     # 5단원 캐릭터
     codex = "<span style='color: #ef4444; text-shadow: 0 0 3px #ef4444; font-weight: bold;'>[코덱스-L]</span>"
     davinci = "<span style='color: #60a5fa; text-shadow: 0 0 3px #3b82f6; font-weight: bold;'>[다빈치-메모리]</span>"
+    filippo = "<span style='color: #fb923c; text-shadow: 0 0 3px #f97316; font-weight: bold;'>[필리포]</span>"
+    giarro = "<span style='color: #fb7185; text-shadow: 0 0 3px #f43f5e; font-weight: bold;'>[기아로]</span>"
 
     text = text.replace("{nereus}", nereus).replace("[네레우스]", nereus)
     text = text.replace("{clio}", clio).replace("[클리오]", clio)
     text = text.replace("{poseidon}", poseidon).replace("[포세이돈-V]", poseidon)
     text = text.replace("{trident}", trident).replace("[트라이던트]", trident)
-    text = text.replace("{dyn_captain}", captain).replace("캡틴", captain).replace("[캡틴]", captain)
+    text = text.replace("{dyn_captain}", captain).replace("캡틴", captain).replace("[캡틴]", captain).replace("탐사대장", captain).replace("[탐사대장]", captain)
     text = text.replace("{codex}", codex).replace("[코덱스-L]", codex)
     text = text.replace("{davinci}", davinci).replace("[다빈치-메모리]", davinci)
+    text = text.replace("{filippo}", filippo).replace("[필리포]", filippo)
+    text = text.replace("{giarro}", giarro).replace("[기아로]", giarro)
     
     # 대화 패턴 치환
     text = re.sub(r'-\s*\*\*포세이돈-V:\*\*|-\s*\*\*포세이돈-V\*\*:', f'{poseidon}', text)
@@ -178,12 +182,15 @@ def apply_character_styles(text):
     text = re.sub(r'-\s*\*\*클리오:\*\*|-\s*\*\*클리오\*\*:', f'{clio}', text)
     text = re.sub(r'-\s*\*\*트라이던트:\*\*|-\s*\*\*트라이던트\*\*:', f'{trident}', text)
     text = re.sub(r'-\s*\*\*조사관\s*\(플레이어\):\*\*|-\s*\*\*조사관\*\*:', f'{captain}', text)
+    text = re.sub(r'-\s*\*\*탐사대장:\*\*|-\s*\*\*탐사대장\*\*:', f'{captain}', text)
     text = re.sub(r'-\s*\*\*코덱스-L:\*\*|-\s*\*\*코덱스-L\*\*:', f'{codex}', text)
     text = re.sub(r'-\s*\*\*다빈치-메모리:\*\*|-\s*\*\*다빈치-메모리\*\*:', f'{davinci}', text)
+    text = re.sub(r'-\s*\*\*필리포:\*\*|-\s*\*\*필리포\*\*:', f'{filippo}', text)
+    text = re.sub(r'-\s*\*\*기아로:\*\*|-\s*\*\*기아로\*\*:', f'{giarro}', text)
     
     # 일반 텍스트 내 캐릭터명 치환
     text = text.replace("네레우스:", nereus).replace("클리오:", clio).replace("포세이돈-V:", poseidon).replace("트라이던트:", trident)
-    text = text.replace("코덱스-L:", codex).replace("다빈치-메모리:", davinci)
+    text = text.replace("코덱스-L:", codex).replace("다빈치-메모리:", davinci).replace("필리포:", filippo).replace("기아로:", giarro).replace("탐사대장:", captain)
     
     return text
 
