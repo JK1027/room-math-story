@@ -2,8 +2,10 @@ import os
 import re
 import shutil
 import sys
+from pathlib import Path
 
-project_root = r"c:\Coding\Projects\School\room-math-story"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+project_root = str(PROJECT_ROOT)
 if project_root not in sys.path:
     sys.path.append(project_root)
 builders_dir = os.path.join(project_root, "scripts", "builders")

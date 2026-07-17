@@ -1,8 +1,10 @@
 import os
 import re
+from pathlib import Path
 
 def load_storyboard_qs(unit):
-    project_root = r"c:\Coding\Projects\School\room-math-story"
+    PROJECT_ROOT = Path(__file__).resolve().parents[2]
+    project_root = str(PROJECT_ROOT)
     grade_dir = "중1" if "m1_" in unit else ("중2" if "m2_" in unit else "중3")
     storyboard_path = os.path.join(project_root, "data", "storyboards", grade_dir, f"{unit}_storyboard.md")
     

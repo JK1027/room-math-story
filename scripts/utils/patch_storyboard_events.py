@@ -1,7 +1,9 @@
 import os
 import re
+from pathlib import Path
 
-project_root = r"c:\Coding\Projects\School\room-math-story"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+project_root = str(PROJECT_ROOT)
 storyboards_root = os.path.join(project_root, "data", "storyboards")
 archive_dir = os.path.join(project_root, "stories", "archive")
 

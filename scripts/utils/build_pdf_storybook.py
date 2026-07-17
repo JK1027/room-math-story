@@ -54,7 +54,8 @@ UNIT_CONFIGS = {
 }
 
 # ----------------- 경로 설정 -----------------
-project_root = r"c:\Coding\Projects\School\room-math-story"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+project_root = str(PROJECT_ROOT)
 html_temp_path = os.path.join(project_root, "scratch", "temp_storybook.html")
 
 # ----------------- 데이터 파싱 -----------------
