@@ -98,16 +98,16 @@ def parse_chapter(filepath: str) -> ParseResult:
             
         q_block = q_match.group(1)
         
-        title = extract_section_text(q_block, "### Title", ["### Image", "### Question"])
-        image = extract_section_text(q_block, "### Image", ["### Question"])
+        title = extract_section_text(q_block, "### Title", ["### Image", "### Story"])
+        image = extract_section_text(q_block, "### Image", ["### Story"])
+        story = extract_section_text(q_block, "### Story", ["### Question"])
         qtext = extract_section_text(q_block, "### Question", ["### Choices", "### Answer"])
         choices_raw = extract_section_text(q_block, "### Choices", ["### Answer"])
         answer_raw = extract_section_text(q_block, "### Answer", ["### Placeholder"])
         placeholder = extract_section_text(q_block, "### Placeholder", ["### Error Message"])
         error_msg = extract_section_text(q_block, "### Error Message", ["### Hint"])
-        hint = extract_section_text(q_block, "### Hint", ["### Story", "### Extra Class"])
-        extra_class = extract_section_text(q_block, "### Extra Class", ["### Story"])
-        story = extract_section_text(q_block, "### Story", [])
+        hint = extract_section_text(q_block, "### Hint", ["### Extra Class", "##"])
+        extra_class = extract_section_text(q_block, "### Extra Class", [])
         
         choices = parse_choices(choices_raw)
         
