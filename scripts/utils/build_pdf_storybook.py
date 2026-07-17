@@ -325,10 +325,13 @@ def main():
             "hud_title": hud_title
         }
         
-    storyboard_path = os.path.join(project_root, "data", "storyboards", f"{unit}_storyboard.md")
-    script_path = os.path.join(project_root, "stories", grade_dir, script_name)
+    storyboard_path = os.path.join(project_root, "data", "storyboards", grade_dir, f"{unit}_storyboard.md")
+    script_path = os.path.join(project_root, "stories", "archive", script_name)
+    if not os.path.exists(script_path):
+        script_path = os.path.join(project_root, "stories", grade_dir, script_name)
+        
     assets_dir = os.path.join(project_root, "apps", "assets", assets_folder)
-    pdf_output_path = os.path.join(project_root, "data", "storyboards", f"{unit}_storyboard.pdf")
+    pdf_output_path = os.path.join(project_root, "data", "storyboards", grade_dir, f"{unit}_storyboard.pdf")
     
     print(f"Parsing files for unit {unit}...")
     if not os.path.exists(storyboard_path) or not os.path.exists(script_path):
