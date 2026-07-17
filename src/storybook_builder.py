@@ -601,6 +601,18 @@ class StorybookBuilder(Builder):
             }} else if (e.key === 'PageDown' || e.key === 'ArrowRight' || e.key === ' ') {{
                 e.preventDefault();
                 if (currentIndex < total - 1) showScene(currentIndex + 1);
+            }} else if (e.key === 'ArrowUp') {{
+                const activeCard = document.querySelector('.storyboard-card.active');
+                if (activeCard) {{
+                    e.preventDefault();
+                    activeCard.scrollBy({{ top: -50, behavior: 'auto' }});
+                }}
+            }} else if (e.key === 'ArrowDown') {{
+                const activeCard = document.querySelector('.storyboard-card.active');
+                if (activeCard) {{
+                    e.preventDefault();
+                    activeCard.scrollBy({{ top: 50, behavior: 'auto' }});
+                }}
             }}
         }});
     </script>
