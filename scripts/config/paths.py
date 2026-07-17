@@ -17,8 +17,8 @@ def story_dir(grade: str) -> Path:
     return STORIES_DIR / grade
 
 def storyboard_dir(grade: str) -> Path:
-    """Returns the storyboard folder for a given grade."""
-    return STORYBOARDS_DIR / grade
+    """Returns the storyboard folder for a given grade, targeting the generated directory."""
+    return STORYBOARDS_DIR / "generated" / grade
 
 def storyboard_path(grade: str, unit: str) -> Path:
     """Returns the full path to a storyboard markdown file."""

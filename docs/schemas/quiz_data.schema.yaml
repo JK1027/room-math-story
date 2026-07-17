@@ -1,0 +1,55 @@
+# Schema specification for quiz_data YAML files
+# Version: 1.0
+
+type: object
+required:
+  - image_mapping
+  - questions
+  - events
+properties:
+  template:
+    type: string
+    enum:
+      - escape_room
+      - custom_coordinates
+      - custom_geometry
+    default: escape_room
+  image_mapping:
+    type: object
+    properties:
+      intro: {type: string}
+      outro: {type: string}
+      event1: {type: string}
+      event2: {type: string}
+      event3: {type: string}
+      event4: {type: string}
+    patternProperties:
+      "^q[1-9]$|^q1[0-9]$|^q20$": {type: string}
+  questions:
+    type: object
+    patternProperties:
+      "^q[1-9]$|^q1[0-9]$|^q20$":
+        type: object
+        required:
+          - title
+          - qtext
+          - hint
+          - ans_check
+        properties:
+          title: {type: string}
+          qtext: {type: string}
+          hint: {type: string}
+          ans_check: {type: string}
+          placeholder: {type: string}
+          error: {type: string}
+          extra_class: {type: string}
+          options:
+            type: array
+            items: {type: string}
+  events:
+    type: object
+    properties:
+      event1: {type: object, required: [title, btn_text, next_stage, progress]}
+      event2: {type: object, required: [title, btn_text, next_stage, progress]}
+      event3: {type: object, required: [title, btn_text, next_stage, progress]}
+      event4: {type: object, required: [title, btn_text, next_stage, progress]}

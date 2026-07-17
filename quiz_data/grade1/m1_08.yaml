@@ -1,0 +1,259 @@
+template: escape_room
+image_mapping:
+  intro: intro.png
+  q1: q1.png
+  q2: q2.png
+  q3: q3.png
+  q4: q4.png
+  q5: q5.png
+  q6: q6.png
+  q7: q7.png
+  q8: q8.png
+  q9: q9.png
+  q10: q10.png
+  q11: q11.png
+  q12: q12.png
+  q13: q13.png
+  q14: q14.png
+  q15: q15.png
+  q16: q16.png
+  q17: q17.png
+  q18: q18.png
+  q19: q19.png
+  q20: q20.png
+  event1: event1.png
+  event2: event2.png
+  event3: event3.png
+  event4: event4.png
+  outro: outro.png
+questions:
+  q1:
+    title: 잎의 복원
+    qtext: <strong>Q1. [줄기와 잎 그림]</strong><br>위 자료를 줄기와 잎 그림으로 나타낼 때, 줄기가 2인 잎을 쉼표(,)로
+      구분하여 크기 순으로 모두 적으시오.
+    hint: 줄기가 2인 데이터 변량들의 일의 자리 숫자들을 차례대로 나열해 줍니다.
+    ans_check: ans === '3,4,7' || ans === '3, 4, 7' || ans === '347'
+    options:
+    - '3'
+    - '4'
+    - '7'
+    - '3'
+    - '4'
+    - 7 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: 3, 4, 7'
+    error: 장부 판독 실패! 잎을 다시 세십시오.
+  q2:
+    title: 변량 개수
+    qtext: <strong>Q2. [변량의 개수]</strong><br>위 자료에서 전체 변량의 개수는 몇 개인가?
+    hint: 수집된 전체 데이터 샘플의 개수가 모두 몇 개인지 직접 세어 봅니다.
+    ans_check: ans === '10' || ans === '10개'
+    options:
+    - '8'
+    - '10'
+    - '20'
+    - '12'
+    placeholder: 숫자 또는 개수 입력
+    error: 변량 개수 불일치! 장부의 줄 수가 다릅니다.
+  q3:
+    title: 최대 분포 줄기
+    qtext: <strong>Q3. [최다 잎 줄기]</strong><br>위 자료에서 잎이 가장 많은 줄기는 무엇인가?
+    hint: 줄기와 잎 그림에서 잎(오른쪽 숫자)의 개수가 가장 많이 늘어선 줄기 번호를 찾습니다.
+    ans_check: ans === '2와3' || ans === '2,3' || ans === '2, 3'
+    options:
+    - 2와3
+    - 2와3 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: 2, 3'
+    error: 탐색 실패! 잎의 최대 개수가 매칭되지 않습니다.
+  q4:
+    title: 우범 구역 식별
+    qtext: <strong>Q4. [조건 필터링]</strong><br>소매치기 발생 건수가 30건 이상인 지역은 몇 곳인가?
+    hint: 30 이상인 숫자(31, 31, 35, 42, 45)가 모두 몇 개인지 개수를 셉니다.
+    ans_check: ans === '5' || ans === '5곳'
+    options:
+    - '10'
+    - '3'
+    - '7'
+    - '5'
+    placeholder: 숫자 또는 곳 입력
+    error: 구역 필터링 개수가 달라 통신 오류가 발생합니다!
+  q5:
+    title: 경미 지역 추적
+    qtext: <strong>Q5. [순위 데이터]</strong><br>소매치기 발생 건수가 적은 쪽에서 3번째인 지역의 건수는 얼마인가?
+    hint: 데이터를 크기 순서대로 정렬했을 때 세 번째로 작은 건수 값을 찾습니다.
+    ans_check: ans === '23' || ans === '23건'
+    options:
+    - '21'
+    - '23'
+    - '46'
+    - '25'
+    placeholder: 숫자 또는 건 입력
+    error: 수치 불일치! 정렬 순서가 꼬였습니다.
+  q6:
+    title: '제2구역: 계급 분류'
+    qtext: <strong>Q6. [계급의 정의]</strong><br>자료를 몇 개의 구간으로 나눌 때, 이 구간을 무엇이라 하는가?
+    hint: 수집된 변량을 일정한 간격으로 나눈 구간을 가리키는 통계 용어입니다.
+    ans_check: ans === '계급'
+    options:
+    - 계급
+    - 계급 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 한글 단어 입력
+    error: 기초 통계 용어 오류! 결계가 열리지 않습니다.
+  q7:
+    title: 도수의 정의
+    qtext: <strong>Q7. [도수의 정의]</strong><br>각 계급에 속하는 변량의 개수를 무엇이라 하는가?
+    hint: 각 계급 구간에 속해 있는 자료(변량)의 개수를 의미하는 용어입니다.
+    ans_check: ans === '도수'
+    options:
+    - 도수
+    - 도수 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 한글 단어 입력
+    error: 회전 기운 조절 오류! 올바른 한글 용어를 쓰십시오.
+  q8:
+    title: 계급의 폭
+    qtext: '<strong>Q8. [계급의 크기]</strong><br>계급의 너비(크기)는 얼마인가? (자료: 10대, 20대 식일 때의
+      너비)'
+    hint: 한 계급 구간의 너비(끝값 - 시작값)를 계산하여 단위를 포함하지 않은 값을 적습니다.
+    ans_check: ans === '10' || ans === '10세'
+    options:
+    - '8'
+    - '10'
+    - '20'
+    - '12'
+    placeholder: 숫자만 입력
+    error: 너비 부조화! 구간 세그먼트가 틀어졌습니다.
+  q9:
+    title: 최대 나이 도수
+    qtext: '<strong>Q9. [최대 도수 계급]</strong><br>도수가 가장 큰 계급은 어느 연령대인가? (자료: 10대: 4명,
+      20대: 8명, 30대: 5명, 40대: 3명)'
+    hint: 도수(인원수)가 8명으로 가장 많이 몰려 있는 나이대 계급을 찾습니다.
+    ans_check: ans === '20대'
+    options:
+    - 20대
+    - 20대 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: 20대'
+    error: 용의자 타겟팅 오류!
+  q10:
+    title: 청년 용의자 비율
+    qtext: <strong>Q10. [백분율 계산]</strong><br>나이가 30세 미만인 용의자는 전체의 몇 %인가? (단위 생략)
+    hint: 30세 미만 인원수(4명 + 8명 = 12명)가 전체 20명 중에서 차지하는 비율을 백분율(%)로 계산합니다.
+    ans_check: ans === '60' || ans === '60%'
+    options:
+    - '120'
+    - '62'
+    - '60'
+    - '58'
+    placeholder: 숫자만 입력
+    error: 백분율 오차 발생! 차단 셔터 압력 증가!
+    extra_class: glitch-bg
+  q11:
+    title: '제3구역: 히스토그램'
+    qtext: <strong>Q11. [히스토그램]</strong><br>도수분포표를 바탕으로 가로축에 계급, 세로축에 도수를 나타내어 직사각형
+      모양으로 그린 그래프를 무엇이라 하는가?
+    hint: 도수분포표를 바탕으로 가로에 계급, 세로에 도수를 매칭해 그린 직사각형 모양의 그래프 명칭입니다.
+    ans_check: ans === '히스토그램'
+    placeholder: 한글 그래프 이름 입력
+    error: 그래프 타입 인식 불가능!
+  q12:
+    title: 가로폭의 속성
+    qtext: <strong>Q12. [히스토그램 가로]</strong><br>히스토그램에서 직사각형의 가로의 길이는 무엇을 의미하는가?
+    hint: 도수분포표의 각 직사각형의 가로폭이 나타내는 계급의 간격 크기를 의미합니다.
+    ans_check: ans === '계급의크기' || ans === '계급의 크기' || ans === '계급의너비' || ans === '계급의
+      너비'
+    placeholder: '예: 계급의 크기'
+    error: 가로 기둥 정렬 에러!
+  q13:
+    title: 넓이의 총합
+    qtext: <strong>Q13. [히스토그램 넓이 공식]</strong><br>히스토그램에서 직사각형의 넓이의 합은 (계급의 크기) ×
+      ( ? ) 이다. ?에 들어갈 알맞은 말은?
+    hint: 모든 직사각형의 넓이 합 공식은 (계급의 크기) * (도수의 총합) 입니다.
+    ans_check: ans === '도수의총합' || ans === '도수의 총합' || ans === '도수의합' || ans === '도수의
+      합'
+    placeholder: 한글 단어 입력
+    error: 넓이 총합 불일치! 차분기관 가동 정지 경보!
+  q14:
+    title: 다각형 그래프
+    qtext: <strong>Q14. [도수분포다각형]</strong><br>히스토그램의 각 직사각형 윗변의 중점을 차례로 선분으로 연결한 그래프를
+      무엇이라 하는가?
+    hint: 히스토그램의 각 직사각형 윗변의 중점들을 선분으로 이어 꺾은선 모양으로 만든 다각형 그래프입니다.
+    ans_check: ans === '도수분포다각형'
+    placeholder: 한글 그래프 이름 입력
+    error: 꺾은선 궤적 연결 오류!
+  q15:
+    title: 넓이의 동등성
+    qtext: <strong>Q15. [넓이의 성질]</strong><br>도수분포다각형과 가로축으로 둘러싸인 부분의 넓이는 히스토그램의 직사각형들의
+      넓이의 합과 어떠한가?
+    hint: 도수분포다각형과 가로축이 만드는 면적은 히스토그램 전체 직사각형 넓이의 합과 항상 같은 성질을 가집니다.
+    ans_check: ans === '같다'
+    placeholder: 같다 또는 다르다 입력
+    error: 면적 불균형! 공간 붕괴 위험!
+    extra_class: glitch-bg
+  q16:
+    title: '제4구역: 상대도수'
+    qtext: <strong>Q16. [상대도수의 정의]</strong><br>각 계급의 도수를 도수의 총합으로 나눈 비율을 무엇이라 하는가?
+    hint: 각 계급의 도수가 전체 도수 총합 중에서 차지하는 상대적인 비율을 뜻하는 용어입니다.
+    ans_check: ans === '상대도수'
+    placeholder: 한글 단어 입력
+    error: 가중치 데이터 로드 불가!
+  q17:
+    title: 상대도수 계산
+    qtext: <strong>Q17. [상대도수 계산]</strong><br>어떤 계급의 도수가 15, 도수의 총합이 50일 때, 이 계급의
+      상대도수를 구하시오. (소수로 기재)
+    hint: 특정 계급 도(15)를 전체 도수(50)로 나눈 비율을 소수 값으로 계산합니다.
+    ans_check: ans === '0.3'
+    placeholder: '예: 0.5'
+    error: 오차 발생! 기계 증기가 더 짙어집니다.
+  q18:
+    title: 상대도수의 총합
+    qtext: <strong>Q18. [상대도수 총합]</strong><br>상대도수의 총합은 항상 얼마인가?
+    hint: 상대적인 비율들의 총합은 항상 전체를 뜻하는 고정된 자연수 값이 나옵니다.
+    ans_check: ans === '1'
+    placeholder: 숫자만 입력
+    error: 한계선 수치 초과! 시스템 잠금!
+  q19:
+    title: 분포 상태 비교
+    qtext: <strong>Q19. [상대도수의 활용]</strong><br>상대도수는 도수의 총합이 다른 두 집단의 분포 상태를 비교할 때
+      어떠한가? (유용하다 / 불필요하다)
+    hint: 조사 대상의 전체 총인원수가 서로 다른 두 집단의 성적이나 선호도를 비율로 공평하게 비교할 때의 유용성 여부를 생각합니다.
+    ans_check: ans === '유용하다'
+    placeholder: 유용하다 또는 불필요하다 입력
+    error: 비교 기어 작동 불능!
+  q20:
+    title: 범인 도수 산출
+    qtext: <strong>Q20. [도수 구하기]</strong><br>상대도수가 0.2이고 전체 도수가 40명일 때, 이 계급의 도수를
+      구하시오.
+    hint: (전체 인원 40명) * (상대도수 비율 0.2)를 곱하여 해당 계급의 실제 인원수를 계산합니다.
+    ans_check: ans === '8' || ans === '8명'
+    placeholder: 숫자만 입력
+    error: 지목 실패! 스파이가 안개 속으로 도망칩니다!
+    extra_class: glitch-bg
+events:
+  event1:
+    title: 동력 기어 가동
+    btn_text: 계속 전진하기
+    next_stage: panel_q6
+    progress: 25
+  event2:
+    title: 비상 차단 장치 리셋
+    btn_text: 비상 전력 가동
+    next_stage: panel_q11
+    progress: 50
+  event3:
+    title: 핵심 복원 제단 활성화
+    btn_text: 제단 활성화
+    next_stage: panel_q16
+    progress: 75
+  event4:
+    title: 탈출 차원 포탈 개방
+    btn_text: 지상으로 탈출
+    next_stage: outro
+    progress: 100

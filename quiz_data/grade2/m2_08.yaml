@@ -1,0 +1,260 @@
+template: escape_room
+image_mapping:
+  intro: intro.png
+  q1: q1.png
+  q2: q2.png
+  q3: q3.png
+  q4: q4.png
+  q5: q5.png
+  q6: q6.png
+  q7: q7.png
+  q8: q8.png
+  q9: q9.png
+  q10: q10.png
+  q11: q11.png
+  q12: q12.png
+  q13: q13.png
+  q14: q14.png
+  q15: q15.png
+  q16: q16.png
+  q17: q17.png
+  q18: q18.png
+  q19: q19.png
+  q20: q20.png
+  event1: event1.png
+  event2: event2.png
+  event3: event3.png
+  event4: event4.png
+  outro: outro.png
+questions:
+  q1:
+    title: 딜러의 주사위 분석 1
+    qtext: <strong>Q1. [짝수의 경우의 수]</strong><br>1에서 6까지 있는 주사위 한 개를 던질 때, 짝수의 눈이 나오는
+      경우의 수를 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '3'
+    options:
+    - '6'
+    - '1'
+    - '3'
+    - '5'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 짝수는 2, 4, 6입니다.
+  q2:
+    title: 쌍주사위의 전수 조합
+    qtext: <strong>Q2. [두 주사위의 경우의 수]</strong><br>서로 다른 두 개의 주사위를 동시에 던질 때, 일어날 수
+      있는 모든 경우의 수를 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '36'
+    options:
+    - '36'
+    - '72'
+    - '34'
+    - '38'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 각 주사위당 6가지씩 동시에 일어나는 경우입니다.
+  q3:
+    title: 동전과 주사위의 링크
+    qtext: <strong>Q3. [동전과 주사위의 연계]</strong><br>동전 1개와 주사위 1개를 동시에 던질 때 일어나는 모든 경우의
+      수를 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '12'
+    options:
+    - '14'
+    - '24'
+    - '10'
+    - '12'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 동전의 경우의 수와 주사위의 경우의 수를 곱해보세요.
+  q4:
+    title: 잭팟의 히든카드 추적
+    qtext: <strong>Q4. [배수의 경우의 수]</strong><br>1에서 10까지 적힌 10장의 카드에서 1장을 뽑을 때, 3의
+      배수가 나오는 경우의 수를 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '3'
+    options:
+    - '6'
+    - '1'
+    - '3'
+    - '5'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 10 이하의 수 중 3의 배수들의 개수입니다.
+  q5:
+    title: 주사위 합의 조작선
+    qtext: <strong>Q5. [합이 특정 수가 되는 경우]</strong><br>두 개의 주사위를 동시에 던질 때, 눈의 합이 4가 되는
+      경우의 수를 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '3'
+    options:
+    - '6'
+    - '1'
+    - '3'
+    - '5'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 합이 4가 되는 순서쌍 (x, y)의 개수를 구하세요.
+  q6:
+    title: 딜러의 위장 복장
+    qtext: <strong>Q6. [동시 일어나는 경우의 수]</strong><br>상의 3벌, 하의 4벌이 있을 때, 짝을 지어 입는 경우의
+      수는?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '12'
+    options:
+    - '14'
+    - '24'
+    - '10'
+    - '12'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 상의 선택과 하의 선택은 연달아 일어나므로 곱의 법칙을 적용합니다.
+  q7:
+    title: 탈출 경로의 탐색
+    qtext: <strong>Q7. [합의 법칙의 적용]</strong><br>서울에서 부산으로 가는 버스가 3가지, 기차가 2가지 있을 때,
+      서울에서 부산으로 가는 경우의 수는?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '5'
+    options:
+    - '10'
+    - '3'
+    - '7'
+    - '5'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 동시에 타는 것이 아닌 선택지 중 하나이므로 합의 법칙을 씁니다.
+  q8:
+    title: 경호원 보안 레이아웃
+    qtext: <strong>Q8. [일렬로 세우는 경우의 수]</strong><br>A, B, C 세 명의 학생을 일렬로 세우는 경우의 수는?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '6'
+    options:
+    - '4'
+    - '6'
+    - '8'
+    - '12'
+    placeholder: 숫자만 입력
+    error: "틀렸습니다. 3명을 순서대로 배열하는 경우의 수($3 \times 2 \times 1$)입니다."
+  q9:
+    title: 카지노 임원진 선출
+    qtext: <strong>Q9. [직책이 다른 대표 뽑기]</strong><br>4명 중 반장 1명, 부반장 1명을 뽑는 경우의 수는?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '12'
+    options:
+    - '14'
+    - '24'
+    - '10'
+    - '12'
+    placeholder: 숫자만 입력
+    error: "틀렸습니다. 순서와 직책이 있으므로 $4 \times 3$으로 연산합니다."
+  q10:
+    title: 수사팀 구성 조합
+    qtext: <strong>Q10. [자격이 같은 대표 뽑기]</strong><br>4명 중 자격이 같은 대표 2명을 뽑는 경우의 수는?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '6'
+    options:
+    - '4'
+    - '6'
+    - '8'
+    - '12'
+    placeholder: 숫자만 입력
+    error: "틀렸습니다. 자격이 같으므로 뽑는 순서의 중복을 제거해야 합니다. ($(4 \times 3) \\div 2$)"
+    extra_class: glitch-bg
+  q11:
+    title: 확률의 기본 범위
+    qtext: <strong>Q11. [확률의 기본 성질 1]</strong><br>어떤 사건이 일어날 확률을 $p$라고 할 때, $p$의 범위는
+      어떻게 되는가? (공백 없이 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans.replace(/\s+/g, '') === '0<=P<=1' || ans.replace(/\s+/g, '') ===
+      '0<=P<=1.0'
+    placeholder: '예: 0<=p<=1'
+    error: 부등식 표현이 잘못되었습니다. 확률은 0 이상 1 이하의 범위를 가집니다.
+  q12:
+    title: 치명적 잭팟의 실패율
+    qtext: <strong>Q12. [확률의 기본 성질 2]</strong><br>절대로 일어날 수 없는 사건의 확률은 얼마인가? (정수 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '0'
+    placeholder: 숫자만 입력
+    error: 틀렸습니다. 불가능한 사건의 확률 값입니다.
+  q13:
+    title: 동전 승부의 진실
+    qtext: <strong>Q13. [기본 확률 구하기]</strong><br>동전 한 개를 던질 때 앞면이 나올 확률을 구하시오. (분수
+      형태로 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '1/2' || ans === '0.5'
+    placeholder: '분수 형태로 입력 (예: 1/2)'
+    error: 틀렸습니다. 동전의 단면은 앞면과 뒷면 총 두 가지입니다.
+  q14:
+    title: 소수 슬롯머신
+    qtext: <strong>Q14. [소수의 확률]</strong><br>주사위 한 개를 던질 때 소수의 눈이 나올 확률을 구하시오. (분수
+      형태로 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '1/2' || ans === '0.5'
+    placeholder: '분수 형태로 입력 (예: 1/2)'
+    error: 틀렸습니다. 6개 눈 중 소수(2, 3, 5)의 비율을 구하세요.
+  q15:
+    title: 2 이하의 안전 룰
+    qtext: <strong>Q15. [이하의 확률]</strong><br>주사위 한 개를 던질 때, 2 이하의 눈이 나올 확률을 구하시오.
+      (기약분수로 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '1/3'
+    placeholder: '분수 형태로 입력 (예: 1/3)'
+    error: 틀렸습니다. 전체 6가지 중 1, 2 두 가지입니다. 약분하여 기약분수로 적으세요.
+    extra_class: glitch-bg
+  q16:
+    title: 포커 덱의 홀수 확률
+    qtext: <strong>Q16. [여사건의 확률 1]</strong><br>1부터 5까지 적힌 5장의 카드 중 1장을 뽑을 때, 짝수가
+      아닐 확률을 구하시오. (분수 형태로 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '3/5' || ans === '0.6'
+    placeholder: '분수 형태로 입력 (예: 3/5)'
+    error: 틀렸습니다. 5장 중 홀수 카드의 장수 비율입니다.
+  q17:
+    title: 비 올 확률의 대칭
+    qtext: "<strong>Q17. [여사건의 확률 2]</strong><br>비가 올 확률이 $\frac{3}{5}$ 일 때, 비가 오지\
+      \ 않을 확률을 구하시오. (분수 형태로 입력)"
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '2/5' || ans === '0.4'
+    placeholder: '분수 형태로 입력 (예: 2/5)'
+    error: 틀렸습니다. 전체 확률 1에서 비가 올 확률 3/5을 빼서 계산하세요.
+  q18:
+    title: 색상 칩 주머니
+    qtext: <strong>Q18. [공 꺼내기 확률]</strong><br>주머니에 빨간 공 3개와 파란 공 2개가 들어 있다. 임의로 1개를
+      꺼낼 때 빨간 공이 나올 확률은? (분수 형태로 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '3/5' || ans === '0.6'
+    placeholder: '분수 형태로 입력 (예: 3/5)'
+    error: 틀렸습니다. 전체 공의 개수 중 빨간 공의 개수 비율입니다.
+  q19:
+    title: 더블 코인 플립
+    qtext: <strong>Q19. [동시 일어나는 확률]</strong><br>동전 2개를 동시에 던질 때, 모두 앞면이 나올 확률을 구하시오.
+      (분수 형태로 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '1/4' || ans === '0.25'
+    placeholder: '분수 형태로 입력 (예: 1/4)'
+    error: 틀렸습니다. 각 동전의 앞면 확률 1/2을 서로 곱해보십시오.
+  q20:
+    title: 마지막 선택의 순간
+    qtext: <strong>Q20. [오답의 확률]</strong><br>객관식 5지 선다형 문제 1개를 임의로 찍었을 때, 틀릴 확률을 구하시오.
+      (분수 형태로 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '4/5' || ans === '0.8'
+    placeholder: '분수 형태로 입력 (예: 4/5)'
+    error: 틀렸습니다. 정답 확률이 1/5이므로 오답(틀릴) 확률을 구하십시오.
+    extra_class: glitch-bg
+events:
+  event1:
+    title: 동력 기어 가동
+    btn_text: 계속 전진하기
+    next_stage: panel_q6
+    progress: 25
+  event2:
+    title: 비상 차단 장치 리셋
+    btn_text: 비상 전력 가동
+    next_stage: panel_q11
+    progress: 50
+  event3:
+    title: 핵심 복원 제단 활성화
+    btn_text: 제단 활성화
+    next_stage: panel_q16
+    progress: 75
+  event4:
+    title: 탈출 차원 포탈 개방
+    btn_text: 지상으로 탈출
+    next_stage: outro
+    progress: 100

@@ -1,0 +1,248 @@
+template: custom_geometry
+image_mapping:
+  intro: intro.png
+  q1: q1.png
+  q2: q2.png
+  q3: q3.png
+  q4: q4.png
+  q5: q5.png
+  q6: q6.png
+  q7: q7.png
+  q8: q8.png
+  q9: q9.png
+  q10: q10.png
+  q11: q11.png
+  q12: q12.png
+  q13: q13.png
+  q14: q14.png
+  q15: q15.png
+  q16: q16.png
+  q17: q17.png
+  q18: q18.png
+  q19: q19.png
+  q20: q20.png
+  event1: event1.png
+  event2: event2.png
+  event3: event3.png
+  event4: event4.png
+  outro: outro.png
+questions:
+  q1:
+    title: 코덱스-L의 위협
+    qtext: <strong>Q1.</strong> 도형을 구성하는 가장 기본이 되는 요소 세 가지는 점, 선, 그리고 무엇인가?
+    hint: 도형을 구성하는 가장 기본 요소인 점, 선, 면 중 마지막 요소를 생각해 봅니다.
+    ans_check: ans === '면'
+    options:
+    - 면
+    - 면 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 정답 입력
+    error: 틀렸습니다. 점이 모여 선이 되고, 선이 모여 이것이 됩니다.
+  q2:
+    title: 궤적의 고유성
+    qtext: <strong>Q2.</strong> 서로 다른 두 점 A, B를 지나는 직선은 모두 몇 개인가?
+    hint: 두 점을 동시에 관통하는 직선은 세상에 오직 하나뿐입니다.
+    ans_check: ans === '1' || ans === '1개'
+    options:
+    - '-1'
+    - '1'
+    - '3'
+    - '2'
+    placeholder: '예: 1개'
+    error: 틀렸습니다. 두 점을 동시에 관통하는 직선은 세상에 오직 하나뿐입니다.
+  q3:
+    title: 레이저 방향 지정
+    qtext: <strong>Q3.</strong> 점 A에서 시작하여 점 B 방향으로 끝없이 뻗어 나가는 선분을 기호로 나타낼 때, 이를 무엇이라
+      부르는가?
+    hint: 한쪽으로만 끝없이 뻗어 나가는 직선의 절반입니다.
+    ans_check: ans.includes('반직선')
+    options:
+    - 반직선
+    - 반직선 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 정답 입력
+    error: 틀렸습니다. 한쪽으로만 끝없이 뻗어 나가는 직선의 절반입니다.
+  q4:
+    title: 수평의 바닥
+    qtext: <strong>Q4.</strong> 180도인 각을 무엇이라 부르는가?
+    hint: 평평한 각을 뜻하는 명칭입니다.
+    ans_check: ans === '평각'
+    options:
+    - 평각
+    - 평각 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 정답 입력
+    error: 틀렸습니다. 평평한 각을 뜻하는 명칭입니다.
+  q5:
+    title: 경보 태엽의 각도
+    qtext: <strong>Q5.</strong> 시계가 4시 정각을 가리킬 때, 시침과 분침이 이루는 작은 쪽의 각의 크기를 구하시오.
+    hint: 시계의 1시간 간격은 30도입니다. 4시간의 각도를 계산해보세요.
+    ans_check: ans === '120' || ans === '120도'
+    options:
+    - '120'
+    - '240'
+    - '118'
+    - '122'
+    placeholder: 단위 없이 숫자만 입력 또는 '120도' 입력
+    error: 틀렸습니다. 시계의 1시간 간격은 30도입니다. 4시간의 각도를 계산해보세요.
+  q6:
+    title: '제 2구역: 교차하는 빛줄기'
+    qtext: <strong>Q6.</strong> 두 직선이 교차할 때 생기는 교각 중, 마주 보는 두 각을 무엇이라 하는가?
+    hint: 마주 보고 솟은 꼭지점을 공유하는 각입니다.
+    ans_check: ans === '맞꼭지각'
+    options:
+    - 맞꼭지각
+    - 맞꼭지각 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 정답 입력
+    error: 틀렸습니다. 마주 보고 솟은 꼭지점을 공유하는 각입니다.
+  q7:
+    title: 광선의 대칭성
+    qtext: '<strong>Q7.</strong> 맞꼭지각의 크기는 서로 어떠한가? (예: 같다, 다르다)'
+    hint: 마주 보는 각은 기하학적으로 항상 동일한 크기를 가집니다.
+    ans_check: ans === '같다'
+    options:
+    - 같다
+    - 같다 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 같다 또는 다르다 입력
+    error: 틀렸습니다. 마주 보는 각은 기하학적으로 항상 동일한 크기를 가집니다.
+  q8:
+    title: 평행 레이저의 동위
+    qtext: <strong>Q8.</strong> 직선 l과 m이 평행하고 한 직선 n과 만날 때, 동위각의 크기는 서로 어떠한가?
+    hint: 평행할 때 동위각의 크기는 항상 대칭 일치합니다.
+    ans_check: ans === '같다'
+    placeholder: 같다 또는 다르다 입력
+    error: 틀렸습니다. 평행할 때 동위각의 크기는 항상 대칭 일치합니다.
+  q9:
+    title: 엇갈린 반사각
+    qtext: <strong>Q9.</strong> 평행한 두 직선 사이를 가로지르는 선이 있을 때, 엇각의 크기는 서로 어떠한가?
+    hint: 평행한 직선 사이에서 엇각의 크기는 언제나 일치합니다.
+    ans_check: ans === '같다'
+    placeholder: 같다 또는 다르다 입력
+    error: 틀렸습니다. 평행한 직선 사이에서 엇각의 크기는 언제나 일치합니다.
+  q10:
+    title: 위치 정렬 빔
+    qtext: <strong>Q10.</strong> 두 직선이 평행할 조건 중 하나는 동위각의 크기가 같거나 무엇의 크기가 같은 경우인가?
+    hint: 엇갈린 위치에 있는 각도입니다.
+    ans_check: ans === '엇각'
+    placeholder: 정답 입력
+    error: 틀렸습니다. 엇갈린 위치에 있는 각도입니다.
+    extra_class: glitch-bg
+  q11:
+    title: '제 3구역: 작도의 방'
+    qtext: <strong>Q11.</strong> 눈금 없는 자와 컴퍼스만을 사용하여 도형을 그리는 것을 무엇이라 하는가?
+    hint: 두 글자 기하학 용어입니다.
+    ans_check: ans === '작도'
+    placeholder: 정답 입력
+    error: 틀렸습니다. 두 글자 기하학 용어입니다.
+  q12:
+    title: 길이 복제기
+    qtext: <strong>Q12.</strong> 길이가 주어진 선분을 다른 직선 위로 옮길 때 주로 사용하는 도구는 무엇인가?
+    hint: 원을 그리거나 길이를 재어 옮기는 도구입니다.
+    ans_check: ans === '컴퍼스'
+    placeholder: 정답 입력
+    error: 틀렸습니다. 원을 그리거나 길이를 재어 옮기는 도구입니다.
+  q13:
+    title: 삼각 지지대의 성립 조건
+    qtext: <strong>Q13.</strong> 삼각형의 세 변의 길이가 a, b, c (c가 가장 긴 변)일 때, c는 a+b보다 (
+      커야 / 작아야 ) 삼각형이 만들어진다. 알맞은 말은?
+    hint: 한 변이 너무 길면 양쪽에서 닫히지 않고 벌어집니다.
+    ans_check: ans === '작아야'
+    placeholder: 커야 또는 작아야 입력
+    error: 틀렸습니다. 한 변이 너무 길면 양쪽에서 닫히지 않고 벌어집니다.
+  q14:
+    title: 목재 조립 테스트
+    qtext: '<strong>Q14.</strong> 다음 세 선분의 길이로 삼각형을 만들 수 있는가? (3cm, 4cm, 7cm) (예:
+      있다, 없다)'
+    hint: 가장 긴 변이 나머지 두 변의 합과 같으므로 겹쳐져 무너집니다.
+    ans_check: ans === '없다'
+    placeholder: 있다 또는 없다 입력
+    error: 틀렸습니다. 가장 긴 변이 나머지 두 변의 합과 같으므로 겹쳐져 무너집니다.
+  q15:
+    title: 설계 완성 가능 여부
+    qtext: '<strong>Q15.</strong> 두 변의 길이와 그 끼인각의 크기가 주어졌을 때, 삼각형을 작도할 수 있는가? (예:
+      있다, 없다)'
+    hint: 두 변의 길이와 그 사이에 낀 각이 주어지면 삼각형은 오직 하나로 결정되므로 작도가 가능합니다.
+    ans_check: ans === '있다'
+    placeholder: 있다 또는 없다 입력
+    error: 틀렸습니다. 두 변과 사잇각은 삼각형을 고정하는 완벽한 조건입니다.
+    extra_class: glitch-bg
+  q16:
+    title: '제 4구역: 잃어버린 걸작 복원'
+    qtext: <strong>Q16.</strong> 모양과 크기가 완전히 같아서 포개었을 때 완전히 겹쳐지는 두 도형을 서로 무엇이라 하는가?
+    hint: 두 글자 수학적 명칭입니다.
+    ans_check: ans === '합동'
+    placeholder: 정답 입력
+    error: 틀렸습니다. 두 글자 수학적 명칭입니다.
+  q17:
+    title: 세 기둥의 합동 락
+    qtext: '<strong>Q17.</strong> 삼각형의 합동 조건 중 세 변의 길이가 각각 같을 때의 합동을 기호로 무엇이라 하는가?
+      (예: SSS, SAS, ASA)'
+    hint: 변(Side) 세 개를 뜻하는 기호입니다.
+    ans_check: ans === 'SSS' || ans === 'SSS합동'
+    options:
+    - SSS
+    - SAS
+    - AA
+    - ASA
+    placeholder: 영문 대문자 세 글자 입력
+    error: 틀렸습니다. 변(Side) 세 개를 뜻하는 기호입니다.
+  q18:
+    title: 두 변과 사잇각의 락
+    qtext: <strong>Q18.</strong> 삼각형의 두 변의 길이와 그 끼인각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?
+    hint: 변(Side) 두 개와 각(Angle) 하나가 끼어 있는 기호입니다.
+    ans_check: ans === 'SAS' || ans === 'SAS합동'
+    options:
+    - SSS
+    - SAS
+    - AA
+    - ASA
+    placeholder: 영문 대문자 세 글자 입력
+    error: 틀렸습니다. 변(Side) 두 개와 각(Angle) 하나가 끼어 있는 기호입니다.
+  q19:
+    title: 한 변과 양 끝각의 락
+    qtext: <strong>Q19.</strong> 삼각형의 한 변의 길이와 그 양 끝각의 크기가 각각 같을 때의 합동 조건을 무엇이라 하는가?
+    hint: 각(Angle) 두 개 사이에 변(Side)이 끼어 있는 기호입니다.
+    ans_check: ans === 'ASA' || ans === 'ASA합동'
+    options:
+    - SSS
+    - SAS
+    - AA
+    - ASA
+    placeholder: 영문 대문자 세 글자 입력
+    error: 틀렸습니다. 각(Angle) 두 개 사이에 변(Side)이 끼어 있는 기호입니다.
+  q20:
+    title: 최종 마스터 봉인
+    qtext: <strong>Q20.</strong> 직각삼각형에서 빗변의 길이와 한 예각의 크기가 같을 때의 합동 조건을 무엇이라 하는가?
+    hint: 빗변과 예각이 같으면 무조건 합동이 성립됩니다.
+    ans_check: ans === '합동' || ans === '합동이다'
+    placeholder: 합동이다 또는 합동 입력
+    error: 틀렸습니다. 빗변과 예각이 같으면 무조건 합동이 성립됩니다.
+    extra_class: glitch-bg
+events:
+  event1:
+    title: 다빈치의 입체 홀로그램 설계도
+    btn_text: 계속하기
+    next_stage: panel_q6
+    progress: 25
+  event2:
+    title: 코덱스-L의 자폭 시퀀스 제어
+    btn_text: 계속하기
+    next_stage: panel_q11
+    progress: 50
+  event3:
+    title: 다빈치-메모리 완전 복구와 복원 제단
+    btn_text: 계속하기
+    next_stage: panel_q16
+    progress: 75
+  event4:
+    title: 최종 마스터 봉인 붕괴 및 출구 포탈
+    btn_text: 계속하기
+    next_stage: outro
+    progress: 100

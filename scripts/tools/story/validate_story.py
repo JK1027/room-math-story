@@ -4,6 +4,8 @@ import re
 import time
 import json
 import argparse
+import yaml
+import unicodedata
 from pathlib import Path
 
 # --- Central Configs Loading ---
@@ -17,19 +19,46 @@ from scripts.config.constants import SUPPORTED_GRADES
 # 바이블 위반 금지어 (AI 관련 메타 단어 및 비속어 등)
 BANNED_KEYWORDS = ["chatgpt", "gpt", "인공지능", "openai", "bard", "gemini"]
 
+def read_file_safe(filepath):
+    """
+    파일의 인코딩(utf-8-sig, utf-8, cp949)을 판별하여 깨짐 없이 온전하게 로드합니다.
+    """
+    try:
+        with open(filepath, 'r', encoding='utf-8-sig') as f:
+            content = f.read()
+            if "units" in content or "질문" in content or "지문" in content or "이미지" in content:
+                return content.replace('\r\n', '\n')
+    except UnicodeDecodeError:
+        pass
+
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            content = f.read()
+            if "units" in content or "질문" in content or "지문" in content or "이미지" in content:
+                return content.replace('\r\n', '\n')
+    except UnicodeDecodeError:
+        pass
+        
+    try:
+        with open(filepath, 'r', encoding='cp949') as f:
+            content = f.read()
+            return content.replace('\r\n', '\n')
+    except Exception:
+        pass
+        
+    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+        return f.read().replace('\r\n', '\n')
+
 def load_metadata_yaml(filepath):
     """Safe regex-based YAML parser for grade metadata.yaml files."""
     data = {"units": {}}
     if not os.path.exists(filepath):
         return data
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
+    content = read_file_safe(filepath)
     
-    # Simple regex parser for our metadata format
     units_block = re.search(r'units:\n([\s\S]*)', content)
     if units_block:
         units_content = units_block.group(1)
-        # Split by unit keys (e.g. m1_01:)
         unit_blocks = re.findall(r'  (\w+):\n([\s\S]*?)(?=\n  \w+:|$)', units_content)
         for u_id, u_body in unit_blocks:
             unit_data = {"characters": {}}
@@ -60,37 +89,105 @@ def check_bible_violations(text, file_name):
             violations.append(f"Banned keyword '{kw}' found in {file_name}")
     return violations
 
+def validate_quiz_data_schema(unit, filepath):
+    """
+    quiz_data/*.yaml 파일이 정해진 스키마 규칙을 충족하는지 강제 정적 심사합니다.
+    """
+    errors = []
+    if not os.path.exists(filepath):
+        errors.append(f"Quiz metadata file not found for {unit} at {filepath}")
+        return errors
+        
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f)
+    except Exception as e:
+        errors.append(f"YAML parsing error in {unit}.yaml: {e}")
+        return errors
+        
+    if not isinstance(data, dict):
+        errors.append(f"Invalid YAML structure in {unit}.yaml. Must be an object.")
+        return errors
+        
+    # 필수 최상위 키 검증
+    for required_key in ["image_mapping", "questions", "events"]:
+        if required_key not in data:
+            errors.append(f"Missing required key '{required_key}' in {unit}.yaml")
+            
+    # 1. image_mapping 검증
+    img_map = data.get("image_mapping", {})
+    if not isinstance(img_map, dict):
+        errors.append(f"'image_mapping' must be a dictionary in {unit}.yaml")
+    else:
+        for k in ["intro", "outro", "event1", "event2", "event3", "event4"]:
+            if k not in img_map:
+                errors.append(f"Missing image mapping key '{k}' in {unit}.yaml")
+        for i in range(1, 21):
+            qkey = f"q{i}"
+            if qkey not in img_map:
+                errors.append(f"Missing image mapping key '{qkey}' in {unit}.yaml")
+                
+    # 2. questions 검증
+    qs = data.get("questions", {})
+    if not isinstance(qs, dict):
+        errors.append(f"'questions' must be a dictionary in {unit}.yaml")
+    else:
+        for i in range(1, 21):
+            qkey = f"q{i}"
+            if qkey not in qs:
+                errors.append(f"Missing question definition for '{qkey}' in {unit}.yaml")
+            else:
+                qmeta = qs[qkey]
+                for required_qfield in ["title", "qtext", "hint", "ans_check"]:
+                    if required_qfield not in qmeta or not str(qmeta[required_qfield]).strip():
+                        errors.append(f"Question '{qkey}' in {unit}.yaml is missing required field '{required_qfield}'")
+                        
+    # 3. events 검증
+    evs = data.get("events", {})
+    if not isinstance(evs, dict):
+        errors.append(f"'events' must be a dictionary in {unit}.yaml")
+    else:
+        for i in range(1, 5):
+            ekey = f"event{i}"
+            if ekey not in evs:
+                errors.append(f"Missing event definition for '{ekey}' in {unit}.yaml")
+            else:
+                emeta = evs[ekey]
+                for required_efield in ["title", "btn_text", "next_stage", "progress"]:
+                    if required_efield not in emeta:
+                        errors.append(f"Event '{ekey}' in {unit}.yaml is missing required field '{required_efield}'")
+                        
+    return errors
+
+
+
 def validate_storyboard(file_path, metadata=None):
     """
     Statically analyzes a single storyboard markdown file.
-    Checks for:
-    - Sequential Q numbers (Q1 to Q20)
-    - Target image files existence in apps/assets/
-    - Valid next stage transitions in events
-    - Metadata and hint formats
-    - Bible keyword violations
     """
     errors = []
     file_name = os.path.basename(file_path)
     
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read().replace('\r\n', '\n')
+    content = read_file_safe(file_path)
+    content = unicodedata.normalize('NFC', content)
         
-    # Bible keyword check on the entire content
     violations = check_bible_violations(content, file_name)
     errors.extend(violations)
     
-    # Metadata cross-verification
     unit_id = file_name.replace("_storyboard.md", "")
     if metadata and "units" in metadata and unit_id in metadata["units"]:
         unit_meta = metadata["units"][unit_id]
         expected_helper = unit_meta.get("characters", {}).get("helper")
         expected_villain = unit_meta.get("characters", {}).get("villain")
         
-        if expected_helper and expected_helper not in content:
-            errors.append(f"Helper character '{expected_helper}' defined in metadata was not found in storyboard {file_name}")
-        if expected_villain and expected_villain not in content:
-            errors.append(f"Villain character '{expected_villain}' defined in metadata was not found in storyboard {file_name}")
+        if expected_helper:
+            expected_helper = unicodedata.normalize('NFC', expected_helper)
+            if expected_helper not in content:
+                errors.append(f"Helper character '{expected_helper}' defined in metadata was not found in storyboard {file_name}")
+        if expected_villain:
+            expected_villain = unicodedata.normalize('NFC', expected_villain)
+            if expected_villain not in content:
+                errors.append(f"Villain character '{expected_villain}' defined in metadata was not found in storyboard {file_name}")
     
     # 1. Parse Image Mappings
     img_map = {}
@@ -106,101 +203,66 @@ def validate_storyboard(file_path, metadata=None):
                     val = parts[1].strip()
                     img_map[key] = val
                     
-    # 2. Check Q1 ~ Q20
-    q_parts = content.split('## Q')
-    q_nums = []
-    
-    # Find active asset directory
-    unit_id = file_name.replace("_storyboard.md", "")
-    assets_dir = None
-    assets_root = paths.APPS_DIR / "assets"
-    
-    if assets_root.exists():
-        for dname in os.listdir(assets_root):
-            if dname.startswith(unit_id) and os.path.isdir(assets_root / dname):
-                assets_dir = assets_root / dname
-                break
+    # Check images existence
+    assets_folder = None
+    for dname in os.listdir(paths.APPS_DIR / "assets"):
+        if dname.startswith(unit_id) and os.path.isdir(paths.APPS_DIR / "assets" / dname):
+            assets_folder = dname
+            break
+            
+    if assets_folder:
+        for k, v in img_map.items():
+            img_path = paths.APPS_DIR / "assets" / assets_folder / v
+            if not img_path.exists():
+                errors.append(f"Target asset '{v}' for key '{k}' does not exist at {img_path}")
                 
-    for part in q_parts[1:]:
-        lines = part.strip().split('\n')
+    # 2. Parse Q1 to Q20 definitions
+    q_matches = re.findall(r'## Q(\d+)', content)
+    q_nums = [int(x) for x in q_matches]
+    if q_nums != list(range(1, 21)):
+        errors.append(f"Storyboard {file_name} does not contain sequential questions Q1 to Q20. Found: {q_nums}")
+        
+    # Check each question metadata
+    q_blocks = content.split('## Q')
+    for q_block in q_blocks[1:]:
+        lines = q_block.strip().split('\n')
         qnum_str = lines[0].strip()
         if not qnum_str.isdigit():
-            errors.append(f"Invalid section header: '## Q{qnum_str}' is not numeric.")
             continue
-            
         qnum = int(qnum_str)
-        q_nums.append(qnum)
         
-        # Check specific Q lines
-        has_title = False
-        has_qtext = False
-        has_ans = False
-        has_story = False
-        story_started = False
+        required_fields = ["제목:", "이미지:", "질문:", "힌트:", "정답 체크:", "지문:"]
+        for fld in required_fields:
+            if fld not in q_block:
+                errors.append(f"Question Q{qnum} in {file_name} is missing key field '{fld.replace(':', '')}'.")
+                
+    # 3. Parse EVENT1 to EVENT4 definitions
+    ev_matches = re.findall(r'## EVENT(\d+)', content)
+    ev_nums = [int(x) for x in ev_matches]
+    if ev_nums != list(range(1, 5)):
+        errors.append(f"Storyboard {file_name} does not contain sequential events EVENT1 to EVENT4. Found: {ev_nums}")
         
-        for line in lines[1:]:
-            line_str = line.strip()
-            if line_str.startswith('- 제목:'):
-                has_title = True
-            elif line_str.startswith('- 질문:'):
-                has_qtext = True
-            elif line_str.startswith('- 정답 체크:'):
-                has_ans = True
-            elif line_str.startswith('- 지문:'):
-                has_story = True
-                story_started = True
-                
-        if not has_title:
-            errors.append(f"Q{qnum} in {file_name} is missing Title (- 제목:).")
-        if not has_qtext:
-            errors.append(f"Q{qnum} in {file_name} is missing Question (- 질문:).")
-        if not has_ans:
-            errors.append(f"Q{qnum} in {file_name} is missing Answer Check (- 정답 체크:).")
-        if not has_story:
-            errors.append(f"Q{qnum} in {file_name} is missing Story Script (- 지문:).")
-            
-        # Verify mapped asset image exists
-        img_name = img_map.get(str(qnum), f"q{qnum}.png")
-        if assets_dir:
-            img_path = assets_dir / img_name
-            fallback_img = assets_dir / f"q{qnum}.png"
-            if not img_path.exists() and not fallback_img.exists():
-                errors.append(f"Q{qnum} in {file_name}: Mapped asset image '{img_name}' not found at {assets_dir}")
-                
-    # Verify sequential questions
-    if len(q_nums) != 20:
-        errors.append(f"Storyboard {file_name} does not contain exactly 20 questions (found {len(q_nums)}).")
-    else:
-        for idx, qnum in enumerate(sorted(q_nums), 1):
-            if qnum != idx:
-                errors.append(f"Question order is broken in {file_name}: expected Q{idx}, got Q{qnum}")
-                
-    # 3. Check EVENT1 ~ EVENT4
-    event_parts = content.split('## EVENT')
-    event_nums = []
+    ev_blocks = content.split('## EVENT')
     next_stages = []
-    
-    for part in event_parts[1:]:
-        lines = part.strip().split('\n')
+    for ev_block in ev_blocks[1:]:
+        lines = ev_block.strip().split('\n')
         evnum_str = lines[0].strip()
         if not evnum_str.isdigit():
             continue
         evnum = int(evnum_str)
-        event_nums.append(evnum)
         
-        for line in lines[1:]:
-            line_str = line.strip()
-            if line_str.startswith('- 다음 스테이지:'):
-                next_stage = line_str.replace('- 다음 스테이지:', '').strip()
-                next_stages.append((evnum, next_stage))
+        required_fields = ["제목:", "이미지:", "버튼 텍스트:", "다음 스테이지:", "달성도:", "지문:"]
+        for fld in required_fields:
+            if fld not in ev_block:
+                errors.append(f"Event EVENT{evnum} in {file_name} is missing key field '{fld.replace(':', '')}'.")
                 
-    # Verify events count
-    if len(event_nums) != 4:
-        errors.append(f"Storyboard {file_name} does not contain exactly 4 events (found {len(event_nums)}).")
+        # Transition check
+        ns_match = re.search(r'- 다음 스테이지:\s*(.*)', ev_block)
+        if ns_match:
+            next_stages.append((evnum, ns_match.group(1).strip()))
         
     # Verify transitions (Dead Scene Check)
     for evnum, next_stage in next_stages:
-        # Valid next stages are: panel_q6, panel_q11, panel_q16, outro
         valid_stages = ["panel_q6", "panel_q11", "panel_q16", "outro"]
         if next_stage not in valid_stages:
             errors.append(f"Event {evnum} in {file_name} has invalid transition target '{next_stage}'.")
@@ -210,14 +272,33 @@ def validate_storyboard(file_path, metadata=None):
 def main():
     start_time = time.time()
     
-    parser = argparse.ArgumentParser(description="Storyboard Static Analyzer")
+    parser = argparse.ArgumentParser(description="Storyboard & Quiz Static Schema Analyzer")
     parser.add_argument('--json', action='store_true', help='Output results as a structured JSON string')
     args = parser.parse_args()
     
     storyboard_root = paths.ROOT_DIR / "storyboards" / "generated"
     if not storyboard_root.exists():
         storyboard_root = paths.STORYBOARDS_DIR
+    quiz_data_root = paths.ROOT_DIR / "quiz_data"
     total_errors = []
+    
+    # 1. Pre-validate YAML Files (Quiz Data Schema Audit)
+    print("=== Quiz Data Schema Verification ===")
+    yaml_count = 0
+    for g in SUPPORTED_GRADES:
+        yaml_grade_dir = quiz_data_root / g
+        if yaml_grade_dir.exists():
+            for f in os.listdir(yaml_grade_dir):
+                if f.endswith(".yaml"):
+                    unit_id = f.replace(".yaml", "")
+                    print(f"Auditing schema for: {f}...")
+                    yaml_errors = validate_quiz_data_schema(unit_id, yaml_grade_dir / f)
+                    if yaml_errors:
+                        total_errors.extend(yaml_errors)
+                        print(f"   [FAIL] {len(yaml_errors)} schema violations found.")
+                    else:
+                        print("   [PASS] Schema compliant.")
+                    yaml_count += 1
     
     # Load grade metadata dictionaries
     grade_metadata = {}
@@ -234,6 +315,7 @@ def main():
                     storyboard_files.append((g, grade_dir / f))
                     
     results = []
+    print("\n=== Generated Storyboard Verification ===")
     for g, sb_file in sorted(storyboard_files, key=lambda x: x[1].name):
         meta = grade_metadata.get(g)
         errors = validate_storyboard(sb_file, meta)
@@ -244,12 +326,14 @@ def main():
                 "status": "FAIL",
                 "errors": len(errors)
             })
+            print(f"Analyzing: {sb_file.name}... [FAIL] {len(errors)} anomalies.")
         else:
             results.append({
                 "file": sb_file.name,
                 "status": "PASS",
                 "errors": 0
             })
+            print(f"Analyzing: {sb_file.name}... [PASS]")
             
     duration = f"{time.time() - start_time:.2f}s"
     
@@ -264,16 +348,6 @@ def main():
         print(json.dumps(output_data, ensure_ascii=False, indent=2))
         sys.exit(1 if total_errors else 0)
         
-    # Human-readable output fallback
-    print("=== Story Static Analyzer ===")
-    print(f"Found {len(storyboard_files)} active storyboards for validation.")
-    for res in results:
-        print(f"Analyzing: {res['file']}...")
-        if res['errors'] > 0:
-            print(f"   [FAIL] {res['errors']} anomalies detected.")
-        else:
-            print("   [PASS] Statically verified.")
-            
     print("\n=== Validation Results ===")
     if total_errors:
         print(f"Total Validation Anomalies: {len(total_errors)}")
@@ -281,7 +355,7 @@ def main():
             print(f"  {idx}. {err}")
         sys.exit(1)
     else:
-        print(f"[+] SUCCESS: All active storyboards passed pipeline verification! (Duration: {duration})")
+        print(f"[+] SUCCESS: All {yaml_count} YAMLs and storyboards passed verification! (Duration: {duration})")
         sys.exit(0)
 
 if __name__ == "__main__":

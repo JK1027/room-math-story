@@ -1,0 +1,259 @@
+template: escape_room
+image_mapping:
+  intro: intro.png
+  q1: q1.png
+  q2: q2.png
+  q3: q3.png
+  q4: q4.png
+  q5: q5.png
+  q6: q6.png
+  q7: q7.png
+  q8: q8.png
+  q9: q9.png
+  q10: q10.png
+  q11: q11.png
+  q12: q12.png
+  q13: q13.png
+  q14: q14.png
+  q15: q15.png
+  q16: q16.png
+  q17: q17.png
+  q18: q18.png
+  q19: q19.png
+  q20: q20.png
+  event1: event1.png
+  event2: event2.png
+  event3: event3.png
+  event4: event4.png
+  outro: outro.png
+questions:
+  q1:
+    title: 시스템 함수 정의
+    qtext: <strong>Q1. [함수의 정의]</strong><br>두 변수 $x, y$ 에 대하여 $x$의 값이 정해짐에 따라 $y$의
+      값이 오직 하나씩 정해지는 관계가 있을 때, $y$를 $x$의 무엇이라 하는가?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '함수'
+    options:
+    - 함수
+    - 함수 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 두 글자 입력
+    error: 시스템 용어가 올바르지 않습니다. 두 글자 명사입니다.
+  q2:
+    title: 기본 궤적 연산
+    qtext: <strong>Q2. [함숫값 연산 1]</strong><br>함수 $f(x) = 2x - 3$ 에서 $x=4$ 일 때의 함숫값
+      $f(4)$ 를 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '5'
+    options:
+    - '10'
+    - '3'
+    - '7'
+    - '5'
+    placeholder: 숫자만 입력
+    error: "연산 결과가 올바르지 않습니다. $2 \times 4 - 3$을 다시 계산해보세요."
+  q3:
+    title: 속도 제어 밸브
+    qtext: "<strong>Q3. [함숫값 연산 2]</strong><br>함수 $f(x) = \frac{10}{x}$ 에서 $f(2)$\
+      \ 의 값을 구하시오."
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '5'
+    options:
+    - '10'
+    - '3'
+    - '7'
+    - '5'
+    placeholder: 숫자만 입력
+    error: 출력 전압이 맞지 않습니다. 10을 2로 나누어보세요.
+  q4:
+    title: 일차함수 판별
+    qtext: "<strong>Q4. [일차함수의 판별]</strong><br>다음 중 일차함수인 것은?<br>(1) $y = \frac{3}{x}$<br>(2)\
+      \ $y = x^2$<br>(3) $y = 3x - 1$<br>(4) $y = 5$"
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '3' || ans === '(3)'
+    options:
+    - $y
+    placeholder: '번호만 입력 (예: 3)'
+    error: 오류 패킷입니다. $y = ax + b$ (단, $a
+  q5:
+    title: 궤적 평행이동
+    qtext: <strong>Q5. [평행이동 식 세우기]</strong><br>일차함수 $y = 4x$ 의 그래프를 $y$축의 방향으로 -2만큼
+      평행이동한 그래프의 식을 구하시오. (공백 없이 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans.replace(/\s+/g, '') === 'Y=4X-2'
+    options:
+    - Y=4X-2
+    - Y=4X-2 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: y = 4x - 2'
+    error: 수식이 올바르지 않습니다. 평행이동한 만큼 상수항을 붙여 완성하세요.
+  q6:
+    title: 축 교점 분석
+    qtext: <strong>Q6. [x축과의 교점]</strong><br>일차함수의 그래프가 $x$축과 만나는 점의 $x$좌표를 무엇이라 하는가?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === 'X절편' || ans === '엑스절편'
+    options:
+    - X절편
+    - X절편 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: 세 글자 입력
+    error: 올바른 명칭이 아닙니다. x...?
+  q7:
+    title: 출발지 복원 ($y$절편)
+    qtext: <strong>Q7. [y절편 구하기]</strong><br>일차함수 $y = 2x + 6$ 의 $y$절편을 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '6'
+    placeholder: 숫자만 입력
+    error: 절편 연산에 실패했습니다. $x=0$일 때의 $y$값을 구하세요.
+  q8:
+    title: 제동 장벽 통과 ($x$절편)
+    qtext: <strong>Q8. [x절편 구하기 1]</strong><br>일차함수 $y = 2x + 6$ 의 $x$절편을 구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '-3'
+    placeholder: 음수는 마이너스 기호 포함 입력
+    error: 틀렸습니다. $y=0$일 때의 $x$값을 찾아보세요. ($2x+6=0$)
+  q9:
+    title: 회전 각도 정합
+    qtext: "<strong>Q9. [x절편 구하기 2]</strong><br>일차함수 $y = -\frac{1}{2}x + 4$ 의 $x$절편을\
+      \ 구하시오."
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '8'
+    placeholder: 숫자만 입력
+    error: "오류입니다. $-\frac{1}{2}x + 4 = 0$이 되는 $x$값을 구하세요."
+  q10:
+    title: 궤적 방정식 조립
+    qtext: <strong>Q10. [절편을 활용한 식 세우기]</strong><br>$y$절편이 5이고 $x$절편이 -5인 일차함수의 식을
+      구하시오. (공백 없이 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans.replace(/\s+/g, '') === 'Y=X+5'
+    options:
+    - Y=X+5
+    - Y=X+5 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: y = x + 5'
+    error: 방정식이 잘못 조립되었습니다. 기울기와 $y$절편을 바탕으로 식을 완성하세요.
+    extra_class: glitch-bg
+  q11:
+    title: 변화율 계산
+    qtext: <strong>Q11. [x의 증가량에 따른 y의 증가량]</strong><br>일차함수 $y = 3x - 2$ 에서 $x$의
+      값이 1만큼 증가할 때 $y$의 값은 얼마나 증가하는가?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '3'
+    placeholder: 숫자만 입력
+    error: 계측 오류입니다. 일차함수 $y=ax+b$에서 $x$의 계수가 의미하는 변화량을 찾아보세요.
+  q12:
+    title: 기울기 심볼
+    qtext: <strong>Q12. [기울기의 정의]</strong><br>일차함수 $y = ax + b$ 에서 기울기를 나타내는 문자는 무엇인가?
+      (알파벳 소문자)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === 'A' || ans === 'a'
+    placeholder: 알파벳 1글자 입력
+    error: 올바른 시스템 심볼이 아닙니다. $x$의 계수에 해당하는 변수 이름입니다.
+  q13:
+    title: 두 점 사이의 구배
+    qtext: <strong>Q13. [기울기 구하기]</strong><br>두 점 $(1, 3)$ 과 $(3, 7)$ 을 지나는 직선의 기울기를
+      구하시오.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '2'
+    placeholder: 숫자만 입력
+    error: 구배 연산에 실패했습니다. (y의 증가량) / (x의 증가량) 공식을 이용하세요.
+  q14:
+    title: 경로 함수 합성
+    qtext: <strong>Q14. [기울기와 y절편으로 식 세우기]</strong><br>기울기가 -2이고 $y$절편이 1인 일차함수의 식을
+      구하시오. (공백 없이 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans.replace(/\s+/g, '') === 'Y=-2X+1'
+    options:
+    - Y=-2X+1
+    - Y=-2X+1 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: y = -2x + 1'
+    error: 합성 식에 오류가 있습니다. 기울기와 $y$절편을 순서대로 식에 넣으세요.
+  q15:
+    title: 조향 방향 결정
+    qtext: <strong>Q15. [기울기의 부호와 그래프 방향]</strong><br>일차함수 $y = -3x + 4$ 의 그래프는 오른쪽
+      ( 위 / 아래 ) 로 향하는 직선이다.
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '아래'
+    placeholder: 위 또는 아래 입력
+    error: 틀렸습니다. 기울기의 부호가 음수(-)일 때 직선이 향하는 방향을 생각해보세요.
+    extra_class: glitch-bg
+  q16:
+    title: 소모 패턴 식화
+    qtext: <strong>Q16. [일차함수 활용 식 세우기]</strong><br>길이가 20cm인 양초에 불을 붙이면 1시간에 2cm씩
+      짧아진다. $x$시간 후의 양초의 길이를 $y$cm라 할 때, $y$를 $x$의 식으로 나타내시오. (공백 없이 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans.replace(/\s+/g, '') === 'Y=20-2X' || ans.replace(/\s+/g, '') ===
+      'Y=-2X+20'
+    options:
+    - Y=20-2X
+    - Y=20-2X 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: y = 20 - 2x'
+    error: 수식이 올바르지 않습니다. 처음 전지 길이에서 시간당 소모량을 차감하는 식을 세우세요.
+  q17:
+    title: 완전 방전 시간
+    qtext: <strong>Q17. [함수 활용 값 구하기 1]</strong><br>위 Q16의 양초가 완전히 다 타서 없어지는 것은 불을
+      붙인 지 몇 시간 후인가?
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '10' || ans === '10시간'
+    placeholder: '예: 10시간'
+    error: 틀렸습니다. 냉각 연료 봉의 잔여 길이인 $y$가 0이 되는 시간 $x$를 구하세요.
+  q18:
+    title: 음파 내비게이션 복구
+    qtext: <strong>Q18. [일차함수 활용 식 세우기 2]</strong><br>기온이 0도일 때 소리의 속력은 초속 331m이고
+      기온이 1도 오를 때마다 초속 0.6m씩 증가한다. 기온이 $x$도일 때 소리의 속력 $y$를 식으로 나타내시오. (공백 없이 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans.replace(/\s+/g, '') === 'Y=0.6X+331' || ans.replace(/\s+/g, '')
+      === 'Y=331+0.6X'
+    options:
+    - Y=0.6X+331
+    - Y=0.6X+331 아님
+    - 알 수 없음
+    - 해 없음
+    placeholder: '예: y = 0.6x + 331'
+    error: 물리 보정 식이 바르지 않습니다. 기온에 따른 가산율을 계산 식에 포함하세요.
+  q19:
+    title: 최종 기온 속력 정합
+    qtext: <strong>Q19. [함수 활용 값 구하기 2]</strong><br>기온이 15도일 때, 소리의 속력을 구하시오. (숫자만
+      입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '340' || ans === '340M/S' || ans === '초속340M'
+    placeholder: '예: 340'
+    error: "오차 기온 속력입니다. $331 + 0.6 \times 15$를 연산해 보세요."
+  q20:
+    title: 감속 냉각 시간
+    qtext: <strong>Q20. [일차함수 최종 활용]</strong><br>처음 물통에 50L의 물이 들어 있고 매분 3L씩 물을 빼낸다.
+      물이 20L가 남는 것은 몇 분 후인지 구하시오. (숫자만 입력)
+    hint: 💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.
+    ans_check: ans === '10' || ans === '10분'
+    placeholder: '예: 10'
+    error: 브레이크 동작 실패! 유량 잔액 식 $50 - 3x = 20$을 만족하는 변수 값을 다시 구하십시오.
+    extra_class: glitch-bg
+events:
+  event1:
+    title: 동력 기어 가동
+    btn_text: 계속 전진하기
+    next_stage: panel_q6
+    progress: 25
+  event2:
+    title: 비상 차단 장치 리셋
+    btn_text: 비상 전력 가동
+    next_stage: panel_q11
+    progress: 50
+  event3:
+    title: 핵심 복원 제단 활성화
+    btn_text: 제단 활성화
+    next_stage: panel_q16
+    progress: 75
+  event4:
+    title: 탈출 차원 포탈 개방
+    btn_text: 지상으로 탈출
+    next_stage: outro
+    progress: 100
