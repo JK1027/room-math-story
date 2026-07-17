@@ -129,7 +129,7 @@ class StorybookBuilder(Builder):
         }}
         
         .container {{
-            max-width: 1350px;
+            max-width: 1550px;
             width: 100%;
             margin: 0 auto;
             padding: 20px;
@@ -181,7 +181,7 @@ class StorybookBuilder(Builder):
         
         .storyboard-card {{
             display: none; /* JS에 의해 active 상태만 block */
-            grid-template-columns: 500px 1fr; /* 왼쪽 이미지 영역 대폭 확대 */
+            grid-template-columns: 650px 1fr; /* 왼쪽 이미지 영역 대폭 확대 */
             gap: 40px;
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
@@ -277,7 +277,7 @@ class StorybookBuilder(Builder):
         .img-preview {{
             width: 100%;
             height: auto;
-            max-height: 380px; /* 고화질 웅장한 이미지 높이 설정 */
+            max-height: 520px; /* 고화질 웅장한 이미지 높이 설정 */
             object-fit: contain;
             border: 1px solid var(--border-glass);
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
