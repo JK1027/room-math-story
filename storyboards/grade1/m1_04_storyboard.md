@@ -6,32 +6,32 @@
 ---
 
 # [이미지 매핑]
-- intro: img1_radar.png
+- intro: intro.png
 - 1: img1_radar.png
-- 2: img1_radar.png
-- 3: img1_radar.png
+- 2: img12_compass.png
+- 3: intro.png
 - 4: img11_deep_cave.png
 - 5: img2_pillars.png
 - 6: img3_atlantis.png
 - 7: img12_compass.png
 - 8: img3_atlantis.png
 - 9: img4_mirror.png
-- 10: img4_mirror.png
+- 10: event2.png
 - 11: img5_descend.png
 - 12: img13_graph_speed.png
 - 13: img6_oxygen.png
-- 14: img6_oxygen.png
+- 14: event3.png
 - 15: img14_oxygen_leak.png
 - 16: img7_gears.png
-- 17: img7_gears.png
+- 17: img9_laser.png
 - 18: img8_buoyancy.png
 - 19: img15_golden_door.png
-- 20: img9_laser.png
+- 20: event4.png
 - event1: event1.png
 - event2: event2.png
 - event3: event3.png
 - event4: event4.png
-- outro: img10_escape.png
+- outro: outro.png
 
 ---
 
