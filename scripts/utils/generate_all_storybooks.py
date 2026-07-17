@@ -4,10 +4,38 @@ import shutil
 import sys
 
 project_root = r"c:\Coding\Projects\School\room-math-story"
+if project_root not in sys.path:
+    sys.path.append(project_root)
 builders_dir = os.path.join(project_root, "scripts", "builders")
 storyboards_dir = os.path.join(project_root, "data", "storyboards")
 stories_dir = os.path.join(project_root, "stories")
 assets_root = os.path.join(project_root, "apps", "assets")
+
+THEME_METADATA = {
+    "m1_01": {"background": "장영실의 조선 공방 자격루실", "artifact": "자격루와 앙부일구의 제어 부품", "player": "조사관", "partner": None, "assistant": "자격(自擊)", "villain": "흑영(黑影)"},
+    "m1_02": {"background": "마법 아카데미의 비밀 도서실", "artifact": "고대 마법 그리무어의 핵심 룬", "player": "마법 조사관", "partner": None, "assistant": "그리무어-G", "villain": "섀도우-S"},
+    "m1_03": {"background": "스페이스 익스플로러 호 제어실", "artifact": "우주 정거장의 메인 제어 코드", "player": "관제 조사관", "partner": None, "assistant": "오라클-X", "villain": "보이드-V"},
+    "m1_04": {"background": "아틀란티스 심해 신전 묘실", "artifact": "고대 아틀란티스의 보석 명판", "player": "캡틴", "partner": "클리오", "assistant": "네레우스", "villain": "포세이돈-V"},
+    "m1_05": {"background": "레오나르도 다빈치의 피렌체 비밀 작업실", "artifact": "다빈치의 오르니톱터 설계 도면", "player": "탐사대장", "partner": "필리포", "assistant": "다빈치-메모리", "villain": "코덱스-L"},
+    "m1_06": {"background": "이집트 아문-라 태양 신전 거울 미궁", "artifact": "태양 신전의 에너지 거울 반사판", "player": "탐사 요원", "partner": None, "assistant": "아누비스-A", "villain": "세트-S"},
+    "m1_07": {"background": "그리스 파르테논 기하학 신전", "artifact": "플라톤 다면체 결정석", "player": "기하 조사관", "partner": None, "assistant": "헤르메스-H", "villain": "모래의 침입자 - 도굴꾼"},
+    "m1_08": {"background": "런던 통계국 비밀 기록 보관소", "artifact": "빅벤의 시한폭탄 해체 장부", "player": "보좌 요원", "partner": "왓슨", "assistant": "존 H. 왓슨 - 왓슨", "villain": "범죄의 지배자 - 모리아티"},
+    "m2_01": {"background": "연금술사의 비밀 공방", "artifact": "현자의 돌 정제 공식", "player": "연금술 조사관", "partner": None, "assistant": "알케미-H", "villain": "흑마법사-M"},
+    "m2_02": {"background": "은하 함대 조종 통제실", "artifact": "블랙홀 탈출 추진 기어 공식", "player": "조사관", "partner": None, "assistant": "기어즈-C", "villain": "바이러스-K"},
+    "m2_03": {"background": "황야의 무법자 추적 마차", "artifact": "보안관의 황금 배지 결계", "player": "조사관", "partner": None, "assistant": "실프-F", "villain": "다크-엘프"},
+    "m2_04": {"background": "스파이 암호 해독 기지", "artifact": "괴도 X의 보석함 좌표 락다운", "player": "조사관", "partner": None, "assistant": "가드-X", "villain": "괴도-X"},
+    "m2_05": {"background": "사이버 월스트리트 네오 서울 터미널", "artifact": "자율주행 택시 메인 제어 콘솔", "player": "조사관", "partner": None, "assistant": "루트-R", "villain": "시스템-에러"},
+    "m2_06": {"background": "그리스 아테나 신전", "artifact": "임호텝 사원 파피루스 설계도", "player": "조사관", "partner": None, "assistant": "신전의 수호 정령 - 임호텝", "villain": "사원의 약탈자 - 도굴꾼"},
+    "m2_07": {"background": "캡틴 키드의 보물선", "artifact": "거울 게이트 닮음 비례 비약", "player": "조사관", "partner": None, "assistant": "앨리스-Q", "villain": "붉은-여왕"},
+    "m2_08": {"background": "라스베이거스 카지노 빌딩", "artifact": "카지노 중앙 서버 확률 보안 락", "player": "조사관", "partner": None, "assistant": "잭팟-D", "villain": "리퍼-R"},
+    "m3_01": {"background": "고대 무리수 사원", "artifact": "사원 마스터 록 해제 프리즘", "player": "조사관", "partner": None, "assistant": "피타고라스-P", "villain": "이단자-X"},
+    "m3_02": {"background": "현자의 돌 연금술 아카데미", "artifact": "다항식 전개 연금 비약 배합", "player": "조사관", "partner": None, "assistant": "알케미-H", "villain": "흑마법사-M"},
+    "m3_03": {"background": "시간의 톱니바퀴 탑", "artifact": "시계탑 비상 피스톤 밸브", "player": "조사관", "partner": None, "assistant": "크로노스-C", "villain": "시간의-방랑자"},
+    "m3_04": {"background": "도시 상공 관제탑 레이더 기지", "artifact": "포물선 궤도 안전 정렬 고도", "player": "조사관", "partner": None, "assistant": "이글-E", "villain": "재머-J"},
+    "m3_05": {"background": "특이점 중력 우주선", "artifact": "하이퍼드라이브 추진 조향 축", "player": "조사관", "partner": None, "assistant": "아스트로-A", "villain": "블랙홀-B"},
+    "m3_06": {"background": "아더 기사단의 원탁 제어실", "artifact": "원형 실드 수선 정합 장치", "player": "조사관", "partner": None, "assistant": "랜슬롯-M", "villain": "모드레드-AI"},
+    "m3_07": {"background": "은하 탐사선 데이터 룸", "artifact": "반물질 폭풍 탈출 워프 게이트", "player": "조사관", "partner": None, "assistant": "갤럭시-G", "villain": "안티-매터"},
+}
 
 def get_unit_from_filename(filename):
     m2_match = re.search(r'update_app_m2_(\d+)\.py', filename)
@@ -117,9 +145,12 @@ def main():
         file_path = os.path.join(builders_dir, filename)
         print(f"Processing {filename} ({unit})...")
         
-        app_id, qs = parse_builder(file_path)
-        if not qs:
-            print(f"Warning: No questions parsed for {filename}")
+        try:
+            from scripts.utils.storyboard_parser import load_storyboard_qs
+            qs = load_storyboard_qs(unit)
+            app_id = unit
+        except Exception as e:
+            print(f"Error loading storyboard for {unit}: {e}")
             continue
             
         grade_str = "중1" if "m1_" in unit else ("중2" if "m2_" in unit else "중3")
@@ -141,29 +172,39 @@ def main():
             target_assets_dir = os.path.join(assets_root, assets_folder)
             
         # 조력자/빌런 감지
-        detected_chars = detect_characters(qs)
-        assistant = "조력자-AI"
-        villain = "보안-오토마타"
+        meta = THEME_METADATA.get(unit, {})
+        assistant = meta.get("assistant")
+        villain = meta.get("villain")
         
-        for char in detected_chars:
-            if any(k in char for k in ["코덱스", "포세이돈", "가디언", "가르", "세이렌", "바르토", "드라큘라", "루시퍼", "아누비스", "미노타우로스", "빌런", "메두사", "하데스", "켄타우로스", "키메라", "켈베로스"]):
-                villain = char
-            else:
-                assistant = char
-                
-        if len(detected_chars) >= 2:
-            assistant = detected_chars[0]
-            villain = detected_chars[1]
+        if not assistant or not villain:
+            detected_chars = detect_characters(qs)
+            fallback_assistant = "조력자-AI"
+            fallback_villain = "보안-오토마타"
+            
             for char in detected_chars:
                 if any(k in char for k in ["코덱스", "포세이돈", "가디언", "가르", "세이렌", "바르토", "드라큘라", "루시퍼", "아누비스", "미노타우로스", "빌런", "메두사", "하데스", "켄타우로스", "키메라", "켈베로스"]):
-                    villain = char
-                    for other in detected_chars:
-                        if other != villain:
-                            assistant = other
-                            break
-                    break
-        elif len(detected_chars) == 1:
-            assistant = detected_chars[0]
+                    fallback_villain = char
+                else:
+                    fallback_assistant = char
+                    
+            if len(detected_chars) >= 2:
+                fallback_assistant = detected_chars[0]
+                fallback_villain = detected_chars[1]
+                for char in detected_chars:
+                    if any(k in char for k in ["코덱스", "포세이돈", "가디언", "가르", "세이렌", "바르토", "드라큘라", "루시퍼", "아누비스", "미노타우로스", "빌런", "메두사", "하데스", "켄타우로스", "키메라", "켈베로스"]):
+                        fallback_villain = char
+                        for other in detected_chars:
+                            if other != fallback_villain:
+                                fallback_assistant = other
+                                break
+                        break
+            elif len(detected_chars) == 1:
+                fallback_assistant = detected_chars[0]
+                
+            if not assistant:
+                assistant = fallback_assistant
+            if not villain:
+                villain = fallback_villain
             
         theme_title = assets_folder.replace(f"{unit}_", "").replace("_", " ").title()
         
@@ -239,13 +280,29 @@ def main():
         # 2. 대본집(Scenario Script) 생성
         script_path = os.path.join(stories_dir, grade_str, f"{unit}_script.md")
         
+        # 테마 메타데이터 추출
+        meta = THEME_METADATA.get(unit, {
+            "background": "피렌체 지하 밀실",
+            "artifact": "다빈치의 오르니톱터 설계 도면",
+            "player": "탐사대장",
+            "partner": "필리포"
+        })
+        bg = meta["background"]
+        art = meta["artifact"]
+        ply = meta["player"]
+        ptn = meta["partner"]
+        
+        partner_desc = f"와 서기 {ptn}" if ptn else ""
+        partner_setup = f"\n- **{ptn} (서브 조력자):** {ply}을 보좌하는 기록 서기 겸 조수. 겁이 많으나 기록에 충실함. (인간)" if ptn else ""
+        
         sc_content = []
         sc_content.append(f"# {theme_title} 대본집 (Scenario Script) V4: {grade_str} {int(unit[3:5])}단원")
         sc_content.append(f"\n본 대본집은 {grade_str} {int(unit[3:5])}단원 {theme_title} 수학 방탈출 게임의 극적 내러티브를 위해 기획되었습니다.\n")
         sc_content.append("---")
         sc_content.append("\n## 🧭 [기본 캐릭터 설정]")
-        sc_content.append("- **탐사대장 (플레이어):** 유실된 지식의 방을 탐색하는 수석 조사관. 기하학/수학 연산 담당.")
-        sc_content.append("- **필리포 (서브 조력자):** 탐사대장을 보좌하는 기록 서기 겸 조수. 겁이 많으나 기록에 충실함. (인간)")
+        sc_content.append(f"- **{ply} (플레이어):** {bg}을 탐색하는 수석 조사관. 기하학/수학 연산 담당.")
+        if partner_setup:
+            sc_content.append(partner_setup)
         sc_content.append(f"- **{assistant} (메인 조력자):** 탐사대의 기록 복원과 락 해제를 돕는 고대 전송식 오토마타 인격.")
         sc_content.append(f"- **{villain} (메인 빌런):** 기지를 격리하고 자폭을 유도하는 폭주 오토마타 가디언.")
         sc_content.append("- **기아로 (중간 빌런):** 빌런의 핵심 집행 장치이자 강철 수호 장갑 오토마타.")
@@ -254,10 +311,11 @@ def main():
         sc_content.append("\n## 🎬 [오프닝 & 인트로]")
         sc_content.append("- **기지 상태:** `[배전반 온도: 42°C] [설계 기록 복원율: 15%] [기하학 락 강도: 95%]`")
         sc_content.append("- **스토리 전개:**")
-        sc_content.append(f"피렌체 지하 밀실에 안착한 탐사대장과 서기 필리포는 다빈치의 잃어버린 도면을 회수하기 위해 기동 장치를 돌렸습니다. 그 순간 기지의 모든 격벽 빗장이 내려앉으며 비상 봉인 모드가 기동됩니다. 구체 오토마타인 {villain}의 붉은 광선이 사방을 뒤덮습니다.")
-        sc_content.append(f"- **{villain}:** \"삐- 침입자를 소거한다. 40분 뒤 이 밀실의 모든 기어 축을 강제 역회전하여 자폭 매립하겠다! 살아남고 싶다면 기하학 규칙을 증명하라!\"")
-        sc_content.append(f"- **필리포:** \"으아악! 대장님! 또 기계 괴물이 나타나 장벽을 내렸어요! 서판에 적힌 공식을 어서 풀어서 오토마타를 안정시켜야 합니다!\"")
-        sc_content.append(f"- **{assistant}:** \"치지직... 탐사대장님, 제 음성이 전성관관으로 전송되길 바랍니다. {villain}이 마나 펄스 노이즈에 중독되어 폭주하고 있습니다. 20개의 기하학 수수께끼를 해독해 봉인을 풀어주세요!\"")
+        sc_content.append(f"{bg}에 안착한 {ply}{partner_desc}는 {art}을 회수하기 위해 기동 장치를 돌렸습니다. 그 순간 기지의 모든 격벽 빗장이 내려앉으며 비상 봉인 모드가 기동됩니다. 구체 오토마타인 {villain}의 붉은 광선이 사방을 뒤덮습니다.")
+        sc_content.append(f"- **{villain}:** \"삐- 침입자를 소거한다. 40분 뒤 이 기지의 모든 제어 장치를 강제 역회전하여 자폭 격리하겠다! 살아남고 싶다면 수학의 규칙을 증명하라!\"")
+        if ptn:
+            sc_content.append(f"- **{ptn}:** \"으아악! {ply}님! 또 기계 괴물이 나타나 장벽을 내렸어요! 서판에 적힌 문제를 어서 풀어서 오토마타를 안정시켜야 합니다!\"")
+        sc_content.append(f"- **{assistant}:** \"치지직... {ply}님, 제 음성이 전성관관으로 전송되길 바랍니다. {villain}이 마나 펄스 노이즈에 중독되어 폭주하고 있습니다. 20개의 수수께끼를 해독해 봉인을 풀어주세요!\"")
         sc_content.append(f"- **[일러스트 지시 - 0. intro]:** 어두운 석조 기기실 내부에 안착된 복잡한 황동 동력 기어반과 적색 경보 렌즈가 하강하는 인트로 전경.")
         
         sc_content.append("\n---")
@@ -273,11 +331,12 @@ def main():
             
         sc_content.append("\n---")
         sc_content.append("\n## 🎬 [Event Scene 1: 동력 기어 가동]")
-        sc_content.append(f"120도의 동조 신호가 톱니 빗장 기어들을 맞춰 누르자, 회전을 정지하고 벽면 락이 열립니다. 황동 실린더 위로 눈부신 노란색 기하 홀로그램이 피어오릅니다.")
-        sc_content.append(f"- **{assistant}:** \"정교한 기하 균형입니다! 마스터 다빈치의 비행선 도판 1차가 복원되었습니다. 점과 선이 완벽히 면을 이룬 조화의 아름다움입니다.\"")
-        sc_content.append(f"- **필리포:** \"대장님, 공중에 금빛 홀로그램이 돌고 있어요! 어서 다음 나선 계단 아래의 통로로 내려가시죠!\"")
-        sc_content.append(f"- **{villain}:** \"감히 마스터의 기하 코덱스를 훔쳐보려 하는가! 다음 광선 방막이 너희를 용융하리라!\"")
-        sc_content.append(f"- **[일러스트 지시 - Event 1]:** 둥근 구리 테이블 위로 금빛 마나 오르니톱터 도면이 서서히 회전하며 자전하는 장면.")
+        sc_content.append(f"120도의 동조 신호가 톱니 빗장 기어들을 맞춰 누르자, 회전을 정지하고 벽면 락이 열립니다. 황동 실린더 위로 눈부신 노란색 홀로그램이 피어오릅니다.")
+        sc_content.append(f"- **{assistant}:** \"정교한 수학적 균형입니다! {art} 1차가 복원되었습니다. 완벽한 조화의 아름다움입니다.\"")
+        if ptn:
+            sc_content.append(f"- **{ptn}:** \"{ply}님, 공중에 금빛 홀로그램이 돌고 있어요! 어서 다음 통로로 이동하시죠!\"")
+        sc_content.append(f"- **{villain}:** \"감히 마스터의 장치를 열어보는가! 다음 방화벽이 너희를 용융하리라!\"")
+        sc_content.append(f"- **[일러스트 지시 - Event 1]:** 둥근 테이블 위로 마나 홀로그램이 서서히 회전하며 자전하는 장면.")
         
         sc_content.append("\n---")
         sc_content.append("\n## 🧭 제 2구역: 교차하는 빛줄기")
@@ -291,10 +350,11 @@ def main():
             
         sc_content.append("\n---")
         sc_content.append("\n## 🎬 [Event Scene 2: 비상 차단 장치 리셋]")
-        sc_content.append(f"평행 조건과 엇각이 맞추어 주입되자, 광선 빔들이 일렬 동축 정렬되어 차단 빗장을 고정합니다. 분출되던 가열 증기가 잦아듭니다.")
+        sc_content.append(f"조건과 수식이 맞추어 주입되자, 광선 빔들이 일렬 동축 정렬되어 차단 빗장을 고정합니다. 분출되던 가열 증기가 잦아듭니다.")
         sc_content.append(f"- **{assistant}:** \"자폭 주파수 오버라이드에 성공해 비상 리셋을 완료했습니다. 기지 온도 상승이 멈췄습니다!\"")
         sc_content.append(f"- **기아로:** \"삐- 전력 강제 셧다운. 자폭 시퀀스 유예됨. 빗장을 격리하겠다.\"")
-        sc_content.append(f"- **필리포:** \"살았습니다! 청동 장갑 오토마타인 기아로의 안광이 꺼지며 문이 전개되었어요!\"")
+        if ptn:
+            sc_content.append(f"- **{ptn}:** \"살았습니다! 청동 장갑 오토마타인 기아로의 안광이 꺼지며 문이 전개되었어요!\"")
         sc_content.append(f"- **[일러스트 지시 - Event 2]:** 푸르스름한 배리어 실드가 터빈을 포근히 둘러싸 안전하게 식혀나가는 긴장 해소 뷰.")
         
         sc_content.append("\n---")
@@ -309,10 +369,11 @@ def main():
             
         sc_content.append("\n---")
         sc_content.append("\n## 🎬 [Event Scene 3: 핵심 복원 제단 활성화]")
-        sc_content.append(f"삼각형의 최종 작도가 완료되자 중앙 코어 유리 돔의 붉은 노이즈가 부서지며 맑고 깨끗한 공기가 실내에 뿜어져 나옵니다.")
+        sc_content.append(f"수학적 연산이 완료되자 중앙 코어 유리 돔의 붉은 노이즈가 부서지며 맑고 깨끗한 공기가 실내에 뿜어져 나옵니다.")
         sc_content.append(f"- **{assistant}:** \"시스템 완전 복구율 100%! 이제 빌런 {villain}의 메인 락 제단을 강제로 분리하고 걸작 복원 제단을 기동합니다!\"")
-        sc_content.append(f"- **필리포:** \"하아... 공기가 돌아와서 살 것 같습니다! 정면의 기단 석벽들이 무너지며 오색 찬란한 보석 제단이 솟아올라요!\"")
-        sc_content.append(f"- **{villain}:** \"최종 마스터 합동 결계를 전개한다! 이 아름다운 복원도는 침입자의 몫이 아니다!\"")
+        if ptn:
+            sc_content.append(f"- **{ptn}:** \"하아... 공기가 돌아와서 살 것 같습니다! 정면의 기단 석벽들이 무너지며 오색 찬란한 보석 제단이 솟아올라요!\"")
+        sc_content.append(f"- **{villain}:** \"최종 마스터 합동 결계를 전개한다! 이 아름다운 유산은 너희의 몫이 아니다!\"")
         sc_content.append(f"- **[일러스트 지시 - Event 3]:** 거대한 황동 기어들이 석조 격벽 틈새로 맞물려 열리고 보라색 마나 광원을 발하는 복합 제단이 솟아오르는 풍경.")
         
         sc_content.append("\n---")
@@ -327,20 +388,22 @@ def main():
             
         sc_content.append("\n---")
         sc_content.append("\n## 🎬 [Event Scene 4: 탈출 차원 포탈 개방]")
-        sc_content.append(f"직각삼각형의 마지막 합동이 해제되며, 기지를 감싸던 적색 장벽선들이 찬란한 에메랄드색 오색 입자로 바스러지며 탈출용 차원 포탈로 화합니다.")
-        sc_content.append(f"- **{assistant}:** \"탐사 완료! 가방에 복원된 마스터의 오르니톱터 도면을 챙겨 포탈로 도약하십시오!\"")
-        sc_content.append(f"- **필리포:** \"포탈이 황금빛으로 휘몰아쳐요! 빌런이었던 {villain}도 완전히 정화되어 배웅해주네요. 어서 뛰어듭시다!\"")
-        sc_content.append(f"- **{villain}:** \"기하 계승 완료. 무결한 지식을 탐사대장에게 위임한다. 게이트웨이를 연다.\"")
-        sc_content.append(f"- **[일러스트 지시 - Event 4]:** 찬란한 금빛 녹색 차원 링 포탈 정면에서, 머리를 깊이 숙여 배웅하는 백색 렌즈 구체 로봇 코덱스-L과 환하게 미소 짓는 조력자의 모습.")
+        sc_content.append(f"마지막 정답이 해제되며, 기지를 감싸던 적색 장벽선들이 찬란한 오색 입자로 바스러지며 탈출용 차원 포탈로 화합니다.")
+        sc_content.append(f"- **{assistant}:** \"탐사 완료! 가방에 복원된 {art}을 챙겨 포탈로 도약하십시오!\"")
+        if ptn:
+            sc_content.append(f"- **{ptn}:** \"포탈이 황금빛으로 휘몰아쳐요! 빌런이었던 {villain}도 완전히 정화되어 배웅해주네요. 어서 뛰어듭시다!\"")
+        sc_content.append(f"- **{villain}:** \"수학 계승 완료. 무결한 지식을 {ply}에게 위임한다. 게이트웨이를 연다.\"")
+        sc_content.append(f"- **[일러스트 지시 - Event 4]:** 찬란한 금빛 녹색 차원 링 포탈 정면에서, 머리를 깊이 숙여 배웅하는 백색 렌즈 구체 로봇과 환하게 미소 짓는 조력자의 모습.")
         
         sc_content.append("\n---")
         sc_content.append("\n## 🎬 [엔딩 & 아웃트로]")
         sc_content.append("- **기지 상태:** `[작업실 탈출 성공] [걸작 설계도 100% 획득] [생환 완료]`")
         sc_content.append("- **스토리 전개:**")
-        sc_content.append("은백색 광채가 선체 조종석과 탐사단을 휘감아 지상으로 쏘아 올립니다. 눈이 멀 만큼 찬란하고 평화로운 피렌체 광장의 맑은 하늘 위로 탐사단이 마침내 무사히 부상해 생환을 만끽합니다.")
-        sc_content.append(f"- **필리포:** \"살았다! 진짜 피렌체의 푸른 하늘이에요! 캡틴, 도면이 가방에 안전하게 보존되어 있습니다! 우리가 천재의 기록을 지켰어요!\"")
-        sc_content.append(f"- **{assistant}:** \"(음성 전성관관관관으로) 기하의 이치로 천재 다빈치의 잃어버린 유산을 수호하셨습니다. 당신은 진정 최고의 기하 탐사 대장이십니다! 미션 완료!\"")
-        sc_content.append(f"- **[일러스트 지시 - outro]:** 맑고 쾌청한 오후 햇살이 대리석 피렌체 아치 아치를 비추며 복원된 유산 도면을 안고 귀환하는 탐사대장의 실루엣 뷰.")
+        sc_content.append(f"은백색 광채가 선체 조종석과 탐사단을 휘감아 지상으로 쏘아 올립니다. 눈이 멀 만큼 찬란하고 평화로운 하늘 위로 탐사단이 마침내 무사히 부상해 생환을 만끽합니다.")
+        if ptn:
+            sc_content.append(f"- **{ptn}:** \"살았다! {ply}님, 유산이 안전하게 보존되어 있습니다! 우리가 천재의 기록을 지켰어요!\"")
+        sc_content.append(f"- **{assistant}:** \"수학의 이치로 잃어버린 유산을 수호하셨습니다. 당신은 최고의 탐사 대원(조사관)이십니다! 미션 완료!\"")
+        sc_content.append(f"- **[일러스트 지시 - outro]:** 맑고 쾌청한 오후 햇살이 비추며 복원된 유산 도면을 안고 귀환하는 {ply}의 실루엣 뷰.")
         
         with open(script_path, 'w', encoding='utf-8') as f:
             f.write('\n'.join(sc_content))

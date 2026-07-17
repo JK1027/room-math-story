@@ -5,6 +5,34 @@ import sys
 import argparse
 from pathlib import Path
 
+CURRENT_UNIT = "m1_05"
+
+THEME_METADATA = {
+    "m1_01": {"background": "장영실의 조선 공방 자격루실", "artifact": "자격루와 앙부일구의 제어 부품", "player": "조사관", "partner": None, "assistant": "자격(自擊)", "villain": "흑영(黑影)"},
+    "m1_02": {"background": "마법 아카데미의 비밀 도서실", "artifact": "고대 마법 그리무어의 핵심 룬", "player": "마법 조사관", "partner": None, "assistant": "그리무어-G", "villain": "섀도우-S"},
+    "m1_03": {"background": "스페이스 익스플로러 호 제어실", "artifact": "우주 정거장의 메인 제어 코드", "player": "관제 조사관", "partner": None, "assistant": "오라클-X", "villain": "보이드-V"},
+    "m1_04": {"background": "아틀란티스 심해 신전 묘실", "artifact": "고대 아틀란티스의 보석 명판", "player": "캡틴", "partner": "클리오", "assistant": "네레우스", "villain": "포세이돈-V"},
+    "m1_05": {"background": "레오나르도 다빈치의 피렌체 비밀 작업실", "artifact": "다빈치의 오르니톱터 설계 도면", "player": "탐사대장", "partner": "필리포", "assistant": "다빈치-메모리", "villain": "코덱스-L"},
+    "m1_06": {"background": "이집트 아문-라 태양 신전 거울 미궁", "artifact": "태양 신전의 에너지 거울 반사판", "player": "탐사 요원", "partner": None, "assistant": "아누비스-A", "villain": "세트-S"},
+    "m1_07": {"background": "그리스 파르테논 기하학 신전", "artifact": "플라톤 다면체 결정석", "player": "기하 조사관", "partner": None, "assistant": "헤르메스-H", "villain": "모래의 침입자 - 도굴꾼"},
+    "m1_08": {"background": "런던 통계국 비밀 기록 보관소", "artifact": "빅벤의 시한폭탄 해체 장부", "player": "보좌 요원", "partner": "왓슨", "assistant": "존 H. 왓슨 - 왓슨", "villain": "범죄의 지배자 - 모리아티"},
+    "m2_01": {"background": "연금술사의 비밀 공방", "artifact": "현자의 돌 정제 공식", "player": "연금술 조사관", "partner": None, "assistant": "알케미-H", "villain": "흑마법사-M"},
+    "m2_02": {"background": "은하 함대 조종 통제실", "artifact": "블랙홀 탈출 추진 기어 공식", "player": "조사관", "partner": None, "assistant": "기어즈-C", "villain": "바이러스-K"},
+    "m2_03": {"background": "황야의 무법자 추적 마차", "artifact": "보안관의 황금 배지 결계", "player": "조사관", "partner": None, "assistant": "실프-F", "villain": "다크-엘프"},
+    "m2_04": {"background": "스파이 암호 해독 기지", "artifact": "괴도 X의 보석함 좌표 락다운", "player": "조사관", "partner": None, "assistant": "가드-X", "villain": "괴도-X"},
+    "m2_05": {"background": "사이버 월스트리트 네오 서울 터미널", "artifact": "자율주행 택시 메인 제어 콘솔", "player": "조사관", "partner": None, "assistant": "루트-R", "villain": "시스템-에러"},
+    "m2_06": {"background": "그리스 아테나 신전", "artifact": "임호텝 사원 파피루스 설계도", "player": "조사관", "partner": None, "assistant": "신전의 수호 정령 - 임호텝", "villain": "사원의 약탈자 - 도굴꾼"},
+    "m2_07": {"background": "캡틴 키드의 보물선", "artifact": "거울 게이트 닮음 비례 비약", "player": "조사관", "partner": None, "assistant": "앨리스-Q", "villain": "붉은-여왕"},
+    "m2_08": {"background": "라스베이거스 카지노 빌딩", "artifact": "카지노 중앙 서버 확률 보안 락", "player": "조사관", "partner": None, "assistant": "잭팟-D", "villain": "리퍼-R"},
+    "m3_01": {"background": "고대 무리수 사원", "artifact": "사원 마스터 록 해제 프리즘", "player": "조사관", "partner": None, "assistant": "피타고라스-P", "villain": "이단자-X"},
+    "m3_02": {"background": "현자의 돌 연금술 아카데미", "artifact": "다항식 전개 연금 비약 배합", "player": "조사관", "partner": None, "assistant": "알케미-H", "villain": "흑마법사-M"},
+    "m3_03": {"background": "시간의 톱니바퀴 탑", "artifact": "시계탑 비상 피스톤 밸브", "player": "조사관", "partner": None, "assistant": "크로노스-C", "villain": "시간의-방랑자"},
+    "m3_04": {"background": "도시 상공 관제탑 레이더 기지", "artifact": "포물선 궤도 안전 정렬 고도", "player": "조사관", "partner": None, "assistant": "이글-E", "villain": "재머-J"},
+    "m3_05": {"background": "특이점 중력 우주선", "artifact": "하이퍼드라이브 추진 조향 축", "player": "조사관", "partner": None, "assistant": "아스트로-A", "villain": "블랙홀-B"},
+    "m3_06": {"background": "아더 기사단의 원탁 제어실", "artifact": "원형 실드 수선 정합 장치", "player": "조사관", "partner": None, "assistant": "랜슬롯-M", "villain": "모드레드-AI"},
+    "m3_07": {"background": "은하 탐사선 데이터 룸", "artifact": "반물질 폭풍 탈출 워프 게이트", "player": "조사관", "partner": None, "assistant": "갤럭시-G", "villain": "안티-매터"},
+}
+
 # ----------------- 단원별 설정 사전 -----------------
 UNIT_CONFIGS = {
     "m1_04": {
@@ -153,12 +181,16 @@ def load_storyboard(file_path):
 # ----------------- HTML 스타일 가공 -----------------
 
 def apply_character_styles(text):
+    global CURRENT_UNIT
+    meta = THEME_METADATA.get(CURRENT_UNIT, {"player": "탐사대장"})
+    player_name = meta.get("player", "탐사대장")
+    
     # 캐릭터 스팬 정의
     nereus = "<span style='color: #60a5fa; text-shadow: 0 0 3px #3b82f6; font-weight: bold;'>[네레우스]</span>"
     clio = "<span style='color: #c084fc; text-shadow: 0 0 3px #a855f7; font-weight: bold;'>[클리오]</span>"
     poseidon = "<span style='color: #f43f5e; text-shadow: 0 0 3px #f43f5e; font-weight: bold;'>[포세이돈-V]</span>"
     trident = "<span style='color: #fb923c; text-shadow: 0 0 3px #f97316; font-weight: bold;'>[트라이던트]</span>"
-    captain = "<span style='color: #34d399; text-shadow: 0 0 3px #059669; font-weight: bold;'>[탐사대장]</span>"
+    captain = f"<span style='color: #34d399; text-shadow: 0 0 3px #059669; font-weight: bold;'>[{player_name}]</span>"
     
     # 5단원 캐릭터
     codex = "<span style='color: #ef4444; text-shadow: 0 0 3px #ef4444; font-weight: bold;'>[코덱스-L]</span>"
@@ -170,7 +202,7 @@ def apply_character_styles(text):
     text = text.replace("{clio}", clio).replace("[클리오]", clio)
     text = text.replace("{poseidon}", poseidon).replace("[포세이돈-V]", poseidon)
     text = text.replace("{trident}", trident).replace("[트라이던트]", trident)
-    text = text.replace("{dyn_captain}", captain).replace("캡틴", captain).replace("[캡틴]", captain).replace("탐사대장", captain).replace("[탐사대장]", captain)
+    text = text.replace("{dyn_captain}", captain).replace("캡틴", captain).replace("[캡틴]", captain).replace("탐사대장", captain).replace("[탐사대장]", captain).replace("조사관", captain).replace("[조사관]", captain)
     text = text.replace("{codex}", codex).replace("[코덱스-L]", codex)
     text = text.replace("{davinci}", davinci).replace("[다빈치-메모리]", davinci)
     text = text.replace("{filippo}", filippo).replace("[필리포]", filippo)
@@ -190,7 +222,7 @@ def apply_character_styles(text):
     
     # 일반 텍스트 내 캐릭터명 치환
     text = text.replace("네레우스:", nereus).replace("클리오:", clio).replace("포세이돈-V:", poseidon).replace("트라이던트:", trident)
-    text = text.replace("코덱스-L:", codex).replace("다빈치-메모리:", davinci).replace("필리포:", filippo).replace("기아로:", giarro).replace("탐사대장:", captain)
+    text = text.replace("코덱스-L:", codex).replace("다빈치-메모리:", davinci).replace("필리포:", filippo).replace("기아로:", giarro).replace("탐사대장:", captain).replace("조사관:", captain)
     
     return text
 
@@ -273,11 +305,13 @@ def find_browser():
 # ----------------- 메인 로직 -----------------
 
 def main():
+    global CURRENT_UNIT
     parser = argparse.ArgumentParser(description="Generate PDF storyboard book.")
     parser.add_argument('--unit', type=str, default='m1_04', help='Unit ID (e.g. m1_04, m1_05)')
     args = parser.parse_args()
     
     unit = args.unit
+    CURRENT_UNIT = unit
     grade_dir = "중1" if "m1_" in unit else ("중2" if "m2_" in unit else "중3")
     
     if unit in UNIT_CONFIGS:
