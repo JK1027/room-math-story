@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import yaml
+import argparse
 from pathlib import Path
 
 # --- Central Configs Loading ---
@@ -18,6 +19,7 @@ quiz_data_root = str(PROJECT_ROOT / "quiz_data")
 
 # 허용되는 YAML 스키마 필드
 ALLOWED_YAML_FIELDS = {"template", "image_mapping", "questions", "events"}
+
 
 def parse_script_md(filepath):
     """
@@ -40,8 +42,6 @@ def parse_script_md(filepath):
     for m in q_matches:
         qnum = int(m.group(1))
         body = m.group(2).strip()
-        
-        # - 스토리: ... 라인 찾아서 추출 (콜론 위치 예외 방어)
         story_match = re.search(r'-\s*(?:\*\*스토리\*\*:\s*|\*\*스토리:\*\*\s*|스토리\s*:\s*)([\s\S]*)', body)
         if story_match:
             qs_stories[qnum] = story_match.group(1).strip()
@@ -58,6 +58,7 @@ def parse_script_md(filepath):
 
     return intro_story, outro_story, qs_stories, events_stories
 
+
 def get_unit_from_builder(filename):
     m2_match = re.search(r'update_app_m2_(\d+)\.py', filename)
     if m2_match:
@@ -70,137 +71,180 @@ def get_unit_from_builder(filename):
         return f"m1_{m1_match.group(1).zfill(2)}"
     return None
 
-def main():
+
+def generate_storyboard_for_unit(unit_id: str) -> bool:
+    """
+    [Programmatic API] 특정 단원의 스토리보드 마크다운을 합성하여
+    storyboards/generated/{grade}/ 에 기록합니다.
+
+    Args:
+        unit_id: 단원 코드 (예: "m1_02")
+    Returns:
+        True 생성 성공, False 실패
+    """
+    grade_str = "grade1" if "m1_" in unit_id else ("grade2" if "m2_" in unit_id else "grade3")
+
+    yaml_path = Path(quiz_data_root) / grade_str / f"{unit_id}.yaml"
+    script_path = Path(stories_dir) / grade_str / f"{unit_id}_script.md"
+
+    if not yaml_path.exists() or not script_path.exists():
+        print(f"  [Error] Canonical sources missing for {unit_id}: Script exists={script_path.exists()}, YAML exists={yaml_path.exists()}", file=sys.stderr)
+        return False
+
+    generated_dir = paths.ROOT_DIR / "storyboards" / "generated"
+    target_sb_dir = generated_dir / grade_str
+    target_sb_dir.mkdir(parents=True, exist_ok=True)
+    target_sb_path = target_sb_dir / f"{unit_id}_storyboard.md"
+
+    # 이미지 에셋 매핑용 폴더명 탐색
+    assets_folder = None
+    if os.path.exists(apps_assets_root):
+        for dname in os.listdir(apps_assets_root):
+            if dname.startswith(unit_id) and os.path.isdir(os.path.join(apps_assets_root, dname)):
+                assets_folder = dname
+                break
+    if not assets_folder:
+        assets_folder = unit_id
+
+    with open(yaml_path, 'r', encoding='utf-8') as y_file:
+        gdata = yaml.safe_load(y_file)
+
+    # 스키마 필드 교차 체크
+    for k in gdata.keys():
+        if k not in ALLOWED_YAML_FIELDS:
+            print(f"  [Warning] YAML key '{k}' ignored in schema boundary.")
+
+    intro_story, outro_story, qs_stories, events_stories = parse_script_md(script_path)
+
+    sb_content = []
+    theme_title = assets_folder.replace(f"{unit_id}_", "").replace("_", " ").title()
+    sb_content.append(f"# {grade_str} {int(unit_id[3:5])}단원 대본집: {theme_title}")
+    sb_content.append("\n이 파일은 수학 방탈출 게임의 스토리 대사, 퀴즈 문항, 이벤트 씬 정보를 관리하는 원천 데이터 파일입니다.\n")
+    sb_content.append("---")
+
+    # 1. [이미지 매핑]
+    sb_content.append("\n# [이미지 매핑]")
+    img_map = gdata.get("image_mapping", {})
+    sb_content.append(f"- intro: {img_map.get('intro', 'intro.png')}")
+    for i in range(1, 21):
+        sb_content.append(f"- {i}: {img_map.get(f'q{i}', f'q{i}.png')}")
+    for i in range(1, 5):
+        sb_content.append(f"- event{i}: {img_map.get(f'event{i}', f'event{i}.png')}")
+    sb_content.append(f"- outro: {img_map.get('outro', 'outro.png')}")
+    sb_content.append("\n---")
+
+    # 2. [문항 정의]
+    sb_content.append("\n# [문항 정의]")
+    q_meta = gdata.get("questions", {})
+    for i in range(1, 21):
+        qkey = f"q{i}"
+        meta = q_meta.get(qkey, {})
+        title = meta.get("title", f"수수께끼 {i}")
+        qtext = meta.get("qtext", "")
+        hint = meta.get("hint", "")
+        ans_check = meta.get("ans_check", "")
+        placeholder = meta.get("placeholder", "숫자 입력")
+        error = meta.get("error", "틀렸습니다.")
+        options = meta.get("options", [])
+        extra_class = meta.get("extra_class", "")
+
+        story_body = qs_stories.get(i, f"[{unit_id.upper()}]: 지문 로드 실패")
+
+        sb_content.append(f"\n## Q{i}")
+        sb_content.append(f"- 제목: {title}")
+        sb_content.append(f"- 이미지: ![{title}](../../apps/assets/{assets_folder}/{img_map.get(qkey, f'q{i}.png')})")
+        sb_content.append(f"- 질문: {qtext}")
+        sb_content.append(f"- 힌트: {hint}")
+        sb_content.append(f"- 정답 체크: {ans_check}")
+        if options:
+            sb_content.append(f"- 선택지: {', '.join(options)}")
+        sb_content.append(f"- 플레이스홀더: {placeholder}")
+        sb_content.append(f"- 에러 메시지: {error}")
+        if extra_class:
+            sb_content.append(f"- extra_class: {extra_class}")
+        sb_content.append("- 지문:")
+        sb_content.append(story_body)
+
+    # 3. [이벤트 정의]
+    sb_content.append("\n---")
+    sb_content.append("\n# [이벤트 정의]")
+    ev_meta = gdata.get("events", {})
+    for i in range(1, 5):
+        evkey = f"event{i}"
+        meta = ev_meta.get(evkey, {})
+        title = meta.get("title", "돌발 이벤트")
+        btn = meta.get("btn_text", "계속하기")
+        nxt = meta.get("next_stage", "outro")
+        prog = meta.get("progress", 25)
+
+        story_body = events_stories.get(i, f"[조력자]: 이벤트 지문 로드 실패")
+
+        sb_content.append(f"\n## EVENT{i}")
+        sb_content.append(f"- 제목: {title}")
+        sb_content.append(f"- 이미지: ![이벤트{i}](../../apps/assets/{assets_folder}/{img_map.get(evkey, f'event{i}.png')})")
+        sb_content.append(f"- 버튼 텍스트: {btn}")
+        sb_content.append(f"- 다음 스테이지: {nxt}")
+        sb_content.append(f"- 달성도: {prog}")
+        sb_content.append("- 지문:")
+        sb_content.append(story_body)
+
+    with open(target_sb_path, 'w', encoding='utf-8') as sf:
+        sf.write('\n'.join(sb_content))
+
+    print(f"  [OK] Generated: {target_sb_path.name}")
+    return True
+
+
+def generate_all() -> bool:
+    """
+    [Programmatic API] 전체 단원의 스토리보드를 일괄 합성합니다.
+    Returns:
+        True 전체 성공, False 하나 이상 실패
+    """
     builders_dir = str(paths.ROOT_DIR / "scripts" / "builders")
     generated_dir = paths.ROOT_DIR / "storyboards" / "generated"
     generated_dir.mkdir(parents=True, exist_ok=True)
 
     files = sorted(os.listdir(builders_dir))
-    
+    success = True
+
     for filename in files:
         if not filename.startswith("update_app_") or not filename.endswith(".py"):
             continue
-            
         if "update_mobile_css" in filename:
             continue
-            
+
         unit = get_unit_from_builder(filename)
         if not unit:
             continue
-            
-        grade_str = "grade1" if "m1_" in unit else ("grade2" if "m2_" in unit else "grade3")
-        
-        yaml_path = Path(quiz_data_root) / grade_str / f"{unit}.yaml"
-        script_path = Path(stories_dir) / grade_str / f"{unit}_script.md"
-        
-        target_sb_dir = generated_dir / grade_str
-        target_sb_dir.mkdir(parents=True, exist_ok=True)
-        target_sb_path = target_sb_dir / f"{unit}_storyboard.md"
 
         print(f"Generating storyboard for {unit}...")
+        result = generate_storyboard_for_unit(unit)
+        if not result:
+            success = False
 
-        # 이미지 에셋 매핑용 폴더명
-        assets_folder = None
-        for dname in os.listdir(apps_assets_root):
-            if dname.startswith(unit) and os.path.isdir(os.path.join(apps_assets_root, dname)):
-                assets_folder = dname
-                break
-        if not assets_folder:
-            assets_folder = unit
+    if success:
+        print("[+] Storyboard generation completed successfully.")
+    else:
+        print("[-] Some units failed to generate.", file=sys.stderr)
 
-        if not yaml_path.exists() or not script_path.exists():
-            print(f"  [Error] Canonical sources missing for {unit}: Script exists={script_path.exists()}, YAML exists={yaml_path.exists()}", file=sys.stderr)
-            sys.exit(1)
-            
-        # ====================================================
-        # [Canonical Authoring Sources] 로딩 및 빌드
-        # ====================================================
-        with open(yaml_path, 'r', encoding='utf-8') as y_file:
-            gdata = yaml.safe_load(y_file)
-            
-        # 스키마 필드 교차 체크
-        for k in gdata.keys():
-            if k not in ALLOWED_YAML_FIELDS:
-                print(f"  [Warning] YAML key '{k}' ignored in schema boundary.")
-        
-        intro_story, outro_story, qs_stories, events_stories = parse_script_md(script_path)
-        
-        sb_content = []
-        theme_title = assets_folder.replace(f"{unit}_", "").replace("_", " ").title()
-        sb_content.append(f"# {grade_str} {int(unit[3:5])}단원 대본집: {theme_title}")
-        sb_content.append("\n이 파일은 수학 방탈출 게임의 스토리 대사, 퀴즈 문항, 이벤트 씬 정보를 관리하는 원천 데이터 파일입니다.\n")
-        sb_content.append("---")
-        
-        # 1. [이미지 매핑]
-        sb_content.append("\n# [이미지 매핑]")
-        img_map = gdata.get("image_mapping", {})
-        sb_content.append(f"- intro: {img_map.get('intro', 'intro.png')}")
-        for i in range(1, 21):
-            sb_content.append(f"- {i}: {img_map.get(f'q{i}', f'q{i}.png')}")
-        for i in range(1, 5):
-            sb_content.append(f"- event{i}: {img_map.get(f'event{i}', f'event{i}.png')}")
-        sb_content.append(f"- outro: {img_map.get('outro', 'outro.png')}")
-        sb_content.append("\n---")
-        
-        # 2. [문항 정의]
-        sb_content.append("\n# [문항 정의]")
-        q_meta = gdata.get("questions", {})
-        for i in range(1, 21):
-            qkey = f"q{i}"
-            meta = q_meta.get(qkey, {})
-            title = meta.get("title", f"수수께끼 {i}")
-            qtext = meta.get("qtext", "")
-            hint = meta.get("hint", "")
-            ans_check = meta.get("ans_check", "")
-            placeholder = meta.get("placeholder", "숫자 입력")
-            error = meta.get("error", "틀렸습니다.")
-            options = meta.get("options", [])
-            extra_class = meta.get("extra_class", "")
-            
-            story_body = qs_stories.get(i, f"[{unit.upper()}]: 지문 로드 실패")
-            
-            sb_content.append(f"\n## Q{i}")
-            sb_content.append(f"- 제목: {title}")
-            sb_content.append(f"- 이미지: ![{title}](../../apps/assets/{assets_folder}/{img_map.get(qkey, f'q{i}.png')})")
-            sb_content.append(f"- 질문: {qtext}")
-            sb_content.append(f"- 힌트: {hint}")
-            sb_content.append(f"- 정답 체크: {ans_check}")
-            if options:
-                sb_content.append(f"- 선택지: {', '.join(options)}")
-            sb_content.append(f"- 플레이스홀더: {placeholder}")
-            sb_content.append(f"- 에러 메시지: {error}")
-            if extra_class:
-                sb_content.append(f"- extra_class: {extra_class}")
-            sb_content.append("- 지문:")
-            sb_content.append(story_body)
-            
-        # 3. [이벤트 정의]
-        sb_content.append("\n---")
-        sb_content.append("\n# [이벤트 정의]")
-        ev_meta = gdata.get("events", {})
-        for i in range(1, 5):
-            evkey = f"event{i}"
-            meta = ev_meta.get(evkey, {})
-            title = meta.get("title", "돌발 이벤트")
-            btn = meta.get("btn_text", "계속하기")
-            nxt = meta.get("next_stage", "outro")
-            prog = meta.get("progress", 25)
-            
-            story_body = events_stories.get(i, f"[조력자]: 이벤트 지문 로드 실패")
-            
-            sb_content.append(f"\n## EVENT{i}")
-            sb_content.append(f"- 제목: {title}")
-            sb_content.append(f"- 이미지: ![이벤트{i}](../../apps/assets/{assets_folder}/{img_map.get(evkey, f'event{i}.png')})")
-            sb_content.append(f"- 버튼 텍스트: {btn}")
-            sb_content.append(f"- 다음 스테이지: {nxt}")
-            sb_content.append(f"- 달성도: {prog}")
-            sb_content.append("- 지문:")
-            sb_content.append(story_body)
-            
-        with open(target_sb_path, 'w', encoding='utf-8') as sf:
-            sf.write('\n'.join(sb_content))
+    return success
 
-    print("[+] Storyboard generation process completed successfully.")
+
+def main():
+    parser = argparse.ArgumentParser(description="Storyboard generator from Canonical Authoring Sources")
+    parser.add_argument('--unit', type=str, default=None,
+                        help='Target a single unit (e.g. m1_02). Omit to generate all units.')
+    args = parser.parse_args()
+
+    if args.unit:
+        print(f"Generating storyboard for unit: {args.unit}...")
+        ok = generate_storyboard_for_unit(args.unit)
+        sys.exit(0 if ok else 1)
+    else:
+        ok = generate_all()
+        sys.exit(0 if ok else 1)
+
 
 if __name__ == "__main__":
     main()

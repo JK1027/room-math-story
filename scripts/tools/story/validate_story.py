@@ -269,12 +269,72 @@ def validate_storyboard(file_path, metadata=None):
             
     return errors
 
+def validate_for_unit(unit_id: str) -> bool:
+    """
+    [Programmatic API] 특정 단원의 YAML 스키마 및 Generated 스토리보드를
+    정적 심사하여 합격 여부를 반환합니다.
+
+    Args:
+        unit_id: 단원 코드 (예: "m1_02")
+    Returns:
+        True 검증 통과, False 검증 실패
+    """
+    grade_str = "grade1" if "m1_" in unit_id else ("grade2" if "m2_" in unit_id else "grade3")
+    quiz_data_root = paths.ROOT_DIR / "quiz_data"
+    storyboard_root = paths.ROOT_DIR / "storyboards" / "generated"
+
+    total_errors = []
+
+    # YAML 스키마 검증
+    yaml_path = quiz_data_root / grade_str / f"{unit_id}.yaml"
+    if yaml_path.exists():
+        yaml_errors = validate_quiz_data_schema(unit_id, yaml_path)
+        if yaml_errors:
+            total_errors.extend(yaml_errors)
+            print(f"  [FAIL] {unit_id}.yaml: {len(yaml_errors)} schema violations.")
+        else:
+            print(f"  [PASS] {unit_id}.yaml schema compliant.")
+    else:
+        total_errors.append(f"{unit_id}.yaml not found in quiz_data/{grade_str}")
+
+    # 스토리보드 검증
+    sb_path = storyboard_root / grade_str / f"{unit_id}_storyboard.md"
+    meta_file = paths.story_dir(grade_str) / "metadata.yaml"
+    meta = load_metadata_yaml(str(meta_file))
+
+    if sb_path.exists():
+        sb_errors = validate_storyboard(sb_path, meta)
+        if sb_errors:
+            total_errors.extend(sb_errors)
+            print(f"  [FAIL] {unit_id}_storyboard.md: {len(sb_errors)} anomalies.")
+        else:
+            print(f"  [PASS] {unit_id}_storyboard.md verified.")
+    else:
+        total_errors.append(f"{unit_id}_storyboard.md not found in storyboards/generated/{grade_str}")
+
+    return len(total_errors) == 0
+
+
 def main():
     start_time = time.time()
-    
+
     parser = argparse.ArgumentParser(description="Storyboard & Quiz Static Schema Analyzer")
     parser.add_argument('--json', action='store_true', help='Output results as a structured JSON string')
+    parser.add_argument('--unit', type=str, default=None,
+                        help='Validate only a single unit (e.g. m1_02). Omit to validate all units.')
     args = parser.parse_args()
+
+    # 단일 유닛 검증 모드
+    if args.unit:
+        print(f"\n=== Validating Unit: {args.unit} ===")
+        ok = validate_for_unit(args.unit)
+        print(f"\n=== Validation Results ===")
+        if ok:
+            print(f"[+] SUCCESS: {args.unit} passed all checks.")
+            sys.exit(0)
+        else:
+            print(f"[-] FAILED: {args.unit} has validation errors.")
+            sys.exit(1)
     
     storyboard_root = paths.ROOT_DIR / "storyboards" / "generated"
     if not storyboard_root.exists():
