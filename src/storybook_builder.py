@@ -595,10 +595,10 @@ class StorybookBuilder(Builder):
         
         // 4. ⌨️ 키보드 단축키 연동 (Page Up / Page Down / 방향키)
         document.addEventListener('keydown', (e) => {{
-            if (e.key === 'PageUp' || e.key === 'ArrowUp' || e.key === 'ArrowLeft') {{
+            if (e.key === 'PageUp' || e.key === 'ArrowLeft') {{
                 e.preventDefault();
                 if (currentIndex > 0) showScene(currentIndex - 1);
-            }} else if (e.key === 'PageDown' || e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {{
+            }} else if (e.key === 'PageDown' || e.key === 'ArrowRight' || e.key === ' ') {{
                 e.preventDefault();
                 if (currentIndex < total - 1) showScene(currentIndex + 1);
             }}
