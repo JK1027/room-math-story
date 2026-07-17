@@ -10,7 +10,7 @@ def format_markdown_to_html(text: str) -> str:
     if not text:
         return ""
     
-    # 1. 윈도우 줄바꿈 규격화
+    # 1. 줄바꿈 규격화
     text = text.replace('\r\n', '\n')
     
     # 2. 마크다운 볼드 치환: **텍스트** -> 강조 네온
@@ -48,9 +48,9 @@ def format_markdown_to_html(text: str) -> str:
 
 class StorybookBuilder(Builder):
     """
-    [Storybook Viewer 빌더] chapterXX.md 모델을 읽어 
-    실제 방탈출 게임 웹앱과 100% 동일한 비주얼 테마(네온 컬러, 다크 네이비 블루, 글래스모피즘, 동일 폰트)
-    를 갖춘 검토용 스토리북 HTML을 생성합니다. (타이핑 효과 제외)
+    [Storyboard PDF-like Grid 빌더] chapterXX.md 모델을 읽어 
+    전통적인 2단 스토리보드(좌측: 이미지/일러스트 지시, 우측: 대사/명세 표) 격자 레이아웃을 생성합니다.
+    인쇄(PDF 저장) 시 최적의 페이지 나눔(Page Break)을 지원합니다.
     """
     
     def build(self, chapter: Chapter, grade_str: str, unit_code: str) -> bool:
@@ -74,13 +74,13 @@ class StorybookBuilder(Builder):
         
         html_content = []
         
-        # HTML Header & WebApp Matching Neon CSS
+        # HTML Header & WebApp Matching Grid CSS
         html_content.append(f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스토리북 검토: {chapter.title}</title>
+    <title>스토리보드 검토(PDF형): {chapter.title}</title>
     <!-- 웹앱 동일 구글 폰트 로드 -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     
@@ -122,25 +122,24 @@ class StorybookBuilder(Builder):
             color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.7;
+            line-height: 1.6;
         }}
         
         .container {{
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 50px 20px;
+            padding: 40px 20px;
             box-sizing: border-box;
         }}
         
         header {{
             text-align: center;
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 2px solid var(--border-glass);
+            margin-bottom: 40px;
             background: var(--bg-glass);
             backdrop-filter: blur(8px);
+            border: 1px solid var(--border-glass);
             border-radius: 8px;
-            padding: 30px;
+            padding: 24px;
             box-shadow: 0 0 15px rgba(0,0,0,0.3);
         }}
         
@@ -151,71 +150,86 @@ class StorybookBuilder(Builder):
             font-weight: 700;
             font-size: 0.95rem;
             letter-spacing: 0.15em;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-shadow: var(--text-glow);
         }}
         
         h1 {{
             font-family: 'Orbitron', sans-serif;
-            font-size: 2rem;
+            font-size: 1.85rem;
             margin: 0;
             font-weight: 700;
             color: #ffffff;
-            letter-spacing: -0.01em;
             text-shadow: var(--text-glow);
         }}
         
         .meta-grid {{
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 25px;
+            gap: 12px;
+            margin-top: 20px;
         }}
         
         .meta-card {{
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.35);
             border: 1px solid var(--border-glass);
-            border-radius: 6px;
-            padding: 14px;
+            border-radius: 4px;
+            padding: 10px;
             text-align: center;
         }}
         
         .meta-label {{
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-muted);
-            letter-spacing: 0.05em;
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }}
         
         .meta-val {{
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 700;
             color: #ffffff;
         }}
         
-        /* 웹앱 동일 반투명 글래스 패널 */
-        .section-card {{
+        /* ─── 2단 스토리보드 그리드 카드 ─── */
+        .storyboard-card {{
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 30px;
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-glass);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
             box-sizing: border-box;
+            page-break-inside: avoid; /* PDF 출력 시 페이지 끊김 방지 */
+        }}
+        
+        /* 좌측: 비주얼/이미지 영역 */
+        .storyboard-left {{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }}
+        
+        /* 우측: 명세/지문 영역 */
+        .storyboard-right {{
+            display: flex;
+            flex-direction: column;
         }}
         
         h2 {{
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.35rem;
+            font-size: 1.25rem;
             font-weight: 700;
             margin-top: 0;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             color: var(--primary-neon);
             text-shadow: var(--text-glow);
             border-bottom: 1px solid var(--border-glass);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }}
         
         .story-p {{
@@ -223,24 +237,25 @@ class StorybookBuilder(Builder):
             border: 1px solid var(--border-glass);
             border-radius: 6px;
             padding: 16px 20px;
-            font-size: 1rem;
+            font-size: 0.98rem;
             color: #e5e7eb;
             white-space: pre-line;
-            line-height: 1.75;
+            line-height: 1.7;
+            margin-top: auto; /* 대사는 카드 아래쪽에 배치하여 흐름 고정 */
         }}
         
-        /* 웹앱 뼈대 테이블 정합 */
+        /* 테이블 명세 스타일 */
         .quiz-details {{
             border-collapse: collapse;
             width: 100%;
-            font-size: 0.95rem;
-            margin-bottom: 25px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
             border-top: 1px solid var(--border-glass);
             border-bottom: 1px solid var(--border-glass);
         }}
         
         .quiz-details td {{
-            padding: 12px 14px;
+            padding: 10px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             vertical-align: top;
             color: #e5e7eb;
@@ -254,66 +269,118 @@ class StorybookBuilder(Builder):
             font-family: 'Noto Sans KR', sans-serif;
             font-weight: 700;
             color: var(--text-muted);
-            width: 120px;
+            width: 110px;
         }}
         
-        /* 삽화 프레임 정의 */
+        /* 이미지 프리뷰 양식 */
         .img-frame {{
+            width: 100%;
             text-align: center;
-            margin: 25px 0;
         }}
         
         .img-preview {{
-            max-width: 100%;
-            max-height: 380px;
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: contain;
             border: 1px solid var(--border-glass);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-            border-radius: 6px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+            background: #020617;
         }}
         
         .img-caption {{
             font-family: 'Share Tech Mono', monospace;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             margin-top: 8px;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.03em;
+            line-height: 1.3;
         }}
         
         .choices-list {{
             margin: 0;
-            padding-left: 20px;
+            padding-left: 18px;
         }}
         
         .choices-list li {{
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }}
         
         .badge {{
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.7rem;
             font-weight: 700;
             font-family: 'Orbitron', sans-serif;
         }}
         
         .badge-accent {{
-            background-color: rgba(239, 68, 68, 0.1);
+            background-color: rgba(239, 68, 68, 0.15);
             color: var(--danger-neon);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.25);
             text-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
         }}
         
-        /* 반응형 */
-        @media (max-width: 768px) {{
+        /* ─── PDF 인쇄 최적화 규칙 ─── */
+        @media print {{
+            body {{
+                background: #ffffff !important;
+                color: #000000 !important;
+            }}
             .container {{
-                padding: 20px 10px;
+                max-width: 100% !important;
+                padding: 10px !important;
             }}
-            .section-card {{
-                padding: 25px 15px;
+            header {{
+                background: #ffffff !important;
+                color: #000000 !important;
+                border: 1px solid #cccccc !important;
+                box-shadow: none !important;
+                page-break-after: avoid;
             }}
-            h1 {{
-                font-size: 1.6rem;
+            .meta-card {{
+                background: #ffffff !important;
+                border: 1px solid #cccccc !important;
+            }}
+            .meta-val, h1, h2, .grade-tag {{
+                color: #000000 !important;
+                text-shadow: none !important;
+            }}
+            .storyboard-card {{
+                grid-template-columns: 280px 1fr !important;
+                background: #ffffff !important;
+                border: 1px solid #999999 !important;
+                box-shadow: none !important;
+                color: #000000 !important;
+                page-break-inside: avoid !important;
+                margin-bottom: 25px !important;
+                padding: 20px !important;
+            }}
+            .story-p {{
+                background: #f9f9f9 !important;
+                border: 1px solid #cccccc !important;
+                color: #111111 !important;
+            }}
+            .quiz-details td {{
+                color: #111111 !important;
+                border-bottom: 1px solid #dddddd !important;
+            }}
+            .img-preview {{
+                border: 1px solid #cccccc !important;
+            }}
+        }}
+
+        /* 모바일 대응 */
+        @media (max-width: 900px) {{
+            .storyboard-card {{
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+                padding: 20px;
+            }}
+            .img-preview {{
+                max-height: 300px;
             }}
         }}
     </style>
@@ -344,13 +411,20 @@ class StorybookBuilder(Builder):
         </header>
 
         <!-- INTRO -->
-        <div class="section-card">
-            <h2>🎬 [오프닝 & 인트로]</h2>
-            <div class="img-frame">
-                <img class="img-preview" src="{assets_relative_path}/{chapter.intro_image}" alt="Intro Image">
-                <div class="img-caption">[ILLUSTRATION 00] INTRO STORY ILLUSTRATION</div>
+        <div class="storyboard-card">
+            <div class="storyboard-left">
+                <div class="img-frame">
+                    <img class="img-preview" src="{assets_relative_path}/{chapter.intro_image}" alt="Intro Image">
+                    <div class="img-caption">
+                        <strong>[ILLUSTRATION 00] INTRO SCENE</strong><br>
+                        지시: {chapter.title}에 안착한 인트로 배경 화면
+                    </div>
+                </div>
             </div>
-            <div class="story-p">{chapter.intro_story}</div>
+            <div class="storyboard-right">
+                <h2>🎬 [오프닝 & 인트로]</h2>
+                <div class="story-p">{format_markdown_to_html(chapter.intro_story)}</div>
+            </div>
         </div>
 """)
 
@@ -371,42 +445,46 @@ class StorybookBuilder(Builder):
             
             html_content.append(f"""
         <!-- Q{q.qnum} -->
-        <div class="section-card">
-            <h2>🧩 Q{q.qnum}: {q.title} {extra_class_badge}</h2>
-            <table class="quiz-details">
-                <tr>
-                    <td class="field-name">퀴즈 질문</td>
-                    <td><strong>{q.qtext}</strong></td>
-                </tr>
-                <tr>
-                    <td class="field-name">선택지</td>
-                    <td>{choices_html}</td>
-                </tr>
-                <tr>
-                    <td class="field-name">정답 조건</td>
-                    <td><code>{ans_display}</code></td>
-                </tr>
-                <tr>
-                    <td class="field-name">플레이스홀더</td>
-                    <td>{q.placeholder}</td>
-                </tr>
-                <tr>
-                    <td class="field-name">에러 메시지</td>
-                    <td>{q.error_message}</td>
-                </tr>
-                <tr>
-                    <td class="field-name">힌트</td>
-                    <td style="color:var(--accent-neon)">💡 {q.hint}</td>
-                </tr>
-            </table>
-            
-            <div class="img-frame">
-                <img class="img-preview" src="{assets_relative_path}/{q.image}" alt="Q{q.qnum} Image">
-                <div class="img-caption">[ILLUSTRATION {q.qnum:02d}] ZONE {q.qnum} PUZZLE ILLUSTRATION</div>
+        <div class="storyboard-card">
+            <div class="storyboard-left">
+                <div class="img-frame">
+                    <img class="img-preview" src="{assets_relative_path}/{q.image}" alt="Q{q.qnum} Image">
+                    <div class="img-caption">
+                        <strong>[ILLUSTRATION {q.qnum:02d}] ZONE {q.qnum}</strong><br>
+                        지시: {q.title} 관련 퍼즐 삽화 도판
+                    </div>
+                </div>
             </div>
-            
-            <h4 style="margin-bottom: 8px; font-family:'Orbitron', sans-serif; color: var(--text-muted)">📖 SCENARIO DIALOGUE</h4>
-            <div class="story-p">{format_markdown_to_html(q.story)}</div>
+            <div class="storyboard-right">
+                <h2>🧩 Q{q.qnum}: {q.title} {extra_class_badge}</h2>
+                <table class="quiz-details">
+                    <tr>
+                        <td class="field-name">퀴즈 질문</td>
+                        <td><strong>{q.qtext}</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="field-name">선택지</td>
+                        <td>{choices_html}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-name">정답 조건</td>
+                        <td><code>{ans_display}</code></td>
+                    </tr>
+                    <tr>
+                        <td class="field-name">플레이스홀더</td>
+                        <td>{q.placeholder}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-name">에러 메시지</td>
+                        <td>{q.error_message}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-name">힌트</td>
+                        <td style="color:var(--accent-neon)">💡 {q.hint}</td>
+                    </tr>
+                </table>
+                <div class="story-p">{format_markdown_to_html(q.story)}</div>
+            </div>
         </div>
 """)
 
@@ -414,43 +492,54 @@ class StorybookBuilder(Builder):
         for idx, ev in enumerate(chapter.events, 1):
             html_content.append(f"""
         <!-- EVENT{ev.evnum} -->
-        <div class="section-card">
-            <h2>🎬 EVENT {ev.evnum}: {ev.title}</h2>
-            <table class="quiz-details">
-                <tr>
-                    <td class="field-name">버튼 텍스트</td>
-                    <td>{ev.btn_text}</td>
-                </tr>
-                <tr>
-                    <td class="field-name">다음 스테이지</td>
-                    <td><code>{ev.next_stage}</code></td>
-                </tr>
-                <tr>
-                    <td class="field-name">진행도</td>
-                    <td>{ev.progress}%</td>
-                </tr>
-            </table>
-            
-            <div class="img-frame">
-                <img class="img-preview" src="{assets_relative_path}/{ev.image}" alt="Event{ev.evnum} Image">
-                <div class="img-caption">[ILLUSTRATION EVENT {ev.evnum:02d}] SUDDEN SITUATION SCENE</div>
+        <div class="storyboard-card">
+            <div class="storyboard-left">
+                <div class="img-frame">
+                    <img class="img-preview" src="{assets_relative_path}/{ev.image}" alt="Event{ev.evnum} Image">
+                    <div class="img-caption">
+                        <strong>[ILLUSTRATION EVENT {ev.evnum:02d}]</strong><br>
+                        지시: {ev.title} 돌발 상황 이벤트 배경
+                    </div>
+                </div>
             </div>
-            
-            <h4 style="margin-bottom: 8px; font-family:'Orbitron', sans-serif; color: var(--text-muted)">📖 EVENT SCENARIO</h4>
-            <div class="story-p">{format_markdown_to_html(ev.story)}</div>
+            <div class="storyboard-right">
+                <h2>🎬 EVENT {ev.evnum}: {ev.title}</h2>
+                <table class="quiz-details">
+                    <tr>
+                        <td class="field-name">버튼 텍스트</td>
+                        <td>{ev.btn_text}</td>
+                    </tr>
+                    <tr>
+                        <td class="field-name">다음 스테이지</td>
+                        <td><code>{ev.next_stage}</code></td>
+                    </tr>
+                    <tr>
+                        <td class="field-name">진행도</td>
+                        <td>{ev.progress}%</td>
+                    </tr>
+                </table>
+                <div class="story-p">{format_markdown_to_html(ev.story)}</div>
+            </div>
         </div>
 """)
 
         # OUTRO
         html_content.append(f"""
         <!-- OUTRO -->
-        <div class="section-card">
-            <h2>🎬 [엔딩 & 아웃트로]</h2>
-            <div class="img-frame">
-                <img class="img-preview" src="{assets_relative_path}/{chapter.outro_image}" alt="Outro Image">
-                <div class="img-caption">[ILLUSTRATION 21] OUTRO SUCCESS ENDING SCENE</div>
+        <div class="storyboard-card">
+            <div class="storyboard-left">
+                <div class="img-frame">
+                    <img class="img-preview" src="{assets_relative_path}/{chapter.outro_image}" alt="Outro Image">
+                    <div class="img-caption">
+                        <strong>[ILLUSTRATION 21] OUTRO SCENE</strong><br>
+                        지시: 미션 성공 후 아웃트로 엔딩 연출
+                    </div>
+                </div>
             </div>
-            <div class="story-p">{format_markdown_to_html(chapter.outro_story)}</div>
+            <div class="storyboard-right">
+                <h2>🎬 [엔딩 & 아웃트로]</h2>
+                <div class="story-p">{format_markdown_to_html(chapter.outro_story)}</div>
+            </div>
         </div>
     </div>
 </body>
