@@ -5,7 +5,7 @@ import glob
 # Define directory paths
 current_dir = os.path.dirname(os.path.abspath(__file__))
 project_root = os.path.dirname(os.path.dirname(current_dir))
-stories_dir = os.path.join(project_root, "stories", "중3")
+stories_dir = os.path.join(project_root, "stories", "grade3")
 builders_dir = os.path.join(project_root, "scripts", "builders")
 
 # Year 3 unit themes configurations

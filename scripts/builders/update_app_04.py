@@ -123,7 +123,7 @@ poseidon = "<span class='glitch-text' style='color: #ef4444; font-weight: bold; 
 trident = "<span class='glitch-text' style='color: #fb923c; font-weight: bold; text-shadow: 0 0 5px #f97316;'>[트라이던트]</span>"
 dyn_captain = "<span class='dynamic-captain-name'>캡틴</span>"
 
-storyboard_path = os.path.join(project_root, "data", "storyboards", "중1", "m1_04_storyboard.md")
+storyboard_path = os.path.join(project_root, "data", "storyboards", "grade1", "m1_04_storyboard.md")
 img_map, qs, events = load_storyboard(storyboard_path)
 
 # 지문 내 변수 치환 적용

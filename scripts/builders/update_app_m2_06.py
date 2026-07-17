@@ -595,7 +595,7 @@ _cur = os.path.dirname(os.path.abspath(__file__))
 _root = os.path.dirname(os.path.dirname(_cur))
 if _root not in sys.path:
     sys.path.append(_root)
-from scripts.utils.storyboard_parser import load_storyboard_qs
+from scripts.tools.story.storyboard_parser import load_storyboard_qs
 qs = load_storyboard_qs('m2_06')
 # ----------------------------------
 

@@ -1,4 +1,4 @@
-# 중3 3단원 대본집: Quadratic Equations
+# grade3 3단원 대본집: Quadratic Equations
 
 이 파일은 수학 방탈출 게임의 스토리 대사, 퀴즈 문항, 이벤트 씬 정보를 관리하는 원천 데이터 파일입니다.
 
