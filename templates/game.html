@@ -678,8 +678,8 @@
                     '    <div class="user-info-section" style="margin-top: 15px; border-top: 1px solid var(--border-glass); padding-top: 15px;">\n' +
                     '        <div style="display: flex; gap: 10px; margin-bottom: 10px;">\n' +
                     '            <div style="flex: 1;">\n' +
-                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">학번 (예: 10101)</label>\n' +
-                    '                <input type="text" id="studentNum" placeholder="5자리 학번" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
+                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">학번 (예: 1101)</label>\n' +
+                    '                <input type="text" id="studentNum" placeholder="4자리 학번" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
                     '            </div>\n' +
                     '            <div style="flex: 1;">\n' +
                     '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">이름</label>\n' +
@@ -899,9 +899,9 @@
                     return;
                 }
                 
-                if (sNum.length !== 5 || isNaN(sNum)) {
+                if (sNum.length !== 4 || isNaN(sNum)) {
                     if (errorEl) {
-                        errorEl.textContent = "학번은 5자리 숫자여야 합니다 (예: 10101).";
+                        errorEl.textContent = "학번은 4자리 숫자여야 합니다 (예: 1101).";
                         errorEl.style.display = 'block';
                     }
                     return;
