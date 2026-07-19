@@ -40,14 +40,20 @@ class GameBuilder(Builder):
         # JSON 직렬화 수행
         game_data_json = json.dumps(game_data, ensure_ascii=False, indent=2)
         
+        import base64
+        # UTF-8 데이터를 안전하게 Base64로 인코딩
+        game_data_base64 = base64.b64encode(game_data_json.encode('utf-8')).decode('utf-8')
+        
         # 3. 공통 템플릿에 GAME_DATA 직렬화본 바인딩 주입 (Runtime Contract 시동)
         injection_block = f"""
     <!-- ─── GAME_DATA_INJECTION ─── -->
     <script>
-        const GAME_DATA = {game_data_json};
+        const GAME_DATA_BASE64 = "{game_data_base64}";
         (function() {{
-            if (typeof GameRuntime !== 'undefined' && typeof GAME_DATA !== 'undefined') {{
-                GameRuntime.start(GAME_DATA);
+            if (typeof GameRuntime !== 'undefined' && typeof GAME_DATA_BASE64 !== 'undefined') {{
+                // UTF-8 안전 복원용 Base64 디코딩
+                const gameData = JSON.parse(decodeURIComponent(escape(atob(GAME_DATA_BASE64))));
+                GameRuntime.start(gameData);
             }}
         }})();
     </script>
