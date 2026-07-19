@@ -45,11 +45,11 @@ class GameBuilder(Builder):
     <!-- ─── GAME_DATA_INJECTION ─── -->
     <script>
         const GAME_DATA = {game_data_json};
-        window.addEventListener('load', function() {{
+        (function() {{
             if (typeof GameRuntime !== 'undefined' && typeof GAME_DATA !== 'undefined') {{
                 GameRuntime.start(GAME_DATA);
             }}
-        }});
+        }})();
     </script>
 """
         # </body> 직전에 인젝션 스크립트 삽입
