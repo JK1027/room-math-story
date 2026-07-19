@@ -149,6 +149,30 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        /* 대사 읽기 전용 모드 - 이미지 확대 및 문제/버튼 완전 감춤 */
+        .glass-panel.read-mode .panel-image {
+            max-height: 380px;
+        }
+        .glass-panel.read-mode .question-box,
+        .glass-panel.read-mode .btn-group {
+            display: none !important;
+        }
+
+        /* 문제 풀이 모드 - 이미지 축소 및 문제/버튼 페이드인 */
+        .glass-panel.solve-mode .panel-image {
+            max-height: 250px;
+        }
+        .glass-panel.solve-mode .question-box,
+        .glass-panel.solve-mode .btn-group {
+            display: block !important;
+            animation: cardFadeIn 0.6s forwards;
+        }
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* 스토리 및 지문 */
@@ -677,31 +701,21 @@
                 target.classList.add('active');
                 this.activePanelId = panelId;
 
-                // 퀴즈 입력 폼 및 진행 버튼 탐색 후 숨김 처리
-                const toHide = target.querySelectorAll('.question-box, .btn-group');
-                toHide.forEach(el => {
-                    el.style.opacity = '0';
-                    el.style.transform = 'translateY(10px)';
-                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    el.style.pointerEvents = 'none';
-                });
+                // 대사 읽기 전용 모드 클래스 세팅 (이미지 최대화, 문제 가림)
+                target.classList.remove('solve-mode');
+                target.classList.add('read-mode');
 
                 // 스토리 타이머 구동 후 완료 콜백에서 보여줌
                 const storyBox = target.querySelector('.story-box');
                 if (storyBox) {
                     typeWriterHTML(storyBox, 15, () => {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
+                        // 대사 읽기 끝났으므로 문제 풀이 모드로 전환 (이미지 축소, 문제 서서히 표출)
+                        target.classList.remove('read-mode');
+                        target.classList.add('solve-mode');
                     });
                 } else {
-                    toHide.forEach(el => {
-                        el.style.opacity = '1';
-                        el.style.transform = 'translateY(0)';
-                        el.style.pointerEvents = 'auto';
-                    });
+                    target.classList.remove('read-mode');
+                    target.classList.add('solve-mode');
                 }
                 
                 // 오프닝을 넘어가 게임에 들어가는 시점에 타이머 자동 시작
