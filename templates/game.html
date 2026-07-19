@@ -709,7 +709,7 @@
                     window.playerFirstName = "캡틴";
                 }
                 
-                storyLogHistory.push('[오프닝]: ' + parseMarkdown(this.data.intro.story));
+
 
                 // 2. Q1 ~ Q20 PANELS
                 this.data.questions.forEach((q, idx) => {
@@ -809,7 +809,7 @@
                     errorEl.textContent = q.error_message;
                     qPanel.querySelector('.q-input-container').innerHTML = inputHtml;
                     
-                    storyLogHistory.push('[제 ' + q.qnum + '구역]: ' + parseMarkdown(q.story));
+
                 });
 
                 // 3. EVENT 1 ~ 4 PANELS
@@ -836,7 +836,7 @@
                     evPanel.querySelector('.story-text').dataset.rawHtml = evStoryParsed;
                     evPanel.querySelector('.story-text').innerHTML = '';
                     
-                    storyLogHistory.push('[돌발 이벤트 ' + ev.evnum + ']: ' + parseMarkdown(ev.story));
+
                 });
 
                 // 4. OUTRO PANEL
@@ -1191,28 +1191,8 @@
         }
 
         function startBGM() {
-            if (isMuted) return;
-            try {
-                initAudio();
-                if(bgmOsc) return;
-                bgmOsc = audioCtx.createOscillator();
-                bgmGain = audioCtx.createGain();
-                bgmOsc.type = 'triangle';
-                bgmOsc.frequency.setValueAtTime(55.00, audioCtx.currentTime);
-                bgmGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-                bgmOsc.connect(bgmGain);
-                bgmGain.connect(audioCtx.destination);
-                bgmOsc.start();
-                
-                bgmLfo = audioCtx.createOscillator();
-                bgmLfo.type = 'sine';
-                bgmLfo.frequency.setValueAtTime(0.15, audioCtx.currentTime); 
-                const lfoGain = audioCtx.createGain();
-                lfoGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                bgmLfo.connect(lfoGain);
-                lfoGain.connect(bgmGain.gain);
-                bgmLfo.start();
-            } catch(e) {}
+            // 저주파 우웅 거리는 BGM 사운드 완전 차단
+            return;
         }
 
         function toggleSound() {
