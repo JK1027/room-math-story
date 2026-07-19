@@ -9,7 +9,7 @@ function doGet(e) {
       .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
-function recordStart(studentId, name, unit) {
+function recordStart(studentNum, name, unit) {
   var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
   
   // 시트 이름 결정
@@ -29,7 +29,7 @@ function recordStart(studentId, name, unit) {
   var formattedTime = Utilities.formatDate(startTime, "Asia/Seoul", "yyyy-MM-dd HH:mm:ss");
   
   // 신규 행 작성
-  sheet.appendRow([studentId, name, formattedTime, "", "", ""]);
+  sheet.appendRow([studentNum, name, formattedTime, "", "", ""]);
   var rowNum = sheet.getLastRow();
   
   // 6열에 체크박스 삽입하고 미완료(체크 해제) 상태 및 빨간색 배경 지정
