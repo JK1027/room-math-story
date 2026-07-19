@@ -1245,23 +1245,51 @@
             });
         }
 
-        // 문장 마침표/느낌표/물음표 분할 헬퍼
+        // 문장 마침표/느낌표/물음표 분할 및 초과 길이 정밀 분할 헬퍼
         let typeWriterTimeout;
         function splitSentences(text) {
             let result = [];
+            let rawChunks = [];
             let start = 0;
             for (let i = 0; i < text.length; i++) {
                 const char = text.charAt(i);
                 if (char === '.' || char === '!' || char === '?') {
                     const nextChar = text.charAt(i + 1);
                     if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
-                        result.push(text.substring(start, i + 1).trim());
+                        rawChunks.push(text.substring(start, i + 1).trim());
                         start = i + 1;
                     }
                 }
             }
             const finalChunk = text.substring(start).trim();
-            if (finalChunk) result.push(finalChunk);
+            if (finalChunk) rawChunks.push(finalChunk);
+
+            // 각 청크가 대사 박스 높이를 넘지 않도록 60자 기준으로 2차 안전 슬라이싱
+            const MAX_LEN = 60;
+            rawChunks.forEach(chunk => {
+                if (chunk.length <= MAX_LEN) {
+                    result.push(chunk);
+                } else {
+                    let temp = chunk;
+                    while (temp.length > MAX_LEN) {
+                        let splitIdx = -1;
+                        for (let j = MAX_LEN; j > 10; j--) {
+                            const c = temp.charAt(j);
+                            if (c === ',' || c === ' ') {
+                                splitIdx = j;
+                                break;
+                            }
+                        }
+                        if (splitIdx === -1) {
+                            splitIdx = MAX_LEN;
+                        }
+                        result.push(temp.substring(0, splitIdx + 1).trim());
+                        temp = temp.substring(splitIdx + 1).trim();
+                    }
+                    if (temp) result.push(temp);
+                }
+            });
+
             return result;
         }
 
