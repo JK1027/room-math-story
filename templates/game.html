@@ -343,11 +343,32 @@
                 if (target) {
                     target.classList.add('active');
                     this.activePanelId = panelId;
-                    
-                    // 패널 오픈 시 타이핑 효과 실행
+
+                    // 퀴즈 입력 폼 및 진행 버튼 탐색 후 숨김 처리
+                    const toHide = target.querySelectorAll('.question-box, .btn-group');
+                    toHide.forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(10px)';
+                        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                        el.style.pointerEvents = 'none';
+                    });
+
+                    // 스토리 타이머 구동 후 완료 콜백에서 보여줌
                     const storyBox = target.querySelector('.story-box');
                     if (storyBox) {
-                        typeWriterHTML(storyBox, 15);
+                        typeWriterHTML(storyBox, 15, () => {
+                            toHide.forEach(el => {
+                                el.style.opacity = '1';
+                                el.style.transform = 'translateY(0)';
+                                el.style.pointerEvents = 'auto';
+                            });
+                        });
+                    } else {
+                        toHide.forEach(el => {
+                            el.style.opacity = '1';
+                            el.style.transform = 'translateY(0)';
+                            el.style.pointerEvents = 'auto';
+                        });
                     }
                 }
                 
@@ -371,8 +392,25 @@
                     '    <div class="story-box">\n' +
                     '        <div class="story-text"></div>\n' +
                     '    </div>\n' +
+                    '    <!-- 학번/이름 입력 및 사운드 조절 UI 영역 -->\n' +
+                    '    <div class="user-info-section" style="margin-top: 15px; border-top: 1px solid var(--border-glass); padding-top: 15px;">\n' +
+                    '        <div style="display: flex; gap: 10px; margin-bottom: 10px;">\n' +
+                    '            <div style="flex: 1;">\n' +
+                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">학번 (예: 10101)</label>\n' +
+                    '                <input type="text" id="studentNum" placeholder="5자리 학번" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
+                    '            </div>\n' +
+                    '            <div style="flex: 1;">\n' +
+                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">이름</label>\n' +
+                    '                <input type="text" id="studentName" placeholder="이름" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div style="display: flex; justify-content: space-between; align-items: center;">\n' +
+                    '            <div id="intro-error" style="color: var(--danger-neon); font-size: 0.85rem; display: none;"></div>\n' +
+                    '            <button id="soundToggle" class="btn-hint" onclick="toggleSound()" style="margin-left: auto;">🔇 소리 꺼짐</button>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
                     '    <div class="btn-group">\n' +
-                    '        <button class="btn" onclick="GameRuntime.showPanel(\'panel_q1\')">미션 개시</button>\n' +
+                    '        <button class="btn" onclick="GameRuntime.submitUserInfo()">미션 개시</button>\n' +
                     '    </div>\n' +
                     '</div>';
                 container.insertAdjacentHTML('beforeend', introHtml);
@@ -382,6 +420,13 @@
                 const introHtmlParsed = parseMarkdown(this.data.intro.story);
                 introPanel.querySelector('.story-text').dataset.rawHtml = introHtmlParsed;
                 introPanel.querySelector('.story-text').innerHTML = '';
+                
+                // 동적으로 로드되는 UI 연계 처리
+                const isGasEnv = typeof google !== 'undefined' && google.script && google.script.run;
+                if (!isGasEnv) {
+                    window.playerFirstName = "캡틴";
+                }
+                
                 storyLogHistory.push('[오프닝]: ' + this.data.intro.story);
 
                 // 2. Q1 ~ Q20 PANELS
@@ -518,6 +563,52 @@
                 });
             },
 
+            submitUserInfo: function() {
+                const sNumInput = document.getElementById('studentNum');
+                const sNameInput = document.getElementById('studentName');
+                const errorEl = document.getElementById('intro-error');
+                
+                const sNum = sNumInput ? sNumInput.value.trim() : '';
+                const sName = sNameInput ? sNameInput.value.trim() : '';
+                
+                if (!sNum || !sName) {
+                    if (errorEl) {
+                        errorEl.textContent = "학번과 이름을 모두 입력해주세요.";
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+                
+                if (sNum.length !== 5 || isNaN(sNum)) {
+                    if (errorEl) {
+                        errorEl.textContent = "학번은 5자리 숫자여야 합니다 (예: 10101).";
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+                
+                window.playerFirstName = sName.substring(1); // 성 제외 이름만 추출 (예: '홍길동' -> '길동')
+                
+                // 브라우저 오디오 가동 시도 (뮤트 아닌 경우)
+                try {
+                    if (!isMuted) {
+                        initAudio();
+                        startBGM();
+                    }
+                } catch(e) {}
+
+                // GAS 시트에 기록 저장 후 화면 이동
+                if (typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler((rowNum) => {
+                        window.userRecordRow = rowNum;
+                        this.showPanel('panel_q1');
+                    }).recordStart(sNum, sName, this.data.unit_code);
+                } else {
+                    // 로컬 환경 폴백
+                    this.showPanel('panel_q1');
+                }
+            },
+
             startTimer: function() {
                 if (this.timerId) return;
                 this.updateTimerDisplay();
@@ -567,6 +658,7 @@
                     const nextProgress = qnum * 5;
                     this.triggerStageTransition(`panel_q${qnum}`, nextStage, nextProgress);
                 } else {
+                    try { playError(); } catch(e) {}
                     this.currentWrongCount++;
                     this.totalWrongCount++;
                     this.timeLeft -= 60; // 오답시 60초 감소 페널티
@@ -685,51 +777,223 @@
             return html;
         }
 
-        // 타이핑 효과 구현 함수 (HTML 태그 안전 파싱 및 지연 렌더링)
-        function typeWriterHTML(storyBox, speed) {
-            const textEl = storyBox.querySelector('.story-text');
-            if (!textEl) return;
-            const rawHtml = textEl.dataset.rawHtml || textEl.innerHTML;
-            if (!rawHtml) return;
-            
-            // 기존 타이핑 인터벌/타이머 제거 (중복 실행 방지)
-            if (textEl.timerId) {
-                clearTimeout(textEl.timerId);
-            }
-            
-            textEl.innerHTML = '';
-            
-            let index = 0;
-            let currentHTML = '';
-            
-            function step() {
-                if (index >= rawHtml.length) {
-                    textEl.timerId = null;
-                    return;
-                }
+        // Web Audio API 기반 오디오 엔진 (기본 Muted)
+        let isMuted = true;
+        let audioCtx = null;
+        let bgmOsc = null;
+        let bgmGain = null;
+        let bgmLfo = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSynth(freq, type, duration, vol) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function stopBGM() {
+            try {
+                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
+                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
+            } catch(e){}
+        }
+
+        function startBGM() {
+            if (isMuted) return;
+            try {
+                initAudio();
+                if(bgmOsc) return;
+                bgmOsc = audioCtx.createOscillator();
+                bgmGain = audioCtx.createGain();
+                bgmOsc.type = 'triangle';
+                bgmOsc.frequency.setValueAtTime(55.00, audioCtx.currentTime);
+                bgmGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                bgmOsc.connect(bgmGain);
+                bgmGain.connect(audioCtx.destination);
+                bgmOsc.start();
                 
-                const char = rawHtml[index];
-                if (char === '<') {
-                    // HTML 태그 한 번에 스킵하여 렌더링 깨짐 방지
-                    const tagEnd = rawHtml.indexOf('>', index);
-                    if (tagEnd !== -1) {
-                        currentHTML += rawHtml.substring(index, tagEnd + 1);
-                        index = tagEnd + 1;
-                    } else {
-                        currentHTML += char;
-                        index++;
+                bgmLfo = audioCtx.createOscillator();
+                bgmLfo.type = 'sine';
+                bgmLfo.frequency.setValueAtTime(0.15, audioCtx.currentTime); 
+                const lfoGain = audioCtx.createGain();
+                lfoGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                bgmLfo.connect(lfoGain);
+                lfoGain.connect(bgmGain.gain);
+                bgmLfo.start();
+            } catch(e) {}
+        }
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            const btn = document.getElementById('soundToggle');
+            if (isMuted) {
+                if(btn) btn.innerText = '🔇 소리 꺼짐';
+                stopBGM();
+            } else {
+                if(btn) btn.innerText = '🔊 소리 켜짐';
+                startBGM();
+            }
+        }
+
+        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
+        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
+        function playSuccess() { 
+            playSynth(523.25, 'sine', 0.15, 0.7); 
+            setTimeout(()=>playSynth(659.25, 'sine', 0.15, 0.7), 150); 
+            setTimeout(()=>playSynth(783.99, 'sine', 0.3, 0.7), 300); 
+        }
+        function playError() {
+            playSynth(150, 'sawtooth', 0.3, 0.6);
+            setTimeout(()=>playSynth(100, 'sawtooth', 0.4, 0.6), 200);
+        }
+        function playVictory() {
+            stopBGM();
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
+            });
+        }
+
+        // 문장 마침표/느낌표/물음표 분할 헬퍼
+        let typeWriterTimeout;
+        function splitSentences(text) {
+            let result = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                if (char === '.' || char === '!' || char === '?') {
+                    const nextChar = text.charAt(i + 1);
+                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
+                        result.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
                     }
-                } else {
-                    currentHTML += char;
-                    index++;
+                }
+            }
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) result.push(finalChunk);
+            return result;
+        }
+
+        // 타이핑 효과 구현 함수 (HTML 태그 안전 파싱 및 지연 렌더링)
+        function typeWriterHTML(element, speed = 25, onComplete = null) {
+            let isComplete = false;
+            let currentChunkIndex = 0;
+            let chunks = [];
+            const textEl = element.querySelector('.story-text');
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
+            function triggerComplete() {
+                if(!isComplete) {
+                    isComplete = true;
+                    element.style.cursor = 'default';
+                    if(onComplete) onComplete();
+                }
+            }
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            const htmlContent = textEl.dataset.rawHtml || textEl.innerHTML;
+            if (!textEl.dataset.rawHtml) {
+                textEl.dataset.rawHtml = htmlContent;
+            }
+            let rawLines = htmlContent.split(/<br\s*\/?>/i);
+            for(let line of rawLines) {
+                let sentences = splitSentences(line);
+                for(let s of sentences) {
+                    if(s.trim()) chunks.push(s.trim());
+                }
+            }
+            if(chunks.length === 0) {
+                triggerComplete();
+                return;
+            }
+            let i = 0;
+            let textStr = '';
+            let typingFinished = false;
+            element.style.cursor = 'pointer';
+            
+            function renderChunk() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                i = 0;
+                textStr = '';
+                typingFinished = false;
+                let chunkText = chunks[currentChunkIndex];
+                
+                const currentPanel = element.closest('.glass-panel');
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
+                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                if (!storyLogHistory.includes(logEntry)) {
+                    storyLogHistory.push(logEntry);
                 }
                 
-                textEl.innerHTML = currentHTML;
-                storyBox.scrollTop = storyBox.scrollHeight;
-                textEl.timerId = setTimeout(step, speed);
+                if(currentChunkIndex < chunks.length - 1) {
+                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent-neon); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                }
+                textEl.innerHTML = '';
+                
+                function type() {
+                    if (i < chunkText.length) {
+                        if (chunkText.charAt(i) === '<') {
+                            const endTag = chunkText.indexOf('>', i);
+                            if (endTag !== -1) {
+                                textStr += chunkText.substring(i, endTag + 1);
+                                i = endTag + 1;
+                            } else {
+                                textStr += chunkText.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            textStr += chunkText.charAt(i);
+                            i++;
+                        }
+                        textEl.innerHTML = textStr;
+                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
+                            try { playTick(); } catch(e) {}
+                        }
+                        typeWriterTimeout = setTimeout(type, speed);
+                    } else {
+                        textEl.innerHTML = chunkText;
+                        typingFinished = true;
+                        if(currentChunkIndex === chunks.length - 1) {
+                            triggerComplete();
+                        }
+                    }
+                }
+                type();
             }
-            
-            step();
+            element.onclick = () => {
+                if (!typingFinished) {
+                    clearTimeout(typeWriterTimeout);
+                    let chunkText = chunks[currentChunkIndex];
+                    if(currentChunkIndex < chunks.length - 1) {
+                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent-neon); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    }
+                    textEl.innerHTML = chunkText;
+                    typingFinished = true;
+                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
+                } else {
+                    if (currentChunkIndex < chunks.length - 1) {
+                        currentChunkIndex++;
+                        renderChunk();
+                    }
+                }
+            };
+            renderChunk();
         }
 
         // 모달 이전 대사 다이얼로그 열기
