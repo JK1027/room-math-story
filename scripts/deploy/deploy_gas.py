@@ -32,7 +32,7 @@ def deploy_grade(grade_key):
     gas_dir = paths.GAS_DIR / cfg["project"]
     os.makedirs(gas_dir, exist_ok=True)
     
-    html_pattern = str(paths.APPS_DIR / f"app_{prefix}_*_escape_room.html")
+    html_pattern = str(paths.ROOT_DIR / "build" / "webapps" / f"app_{prefix}_*_escape_room.html")
     html_files = glob.glob(html_pattern)
     
     if not html_files:
