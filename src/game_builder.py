@@ -60,14 +60,14 @@ class GameBuilder(Builder):
         output_file_path = output_dir / output_file_name
         
         try:
-            with open(output_file_path, 'w', encoding='utf-8') as f:
+            with open(output_file_path, 'w', encoding='utf-8-sig') as f:
                 f.write(new_html_content)
                 
             # 동시에 gas/ 폴더 밑의 Index_{unit_code}.html 배포 복사 동조
             gas_target_dir = paths.ROOT_DIR / "gas"
             if gas_target_dir.exists():
                 gas_file_name = f"Index_{unit_code}.html"
-                with open(gas_target_dir / gas_file_name, 'w', encoding='utf-8') as gf:
+                with open(gas_target_dir / gas_file_name, 'w', encoding='utf-8-sig') as gf:
                     gf.write(new_html_content)
                 print(f"  [OK] Apps Script game deployment copied: {gas_file_name}")
                 
