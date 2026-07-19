@@ -595,7 +595,7 @@
                     window.playerFirstName = "캡틴";
                 }
                 
-                storyLogHistory.push('[오프닝]: ' + this.data.intro.story);
+                storyLogHistory.push('[오프닝]: ' + parseMarkdown(this.data.intro.story));
 
                 // 2. Q1 ~ Q20 PANELS
                 this.data.questions.forEach((q, idx) => {
@@ -660,7 +660,7 @@
                     errorEl.textContent = q.error_message;
                     qPanel.querySelector('.q-input-container').innerHTML = inputHtml;
                     
-                    storyLogHistory.push('[제 ' + q.qnum + '구역]: ' + q.story);
+                    storyLogHistory.push('[제 ' + q.qnum + '구역]: ' + parseMarkdown(q.story));
                 });
 
                 // 3. EVENT 1 ~ 4 PANELS
@@ -687,7 +687,7 @@
                     evPanel.querySelector('.story-text').dataset.rawHtml = evStoryParsed;
                     evPanel.querySelector('.story-text').innerHTML = '';
                     
-                    storyLogHistory.push('[돌발 이벤트 ' + ev.evnum + ']: ' + ev.story);
+                    storyLogHistory.push('[돌발 이벤트 ' + ev.evnum + ']: ' + parseMarkdown(ev.story));
                 });
 
                 // 4. OUTRO PANEL
@@ -970,11 +970,14 @@
         // 간단한 Markdown -> HTML 변환 헬퍼 함수
         function parseMarkdown(text) {
             if (!text) return '';
-            let html = text;
-            // 일러스트 지시 제거
-            html = html.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
-            html = html.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
-            html = html.trim();
+            
+            // 줄 단위로 분할하여 "일러스트 지시"가 포함된 모든 라인 원천 차단
+            let lines = text.split('\n');
+            let filteredLines = lines.filter(line => {
+                return !line.includes('일러스트 지시') && !line.includes('일러스트지시');
+            });
+            let html = filteredLines.join('\n').trim();
+
             // **bold** -> <strong>bold</strong>
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             // *italic* -> <em>italic</em>
