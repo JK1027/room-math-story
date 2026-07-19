@@ -403,7 +403,7 @@
                     }
 
                     const qHtml = `
-                        <div id="panel_q${q.qnum}" class="glass-panel ${q.extra_class || ''}">
+                        <div class="glass-panel ${q.extra_class || ''}">
                             <h2>제 ${q.qnum}구역: ${q.title} <span class="game-timer">40:00</span></h2>
                             <img src="${assetsBase}/${q.image}" class="panel-image" alt="Q${q.qnum}">
                             <div class="story-box">
@@ -417,19 +417,24 @@
                                     <div class="q-input-container"></div>
                                 </div>
                             </div>
-                            <div class="error-msg" id="error${q.qnum}"></div>
+                            <div class="error-msg"></div>
                             <div class="btn-group">
                                 <button class="btn" onclick="GameRuntime.submitAnswer(${q.qnum})">${btnText}</button>
                             </div>
                         </div>`;
                     container.insertAdjacentHTML('beforeend', qHtml);
                     
-                    // 퀴즈 요소 안전 주입
+                    // 퀴즈 요소 안전 주입 및 동적 ID 부여
                     const qPanel = container.lastElementChild;
+                    qPanel.id = 'panel_q' + q.qnum;
+                    
+                    const errorEl = qPanel.querySelector('.error-msg');
+                    errorEl.id = 'error' + q.qnum;
+                    
                     qPanel.querySelector('.story-text').innerHTML = q.story.replace(/\n/g, '<br>');
                     qPanel.querySelector('.q-text-el').innerHTML = q.qtext;
                     qPanel.querySelector('.btn-hint').onclick = () => alert(`💡 힌트: ${q.hint}`);
-                    qPanel.querySelector('.error-msg').textContent = q.error_message;
+                    errorEl.textContent = q.error_message;
                     qPanel.querySelector('.q-input-container').innerHTML = inputHtml;
                     
                     storyLogHistory.push(`[제 ${q.qnum}구역]: ${q.story}`);
@@ -438,7 +443,7 @@
                 // 3. EVENT 1 ~ 4 PANELS
                 this.data.events.forEach(ev => {
                     const evHtml = `
-                        <div id="panel_event${ev.evnum}" class="glass-panel">
+                        <div class="glass-panel">
                             <h2>[돌발] ${ev.title} <span class="game-timer">40:00</span></h2>
                             <img src="${assetsBase}/${ev.image}" class="panel-image" alt="Event">
                             <div class="story-box">
@@ -451,8 +456,10 @@
                         </div>`;
                     container.insertAdjacentHTML('beforeend', evHtml);
                     
-                    // 이벤트 요소 안전 주입
+                    // 이벤트 요소 안전 주입 및 동적 ID 부여
                     const evPanel = container.lastElementChild;
+                    evPanel.id = 'panel_event' + ev.evnum;
+                    
                     evPanel.querySelector('.story-text').innerHTML = ev.story.replace(/\n/g, '<br>');
                     
                     storyLogHistory.push(`[돌발 이벤트 ${ev.evnum}]: ${ev.story}`);
