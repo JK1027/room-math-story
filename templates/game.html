@@ -414,7 +414,7 @@
                                 <div class="question-content">
                                     <strong class="q-text-el"></strong>
                                     <button class="btn-hint">💡 힌트</button>
-                                    ${inputHtml}
+                                    <div class="q-input-container"></div>
                                 </div>
                             </div>
                             <div class="error-msg" id="error${q.qnum}"></div>
@@ -430,6 +430,7 @@
                     qPanel.querySelector('.q-text-el').innerHTML = q.qtext;
                     qPanel.querySelector('.btn-hint').onclick = () => alert(`💡 힌트: ${q.hint}`);
                     qPanel.querySelector('.error-msg').textContent = q.error_message;
+                    qPanel.querySelector('.q-input-container').innerHTML = inputHtml;
                     
                     storyLogHistory.push(`[제 ${q.qnum}구역]: ${q.story}`);
                 });
