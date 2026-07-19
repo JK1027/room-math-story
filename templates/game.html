@@ -132,6 +132,7 @@
 
         /* 스토리 및 지문 */
         .story-box {
+            cursor: pointer;
             position: relative;
             background: linear-gradient(90deg, rgba(55,40,30,0.5) 0%, rgba(0,0,0,0.3) 100%);
             border-left: 4px solid var(--accent);
@@ -697,7 +698,10 @@
                     '    <img src="' + assetsBase + '/' + this.data.outro.image + '" class="panel-image" alt="Outro">\n' +
                     '    <div class="story-box">\n' +
                     '        <div class="story-text" id="outro-dynamic-text">미션 결과를 산출 중입니다...</div>\n' +
-                    '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
+                    '        <div style="position: absolute; bottom: 4px; right: 8px; display: flex; gap: 6px; z-index: 10;">\n' +
+                    '            <button class="story-log-trigger" style="position: static;" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>\n' +
+                    '            <button class="story-log-trigger" style="position: static; background: rgba(229,169,60,0.25); border: 1px solid rgba(229,169,60,0.5); color: var(--accent);" onclick="GameRuntime.skipStory(); event.stopPropagation();">⏩ 스킵</button>\n' +
+                    '        </div>\n' +
                     '    </div>\n' +
                     '    <button class="btn" style="margin-top: 20px; width:100%;" onclick="location.reload()">다시 도전하기</button>\n' +
                     '</div>';
@@ -936,6 +940,30 @@
                 } catch(e) {
                     console.warn("GAS progress report failed:", e);
                 }
+            },
+
+            skipStory: function() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                const activePanel = document.getElementById(this.activePanelId);
+                if (!activePanel) return;
+                const storyBox = activePanel.querySelector('.story-box');
+                if (storyBox) {
+                    const textEl = storyBox.querySelector('.story-text') || storyBox;
+                    let rawHtml = textEl.dataset.rawHtml || textEl.innerHTML;
+                    rawHtml = rawHtml.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
+                    rawHtml = rawHtml.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
+                    rawHtml = rawHtml.replace(/<br><span style="font-size:0.8rem; color:var\(--accent\); font-weight:bold; animation: blink 1s infinite;">\(클릭하여 다음 대사 보기 ▼\)<\/span>/gi, '');
+                    textEl.innerHTML = rawHtml.trim();
+                    storyBox.style.cursor = 'default';
+                }
+                
+                // 숨김 패널들 즉시 표시
+                const toShow = activePanel.querySelectorAll('.question-box, .btn-group');
+                toShow.forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                    el.style.pointerEvents = 'auto';
+                });
             }
         };
 
@@ -943,6 +971,10 @@
         function parseMarkdown(text) {
             if (!text) return '';
             let html = text;
+            // 일러스트 지시 제거
+            html = html.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
+            html = html.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
+            html = html.trim();
             // **bold** -> <strong>bold</strong>
             html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             // *italic* -> <em>italic</em>
@@ -1068,7 +1100,7 @@
             let isComplete = false;
             let currentChunkIndex = 0;
             let chunks = [];
-            const textEl = element.querySelector('.story-text');
+            const textEl = element.querySelector('.story-text') || element;
             if(!textEl) {
                 if(onComplete) onComplete();
                 return;
@@ -1082,10 +1114,17 @@
                 }
             }
             if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
-            const htmlContent = textEl.dataset.rawHtml || textEl.innerHTML;
+            
+            let htmlContent = textEl.dataset.rawHtml || textEl.innerHTML;
+            // 일러스트 지시 필터링
+            htmlContent = htmlContent.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
+            htmlContent = htmlContent.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
+            htmlContent = htmlContent.trim();
+
             if (!textEl.dataset.rawHtml) {
                 textEl.dataset.rawHtml = htmlContent;
             }
+            
             let rawLines = htmlContent.split(/<br\s*\/?>/i);
             for(let line of rawLines) {
                 let sentences = splitSentences(line);
@@ -1093,6 +1132,7 @@
                     if(s.trim()) chunks.push(s.trim());
                 }
             }
+
             if(chunks.length === 0) {
                 triggerComplete();
                 return;
@@ -1107,17 +1147,17 @@
                 i = 0;
                 textStr = '';
                 typingFinished = false;
-                let chunkText = chunks[currentChunkIndex];
+                let chunkText = chunks[currentChunkIndex].trim();
                 
                 const currentPanel = element.closest('.glass-panel');
                 const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
-                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
+                const logEntry = '<strong>[' + panelTitle + ']</strong> ' + chunkText;
                 if (!storyLogHistory.includes(logEntry)) {
                     storyLogHistory.push(logEntry);
                 }
                 
                 if(currentChunkIndex < chunks.length - 1) {
-                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent-neon); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    chunkText += '<br><span style="font-size:0.8rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭하여 다음 대사 보기 ▼)</span>';
                 }
                 textEl.innerHTML = '';
                 
@@ -1136,7 +1176,8 @@
                             textStr += chunkText.charAt(i);
                             i++;
                         }
-                        textEl.innerHTML = textStr;
+                        // 깜빡이 커서 효과 적용
+                        textEl.innerHTML = textStr + (i % 2 === 0 ? '█' : '');
                         if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
                             try { playTick(); } catch(e) {}
                         }
@@ -1151,12 +1192,13 @@
                 }
                 type();
             }
-            element.onclick = () => {
+            element.onclick = (e) => {
+                // 스킵 버튼을 직접 클릭한 경우는 이벤트 전파 방지로 여기서 걸러짐
                 if (!typingFinished) {
                     clearTimeout(typeWriterTimeout);
-                    let chunkText = chunks[currentChunkIndex];
+                    let chunkText = chunks[currentChunkIndex].trim();
                     if(currentChunkIndex < chunks.length - 1) {
-                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent-neon); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                        chunkText += '<br><span style="font-size:0.8rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭하여 다음 대사 보기 ▼)</span>';
                     }
                     textEl.innerHTML = chunkText;
                     typingFinished = true;
