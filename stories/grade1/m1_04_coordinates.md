@@ -37,13 +37,6 @@ q1.png
 ### Question
 <strong>Q1. [순서쌍 좌표 찍기]</strong><br>x좌표가 -5 이고, y좌표가 8 인 점의 <strong>좌표</strong>를 순서쌍 기호 괄호 ()를 사용하여 나타내시오.
 
-### Choices
-- -5
-- 8
-- -5
-- 8 아님
-- 알 수 없음
-- 해 없음
 
 ### Answer
 type: exact
