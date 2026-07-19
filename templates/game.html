@@ -363,13 +363,17 @@
                         <h2>SYSTEM INITIATION</h2>
                         <img src="${assetsBase}/${this.data.intro.image}" class="panel-image" alt="Intro">
                         <div class="story-box">
-                            <div class="story-text">${this.data.intro.story}</div>
+                            <div class="story-text"></div>
                         </div>
                         <div class="btn-group">
                             <button class="btn" onclick="GameRuntime.showPanel('panel_q1')">미션 개시</button>
                         </div>
                     </div>`;
                 container.insertAdjacentHTML('beforeend', introHtml);
+                
+                // 인트로 안전 주입
+                const introPanel = container.lastElementChild;
+                introPanel.querySelector('.story-text').innerHTML = this.data.intro.story.replace(/\n/g, '<br>');
                 storyLogHistory.push(`[오프닝]: ${this.data.intro.story}`);
 
                 // 2. Q1 ~ Q20 PANELS
@@ -403,22 +407,30 @@
                             <h2>제 ${q.qnum}구역: ${q.title} <span class="game-timer">40:00</span></h2>
                             <img src="${assetsBase}/${q.image}" class="panel-image" alt="Q${q.qnum}">
                             <div class="story-box">
-                                <div class="story-text">${q.story}</div>
+                                <div class="story-text"></div>
                                 <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
                             </div>
                             <div class="question-box">
                                 <div class="question-content">
-                                    <strong>${q.qtext}</strong>
-                                    <button class="btn-hint" onclick="alert('💡 힌트: ${q.hint}')">💡 힌트</button>
+                                    <strong class="q-text-el"></strong>
+                                    <button class="btn-hint">💡 힌트</button>
                                     ${inputHtml}
                                 </div>
                             </div>
-                            <div class="error-msg" id="error${q.qnum}">${q.error_message}</div>
+                            <div class="error-msg" id="error${q.qnum}"></div>
                             <div class="btn-group">
                                 <button class="btn" onclick="GameRuntime.submitAnswer(${q.qnum})">${btnText}</button>
                             </div>
                         </div>`;
                     container.insertAdjacentHTML('beforeend', qHtml);
+                    
+                    // 퀴즈 요소 안전 주입
+                    const qPanel = container.lastElementChild;
+                    qPanel.querySelector('.story-text').innerHTML = q.story.replace(/\n/g, '<br>');
+                    qPanel.querySelector('.q-text-el').innerHTML = q.qtext;
+                    qPanel.querySelector('.btn-hint').onclick = () => alert(`💡 힌트: ${q.hint}`);
+                    qPanel.querySelector('.error-msg').textContent = q.error_message;
+                    
                     storyLogHistory.push(`[제 ${q.qnum}구역]: ${q.story}`);
                 });
 
@@ -429,7 +441,7 @@
                             <h2>[돌발] ${ev.title} <span class="game-timer">40:00</span></h2>
                             <img src="${assetsBase}/${ev.image}" class="panel-image" alt="Event">
                             <div class="story-box">
-                                <div class="story-text">${ev.story}</div>
+                                <div class="story-text"></div>
                                 <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
                             </div>
                             <div class="btn-group">
@@ -437,6 +449,11 @@
                             </div>
                         </div>`;
                     container.insertAdjacentHTML('beforeend', evHtml);
+                    
+                    // 이벤트 요소 안전 주입
+                    const evPanel = container.lastElementChild;
+                    evPanel.querySelector('.story-text').innerHTML = ev.story.replace(/\n/g, '<br>');
+                    
                     storyLogHistory.push(`[돌발 이벤트 ${ev.evnum}]: ${ev.story}`);
                 });
 
@@ -460,11 +477,15 @@
                         <h1 style="color:var(--danger-neon); text-align:center;">미션 실패 (GAME OVER)</h1>
                         <img src="${assetsBase}/${this.data.outro.image}" class="panel-image" alt="GameOver" style="filter:grayscale(1);">
                         <div class="story-box">
-                            <div class="story-text" style="color:var(--danger-neon);">${this.data.outro.story_failure}</div>
+                            <div class="story-text" style="color:var(--danger-neon);"></div>
                         </div>
                         <button class="btn" style="margin-top: 20px; width:100%; background:var(--danger-neon); color:white;" onclick="location.reload()">다시 시도하기</button>
                     </div>`;
                 container.insertAdjacentHTML('beforeend', gameOverHtml);
+                
+                // 게임오버 안전 주입
+                const gameOverPanel = container.lastElementChild;
+                gameOverPanel.querySelector('.story-text').textContent = this.data.outro.story_failure;
             },
 
             bindEvents: function() {
