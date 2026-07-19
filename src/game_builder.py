@@ -44,11 +44,16 @@ class GameBuilder(Builder):
         # UTF-8 데이터를 안전하게 Base64로 인코딩
         game_data_base64 = base64.b64encode(game_data_json.encode('utf-8')).decode('utf-8')
         
+        # 2000자씩 쪼개서 JS 결합 코드로 변환 (GAS의 단일 라인 길이 한계 우회)
+        chunk_size = 2000
+        chunks = [game_data_base64[i:i+chunk_size] for i in range(0, len(game_data_base64), chunk_size)]
+        js_chunks = " +\n        ".join([f'"{chunk}"' for chunk in chunks])
+        
         # 3. 공통 템플릿에 GAME_DATA 직렬화본 바인딩 주입 (Runtime Contract 시동)
         injection_block = f"""
     <!-- ─── GAME_DATA_INJECTION ─── -->
     <script>
-        const GAME_DATA_BASE64 = "{game_data_base64}";
+        const GAME_DATA_BASE64 = {js_chunks};
         (function() {{
             if (typeof GameRuntime !== 'undefined' && typeof GAME_DATA_BASE64 !== 'undefined') {{
                 // UTF-8 안전 복원용 Base64 디코딩
@@ -69,12 +74,21 @@ class GameBuilder(Builder):
             with open(output_file_path, 'w', encoding='utf-8-sig') as f:
                 f.write(new_html_content)
                 
-            # 동시에 gas/ 폴더 밑의 Index_{unit_code}.html 배포 복사 동조
+            # 동시에 gas/ 폴더 밑 및 서브 프로젝트 폴더 밑의 Index_{unit_code}.html 배포 복사 동조
             gas_target_dir = paths.ROOT_DIR / "gas"
             if gas_target_dir.exists():
                 gas_file_name = f"Index_{unit_code}.html"
+                # root gas folder
                 with open(gas_target_dir / gas_file_name, 'w', encoding='utf-8-sig') as gf:
                     gf.write(new_html_content)
+                
+                # sub project folders (m1_project, m2_project, m3_project)
+                sub_proj = f"m1_project" if "m1_" in unit_code else ("m2_project" if "m2_" in unit_code else "m3_project")
+                sub_target_dir = gas_target_dir / sub_proj
+                if sub_target_dir.exists():
+                    with open(sub_target_dir / gas_file_name, 'w', encoding='utf-8-sig') as gsf:
+                        gsf.write(new_html_content)
+                    print(f"  [OK] Apps Script sub-project game deployment copied: {sub_proj}/{gas_file_name}")
                 print(f"  [OK] Apps Script game deployment copied: {gas_file_name}")
                 
             print(f"  [OK] Game compiled successfully: {output_file_path.name}")
