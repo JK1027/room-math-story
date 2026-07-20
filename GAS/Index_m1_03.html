@@ -145,7 +145,7 @@
         .panel-image {
             width: 100%;
             height: auto;
-            max-height: 280px;
+            max-height: 330px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
@@ -466,6 +466,28 @@
             50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
         }
 
+        /* 사운드 조절 아이콘 버튼 */
+        .sound-icon-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            padding: 4px 8px;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            font-weight: bold;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        .sound-icon-btn:hover {
+            background: rgba(96, 165, 250, 0.2);
+            border-color: #60A5FA;
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.4);
+        }
+
         /* 타이머 경고 점멸 */
         .timer-warning {
             animation: blink-red 0.2s 5;
@@ -476,19 +498,6 @@
             50% { color: #ffffff; text-shadow: none; }
         }
 
-        /* 사운드 조절 고정 버튼 */
-        .sound-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--glass-border);
-            padding: 8px 16px;
-            border-radius: 20px;
-            color: white;
-            cursor: pointer;
-            z-index: 100;
-            backdrop-filter: blur(10px);
             font-size: 0.9rem;
             transition: all 0.3s;
             font-weight: bold;
@@ -608,7 +617,7 @@
     <div class="bubble" style="left: 70%; width: 18px; height: 18px; animation-delay: 3s; animation-duration: 11s;"></div>
     <div class="bubble" style="left: 90%; width: 22px; height: 22px; animation-delay: 5s; animation-duration: 9s;"></div>
 
-    <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔇 소리 꺼짐</button>
+
 
     <div class="container">
         <!-- 상단 진행도 표시 바 -->
@@ -749,7 +758,7 @@
                 // 1. INTRO PANEL
                 const introHtml = 
                     '<div id="panel_intro" class="glass-panel active">\n' +
-                    '    <h2>SYSTEM INITIATION</h2>\n' +
+                    '    <h2>SYSTEM INITIATION <button class="sound-icon-btn" onclick="toggleSound()">' + (isMuted ? '🔇' : '🔊') + '</button></h2>\n' +
                     '    <img src="' + assetsBase + '/' + this.data.intro.image + '" class="panel-image" alt="Intro">\n' +
                     '    <div class="story-box" style="display: none;">\n' +
                     '        <div class="story-text"></div>\n' +
@@ -819,7 +828,7 @@
 
                     const qHtml = 
                         '<div class="glass-panel ' + (q.extra_class || '') + '">\n' +
-                        '    <h2>제 ' + q.qnum + '구역: ' + q.title + ' <span class="game-timer">40:00</span></h2>\n' +
+                        '    <h2>제 ' + q.qnum + '구역: ' + q.title + ' <span class="game-timer">40:00</span> <button class="sound-icon-btn" onclick="toggleSound()">' + (isMuted ? '🔇' : '🔊') + '</button></h2>\n' +
                         '    <img src="' + assetsBase + '/' + q.image + '" class="panel-image" alt="Q' + q.qnum + '">\n' +
                         '    <div class="story-box">\n' +
                         '        <div class="story-text"></div>\n' +
@@ -896,7 +905,7 @@
                 this.data.events.forEach(ev => {
                     const evHtml = 
                         '<div class="glass-panel">\n' +
-                        '    <h2>[돌발] ' + ev.title + ' <span class="game-timer">40:00</span></h2>\n' +
+                        '    <h2>[돌발] ' + ev.title + ' <span class="game-timer">40:00</span> <button class="sound-icon-btn" onclick="toggleSound()">' + (isMuted ? '🔇' : '🔊') + '</button></h2>\n' +
                         '    <img src="' + assetsBase + '/' + ev.image + '" class="panel-image" alt="Event">\n' +
                         '    <div class="story-box">\n' +
                         '        <div class="story-text"></div>\n' +
@@ -923,7 +932,7 @@
                 const outroHtml = 
                     '<div id="outro" class="glass-panel">\n' +
                     '    <h1 style="color:var(--primary-neon); text-align:center;">미션 성공!</h1>\n' +
-                    '    <h2>' + this.data.title + '</h2>\n' +
+                    '    <h2>' + this.data.title + ' <button class="sound-icon-btn" onclick="toggleSound()">' + (isMuted ? '🔇' : '🔊') + '</button></h2>\n' +
                     '    <img src="' + assetsBase + '/' + this.data.outro.image + '" class="panel-image" alt="Outro">\n' +
                     '    <div class="story-box">\n' +
                     '        <div class="story-text" id="outro-dynamic-text">미션 결과를 산출 중입니다...</div>\n' +
@@ -1311,12 +1320,13 @@
 
         function toggleSound() {
             isMuted = !isMuted;
-            const btn = document.getElementById('soundToggle');
+            const btns = document.querySelectorAll('.sound-icon-btn');
+            btns.forEach(btn => {
+                btn.innerText = isMuted ? '🔇' : '🔊';
+            });
             if (isMuted) {
-                if(btn) btn.innerText = '🔇 소리 꺼짐';
                 stopBGM();
             } else {
-                if(btn) btn.innerText = '🔊 소리 켜짐';
                 startBGM();
             }
         }
