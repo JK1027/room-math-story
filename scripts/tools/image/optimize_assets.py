@@ -12,8 +12,8 @@ if _root not in sys.path:
     sys.path.append(_root)
 from scripts.config import paths
 
-RAW_ASSETS_DIR = paths.ROOT_DIR / "assets" / "raw_assets"
-OPTIMIZED_ASSETS_DIR = paths.APPS_DIR / "assets"
+RAW_ASSETS_DIR = paths.ROOT_DIR / "assets" / "raw_units"
+OPTIMIZED_ASSETS_DIR = paths.ROOT_DIR / "assets" / "units"
 CACHE_FILE = paths.ROOT_DIR / "scratch" / "asset_cache.json"
 
 MAX_EDGE = 1280

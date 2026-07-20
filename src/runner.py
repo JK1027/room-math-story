@@ -21,6 +21,8 @@ def write_json_report(report_data: dict):
     except Exception as e:
         print(f"[-] Failed to generate build report: {e}", file=sys.stderr)
 
+from scripts.tools.image.optimize_assets import optimize_all_assets
+
 def run_pipeline(grade_str: str, unit_code: str, build_storybook_flag: bool = True, build_game_flag: bool = False) -> bool:
     """
     [PipelineRunner 코어] 단일 단원(예: m1_02)에 대해 
@@ -32,6 +34,13 @@ def run_pipeline(grade_str: str, unit_code: str, build_storybook_flag: bool = Tr
     
     print(f"\n>>> Running Pipeline for {unit_code.upper()} ({chapter_file_name})")
     
+    # ─── 0. OPTIMIZE ASSETS (Pre-process) ──────────────
+    print("  [0/3] Optimizing Asset Images...")
+    try:
+        optimize_all_assets()
+    except Exception as e:
+        print(f"  [Warning] Asset optimization failed: {e}", file=sys.stderr)
+        
     # ─── 1. PARSE ──────────────────────────────────────
     print("  [1/3] Parsing Chapter Source...")
     parse_result = parse_chapter(str(chapter_path))
