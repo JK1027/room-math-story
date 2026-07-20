@@ -1143,6 +1143,10 @@
 
                     const errMsg = document.getElementById(`error${qnum}`);
                     if (errMsg) {
+                        if (!errMsg.dataset.originalMsg) {
+                            errMsg.dataset.originalMsg = errMsg.textContent;
+                        }
+                        errMsg.innerHTML = `<span style="color: var(--danger-neon); font-weight: bold;">(오답 ${this.currentWrongCount}/3회)</span> ` + errMsg.dataset.originalMsg;
                         errMsg.style.display = 'block';
                         setTimeout(() => errMsg.style.display = 'none', 3000);
                     }
