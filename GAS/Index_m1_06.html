@@ -145,26 +145,19 @@
         .panel-image {
             width: 100%;
             height: auto;
-            max-height: 250px;
+            max-height: 280px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
-            transition: max-height 0.5s ease-in-out;
         }
 
-        /* 대사 읽기 전용 모드 - 이미지 확대 및 문제/버튼 완전 감춤 */
-        .glass-panel.read-mode .panel-image {
-            max-height: 380px;
-        }
+        /* 대사 읽기 전용 모드 - 문제/버튼 완전 감춤 */
         .glass-panel.read-mode .question-box,
         .glass-panel.read-mode .btn-group {
             display: none !important;
         }
 
-        /* 문제 풀이 모드 - 이미지 축소 및 문제/버튼 페이드인 */
-        .glass-panel.solve-mode .panel-image {
-            max-height: 250px;
-        }
+        /* 문제 풀이 모드 - 문제/버튼 페이드인 */
         .glass-panel.solve-mode .question-box,
         .glass-panel.solve-mode .btn-group {
             display: block !important;
@@ -185,9 +178,10 @@
             margin-bottom: 1.5rem;
             border-radius: 0 12px 12px 0;
             box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            height: 120px;
             min-height: 120px;
-            height: auto;
-            padding-bottom: 2.5rem;
+            overflow-y: hidden;
+            padding-bottom: 2.2rem;
             box-sizing: border-box;
         }
 
@@ -1364,8 +1358,8 @@
             const finalChunk = text.substring(start).trim();
             if (finalChunk) rawChunks.push(finalChunk);
 
-            // 각 청크가 대사 박스 높이를 넘지 않도록 60자 기준으로 2차 안전 슬라이싱
-            const MAX_LEN = 60;
+            // 각 청크가 대사 박스 높이를 넘지 않도록 45자 기준으로 2차 안전 슬라이싱
+            const MAX_LEN = 45;
             rawChunks.forEach(chunk => {
                 if (chunk.length <= MAX_LEN) {
                     result.push(chunk);
