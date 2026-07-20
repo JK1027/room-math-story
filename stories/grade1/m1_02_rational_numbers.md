@@ -500,8 +500,6 @@ q11.png
 ### Question
 <strong>Q11. [정수의 덧셈]</strong><br>(-5) + (+8) 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -537,8 +535,6 @@ q12.png
 ### Question
 <strong>Q12. [정수의 뺄셈]</strong><br>(+3) - (-7) 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -574,8 +570,6 @@ q13.png
 ### Question
 <strong>Q13. [유리수의 덧셈]</strong><br>(-2.5) + (-1.5) 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -615,8 +609,6 @@ q14.png
 ### Question
 <strong>Q14. [정수의 덧뺄셈 혼합]</strong><br>5 - 9 + 3 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -652,8 +644,6 @@ q15.png
 ### Question
 <strong>Q15. [식의 바른 계산]</strong><br>어떤 수에서 -3을 빼야 할 것을 잘못하여 더했더니 5가 되었다. 바르게 계산한 답을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -718,8 +708,6 @@ q16.png
 ### Question
 <strong>Q16. [정수의 곱셈]</strong><br>(-4) × (+6) 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -755,8 +743,6 @@ q17.png
 ### Question
 <strong>Q17. [정수의 나눗셈]</strong><br>(-15) ÷ (-3) 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -792,8 +778,6 @@ q18.png
 ### Question
 <strong>Q18. [거듭제곱]</strong><br>$(-2)^3$ 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -854,8 +838,6 @@ q19.png
 ### Question
 <strong>Q19. [유리수의 사칙혼합 1]</strong><br>$(-2) \times (-3) - (+10) \div (-2)$ 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -891,8 +873,6 @@ q20.png
 ### Question
 <strong>Q20. [유리수의 사칙혼합 2]</strong><br>$12 - [ 5 - \{ (-2) \times 3 - 4 \} ]$ 의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact

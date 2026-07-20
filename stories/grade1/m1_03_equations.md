@@ -326,10 +326,10 @@ q8.png
 <strong>Q8. [일차식 판별]</strong><br>다음 중 차수가 1인 <strong>일차식</strong>의 번호만 쓰시오.<br>(1) 3x² &nbsp;&nbsp;(2) 0 × x + 2 &nbsp;&nbsp;(3) 1/x + 1 &nbsp;&nbsp;(4) -2x + 1
 
 ### Choices
-- 3x²
-- 0
-- 1/x
-- -2x
+- 1
+- 2
+- 3
+- 4
 
 ### Answer
 type: exact
@@ -450,8 +450,6 @@ q11.png
 ### Question
 <strong>Q11. [방정식의 이해]</strong><br>다음 식 중 미지수 x에 따라 참도 되고 거짓도 되는 <strong>방정식</strong>인 것의 번호를 쓰시오.<br>(1) 2x + 3 &nbsp;&nbsp;(2) x + x = 2x &nbsp;&nbsp;(3) 3x - 1 = 5 &nbsp;&nbsp;(4) 3 < 5
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -487,8 +485,6 @@ q12.png
 ### Question
 <strong>Q12. [일차방정식 1]</strong><br>방정식 x - 4 = 6 의 해를 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -524,8 +520,6 @@ q13.png
 ### Question
 <strong>Q13. [일차방정식 2]</strong><br>방정식 2x + 5 = 11 의 해를 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -563,8 +557,6 @@ q14.png
 ### Question
 <strong>Q14. [일차방정식 3]</strong><br>방정식 3x - 2 = x + 6 의 해를 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -600,8 +592,6 @@ q15.png
 ### Question
 <strong>Q15. [비례식 풀이]</strong><br>비례식 (x - 1) : 2 = (2x + 1) : 5 을 만족하는 해 x의 값을 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -640,8 +630,6 @@ q16.png
 ### Question
 <strong>Q16. [연속하는 세 수]</strong><br>연속하는 세 자연수의 합이 36일 때, 세 자연수 중 가장 큰 자연수를 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -677,8 +665,6 @@ q17.png
 ### Question
 <strong>Q17. [식의 활용 1]</strong><br>어떤 수의 3배에서 5를 뺀 수는 어떤 수의 2배보다 4만큼 크다. 이 어떤 수를 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -714,8 +700,6 @@ q18.png
 ### Question
 <strong>Q18. [과부족 문제]</strong><br>요원들에게 산소 팩을 나누어 주는데, 한 명에게 4개씩 주면 3개가 남고, 5개씩 주면 2개가 부족하다. 요원 수(명)를 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: exact
@@ -753,8 +737,6 @@ q19.png
 ### Question
 <strong>Q19. [거리 속력 시간]</strong><br>해치까지 가는데 시속 4km로 걸어가면 시속 12km로 호버보드를 타고 가는 것보다 20분 늦게 도착한다. 총 통로 거리(km)를 구하시오.
 
-### Choices
-- 없음
 
 ### Answer
 type: any_of
@@ -791,8 +773,6 @@ q20.png
 ### Question
 <strong>Q20. [나이에 관한 문제]</strong><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?
 
-### Choices
-- 없음
 
 ### Answer
 type: any_of

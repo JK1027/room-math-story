@@ -115,7 +115,7 @@ q3.png
 ### Answer
 type: exact
 values:
-  - "ans.includes(반직선)"
+  - "반직선"
 
 ### Placeholder
 정답 입력
