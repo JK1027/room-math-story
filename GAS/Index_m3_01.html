@@ -1041,14 +1041,12 @@
                     }
                 };
 
-                // GAS 시트에 기록 저장 후 화면 이동 대신 대사 시퀀스 실행
+                // GAS 서버 요청은 비동기로 백그라운드에서 기록하고, 화면 전환은 딜레이 없이 즉시 실행
+                proceedLogin(null);
                 if (typeof google !== 'undefined' && google.script && google.script.run) {
                     google.script.run.withSuccessHandler((rowNum) => {
-                        proceedLogin(rowNum);
+                        if (rowNum) window.userRecordRow = rowNum;
                     }).recordStart(sNum, sName, this.data.unit_code);
-                } else {
-                    // 로컬 환경 폴백
-                    proceedLogin(null);
                 }
             },
 
