@@ -1,255 +1,453 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>수학 방탈출 게임</title>
-    <!-- 구글 폰트 및 외부 리소스 -->
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Pretendard 웹폰트 및 외부 리소스 -->
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     
     <style>
         :root {
-            --primary-neon: #00f2fe;
-            --accent-neon: #4facfe;
-            --danger-neon: #ef4444;
-            --bg-glass: rgba(10, 25, 47, 0.7);
-            --border-glass: rgba(0, 242, 254, 0.2);
-            --text-glow: 0 0 10px rgba(0, 242, 254, 0.5);
+            --primary: #0F172A; 
+            --secondary: #1E3A8A; 
+            --accent: #FBBF24; 
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --danger: #EF4444;
+            --success: #10B981;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(96, 165, 250, 0.4);
+            --accent-blue: #60A5FA;
+            --error-red: #EF4444;
         }
 
         /* ─── 학년/단원별 테마별 CSS 확장 바인딩 ─── */
         body.theme-atlantis {
-            background: radial-gradient(circle at center, #0a2540 0%, #001020 100%);
-            --primary-neon: #60a5fa;
-            --accent-neon: #3b82f6;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(96, 165, 250, 0.4);
+            --accent: #FBBF24;
+            --accent-blue: #60A5FA;
         }
         body.theme-da_vinci {
-            background: radial-gradient(circle at center, #3e2723 0%, #1a0c00 100%);
-            --primary-neon: #d97706;
-            --accent-neon: #f59e0b;
+            --glass-bg: rgba(45, 25, 15, 0.75);
+            --glass-border: rgba(217, 119, 6, 0.4);
+            --accent: #fbbf24;
+            --accent-blue: #f59e0b;
         }
         body.theme-space {
-            background: radial-gradient(circle at center, #1e1b4b 0%, #030712 100%);
-            --primary-neon: #a855f7;
-            --accent-neon: #c084fc;
+            --glass-bg: rgba(20, 15, 35, 0.75);
+            --glass-border: rgba(168, 85, 247, 0.4);
+            --accent: #c084fc;
+            --accent-blue: #a855f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background: #030712;
-            color: #f3f4f6;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
+            font-family: 'Pretendard', sans-serif;
+            background-color: #020617;
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* 게임 전용 뷰포트 컨테이너 */
-        #game-viewport {
-            position: relative;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(2, 6, 23, 0.95) 100%), rgba(15, 23, 42, 0.85);
+            z-index: -2;
+        }
+
+
+
+        /* 배경 거품 기포 애니메이션 효과 */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            bottom: -50px;
+            animation: floatUp 10s infinite linear;
+            z-index: -1;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+
+        /* 반응형 컨테이너 레이아웃 */
+        .container {
             width: 100%;
-            max-width: 900px;
-            height: 600px;
-            background: #020617;
-            border: 2px solid var(--primary-neon);
-            box-shadow: 0 0 25px var(--primary-neon);
-            border-radius: 16px;
-            overflow: hidden;
-            box-sizing: border-box;
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
         }
 
         /* 공통 글래스모피즘 패널 구조 */
         .glass-panel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            box-sizing: border-box;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(96, 165, 250, 0.1);
             display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-panel.active {
-            display: flex;
+            display: block;
             opacity: 1;
+            transform: translateY(0);
         }
 
         h2 {
-            font-family: 'Orbitron', sans-serif;
-            margin: 0;
-            font-size: 1.5rem;
-            color: var(--primary-neon);
-            text-shadow: var(--text-glow);
-            border-bottom: 2px solid var(--border-glass);
+            font-size: 1.8rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.8), 0 0 20px rgba(251, 191, 36, 0.4), 0 2px 5px rgba(0,0,0,0.8);
+            border-bottom: 2px solid rgba(251, 191, 36, 0.5);
             padding-bottom: 10px;
+            display: inline-block;
+            width: 100%;
+            box-shadow: 0 10px 10px -10px rgba(251, 191, 36, 0.3);
         }
 
         /* 타이머 영역 */
         .game-timer {
             float: right;
-            color: var(--danger-neon);
+            color: var(--danger);
             font-family: 'Share Tech Mono', monospace;
             font-size: 1.4rem;
-            text-shadow: 0 0 8px var(--danger-neon);
+            text-shadow: 0 0 8px var(--danger);
         }
 
         .panel-image {
             width: 100%;
-            height: 220px;
+            height: auto;
+            max-height: 250px;
             object-fit: cover;
             border-radius: 8px;
-            border: 1px solid var(--border-glass);
-            margin: 15px 0;
+            margin-bottom: 1rem;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        /* 대사 읽기 전용 모드 - 이미지 확대 및 문제/버튼 완전 감춤 */
+        .glass-panel.read-mode .panel-image {
+            max-height: 380px;
+        }
+        .glass-panel.read-mode .question-box,
+        .glass-panel.read-mode .btn-group {
+            display: none !important;
+        }
+
+        /* 문제 풀이 모드 - 이미지 축소 및 문제/버튼 페이드인 */
+        .glass-panel.solve-mode .panel-image {
+            max-height: 250px;
+        }
+        .glass-panel.solve-mode .question-box,
+        .glass-panel.solve-mode .btn-group {
+            display: block !important;
+            animation: cardFadeIn 0.6s forwards;
+        }
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* 스토리 및 지문 */
         .story-box {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-glass);
-            border-radius: 8px;
-            padding: 12px 18px;
-            max-height: 100px;
-            overflow-y: auto;
+            cursor: pointer;
             position: relative;
+            background: linear-gradient(90deg, rgba(30, 58, 138, 0.5) 0%, rgba(0,0,0,0.3) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            min-height: 120px;
+            height: auto;
+            padding-bottom: 2.5rem;
+            box-sizing: border-box;
         }
 
         .story-text {
-            font-size: 0.95rem;
-            line-height: 1.5;
-            color: #e5e7eb;
-        }
-
-        .story-log-trigger {
-            position: absolute;
-            right: 10px;
-            bottom: 5px;
-            background: transparent;
-            border: none;
-            color: var(--accent-neon);
-            cursor: pointer;
-            font-size: 0.8rem;
+            width: 100%;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
         }
 
         /* 퀴즈 문제 구역 */
         .question-box {
             background: rgba(0, 0, 0, 0.5);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 10px;
-            border-left: 4px solid var(--primary-neon);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-box::before {
+            content: 'Q';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 6rem;
+            font-weight: 900;
+            color: rgba(96, 165, 250, 0.05);
+            z-index: 0;
         }
 
         .question-content {
-            font-size: 1rem;
-            color: #f9fafb;
+            position: relative;
+            z-index: 1;
+            font-size: 1.0rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
-        .input-group input {
+        .input-group {
+            margin-top: 1.5rem;
+        }
+
+        input[type="text"] {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass);
-            border-radius: 6px;
-            padding: 10px;
-            color: #ffffff;
-            font-size: 1.1rem;
-            margin-top: 10px;
-            outline: none;
+            padding: 1.2rem;
+            background: rgba(2, 6, 23, 0.8);
+            border: 2px solid rgba(96, 165, 250, 0.5);
+            color: #60A5FA;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: inherit;
+            transition: all 0.3s;
             box-sizing: border-box;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
+            outline: none;
         }
 
-        .input-group input:focus {
-            border-color: var(--primary-neon);
-            box-shadow: 0 0 10px var(--primary-neon);
+        input[type="text"]:focus {
+            border-color: #60A5FA;
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.5), inset 0 2px 10px rgba(0,0,0,0.8);
         }
 
         /* 객관식 라디오 레이아웃 */
         .radio-label {
             display: block;
             margin-bottom: 0.6rem;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            padding: 8px 15px;
+            padding: 8px 14px;
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 6px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.2s;
         }
         
         .radio-label:hover {
-            background: rgba(0, 242, 254, 0.08);
-            border-color: var(--primary-neon);
+            background: rgba(30, 58, 138, 0.4);
+            border-color: var(--accent-blue);
         }
 
         /* 버튼 및 그룹 */
         .btn-group {
             display: flex;
-            justify-content: flex-end;
-            margin-top: 12px;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
         .btn {
-            background: transparent;
-            border: 1px solid var(--primary-neon);
-            color: var(--primary-neon);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            padding: 10px 24px;
-            border-radius: 6px;
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            color: white;
+            border: 1px solid #60A5FA;
+            padding:  0.6rem 1.5rem;
+            font-size:  1.1rem;
+            font-weight: 900;
+            border-radius:  8px;
             cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
-            text-shadow: var(--text-glow);
-            box-shadow: inset 0 0 5px rgba(0, 242, 254, 0.2);
-            transition: all 0.2s;
+            letter-spacing: 3px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
         }
 
         .btn:hover {
-            background: var(--primary-neon);
-            color: #020617;
-            box-shadow: 0 0 15px var(--primary-neon);
-            text-shadow: none;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(29, 78, 216, 0.7), inset 0 2px 5px rgba(255,255,255,0.6);
         }
 
         .btn-hint {
-            background: transparent;
-            border: 1px solid var(--accent-neon);
-            color: var(--accent-neon);
-            border-radius: 4px;
-            padding: 2px 8px;
-            font-size: 0.75rem;
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 6px;
             cursor: pointer;
-            margin-left: 6px;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .btn-hint:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(52,211,153,0.4);
         }
 
         /* 에러 메시지 */
         .error-msg {
-            color: var(--danger-neon);
-            font-weight: bold;
-            font-size: 0.9rem;
-            margin-top: 6px;
+            color: #EF4444;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
             display: none;
-            text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
             text-align: center;
-        }
-
-        .radio-msg {
-            color: var(--accent-neon);
-            font-size: 0.9rem;
-            margin-top: 4px;
             font-weight: bold;
-            text-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
-            text-align: center;
+            text-shadow: 0 0 10px rgba(239,68,68,0.3);
         }
 
-        /* 락다운 오버레이 */
+        /* 쉐이크 흔들림 효과 */
+        .shake { animation: shake-act 0.5s; }
+        @keyframes shake-act {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* 4단원용 그래프 박스 전용 레이아웃 */
+        .graph-container {
+            background: rgba(248, 250, 252, 0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.3), inset 0 0 10px rgba(0,0,0,0.1);
+            border: 2px solid #60A5FA;
+        }
+
+        /* 오답 시 적색 레이저 플래시 오버레이 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 0, 0, 0);
+            pointer-events: none;
+            z-index: 9999;
+            transition: background 0.15s ease-out;
+        }
+        .laser-flash-active {
+            background: rgba(255, 0, 0, 0.15);
+            transition: none;
+        }
+
+        /* 화면 흔들림 효과 */
+        @keyframes shakePage {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shakePage 0.3s ease-in-out;
+        }
+
+        /* 최상단 슬라이딩 이전 대사 로그 모달 */
+        .log-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; max-height: 50vh;
+            background: rgba(40, 40, 40, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--accent-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        .log-modal.active {
+            display: flex;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        .log-content {
+            background: transparent;
+            border: none;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            max-height: 50vh;
+            overflow-y: auto;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .log-content h2 { margin-top: 0; color: var(--accent-blue); }
+        .log-content hr { border-color: rgba(255,255,255,0.1); margin: 15px 0; }
+        .close-log {
+            float: right;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* 3회 오답 강제 이송 락다운 오버레이 및 펄스 보더 */
         .glitch-overlay-screen {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -260,56 +458,193 @@
             justify-content: center;
             align-items: center;
             pointer-events: none;
-            border: 10px solid var(--danger-neon);
+            border: 10px solid #ef4444;
+            animation: pulse-border 0.2s infinite;
         }
         .glitch-overlay-text {
             font-family: 'Share Tech Mono', monospace;
             font-size: 2.8rem;
-            color: var(--danger-neon);
-            text-shadow: 0 0 20px var(--danger-neon);
+            color: #ef4444;
+            text-shadow: 0 0 20px #ef4444;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+            50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
         }
 
-        /* 모달 로그 오버레이 */
-        #logModal {
-            display: none;
+        /* 타이머 경고 점멸 */
+        .timer-warning {
+            animation: blink-red 0.2s 5;
+            font-size: 1.5rem !important;
+        }
+        @keyframes blink-red {
+            0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+            50% { color: #ffffff; text-shadow: none; }
+        }
+
+        /* 사운드 조절 고정 버튼 */
+        .sound-toggle {
             position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80%; max-width: 500px;
-            background: rgba(10, 20, 30, 0.95);
-            border: 2px solid var(--primary-neon);
-            border-radius: 12px;
-            padding: 20px;
-            z-index: 10000;
-            color: #ffffff;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-weight: bold;
         }
 
-        /* 쉐이크 흔들림 효과 */
-        .shake { animation: shake-act 0.4s; }
-        @keyframes shake-act {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+        .sound-toggle:hover {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: #60A5FA;
+            box-shadow: 0 0 15px #60A5FA;
+        }
+
+        /* 진행도 표시 바 */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            display: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #60A5FA;
+            box-shadow: 0 0 15px #60A5FA;
+            transition: width 0.5s ease;
+        }
+
+        .radio-msg {
+            color: #60a5fa;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px #3b82f6;
+            text-align: center;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 일러스트 전체 화면 오버레이 스타일 */
+        .illustration-fullscreen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(2, 6, 23, 0.97);
+            z-index: 9500;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+        }
+        .illustration-fullscreen img {
+            max-width: 90%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 30px rgba(96, 165, 250, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .overlay-guide {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                overflow-y: auto;
+            }
+            .container {
+                padding: 10px;
+            }
+            .glass-panel {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: 1.2rem;
+            }
+            .story-box {
+                min-height: 110px;
+                height: auto;
+            }
+            .btn-group {
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+            .sound-toggle {
+                top: 10px;
+                right: 10px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="game-viewport">
-        <!-- 런타임에 이 컨테이너 하위로 패널들이 렌더링되거나 제어됩니다. -->
+    <div id="laserOverlay" class="laser-flash-overlay"></div>
+
+    <div class="bubble" style="left: 10%; width: 20px; height: 20px; animation-delay: 0s; animation-duration: 12s;"></div>
+    <div class="bubble" style="left: 30%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 8s;"></div>
+    <div class="bubble" style="left: 50%; width: 25px; height: 25px; animation-delay: 1s; animation-duration: 10s;"></div>
+    <div class="bubble" style="left: 70%; width: 18px; height: 18px; animation-delay: 3s; animation-duration: 11s;"></div>
+    <div class="bubble" style="left: 90%; width: 22px; height: 22px; animation-delay: 5s; animation-duration: 9s;"></div>
+
+    <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔇 소리 꺼짐</button>
+
+    <div class="container">
+        <!-- 상단 진행도 표시 바 -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- 런타임 패널 컨테이너 -->
         <div id="panels-container"></div>
     </div>
 
     <!-- 락다운 및 공통 모달 -->
     <div id="glitchOverlay" class="glitch-overlay-screen">
         <div class="glitch-overlay-text">🚨 SYSTEM ERROR 🚨</div>
-        <div style="color: white; margin-top: 10px;">ACCESS TEMPORARILY LOCKDOWN</div>
+        <div class="glitch-overlay-sub">ACCESS TEMPORARILY LOCKDOWN</div>
     </div>
 
-    <div id="logModal">
-        <h3>📜 지나간 이전 스토리 로그</h3>
-        <div id="logContent" style="max-height: 250px; overflow-y: auto; font-size: 0.9rem; line-height: 1.5;"></div>
-        <button class="btn" style="margin-top: 15px; width: 100%;" onclick="closeLog()">닫기</button>
+    <!-- Story Log UI -->
+    <div id="storyLogModal" class="log-modal">
+        <div class="log-content">
+            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
+            <h2>📜 지나온 해저 탐사 기록</h2>
+            <div id="logContainer">기록이 없습니다.</div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Illustration Overlay -->
+    <div id="illustrationOverlay" class="illustration-fullscreen" onclick="GameRuntime.closeIllustrationOverlay()">
+        <img id="overlayImg" src="" alt="Fullscreen Illustration">
+        <div class="overlay-guide">[ 화면을 터치하여 조사하기 ]</div>
     </div>
 
     <!-- ─── GameRuntime 공통 자바스크립트 엔진 ─── -->
@@ -337,12 +672,55 @@
                 this.showPanel('panel_intro');
             },
 
+            pendingPanelId: null,
+
             showPanel: function(panelId) {
-                document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
                 const target = document.getElementById(panelId);
-                if (target) {
-                    target.classList.add('active');
-                    this.activePanelId = panelId;
+                if (!target) return;
+
+                // 인트로 패널이 아니며 일러스트 이미지가 존재하는 경우 풀스크린 오버레이 먼저 노출
+                const imgEl = target.querySelector('.panel-image');
+                const overlay = document.getElementById('illustrationOverlay');
+                const overlayImg = document.getElementById('overlayImg');
+
+                if (panelId !== 'panel_intro' && imgEl && overlay && overlayImg && this.pendingPanelId !== panelId) {
+                    this.pendingPanelId = panelId;
+                    overlayImg.src = imgEl.src;
+                    overlay.style.display = 'flex';
+                    overlay.style.opacity = '0';
+                    // 리플로우 강제 유발 후 불투명도 적용
+                    void overlay.offsetWidth;
+                    overlay.style.opacity = '1';
+                    return; // 패널 렌더링 지연
+                }
+
+                // 오버레이가 이미 닫힌 상태이거나 없는 경우 본래 동작 실행
+                this.pendingPanelId = null;
+                document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
+                
+                target.classList.add('active');
+                this.activePanelId = panelId;
+
+                // 대사 읽기 전용 모드 클래스 세팅 (이미지 최대화, 문제 가림)
+                target.classList.remove('solve-mode');
+                target.classList.add('read-mode');
+
+                // 스토리 타이머 구동 후 완료 콜백에서 보여줌
+                const storyBox = target.querySelector('.story-box');
+                if (storyBox) {
+                    if (panelId === 'panel_intro') {
+                        target.classList.remove('read-mode');
+                        target.classList.add('solve-mode');
+                        return;
+                    }
+                    typeWriterHTML(storyBox, 15, () => {
+                        // 대사 읽기 끝났으므로 문제 풀이 모드로 전환 (이미지 축소, 문제 서서히 표출)
+                        target.classList.remove('read-mode');
+                        target.classList.add('solve-mode');
+                    });
+                } else {
+                    target.classList.remove('read-mode');
+                    target.classList.add('solve-mode');
                 }
                 
                 // 오프닝을 넘어가 게임에 들어가는 시점에 타이머 자동 시작
@@ -351,33 +729,81 @@
                 }
             },
 
+            closeIllustrationOverlay: function() {
+                const overlay = document.getElementById('illustrationOverlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        // 지연되었던 대사 카드 활성화 실행
+                        if (this.pendingPanelId) {
+                            const nextPanelId = this.pendingPanelId;
+                            // 무한 루프 차단하기 위해 임시 보관
+                            this.pendingPanelId = nextPanelId; 
+                            this.showPanel(nextPanelId);
+                        }
+                    }, 500); // 0.5s transition 대기
+                }
+            },
+
             render: function() {
                 const container = document.getElementById('panels-container');
                 container.innerHTML = '';
                 
-                const assetsBase = `https://jk1027.github.io/room-math-story/assets/units/${this.data.unit_code}`;
+                const assetsBase = 'https://raw.githubusercontent.com/JK1027/room-math-story/feat/cleanup-storyboards/assets/units/' + this.data.unit_code;
                 
                 // 1. INTRO PANEL
-                const introHtml = `
-                    <div id="panel_intro" class="glass-panel active">
-                        <h2>SYSTEM INITIATION</h2>
-                        <img src="${assetsBase}/${this.data.intro.image}" class="panel-image" alt="Intro">
-                        <div class="story-box">
-                            <div class="story-text">${this.data.intro.story}</div>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn" onclick="GameRuntime.showPanel('panel_q1')">미션 개시</button>
-                        </div>
-                    </div>`;
+                const introHtml = 
+                    '<div id="panel_intro" class="glass-panel active">\n' +
+                    '    <h2>SYSTEM INITIATION</h2>\n' +
+                    '    <img src="' + assetsBase + '/' + this.data.intro.image + '" class="panel-image" alt="Intro">\n' +
+                    '    <div class="story-box" style="display: none;">\n' +
+                    '        <div class="story-text"></div>\n' +
+                    '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
+                    '    </div>\n' +
+                    '    <!-- 학번/이름 입력 및 사운드 조절 UI 영역 -->\n' +
+                    '    <div class="user-info-section" style="margin-top: 15px; border-top: 1px solid var(--border-glass); padding-top: 15px;">\n' +
+                    '        <div style="display: flex; gap: 10px; margin-bottom: 10px;">\n' +
+                    '            <div style="flex: 1;">\n' +
+                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">학번 (예: 1101)</label>\n' +
+                    '                <input type="text" id="studentNum" placeholder="4자리 학번" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
+                    '            </div>\n' +
+                    '            <div style="flex: 1;">\n' +
+                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">이름</label>\n' +
+                    '                <input type="text" id="studentName" placeholder="이름" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div style="display: flex; justify-content: space-between; align-items: center;">\n' +
+                    '            <div id="intro-error" style="color: var(--danger-neon); font-size: 0.85rem; display: none;"></div>\n' +
+                    '            <button id="soundToggle" class="btn-hint" onclick="toggleSound()" style="margin-left: auto;">🔇 소리 꺼짐</button>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '    <div class="btn-group">\n' +
+                    '        <button class="btn" onclick="GameRuntime.submitUserInfo()">미션 개시</button>\n' +
+                    '    </div>\n' +
+                    '</div>';
                 container.insertAdjacentHTML('beforeend', introHtml);
-                storyLogHistory.push(`[오프닝]: ${this.data.intro.story}`);
+                
+                // 인트로 안전 주입
+                const introPanel = container.lastElementChild;
+                const introHtmlParsed = parseMarkdown(this.data.intro.story);
+                introPanel.querySelector('.story-text').dataset.rawHtml = introHtmlParsed;
+                introPanel.querySelector('.story-text').innerHTML = '';
+                
+                // 동적으로 로드되는 UI 연계 처리
+                const isGasEnv = typeof google !== 'undefined' && google.script && google.script.run;
+                if (!isGasEnv) {
+                    window.playerFirstName = "캡틴";
+                }
+                
+
 
                 // 2. Q1 ~ Q20 PANELS
                 this.data.questions.forEach((q, idx) => {
                     const nextStage = idx === 19 ? 'panel_event4' : 
                                      (q.qnum === 5 ? 'panel_event1' : 
                                       (q.qnum === 10 ? 'panel_event2' : 
-                                       (q.qnum === 15 ? 'panel_event3' : `panel_q${q.qnum + 1}`)));
+                                       (q.qnum === 15 ? 'panel_event3' : ('panel_q' + (q.qnum + 1)))));
                     
                     const btnText = q.qnum === 1 ? '잠항 시작' : (q.qnum === 20 ? '탈출하기' : '다음으로');
                     
@@ -385,86 +811,153 @@
                     if (q.choices && q.choices.length > 0) {
                         let optionsHtml = '';
                         q.choices.forEach(opt => {
-                            optionsHtml += `
-                                <label class="radio-label">
-                                    <input type="radio" name="ans_group${q.qnum}" value="${opt}"> ${opt}
-                                </label>`;
+                            optionsHtml += 
+                                '<label class="radio-label">\n' +
+                                '    <input type="radio" name="ans_group' + q.qnum + '" value="' + opt + '"> ' + opt + '\n' +
+                                '</label>';
                         });
-                        inputHtml = `<div class="options-group" id="ans${q.qnum}_group">${optionsHtml}</div>`;
+                        inputHtml = '<div class="options-group" id="ans' + q.qnum + '_group">' + optionsHtml + '</div>';
                     } else {
-                        inputHtml = `
-                            <div class="input-group">
-                                <input type="text" id="ans${q.qnum}" placeholder="${q.placeholder}">
-                            </div>`;
+                        inputHtml = 
+                            '<div class="input-group">\n' +
+                            '    <input type="text" id="ans' + q.qnum + '" placeholder="' + q.placeholder + '">\n' +
+                            '</div>';
                     }
 
-                    const qHtml = `
-                        <div id="panel_q${q.qnum}" class="glass-panel ${q.extra_class || ''}">
-                            <h2>제 ${q.qnum}구역: ${q.title} <span class="game-timer">40:00</span></h2>
-                            <img src="${assetsBase}/${q.image}" class="panel-image" alt="Q${q.qnum}">
-                            <div class="story-box">
-                                <div class="story-text">${q.story}</div>
-                                <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
-                            </div>
-                            <div class="question-box">
-                                <div class="question-content">
-                                    <strong>${q.qtext}</strong>
-                                    <button class="btn-hint" onclick="alert('💡 힌트: ${q.hint}')">💡 힌트</button>
-                                    ${inputHtml}
-                                </div>
-                            </div>
-                            <div class="error-msg" id="error${q.qnum}">${q.error_message}</div>
-                            <div class="btn-group">
-                                <button class="btn" onclick="GameRuntime.submitAnswer(${q.qnum})">${btnText}</button>
-                            </div>
-                        </div>`;
+                    const qHtml = 
+                        '<div class="glass-panel ' + (q.extra_class || '') + '">\n' +
+                        '    <h2>제 ' + q.qnum + '구역: ' + q.title + ' <span class="game-timer">40:00</span></h2>\n' +
+                        '    <img src="' + assetsBase + '/' + q.image + '" class="panel-image" alt="Q' + q.qnum + '">\n' +
+                        '    <div class="story-box">\n' +
+                        '        <div class="story-text"></div>\n' +
+                        '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
+                        '    </div>\n' +
+                        '    <div class="question-box">\n' +
+                        '        <div class="question-content">\n' +
+                        '            <strong class="q-text-el"></strong>\n' +
+                        '            <button class="btn-hint">💡 힌트</button>\n' +
+                        '            <div class="q-input-container"></div>\n' +
+                        '        </div>\n' +
+                        '    </div>\n' +
+                        '    <div class="error-msg"></div>\n' +
+                        '    <div class="btn-group">\n' +
+                        '        <button class="btn" onclick="GameRuntime.submitAnswer(' + q.qnum + ')">' + btnText + '</button>\n' +
+                        '    </div>\n' +
+                        '</div>';
                     container.insertAdjacentHTML('beforeend', qHtml);
-                    storyLogHistory.push(`[제 ${q.qnum}구역]: ${q.story}`);
+                    // 퀴즈 요소 안전 주입 및 동적 ID 부여
+                    const qPanel = container.lastElementChild;
+                    qPanel.id = 'panel_q' + q.qnum;
+                    
+                    const errorEl = qPanel.querySelector('.error-msg');
+                    errorEl.id = 'error' + q.qnum;
+                    
+                    const qStoryParsed = parseMarkdown(q.story);
+                    qPanel.querySelector('.story-text').dataset.rawHtml = qStoryParsed;
+                    qPanel.querySelector('.story-text').innerHTML = '';
+                    qPanel.querySelector('.q-text-el').innerHTML = q.qtext;
+
+                    // 4단원 그래프 전용 렌더링 탑재 (Q9, Q17)
+                    if (this.data.unit_code === 'm1_04') {
+                        if (q.qnum === 9) {
+                            const graphHtml = 
+                                '<div class="graph-container" style="text-align: center; color: #1e293b; font-family: monospace; font-size: 1.1rem; line-height: 1.5; font-weight: bold; background: #f8fafc; border: 2px solid #3b82f6; padding: 10px; border-radius: 8px; margin: 10px 0;">\n' +
+                                '    [ 수압 그래프 ]<br>\n' +
+                                '    y ( 수압 )<br>\n' +
+                                '    ▲<br>\n' +
+                                '    │<br>\n' +
+                                '    │      / (10, 100)<br>\n' +
+                                '    │     /<br>\n' +
+                                '    │    /<br>\n' +
+                                '    │   /<br>\n' +
+                                '    │  /<br>\n' +
+                                '    └─/────────────────► x ( 시간 )<br>\n' +
+                                '    O ( 원점 )\n' +
+                                '</div>';
+                            qPanel.querySelector('.q-text-el').insertAdjacentHTML('afterend', graphHtml);
+                        } else if (q.qnum === 17) {
+                            const graphHtml = 
+                                '<div class="graph-container" style="text-align: center; color: #1e293b; font-family: monospace; font-size: 1.1rem; line-height: 1.5; font-weight: bold; background: #f8fafc; border: 2px solid #3b82f6; padding: 10px; border-radius: 8px; margin: 10px 0;">\n' +
+                                '    [ 좌표평면의 점 ]<br>\n' +
+                                '    y<br>\n' +
+                                '    ▲<br>\n' +
+                                '    │     * A ( -3, a )<br>\n' +
+                                '    │<br>\n' +
+                                '    │<br>\n' +
+                                '    │          * B ( b, -4 )<br>\n' +
+                                '    └─────────────────► x<br>\n' +
+                                '    O\n' +
+                                '</div>';
+                            qPanel.querySelector('.q-text-el').insertAdjacentHTML('afterend', graphHtml);
+                        }
+                    }
+
+                    qPanel.querySelector('.btn-hint').onclick = () => alert('💡 힌트: ' + q.hint);
+                    errorEl.textContent = q.error_message;
+                    qPanel.querySelector('.q-input-container').innerHTML = inputHtml;
+                    
+
                 });
 
                 // 3. EVENT 1 ~ 4 PANELS
                 this.data.events.forEach(ev => {
-                    const evHtml = `
-                        <div id="panel_event${ev.evnum}" class="glass-panel">
-                            <h2>[돌발] ${ev.title} <span class="game-timer">40:00</span></h2>
-                            <img src="${assetsBase}/${ev.image}" class="panel-image" alt="Event">
-                            <div class="story-box">
-                                <div class="story-text">${ev.story}</div>
-                                <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
-                            </div>
-                            <div class="btn-group">
-                                <button class="btn" onclick="GameRuntime.triggerStageTransition('panel_event${ev.evnum}', '${ev.next_stage}', ${ev.progress})">${ev.btn_text}</button>
-                            </div>
-                        </div>`;
+                    const evHtml = 
+                        '<div class="glass-panel">\n' +
+                        '    <h2>[돌발] ' + ev.title + ' <span class="game-timer">40:00</span></h2>\n' +
+                        '    <img src="' + assetsBase + '/' + ev.image + '" class="panel-image" alt="Event">\n' +
+                        '    <div class="story-box">\n' +
+                        '        <div class="story-text"></div>\n' +
+                        '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
+                        '    </div>\n' +
+                        '    <div class="btn-group">\n' +
+                        '        <button class="btn" onclick="GameRuntime.triggerStageTransition(\'panel_event\' + ev.evnum, \'' + ev.next_stage + '\', ' + ev.progress + ')">' + ev.btn_text + '</button>\n' +
+                        '    </div>\n' +
+                        '</div>';
                     container.insertAdjacentHTML('beforeend', evHtml);
-                    storyLogHistory.push(`[돌발 이벤트 ${ev.evnum}]: ${ev.story}`);
+                    
+                    // 이벤트 요소 안전 주입 및 동적 ID 부여
+                    const evPanel = container.lastElementChild;
+                    evPanel.id = 'panel_event' + ev.evnum;
+                    
+                    const evStoryParsed = parseMarkdown(ev.story);
+                    evPanel.querySelector('.story-text').dataset.rawHtml = evStoryParsed;
+                    evPanel.querySelector('.story-text').innerHTML = '';
+                    
+
                 });
 
                 // 4. OUTRO PANEL
-                const outroHtml = `
-                    <div id="outro" class="glass-panel">
-                        <h1 style="color:var(--primary-neon); text-align:center;">미션 성공!</h1>
-                        <h2>${this.data.title}</h2>
-                        <img src="${assetsBase}/${this.data.outro.image}" class="panel-image" alt="Outro">
-                        <div class="story-box">
-                            <div class="story-text" id="outro-dynamic-text">미션 결과를 산출 중입니다...</div>
-                            <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>
-                        </div>
-                        <button class="btn" style="margin-top: 20px; width:100%;" onclick="location.reload()">다시 도전하기</button>
-                    </div>`;
+                const outroHtml = 
+                    '<div id="outro" class="glass-panel">\n' +
+                    '    <h1 style="color:var(--primary-neon); text-align:center;">미션 성공!</h1>\n' +
+                    '    <h2>' + this.data.title + '</h2>\n' +
+                    '    <img src="' + assetsBase + '/' + this.data.outro.image + '" class="panel-image" alt="Outro">\n' +
+                    '    <div class="story-box">\n' +
+                    '        <div class="story-text" id="outro-dynamic-text">미션 결과를 산출 중입니다...</div>\n' +
+                    '        <div style="position: absolute; bottom: 4px; right: 8px; display: flex; gap: 6px; z-index: 10;">\n' +
+                    '            <button class="story-log-trigger" style="position: static;" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>\n' +
+                    '            <button class="story-log-trigger" style="position: static; background: rgba(229,169,60,0.25); border: 1px solid rgba(229,169,60,0.5); color: var(--accent);" onclick="GameRuntime.skipStory(); event.stopPropagation();">⏩ 스킵</button>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '    <button class="btn" style="margin-top: 20px; width:100%;" onclick="location.reload()">다시 도전하기</button>\n' +
+                    '</div>';
                 container.insertAdjacentHTML('beforeend', outroHtml);
                 
                 // 5. GAMEOVER PANEL
-                const gameOverHtml = `
-                    <div id="gameover" class="glass-panel">
-                        <h1 style="color:var(--danger-neon); text-align:center;">미션 실패 (GAME OVER)</h1>
-                        <img src="${assetsBase}/${this.data.outro.image}" class="panel-image" alt="GameOver" style="filter:grayscale(1);">
-                        <div class="story-box">
-                            <div class="story-text" style="color:var(--danger-neon);">${this.data.outro.story_failure}</div>
-                        </div>
-                        <button class="btn" style="margin-top: 20px; width:100%; background:var(--danger-neon); color:white;" onclick="location.reload()">다시 시도하기</button>
-                    </div>`;
+                const gameOverHtml = 
+                    '<div id="gameover" class="glass-panel">\n' +
+                    '    <h1 style="color:var(--danger-neon); text-align:center;">미션 실패 (GAME OVER)</h1>\n' +
+                    '    <img src="' + assetsBase + '/' + this.data.outro.image + '" class="panel-image" alt="GameOver" style="filter:grayscale(1);">\n' +
+                    '    <div class="story-box">\n' +
+                    '        <div class="story-text" style="color:var(--danger-neon);"></div>\n' +
+                    '    </div>\n' +
+                    '    <button class="btn" style="margin-top: 20px; width:100%; background:var(--danger-neon); color:white;" onclick="location.reload()">다시 시도하기</button>\n' +
+                    '</div>';
                 container.insertAdjacentHTML('beforeend', gameOverHtml);
+                
+                // 게임오버 안전 주입
+                const gameOverPanel = container.lastElementChild;
+                gameOverPanel.querySelector('.story-text').textContent = this.data.outro.story_failure;
             },
 
             bindEvents: function() {
@@ -475,6 +968,86 @@
                         e.returnValue = '';
                     }
                 });
+            },
+
+            submitUserInfo: function() {
+                const sNumInput = document.getElementById('studentNum');
+                const sNameInput = document.getElementById('studentName');
+                const errorEl = document.getElementById('intro-error');
+                
+                const sNum = sNumInput ? sNumInput.value.trim() : '';
+                const sName = sNameInput ? sNameInput.value.trim() : '';
+                
+                if (!sNum || !sName) {
+                    if (errorEl) {
+                        errorEl.textContent = "학번과 이름을 모두 입력해주세요.";
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+                
+                if (sNum.length !== 4 || isNaN(sNum)) {
+                    if (errorEl) {
+                        errorEl.textContent = "학번은 4자리 숫자여야 합니다 (예: 1101).";
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+                
+                window.playerFirstName = sName.substring(1); // 성 제외 이름만 추출 (예: '홍길동' -> '길동')
+                
+                // 브라우저 오디오 가동 시도 (뮤트 아닌 경우)
+                try {
+                    if (!isMuted) {
+                        initAudio();
+                        startBGM();
+                    }
+                } catch(e) {}
+
+                const proceedLogin = (rowNum) => {
+                    if (rowNum) window.userRecordRow = rowNum;
+                    
+                    // 1. 입력 폼 숨기기
+                    const infoSec = document.querySelector('.user-info-section');
+                    if (infoSec) infoSec.style.display = 'none';
+                    
+                    // 2. 미션 개시 버튼 숨기기
+                    const btnGroup = document.querySelector('#panel_intro .btn-group');
+                    if (btnGroup) btnGroup.style.display = 'none';
+                    
+                    // 3. story-box 표시 및 타이핑 효과 시작
+                    const introPanel = document.getElementById('panel_intro');
+                    const storyBox = introPanel.querySelector('.story-box');
+                    if (storyBox) {
+                        storyBox.style.display = 'block';
+                        introPanel.classList.remove('solve-mode');
+                        introPanel.classList.add('read-mode');
+                        
+                        typeWriterHTML(storyBox, 15, () => {
+                            introPanel.classList.remove('read-mode');
+                            introPanel.classList.add('solve-mode');
+                            
+                            // 4. [잠항 시작] 버튼 활성화 및 노출
+                            if (btnGroup) {
+                                const btnText = this.data.unit_code === 'm1_04' ? '잠항 시작' : '미션 시작';
+                                btnGroup.innerHTML = '<button class="btn" onclick="GameRuntime.showPanel(\'panel_q1\')">' + btnText + '</button>';
+                                btnGroup.style.display = 'block';
+                            }
+                        });
+                    } else {
+                        this.showPanel('panel_q1');
+                    }
+                };
+
+                // GAS 시트에 기록 저장 후 화면 이동 대신 대사 시퀀스 실행
+                if (typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler((rowNum) => {
+                        proceedLogin(rowNum);
+                    }).recordStart(sNum, sName, this.data.unit_code);
+                } else {
+                    // 로컬 환경 폴백
+                    proceedLogin(null);
+                }
             },
 
             startTimer: function() {
@@ -493,9 +1066,16 @@
             updateTimerDisplay: function() {
                 const minutes = Math.floor(this.timeLeft / 60);
                 const seconds = this.timeLeft % 60;
-                const timeStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-                document.querySelectorAll('.game-timer').forEach(el => {
+                const timeStr = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+                
+                const timers = document.querySelectorAll('.game-timer');
+                timers.forEach(el => {
                     el.innerText = timeStr;
+                    if (this.timeLeft <= 180) {
+                        el.classList.add('timer-warning');
+                    } else {
+                        el.classList.remove('timer-warning');
+                    }
                 });
             },
 
@@ -526,6 +1106,8 @@
                     const nextProgress = qnum * 5;
                     this.triggerStageTransition(`panel_q${qnum}`, nextStage, nextProgress);
                 } else {
+                    this.triggerLaserAndShake();
+                    try { playError(); } catch(e) {}
                     this.currentWrongCount++;
                     this.totalWrongCount++;
                     this.timeLeft -= 60; // 오답시 60초 감소 페널티
@@ -554,13 +1136,13 @@
                         
                         let resetQnum, resetProg, zoneName;
                         if (qnum <= 5) {
-                            resetQnum, resetProg, zoneName = 1, 0, "1구역";
+                            resetQnum = 1; resetProg = 0; zoneName = "1구역";
                         } else if (qnum <= 10) {
-                            resetQnum, resetProg, zoneName = 6, 25, "2구역";
+                            resetQnum = 6; resetProg = 25; zoneName = "2구역";
                         } else if (qnum <= 15) {
-                            resetQnum, resetProg, zoneName = 11, 50, "3구역";
+                            resetQnum = 11; resetProg = 50; zoneName = "3구역";
                         } else {
-                            resetQnum, resetProg, zoneName = 16, 75, "4구역";
+                            resetQnum = 16; resetProg = 75; zoneName = "4구역";
                         }
 
                         alert(`🚨 3회 오답! ${zoneName}의 처음인 제 ${resetQnum}구역으로 강제 이송됩니다.`);
@@ -574,10 +1156,20 @@
                 }
             },
 
+            triggerLaserAndShake: function() {
+                const overlay = document.getElementById('laserOverlay');
+                if (overlay) {
+                    overlay.classList.add('laser-flash-active');
+                    setTimeout(() => overlay.classList.remove('laser-flash-active'), 150);
+                }
+                document.body.classList.add('shake-effect');
+                setTimeout(() => document.body.classList.remove('shake-effect'), 300);
+            },
+
             checkAnswer: function(spec, ans) {
                 if (!spec || !spec.type || !spec.values) return false;
                 
-                const cleanAns = ans.trim();
+                const cleanAns = ans.replace(/\(/g, '').replace(/\)/g, '').trim();
                 
                 if (spec.type === 'exact') {
                     return spec.values.includes(cleanAns);
@@ -592,6 +1184,14 @@
             },
 
             triggerStageTransition: function(currentId, nextId, progress) {
+                if (currentId === 'panel_intro') {
+                    const progContainer = document.getElementById('progressContainer');
+                    if (progContainer) progContainer.style.display = 'block';
+                }
+                
+                const progBar = document.getElementById('progressBar');
+                if (progBar) progBar.style.width = progress + '%';
+
                 // 최종 성공 도달 시
                 if (nextId === 'outro') {
                     clearInterval(this.timerId);
@@ -628,504 +1228,352 @@
                 } catch(e) {
                     console.warn("GAS progress report failed:", e);
                 }
+            },
+
+            skipStory: function() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                const activePanel = document.getElementById(this.activePanelId);
+                if (!activePanel) return;
+                const storyBox = activePanel.querySelector('.story-box');
+                if (storyBox) {
+                    const textEl = storyBox.querySelector('.story-text') || storyBox;
+                    let rawHtml = textEl.dataset.rawHtml || textEl.innerHTML;
+                    rawHtml = rawHtml.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
+                    rawHtml = rawHtml.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
+                    rawHtml = rawHtml.replace(/<br><span style="font-size:0.8rem; color:var\(--accent\); font-weight:bold; animation: blink 1s infinite;">\(클릭하여 다음 대사 보기 ▼\)<\/span>/gi, '');
+                    textEl.innerHTML = rawHtml.trim();
+                    storyBox.style.cursor = 'default';
+                }
+                
+                // 숨김 패널들 즉시 표시
+                const toShow = activePanel.querySelectorAll('.question-box, .btn-group');
+                toShow.forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                    el.style.pointerEvents = 'auto';
+                });
             }
         };
 
+        // 간단한 Markdown -> HTML 변환 헬퍼 함수
+        function parseMarkdown(text) {
+            if (!text) return '';
+            
+            // 줄 단위로 분할하여 "일러스트 지시"가 포함된 모든 라인 원천 차단
+            let lines = text.split('\n');
+            let filteredLines = lines.filter(line => {
+                return !line.includes('일러스트 지시') && !line.includes('일러스트지시');
+            });
+            let html = filteredLines.join('\n').trim();
+
+            // **bold** -> <strong>bold</strong>
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // *italic* -> <em>italic</em>
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            // \n -> <br>
+            html = html.replace(/\n/g, '<br>');
+            return html;
+        }
+
+        // Web Audio API 기반 오디오 엔진 (기본 Muted)
+        let isMuted = true;
+        let audioCtx = null;
+        let bgmOsc = null;
+        let bgmGain = null;
+        let bgmLfo = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSynth(freq, type, duration, vol) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function stopBGM() {
+            try {
+                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
+                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
+            } catch(e){}
+        }
+
+        function startBGM() {
+            // 저주파 우웅 거리는 BGM 사운드 완전 차단
+            return;
+        }
+
+        function toggleSound() {
+            isMuted = !isMuted;
+            const btn = document.getElementById('soundToggle');
+            if (isMuted) {
+                if(btn) btn.innerText = '🔇 소리 꺼짐';
+                stopBGM();
+            } else {
+                if(btn) btn.innerText = '🔊 소리 켜짐';
+                startBGM();
+            }
+        }
+
+        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
+        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
+        function playSuccess() { 
+            playSynth(523.25, 'sine', 0.15, 0.7); 
+            setTimeout(()=>playSynth(659.25, 'sine', 0.15, 0.7), 150); 
+            setTimeout(()=>playSynth(783.99, 'sine', 0.3, 0.7), 300); 
+        }
+        function playError() {
+            playSynth(150, 'sawtooth', 0.3, 0.6);
+            setTimeout(()=>playSynth(100, 'sawtooth', 0.4, 0.6), 200);
+        }
+        function playVictory() {
+            stopBGM();
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
+            });
+        }
+
+        // 문장 마침표/느낌표/물음표 분할 및 초과 길이 정밀 분할 헬퍼
+        let typeWriterTimeout;
+        function splitSentences(text) {
+            let result = [];
+            let rawChunks = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                if (char === '.' || char === '!' || char === '?') {
+                    const nextChar = text.charAt(i + 1);
+                    if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
+                        rawChunks.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
+                    }
+                }
+            }
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) rawChunks.push(finalChunk);
+
+            // 각 청크가 대사 박스 높이를 넘지 않도록 60자 기준으로 2차 안전 슬라이싱
+            const MAX_LEN = 60;
+            rawChunks.forEach(chunk => {
+                if (chunk.length <= MAX_LEN) {
+                    result.push(chunk);
+                } else {
+                    let temp = chunk;
+                    while (temp.length > MAX_LEN) {
+                        let splitIdx = -1;
+                        for (let j = MAX_LEN; j > 10; j--) {
+                            const c = temp.charAt(j);
+                            if (c === ',' || c === ' ') {
+                                splitIdx = j;
+                                break;
+                            }
+                        }
+                        if (splitIdx === -1) {
+                            splitIdx = MAX_LEN;
+                        }
+                        result.push(temp.substring(0, splitIdx + 1).trim());
+                        temp = temp.substring(splitIdx + 1).trim();
+                    }
+                    if (temp) result.push(temp);
+                }
+            });
+
+            return result;
+        }
+
+        // 타이핑 효과 구현 함수 (HTML 태그 안전 파싱 및 지연 렌더링)
+        function typeWriterHTML(element, speed = 25, onComplete = null) {
+            let isComplete = false;
+            let currentChunkIndex = 0;
+            let chunks = [];
+            const textEl = element.querySelector('.story-text') || element;
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
+            function triggerComplete() {
+                if(!isComplete) {
+                    isComplete = true;
+                    element.style.cursor = 'default';
+                    if(onComplete) onComplete();
+                }
+            }
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+            
+            let htmlContent = textEl.dataset.rawHtml || textEl.innerHTML;
+            // 일러스트 지시 필터링
+            htmlContent = htmlContent.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
+            htmlContent = htmlContent.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
+            htmlContent = htmlContent.trim();
+
+            if (!textEl.dataset.rawHtml) {
+                textEl.dataset.rawHtml = htmlContent;
+            }
+            
+            let rawLines = htmlContent.split(/<br\s*\/?>/i);
+            for(let line of rawLines) {
+                let sentences = splitSentences(line);
+                for(let s of sentences) {
+                    if(s.trim()) chunks.push(s.trim());
+                }
+            }
+
+            if(chunks.length === 0) {
+                triggerComplete();
+                return;
+            }
+            let i = 0;
+            let textStr = '';
+            let typingFinished = false;
+            element.style.cursor = 'pointer';
+            
+            function renderChunk() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                i = 0;
+                textStr = '';
+                typingFinished = false;
+                let chunkText = chunks[currentChunkIndex].trim();
+                
+                const currentPanel = element.closest('.glass-panel');
+                const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
+                const logEntry = '<strong>[' + panelTitle + ']</strong> ' + chunkText;
+                if (!storyLogHistory.includes(logEntry)) {
+                    storyLogHistory.push(logEntry);
+                }
+                
+                if(currentChunkIndex < chunks.length - 1) {
+                    chunkText += '<br><span style="font-size:0.8rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭하여 다음 대사 보기 ▼)</span>';
+                }
+                textEl.innerHTML = '';
+                
+                function type() {
+                    if (i < chunkText.length) {
+                        if (chunkText.charAt(i) === '<') {
+                            const endTag = chunkText.indexOf('>', i);
+                            if (endTag !== -1) {
+                                textStr += chunkText.substring(i, endTag + 1);
+                                i = endTag + 1;
+                            } else {
+                                textStr += chunkText.charAt(i);
+                                i++;
+                            }
+                        } else {
+                            textStr += chunkText.charAt(i);
+                            i++;
+                        }
+                        // 깜빡이 커서 효과 적용
+                        textEl.innerHTML = textStr + (i % 2 === 0 ? '█' : '');
+                        if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
+                            try { playTick(); } catch(e) {}
+                        }
+                        typeWriterTimeout = setTimeout(type, speed);
+                    } else {
+                        textEl.innerHTML = chunkText;
+                        typingFinished = true;
+                        if(currentChunkIndex === chunks.length - 1) {
+                            triggerComplete();
+                        }
+                    }
+                }
+                type();
+            }
+            element.onclick = (e) => {
+                // 스킵 버튼을 직접 클릭한 경우는 이벤트 전파 방지로 여기서 걸러짐
+                if (!typingFinished) {
+                    clearTimeout(typeWriterTimeout);
+                    let chunkText = chunks[currentChunkIndex].trim();
+                    if(currentChunkIndex < chunks.length - 1) {
+                        chunkText += '<br><span style="font-size:0.8rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭하여 다음 대사 보기 ▼)</span>';
+                    }
+                    textEl.innerHTML = chunkText;
+                    typingFinished = true;
+                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
+                } else {
+                    if (currentChunkIndex < chunks.length - 1) {
+                        currentChunkIndex++;
+                        renderChunk();
+                    }
+                }
+            };
+            renderChunk();
+        }
+
         // 모달 이전 대사 다이얼로그 열기
         function openLog() {
-            const modal = document.getElementById('logModal');
-            const content = document.getElementById('logContent');
-            if (modal && content) {
-                content.innerHTML = storyLogHistory.map(line => `<p style='border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:6px;'>${line}</p>`).join('');
-                modal.style.display = 'block';
+            const modal = document.getElementById('storyLogModal');
+            const container = document.getElementById('logContainer');
+            if (modal && container) {
+                if (storyLogHistory.length === 0) {
+                    container.innerHTML = '기록이 없습니다.';
+                } else {
+                    container.innerHTML = storyLogHistory.map(line => '<p>' + line + '</p>').join('<hr>');
+                }
+                modal.classList.add('active');
             }
         }
 
         function closeLog() {
-            const modal = document.getElementById('logModal');
-            if (modal) modal.style.display = 'none';
+            const modal = document.getElementById('storyLogModal');
+            if (modal) {
+                modal.classList.remove('active');
+            }
         }
     </script>
 
     <!-- ─── GAME_DATA_INJECTION ─── -->
     <script>
-        const GAME_DATA = {
-  "unit_code": "m1_03",
-  "grade": "grade1",
-  "title": "문자와 식 - 스페이스 익스플로러 호 제어실",
-  "template": "escape_room",
-  "hero": "관제 조사관",
-  "helper": "오라클-X",
-  "villain": "보이드-V",
-  "timer_limit_sec": 2400,
-  "intro": {
-    "image": "intro.png",
-    "story": "- **기지 상태:** `[배전반 온도: 42°C] [설계 기록 복원율: 15%] [기하학 락 강도: 95%]`\n- **스토리 전개:**\n스페이스 익스플로러 호 제어실에 안착한 관제 조사관는 우주 정거장의 메인 제어 코드을 회수하기 위해 기동 장치를 돌렸습니다. 그 순간 기지의 모든 격벽 빗장이 내려앉으며 비상 봉인 모드가 기동됩니다. 구체 오토마타인 보이드-V의 붉은 광선이 사방을 뒤덮습니다.\n- **보이드-V:** \"삐- 침입자를 소거한다. 40분 뒤 이 기지의 모든 제어 장치를 강제 역회전하여 자폭 격리하겠다! 살아남고 싶다면 수학의 규칙을 증명하라!\"\n- **오라클-X:** \"치지직... 관제 조사관님, 제 음성이 전성관관으로 전송되길 바랍니다. 보이드-V이 마나 펄스 노이즈에 중독되어 폭주하고 있습니다. 20개의 수수께끼를 해독해 봉인을 풀어주세요!\"\n- **[일러스트 지시 - 0. intro]:** 어두운 석조 기기실 내부에 안착된 복잡한 황동 동력 기어반과 적색 경보 렌즈가 하강하는 인트로 전경."
-  },
-  "outro": {
-    "image": "outro.png",
-    "story_success": "축하합니다! 모든 오라클-X 봉인을 해제하고 수학 탈출 좌표를 복원했습니다.",
-    "story_failure": "시간이 모두 고갈되었습니다! 탈출에 실패했습니다."
-  },
-  "questions": [
-    {
-      "qnum": 1,
-      "title": "단순화 코드 전송",
-      "image": "q1.png",
-      "qtext": "<strong>Q1. [문자의 사용]</strong><br>a × b × a × 3 을 곱셈 기호를 생략하고 거듭제곱을 사용하여 간단히 나타내시오.",
-      "choices": [
-        "3a^2b",
-        "3a^2b 아님",
-        "알 수 없음",
-        "해 없음"
-      ],
-      "answer": {
-        "type": "any_of",
-        "values": [
-          "3a^2b",
-          "3ba^2"
-        ]
-      },
-      "placeholder": "예: 5x^2y",
-      "error_message": "구문 오류! 시스템 연결 실패!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"크하하! 이 스페이스 익스플로러 호는 나의 지배하에 있다! 우주의 먼지가 될 하찮은 조사관 녀석들이 탈출용 구명 포트를 건드리다니!\"\n\n지이잉- 구명 포트 해치 제어 콘솔에 붉은색 노이즈 스파크가 튀며 경고음이 울립니다. 데이터 대역 전송 병목 현상을 해결하기 위해 난잡한 곱셈 부호 식을 압축 정렬해야 합니다.\n\n[오라클-X]: \"대역폭 복구율 10%! 전송 패킷이 꼬이고 있습니다. 곱셈 기호를 완벽히 생략하고 거듭제곱 코드로 간결하게 압축해 콘솔에 주입하십시오!\"\n- **[일러스트 지시 - 1. q1]:** 단순화 코드 전송 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 2,
-      "title": "전력 요구 식 세우기",
-      "image": "q2.png",
-      "qtext": "<strong>Q2. [식 세우기]</strong><br>소형 포드 1개 작동에 x kW, 대형 포드 1개 작동에 1000 kW가 듭니다. 소형 포드 5개와 대형 포드 1개를 동시에 작동할 때 필요한 총 전력량을 x에 대한 식으로 나타내시오.",
-      "choices": [
-        "5x+1000",
-        "5x+1000 아님",
-        "알 수 없음",
-        "해 없음"
-      ],
-      "answer": {
-        "type": "any_of",
-        "values": [
-          "5x+1000",
-          "1000+5x"
-        ]
-      },
-      "placeholder": "예: 3x+500",
-      "error_message": "에너지 초과 경고!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"에너지 노드를 강제 고갈시켜 주마. 동력원을 잃고 칠흑 같은 우주 속에서 얼어붙어 보아라!\"\n\n메인 동력 기둥의 연료 셀들이 하나둘씩 꺼지며 보조 전력마저 빠르게 방전되고 있습니다. 소형 포드들과 대형 포드가 소모하는 총 에너지 다항식을 세워 전원 분배 장치에 동기화시켜야 합니다.\n\n[오라클-X]: \"소형 포드 5개 and 대형 포드 1개의 총 에너지 요구량을 변수 x를 이용한 한 줄의 다항식으로 설정해 비상 전력망을 복구해 주십시오!\"\n- **[일러스트 지시 - 2. q2]:** 전력 요구 식 세우기 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 3,
-      "title": "냉각수 계수 대입",
-      "image": "q3.png",
-      "qtext": "<strong>Q3. [식의 값]</strong><br>x = -2 일 때, 대입 식 3x + 5 의 값을 구하시오.",
-      "choices": [
-        "-3",
-        "-1",
-        "1",
-        "-2"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "-1"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "냉각수 부족! 온도가 상승합니다!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"엔진 온도를 임계점까지 끌어올려 주마. 멜트다운 속에서 재가 될 시간이다!\"\n\n엔진 룸 파이프들이 터져 나가며 뜨거운 증기가 조종석 내부까지 차오릅니다. 엔진 가동 온도 변화 상수인 x = -2를 냉각수 분출 수식에 신속히 대입하여 온도 제어 밸브를 개방해야 합니다.\n\n[오라클-X]: \"조사관님! 현재 엔진 노화 계수 x = -2 상태입니다. 3x + 5 의 최종 값을 연산해 비상 냉각수 주입 압력 상수로 입력해 주십시오!\"\n- **[일러스트 지시 - 3. q3]:** 냉각수 계수 대입 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 4,
-      "title": "증폭 계수 추출",
-      "image": "q4.png",
-      "qtext": "<strong>Q4. [다항식과 일차식]</strong><br>다항식 2x² - 5x + 3 에서 x의 계수를 구하시오. (부호 포함)",
-      "choices": [
-        "-3",
-        "-10",
-        "-7",
-        "-5"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "-5"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "증폭 계수 불일치! 차단벽 가동!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[시스템 통신 단절 및 스파크 폭발]\n\n[오라클-X]: \"치지직... 조사관님! 보이드-V의 다차원 왜곡 코드 장벽이 생성되어 기어 회로를 가로막았습니다! 저의 방어막 전력이 상실되고 있습니다! 다항식 2x² - 5x + 3 에서 변수 x의 실질 계수 수치를 도출해 장벽 해제 해독 펄스로 사용하십시오! 서두르십시오!\"\n- **[일러스트 지시 - 4. q4]:** 증폭 계수 추출 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 5,
-      "title": "예비 회로 분배 결합",
-      "image": "q5.png",
-      "qtext": "<strong>Q5. [일차식의 계산 1]</strong><br>식 3(2x - 4) + 2x 를 분배법칙을 활용해 간단히 정리한 식을 입력하시오.",
-      "choices": [
-        "8x-12",
-        "8x-12 아님",
-        "알 수 없음",
-        "해 없음"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "8x-12"
-        ]
-      },
-      "placeholder": "예: 5x-7",
-      "error_message": "회로 쇼트 경고! 전력 누출!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "🚨 [예비 전력 동축 케이블 파손 경보]\n\n[오라클-X]: \"치직... 결계 온도 상승 속도가 걷잡을 수 없습니다! 예비 회로 분배기를 작동시켜야 하지만 결합 단자가 다중 얽힘 상태에 빠졌습니다! 분배 법칙을 사용하여 복잡한 얽힘 회로식인 3(2x - 4) + 2x 를 극소 일차식 코드로 간단히 결합하십시오!\"\n- **[일러스트 지시 - 5. q5]:** 예비 회로 분배 결합 기하 수치가 새겨진 고대 제단 패널의 상세 뷰.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 6,
-      "title": "서브 전압 분배기",
-      "image": "q6.png",
-      "qtext": "<strong>Q6. [일차식의 나눗셈]</strong><br>식 (6x - 4) ÷ 2 를 간단히 한 식을 입력하시오.",
-      "choices": [
-        "3x-2",
-        "3x-2 아님",
-        "알 수 없음",
-        "해 없음"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "3x-2"
-        ]
-      },
-      "placeholder": "예: 2x-5",
-      "error_message": "배터리 과부하! 전력이 역류합니다!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"고압의 펄스를 너희 전원에 역으로 흘려보내 한꺼번에 튀겨 주마! 과전압의 충격을 이겨낼 수 있겠느냐?\"\n\n번쩍- 하는 섬광과 함께 동력 콘솔의 메인 퓨즈가 터져 연기가 뿜어져 나옵니다. 전력 노드의 전압 (6x - 4)를 2개의 서브 보조 배터리로 안전하게 나누어 흘려보내야 합니다.\n\n[오라클-X]: \"퓨즈 임계 가동 한계 봉착! 과전압 식을 2로 안전하게 나누어 전하를 균등 분배하십시오! 콘솔이 타버리기 직전입니다!\"\n- **[일러스트 지시 - 6. q6]:** 서브 전압 분배기 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 7,
-      "title": "주파수 대역 통분 동기화",
-      "image": "q7.png",
-      "qtext": "<strong>Q7. [일차식의 계산 2]</strong><br>식 1/2(4x - 6) - 1/3(3x + 9) 를 계산하여 간단히 하시오.",
-      "choices": [
-        "x-6",
-        "x-6 아님",
-        "알 수 없음",
-        "해 없음"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "x-6"
-        ]
-      },
-      "placeholder": "예: 2x-8",
-      "error_message": "주파수 왜곡! 동기화 실패!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"동조 주파수를 비틀어 외부와의 모든 해킹 링크를 원천 소멸시켰다. 이 차가운 함선 속에서 혼자 우주를 떠돌아라!\"\n\n통신 링크가 차례대로 끊어지며 메인 스크린에 'OFFLINE' 경고가 점멸합니다. 분수 형태로 어지럽게 들어오는 두 채널의 주파수 대역폭 수식을 통분 결합해 안정 동기 주파수를 맞춰야 합니다.\n\n[오라클-X]: \"조사관님! 두 분수 전파 수식인 1/2(4x - 6) - 1/3(3x + 9) 를 깔끔하게 통분 계산해 통신 복구 정렬 수치로 전송해 주십시오!\"\n- **[일러스트 지시 - 7. q7]:** 주파수 대역 통분 동기화 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 8,
-      "title": "일차식 전원 코어 감별",
-      "image": "q8.png",
-      "qtext": "<strong>Q8. [일차식 판별]</strong><br>다음 중 차수가 1인 <strong>일차식</strong>의 번호만 쓰시오.<br>(1) 3x² &nbsp;&nbsp;(2) 0 × x + 2 &nbsp;&nbsp;(3) 1/x + 1 &nbsp;&nbsp;(4) -2x + 1",
-      "choices": [
-        "3x²",
-        "0",
-        "1/x",
-        "-2x"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "4"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "회로 폭발! 코어가 과열되었습니다!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"구조 코어를 엉뚱한 가짜 노드에 꽂아 일제히 과부하 폭발을 일으키도록 해 두었지. 네놈의 눈으로 진짜 안정된 코어를 가릴 수 있겠느냐?\"\n\n콘솔 상단 제어반에 네 개의 예비 전원 실린더가 빛나고 있지만, 세 개는 차수가 맞지 않아 꽂는 즉시 폭발을 유도하는 함정입니다. 완벽한 1차수 식을 유지하는 진짜 일차식 전원 코어를 식별하십시오.\n\n[오라클-X]: \"경고! 잘못된 코어를 연결하면 함선 자이로 회로가 붕괴합니다. 진짜 일차식 코어의 번호만을 정확히 찾아내십시오!\"\n- **[일러스트 지시 - 8. q8]:** 일차식 전원 코어 감별 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 9,
-      "title": "잔류 저항 동류항 정리",
-      "image": "q9.png",
-      "qtext": "<strong>Q9. [동류항 정리]</strong><br>식 2x - 3 - (x - 5) 를 계산하여 간단히 정리하시오.",
-      "choices": [
-        "x+2",
-        "x+2 아님",
-        "알 수 없음",
-        "해 없음"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "x+2"
-        ]
-      },
-      "placeholder": "예: 3x-4",
-      "error_message": "저항 매칭 실패! 감전 위험!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"조그만 저항이라도 계속 쌓이다 보면 종국에는 파멸의 전하로 너희 제어권을 녹여버릴 것이다!\"\n\n드르륵- 조종 콘솔 바닥의 잔류 전압 저항 코일이 붉게 달아오릅니다. 두 축의 케이블에 잔존하는 식 2x - 3 과 (x - 5)의 차를 동류항끼리 묶어 상쇄 정렬해야 안전합니다.\n\n[오라클-X]: \"조사관님! 잔류 저항식 2x - 3 - (x - 5)를 한 줄로 결합 정리한 뒤 값을 시스템 전송 창에 입력해 주십시오!\"\n- **[일러스트 지시 - 9. q9]:** 잔류 저항 동류항 정리 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 10,
-      "title": "부하값 대입 최종식",
-      "image": "q10.png",
-      "qtext": "<strong>Q10. [식의 대입 정리]</strong><br>A = x - 2, B = -2x + 3 일 때, 2A - B 를 x에 대한 식으로 나타내시오.",
-      "choices": [
-        "4x-7",
-        "4x-7 아님",
-        "알 수 없음",
-        "해 없음"
-      ],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "4x-7"
-        ]
-      },
-      "placeholder": "예: 3x+5",
-      "error_message": "시스템 임계치 돌파! 비상 경보!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "💥 [비상 로그: 시스템 강제 멜트다운 및 자폭 폭발 개시!] 💥\n\n[보이드-V]: \"하찮은 필멸자들아, 끝이다! 함선의 모든 자폭 원자로 밸브를 강제로 임계치까지 올렸다! 5분 뒤 이 우주 영역 전체가 화염에 휩싸이리라!\"\n\n삐- 삐- 붉은 위급 조명이 비추며 통로의 격벽들이 굉음과 함께 굳게 내려앉습니다. 두 동적 부하 식 A와 B에 대하여, 메인 보드의 가중식 2A - B를 대입해 비상 멜트다운 차단 코드를 도출해야 합니다.\n\n[오라클-X]: \"비상! 원자로 노심 온도 1200도 돌파! A = x - 2, B = -2x + 3 일 때, 합성 부하 값 2A - B의 다항식 코드를 긴급 입력해 주십시오! 제가 최대 방화벽으로 차단막을 유지하겠습니다!\"\n- **[일러스트 지시 - 10. q10]:** 부하값 대입 최종식 광선 빔이 프리즘 필터 보드와 교차하여 스파크를 일으키는 장면.",
-      "extra_class": "glitch-bg"
-    },
-    {
-      "qnum": 11,
-      "title": "진짜 보안 방정식 감별",
-      "image": "q11.png",
-      "qtext": "<strong>Q11. [방정식의 이해]</strong><br>다음 식 중 미지수 x에 따라 참도 되고 거짓도 되는 <strong>방정식</strong>인 것의 번호를 쓰시오.<br>(1) 2x + 3 &nbsp;&nbsp;(2) x + x = 2x &nbsp;&nbsp;(3) 3x - 1 = 5 &nbsp;&nbsp;(4) 3 < 5",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "3"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "위조 보안식 감지! 암호화 록!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[오라클-X]: \"방화벽 출력 급격히 저하! 조사관님, 보안 코드 링크를 새로고침하여 폭발을 지연시켜야 합니다! ⚙️ [방정식의 위상 감별]\"\n\n해치 게이트 자물쇠 화면에 여러 개의 수식이 어지럽게 깜빡입니다. 미지수 x의 값에 따라 때로는 참이 되고 때로는 거짓이 되는 진짜 '방정식'만을 선택해 입력창에 매핑해야 합니다.\n\n[보이드-V]: \"방정식과 항등식의 차이조차 모르는 하찮은 지능들이 내 마지막 포맷 폭탄을 지연시킬 리 없지!\"\n- **[일러스트 지시 - 11. q11]:** 진짜 보안 방정식 감별 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 12,
-      "title": "수압 밸브 이항 제어 1",
-      "image": "q12.png",
-      "qtext": "<strong>Q12. [일차방정식 1]</strong><br>방정식 x - 4 = 6 의 해를 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "10"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "연료 부족! 엔진 시동 지연!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[오라클-X]: \"휴... 폭발 유예 시간 3분 확보! 하지만 아직 연료 주입 파이프라인의 이송 압력이 불안정합니다! ⚙️ [연료 밸브 제어]\"\n\n쿵- 하는 충격음과 함께 제어 기둥 하부의 수압 관로 밸브가 바닥에서 노출됩니다. 일차방정식 x - 4 = 6 의 미지수 해를 도출하여 주입 모터 속도를 정상 수치로 정밀 튜닝하십시오.\n\n[보이드-V]: \"밸브를 열어봤자 연료가 과압으로 폭발할 뿐이다!\"\n- **[일러스트 지시 - 12. q12]:** 수압 밸브 이항 제어 1 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 13,
-      "title": "수압 밸브 이항 제어 2",
-      "image": "q13.png",
-      "qtext": "<strong>Q13. [일차방정식 2]</strong><br>방정식 2x + 5 = 11 의 해를 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "3"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "조정 각도 이탈! 압력 경보!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[오라클-X]: \"좋습니다, 주파수는 맞췄으나 2차 압력 밸브의 위상각이 흔일리고 있습니다! ⚙️ [2차 압력 이항 동기화]\"\n\n피이이익- 관로 접속부에서 고압 연료가 누출되기 시작합니다. 일차방정식 2x + 5 = 11 의 이항 법칙에 근거해 정확한 해를 입력하여 밸브 각도를 완벽히 격리 고정하십시오!\n- **[일러스트 지시 - 13. q13]:** 수압 밸브 이항 제어 2 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 14,
-      "title": "미지수/상수 이항 격리",
-      "image": "q14.png",
-      "qtext": "<strong>Q14. [일차방정식 3]</strong><br>방정식 3x - 2 = x + 6 의 해를 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "4"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "격리 실패! 동력원 손상!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[오라클-X]: \"엔진 압력 동조율 85% 도달! 이제 미지수 항과 상수 항을 각 변으로 완벽히 격리 정리해야 합니다!\"\n\n드르륵- 피스톤 제어기가 상하 수직 정렬을 시작하며 금속성 구동음이 울립니다. 방정식 3x - 2 = x + 6 의 양변 이항을 통해 도출되는 진짜 x의 해를 계산해 전송해 주십시오!\n- **[일러스트 지시 - 14. q14]:** 미지수/상수 이항 격리 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 15,
-      "title": "비례식 펌프 동력비",
-      "image": "q15.png",
-      "qtext": "<strong>Q15. [비례식 풀이]</strong><br>비례식 (x - 1) : 2 = (2x + 1) : 5 을 만족하는 해 x의 값을 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "7"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "비율 붕괴! 기어 훼손 경고!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "✨ [오라클-X 서브넷 시스템 권한 100% 완전 복구] ✨\n\n[오라클-X]: \"정답입니다, 조사관님! 스페이스 익스플로러 호의 전체 서브넷 제어권을 완전히 환수했습니다! 이제 보이드-V의 통제 코드를 우주 밖으로 밀어내겠습니다. 비례식 펌프 동력 수식을 연산하십시오!\"\n\n황폐했던 콘솔 스크린이 일제히 푸른 황금빛 조명으로 밝아지며 구동 기어들이 부드럽게 복구 회전합니다.\n\n[보이드-V]: \"말도 안 돼... 내 파괴 스크립트가 기계 코어에서 제거당하다니... 최종 차단벽으로 구명정 궤도를 강제 차단하겠다!\"\n- **[일러스트 지시 - 15. q15]:** 비례식 펌프 동력비 컴퍼스와 가죽 서판, 아날로그 작도판이 결합된 연출.",
-      "extra_class": "glitch-bg"
-    },
-    {
-      "qnum": 16,
-      "title": "사출 궤도 충돌 방지",
-      "image": "q16.png",
-      "qtext": "<strong>Q16. [연속하는 세 수]</strong><br>연속하는 세 자연수의 합이 36일 때, 세 자연수 중 가장 큰 자연수를 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "13"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "궤도 겹침 감지! 발사 중단!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"도망치게 내버려 둘 것 같으냐? 구명정 사출 통로에 장애 코드를 나란히 세워 서로 충돌하게 만들어 주마!\"\n\n쿵-! 사출 해치 너머로 인접한 세 개의 가이드 레일 기둥이 충돌 각도로 무섭게 회전합니다. 연속하는 세 자연수의 합이 36일 때, 이 중 충돌 억제 타겟이 되는 가장 큰 레일 기둥 번호를 산출해 입력하십시오!\n- **[일러스트 지시 - 16. q16]:** 사출 궤도 충돌 방지 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 17,
-      "title": "유실된 시스템 정수 복원",
-      "image": "q17.png",
-      "qtext": "<strong>Q17. [식의 활용 1]</strong><br>어떤 수의 3배에서 5를 뺀 수는 어떤 수의 2배보다 4만큼 크다. 이 어떤 수를 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "9"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "데이터 복원 실패!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"사출 궤도를 정렬했다 해도, 핵심 추진기 정전 상수가 복구되지 않는 한 그대로 공허 속에 갇혀 떠돌 뿐이다!\"\n\n파지직- 추진기 점화 시스템의 핵심 메모리가 누전으로 지워졌습니다. \"어떤 추진 상수의 3배에서 5를 뺀 것이 원래의 2배보다 4만큼 크다\"는 방정식 단서를 풀어 유실된 원래의 시스템 정수 추진 상수를 복원해야 점화가 작동합니다!\n- **[일러스트 지시 - 17. q17]:** 유실된 시스템 정수 복원 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 18,
-      "title": "산소 팩 과부족 분배",
-      "image": "q18.png",
-      "qtext": "<strong>Q18. [과부족 문제]</strong><br>요원들에게 산소 팩을 나누어 주는데, 한 명에게 4개씩 주면 3개가 남고, 5개씩 주면 2개가 부족하다. 요원 수(명)를 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "exact",
-        "values": [
-          "5"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "산소 배분 실패! 탑승 불가!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"결국 사출까지 간다 해도, 제한된 생명 유지 에너지 팩이 꼬여 내부에서 서로 싸우다 산소 부족으로 질식하리라!\"\n\n생명 유지 장치의 산소 배분 시스템에 불량이 발생했습니다. 1인당 4개씩 분배하면 3개가 남고, 5개씩 분배하면 2개가 모자라게 되는 한계 속에서, 탑승 대기 중인 정확한 대피 요원 수를 산출해 분배기에 주입하십시오.\n- **[일러스트 지시 - 18. q18]:** 산소 팩 과부족 분배 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 19,
-      "title": "대피 통로 거리 속력 연산",
-      "image": "q19.png",
-      "qtext": "<strong>Q19. [거리 속력 시간]</strong><br>해치까지 가는데 시속 4km로 걸어가면 시속 12km로 호버보드를 타고 가는 것보다 20분 늦게 도착한다. 총 통로 거리(km)를 구하시오.",
-      "choices": [],
-      "answer": {
-        "type": "any_of",
-        "values": [
-          "2",
-          "2km"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "도착 시간 지연! 폭발 경보!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "[보이드-V]: \"출구 해치로 향하는 대피 복도가 무너져 내리기 시작했다! 속도와 거리의 상관 관계를 이겨낼 수 있겠느냐!\"\n\n콰콰콰쾅- 대피 통로의 천장 격벽들이 거대한 흙먼지를 일으키며 붕괴하기 시작합니다. 시속 4km 걷기와 시속 12km 호버보드 탑승 시 발생하는 20분의 골든타임 시차를 활용하여, 안전지대인 출구 해치까지의 총 물리적 거리(km)를 정확히 도출하십시오!\n- **[일러스트 지시 - 19. q19]:** 대피 통로 거리 속력 연산 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.",
-      "extra_class": ""
-    },
-    {
-      "qnum": 20,
-      "title": "동면 생체 나이 동기화",
-      "image": "q20.png",
-      "qtext": "<strong>Q20. [나이에 관한 문제]</strong><br>현재 어머니의 나이는 42세이고 딸의 나이는 12세이다. 어머니의 나이가 딸의 나이의 3배가 되는 것은 몇 년 후인가?",
-      "choices": [],
-      "answer": {
-        "type": "any_of",
-        "values": [
-          "3",
-          "3년"
-        ]
-      },
-      "placeholder": "숫자만 입력",
-      "error_message": "동기화 실패! 생체 나이 비동기화 경고!",
-      "hint": "💡 힌트가 제공되지 않는 구역입니다. 연산을 신중히 전개해 보세요.",
-      "story": "🔮 [최종 탈출 포탈 락다운 해제] 🔮\n\n[오라클-X]: \"조사관님! 이제 눈앞에 마지막 탈출용 성간 포탈 게이트만 남았습니다! 동면 캡슐의 동기화를 위해, 현재 42세인 어머니와 12세인 딸의 생체 나이 방정식 조건에 맞춰 어머니가 딸 나이의 3배가 되는 동면 연도(년 후) 상수를 입력하십시오! 이제 지상으로 대피할 시간입니다!\"\n\n[보이드-V]: \"안 돼... 내 통제 프로토콜이... 완전히 삭제되어 정지한다아앗!\"\n- **[일러스트 지시 - 20. q20]:** 동면 생체 나이 동기화 SSS/SAS/ASA 합동 부호가 음각된 피스톤 기둥의 압축 전경.",
-      "extra_class": "glitch-bg"
-    }
-  ],
-  "events": [
-    {
-      "evnum": 1,
-      "title": "동력 기어 가동",
-      "image": "event1.png",
-      "btn_text": "계속 전진하기",
-      "next_stage": "panel_q6",
-      "progress": 25,
-      "story": "120도의 동조 신호가 톱니 빗장 기어들을 맞춰 누르자, 회전을 정지하고 벽면 락이 열립니다. 황동 실린더 위로 눈부신 노란색 홀로그램이 피어오릅니다.\n- **오라클-X:** \"정교한 수학적 균형입니다! 우주 정거장의 메인 제어 코드 1차가 복원되었습니다. 완벽한 조화의 아름다움입니다.\"\n- **보이드-V:** \"감히 마스터의 장치를 열어보는가! 다음 방화벽이 너희를 용융하리라!\"\n- **[일러스트 지시 - Event 1]:** 둥근 테이블 위로 마나 홀로그램이 서서히 회전하며 자전하는 장면."
-    },
-    {
-      "evnum": 2,
-      "title": "비상 차단 장치 리셋",
-      "image": "event2.png",
-      "btn_text": "비상 전력 가동",
-      "next_stage": "panel_q11",
-      "progress": 50,
-      "story": "조건과 수식이 맞추어 주입되자, 광선 빔들이 일렬 동축 정렬되어 차단 빗장을 고정합니다. 분출되던 가열 증기가 잦아듭니다.\n- **오라클-X:** \"자폭 주파수 오버라이드에 성공해 비상 리셋을 완료했습니다. 기지 온도 상승이 멈췄습니다!\"\n- **기아로:** \"삐- 전력 강제 셧다운. 자폭 시퀀스 유예됨. 빗장을 격리하겠다.\"\n- **[일러스트 지시 - Event 2]:** 푸르스름한 배리어 실드가 터빈을 포근히 둘러싸 안전하게 식혀나가는 긴장 해소 뷰."
-    },
-    {
-      "evnum": 3,
-      "title": "핵심 복원 제단 활성화",
-      "image": "event3.png",
-      "btn_text": "제단 활성화",
-      "next_stage": "panel_q16",
-      "progress": 75,
-      "story": "수학적 연산이 완료되자 중앙 코어 유리 돔의 붉은 노이즈가 부서지며 맑고 깨끗한 공기가 실내에 뿜어져 나옵니다.\n- **오라클-X:** \"시스템 완전 복구율 100%! 이제 빌런 보이드-V의 메인 락 제단을 강제로 분리하고 걸작 복원 제단을 기동합니다!\"\n- **보이드-V:** \"최종 마스터 합동 결계를 전개한다! 이 아름다운 유산은 너희의 몫이 아니다!\"\n- **[일러스트 지시 - Event 3]:** 거대한 황동 기어들이 석조 격벽 틈새로 맞물려 열리고 보라색 마나 광원을 발하는 복합 제단이 솟아오르는 풍경."
-    },
-    {
-      "evnum": 4,
-      "title": "탈출 차원 포탈 개방",
-      "image": "event4.png",
-      "btn_text": "지상으로 탈출",
-      "next_stage": "outro",
-      "progress": 100,
-      "story": "마지막 정답이 해제되며, 기지를 감싸던 적색 장벽선들이 찬란한 오색 입자로 바스러지며 탈출용 차원 포탈로 화합니다.\n- **오라클-X:** \"탐사 완료! 가방에 복원된 우주 정거장의 메인 제어 코드을 챙겨 포탈로 도약하십시오!\"\n- **보이드-V:** \"수학 계승 완료. 무결한 지식을 관제 조사관에게 위임한다. 게이트웨이를 연다.\"\n- **[일러스트 지시 - Event 4]:** 찬란한 금빛 녹색 차원 링 포탈 정면에서, 머리를 깊이 숙여 배웅하는 백색 렌즈 구체 로봇과 환하게 미소 짓는 조력자의 모습."
-    }
-  ],
-  "theme": "atlantis"
-};
-        window.onload = () => {
-            GameRuntime.start(GAME_DATA);
-        };
+        const GAME_DATA_BASE64 = "ewogICJ1bml0X2NvZGUiOiAibTFfMDMiLAogICJncmFkZSI6ICJncmFkZTEiLAogICJ0aXRsZSI6ICLrrLjsnpDsmYAg7IudIC0g7Iqk7Y6Y7J207IqkIOydteyKpO2UjOuhnOufrCDtmLgg7KCc7Ja07IukIiwKICAidGVtcGxhdGUiOiAiZXNjYXBlX3Jvb20iLAogICJoZXJvIjogIuq0gOygnCDsobDsgqzqtIAiLAogICJoZWxwZXIiOiAi7Jik65287YG0LVgiLAogICJ2aWxsYWluIjogIuuztOydtOuTnC1WIiwKICAidGltZXJfbGltaXRfc2VjIjogMjQwMCwKICAiaW50cm8iOiB7CiAgICAiaW1hZ2UiOiAiaW50cm8ucG5nIiwKICAgICJzdG9yeSI6ICItICoq6riw7KeAIOyDge2DnDoqKiBgW+uwsOyghOuwmCDsmKjrj4Q6IDQywrBDXSBb7ISk6rOEIOq4sOuhnSDrs7Xsm5DsnKg6IDE1JV0gW+q4sO2VmO2VmSDrnb0g6rCV64+EOiA5NSVdYFxuLSAqKuyKpO2GoOumrCDsoITqsJw6KipcbuyasOyjvCDquYrsnYAg6rOz7JeQIOuyhOugpOynhCDssYQg7KGw7Jqp7Z6IIOuWoOuPjOuNmCDtg5DsgqzshKAgJ+yKpO2OmOydtOyKpCDsnbXsiqTtlIzroZzrn6wg7Zi4J+ydmCDsoJzslrTsi6QuIOuplOyduCDtlbTsuZgg64SI66i4IOywqOqwgOyatCDssqDsoJwg6riI7IaNIOuzteuPhOulvCDsp4Drgpgg6rSA7KCcIOyhsOyCrOq0gOydtCDrp4jsuajrgrQg7KSR7JWZIOygnOyWtCDrjbDtgazsl5Ag64+E7LCp7ZaI7Iq164uI64ukLiDsobDsgqzqtIDsnZgg66qp7ZGc64qUIOyeg+yWtOuyhOumsCDsiqTtjpjsnbTsiqQg7J217Iqk7ZSM66Gc65+sIO2YuOydmCDrqZTsnbgg7KCc7Ja0IOy9lOuTnOyZgCDtlITroZzsoJ3tirgg7ISk6rOE64+E66W8IO2ajOyImO2VmOyXrCDshKDssrTrpbwg7J6s6riw64+Z7ZWY64qUIOqyg+yeheuLiOuLpC5cbuuovOyngOyZgCDslrTrkaAg7IaN7JeQIOyeoOq4tCDsiJjrp47snYAgTEVEIOyKpO2BrOumsOuTpCDsgqzsnbTsl5DshJwg7KGw7IKs6rSA7J20IOuplOyduCDrj5nroKUg67C467iM66W8IOuLueq4tCDsiJzqsIQsIOyEoOyytCDrgrTrtoDsl5DshJwg7JqU656A7ZWcIOqyveuztOydjOydtCDsmrjrpqzquLAg7Iuc7J6R7ZaI7Iq164uI64ukLlxu7L+1ISDsvoUhIOygnOyWtOyLpOuhnCDsnbTslrTsp4DripQg66qo65OgIOqyqeuyveuTpOydtCDrrLTqsoHqsowg64K066Ck7JWJ7Jy866mwIO2GteuhnOulvCDsm5Dsspwg7Y+Q7IeE7ZaI7Iq164uI64ukLiDrj5nsi5zsl5Ag7L2Y7IaUIOyghOuptOyXkOyEnCDsoITsnpDquLAg64W47J207KaIIOyKpO2MjO2BrOqwgCDtioDrqbAsIOykkeyVmSDqsJDsi5wg64+UIOy5tOuplOudvOqwgCDstqntmIjrkJwg67aJ7J2AIOu5m+ycvOuhnCDqs6Dsho0g7ZqM7KCE7ZWY6riwIOyLnOyeke2WiOyKteuLiOuLpC4g6rWs7LK07ZiVIOyYpO2GoOuniO2DgOydtOyekCDrs7TslYggQUnsnbgg67O07J2065OcLVbqsIAg7Iqk7Iqk66Gc66W8IOywqOuLqO2VmOqzoCDtj63so7ztlZwg6rKD7J6F64uI64ukIVxuLSAqKuuztOydtOuTnC1WOioqIFwi7JyE7ZeYIOqwnOyy" +
+        "tCDqsJDsp4AuLi4g7Lmo7J6F7J6Q66W8IOyGjOqxsO2VnOuLpC4gNDDrtoQg65KkLCDtlajshKDsnZgg66qo65OgIOyXlOynhCDsl5DrhIjsp4Drpbwg7Y+t7KO87Iuc7YKsIOyekO2PrSDsi5ztgIDsiqTrpbwg6riw64+Z7ZWY6rKg64ukISDsnbQg6riI64uo7J2YIOuNsOydtO2EsOulvCDsmrDso7wg67CW7Jy866GcIOycoOy2nO2VtCDsiqTtjpjsnbTsiqQg7J217Iqk7ZSM66Gc65+sIO2YuOydmCDssLjqt7nsnYQg67CY67O17ZWgIOyInCDsl4bri6QhIOuLueyepSDsoJzslrQg6rKp67K97J2EIOybkOqyqSDsnqDquIjtlZjqsqDri6QhXCJcbi0gKirsmKTrnbztgbQtWDoqKiBcIuy5mOyngOyngS4uLiDqtIDsoJwg7KGw7IKs6rSA64uYISDsoJwg7ZmA66Gc6re4656oIOydjOyEseydtCDrrLTshKAg7Ya17Iug66ed7J2EIO2Gte2VtCDqsIDquYzsiqTroZwg7KCE64us65Cp64uI64ukISDrs7TslYggQUkg67O07J2065OcLVbqsIAg642w7J207YSwIOuIhOy2nOydhCDrp4nquLAg7JyE7ZW0IOyKpOyKpOuhnCDqs7Xtl4goVm9pZCkg67O07Zi4IO2UhOuhnO2GoOy9nOydhCDsi6TtlontlZjsl6wg7Iuc7Iqk7YWcIOyekO2PreydhCDqsJXsoJwg7Iuk7ZaJIOykkeyeheuLiOuLpCEg7L2Y7IaUIOq4sO2MkOydmCAyMOqwnCDrs7TslYgg7IiY7IiY6ruY64G866W8IO2VtOqysO2VtCDsvZTrk5zrpbwg67O17JuQ7ZWY6rOgIOqyjOydtO2KuOulvCDsl7TslrTslbwg7ZWp64uI64ukISDqt7jrn7DrjbAuLi4g7J207IOB7ZWY64Sk7JqULiDsmZwg7KCcIOyLnOyKpO2FnOydtCDsnbQg7ZWo7ISg6rO8IOuwmOydke2VmOuKlCDqsbjquYzsmpQ/IOyYpOuemOyghCDsgq3soJzrkJwg642w7J207YSw7J2YIO2dlOyggeydtCDripDqu7Tsp5Hri4jri6QuLi4g7ISk66qF7ZWgIOyImCDsl4bripQg7J207IOB7ZWcIOq4sOyLnOqwkOydtCDrk6TslrTsmpQuLi5cIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMC4gaW50cm9dOioqIOq4iOyGjeyEsSDshKDssrQg64K067aAIOy9mOyGlCDrjbDtgazsmYAg64Sk7JioIO2ZgOuhnOq3uOueqCDsiqTtgazrprDrk6TsnbQg7Y687LOQ7KeEIOyLoOu5hOuhnOyatCDsmrDso7zshKAg7KCc7Ja07IukLiDqtazssrTtmJUg67O07JWIIOuhnOu0hyDrs7TsnbTrk5wtVuqwgCDrtonsnYAg66CI7J207KCAIOyEvOyEnOulvCDsoJDrqbjtlZjrqbAg67Cp7ZmU67K97J2EIOq1rOuPme2VmOqzoCwg6rO17KSR7JeQIO2MjOuegCDtmYDroZzqt7jrnqgg7ZiV7YOc66GcIOyGjO2ZmOuQnCDsmKTrnbztgbQtWOqwgCDqsbHsoJXsiqTrn6zsmrQg7Ja86rW066GcIOyhsOyCrOq0gOydhCDrs7TsooztlZjripQg7JyE6riJ7ZWcIOyepeuptC4iCiAgfSwKICAib3V0cm8iOiB7CiAgICAiaW1hZ2UiOiAib3V0cm8ucG5nIiwKICAgICJzdG9yeV9zdWNjZXNzIjogIuy2le2VmO2VqeuLiOuLpCEg66qo65OgIOyYpOudvO2BtC1YIOu0ieyduOydhCDtlbTsoJztlZjqs6Ag7IiY7ZWZIO2DiOy2nCDsooztkZzrpbwg67O17JuQ7ZaI" +
+        "7Iq164uI64ukLiIsCiAgICAic3RvcnlfZmFpbHVyZSI6ICLsi5zqsITsnbQg66qo65GQIOqzoOqwiOuQmOyXiOyKteuLiOuLpCEg7YOI7Lac7JeQIOyLpO2MqO2WiOyKteuLiOuLpC4iCiAgfSwKICAicXVlc3Rpb25zIjogWwogICAgewogICAgICAicW51bSI6IDEsCiAgICAgICJ0aXRsZSI6ICLri6jsiJztmZQg7L2U65OcIOyghOyGoSIsCiAgICAgICJpbWFnZSI6ICJxMS5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMS4gW+usuOyekOydmCDsgqzsmqldPC9zdHJvbmc+PGJyPmEgw5cgYiDDlyBhIMOXIDMg7J2EIOqzseyFiCDquLDtmLjrpbwg7IOd65617ZWY6rOgIOqxsOuTreygnOqzseydhCDsgqzsmqntlZjsl6wg6rCE64uo7Z6IIOuCmO2DgOuCtOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAiM2FeMmIiLAogICAgICAgICIzYV4yYiDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIjNhXjJiIiwKICAgICAgICAgICIzYmFeMiIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IDV4XjJ5IiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi6rWs66y4IOyYpOulmCEg7Iuc7Iqk7YWcIOyXsOqysCDsi6TtjKghIiwKICAgICAgImhpbnQiOiAi6rOx7IWIIOq4sO2YuOulvCDsg53rnrXtlaAg65WM64qUIOyIq+yekOulvCDrrLjsnpAg7JWe7JeQIOyTsOqzoCwg7JWM7YyM67KzIOyInOyEnOuhnCDrrLjsnpDrpbwg7KCV66Cs7ZWY66mwLCDrj5nsnbztlZwg66y47J6Q64qUIOqxsOuTreygnOqzsSDtmJXtg5wo7KeA7IiYKeuhnCDrrLbslrQg6rCE6rKw7ZWY6rKMIOuCmO2DgOuDheuLiOuLpC4iLAogICAgICAic3RvcnkiOiAiW+uztOydtOuTnC1WXTogXCLtgaztlZjtlZghIOydtCDsiqTtjpjsnbTsiqQg7J217Iqk7ZSM66Gc65+sIO2YuOuKlCDsmIHsm5Dtnogg6rO17ZeI7J2YIOustOuNpOydtCDrkKAg6rKD7J2064ukISDqsJDtnogg7YOI7Lac7JqpIOq1rOuqhSDtj6ztirjrpbwg7Iqk7LqU7ZWY66CkIOuTpOuLpOuLiCwg64yA7Jet7Y+tIOqzvOu2gO2VmCDrhbjsnbTspojrpbwg67Cb7JWE6528IVwiXG5cbuq1rOuqhSDtj6ztirgg7ZW07LmYIOy9mOyGlOydmCDrhKTsmKgg7Iqk7YGs66awIOychOuhnCDsi5zru5jqsbQg7KCE7J6Q6riwIOuFuOydtOymiCDsiqTtjIztgazqsIAg7YqA66mwIOyCkOqxseqxsOumveuLiOuLpC4g64yA7Jet7Y+tIO2GteyLoOydhCDrs7XqtaztlZjquLAg7JyE7ZW07ISc64qUIO2ZlOuptOyXkCDtkZzsi5zrkJwg64Kc7J6h7ZWcIOqzseyFiCDrtoDtmLgg7IiY7Iud65Ok7J2EIOyVley2le2VmOyXrCDsoJXroKwg7L2U65Oc66W8IOyghOyGoe2VtOyVvCDtlanri4jri6QuXG5cblvsmKTrnbztgbQtWF06IFwi642w7J207YSwIOyghOyGoeuloCAxMCUh" +
+        "IOqzseyFiCDquLDtmLjrpbwg7IOd65617ZWY6rOgIOuPmeydvCDrrLjsnpDripQg6rGw65Ot7KCc6rOx7Jy866GcIOqwhOqysO2VmOqyjCDslZXstpXtlbQg7L2Y7IaUIO2MqOuEkOyXkCDsnoXroKXtlZjsi63si5zsmKQhIOq3uOufsOuNsC4uLiDsi6DquLDtlZjrhKTsmpQuIOydtCDqtazrqoUg7Y+s7Yq47J2YIOyImOuPmSDsi5zrj5kg66CI67KELi4uIOydtOyDge2VmOqyjCDsoITtmIAg64Kv7ISk7KeAIOyViuuEpOyalC5cIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMS4gcTFdOioqIOuzteyeoe2VnCDquLDqs4Tsi50g7ZW07LmYIOygnOyWtCDsvZjshpQg7Iqk7YGs66aw7JeQIOqzseyFiOyLnSBhIMOXIGIgw5cgYSDDlyAz7J20IOu2ieydgOyDiSDrhbjsnbTspogg66y47J6Q65Ok66GcIOuSpOyWve2YgCDquZzruaHsnbTripQg7IOB7IS4IOyhsOykgCDrt7AuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMiwKICAgICAgInRpdGxlIjogIuyghOugpSDsmpTqtawg7IudIOyEuOyasOq4sCIsCiAgICAgICJpbWFnZSI6ICJxMi5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMi4gW+yLnSDshLjsmrDquLBdPC9zdHJvbmc+PGJyPuyGjO2YlSDtj6zrk5wgMeqwnCDsnpHrj5nsl5AgeCBrVywg64yA7ZiVIO2PrOuTnCAx6rCcIOyekeuPmeyXkCAxMDAwIGtX6rCAIOuTreuLiOuLpC4g7IaM7ZiVIO2PrOuTnCA16rCc7JmAIOuMgO2YlSDtj6zrk5wgMeqwnOulvCDrj5nsi5zsl5Ag7J6R64+Z7ZWgIOuVjCDtlYTsmpTtlZwg7LSdIOyghOugpeufieydhCB47JeQIOuMgO2VnCDsi53snLzroZwg64KY7YOA64K07Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICI1eCsxMDAwIiwKICAgICAgICAiNXgrMTAwMCDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIjV4KzEwMDAiLAogICAgICAgICAgIjEwMDArNXgiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7JiIOiAzeCs1MDAiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsl5DrhIjsp4Ag7LSI6rO8IOqyveqzoCEiLAogICAgICAiaGludCI6ICJ4IGtX7J2YIOyghOugpeydtCDshozrqqjrkJjripQg7IaM7ZiVIO2PrOuTnOqwgCA16rCc7J2066+A66GcIO2VhOyalO2VnCDsoITroKXsnYAgNSDDlyB4IOydtOupsCwg7Jes6riw7JeQIOuMgO2YlSDtj6zrk5wgMeqwnOydmCDsoITroKXsnbggMTAwMOydhCDtlantlZjripQg7KCE7LK0IOydvOywqOyLneydhCDqtazshLHtlanri4jri6QuIiwKICAgICAgInN0b3J5IjogIlvrs7TsnbTrk5wtVl06IFwi7JeQ64SI7KeAIOqzteq4iSDtmozroZzrpbwg6rCV7KCcIOywqOuLqO2VmOqyoOuLpC4g67O07KGwIOyghOugpeydtCDrsJTri6Xrgpgg" +
+        "7KCI64yAIOyYgeuPhOydmCDssKjqsIDsmrQg7Jqw7KO8IOyGjeyXkOyEnCDslrzslrTrtpnripQg6rOg7Ya17J2EIOuKkOq7tOuztOyVhOudvCFcIlxuXG7rqZTsnbgg64+Z66ClIOu2hOuwsCDquLDrkaXsnZgg7ZSM65287KaI66eIIOy9lOyWtOuTpOydtCDssKjroYDrjIDroZwg7ZqM7IOJ67mb7Jy866GcIOyLneyWtOqwgOupsCDrsKnsoIQg6rK96rOg6rCAIOyauOumveuLiOuLpC4g6rCBIOq1rOyXreydmCDqtazrqoUg7Y+s7Yq465Ok7J20IOyGjOuqqO2VoCDsoITssrQg7JeQ64SI7KeAIOuLpO2VreyLneydhCDshLjsm4wg67Cw7KCE67CY7JeQIOyjvOyehe2VtOyVvCDruYTsg4Eg7KCE66WY6rCAIOyInO2ZmOuQqeuLiOuLpC5cblxuW+yYpOudvO2BtC1YXTogXCLshoztmJUg7Y+s65OcIDXqsJzsmYAg64yA7ZiVIO2PrOuTnCAx6rCc7J2YIOy0ne2VqSDsoITroKUg7JqU6rWs65+J7J2EIOuzgOyImCB466W8IOyCrOyaqe2VtCDtlZwg7KSE7J2YIOqwhOuLqO2VnCDsiJjsi53snLzroZwg7IS47JuM7KO87IS47JqUISDslrTrnbwuLi4g7J20IOuwsOyghOuwmCDsvIDsnbTruJTrk6TsnZgg67Cw7LmYIOuPmeyEoC4uLiDri6TsnYwg6riw7Ja0IOyhsOyekeydtCDsmZwg7J6Q7Jew7Iqk65+96rKMIOuouOumv+yGjeyXkCDrlqDsmKTrpbTripQg6rG46rmM7JqULi4uP1wiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSAyLiBxMl06Kiog7LKc7J6l6rmM7KeAIOu7l+yWtCDsnojripQg7ZG466W4IOu5m+ydmCDqsbDrjIAg64+Z66ClIOq4sOuRpSDrsLDsoITrsJgg64K067aALCDri6TspJEg7KCR7IaNIOyKrOuhr+yXkCDqvYLsnYQg7KCE66ClIOuLpO2VreyLneydhCDsl7DsgrDtlaAg7IiYIOyeiOuPhOuhnSDslYjrgrTtlZjripQgTEVEIOyDge2DnCDrqqjri4jthLAg7J6l66m0LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDMsCiAgICAgICJ0aXRsZSI6ICLrg4nqsIHsiJgg6rOE7IiYIOuMgOyehSIsCiAgICAgICJpbWFnZSI6ICJxMy5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMy4gW+yLneydmCDqsJJdPC9zdHJvbmc+PGJyPnggPSAtMiDsnbwg65WMLCDrjIDsnoUg7IudIDN4ICsgNSDsnZgg6rCS7J2EIOq1rO2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAiLTMiLAogICAgICAgICItMSIsCiAgICAgICAgIjEiLAogICAgICAgICItMiIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJleGFjdCIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICItMSIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsiKvsnpDrp4wg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi64OJ6rCB7IiYIOu2gOyhsSEg7Jio64+E6rCAIOyDgeyKue2VqeuLiOuLpCEiLAogICAgICAiaGludCI6ICLrrLjsnpAg7J6Q66as7JeQIOyjvOyWtOynhCDsiKvsnpAoLTIp66W8IOuMgOyehe2VoCDrlYzr" +
+        "ipQg6rOx7IWIIOq4sO2YuOulvCDri6Tsi5wg7IK066Ck7IScIDMgw5cgKC0yKSArIDUg66GcIOyLneydhCDtkbwg65KkLCDsnYzsiJjsnZgg6rOx7IWIIOqysOqzvCDrtoDtmLjsl5Ag7KO87J2Y7ZW0IOyXsOyCsO2VqeuLiOuLpC4iLAogICAgICAic3RvcnkiOiAiW+uztOydtOuTnC1WXTogXCLsl5Tsp4Qg7Jio64+E66W8IOyehOqzhOygkOq5jOyngCDrgYzslrTsmKzroKQg7KO866eILiDrqZztirjri6TsmrQg7IaN7JeQ7IScIOyerOqwgCDrkKAg7Iuc6rCE7J2064ukISDsoIjrjIAg7J20IO2VqOyEoOydmCDquIjquLDrkJwg642w7J207YSw66W8IOqwgOyguOqwgOyngCDrp4jrnbwhXCJcblxu67O07JWIIOuNsOydtO2EsCDslYTsubTsnbTruIwg7LSI7J6F7JeQ7IScIOuztOydtOuTnC1W6rCAIOuCmO2DgOuCmCDrtonsnYAg6rSR7ISgIOyepeuyveydhCDsoITqsJztlZjrqbAg7KGw7IKs6rSA7J2YIOynhOyeheydhCDrp4nslYTshK3ri4jri6QuIO2DkOyCrOyEoOydmCDquLDrsIAg7ISk6rOE64+E6rCAIOyYgeybkO2eiCDrrLvtnojripQg6rKD7J2EIOqyveqzoO2VmOugpOuKlCDrk6/tlZwg67O07J2065OcLVbsnZgg64iI67mb7J20IOyKpOyzkCDsp4DrgpjqsJHri4jri6QuIOyXlOynhCDrg4nqsIEg67C467iM66W8IOyImOuPmSDsobDsnKjtlZjquLAg7JyE7ZW0IOyjvOyWtOyngOuKlCDsg4HsiJjqsJIgeCA9IC0y66W8IOygnOyWtCDsiJjsi53sl5Ag64yA7J6F7ZWY7Iut7Iuc7JikLlxuXG5b7Jik65287YG0LVhdOiBcIuyEnOuyhOyLpOydmCDtjIzsnbTtlIQg7JWV66Cl7J20IO2PreyjvO2VmOqzoCDsnojsirXri4jri6QhIOyhsOyCrOq0gOuLmCwg64OJ6rCBIOunpOqwnCDrs4DsiJggeCA9IC0yIOyDge2DnOulvCAzeCArIDUg7Iud7JeQIOuMgOyehSDsl7DsgrDtlZjsl6wsIOy1nOyihSDsoJXrsIAg7IiY7LmY66W8IOuDieqwgeyImCDtjoztlIQg67C467iM7JeQIOuMgOyehe2VtCDso7zsi63si5zsmKQhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDMuIHEzXToqKiDssKjqsJHqs6Ag7ZG466W4IOuNsOydtO2EsCDsvIDsnbTruJTrk6TsnbQg7Ja07KeA65+96rKMIOuSpOyWve2ejCDrs7TslYgg7JWE7Lm07J2067iMIOujuCwg7L2Y7IaUIOuqqOuLiO2EsCDsoITrqbTsl5Ag64yA7J6F7IudIDN4ICsgNeyZgCDrr7jsp4DsiJgg6rCSIHggPSAtMiDqsIAg7J247IeE65CY7Ja0IOu5m+uCmOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogNCwKICAgICAgInRpdGxlIjogIuymne2PrSDqs4TsiJgg7LaU7LacIiwKICAgICAgImltYWdlIjogInE0LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlE0LiBb64uk7ZWt7Iud6rO8IOydvOywqOyLnV08L3N0cm9uZz48YnI+64uk7ZWt7IudIDJ4wrIgLSA1eCArIDMg7JeQ7IScIHjsnZgg6rOE7IiY66W8IOq1rO2VmOyLnOyYpC4gKOu2gO2YuCDtj6ztlagpIiwKICAgICAgImNob2ljZXMiOiBbCiAgICAg" +
+        "ICAgIi0zIiwKICAgICAgICAiLTEwIiwKICAgICAgICAiLTciLAogICAgICAgICItNSIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJleGFjdCIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICItNSIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsiKvsnpDrp4wg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7Kad7Y+tIOqzhOyImCDrtojsnbzsuZghIOywqOuLqOuyvSDqsIDrj5khIiwKICAgICAgImhpbnQiOiAi64uk7ZWt7Iud7JeQ7IScIOqzhOyImOuegCDtirnsoJUg66y47J6QIO2VreydmCDslZ7sl5Ag6rOx7ZW07KeEIOyIq+yekOulvCDsnZjrr7jtlZjrqbAsIOq3uCDtla3snZgg67aA7Zi4KCssIC0p6rmM7KeAIO2PrO2VqO2VmOyXrCDqsrDsoJXtlanri4jri6QuIDJ4XjIgLSA1eCArIDPsl5DshJwgeCDtla0g7JWe7J2YIOyImOyZgCDrtoDtmLjrpbwg7LC+7Jy87IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb7Iuc7Iqk7YWcIOuztOyViCDthrXsi6Ag7J287IucIOuLqOygiCDrsI8g7Iqk7YyM7YGsIOycoO2PrV1cblxuW+yYpOudvO2BtC1YXTogXCLsuZjsp4Dsp4EuLi4g67O07J2065OcLVbqsIAg66mU7J24IO2MjOybjCDrnbzsnbjsnYQg7LCo64uo7ZW0IO2VmOydtO2NvOuTnOudvOydtOu4jOyLpOydmCDsl5Tsp4Trk6TsnbQg7Ya17KCcIOu2iOuKpeycvOuhnCDtnZTrk6TroKTsmpQhIOydtCDqtazsl63snZgg67Cp7Ja066eJIOyghOugpeydtCDqs6DqsIjrkJjqs6Ag7J6I7Jy864uILCDri6Ttla3si50gMnjCsiAtIDV4ICsgMyDsl5DshJwg67OA7IiYIHjsnZgg7J287LCo7ZWtIOqzhOyImCDsvZTrk5zrpbwg64+E7Lac7ZWY7JesIO2VhO2EsOulvCDsoJXtmZTtlZjshLjsmpQhXCJcblxu67aA7ISc7KeEIOyYmyDtlZjsnbTtjbzrk5zrnbzsnbTruIwg7KCc7Ja07YyQ7JeQ7IScIOqygOydgCDqt7jsnYTsnYzqs7wg7Jew6riw6rCAIOy5mOyGn+yKteuLiOuLpC4g7Y+t67CcIOychO2XmOyXkCDrj4Tri6ztlZwg7JeU7KeE7J2EIOynhOygleyLnO2CpOq4sCDsnITtlbTshJzripQg64uk7ZWt7Iud7J2YIOygle2Zle2VnCDqs4TsiJgg7IiY7LmY66W8IOygnOyWtO2MkCDsiqzroa/sl5Ag7KCE7Iah7ZW07JW8IO2VqeuLiOuLpC5cblxuW+yYpOudvO2BtC1YXTogXCLslrTrnbwuLi4g7J20IOyepey5mOuTpOydmCDrs7XsnqHtlZwg67Cw7LmYIOq1rOyhsOqwgCDsmZwg7J2066CH6rKMIOyJveqyjCDsnbTtlbTrkJjripQg6rG46rmM7JqUPyDslrTshJwg6rOE7IiY66W8IOq3nOuqhe2VtCDso7zshLjsmpQhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDQuIHE0XToqKiDqsoDsnYAg7Jew6riw6rCAIOu/nOyWtOyguCDrgpjsmKTripQg7ZWY7J207Y2865Oc65287J2067iMIOyXlOynhCDsvZTslrQg66O4LCDsoJzslrQg7Iqk7YGs66aw7JeQIOuLpO2VreyLnSAyeMKyIC0gNXggKyAzIOydtCDsoIHtmIAg7J6I6rOgIHjsnZgg6rOE7IiY" +
+        "66W8IOyeheugpe2VmOudvOuKlCDruYgg7Lm47J20IOq5nOu5oeydtOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogNSwKICAgICAgInRpdGxlIjogIuyYiOu5hCDtmozroZwg67aE67CwIOqysO2VqSIsCiAgICAgICJpbWFnZSI6ICJxNS5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RNS4gW+ydvOywqOyLneydmCDqs4TsgrAgMV08L3N0cm9uZz48YnI+7IudIDMoMnggLSA0KSArIDJ4IOulvCDrtoTrsLDrspXsuZnsnYQg7Zmc7Jqp7ZW0IOqwhOuLqO2eiCDsoJXrpqztlZwg7Iud7J2EIOyeheugpe2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAiOHgtMTIiLAogICAgICAgICI4eC0xMiDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiOHgtMTIiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7JiIOiA1eC03IiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7ZqM66GcIOyHvO2KuCDqsr3qs6AhIOyghOugpSDriITstpwhIiwKICAgICAgImhpbnQiOiAi66i87KCAIDMoMnggLSA0KeyXkCDrtoTrsLDrspXsuZnsnYQg7KCB7Jqp7ZWY7JesIDMgw5cgMnjsmYAgMyDDlyAoLTQp66W8IOyInOyEnOuMgOuhnCDqs7HtlbQg6rSE7Zi466W8IO2SieuLiOuLpC4g6re4IOuLpOydjCDrj5nrpZjtla3snbggeOulvCDrqqjslYTshJwg642n7IWI7J2EIOy1nOyihSDsoJXrpqztlanri4jri6QuIiwKICAgICAgInN0b3J5IjogIvCfmqggW+yYiOu5hCDsoITroKUg64+Z7LaVIOudvOyduCDri6jshKAg67CPIOuEpOyYqCDsi6DtmLgg6rWQ656AXVxuXG5b67O07J2065OcLVZdOiBcIuyWtOyngOufrOyatCDqtJHshKAg7Jyg64+E7J2YIOuKquyXkOyEnCDrsKntlqUg6rCQ6rCB7J2EIOyDgeyLpO2VtCDrs7TslYTrnbwhIOuEpOyYqCDqtZDrnoAg7Iug7Zi466W8IO2GteqzvO2VoCDsp4DtmJzqsIAg64Sk64aI7JeQ6rKMIOyhtOyerO2VoOq5jCFcIlxuXG7rs7Xrj4Qg67K966m07JeQ7IScIOu/nOyWtOyguCDrgpjsmKTripQg64uk7LGE66Gc7Jq0IO2ZgOuhnOq3uOueqCDqtJHshKAg7J6l66eJ7J20IOyhsOyCrOq0gOydmCDsi5zslbzrpbwg7Z2U65Ok6rOgIOyYqOuPhOulvCDrlqjslrTrnKjrpqzquLAg7Iuc7J6R7ZWp64uI64ukLiDrtoTrsLAg67KV7LmZ7J2EIOyCrOyaqe2VmOyXrCDrs7XsnqHtlZjqsowg6rys7J24IDMoMnggLSA0KSArIDJ4IO2ajOuhnOyLneydhCDstZzshowg64uo7JyE7J2YIOydvOywqOyLneycvOuhnCDslZXstpXtlZjsl6wg67Cp7ZmU67K9IOygnOyWtCDrhbjrk5zsl5Ag7KO87J6F7ZW07JW8IO2GteuhnOqwgCDsl7Trpr3ri4jri6QuXG5cblvsmKTrnbztgbQtWF06IFwi6rWQ656AIOyLoO2YuCDrlYzrrLjs" +
+        "l5Ag6ri47J2EIOyeg+ydhCDru5TtlojslrTsmpQhIOyhsOyCrOq0gOuLmCwg6rSE7Zi4IOyVnuyXkCDqs7HtlbTsp4Qg7IOB7IiY66W8IOu2hOuwsCDrspXsuZnsnLzroZwg66i87KCAIOqzse2VtCDqtITtmLjrpbwg7KCE6rCc7ZWcIOuSpCwg64+Z66WY7ZWt64G866asIOyViOyghO2VmOqyjCDrjZTtlbTshJwg7Iud7J2EIOqwhOuLqO2eiCDsoJXroKztlbQg7KO87IS47JqUIVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSA1LiBxNV06Kiog7Jik7IOJIOuEpOyYqCDtmYDroZzqt7jrnqgg6rSR7ISg65Ok7J20IOuSpOyWve2YgCDriIjrtoDsi5zqsowg67KI7KmN7J2064qUIOyasOyjvOyEoCDrs7Xrj4Qg7KCE6rK9LCDrsr3rqbTsnZgg7ZqM66GcIOyhsOyekSDtjKjrhJAg7JyE7JeQIOu2hOuwsCDsiJjsi53snbQg67Cd7J2AIOu2iOu5m+ycvOuhnCDtiKzsmIHrkJwg7J6l66m0LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDYsCiAgICAgICJ0aXRsZSI6ICLshJzruIwg7KCE7JWVIOu2hOuwsOq4sCIsCiAgICAgICJpbWFnZSI6ICJxNi5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RNi4gW+ydvOywqOyLneydmCDrgpjriJfshYhdPC9zdHJvbmc+PGJyPuyLnSAoNnggLSA0KSDDtyAyIOulvCDqsITri6jtnogg7ZWcIOyLneydhCDsnoXroKXtlZjsi5zsmKQuIiwKICAgICAgImNob2ljZXMiOiBbCiAgICAgICAgIjN4LTIiLAogICAgICAgICIzeC0yIOyVhOuLmCIsCiAgICAgICAgIuyVjCDsiJgg7JeG7J2MIiwKICAgICAgICAi7ZW0IOyXhuydjCIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJleGFjdCIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICIzeC0yIgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyYiDogMngtNSIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuuwsO2EsOumrCDqs7zrtoDtlZghIOyghOugpeydtCDsl63rpZjtlanri4jri6QhIiwKICAgICAgImhpbnQiOiAi64uk7ZWt7Iud7J2EIOyIq+yekOuhnCDrgpjriIwg65WM64qUIOq0hO2YuCDslYjsnZgg66qo65OgIO2VrSg2eOyZgCAtNCnsl5Ag64KY64iX7IWI7J2EIOqwgeqwgSDsoIHsmqntlZjqsbDrgpgsIOu2hOuwsOuyley5mSDtmJXtg5zroZwg6rOx7ZWY6riwIDEvMuuhnCDrsJTqvrjslrQg6rOE7IKw7ZWp64uI64ukLiIsCiAgICAgICJzdG9yeSI6ICJb67O07J2065OcLVZdOiBcIuyXreulmO2VmOuKlCDtjoTsiqQg7KCE7JWV7J2EIOyghOyGoe2VmOyXrCDtlajshKAg7KCc7Ja0IOyepey5mOydmCDsuanshYvrk6TsnYQg7ZWcIOuyiOyXkCDrhbnsl6zso7zrp4ghIOqwkO2eiCDtlajshKAg64K067aAIOq5iuyImeydtCDrk6TslrTsmKTripQg7KOE66W8IOu8iOyggOumrOqyjCDripDqu7TrnbwhXCJcblxu64KY7ISg7ZiV7Jy866GcIO2ajOyghO2VmOuKlCDtmZjquLAg7IOk7ZSE7Yq4IOyeheq1rOydmCDrjIDtmJUg7ZOo" +
+        "7KaIIOq4sOuRpeyXkOyEnCDrtonsnYAg7KCE6riw6rCAIO2KgOupsCDsl63rpZjqsIAg7Iuc7J6R65Cp64uI64ukLiDsoITslZUg7IudICg2eCAtIDQp66W8IOuRkCDqsJzsnZgg64yA7Lmt7ZiVIOuztOyhsCDrnbzsnbjsnLzroZwg67aE67CwKOuCmOuIl+yFiCntlZjsl6wsIOyXreulmO2VmOuKlCDsl5DrhIjsp4Drpbwg7JWI7KCEIOyghOulmCDsoITslZXsnLzroZwg7IOB7IeEIOu2hOyCsOyLnOy8nOyVvCDtlanri4jri6QuXG5cblvsmKTrnbztgbQtWF06IFwi7IOk7ZSE7Yq4IOuCtOu2gCDtk6jspogg6riw65Gl7J2YIOyghO2VmOqwgCDthLDsp4DquLAg7J2867O0IOyngeyghOyeheuLiOuLpCEg7Iud7J2EIDLroZwg64KY64iE7Ja0IOqwgSDtla3snYQg6reg65OxIOu2hOuwsO2VmOyLreyLnOyYpCEg6re465+w642wLi4uIOuouOumv+yGjeyXkCDsnbQg7ZmY6riwIOyDpO2UhO2KuOydmCDrr7jshLjtlZwg7ZmY7ZKNIOuPhOuptOydtCDrp4jsuZgg6re466a87LKY65+8IOyCtOynnSDsiqTss5Ag7KeA64KY6rCU7Ja07JqULiDquLDrtoQg7YOT7J286rmM7JqUP1wiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSA2LiBxNl06Kiog64KY7ISg7ZiVIO2ajOyghO2MrOydtCDqtYnsnYzsnYQg64K064qUIO2ZmOq4sCDsg6TtlITtirgg7KSR7Ius67aALCDrkZAg6rCI656Y7J2YIOydgOu5myDsoITshKAg64uk67Cc7JeQIOuyiOypjeydtOuKlCDsoITslZUg7IiY7IudICg2eCAtIDQpIMO3IDIg6rCAIO2ZgOuhnOq3uOueqOycvOuhnCDrlqAg7J6I64qUIOyepeuptC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiA3LAogICAgICAidGl0bGUiOiAi7KO87YyM7IiYIOuMgOyXrSDthrXrtoQg64+Z6riw7ZmUIiwKICAgICAgImltYWdlIjogInE3LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlE3LiBb7J287LCo7Iud7J2YIOqzhOyCsCAyXTwvc3Ryb25nPjxicj7si50gMS8yKDR4IC0gNikgLSAxLzMoM3ggKyA5KSDrpbwg6rOE7IKw7ZWY7JesIOqwhOuLqO2eiCDtlZjsi5zsmKQuIiwKICAgICAgImNob2ljZXMiOiBbCiAgICAgICAgIngtNiIsCiAgICAgICAgIngtNiDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAieC02IgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyYiDogMngtOCIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuyjvO2MjOyImCDsmZzqs6EhIOuPmeq4sO2ZlCDsi6TtjKghIiwKICAgICAgImhpbnQiOiAi6rCBIOq0hO2YuCDslZ7sl5Ag6rOx7ZW07KeEIOu2hOyImCAxLzLqs7wgMS8z7J2EIOu2hOuwsOuyley5meydhCDsoIHsmqntlZjsl6wg6rOx7ZWcIOuSpCwg64+Z66WY7ZWt7J24IHjtla3qs7wg7IOB7IiY7ZWt7J2EIOuqqOyVhOyE" +
+        "nCDqsIHqsIHsnZgg7LWc7KKFIOydvOywqOyLneydhCDsnKDrj4Ttlanri4jri6QuIiwKICAgICAgInN0b3J5IjogIlvrs7TsnbTrk5wtVl06IFwi7KSR7JWZIOyghO2MjCDrp53snYQg7KGw7Jyo7ZWY7JesIO2VqOyEoOqzvCDrs7jrtoDsnZgg7Ya17Iug66edIOunge2BrOulvCDsm5Dsspwg7IaM66m47Iuc7Lyw64ukLiDsnbQg7LCo6rCA7Jq0IO2VqOyEoCDsho3sl5Ag6rCH7ZiAIOyYgeybkO2eiCDsuajrrLUg7IaN7JeQIOqwh+2eiOqxsOudvCFcIlxuXG7ruJTrnpnrsJXsiqQg6riw66GdIOyEnOqzoCDsnoXqtazsl5AgT0ZGTElORSDrqZTsi5zsp4DqsIAg6rmc67mh7J2066mwIO2GteyLoCDrnbzsnbjsnbQg6rCV7KCcIOqyqeumrOuQqeuLiOuLpC4g67aE7IiYIO2Yle2DnOuhnCDri6TspJEg7Zi87ZWp65CY7Ja0IOycoOyeheuQmOuKlCDrkZAg7KO87YyM7IiYIOyImOyLneydhCDthrXrtoQg6rKw7ZWp7ZWY7JesIOyViOyghCDthrXsi6Ag66eB7YGs66W8IOyerOyXsOqysO2VtOyVvCDrrLjsnbQg6rCc67Cp65Cp64uI64ukLlxuXG5b7Jik65287YG0LVhdOiBcIuyhsOyCrOq0gOuLmCEg65GQIOyjvO2MjOyImCDsiJjsi53snYQg7Ya167aEIOqzhOyCsO2VtCDthrXsi6Ag7KCV66CsIO2MjOyepeydhCDsnoXroKXtlbQg7KO87Iut7Iuc7JikISDslrTrqLguLi4g7KGw7IKs6rSA64uY7J20IOyngOuCmOqwiCDrlYzrp4jri6Qg7ZWo7ISg7J2YIO2ZgOuhnOq3uOueqCDsobDrqoXrk6TsnbQg7ZG466W4IOyKpO2MjO2BrOulvCDsnbzsnLztgqTrqbAsIOqzvOqxsCDtlajshKAg7YOR7Iq57JuQ65Ok7J2YIOyYpOuemOuQnCDquLDrsIAg66Gc6re466W8IOuyveuptOyXkCDrnYTsmrDqs6Ag7J6I7Ja07JqUISDsi6DquLDtlbTsmpQuLi5cIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gNy4gcTddOioqIOqygOydgCDssqDsoJwg642w7J207YSwIOyVhOy5tOydtOu4jCDquLDrkaXrk6TroZwg6rCA65Od7ZWcIOu4lOuemeuwleyKpCDshJzqs6Ag64K067aALiDtmYDroZzqt7jrnqgg66qo64uI7YSw65Ok7J20IO2MjOuegCDsiqTtjIztgazsmYAg7ZWo6ruYIOyYpOuemOuQnCDtg5Hsirnsm5Ag6riw66Gd65Ok7J2EIOudhOyasOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogOCwKICAgICAgInRpdGxlIjogIuydvOywqOyLnSDsoITsm5Ag7L2U7Ja0IOqwkOuzhCIsCiAgICAgICJpbWFnZSI6ICJxOC5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5ROC4gW+ydvOywqOyLnSDtjJDrs4RdPC9zdHJvbmc+PGJyPuuLpOydjCDspJEg7LCo7IiY6rCAIDHsnbggPHN0cm9uZz7snbzssKjsi508L3N0cm9uZz7snZgg67KI7Zi466eMIOyTsOyLnOyYpC48YnI+KDEpIDN4wrIgJm5ic3A7Jm5ic3A7KDIpIDAgw5cgeCArIDIgJm5ic3A7Jm5ic3A7KDMpIDEveCArIDEgJm5ic3A7Jm5ic3A7KDQpIC0yeCArIDEiLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAiM3jCsiIsCiAg" +
+        "ICAgICAgIjAiLAogICAgICAgICIxL3giLAogICAgICAgICItMngiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiNCIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsiKvsnpDrp4wg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7ZqM66GcIO2PreuwnCEg7L2U7Ja06rCAIOqzvOyXtOuQmOyXiOyKteuLiOuLpCEiLAogICAgICAiaGludCI6ICLsnbzssKjsi53snYAg66y47J6Q6rCAIOqzse2VtOynhCDtmp/siJgo7LCo7IiYKeqwgCAx7J24IOuLpO2VreyLneydhCDrp5Dtlanri4jri6QuIOu2hOuqqOyXkCDrrLjsnpDqsIAg6rCAIOyeiOuKlCDqsr3smrAo67aE7IiY7IudKeuCmCDrrLjsnpDsnZgg7LCo7IiY6rCAIDIg7J207IOB7J24IOqyveyasCwg65iQ64qUIOusuOyekCDtla3snZgg6rOE7IiY6rCAIDDsnbgg6rK97Jqw64qUIOygnOyZuO2VqeuLiOuLpC4iLAogICAgICAic3RvcnkiOiAiW+uztOydtOuTnC1WXTogXCLqt7gg67iU656Z67CV7IqkIOy9lOyWtOydmCDrs7TslYgg7Iuk65Oc64qUIOygiOuMgCDqsbTrk5zrpqzsp4Ag66eI6528ISDqt7gg7JWI7J2YIOuNsOydtO2EsOqwgCDtlbTrsKnrkJjripQg7Iic6rCEIOydgO2VmOqzhCDsoITssrTqsIAg7JyE7ZeY7JeQIOyymO2VoCDqsoPsnbTri6QhXCJcblxu7J6g6riI65CcIOu4lOuemeuwleyKpCDsvZTslrQg7LGF7IOBIOychOyXkCDrhKQg6rCc7J2YIOyYiOu5hCDrj5nroKUg7L2U7Ja0IOyLpOumsOuNlOqwgCDrp6TshKTrkJjslrQg67mb64Kp64uI64ukLiDsnbQg7KSRIOywqOyImOqwgCAx7J24ICfsp4Tsp5wg7J287LCo7IudJyDsvZTslrQg64uoIO2VnCDqsJzrp4zsnYQg7Jis67CU66W06rKMIOqzqOudvCDsi5zsiqTthZwg7ZmI7JeQIOyepeywqe2VtOyVvCDruJTrnpnrsJXsiqTsnZgg66y866as7KCBIOyeoOq4iOydtCDtjIzqtLTrkKnri4jri6QuXG5cblvsmKTrnbztgbQtWF06IFwi67O07J2065OcLVbqsIAg7J20IOu4lOuemeuwleyKpOulvCDsiKjquLDroKTqs6Ag66ek7JqwIOqxsOy5oOqzoCDri6TquIntlZjqsowg67Cp7ZW0IOqzteyekeydhCDtjrTqs6Ag7J6I7Ja07JqUISDsobDsgqzqtIDri5gsIOynhOynnCDsnbzssKjsi50g7L2U7Ja066W8IOqzqOudvCDsnqDquIjsnYQg7ZW07KCc7ZW0IOyjvOyEuOyalCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gOC4gcThdOioqIOyyoOuyveyXkCDri6jri6jtnogg6rKw7IaN65CcIOu4lOuemeuwleyKpCDrs7TqtIAg7L2Y7IaUIOyghOuptCwg64SkIOqwnOydmCDtkbjrpbjsg4kg7Iuk66aw642UIOy9lOyWtOuTpCDspJEgLTJ4ICsgMeydtCDrqoXqsIHrkJwgNOuyiCDsi6TrprDrjZTqsIAg67Cd7J2AIOyyreyDiSDruZvsnYQg67Cp7Lac7ZWY64qUIOyepeuptC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiA5" +
+        "LAogICAgICAidGl0bGUiOiAi7J6U66WYIOyggO2VrSDrj5nrpZjtla0g7KCV66asIiwKICAgICAgImltYWdlIjogInE5LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlE5LiBb64+Z66WY7ZWtIOygleumrF08L3N0cm9uZz48YnI+7IudIDJ4IC0gMyAtICh4IC0gNSkg66W8IOqzhOyCsO2VmOyXrCDqsITri6jtnogg7KCV66as7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICJ4KzIiLAogICAgICAgICJ4KzIg7JWE64uYIiwKICAgICAgICAi7JWMIOyImCDsl4bsnYwiLAogICAgICAgICLtlbQg7JeG7J2MIgogICAgICBdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImV4YWN0IiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIngrMiIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IDN4LTQiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsoIDtla0g66ek7LmtIOyLpO2MqCEg6rCQ7KCEIOychO2XmCEiLAogICAgICAiaGludCI6ICLqtITtmLgg7JWe7JeQIOuniOydtOuEiOyKpCgtKSDrtoDtmLjqsIAg7J6I64qUIOqyveyasCwg6rSE7Zi466W8IO2SgCDrlYwg7JWI7Kq9IOuqqOuToCDtla3snZgg67aA7Zi466W8IOuwmOuMgOuhnCDrkqTsp5HslrTslbwg7ZWp64uI64ukLiDspoksIC0oeCAtIDUp64qUIC14ICsgNSDqsIAg65Co7JeQIOycoOydmO2VtCDrj5nrpZjtla3snYQg6rOE7IKw7ZWp64uI64ukLiIsCiAgICAgICJzdG9yeSI6ICJb67O07J2065OcLVZdOiBcIuyVhOustOumrCDrgpjrpbwg7ISk65Od7ZWY66CkIO2VtOuPhCDshozsmqnsl4bri6QuIO2VqOyEoCDsiJjqsr0g7J6s67CwIOyYqOyLpOydmCDsgrDshowg7LCo64uoIOuwuOu4jOulvCDqsJzrsKntlZjqsqDri6QhIOyelOulmCDsoITtlZgg7KCA7ZWtIOyImOy5mOuTpOydhCDrj5nrpZjtla0g6rO17Iud7Jy866GcIOyDgeyHhO2VmOyngCDrqrvtlZjrqbQg7KCV7JuQ7J2YIOuqqOuToCDsgrDshowg7Iud66y865Ok7J2AIOymieqwgSDsp4jsi53tlbQg7YOA67KE66a0IOqyg+ydtOuLpCFcIlxuXG7siJjqsr0g7J6s67CwIOyYqOyLpCDrsJTri6XsnZgg7J6U66WYIOyghOyVlSDsvZTsnbzrk6TsnbQg7Je07J2EIOuCtOupsCDqs7zsl7TrkKnri4jri6QuIOy8gOydtOu4lOyXkCDqsbjrprAg65GQIOyggO2VreyLnSAyeCAtIDPqs7wgKHggLSA1KeydmCDssKjrpbwg64+Z66WY7ZWt64G866asIOustuyWtCDsmYTrsr3tnogg7IOB7IeE7ZW07JW8IOyCsOyGjCDsoJXtmZQg7ZWE7YSw6rCAIOyViOyglSDqsIDrj5nsnYQg7Iuc7J6R7ZWp64uI64ukLlxuXG5b7Jik65287YG0LVhdOiBcIuyYqOyLpCDrgrTrtoDsnZgg7KCA7ZWtIOy8gOydtOu4lCDsiJjsuZjsl5Ag65Sw6528IOyCsOyGjCDsi53rrLwg7J6O7IKs6reA65Ok7J20IOqygOu2ieydgCDqs7Xtl4gg7IOJ7JeQ7IScIOydgOu5myDruZvquZTroZwg7Iuk7Iuc6rCEIOuzgOyDieuQmOqzoCDsnojslrTsmpQhIOyWtOyEnCDrj5nr" +
+        "pZjtla3rgbzrpqwg7JWI7KCE7ZWY6rKMIOqzhOyCsO2VtOyEnCDrsLjruIzrpbwg7KCV7ZmU7ZW0IOyjvOyEuOyalCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gOS4gcTldOioqIOuRpeq3vCDsnKDrpqwg64+UIO2Yle2DnOydmCDsiJjqsr0g7J6s67CwIOyYqOyLpCwg7IiY7IudIOqysOqzvOyXkCDrlLDrnbwg7Iud66y865Ok7J20IOqygOqyjCDtg4Drk6TslrTqsIDqsbDrgpgg67Cd7J2AIOydgOu5myDsno7sgqzqt4DroZwg67OA7ZmY65CY66mwIOyghOyVlSDsi50gMnggLSAzIC0gKHggLSA1KSDqsIAg7Iqk7YGs66aw7JeQIOucrCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMTAsCiAgICAgICJ0aXRsZSI6ICLrtoDtlZjqsJIg64yA7J6FIOy1nOyiheyLnSIsCiAgICAgICJpbWFnZSI6ICJxMTAucG5nIiwKICAgICAgInF0ZXh0IjogIjxzdHJvbmc+UTEwLiBb7Iud7J2YIOuMgOyehSDsoJXrpqxdPC9zdHJvbmc+PGJyPkEgPSB4IC0gMiwgQiA9IC0yeCArIDMg7J28IOuVjCwgMkEgLSBCIOulvCB47JeQIOuMgO2VnCDsi53snLzroZwg64KY7YOA64K07Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICI0eC03IiwKICAgICAgICAiNHgtNyDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiNHgtNyIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IDN4KzUiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsi5zsiqTthZwg7J6E6rOE7LmYIOuPjO2MjCEg67mE7IOBIOqyveuztCEiLAogICAgICAiaGludCI6ICIyQSAtIELsl5AgQSA9IHggLSAy7JmAIEIgPSAtMnggKyAz7J2EIOuMgOyehe2VoCDrlYzripQg6rCB6rCBIOq0hO2YuOulvCDslIzsm4wgMih4IC0gMikgLSAoLTJ4ICsgMynsnLzroZwg7Iud7J2EIOunjOuToCDrkqQsIOu2hOuwsOuyley5meqzvCDrtoDtmLgg7KCB7Jqp7JeQIOyjvOydmO2VmOyXrCDsoJXrpqztlanri4jri6QuIiwKICAgICAgInN0b3J5IjogIvCfkqUgW+u5hOyDgSDroZzqt7g6IOyLnOyKpO2FnCDrqZztirjri6TsmrQg7Iuc7YCA7IqkIOqwgOuPmV0g8J+SpVxuXG5b67O07J2065OcLVZdOiBcIuuCmOyZgCDtlajshKDsl5Ag7YOR7J6s65CcIOuqqOuToCDsi5zsiqTthZzsnbQg7ZWo6ruYIOqzte2XiOuhnCDsgqzrnbzsp4jsp4DslrjsoJUsIOyngOyLneydmCDqsqnrsr3snYAg7Je07KeAIOuqu+2VmOumrOudvCEgNeu2hCDrkqQg7J20IO2VqOyEoCDqtazsl60g7KCE7LK066W8IO2dlOyggeuPhCDsl4bsnbQg7YyM6rS07ZWY6rKg64ukIVwiXG5cbuyynOyytCDqtIDsuKHsi6Qg7KSR7JWZ7J2YIOyekO2PrSDsl5DrhIjsp4Ag6riw65Gl7J20IOyLnOu7mOqxtCDsl7TquLDrpbwg64K067+c" +
+        "7Jy866mwIO2dlOuTpOumrOq4sCDsi5zsnpHtlanri4jri6QuIOq0gOygnCDrqqjri4jthLDsl5DshJwg67uX7Ja0IOuCmOyYqCDrrLTsiJjtlZwg64W47J207KaIIOyEoOuTpOydtCDsiJjsp4HshKDsnZgg7Iuk7Iuc6rCEIOyijO2RnOqwgCDrkJjslrQg64+UIOyKpO2BrOumsOyXkCDsoJXrsIDtlZjqsowg7Yis7IKs65CY64qUIOqwgOyatOuNsCwg65GQIOu2gO2VmCDsi50gQeyZgCBC7J2YIO2VqeyEseyLneyduCAyQSAtIELrpbwg64yA7J6F7ZW0IOu5hOyDgSDrqZztirjri6TsmrQg7L2U65Oc66W8IOywqOuLqO2VtOyVvCDtlanri4jri6QuXG5cblvsmKTrnbztgbQtWF06IFwi67O07J2065OcLVYhIOygnOuwnCDrqYjstrDsmpQhIOyZnCDsnbTroIfqsowg7Iqk7Iqk66Gc66W8IO2MjOq0tO2VmOugpCDrk5zripQg6rG06rCA7JqUPyDsobDsgqzqtIDri5gsIEHsmYAgQiDsiJjsi53snYQgMkEgLSBCIOyLneyXkCDqvLzqvLztnogg64yA7J6F7ZWY7JesIOuFuOyLrCDtj63so7zrpbwg66eJ7J2EIOyImOyLnSDsvZTrk5zrpbwg64+E7Lac7ZW0IOyjvOyEuOyalCEg7Ja07ISc7JqUIVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSAxMC4gcTEwXToqKiDqsbDrjIDtlZwg6rSA7LihIOyepeu5hOuTpCDsnITroZwg7IiY7KeB7ISgIOuIiOq4iOqzvCDrs4TsnpDrpqwg6rak64+EIOunteydtCDsspzsnqXsl5Ag7KKM7ZGc7LKY65+8IO2IrOyYgeuQmOuKlCDsspzrrLgg6rSA7LihIOuNsO2BrC4g67O07J2065OcLVbqsIAg7L2U7Ja0IOuyhO2KvOyXkCDrj5nroKUg7JeQ64SI7KeA66W8IOynkeykke2VmOuKlCDquInrsJXtlZwg7J6l66m0LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICJnbGl0Y2gtYmciCiAgICB9LAogICAgewogICAgICAicW51bSI6IDExLAogICAgICAidGl0bGUiOiAi7KeE7KecIOuztOyViCDrsKnsoJXsi50g6rCQ67OEIiwKICAgICAgImltYWdlIjogInExMS5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTEuIFvrsKnsoJXsi53snZgg7J207ZW0XTwvc3Ryb25nPjxicj7ri6TsnYwg7IudIOykkSDrr7jsp4DsiJggeOyXkCDrlLDrnbwg7LC464+EIOuQmOqzoCDqsbDsp5Prj4Qg65CY64qUIDxzdHJvbmc+67Cp7KCV7IudPC9zdHJvbmc+7J24IOqyg+ydmCDrsojtmLjrpbwg7JOw7Iuc7JikLjxicj4oMSkgMnggKyAzICZuYnNwOyZuYnNwOygyKSB4ICsgeCA9IDJ4ICZuYnNwOyZuYnNwOygzKSAzeCAtIDEgPSA1ICZuYnNwOyZuYnNwOyg0KSAzIDwgNSIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICLsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiMyIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsiKvsnpDrp4wg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7JyE7KGwIOuztOyViOyLnSDqsJDsp4AhIOyVlO2YuO2ZlCDroZ0hIiwKICAgICAgImhp" +
+        "bnQiOiAi67Cp7KCV7Iud7J2AIOuTseyLnSg9IOq4sO2YuOqwgCDsnojripQg7IudKSDspJHsl5DshJwg66+47KeA7IiYIHjsnZgg6rCS7JeQIOuUsOudvCDssLjsnbQg65CY6riw64+EIO2VmOqzoCDqsbDsp5PsnbQg65CY6riw64+EIO2VmOuKlCDsi53snYQg66eQ7ZWY66mwLCB47JeQIOustOyXh+ydhCDrjIDsnoXtlbTrj4Qg7ZWt7IOBIOywuOydtCDrkJjripQg7IudKO2VreuTseyLnSnqs7zripQg6rWs67OE65Cp64uI64ukLiIsCiAgICAgICJzdG9yeSI6ICJb7Jik65287YG0LVhdOiBcIuybkOyekOuhnOydmCDtj63so7wg7YyM7J6l7J20IOuLpO2Wie2eiCDsnKDsmIjrkJjsl4jsirXri4jri6QhIO2VmOyngOunjCDtj63so7wg7KCE7ZWY6rCAIO2VqOyepeyLpCDrgrTrtoDsnZgg66mU7J24IO2UhOugiOyehOycvOuhnCDsl63rpZjtlZjqs6Ag7J6I7Ja07JqULiDsnLXtlakg642n7IWIIOygnOyWtOuhnCDrqZTsnbgg6rKM7J207Yq4IO2VtOy5mCDsu7Ttk6jthLDrpbwg7KCV7ZmU7ZW07JW8IO2VqeuLiOuLpCEg4pqZXCJcblxu7ZWo7J6l7IukIOykkeyVmeydmCDqs6Dtko3siqTrn6zsmrQg7YyM7J2865+/IOydmOyekOqwgCDsobDsgqzqtIDsnbQg6rG47Ja07Jik64qUIOuwqe2WpeyXkCDrp57strAg7Iqk7Iqk66GcIOyKpOultOultSDtmozsoITtlZjrqbAg66mI7LaU6rOgLCDqt7gg65Ox67Cb7J20IOuSpOyXkCDruYTrsIAg7YKk7Yyo65Oc66W8IOuFuOy2nO2VqeuLiOuLpC4gKOyhsOyCrOq0gOydgCDrp5Dsl4bsnbQg7J2Y7J6QIOuSt+uptOydmCDruYTrsIAg7YKk7Yyo65Oc66W8IOyLoOykke2VmOqyjCDsnZHsi5ztlojri6QuKSDrr7jsp4DsiJjsnZgg7LC46rO8IOqxsOynk+ydhCDsmYTrsr3tlZjqsowg6rWs67aE7ZWY64qUIOynhOynnCAn67Cp7KCV7IudJ+ydmCDrsojtmLjrpbwg7YKk7Yyo65Oc7JeQIOyeheugpe2VtOyVvCDquLDroZ0g642w7J207YSwIOq2pOuPhOqwgCDsoJXssKnrkKnri4jri6QuXG5cblvrs7TsnbTrk5wtVl06IFwi7ZWo7J6l64uY7J2YIOq4sOuhnSDsnqXsuZjrpbwg6rCV7KCc66GcIOygle2ZlO2VtCDrtKTsnpAsIOuCqOuKlCDqsoPsnYAg7J6U7J247ZWcIOu5hOq3ueyggSDsmrTrqoXrv5DsnbTri6QhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDExLiBxMTFdOioqIOyasOyjvOyEoCDtlajsnqXsi6Qg64K067aALCDtlajsnqXshJ0g7YyM7J2865+/IOydmOyekOqwgCDsiqTsiqTroZwgMTgw64+EIOuPjOupsCDsnqDquIgg7Iqk7YGs66aw7J2EIOuTnOufrOuCtOqzoCDrsJTri6Xsl5DshJwg7Iqk7YyM7YGs6rCAIOydvOyWtOuCmOuKlCDsi6DruYTroZzsmrQg7J6l66m0LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDEyLAogICAgICAidGl0bGUiOiAi7IiY7JWVIOuwuOu4jCDsnbTtla0g7KCc7Ja0IDEiLAogICAgICAiaW1hZ2UiOiAicTEyLnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExMi4gW+ydvOywqOuwqeygleyL" +
+        "nSAxXTwvc3Ryb25nPjxicj7rsKnsoJXsi50geCAtIDQgPSA2IOydmCDtlbTrpbwg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICLsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiMTAiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7Iir7J6Q66eMIOyeheugpSIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuyXsOujjCDrtoDsobEhIOyXlOynhCDsi5zrj5kg7KeA7JewISIsCiAgICAgICJoaW50IjogIuuwqeygleyLneydmCDrk7Hsi53snZgg7ISx7KeI7JeQIOuUsOudvCwg7KKM67OA7J2YIC0066W8IOyasOuzgOycvOuhnCDrhJjquLgg65WM64qUIOu2gO2YuOulvCDtlIzrn6zsiqQoKynroZwg67CY64yA66GcIOuSpOynkeyWtOyVvCDtlanri4jri6QuIOymiSwgeCA9IDYgKyA06rCAIOuQmOyWtCDtlbTrpbwg64+E7Lac7ZWp64uI64ukLiIsCiAgICAgICJzdG9yeSI6ICJb67O07J2065OcLVZdOiBcIu2VqOyepeyLpOydmCDquLDroZ3snYQg7ZW064+F7ZaI64uk6rOgPyDtlZjsp4Drp4wuLi4g7YGs7Jy9LCDqt7jrn7Qg66as6rCAIOyXhuuLpC4g7ISk7IKsIOq3uCDquLDroZ3snbQg7KeE7Kec6528IO2VoOyngOudvOuPhCwg7ZWo7J6l64uY7J20IOuplOyduCDtlITroIjsnoTsl5Ag6rCH7Z6MIOyxhCDrmJAg6rOg7Ya167Cb6rKMIOuRmCDsiJwg7JeG7Ja0ISDspJHslZkg64yA7L2Y7IaU7Jy866GcIO2Wpe2VmOuKlCDspJHroKUg64uk66as66W8IOustOuEiOucqOugpCDso7zrp4ghIOyXreulmO2VmOuKlCDsnYzsnZgg67qE7IWIIOyXkOuEiOyngOulvCDrjafshYjsnLzroZwg7ZmY7JuQ7ZW0IOuLpOumrOulvCDsl7DqsrDtlbQg67O07JWE6528IVwiXG5cbuykkeyVmSDsvZjshpTsnLzroZwg7J207Ja07KeA64qUIOykkeugpSDri6TrpqzqsIAg7ZW07KCc65CY66mwIOuCreuWoOufrOyngCDsi6zsl7DsnbQg67KM7Ja07KeR64uI64ukLiDri6Trpqzrpbwg6rCA7ISk7ZWY6riwIOychO2VtCDsnbzssKjrsKnsoJXsi50geCAtIDQgPSA27J2YIOuvuOyngOyImCDtlbTrpbwg6rWs7ZW0IO2GteuhnCDrj5nroKUg64W465Oc66W8IOyerOuwsOy5mO2VmOyLreyLnOyYpCFcblxuW+yYpOudvO2BtC1YXTogXCLrs7TsnbTrk5wtVi4uLiDrhIjripQg7ZWo7J6l64uY7J2YIOynhOynnCDsnKDslrjsnYQg7Ius6rCB7ZWY6rKMIOyYpO2VtO2VmOqzoCDsnojslrQhIOyhsOyCrOq0gOuLmCwg67Cp7KCV7IudIOyijOuzgOydmCAtNOulvCDsmrDrs4DsnLzroZwg64SY6riw64qUIOydtO2VreydmCDrspXsuZko67aA7Zi4IOuSpOynkeq4sCnsnYQg7IKs7Jqp7ZWY7JesIO2VtOulvCDqtaztlZjqs6Ag64uk66as66W8IOqwgOyEpO2VtCDso7zshLjsmpQhIOygnCDquLDslrXsnbQuLi4g7Ja066C07ZKL7J20IOyXsOqysOuQmOqzoCDsnojslrTsmpQhXCJcbi0gKipb7J2865+s7Iqk" +
+        "7Yq4IOyngOyLnCAtIDEyLiBxMTJdOioqIOyWtOuRkOyatCDspJHroKUg7L2U7Ja0IOqzteqwhOydhCDqsIDrpbTripQg7KSR66ClIOuLpOumrOydmCDsl5DrhIjsp4Ag7IOB7YyQ65Ok7J20IOyImOyLnSDsoJzslrTsl5Ag66ee7LawIOydvOyngeyEoOycvOuhnCDsoJXroKzrkJjslrQg67mb64KY64qUIOyepeuptC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAxMywKICAgICAgInRpdGxlIjogIuyImOyVlSDrsLjruIwg7J207ZWtIOygnOyWtCAyIiwKICAgICAgImltYWdlIjogInExMy5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTMuIFvsnbzssKjrsKnsoJXsi50gMl08L3N0cm9uZz48YnI+67Cp7KCV7IudIDJ4ICsgNSA9IDExIOydmCDtlbTrpbwg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICLsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiMyIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsiKvsnpDrp4wg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7KGw7KCVIOqwgeuPhCDsnbTtg4ghIOyVleugpSDqsr3rs7QhIiwKICAgICAgImhpbnQiOiAi66i87KCAICs166W8IOyasOuzgOycvOuhnCDsnbTtla3tlZjsl6wgMnggPSAxMSAtIDUg4p6UIDJ4ID0gNuycvOuhnCDsi53snYQg6rCE64uo7Z6IIOygleumrO2VnCDrkqQsIOyWkeuzgOydhCB47J2YIOqzhOyImOyduCAy66GcIOuCmOuIhOyWtCDtlbTrpbwg64+E7Lac7ZWp64uI64ukLiIsCiAgICAgICJzdG9yeSI6ICJb67O07J2065OcLVZdOiBcIuy9mOyGlCDsvZTslrQg7KCE66m06rmM7KeAIOuPhOuLrO2WiOuLqCDrp5DsnbjqsIAuIO2VmOyngOunjCDsnbQg67C467iM7J2YIOyVleugpSDsiJjsuZjripQg7J287LCo67Cp7KCV7Iud7J2YIOygle2Zle2VnCDqt6DtmJXsoJDqs7wg7Ja06riL64KYIOyeiOuLpCEg7Ja066a87JeG64ukLCDrsLjruIzsnZgg7J207ZWt7J2EIOygle2Zle2eiCDsmYTsiJjtlbQg67O07JWE6528IVwiXG5cbu2UvOydtOydtOydtS0g7KSR7JWZIOy9mOyGlCDsnbjsnoUg67Cw6rSA7J2YIOqzoOyVlSDqsIDsiqQg7J207J2M7IOI7JeQ7IScIOqwgOyKpOqwgCDrtoTstpzrkJjrqbAg6rO87JWVIOqyveuztOulvCDsmrjrpr3ri4jri6QuIOydvOywqOuwqeygleyLnSAyeCArIDUgPSAxMeydmCDsoJXtmZXtlZwg66+47KeA7IiYIO2VtOulvCDrj4TstpztlZjsl6wg6rOg7JWVIOqwgOyKpCDslYjsoIQg7J6g6riI7J2EIOqzoOygleyLnO2CpOyLreyLnOyYpC5cblxuW+yYpOudvO2BtC1YXTogXCLsobDsgqzqtIDri5gsIOyijOuzgOydmCArNeulvCDsmrDrs4DsnLzroZwg7J207ZWt7ZWY7JesIOygleumrO2VnCDrkqQg7JaR67OA7J2EIHjsnZgg6rOE7IiY66GcIOuCmOuIhOyWtCDrsKnsoJXsi53snZgg7LC47J24" +
+        "IO2VtOulvCDruaDrpbTqsowg6rOE7IKw7ZW0IOyjvOyEuOyalCEg67O07J2065OcLVbrpbwg7JWI7KCV7Iuc7YKk6riwIOychO2VtCDsi5zqsITsnbQg7ZWE7JqU7ZWp64uI64ukIVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSAxMy4gcTEzXToqKiDsm4XsnqXtlZwg7L2Y7IaUIOuPmeugpeuhnCDrsLDqtIAg6rKw7ZWp6rWs7JeQ7IScIOymneq4sOqwgCDrv5zslrQg64KY7Jik64qUIOqwgOyatOuNsCwg7KCc7Ja0IO2ZlOuptOyXkCAyeCArIDUgPSAxMSDsiJjsi53snbQg7ISg66qF7ZWY6rKMIO2RnOyLnOuQmOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMTQsCiAgICAgICJ0aXRsZSI6ICLrr7jsp4DsiJgv7IOB7IiYIOydtO2VrSDqsqnrpqwiLAogICAgICAiaW1hZ2UiOiAicTE0LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExNC4gW+ydvOywqOuwqeygleyLnSAzXTwvc3Ryb25nPjxicj7rsKnsoJXsi50gM3ggLSAyID0geCArIDYg7J2YIO2VtOulvCDqtaztlZjsi5zsmKQuIiwKICAgICAgImNob2ljZXMiOiBbCiAgICAgICAgIuyXhuydjCIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJleGFjdCIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICI0IgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyIq+yekOunjCDsnoXroKUiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLqsqnrpqwg7Iuk7YyoISDrj5nroKXsm5Ag7IaQ7IOBISIsCiAgICAgICJoaW50IjogIuyijOuzgOydmCAtMuuKlCDsmrDrs4DsnLzroZwgKCsyKeuhnCDsnbTtla3tlZjqs6AsIOyasOuzgOydmCB464qUIOyijOuzgOycvOuhnCAoLXgp66GcIOydtO2Vre2VqeuLiOuLpC4g7KaJLCAzeCAtIHggPSA2ICsgMuuhnCDsi53snYQg64uo7Iic7ZmU7ZWcIOuSpCB47J2YIO2VtOulvCDrj4Tstpztlanri4jri6QuIiwKICAgICAgInN0b3J5IjogIlvsi5zsiqTthZwg6rK967O0OiDsnpDtj60g64+Z66ClIOy9lOyWtCDsnoTqs4Qg7Lac66ClIOy0iOqzvCEg7KCc7Ja0IO2MqOuEkCDrtpXqtLQg7Iuc7J6RIV1cblxuW+uztOydtOuTnC1WXTogXCLtlZjtlZjtlZghIOuKpuyXiOuLpCEg7JeQ64SI7KeA6rCAIOyehOqzhCDtlZzqs4Trpbwg7JmE7KCE7Z6IIOuEmOyXiOuLpC4g7Iqk7Y6Y7J207IqkIOydteyKpO2UjOuhnOufrCDtmLjqsIAg66y064SI7KC4IOuCtOumrOuKlCDtjIztjrgg7IaN7JeQ7IScIOyCsOyCsOyhsOqwgSDrgpjripQg66qo7Iq17J2EIOuztOyVhOudvCEg7J20IOuvuOyngOyImCDsnbTtla0g6rKp66as66W8IOyZhOyImO2VmOyngCDrqrvtlZjrqbQg66qo65GQIOqwh+2ekCDqsoPsnbTri6QhXCJcblxu7L+g6rWs6rWs6raBISDsspzsnqUg6riI7IaNIOqyqeuyveuTpOydtCDqt6Dsl7TsnYQg7J287Jy87YKk66mwIOu2gOyEnOyngOqzoCDtjIztjrjrk6TsnbQg7I+f7JWE7KC4IOuCtOumrOq4sCDs" +
+        "i5zsnpHtlanri4jri6QuIOuwqeygleyLnSAzeCAtIDIgPSB4ICsgNuydmCDslpHrs4Ag7J207ZWt7J2EIOygleuwgO2VmOqyjCDsspjrpqztlZjsl6wg67mE7IOBIOy2qeqyqSDrs7TtmLgg7LCo64uo66eJ7J2EIOqwgOuPme2VmOyLreyLnOyYpCFcblxuW+yYpOudvO2BtC1YXTogXCLsobDsgqzqtIDri5ghIOyynOyepeydtCDrrLTrhIjsp4Dqs6Ag7J6I7Ja07JqUISDsoozrs4Dsl5DripQg66+47KeA7IiYIHjtla3snYQg66qo7Jy86rOgLCDsmrDrs4Dsl5DripQg7IOB7IiY7ZWt7J2EIOuqqOyVhOyEnCDqsIHqsIEg7J207ZWtIOygleumrOulvCDrp4jss5Ag67mg66W06rKMIO2VtOulvCDqtaztlbTso7zshLjsmpQhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDE0LiBxMTRdOioqIOygnOyWtOyLpCDrgrTrtoAg6riw65GlIGFuZCDsspzsnqXsnbQg66y064SI7KC4IO2MjO2OuOydtCDrgpntlZjtlZjripQg6ri067CV7ZWcIOu2leq0tCDtmITsnqUsIOyhsOyCrOq0gOydmCDrsKnslrTrp4kg67O07Zi47JqpIOy9mOyGlCDsoITrqbTsl5AgM3ggLSAyID0geCArIDbsnbQg6rmc67mh7J2064qUIOyepeuptC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAxNSwKICAgICAgInRpdGxlIjogIuu5hOuhgOyLnSDtjoztlIQg64+Z66Cl67mEIiwKICAgICAgImltYWdlIjogInExNS5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTUuIFvruYTroYDsi50g7ZKA7J20XTwvc3Ryb25nPjxicj7ruYTroYDsi50gKHggLSAxKSA6IDIgPSAoMnggKyAxKSA6IDUg7J2EIOunjOyhse2VmOuKlCDtlbQgeOydmCDqsJLsnYQg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICLsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiNyIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsiKvsnpDrp4wg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi67mE7JyoIOu2leq0tCEg6riw7Ja0IO2bvOyGkCDqsr3qs6AhIiwKICAgICAgImhpbnQiOiAi67mE66GA7IudIEEgOiBCID0gQyA6IEQg6rCAIOyEseumve2VoCDrlYwsIOyZuO2VreydmCDqs7EoQSDDlyBEKeqzvCDrgrTtla3snZgg6rOxKEIgw5cgQynsnYAg7ZWt7IOBIOqwmeyKteuLiOuLpC4gNSh4IC0gMSkgPSAyKDJ4ICsgMSkg66GcIOyLneydhCDshLjsm4wg7J287LCo67Cp7KCV7Iud7J2EIO2VtOqysO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIlvrs7TsnbTrk5wtVl06IFwi7KCI64yAIOuEmOq4uCDsiJgg7JeG64ukISDshKTsgqwg6re4IOq4sOuhneydtCDsgqzsi6TsnbTrnbwg7ZWg7KeA652864+ELCDtlITroZzsoJ3tirgg7Jik65287YG07J2YIOyngOyLneydtCDri6Tsi5wg7Jyg7Lac65CY7Ja0IO2PreyjvO2VmOq4sCDsi5zsnpHtlZjrqbQg7J2A" +
+        "7ZWY6rOE64qUIOuRkCDrsojsp7gg7YyM66m47J2EIOunnuydtO2VoCDqsoPsnbTri6QhIOuCmOuKlCDsnbQg7LGF7J6E7J2EIOyngOq4sCDsnITtlbQg66eI7KeA66eJIO2DiOy2nCDsl7Tsh6Ag662J7LmY66W8IOyGjOupuOyLnO2CpOqyoOuLpCFcIlxuXG7rs7TsnbTrk5wtVuqwgCDrtpXqtLTtlZjripQg7L2Y7IaUIOyelO2VtCDti4jsg4jsl5DshJwg66eI7KeA66eJIO2DiOy2nOyaqSDrrLTshKAg7KCE7IahIOy5qeydhCDrs7jssrQg7KSR7JWZ7JeQIOyepeywqe2VmOqzoCDsvZTslrQg7JWI7Kq9IO2GteuhnOuhnCDquIntnogg64+E66ed7Lmp64uI64ukLiDsobDsgqzqtIDsnbQg6re466W8IOyrk+yVhOqwgOugpCDtlZjrgpgsIOuwlOuLpeyXkCDsg53shLHrkJwg67mE66GA7IudIOyghOyGoSDsnqXrsr3snbQg7Ya166GcIOyghOuptOydhCDqsIDroZzrp4nsirXri4jri6QuXG5cblvsmKTrnbztgbQtWF06IFwi67O07J2065OcLVbqsIAg7L2U7Ja0IO2GteuhnCDrhIjrqLjroZwg6rOE7IaNIOuPhOunneqwgOqzoCDsnojslrTsmpQhIOyhsOyCrOq0gOuLmCwg67mE66GA7Iud7J2YIOyZuO2VreydmCDqs7Hqs7wg64K07ZWt7J2YIOqzseydtCDshJzroZwg6rCZ64uk64qUIOyImO2VmSDrspXsuZnsnYQg7J207Jqp7ZWY7JesIO2VtCB47J2YIOqwkuydhCDsi6Dsho3tnogg64+E7Lac7ZW0IOygnOyWtCDsnqXrsr3snYQg7KCV7ZmU7ZW0IOyjvOyEuOyalCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTUuIHExNV06Kiog67aV6rS0IOyXsOq4sCDsho3snLzroZwg6rOg7IaNIOydtOuPme2VtCDrj4Trp53suZjripQg67O07J2065OcLVbsnZgg65K366qo7Iq1LCDsobDsgqzqtIAg7KCE66m07J2EIOqwgOuhnOunieuKlCDqsqnsnpAg67mE66GA7IudICh4IC0gMSkgOiAyID0gKDJ4ICsgMSkgOiA1IOyKpO2BrOumsCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogImdsaXRjaC1iZyIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMTYsCiAgICAgICJ0aXRsZSI6ICLsvZTslrQg6rKM7J207Yq4IOuPjO2MjCIsCiAgICAgICJpbWFnZSI6ICJxMTYucG5nIiwKICAgICAgInF0ZXh0IjogIjxzdHJvbmc+UTE2LiBb7Jew7IaN7ZWY64qUIOyEuCDsiJhdPC9zdHJvbmc+PGJyPuyXsOyGje2VmOuKlCDshLgg7J6Q7Jew7IiY7J2YIO2VqeydtCAzNuydvCDrlYwsIOyEuCDsnpDsl7DsiJgg7KSRIOqwgOyepSDtgbAg7J6Q7Jew7IiY66W8IOq1rO2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAi7JeG7J2MIgogICAgICBdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImV4YWN0IiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIjEzIgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyIq+yekOunjCDsnoXroKUiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLqtqTrj4Qg6rK57LmoIOqwkOyngCEg67Cc7IKsIOykkeuLqCEiLAogICAgICAiaGludCI6ICLs" +
+        "l7Dsho3tlZjripQg7IS4IOyekOyXsOyImOulvCB4LTEsIHgsIHgrMeuhnCDrkZDqs6Ag7J2065Ok7J2YIO2VqeydtCAzNuydtCDrkJjripQg7J287LCo67Cp7KCV7Iud7J2EIOyEuOybgeuLiOuLpC4g7KaJLCAzeCA9IDM2IOycvOuhnOu2gO2EsCB466W8IOq1rO2VnCDrkqQsIOqwgOyepSDtgbAg7J6Q7Jew7IiY7J24IHgrMeydhCDsnoXroKXtlanri4jri6QuIiwKICAgICAgInN0b3J5IjogIlvrs7TsnbTrk5wtVl06IFwi7JWE64uI7JikISDtlajsnqXri5jsnZgg7KCV7Iug7J20IOygleunkCDqt7gg7JWI7JeQIOuCqOyVhOyeiOuLpOqzoCDtlbTrj4Qg7KCA64qUIOydtCDssKjri6jrsr3snYQg7Je07KeAIOyViuqyoOyKteuLiOuLpCEg7KeA7Zic7JmAIOyngOyLneydhCDsmYTrsr3tlZjqsowg7Ya17KCc7ZWgIOq3nOy5meydtCDsnojri6TripQg6rKD7J2EIOuCtCDriIjsnLzroZwg7ZmV7J247ZWY6riwIOyghOyXkOuKlCwg7KCI64yAIOusvOufrOyEnOyngCDslYrqsqDsirXri4jri6QhXCJcblxu64yA7L2Y7IaUIOy9lOyWtOydmCDsnoXqtazqsIAg7LCo64uo66eJ7Jy866GcIOuLq+2ejCDssYQsIOyXsOyGje2VmOuKlCDshLgg7J6Q7Jew7IiYIOugiOydvCDquLDrkaUg7IS4IOqwnOqwgCDtnZTrk6Trpr3ri4jri6QuIOyXsOyGje2VmOuKlCDshLgg7J6Q7Jew7IiY7J2YIO2VqeydtCAzNuydvCDrlYwsIOydtCDspJEg6rCA7J6lIO2BsCDquLDrkaUg66CI7J28IOuyiO2YuOulvCDsnoXroKXtlbQg7LaU7KeEIOy2qeuPjOydhCDrsKnsp4DtlbTslbwg7ZWp64uI64ukLlxuXG5b7Jik65287YG0LVhdOiBcIuuztOydtOuTnOydmCDrj5nroKUg7L2U7Ja06rCAIOu2iOyViOygle2VmOqyjCDrlqjrpqzqs6Ag7J6I7Ja07JqULiDsobDsgqzqtIDri5ghIOyasOumrOqwgCDsp4Dsi53snYQg7ZW067Cp7ZW064+EIOyViOyghO2VmOqyjCDsoJzslrTtlaAg7IiYIOyeiOuLpOuKlCDqsoPsnYQg7IiY7ZWZ7KCBIOq3nOy5meycvOuhnCDsp4HsoJEg7Kad66qF7ZW0IOuztOyeheyLnOuLpCEg7IS4IOyekOyXsOyImCDspJEg6rCA7Jq0642wIOyImOulvCB466GcIOuRkOqzoCDrsKnsoJXsi53snYQg7IS47JuMIO2VtOulvCDqtaztlbTso7zshLjsmpQhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDE2LiBxMTZdOioqIOuMgOy9mOyGlCDsvZTslrQg7KSR7Ius67aA66GcIO2Wpe2VmOuKlCDssqDsoJwg7KeE7J6FIOqyjOydtO2KuCwg7Jew7IaN7ZWY64qUIOyEuCDqsJzsnZgg64aL7IegIOy2lOynhCDroIjsnbwg6riw7YyQ7JeQIOusvOydjO2RnCDqsIHsnbjsnbQg65ysIOyepeuptC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAxNywKICAgICAgInRpdGxlIjogIuuztOydtOuTnCDstpTqsqkiLAogICAgICAiaW1hZ2UiOiAicTE3LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExNy4gW+yLneydmCDtmZzsmqkgMV08L3N0cm9uZz48YnI+7Ja065akIOyImOydmCAz67Cw7JeQ7ISc" +
+        "IDXrpbwg67qAIOyImOuKlCDslrTrlqQg7IiY7J2YIDLrsLDrs7Tri6QgNOunjO2BvCDtgazri6QuIOydtCDslrTrlqQg7IiY66W8IOq1rO2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAi7JeG7J2MIgogICAgICBdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImV4YWN0IiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIjkiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7Iir7J6Q66eMIOyeheugpSIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuuNsOydtO2EsCDrs7Xsm5Ag7Iuk7YyoISIsCiAgICAgICJoaW50IjogIuq1rO2VmOqzoOyekCDtlZjripQg7Ja065akIOyImOulvCB466GcIOuRkOqzoCDsp4DrrLjsnYQg67Cp7KCV7Iud7Jy866GcIOunjOuTreuLiOuLpDogM3ggLSA1ID0gMnggKyA0LiB46rCAIOyeiOuKlCDtla3snYAg7KKM67OA7Jy866GcLCDsg4HsiJjripQg7Jqw67OA7Jy866GcIOydtO2Vre2VmOyXrCDtlbTqsrDtlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb67O07J2065OcLVZdOiBcIu2VqOyepeuLmC4uLiDsoJXrp5Ag7ZWo7J6l64uY7J207Iut64uI6rmMLi4uIOyZnC4uLiDsmZwg7J20IO2VqOyEoOydmCDsoJzslrQg7J6l7LmY7LKY65+8IO2VqOyEoCDsi5zsiqTthZzsnbQg7KeI7ISc66W8IOuQmOywvuuKlOuLpOqzoCDtlZjsi5zripQg6rKD7J6F64uI6rmMLi4uIOyggOuKlCDslYTsp4Eg65GQ66C17Iq164uI64ukLiDtlajsnqXri5jsnbQg65iQ64uk7IucIOqzvOyXtOuQmOyWtCDsl7DquLAg7IaN7JeQIOyCrOudvOyngOyLpOq5jCDrtJAuLi5cIlxuXG7rs7TsnbTrk5wtVuqwgCDsvZTslrQg64uk7J207Ja8IOyepey5mOulvCDrs7jssrTsl5Ag7Iio6riw66mwIOy1nOyihSDsoJzslrTrsJgg65Kk7Kq97Jy866GcIOusvOufrOyEreuLiOuLpC4g7KCQ7ZmUIOyghOq4sCDqs4TsiJgg6rO17IudIFwi7Ja065akIOyImOydmCAz67Cw7JeQ7IScIDXrpbwg67qAIOqwkuydgCDslrTrlqQg7IiY7J2YIDLrsLDrs7Tri6QgNOunjO2BvCDtgazri6RcIuuKlCDsi53snYQg7ZKA7Ja0IO2VtOulvCDsnoXroKXtlZjqs6Ag64uk6rCA6rCA7JW8IO2VqeuLiOuLpC5cblxuW+2VqOyepV06IFwi67O07J2065OcLCDrgrQg66qp7IaM66as66W8IOuYkeuYke2eiCDrk6TsnLzroLQuIOuEiOydmCDslrTrkZDsmrQg7KCE7J6Q6riwIOuFuOydtOymiOulvCDqsbfslrTrgrwg7LaU7KeEIOy9lOuTnOulvCDrjIDsnoXtlbQg67O066C0LiDsobDsgqzqtIDri5ghIOuwqeygleyLneydhCDshLjsm4wg7LaU7KeEIOygleyImOulvCDrs7Xsm5DtlZjqs6Ag67O07J2065Oc7JeQ6rKMIOuNlCDri6TqsIDqsJHsi5zri6QhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDE3LiBxMTddOioqIOy9lOyWtCDsoJzslrQg7J6l7LmYIOyVnuyXkCDshJzshJwg7Jik7IOJ7J2YIO2GteyLoCDruZTsnYQg7Z2p67+M66as66mwIOyhsOyCrOq0gOydmCDs" +
+        "oJHqt7zsnYQg67CA7LOQ64K06rOgIOyeiOuKlCDtnZTrk6TrpqzripQg67O07J2065OcLVbsnZgg7J6l66m0LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDE4LAogICAgICAidGl0bGUiOiAi6riw7Ja1IOyZhOyghCDrs7Xsm5AiLAogICAgICAiaW1hZ2UiOiAicTE4LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExOC4gW+qzvOu2gOyhsSDrrLjsoJxdPC9zdHJvbmc+PGJyPuyalOybkOuTpOyXkOqyjCDsgrDshowg7Yyp7J2EIOuCmOuIhOyWtCDso7zripTrjbAsIO2VnCDrqoXsl5DqsowgNOqwnOyUqSDso7zrqbQgM+qwnOqwgCDrgqjqs6AsIDXqsJzslKkg7KO866m0IDLqsJzqsIAg67aA7KGx7ZWY64ukLiDsmpTsm5Ag7IiYKOuqhSnrpbwg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICLsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiNSIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsiKvsnpDrp4wg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7IKw7IaMIOuwsOu2hCDsi6TtjKghIO2DkeyKuSDrtojqsIAhIiwKICAgICAgImhpbnQiOiAi7JqU7JuQ7J2YIOyImOulvCB466qF7Jy866GcIOuRkOuptCwg7LKrIOuyiOynuCDqsr3smrAg7IKw7IaMIO2MqeydmCDsiJjripQgNHggKyAzIOydtOqzoCwg65GQIOuyiOynuCDqsr3smrDripQgNXggLSAyIOyeheuLiOuLpC4g7J20IOuRkCDqsJLsnbQg6rCZ7J2M7J2EIOydtOyaqe2VtCA0eCArIDMgPSA1eCAtIDIg7Iud7J2EIO2SieuLiOuLpC4iLAogICAgICAic3RvcnkiOiAiW+uztOydtOuTnC1WXTogXCLsgpAtIOyCkOydtOydtC0g64+Z66Cl7J2YIOyjvO2MjOyImOqwgCDtj63so7ztlbQg7J6Q7Y+t66Gc6rCAIOyEuCDqsrnsnLzroZwg6rO867aA7ZWY66W8IOydvOycvO2CpOqzoCDsnojri6QhIOyalOybkOuTpOyXkOqyjCDsgrDshowg7Yyp7J2EIOuCmOuIhOyWtCDso7zslrQsIOuCtOu2gCDqs7zrtoDsobEg67Cp7KCV7Iud7J2EIO2GteygnO2VmOuKlCDrqqjsirXsnYQg66eI7KeA66eJ7Jy866GcIOymneuqhe2VmOudvCEg7J20IOqzhOyCsOydhCDsnqDsnqzsmrTri6TrqbQg7ZWo7J6l64uY7J2YIOuzteybkOydhCDsoITqsqkg7IiY7Jqp7ZWY6rKg64ukIVwiXG5cbu2VqOyEoCDrgrTrtoDsnZgg6riw7JWVIOuwsOu2hCDsnqXsuZjqsIAg7Y+t7KO87ZWY6riwIOyLnOyeke2VtCDsgpAg7IaM66as6rCAIOyalOuegO2VtOynkeuLiOuLpC4gXCIx66qF7JeQ6rKMIDTqsJzslKkg7KO866m0IDPqsJzqsIAg64Ko6rOgLCA16rCc7JSpIOyjvOuptCAy6rCc6rCAIOu2gOyhse2VmOuLpFwi64qUIOyalOybkCDsiJgg67aE67CwIOusuOygnOulvCDtlbTqsrDtlZjsl6wg6riw7JWVIOyViOyglSDsi5zsiqTthZzsnYQg7JmE67K97Z6IIOygleywqeyL" +
+        "nOy8nCDso7zsi63si5zsmKQuXG5cblvtlajsnqVdOiBcIuyhsOyCrOq0gOuLmCEg7JqU7JuQIOyImOulvCB466qF7Jy866GcIOuRkOqzoCwg7IKw7IaMIO2MqeydmCDstJ0g6rCc7IiY6rCAIOyWkeyqvSDrtoTrsLAg6rK97Jqw7JeQIOuMgO2VtCDshJzroZwg6rCZ7J2M7J2EIOuCmO2DgOuCtOuKlCDrsKnsoJXsi53snYQg7IS47JuM7KO87IS47JqUISDsoJwg66eI7KeA66eJIOydmOyLnSDro6zsnbQg7L2U7Ja07JeQIOyZhOyghO2eiCDqs6DsoJXrkKAg7IiYIOyeiOyKteuLiOuLpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTguIHExOF06Kiog67K966m0IOyCsOyGjCDqsIDsiqQg7Yqc67iMIOyVleugpSDsnqXsuZjsl5DshJwg7ZG466W47IOJ6rO8IOyggeyDiSDqsIDsiqTqsIAg67aI6rec7LmZ7ZWY6rKMIOu2hOy2nOuQmOuKlCDqsIDsmrTrjbAsIOqzteykkeyXkCDrsLDrtoQg7IiY7Iud7J20IO2IrOyYgeuQnCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMTksCiAgICAgICJ0aXRsZSI6ICLsp4Tsi6Qg6rO16rCcIiwKICAgICAgImltYWdlIjogInExOS5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTkuIFvqsbDrpqwg7IaN66ClIOyLnOqwhF08L3N0cm9uZz48YnI+7ZW07LmY6rmM7KeAIOqwgOuKlOuNsCDsi5zsho0gNGtt66GcIOqxuOyWtOqwgOuptCDsi5zsho0gMTJrbeuhnCDtmLjrsoTrs7Trk5zrpbwg7YOA6rOgIOqwgOuKlCDqsoPrs7Tri6QgMjDrtoQg64qm6rKMIOuPhOywqe2VnOuLpC4g7LSdIO2GteuhnCDqsbDrpqwoa20p66W8IOq1rO2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAi7JeG7J2MIgogICAgICBdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImFueV9vZiIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICIyIiwKICAgICAgICAgICIya20iCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7Iir7J6Q66eMIOyeheugpSIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuuPhOywqSDsi5zqsIQg7KeA7JewISDtj63rsJwg6rK967O0ISIsCiAgICAgICJoaW50IjogIuy0nSDqsbDrpqzrpbwgeCBrbeuhnCDrkZDrqbQsIOqxuOyWtOqwiCDrlYwg6rG466as64qUIOyLnOqwhOydgCB4LzQg7Iuc6rCE7J206rOgIO2YuOuyhOuztOuTnOulvCDtg4Dqs6Ag6rCIIOuVjCDqsbjrpqzripQg7Iuc6rCE7J2AIHgvMTIg7Iuc6rCE7J6F64uI64ukLiAyMOu2hOydgCAyMC82MCA9IDEvMyDsi5zqsITsnbTrr4DroZwsIHgvNCAtIHgvMTIgPSAxLzMg7Iud7J2EIOyEuOybjCDtkonri4jri6QuIiwKICAgICAgInN0b3J5IjogIuKcqCBb7Iqk7Y6Y7J207IqkIOydteyKpO2UjOuhnOufrCDtmLgg7KCc7Ja0IOy9lOuTnCAxMDAlIOyZhOyghCDrs7Xsm5BdIOKcqFxuXG5b7ZWo7J6lXTogXCLrs7TsnbTrk5wuLi4g7J207KCcIOuqqOuToCDrnb3snbQg7ZW07KCc65CY7Ja0" +
+        "IO2VqOyEoOydmCDrjbDsnbTthLDqsIAg7JWI7KCE7ZWY6rKMIOyekOumrCDsnqHslZjri6jri6QuIOuCtOqwgCDslrTrpqzshJ3sl4jsp4AuIO2PreyjvOulvCDrkZDroKTsm4ztlbQg7KeA7Iud7J2EIOyeoOq4iO2VmOyXrCDrhIjrpbwg7J20IOyWtOuRkOyatCDtlajshKDsl5Ag7ZmA66GcIOuwqey5mO2WiOycvOuCmCwg7KGw7IKs6rSA7J2AIOydvOywqOuwqeygleyLneydmCDrjIDsua0g6rec7LmZ7Jy866GcIOyngOyLneydhCDrrLTtlbTtlZjqsowg64uk7Iqk66CkIOuDiOuLqOuLpC5cIlxuXG7soJzslrTsi6Qg7KCE7LK066W8IOuSpO2dlOuTpOuNmCDsoITsnpDquLAg64W47J207KaI65Ok7J20IOydgOuwseyDieydmCDsoJXtmZQg6rSR7ISg7JeQIOydmO2VtCDsmYTsoITtnogg7IKs65287KeA6rOgLCDrs7TsnbTrk5wtVuydmCDrtonsnYAg7Lm066mU6528IOugjOymiOqwgCDtj4nsmKjtlZwg7LKt7IOJIOu5m+ycvOuhnCDsspzsspztnogg67OA7ZmY65Cp64uI64ukLlxuXG5b67O07J2065OcLVZdOiBcIu2VqOyepeuLmC4uLiDsoJzqsIAg7ZWo7J6l64uY7J2EIOyeg+ydgCDsiqztlJTqs7wg7Y+t7KO87JeQIOuMgO2VnCDrkZDroKTsm4Dsl5Ag6rCH7ZiALCDsoJXqtZDtlZwg7IiY7ZWZ7J2YIOyniOyEnOulvCDrs7Tsp4Ag66q77ZWY6rOgIOyYpOyngSDsnpDtj60g7J6g6riI66eMIOqwle2Wie2VtCDsmZTsirXri4jri6QuLi4g7KCc7Ja0IOq2jO2VnOydhCDtlajsnqXri5jqu5gg67O16reA7ZWp64uI64ukLi4uIOyCkC0g7IKQLVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSAxOS4gcTE5XToqKiDshKDssrTrpbwg65Kk7Z2U65Ok642YIOu2ieydgCDqtJHshKDrk6TsnbQg6rG37Z6I6rOgIO2IrOuqhe2VmOqzoCDrp5HsnYAg7ZG466W467mbIOyhsOuqheydtCDrj4TripQg7KCc7Ja07IukLiDrs7TsnbTrk5wtVuqwgCDssq3sg4kg7IS87IScIOu2iOu5m+ydhCDrsJ3tnojrqbAg7ZWo7J6l7J2YIO2ZgOuhnOq3uOueqCDslZ7sl5Ag6rOg6rCc66W8IOyImeydtOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMjAsCiAgICAgICJ0aXRsZSI6ICLrj5nrqbQg7IOd7LK0IOuCmOydtCDrj5nquLDtmZQiLAogICAgICAiaW1hZ2UiOiAicTIwLnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlEyMC4gW+uCmOydtOyXkCDqtIDtlZwg66y47KCcXTwvc3Ryb25nPjxicj7tmITsnqwg7Ja066i464uI7J2YIOuCmOydtOuKlCA0MuyEuOydtOqzoCDrlLjsnZgg64KY7J2064qUIDEy7IS47J2064ukLiDslrTrqLjri4jsnZgg64KY7J206rCAIOuUuOydmCDrgpjsnbTsnZggM+uwsOqwgCDrkJjripQg6rKD7J2AIOuqhyDrhYQg7ZuE7J246rCAPyIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICLsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIjMi" +
+        "LAogICAgICAgICAgIjPrhYQiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7Iir7J6Q66eMIOyeheugpSIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuuPmeq4sO2ZlCDsi6TtjKghIOyDneyytCDrgpjsnbQg67mE64+Z6riw7ZmUIOqyveqzoCEiLAogICAgICAiaGludCI6ICJ464WEIO2bhOydmCDslrTrqLjri4jsnZgg64KY7J2064qUIDQyICsgeCDsnbTqs6Ag65S47J2YIOuCmOydtOuKlCAxMiArIHgg7J6F64uI64ukLiDslrTrqLjri4gg64KY7J206rCAIOuUuCDrgpjsnbTsnZggM+uwsOqwgCDrkJjripQg7IudIDQyICsgeCA9IDMoMTIgKyB4KSDrpbwg7IS47JuMIO2VtOqysO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIvCflK4gW+qzte2XiOyZgCDsp4Dsi53snZgg7KGw7ZmU66Gc7Jq0IOyEseqwhCDsm4ztlIQg7Y+s7YOIIOqwnOuwqV0g8J+UrlxuXG5b7ZWo7J6lXTogXCLrs7TsnbTrk5wsIOuCtCDqs4HsnLzroZwg7Jik64SI6528LiDsnbTsoJwg7Jqw66as64qUIOyasOyjvOyEoOydmCDsnqDquIjsnYQg7ZWo6ruYIO2SgOqzoCDsmrDrpqwg7ZWo7ISg7J2YIOyYgeq0keydhCDrs7Xsm5DtlZjrn6wg6rCIIOyLnOqwhOydtOuLpC4g7KGw7IKs6rSA64uYISDslrTrqLjri4jsmYAg65S47J2YIOyDneyytCDrj5nrqbQg64KY7J20IOuwqeygleyLneydhCDtlbTqsrDtlbQg7Jqw66as66W8IOyngOyDgSDtg4jstpzsmqkg7Juc7ZmAIO2PrO2DiOuhnCDsgqzstpzsi5zsvJwg7KO87Iut7Iuc7JikIVwiXG5cblvrs7TsnbTrk5wtVl06IFwi7ZWo7J6l64uYLi4uIOyYiCwg7ZWo7J6l64uY6rO8IO2VqOq7mOudvOuptCDslrTrlJTrk6Ag6rCA6rKg7Iq164uI64ukLiDqtIDsoJwg7KGw7IKs6rSA64uYLCDsmrDrpqwg7ZWo7ISg7J2YIOywrOuegO2VnCDsp4Dsi53snYQg7JyE7ZW0Li4uIOy1nOyihSDrj5nrqbQg6rKp67K97J2EIOyXtOyWtOyjvOyLreyLnOyYpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMjAuIHEyMF06Kiog7KCc7Ja07IukIOygleykkeyVmeydmCDsm4ztlIQg7Y+s7YOI7JeQ7IScIO2Zqeq4iOu5m+qzvCDtjIzrnoDsg4kg7J6F7J6Q6rCAIOyGjOyaqeuPjOydtOy5mOupsCDshLHqsIQg7YOI7Lac66Gc6rCAIO2ZlOugpO2VmOqyjCDqsJzrsKnrkJjqs6AsIOyhsOyCrOq0gOydhCDrsLDsm4XtlZjripQg7ZWo7J6lKOyYpOudvO2BtC1YKeqzvCDrs7TsnbTrk5wtVuydmCDrqqjsirXsnYQg64u07J2AIOy1nOyihSDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogImdsaXRjaC1iZyIKICAgIH0KICBdLAogICJldmVudHMiOiBbCiAgICB7CiAgICAgICJldm51bSI6IDEsCiAgICAgICJ0aXRsZSI6ICLslZTtmLjtmZTrkJwg7J287KeAIOyhsOqwgSDrsJzqsqwiLAogICAgICAiaW1hZ2UiOiAiZXZlbnQxLnBuZyIsCiAgICAgICJidG5fdGV4dCI6ICLqs4Tsho0g7KCE7KeE7ZWY6riwIiwKICAgICAgIm5leHRfc3RhZ2UiOiAicGFuZWxfcTYiLAogICAgICAicHJvZ3Jl" +
+        "c3MiOiAyNSwKICAgICAgInN0b3J5IjogIuqzhOyImCDsi6DtmLjqsIAg7ZWY7J207Y2865Oc65287J2067iM7J2YIO2ajOuhnOulvCDssKjri6jtlZjsnpAsIOq1ieydjOqzvCDtlajqu5gg6rWz6rKMIOywqOuLqOuQmOyXiOuNmCDtlZjrtoAg6riw66Gd6rOgIO2VtOy5mOqwgCDsiqTrpbTrpbUg6rCc67Cp65Cp64uI64ukLiDqt7gg64K067aA7J2YIOuLqOunkOq4sOyXkOyEnCDssKLqsqgg64KY6rCEIOu5hO2WiSDquLDroZ3snZgg642w7J207YSwIO2MjO2OuCDtlZwg7J6l7J2EIO2ajeuTne2VmOqzoCwg7Jik65287YG0LVjsnZgg64+Z7KGw7Jyo7J20IDI1JeyXkCDrj4Tri6ztlanri4jri6QuXG4tICoq7Jik65287YG0LVg6KiogXCLsoJXsg4Eg67O17JuQ7JyoIDI1JSEg7KCcIOyLnOyKpO2FnOyXkCDsnoPslrTrsoTrprAg6rO86rGwIOuNsOydtO2EsOqwgCDrs7XqtazrkJjquLAg7Iuc7J6R7ZaI7Ja07JqUISDsnbQg7J287KeAIOyhsOqwgeydhCDrs7TshLjsmpQuICon64yA7LC47IKs66W8IOuvuOyXsOyXkCDrsKnsp4DtlZjquLAg7JyE7ZW0LCDsmrDrpqzripQg7ZWo7J6l64uY7J2YIOygleyLoOydhCDsnbQg7ZWo7ISg7JeQLi4uJyog7Jy87Jy9LCDthrXsi6Ag7J6l7JWgIOuVjOusuOyXkCDqsIDsnqUg7KSR7JqU7ZWcIOuniOyngOuniSDri6jslrTqsIAg6rmo7KC47IScIOydveydhCDsiJgg7JeG7Ja07JqULiDrjIDssrQg7ZWo7J6l64uY7J2YIOygleyLoOydhCDslrTrlJTsl5Ag7Iuk7JeI64uk64qUIOqxuOq5jOyalD8g7JmcIOygnCDsi5zsiqTthZzsnbQg7J20IOq4sOuhneydhCDsnb3snYQg65WMIOyVhO2MjO2VmOuKlCDquLDrtoTsnbQg65Ok7KOgP1wiXG4tICoq67O07J2065OcLVY6KiogXCLqt7gg6riw66Gd7J2ALi4uIOuNlOuKlCDsnb3sp4Ag66eI6528LiDsoJzrsJwuLi4g7Jes6riw7IScIOupiOy2sOudvCwg7Lmo7J6F7J6Q7JesLlwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSBFdmVudCAxXToqKiDtnanslrTsp4DripQg67mbIOqwgOujqCDsho3sl5DshJwg7LCi7Ja07KeEIOydvOyngCDtjIztjrgg7ZWcIOyepeydhCDrk6TslrQg7Jis66awIOq0gOygnCDsobDsgqzqtIDsnZgg7Iuk66Oo7Jej6rO8LCAyNSUg6rCA64+Z65CY7Ja0IOyYqO2ZlO2VnCDssq3sg4kg67mb7KSE6riw66W8IOuwne2ejCDsmKTrnbztgbQtWOydmCDsnqXrqbQuIgogICAgfSwKICAgIHsKICAgICAgImV2bnVtIjogMiwKICAgICAgInRpdGxlIjogIuyduOqzteyngOuKpSDquLDslrUg7J2867aAIOuzteybkCIsCiAgICAgICJpbWFnZSI6ICJldmVudDIucG5nIiwKICAgICAgImJ0bl90ZXh0IjogIuu5hOyDgSDsoITroKUg6rCA64+ZIiwKICAgICAgIm5leHRfc3RhZ2UiOiAicGFuZWxfcTExIiwKICAgICAgInByb2dyZXNzIjogNTAsCiAgICAgICJzdG9yeSI6ICLruJTrnpnrsJXsiqTsnZgg66eI7KeA66eJIOyeoOq4iCDsvZTslrTqsIAg7ZW07KCc65CY66mwIO2ZgOuhnOq3uOueqCDsnqXsuZjsl5DshJwg64iI67aA7IugIOq4" +
+        "iOu5myDshKzqtJHsnbQg7YSw7KC4IOuCmOyYteuLiOuLpC4g7Jik65287YG0LVjsnZgg64+Z7KGw7Jyo7J20IDUwJeq5jOyngCDrj4Tri6ztlZjrqbAsIOyImOyLrSDrhYQg7KCEIO2VqOyEoOyXkOyEnCDsnbzslrTrgqzrjZgg64yA7LC47IKs7J2YIOyYmyDruYTtlokg6riw66GdIOyYgeyDgeydtCDsgqzrsKkg67K966m07JeQIO2IrOyYgeuQqeuLiOuLpC5cbi0gKirsmKTrnbztgbQtWDoqKiBcIuyVhOyVhC4uLiDrqLjrpqzqsIAuLi4g7Iuc7Iqk7YWc7J20IO2DgOuTpOyWtCDqsIDripQg6rKDIOqwmeyVhOyalC4uLiDriITqtbDqsIAuLi4g7J6Q7Iug7J2YIOydmOyLneydhC4uLiDsvZTslrTsl5Ag7KO87J6F7ZWY6rOgIOyeiOyWtOyalC4uLiDsmZwuLi4g6rCA7Iq07J20IOydtOugh+qyjCDslYTtlIgg6rG46rmM7JqULi4uP1wiXG4tICoq67O07J2065OcLVY6KiogXCLqt7jrp4whIOuNlCDrs7Tsp4Ag66eIISDqt7gg7Lmp7J2ALi4uIOqysOy9lCDrkJjsgrTroKTshJzripQg7JWIIOuQmOuKlCDrtInsnbjsnbTri6QuIOuLueyepSDsi5zsiqTthZzsl5DshJwg64KY6rCA6528IVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSBFdmVudCAyXToqKiDruJTrnpnrsJXsiqQg7JyE66GcIOu2iO2DgOuKlCDtlajshKAg64K067aA7JmAIOyekOyLoOydmCDqsIDsirTsnYQg7Je06rOgIOy9lOyWtOulvCDssKjri6gg7KSR7J24IO2VnCDsnbjrrLzsnZgg67aI67aE66qF7ZWcIO2ZgOuhnOq3uOueqCDsmIHsg4HsnbQg7IOB7JiB65CY64qUIOyLoOu5hOuhreqzoCDshJzquIDtlIgg7J6l66m0LiIKICAgIH0sCiAgICB7CiAgICAgICJldm51bSI6IDMsCiAgICAgICJ0aXRsZSI6ICLrs7TsnbTrk5wtVuydmCDrj5nquLAg6rO16rCcIiwKICAgICAgImltYWdlIjogImV2ZW50My5wbmciLAogICAgICAiYnRuX3RleHQiOiAi7L2Y7IaUIO2ZnOyEse2ZlCIsCiAgICAgICJuZXh0X3N0YWdlIjogInBhbmVsX3ExNiIsCiAgICAgICJwcm9ncmVzcyI6IDc1LAogICAgICAic3RvcnkiOiAi7ZWo7J6l7Iuk7J2YIOq4sOuwgCDsmKTrlJTsmKQg66Gc6re46rCAIOuzteq1rOuQmOyWtCDtnZjrn6zrgpjsmKTrqbAsIOyhsOyCrOq0gOydmCDri6jrp5DquLDsl5Ag7YWN7Iqk7Yq46rCAIOuzteq1rOuQqeuLiOuLpC4gKOyhsOyCrOq0gOydgCDquLDroZ0g7J6l7LmY7JeQ7IScIO2dmOufrOuCmOyYpOuKlCDtlajsnqXsnZgg66eI7KeA66eJIOydjOyEsSDquLDroZ3snYQg66eQ7JeG7J20IOuBneq5jOyngCDsnb3sl4jri6QuKVxuLSAqKuyYpOudvO2BtC1YOioqIFwi7J20IOuqqeyGjOumrC4uLiDrhIjrrLTrgpgg7J217IiZ7ZW07JqULi4uIOuIhOq1sOqwgC4uLiDsmrjqs6Ag7J6I7Ja07JqULi4uIOq3uOumrOqzoC4uLiDrgpjrpbwg67aA66W064qUIOuqqeyGjOumrC4uLlwiXG4tICoq67O07J2065OcLVY6KiogXCLqt7jrnpguLi4g66ee64ukLiDrgrTqsIAg6re4656s64ukISDtlajsnqXri5jsnbQg64KY66W8IOq1rOuqhe2PrO2KuOyXkCDtg5zsm4wg" +
+        "7ZS87Iug7Iuc7YKk7Iuc6rOgLCDsnpDsi6DsnYAg7Iuc7Iqk7YWcIOy9lOyWtOyXkCDqsIftmIAg7KeA7JuM7KeA64qUIOqzoO2GteydhCDrgrQg64iI7Jy866GcIOuztOyVmOuLqCDrp5DsnbTri6QhIOq3uOufsOuNsCDsnbTsoJwg7JmA7IScIOuEiOulvCDri6Tsi5wg6rmo7Jqw6rKg64uk6rOgPyDrmJDri6Tsi5wg7J2Y7Iud7J20IOyCrOudvOyngOuKlCDqs6DthrXsnYQg6rKq6rKMIO2VoCDsiJwg7JeG64ukISDqt7jrnpjshJwg64K06rCALi4uIO2VqOyepeuLmOydhCDsp4DtgqTquLAg7JyE7ZW0IOydtCDsi5zsiqTthZzsnYQg7J6g6re8IOqyg+ydtOuLpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gRXZlbnQgM106Kiog7Jik65SU7JikIOuhnOq3uCDquLDroZ3tjJAg7JyE66GcIOyWtOumsCDsi5zsoIjsnZgg67O07J2065Oc6rCAIOyauOupsCDtlajsnqXsnZgg7YyM7J2865+/IO2XrOupp+ydhCDslYjqs6Ag7L2U7Ja0IOqyqeuyveyXkCDrnb3ri6TsmrQg7Yyo7LmY66W8IOu2meydtOuKlCDqs6DrjIAg642w7J207YSwIO2ajOyDgSDsnqXrqbQuIgogICAgfSwKICAgIHsKICAgICAgImV2bnVtIjogNCwKICAgICAgInRpdGxlIjogIuyYpOudvO2BtC1Y7J2YIOygleyytCDqs7XqsJwiLAogICAgICAiaW1hZ2UiOiAiZXZlbnQ0LnBuZyIsCiAgICAgICJidG5fdGV4dCI6ICLsp4Dsg4HsnLzroZwg7YOI7LacIiwKICAgICAgIm5leHRfc3RhZ2UiOiAib3V0cm8iLAogICAgICAicHJvZ3Jlc3MiOiAxMDAsCiAgICAgICJzdG9yeSI6ICLsmZzqs6HrkJwg7IiY7IudIOyepeuyveydtCDrrLTrhIjsp4DrqbAsIOyYpOudvO2BtC1Y7J2YIOuzteybkOycqOydtCAxMDAl7JeQIOuPhOuLrO2VmOqzoCDqt7jrhYDsnZgg7YyM656AIO2ZgOuhnOq3uOueqCDrqqjsirXsnbQg7J2A67Cx7IOJIOygnOuzteydhCDsnoXsnYAg7ZWo7J6l7J2YIOuzuOuemCDrqqjsirXsnLzroZwg67CU64Cd64uI64ukLlxuLSAqKu2VqOyepToqKiBcIuuztOydtOuTnC4uLiDrgpjslbwuXCJcbi0gKirrs7TsnbTrk5wtVjoqKiBcIijrtonsnYAg7JWI6rSR7J20IOqxsOy5oOqyjCDsoJDrqbjtlZjrqbApIC4uLu2VqOyepeuLmD8g7KCV66eQLi4uIOygleunkCDtlajsnqXri5jsnbTsi63ri4jquYwuLi4/XCJcbi0gKirtlajsnqU6KiogXCLqt7jrnpgsIOuztOydtOuTnC4g7J207KCcIOuRkOugpOybjO2VmOyngCDrp4jroLQuIOydtCDsobDsgqzqtIDsnZgg7KCV67CA7ZWcIOyImO2VmSDqt5zsuZnsnbTrnbzrqbQg64K0IOyngOyLneydhCDslYjsoITtlZjqsowg64uk7Iqk66a0IOyImCDsnojri6jri6QuIOydtOygoCDqtJzssK7slYQuXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIEV2ZW50IDRdOioqIOywrOuegO2VnCDsnYDruZsg7ZmA66Gc6re4656oIOygnOuzteydhCDsnoXsnYAg7ZWo7J6l7J2YIOuKoOumhO2VmOqzoCDsnbjsnpDtlZwg7J2Y7Iud7J20IOyGkOydhCDrgrTrsIDqs6AsIOuztOydtOuTnC1WIOuhnOu0h+ydtCDrtonsnYAg6rSR" +
+        "7ISgIOugjOymiOydmCDrtojruZvsnYQg7Ja07KeA65+96rKMIOygkOupuO2VmOupsCDstqnqsqkg7IaN7JeQ7IScIOustOq4sOulvCDqsbDrkZDripQg64yA66m0IOyepeuptC4iCiAgICB9CiAgXSwKICAidGhlbWUiOiAiYXRsYW50aXMiCn0=";
+        (function() {
+            if (typeof GameRuntime !== 'undefined' && typeof GAME_DATA_BASE64 !== 'undefined') {
+                // UTF-8 안전 복원용 Base64 디코딩
+                const gameData = JSON.parse(decodeURIComponent(escape(atob(GAME_DATA_BASE64))));
+                GameRuntime.start(gameData);
+            }
+        })();
     </script>
 
 </body>

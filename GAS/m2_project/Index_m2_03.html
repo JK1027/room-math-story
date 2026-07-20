@@ -1,731 +1,1427 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>요정 숲의 불균형: 방탈출 게임</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbit&family=Share+Tech+Mono&family=Noto+Sans+KR:wght@300;500;900&display=swap" rel="stylesheet">
-    <style>:root{--bg-main:#07150f;--glass-bg:rgba(10,30,20,0.75);--glass-border:rgba(50,205,50,0.25);--accent:#32cd32;--accent-hover:#5cfc5c;--text-main:#f0fbf0;--text-muted:#9abfa0;}*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Noto Sans KR',sans-serif;background-color:var(--bg-main);color:var(--text-main);min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden;position:relative;}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at 10% 20%,rgba(50,205,50,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(34,139,34,0.08) 0%,transparent 40%);z-index:-2;}.container{width:100%;max-width:800px;padding:2rem;position:relative;z-index:10;}.glass-panel{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);border-top:1px solid rgba(50,205,50,0.4);border-left:1px solid rgba(50,205,50,0.4);border-radius:24px;padding:3rem;box-shadow:0 0 50px rgba(50,205,50,0.1),inset 0 0 20px rgba(50,205,50,0.02);display:none;opacity:0;transform:translateY(20px);transition:all 0.5s cubic-bezier(0.4,0,0.2,1);}.glass-panel.active{display:block;opacity:1;transform:translateY(0);}h1{font-family:'Orbit',sans-serif;font-size:2.5rem;font-weight:900;text-align:center;margin-bottom:0.5rem;background:linear-gradient(135deg,#FFF 30%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 30px rgba(50,205,50,0.3);letter-spacing:2px;}h2{font-size:1.4rem;color:var(--text-main);text-align:center;margin-bottom:1.5rem;font-weight:500;letter-spacing:1px;border-bottom:1px solid rgba(50,205,50,0.15);padding-bottom:0.75rem;}.panel-image{width:100%;height:auto;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:1rem;}.story-box{background:rgba(10,20,15,0.5);border:1px solid rgba(50,205,50,0.15);border-radius:12px;padding:1.25rem;margin-bottom:1.5rem;position:relative;cursor:pointer;transition:background 0.3s;}.story-box:hover{background:rgba(10,20,15,0.7);}.story-text{font-size:1rem;line-height:1.7;color:var(--text-main);min-height:110px;word-break:keep-all;}#intro .story-text{min-height:80px;}.story-log-trigger{position:absolute;bottom:8px;right:12px;background:none;border:none;color:var(--accent);font-size:0.8rem;cursor:pointer;opacity:0.7;transition:opacity 0.2s;}.story-log-trigger:hover{opacity:1;}.question-box{background:rgba(50,205,50,0.05);border:1px dashed rgba(50,205,50,0.3);border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;}.question-content{font-size:1.05rem;line-height:1.6;margin-bottom:1rem;font-weight:500;}.input-group{margin-top:1rem;display:flex;gap:10px;}input[type="text"]{flex:1;background:rgba(10,20,15,0.8);border:1px solid rgba(50,205,50,0.3);border-radius:8px;padding:0.75rem 1rem;color:#fff;font-size:1rem;transition:all 0.3s;font-family:'Share Tech Mono',monospace;}input[type="text"]:focus{outline:none;border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.3);}.btn-group{display:flex;justify-content:center;}.btn{background:linear-gradient(135deg,var(--accent) 0%,#1e5c1e 100%);color:#fff;border:none;border-radius:8px;padding:0.85rem 2.5rem;font-size:1.05rem;font-weight:bold;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(50,205,50,0.3);letter-spacing:1px;}.btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(50,205,50,0.5);background:linear-gradient(135deg,var(--accent-hover) 0%,var(--accent) 100%);}.btn-hint{display:inline-block;background:rgba(16,185,129,0.2);border:1px solid rgba(16,185,129,0.5);color:#34D399;padding:4px 10px;font-size:0.85rem;font-weight:700;border-radius:6px;cursor:pointer;transition:all 0.2s ease;vertical-align:middle;margin-left:10px;letter-spacing:0.5px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);}.btn-hint:hover{background:rgba(16,185,129,0.4);color:#fff;box-shadow:0 0 10px rgba(52,211,153,0.4);}.error-msg{color:#ff6b6b;font-size:0.9rem;text-align:center;margin-top:-0.5rem;margin-bottom:1rem;display:none;font-weight:500;text-shadow:0 0 10px rgba(255,107,107,0.2);}.progress-container{width:100%;background:rgba(10,20,15,0.6);border:1px solid rgba(50,205,50,0.2);border-radius:50px;height:10px;margin-bottom:2rem;overflow:hidden;display:none;}.progress-bar{height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-hover) 100%);width:0%;transition:width 0.5s ease;box-shadow:0 0 15px var(--accent);}.sound-ctrl{position:fixed;top:20px;right:20px;background:var(--glass-bg);border:1px solid var(--glass-border);padding:0.5rem 1rem;border-radius:50px;cursor:pointer;z-index:100;display:flex;align-items:center;gap:8px;font-size:0.85rem;transition:all 0.3s;}.sound-ctrl:hover{border-color:var(--accent);box-shadow:0 0 10px rgba(50,205,50,0.2);}.log-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(5,12,8,0.85);backdrop-filter:blur(8px);z-index:200;justify-content:center;align-items:center;}.log-content{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:20px;width:90%;max-width:600px;max-height:70vh;padding:2rem;position:relative;display:flex;flex-direction:column;}.log-content h2{border-bottom:1px solid rgba(50,205,50,0.2);padding-bottom:0.5rem;margin-bottom:1rem;}.log-list{overflow-y:auto;flex:1;padding-right:5px;display:flex;flex-direction:column;gap:12px;}.log-item{font-size:0.95rem;line-height:1.6;padding:0.5rem 0.75rem;background:rgba(10,20,15,0.4);border-radius:8px;border-left:3px solid var(--accent);}.close-log{position:absolute;top:15px;right:15px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;}.close-log:hover{color:#fff;}@keyframes blink{50%{opacity:0;}}@keyframes shake{0%,100%{transform:translate(0,0) rotate(0deg);}10%{transform:translate(-2px,-1px) rotate(-0.5deg);}20%{transform:translate(-3px,0px) rotate(1deg);}30%{transform:translate(0px,2px) rotate(0deg);}40%{transform:translate(1px,-1px) rotate(1deg);}50%{transform:translate(-1px,2px) rotate(-1deg);}60%{transform:translate(-3px,1px) rotate(0deg);}70%{transform:translate(2px,1px) rotate(-0.5deg);}80%{transform:translate(-1px,-1px) rotate(1deg);}90%{transform:translate(2px,2px) rotate(0deg);}}.shake-effect{animation:shake 0.3s ease-in-out;}.laser-flash-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,0,0,0.4);z-index:9999;pointer-events:none;opacity:0;transition:opacity 0.15s ease-out;}.laser-flash-overlay.flash-active{opacity:1;}</style>
-    <!-- MathJax for LaTeX Rendering -->
-    <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']]
-      }
-    };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>수학 방탈출 게임</title>
+    <!-- Pretendard 웹폰트 및 외부 리소스 -->
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0F172A; 
+            --secondary: #1E3A8A; 
+            --accent: #FBBF24; 
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --danger: #EF4444;
+            --success: #10B981;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(96, 165, 250, 0.4);
+            --accent-blue: #60A5FA;
+            --error-red: #EF4444;
+        }
+
+        /* ─── 학년/단원별 테마별 CSS 확장 바인딩 ─── */
+        body.theme-atlantis {
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(96, 165, 250, 0.4);
+            --accent: #FBBF24;
+            --accent-blue: #60A5FA;
+        }
+        body.theme-da_vinci {
+            --glass-bg: rgba(45, 25, 15, 0.75);
+            --glass-border: rgba(217, 119, 6, 0.4);
+            --accent: #fbbf24;
+            --accent-blue: #f59e0b;
+        }
+        body.theme-space {
+            --glass-bg: rgba(20, 15, 35, 0.75);
+            --glass-border: rgba(168, 85, 247, 0.4);
+            --accent: #c084fc;
+            --accent-blue: #a855f7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', sans-serif;
+            background-color: #020617;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(2, 6, 23, 0.95) 100%), rgba(15, 23, 42, 0.85);
+            z-index: -2;
+        }
+
+
+
+        /* 배경 거품 기포 애니메이션 효과 */
+        .bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            bottom: -50px;
+            animation: floatUp 10s infinite linear;
+            z-index: -1;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+
+        /* 반응형 컨테이너 레이아웃 */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 공통 글래스모피즘 패널 구조 */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(96, 165, 250, 0.1);
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.8), 0 0 20px rgba(251, 191, 36, 0.4), 0 2px 5px rgba(0,0,0,0.8);
+            border-bottom: 2px solid rgba(251, 191, 36, 0.5);
+            padding-bottom: 10px;
+            display: inline-block;
+            width: 100%;
+            box-shadow: 0 10px 10px -10px rgba(251, 191, 36, 0.3);
+        }
+
+        /* 타이머 영역 */
+        .game-timer {
+            float: right;
+            color: var(--danger);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.4rem;
+            text-shadow: 0 0 8px var(--danger);
+        }
+
+        .panel-image {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: max-height 0.5s ease-in-out;
+        }
+
+        /* 대사 읽기 전용 모드 - 이미지 확대 및 문제/버튼 완전 감춤 */
+        .glass-panel.read-mode .panel-image {
+            max-height: 380px;
+        }
+        .glass-panel.read-mode .question-box,
+        .glass-panel.read-mode .btn-group {
+            display: none !important;
+        }
+
+        /* 문제 풀이 모드 - 이미지 축소 및 문제/버튼 페이드인 */
+        .glass-panel.solve-mode .panel-image {
+            max-height: 250px;
+        }
+        .glass-panel.solve-mode .question-box,
+        .glass-panel.solve-mode .btn-group {
+            display: block !important;
+            animation: cardFadeIn 0.6s forwards;
+        }
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 스토리 및 지문 */
+        .story-box {
+            cursor: pointer;
+            position: relative;
+            background: linear-gradient(90deg, rgba(30, 58, 138, 0.5) 0%, rgba(0,0,0,0.3) 100%);
+            border-left: 4px solid var(--accent);
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            min-height: 120px;
+            height: auto;
+            padding-bottom: 2.5rem;
+            box-sizing: border-box;
+        }
+
+        .story-text {
+            width: 100%;
+            line-height: 1.6;
+            font-size: 1.02rem;
+            color: var(--text-main);
+            text-align: justify;
+        }
+
+        /* 퀴즈 문제 구역 */
+        .question-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-box::before {
+            content: 'Q';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 6rem;
+            font-weight: 900;
+            color: rgba(96, 165, 250, 0.05);
+            z-index: 0;
+        }
+
+        .question-content {
+            position: relative;
+            z-index: 1;
+            font-size: 1.0rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            margin-top: 1.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1.2rem;
+            background: rgba(2, 6, 23, 0.8);
+            border: 2px solid rgba(96, 165, 250, 0.5);
+            color: #60A5FA;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            font-family: inherit;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            letter-spacing: 1px;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.8);
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #60A5FA;
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.5), inset 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        /* 객관식 라디오 레이아웃 */
+        .radio-label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s;
+        }
+        
+        .radio-label:hover {
+            background: rgba(30, 58, 138, 0.4);
+            border-color: var(--accent-blue);
+        }
+
+        /* 버튼 및 그룹 */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            color: white;
+            border: 1px solid #60A5FA;
+            padding:  0.6rem 1.5rem;
+            font-size:  1.1rem;
+            font-weight: 900;
+            border-radius:  8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            width: 100%;
+            box-shadow: 0 10px 25px rgba(29, 78, 216, 0.5), inset 0 2px 5px rgba(255,255,255,0.4);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(29, 78, 216, 0.7), inset 0 2px 5px rgba(255,255,255,0.6);
+        }
+
+        .btn-hint {
+            display: inline-block;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            color: #34D399;
+            padding: 4px 10px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            margin-left: 10px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .btn-hint:hover {
+            background: rgba(16, 185, 129, 0.4);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(52,211,153,0.4);
+        }
+
+        /* 에러 메시지 */
+        .error-msg {
+            color: #EF4444;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(239,68,68,0.3);
+        }
+
+        /* 쉐이크 흔들림 효과 */
+        .shake { animation: shake-act 0.5s; }
+        @keyframes shake-act {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        /* 4단원용 그래프 박스 전용 레이아웃 */
+        .graph-container {
+            background: rgba(248, 250, 252, 0.9);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.3), inset 0 0 10px rgba(0,0,0,0.1);
+            border: 2px solid #60A5FA;
+        }
+
+        /* 오답 시 적색 레이저 플래시 오버레이 */
+        .laser-flash-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 0, 0, 0);
+            pointer-events: none;
+            z-index: 9999;
+            transition: background 0.15s ease-out;
+        }
+        .laser-flash-active {
+            background: rgba(255, 0, 0, 0.15);
+            transition: none;
+        }
+
+        /* 화면 흔들림 효과 */
+        @keyframes shakePage {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            10% { transform: translate(-2px, -1px) rotate(-0.5deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-0.5deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+        }
+        .shake-effect {
+            animation: shakePage 0.3s ease-in-out;
+        }
+
+        /* 최상단 슬라이딩 이전 대사 로그 모달 */
+        .log-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; max-height: 50vh;
+            background: rgba(40, 40, 40, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--accent-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        .log-modal.active {
+            display: flex;
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        .log-content {
+            background: transparent;
+            border: none;
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+            max-height: 50vh;
+            overflow-y: auto;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .log-content h2 { margin-top: 0; color: var(--accent-blue); }
+        .log-content hr { border-color: rgba(255,255,255,0.1); margin: 15px 0; }
+        .close-log {
+            float: right;
+            background: var(--error-red);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* 3회 오답 강제 이송 락다운 오버레이 및 펄스 보더 */
+        .glitch-overlay-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(239, 68, 68, 0.15);
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            border: 10px solid #ef4444;
+            animation: pulse-border 0.2s infinite;
+        }
+        .glitch-overlay-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 2.8rem;
+            color: #ef4444;
+            text-shadow: 0 0 20px #ef4444;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: #ef4444; background: rgba(239, 68, 68, 0.15); }
+            50% { border-color: #ffffff; background: rgba(239, 68, 68, 0.3); }
+        }
+
+        /* 타이머 경고 점멸 */
+        .timer-warning {
+            animation: blink-red 0.2s 5;
+            font-size: 1.5rem !important;
+        }
+        @keyframes blink-red {
+            0%, 100% { color: #ef4444; text-shadow: 0 0 15px #ef4444; }
+            50% { color: #ffffff; text-shadow: none; }
+        }
+
+        /* 사운드 조절 고정 버튼 */
+        .sound-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--glass-border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .sound-toggle:hover {
+            background: rgba(0, 0, 0, 0.9);
+            border-color: #60A5FA;
+            box-shadow: 0 0 15px #60A5FA;
+        }
+
+        /* 진행도 표시 바 */
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            display: none;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #60A5FA;
+            box-shadow: 0 0 15px #60A5FA;
+            transition: width 0.5s ease;
+        }
+
+        .radio-msg {
+            color: #60a5fa;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 5px #3b82f6;
+            text-align: center;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* 일러스트 전체 화면 오버레이 스타일 */
+        .illustration-fullscreen {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(2, 6, 23, 0.97);
+            z-index: 9500;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            cursor: pointer;
+        }
+        .illustration-fullscreen img {
+            max-width: 90%;
+            max-height: 75vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.9), 0 0 30px rgba(96, 165, 250, 0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .overlay-guide {
+            margin-top: 2rem;
+            font-size: 1.1rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                overflow-y: auto;
+            }
+            .container {
+                padding: 10px;
+            }
+            .glass-panel {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+            h2 {
+                font-size: 1.2rem;
+                margin-bottom: 1.2rem;
+            }
+            .story-box {
+                min-height: 110px;
+                height: auto;
+            }
+            .btn-group {
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+            .sound-toggle {
+                top: 10px;
+                right: 10px;
+                font-size: 0.8rem;
+                padding: 6px 12px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <button class="sound-ctrl" onclick="toggleSound()">
-        🔊 소리 켜짐
-    </button>
+    <div id="laserOverlay" class="laser-flash-overlay"></div>
+
+    <div class="bubble" style="left: 10%; width: 20px; height: 20px; animation-delay: 0s; animation-duration: 12s;"></div>
+    <div class="bubble" style="left: 30%; width: 15px; height: 15px; animation-delay: 2s; animation-duration: 8s;"></div>
+    <div class="bubble" style="left: 50%; width: 25px; height: 25px; animation-delay: 1s; animation-duration: 10s;"></div>
+    <div class="bubble" style="left: 70%; width: 18px; height: 18px; animation-delay: 3s; animation-duration: 11s;"></div>
+    <div class="bubble" style="left: 90%; width: 22px; height: 22px; animation-delay: 5s; animation-duration: 9s;"></div>
+
+    <button id="soundToggle" class="sound-toggle" onclick="toggleSound()">🔇 소리 꺼짐</button>
 
     <div class="container">
+        <!-- 상단 진행도 표시 바 -->
         <div class="progress-container" id="progressContainer">
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <!-- Intro Panel -->
-        <div id="intro" class="glass-panel active">
-            <h1>요정 숲의 불균형</h1>
-            <h2>일차부등식의 해와 성질</h2>
-            <img src="assets/m2_03_inequalities/intro.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">
-                [숲의 정령 실프-F]: "아름답던 요정 숲에 검은 마법의 안개가 드리워져, 숲의 에너지 균형이 깨졌습니다. 에너지가 한쪽으로 기울어지면 숲은 영원한 어둠에 갇히게 됩니다. 이 불균형을 바로잡을 수 있는 방법은 부등식의 원리를 이해하고 마법의 저울을 원래 상태로 복구하는 것뿐입니다. 20개의 부등식 문제를 풀어 숲을 구원하세요!"
-            </div>
-            </div>
-            
-            <div class="student-info-form" style="margin-top: 1.5rem; text-align: left; background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
-                <div style="margin-bottom: 1rem;">
-                    <label for="studentId" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">학번</label>
-                    <input type="text" id="studentId" placeholder="예: 1130" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
-                </div>
-                <div>
-                    <label for="studentName" style="display: block; margin-bottom: 0.5rem; color: #60A5FA; font-weight: bold; font-size: 1rem;">이름</label>
-                    <input type="text" id="studentName" placeholder="예: 홍길동" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(96, 165, 250, 0.4); background: rgba(15,23,42,0.6); color: white; font-size: 1.1rem; font-weight: bold; box-sizing: border-box;">
-                </div>
-            </div>
-                        <div class="info-box" style="background: rgba(220, 38, 38, 0.2); border-left: 4px solid #ef4444; padding: 0.8rem 1.2rem; margin-top: 1.5rem; border-radius: 0 12px 12px 0; color: #f87171; font-size: 0.95rem; line-height: 1.6; text-align: left;">
-                ⚠️ <b>주의사항</b><br>
-                문제는 총 20문제이며, 한 문제에서 3번 틀릴 경우 해당 구역의 처음으로 되돌아갑니다. <br>
-                또한 <b>오답을 제출할 때마다 제한 시간이 1분씩 단축</b>되니 신중하게 도전해 주세요!
-            </div>
+        <!-- 런타임 패널 컨테이너 -->
+        <div id="panels-container"></div>
+    </div>
 
-            <div class="btn-group" style="margin-top: 2rem; width:100%;">
-                <button class="btn" onclick="tryStartGame('m2_03')">미션 시작</button>
-            </div>
+    <!-- 락다운 및 공통 모달 -->
+    <div id="glitchOverlay" class="glitch-overlay-screen">
+        <div class="glitch-overlay-text">🚨 SYSTEM ERROR 🚨</div>
+        <div class="glitch-overlay-sub">ACCESS TEMPORARILY LOCKDOWN</div>
+    </div>
 
-        </div>
-
-        
-        <!-- Q1 -->
-        <div id="panel_q1" class="glass-panel">
-            <h2>제 1구역: 마법 저울의 눈금 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q1.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "하찮은 침입자여! 요정 숲의 마력 저울에 칠흑의 불균형 봉인을 걸었다. 너희가 이 부등식의 경계를 올바르게 판정해 낼 것 같으냐?"<br><br><i>쿠구구궁- 이끼 낀 고대 돌탁자 위에 거대한 천칭 마법 저울이 솟아오르며 한쪽으로 요란하게 기웁니다. 저울의 경계선을 맞추어 제어 핀을 배치해야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "요정 숲의 에너지 밸런스를 잡기 위해, 'x는 3보다 크거나 같다'의 기하학 부등호 수식을 콘솔에 입력하십시오! 첫 장벽을 무너뜨려야 합니다!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q1. [부등식의 표시]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>$x$는 3보다 크거나 같다를 부등호로 나타내시오.
-                    <div class="input-group">
-                        <input type="text" id="ans1" placeholder="예: x>=3">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error1">저울 측정 실패! 바늘이 격렬하게 흔들립니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ1()">시스템 복구 시작</button>
-
-            </div>
-        </div>
-
-        <!-- Q2 -->
-        <div id="panel_q2" class="glass-panel">
-            <h2>제 2구역: 저울의 해 찾기 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q2.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "우연히 저울을 굴렸군. 하지만 진짜 마력 해를 지목하지 못한다면, 오염된 연쇄 전류가 네놈들을 순식간에 휘감아 버릴 것이다!"<br><br><i>저울 바닥의 이끼들이 검게 타들어가며 보라색 노이즈 스파크가 사방으로 튑니다. 보기 중 x=2가 참이 되는 완벽한 해를 골라 다이얼을 정렬해 주십시오.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "조사관님! $x=2$가 성립하는 정합 부등식 번호를 짚어 에너지 폭주를 상쇄하십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q2. [부등식의 해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>다음 중 $x=2$가 해인 부등식은?<br>(1) $2x - 1 &lt; 0$<br>(2) $3x \ge 6$<br>(3) $-x &gt; 0$
-                    <div class="input-group">
-                        <input type="text" id="ans2" placeholder="예: (2) 또는 2">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error2">오답 입력! 저울이 한쪽으로 요동칩니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ2()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q3 -->
-        <div id="panel_q3" class="glass-panel">
-            <h2>제 3구역: 미만의 눈금 조율 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q3.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "마법 저울의 지지 한도를 비틀어 두었다. 5에 채 미치지 못하고 부스러질 필멸자 녀석들!"<br><br><i>천장에서 검은 마력 안개가 자욱하게 뿜어져 나오며 시야를 뿌옇게 가리기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "안개가 시야를 갉아먹고 있습니다! 'x는 5 미만이다'의 부등식 기호를 정밀하게 조율해 안개 포트를 정화하십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q3. [미만의 정의]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 정답은 기호나 문자를 포함해 총 3글자입니다.')">💡 힌트</button><br>$x$는 5 미만이다를 부등호로 나타내시오.
-                    <div class="input-group">
-                        <input type="text" id="ans3" placeholder="예: x<5">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error3">부등호 방향 오류! 기류가 흐트러집니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ3()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q4 -->
-        <div id="panel_q4" class="glass-panel">
-            <h2>제 4구역: 자연수 해 결합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q4.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[마법 장벽 역류 및 노이즈 발생]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "치지직... 조사관님! 다크-엘프가 저울 통신선을 차단하고 방해 코드를 심었습니다! ⚙️ [자연수 해의 판별]<br><br>저울 수식 $x + 2 &lt; 5$ 를 만족하는 진짜 자연수 해를 쉼표로 나열하여 방해 코드를 무력화하십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q4. [조건을 만족하는 해]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>부등식 $x + 2 &lt; 5$ 를 만족하는 자연수 $x$를 모두 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans4" placeholder="예: 1,2">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error4">조합 실패! 마법석이 어두워집니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ4()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q5 -->
-        <div id="panel_q5" class="glass-panel">
-            <h2>제 5구역: 한계 질량 구하기 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q5.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><strong>[제단 돌벽 하강 경보]</strong><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "치지직... 제어 회로 복구율 45%! 위에서 떨어지는 돌판의 한계 질량이 부등식 $2x \le 8$ 에 연동되어 내려오고 있습니다! 이를 만족하는 최대 정수 값을 입력해 돌벽의 하강을 저지해 주십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q5. [해의 최대값]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>부등식 $2x \le 8$ 을 만족하는 가장 큰 정수를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans5" placeholder="예: 4">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error5">질량 초과! 저울 리미터가 울립니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ5()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q6 -->
-        <div id="panel_q6" class="glass-panel">
-            <h2>제 6구역: 저울의 덧셈 성질 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q6.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "자연수를 넘어서 기하학적 저울의 절대 대칭 성질을 건드렸다. 양변에 똑같은 질량을 얹었을 때의 수평 관계를 예측할 수 있을까?"<br><br><i>저울 좌우 플레이트에서 청색 불꽃이 피어오릅니다. 양변에 똑같이 2를 더해 대칭시켰을 때의 대소 관계식을 정확히 선언해야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "제2구역 저울 성질 동조화입니다! $a &lt; b$ 일 때, $a+2$ 와 $b+2$ 의 정합 관계식을 입력해 주십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q6. [부등식의 성질 1]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>$a &lt; b$ 일 때, $a + 2$ 와 $b + 2$ 의 대소를 비교하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans6" placeholder="예: a+2<b+2">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error6">평형 오류! 저울 받침대가 삐걱거립니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ6()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q7 -->
-        <div id="panel_q7" class="glass-panel">
-            <h2>제 7구역: 저울의 곱셈 성질 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q7.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "더하기 정도는 상식이로군. 그렇다면 양변의 크기를 동시에 3배로 팽창시켰을 때는 어떨까? 거대해진 저울의 균형추가 흔들려 으스러지리라!"<br><br><i>황동 천칭이 기괴한 마찰음을 내며 더 무겁게 삐걱거리기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "에너지가 3배로 팽창했습니다! 양수 3을 곱했을 때의 새로운 부등식 기호 $3a$ 와 $3b$ 의 관계를 록 패널에 새기십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q7. [부등식의 성질 2]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>$a &lt; b$ 일 때, $3a$ 와 $3b$ 의 대소를 비교하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans7" placeholder="예: 3a<3b">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error7">에너지 증폭 이상! 스파크가 튑니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ7()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q8 -->
-        <div id="panel_q8" class="glass-panel">
-            <h2>제 8구역: 음수 곱셈의 반전 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q8.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "크크크... 진짜 지옥은 지금부터다. 음의 기류를 흘려보내 저울의 방향을 통째로 꼬아버리겠다!"<br><br><i>파지직- 저울대에 어두운 보랏빛 마력이 흘러들어가며, 바늘의 방향 지시가 정반대로 요동치기 시작합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "비상! 음수 -2가 곱해지면서 부등식 에너지의 방향이 틀어졌습니다! $-2a$ 와 $-2b$ 의 올바른 대소 관계를 역연산해 입력하십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q8. [부등식의 성질 3]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>$a &lt; b$ 일 때, $-2a$ 와 $-2b$ 의 대소 관계를 부등호로 나타내시오.
-                    <div class="input-group">
-                        <input type="text" id="ans8" placeholder="예: -2a>-2b">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error8">반전 에러! 저울이 균형을 완전히 잃고 기울어집니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ8()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q9 -->
-        <div id="panel_q9" class="glass-panel">
-            <h2>제 9구역: 방향 반전 법칙 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q9.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "방향이 바뀐다는 원리를 알았다면, 이 음수 나눗셈의 절대 규칙을 단답형 단어로 증명해 봐라! 기하학의 금기를 어길 수 있을쏘냐!"<br><br><i>천장 덩굴들이 촉수처럼 뻗어 나와 출구를 단단히 틀어막습니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "조사관님! 음수를 곱하거나 나눌 때 부등호의 성질이 어떻게 변하는지, 세 글자의 핵심 선언 단어를 주입하여 덩굴을 후퇴시키십시오!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q9. [부등호의 핵심 법칙]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>음수를 곱하거나 나눌 때 부등호의 방향은 어떻게 되는가?
-                    <div class="input-group">
-                        <input type="text" id="ans9" placeholder="바뀐다 또는 그대로다 입력">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error9">법칙 위반! 숲의 정령들이 길을 막습니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ9()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q10 -->
-        <div id="panel_q10" class="glass-panel">
-            <h2>제 10구역: 음수 나눗셈의 완성 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q10.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">💥 <strong>[비상 로그: 숲의 마력 코어 자폭 포맷 가동!]</strong> 💥<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "더는 참을 수 없군! 모든 고대 숲의 데이터를 파괴하고 시스템을 리셋하겠다! 5분 뒤 이 일대의 모든 마나 셀이 자폭 개시하리라!"<br><br><i>위이이잉- 경보 룬 문자들이 주위 벽면에서 붉게 깜빡이며 진동하기 시작합니다. 음수 나눗셈 부등식 수치 $-3x > 9$ 를 풀어 락을 정지시켜야 합니다.</i><br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "비상! 노심 열량 임계치 돌파! 양변을 -3으로 나눈 최종 부등식 해를 전송하십시오! 제가 정화 배리어를 최대로 작동시켜 지연시키겠습니다!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q10. [음수 나눗셈 연습]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>$-3x &gt; 9$ 양변을 -3으로 나누면 부등식은 어떻게 되는가?
-                    <div class="input-group">
-                        <input type="text" id="ans10" placeholder="예: x<-3">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error10">부호 오류! 2구역 탈출 밸브가 차단됩니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ10()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q11 -->
-        <div id="panel_q11" class="glass-panel">
-            <h2>제 11구역: 마법진 1차 해제 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q11.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "후... 자폭 유예 시간 3분 확보! 하지만 아직 3구역의 숲 정화 마법진 록들이 가로막고 있습니다! ⚙️ [일차부등식 1단계]"<br><br><i>콘솔 상단의 이끼 낀 돌 마법진의 틈새로 부등식 $2x - 4 > 0$ 포트가 빛납니다. 이 식을 이항 연산한 정확한 해를 주입하십시오.</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q11. [기초 부등식 풀이]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $2x - 4 &gt; 0$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans11" placeholder="예: x>2">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error11">마법 해제 실패! 마법진이 붉게 점멸합니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ11()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q12 -->
-        <div id="panel_q12" class="glass-panel">
-            <h2>제 12구역: 마법진 2차 해제 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q12.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "1단계 록 해제 성공! 다음 2단계는 상수 이항의 정확성을 체크합니다! ⚙️ [이항과 부등호 유지]"<br><br><i>파랑색 마나 기류가 부등식 $3x + 1 \le 7$ 의 이항 정합 각도를 요구합니다. 해를 계산해 전송하십시오.</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q12. [이항 계산]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $3x + 1 \le 7$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans12" placeholder="예: x<=2">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error12">이항 연산 미스! 결합 에너지가 소멸됩니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ12()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q13 -->
-        <div id="panel_q13" class="glass-panel">
-            <h2>제 13구역: 양변 이항 결합 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q13.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "정화 마법진 복구율 80%! 양변의 미지수와 상수를 각각 정방향 이항 결합하여 정화 빔을 발사해야 합니다! ⚙️ [양변 이항 정리]"<br><br><i>마법진 중앙에 $5x - 2 < 3x + 8$ 의 기하학 도식이 회전하며, x의 참 범위를 밸런서에 대기시킵니다.</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q13. [복합 이항]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $5x - 2 &lt; 3x + 8$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans13" placeholder="예: x<5">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error13">이항 부호 에러! 에너지 균형이 흐트러집니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ13()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q14 -->
-        <div id="panel_q14" class="glass-panel">
-            <h2>제 14구역: 음수 계수 이항 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q14.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "이제 정화 마법진 마지막 3단계입니다! 음수 계수의 복합 연산 코드를 전송하십시오! ⚙ [최종 계수 반전 제어]"<br><br><i>지이잉- 마법진의 메인 차단막 슬롯이 멈추며 부등식 $-2x + 5 \ge x - 4$ 의 최종 해를 매핑할 준비를 합니다.</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q14. [음수 계수 이항]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $-2x + 5 \ge x - 4$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans14" placeholder="예: x<=3">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error14">반전 연산 실패! 마법진 온도가 급격히 올라갑니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ14()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q15 -->
-        <div id="panel_q15" class="glass-panel">
-            <h2>제 15구역: 괄호 마법진 돌파 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q15.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">✨ <strong><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F 요정 제단 권한 100% 완전 복구]</span></strong> ✨<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "해독 완료, 조사관님! 숲의 메인 룬 제단 통제권을 완벽하게 환수했습니다! 이제 다크-엘프의 검은 기류를 차단합니다. 괄호가 적용된 부등식 $2(x - 1) &gt; 4$ 의 해를 주입하여 락을 파쇄하십시오!"<br><br><i>제단 중앙에 아름다운 에메랄드빛 마나 분수가 솟구치며 주변의 검은 가스가 일제히 소멸합니다.</i><br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "내 핵심 룬 제어 락이 무너지다니...! 최종 실생활 억제 사슬로 숲의 중심부에 가두어 주마!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q15. [괄호가 있는 부등식]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>일차부등식 $2(x - 1) &gt; 4$ 의 해를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans15" placeholder="예: x>3">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error15">괄호 분배 오류! 마법진이 비상 셧다운 모드로 돌입합니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ15()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q16 -->
-        <div id="panel_q16" class="glass-panel">
-            <h2>제 16구역: 연속하는 자연수 씨앗 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q16.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "생명의 숲을 재생시키는 자연수의 씨앗 조화비를 알아맞히지 못하면, 싹조차 틔우지 못하고 고사하리라!"<br><br><i>바닥의 씨앗 분배기 함이 어긋나며 쇠마찰음을 냅니다. 연속하는 두 자연수의 합이 15보다 큰 최소 조합을 입력창에 정확히 대십시오.</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q16. [자연수 응용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 3글자)')">💡 힌트</button><br>연속하는 두 자연수의 합이 15보다 크다고 할 때, 이를 만족하는 가장 작은 두 자연수를 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans16" placeholder="예: 8,9">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error16">수치 조합 오류! 씨앗 공급 장치가 걸립니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ16()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q17 -->
-        <div id="panel_q17" class="glass-panel">
-            <h2>제 17구역: 장미 꽃잎 제단 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q17.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "제단의 가중 밸런서를 흐트러뜨렸다. 한 송이 800원짜리 장미 x송이와 포장비 1000원을 더해 6000원 한도를 초과하지 않는 제단 예산 부등식을 완성해 봐라!"<br><br><i>장미꽃 제단의 황동 저울 밸브가 위험 수위로 가파르게 돌아갑니다. 정확한 한도 식을 입력창에 투사하십시오.</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q17. [식 세우기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 부등식의 양변에 음수를 곱하거나 나누면 부등호의 방향이 반대로 바뀐다는 점을 잊지 마세요.')">💡 힌트</button><br>한 송이에 800원인 장미 $x$송이와 1000원짜리 포장을 하여 전체 비용을 6000원 이하로 하려고 한다. 부등식을 세우시오.
-                    <div class="input-group">
-                        <input type="text" id="ans17" placeholder="예: 800x+1000<=6000">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error17">부등식 기호 불일치! 제단의 마법 빛이 사그라듭니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ17()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q18 -->
-        <div id="panel_q18" class="glass-panel">
-            <h2>제 18구역: 장미의 최대 송이 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q18.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "식을 세웠다 한들, 한도 내에서 제단에 최대로 바칠 수 있는 장미 수량을 오차 없이 계수해 올리지 못하면 마법 제단이 무너지리라!"<br><br><i>부등식을 만족하는 장미의 실질적 최대 송이수를 다이얼 창에 입력해 예산 장벽을 여십시오.</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q18. [최대값 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 1글자)')">💡 힌트</button><br>Q17 조건에서 장미는 최대 몇 송이까지 살 수 있는가?
-                    <div class="input-group">
-                        <input type="text" id="ans18" placeholder="예: 6 또는 6송이">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error18">꽃잎 수량 한계 초과! 저울이 균형을 잃습니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ18()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q19 -->
-        <div id="panel_q19" class="glass-panel">
-            <h2>제 19구역: 동생의 저금 역전 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q19.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text"><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "시간이 갈수록 쌓여가는 형제의 저금 에너지 역전 공식이다! 동생이 형보다 부등식 상으로 자금이 많아지는 시점을 연산해 낼 수 있겠느냐!"<br><br><i>형 20000원(매월 2000원 저금), 동생 10000원(매월 3000원 저금) 조건의 역전 개월 상수를 계산하십시오!</i></div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q19. [실생활 활용]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 2글자)')">💡 힌트</button><br>몇 개월 후부터 동생의 저금액이 형의 저금액보다 많아지는지 구하시오.
-                    <div class="input-group">
-                        <input type="text" id="ans19" placeholder="예: 11 또는 11개월">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error19">연도 계산 오류! 이자가 바닥납니다.</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ19()">다음으로</button>
-
-            </div>
-        </div>
-
-        <!-- Q20 -->
-        <div id="panel_q20" class="glass-panel">
-            <h2>제 20구역: 생명의 숲 최소 면적 <span class="game-timer" style="float: right; color: #ef4444; font-family: 'Share Tech Mono', monospace; font-size: 1.2rem; text-shadow: 0 0 5px #ef4444;">40:00</span></h2>
-            <img src="assets/m2_03_inequalities/q20.png" alt="Background" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">🔮 <strong>[최종 탈출 요정 포탈 해제]</strong> 🔮<br><br><span style="color: #60a5fa; text-shadow: 0 0 5px #3b82f6;">[실프-F]</span>: "조사관님! 이제 숲의 사막 바깥 지상으로 통하는 마지막 고대 포탈 게이트만 남았습니다! 제 마지막 정령 에너지를 기압 단자에 집중하겠습니다! 요정 숲의 활성화 최소 면적 초과 수치를 입력해 포탈 게이트를 여십시오! 이제 숲으로 돌아갈 시간입니다!"<br><br><span class="glitch-text" style="color: #ef4444; font-weight: bold; text-shadow: 0 0 5px #ef4444;">[다크-엘프]</span>: "안 돼... 내 최종 어둠의 결계가... 완전히 해제당해 정지한다아앗!"</div>
-                <button class="story-log-trigger" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>
-            </div>
-            <div class="question-box">
-                <div class="question-content">
-                    <strong>Q20. [최종 면적 구하기]</strong> <button class="btn-hint" onclick="alert('💡 힌트: 단위가 있다면 제외해보고, 기호 유무를 확인하세요. (정답 길이: 약 2글자)')">💡 힌트</button><br>요정 숲의 남은 면적은 최소 얼마 초과인가?
-                    <div class="input-group">
-                        <input type="text" id="ans20" placeholder="숫자만 또는 초과 입력 (예: 30)">
-                    </div>
-                </div>
-            </div>
-            <div class="error-msg" id="error20">정화 범위 미달! 숲 전체가 봉인 모드로 잠겨버립니다!</div>
-            <div class="btn-group">
-                <button class="btn" onclick="checkQ20()">다음으로</button>
-
-            </div>
-        </div>
-
-
-        <!-- Outro Panel -->
-        <div id="outro" class="glass-panel">
-            <h1>미션 완료!</h1>
-            <h2>요정 숲의 균형 회복</h2>
-            <img src="assets/m2_03_inequalities/outro.png" alt="Ending" class="panel-image">
-            <div class="story-box">
-                <div class="story-text" id="outro-dynamic-text">
-                [숲의 정령 실프-F]: "음수를 나눌 때 부등호의 방향이 바뀐다는 결정적 사실을 놓치지 않고 20개의 문제를 해결했습니다! 마법 저울이 다시 수평을 되찾고, 요정 숲에 따뜻한 빛이 스며듭니다. 숲의 균형을 되찾은 여러분께 요정들이 감사를 전합니다!"
-            </div>
-            </div>
-            <div class="btn-group">
-                <button class="btn" onclick="location.reload()">다시 하기</button>
-            </div>
+    <!-- Story Log UI -->
+    <div id="storyLogModal" class="log-modal">
+        <div class="log-content">
+            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
+            <h2>📜 지나온 해저 탐사 기록</h2>
+            <div id="logContainer">기록이 없습니다.</div>
         </div>
     </div>
 
-    <!-- Web Audio API Sound Generation -->
+    <!-- Fullscreen Illustration Overlay -->
+    <div id="illustrationOverlay" class="illustration-fullscreen" onclick="GameRuntime.closeIllustrationOverlay()">
+        <img id="overlayImg" src="" alt="Fullscreen Illustration">
+        <div class="overlay-guide">[ 화면을 터치하여 조사하기 ]</div>
+    </div>
+
+    <!-- ─── GameRuntime 공통 자바스크립트 엔진 ─── -->
     <script>
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let isMuted = false;
+        // 전역 다이얼로그 로그 저장
+        const storyLogHistory = [];
+
+        const GameRuntime = {
+            data: null,
+            timerId: null,
+            timeLeft: 2400,
+            currentWrongCount: 0,
+            totalWrongCount: 0,
+            activePanelId: 'panel_intro',
+
+            start: function(gameData) {
+                this.data = gameData;
+                this.timeLeft = gameData.timer_limit_sec || 2400;
+                
+                // CSS 테마 적용
+                document.body.className = 'theme-' + (gameData.theme || 'atlantis');
+                
+                this.render();
+                this.bindEvents();
+                this.showPanel('panel_intro');
+            },
+
+            pendingPanelId: null,
+
+            showPanel: function(panelId) {
+                const target = document.getElementById(panelId);
+                if (!target) return;
+
+                // 인트로 패널이 아니며 일러스트 이미지가 존재하는 경우 풀스크린 오버레이 먼저 노출
+                const imgEl = target.querySelector('.panel-image');
+                const overlay = document.getElementById('illustrationOverlay');
+                const overlayImg = document.getElementById('overlayImg');
+
+                if (panelId !== 'panel_intro' && imgEl && overlay && overlayImg && this.pendingPanelId !== panelId) {
+                    this.pendingPanelId = panelId;
+                    overlayImg.src = imgEl.src;
+                    overlay.style.display = 'flex';
+                    overlay.style.opacity = '0';
+                    // 리플로우 강제 유발 후 불투명도 적용
+                    void overlay.offsetWidth;
+                    overlay.style.opacity = '1';
+                    return; // 패널 렌더링 지연
+                }
+
+                // 오버레이가 이미 닫힌 상태이거나 없는 경우 본래 동작 실행
+                this.pendingPanelId = null;
+                document.querySelectorAll('.glass-panel').forEach(p => p.classList.remove('active'));
+                
+                target.classList.add('active');
+                this.activePanelId = panelId;
+
+                // 대사 읽기 전용 모드 클래스 세팅 (이미지 최대화, 문제 가림)
+                target.classList.remove('solve-mode');
+                target.classList.add('read-mode');
+
+                // 스토리 타이머 구동 후 완료 콜백에서 보여줌
+                const storyBox = target.querySelector('.story-box');
+                if (storyBox) {
+                    if (panelId === 'panel_intro') {
+                        target.classList.remove('read-mode');
+                        target.classList.add('solve-mode');
+                        return;
+                    }
+                    typeWriterHTML(storyBox, 15, () => {
+                        // 대사 읽기 끝났으므로 문제 풀이 모드로 전환 (이미지 축소, 문제 서서히 표출)
+                        target.classList.remove('read-mode');
+                        target.classList.add('solve-mode');
+                    });
+                } else {
+                    target.classList.remove('read-mode');
+                    target.classList.add('solve-mode');
+                }
+                
+                // 오프닝을 넘어가 게임에 들어가는 시점에 타이머 자동 시작
+                if (panelId === 'panel_q1') {
+                    this.startTimer();
+                }
+            },
+
+            closeIllustrationOverlay: function() {
+                const overlay = document.getElementById('illustrationOverlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        // 지연되었던 대사 카드 활성화 실행
+                        if (this.pendingPanelId) {
+                            const nextPanelId = this.pendingPanelId;
+                            // 무한 루프 차단하기 위해 임시 보관
+                            this.pendingPanelId = nextPanelId; 
+                            this.showPanel(nextPanelId);
+                        }
+                    }, 500); // 0.5s transition 대기
+                }
+            },
+
+            render: function() {
+                const container = document.getElementById('panels-container');
+                container.innerHTML = '';
+                
+                const assetsBase = 'https://raw.githubusercontent.com/JK1027/room-math-story/feat/cleanup-storyboards/assets/units/' + this.data.unit_code;
+                
+                // 1. INTRO PANEL
+                const introHtml = 
+                    '<div id="panel_intro" class="glass-panel active">\n' +
+                    '    <h2>SYSTEM INITIATION</h2>\n' +
+                    '    <img src="' + assetsBase + '/' + this.data.intro.image + '" class="panel-image" alt="Intro">\n' +
+                    '    <div class="story-box" style="display: none;">\n' +
+                    '        <div class="story-text"></div>\n' +
+                    '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
+                    '    </div>\n' +
+                    '    <!-- 학번/이름 입력 및 사운드 조절 UI 영역 -->\n' +
+                    '    <div class="user-info-section" style="margin-top: 15px; border-top: 1px solid var(--border-glass); padding-top: 15px;">\n' +
+                    '        <div style="display: flex; gap: 10px; margin-bottom: 10px;">\n' +
+                    '            <div style="flex: 1;">\n' +
+                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">학번 (예: 1101)</label>\n' +
+                    '                <input type="text" id="studentNum" placeholder="4자리 학번" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
+                    '            </div>\n' +
+                    '            <div style="flex: 1;">\n' +
+                    '                <label style="font-size: 0.85rem; color: var(--accent-neon); display: block; margin-bottom: 5px;">이름</label>\n' +
+                    '                <input type="text" id="studentName" placeholder="이름" style="width: 100%; padding: 8px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 4px; color: white; box-sizing: border-box;">\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '        <div style="display: flex; justify-content: space-between; align-items: center;">\n' +
+                    '            <div id="intro-error" style="color: var(--danger-neon); font-size: 0.85rem; display: none;"></div>\n' +
+                    '            <button id="soundToggle" class="btn-hint" onclick="toggleSound()" style="margin-left: auto;">🔇 소리 꺼짐</button>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '    <div class="btn-group">\n' +
+                    '        <button class="btn" onclick="GameRuntime.submitUserInfo()">미션 개시</button>\n' +
+                    '    </div>\n' +
+                    '</div>';
+                container.insertAdjacentHTML('beforeend', introHtml);
+                
+                // 인트로 안전 주입
+                const introPanel = container.lastElementChild;
+                const introHtmlParsed = parseMarkdown(this.data.intro.story);
+                introPanel.querySelector('.story-text').dataset.rawHtml = introHtmlParsed;
+                introPanel.querySelector('.story-text').innerHTML = '';
+                
+                // 동적으로 로드되는 UI 연계 처리
+                const isGasEnv = typeof google !== 'undefined' && google.script && google.script.run;
+                if (!isGasEnv) {
+                    window.playerFirstName = "캡틴";
+                }
+                
+
+
+                // 2. Q1 ~ Q20 PANELS
+                this.data.questions.forEach((q, idx) => {
+                    const nextStage = idx === 19 ? 'panel_event4' : 
+                                     (q.qnum === 5 ? 'panel_event1' : 
+                                      (q.qnum === 10 ? 'panel_event2' : 
+                                       (q.qnum === 15 ? 'panel_event3' : ('panel_q' + (q.qnum + 1)))));
+                    
+                    const btnText = q.qnum === 1 ? '잠항 시작' : (q.qnum === 20 ? '탈출하기' : '다음으로');
+                    
+                    let inputHtml = '';
+                    if (q.choices && q.choices.length > 0) {
+                        let optionsHtml = '';
+                        q.choices.forEach(opt => {
+                            optionsHtml += 
+                                '<label class="radio-label">\n' +
+                                '    <input type="radio" name="ans_group' + q.qnum + '" value="' + opt + '"> ' + opt + '\n' +
+                                '</label>';
+                        });
+                        inputHtml = '<div class="options-group" id="ans' + q.qnum + '_group">' + optionsHtml + '</div>';
+                    } else {
+                        inputHtml = 
+                            '<div class="input-group">\n' +
+                            '    <input type="text" id="ans' + q.qnum + '" placeholder="' + q.placeholder + '">\n' +
+                            '</div>';
+                    }
+
+                    const qHtml = 
+                        '<div class="glass-panel ' + (q.extra_class || '') + '">\n' +
+                        '    <h2>제 ' + q.qnum + '구역: ' + q.title + ' <span class="game-timer">40:00</span></h2>\n' +
+                        '    <img src="' + assetsBase + '/' + q.image + '" class="panel-image" alt="Q' + q.qnum + '">\n' +
+                        '    <div class="story-box">\n' +
+                        '        <div class="story-text"></div>\n' +
+                        '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
+                        '    </div>\n' +
+                        '    <div class="question-box">\n' +
+                        '        <div class="question-content">\n' +
+                        '            <strong class="q-text-el"></strong>\n' +
+                        '            <button class="btn-hint">💡 힌트</button>\n' +
+                        '            <div class="q-input-container"></div>\n' +
+                        '        </div>\n' +
+                        '    </div>\n' +
+                        '    <div class="error-msg"></div>\n' +
+                        '    <div class="btn-group">\n' +
+                        '        <button class="btn" onclick="GameRuntime.submitAnswer(' + q.qnum + ')">' + btnText + '</button>\n' +
+                        '    </div>\n' +
+                        '</div>';
+                    container.insertAdjacentHTML('beforeend', qHtml);
+                    // 퀴즈 요소 안전 주입 및 동적 ID 부여
+                    const qPanel = container.lastElementChild;
+                    qPanel.id = 'panel_q' + q.qnum;
+                    
+                    const errorEl = qPanel.querySelector('.error-msg');
+                    errorEl.id = 'error' + q.qnum;
+                    
+                    const qStoryParsed = parseMarkdown(q.story);
+                    qPanel.querySelector('.story-text').dataset.rawHtml = qStoryParsed;
+                    qPanel.querySelector('.story-text').innerHTML = '';
+                    qPanel.querySelector('.q-text-el').innerHTML = q.qtext;
+
+                    // 4단원 그래프 전용 렌더링 탑재 (Q9, Q17)
+                    if (this.data.unit_code === 'm1_04') {
+                        if (q.qnum === 9) {
+                            const graphHtml = 
+                                '<div class="graph-container" style="text-align: center; color: #1e293b; font-family: monospace; font-size: 1.1rem; line-height: 1.5; font-weight: bold; background: #f8fafc; border: 2px solid #3b82f6; padding: 10px; border-radius: 8px; margin: 10px 0;">\n' +
+                                '    [ 수압 그래프 ]<br>\n' +
+                                '    y ( 수압 )<br>\n' +
+                                '    ▲<br>\n' +
+                                '    │<br>\n' +
+                                '    │      / (10, 100)<br>\n' +
+                                '    │     /<br>\n' +
+                                '    │    /<br>\n' +
+                                '    │   /<br>\n' +
+                                '    │  /<br>\n' +
+                                '    └─/────────────────► x ( 시간 )<br>\n' +
+                                '    O ( 원점 )\n' +
+                                '</div>';
+                            qPanel.querySelector('.q-text-el').insertAdjacentHTML('afterend', graphHtml);
+                        } else if (q.qnum === 17) {
+                            const graphHtml = 
+                                '<div class="graph-container" style="text-align: center; color: #1e293b; font-family: monospace; font-size: 1.1rem; line-height: 1.5; font-weight: bold; background: #f8fafc; border: 2px solid #3b82f6; padding: 10px; border-radius: 8px; margin: 10px 0;">\n' +
+                                '    [ 좌표평면의 점 ]<br>\n' +
+                                '    y<br>\n' +
+                                '    ▲<br>\n' +
+                                '    │     * A ( -3, a )<br>\n' +
+                                '    │<br>\n' +
+                                '    │<br>\n' +
+                                '    │          * B ( b, -4 )<br>\n' +
+                                '    └─────────────────► x<br>\n' +
+                                '    O\n' +
+                                '</div>';
+                            qPanel.querySelector('.q-text-el').insertAdjacentHTML('afterend', graphHtml);
+                        }
+                    }
+
+                    qPanel.querySelector('.btn-hint').onclick = () => alert('💡 힌트: ' + q.hint);
+                    errorEl.textContent = q.error_message;
+                    qPanel.querySelector('.q-input-container').innerHTML = inputHtml;
+                    
+
+                });
+
+                // 3. EVENT 1 ~ 4 PANELS
+                this.data.events.forEach(ev => {
+                    const evHtml = 
+                        '<div class="glass-panel">\n' +
+                        '    <h2>[돌발] ' + ev.title + ' <span class="game-timer">40:00</span></h2>\n' +
+                        '    <img src="' + assetsBase + '/' + ev.image + '" class="panel-image" alt="Event">\n' +
+                        '    <div class="story-box">\n' +
+                        '        <div class="story-text"></div>\n' +
+                        '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
+                        '    </div>\n' +
+                        '    <div class="btn-group">\n' +
+                        '        <button class="btn" onclick="GameRuntime.triggerStageTransition(\'panel_event\' + ev.evnum, \'' + ev.next_stage + '\', ' + ev.progress + ')">' + ev.btn_text + '</button>\n' +
+                        '    </div>\n' +
+                        '</div>';
+                    container.insertAdjacentHTML('beforeend', evHtml);
+                    
+                    // 이벤트 요소 안전 주입 및 동적 ID 부여
+                    const evPanel = container.lastElementChild;
+                    evPanel.id = 'panel_event' + ev.evnum;
+                    
+                    const evStoryParsed = parseMarkdown(ev.story);
+                    evPanel.querySelector('.story-text').dataset.rawHtml = evStoryParsed;
+                    evPanel.querySelector('.story-text').innerHTML = '';
+                    
+
+                });
+
+                // 4. OUTRO PANEL
+                const outroHtml = 
+                    '<div id="outro" class="glass-panel">\n' +
+                    '    <h1 style="color:var(--primary-neon); text-align:center;">미션 성공!</h1>\n' +
+                    '    <h2>' + this.data.title + '</h2>\n' +
+                    '    <img src="' + assetsBase + '/' + this.data.outro.image + '" class="panel-image" alt="Outro">\n' +
+                    '    <div class="story-box">\n' +
+                    '        <div class="story-text" id="outro-dynamic-text">미션 결과를 산출 중입니다...</div>\n' +
+                    '        <div style="position: absolute; bottom: 4px; right: 8px; display: flex; gap: 6px; z-index: 10;">\n' +
+                    '            <button class="story-log-trigger" style="position: static;" onclick="openLog(); event.stopPropagation();">📜 이전 대사</button>\n' +
+                    '            <button class="story-log-trigger" style="position: static; background: rgba(229,169,60,0.25); border: 1px solid rgba(229,169,60,0.5); color: var(--accent);" onclick="GameRuntime.skipStory(); event.stopPropagation();">⏩ 스킵</button>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '    <button class="btn" style="margin-top: 20px; width:100%;" onclick="location.reload()">다시 도전하기</button>\n' +
+                    '</div>';
+                container.insertAdjacentHTML('beforeend', outroHtml);
+                
+                // 5. GAMEOVER PANEL
+                const gameOverHtml = 
+                    '<div id="gameover" class="glass-panel">\n' +
+                    '    <h1 style="color:var(--danger-neon); text-align:center;">미션 실패 (GAME OVER)</h1>\n' +
+                    '    <img src="' + assetsBase + '/' + this.data.outro.image + '" class="panel-image" alt="GameOver" style="filter:grayscale(1);">\n' +
+                    '    <div class="story-box">\n' +
+                    '        <div class="story-text" style="color:var(--danger-neon);"></div>\n' +
+                    '    </div>\n' +
+                    '    <button class="btn" style="margin-top: 20px; width:100%; background:var(--danger-neon); color:white;" onclick="location.reload()">다시 시도하기</button>\n' +
+                    '</div>';
+                container.insertAdjacentHTML('beforeend', gameOverHtml);
+                
+                // 게임오버 안전 주입
+                const gameOverPanel = container.lastElementChild;
+                gameOverPanel.querySelector('.story-text').textContent = this.data.outro.story_failure;
+            },
+
+            bindEvents: function() {
+                // 필요시 리로드나 키다운 방지 등 공통화 처리
+                window.addEventListener('beforeunload', (e) => {
+                    if (this.activePanelId !== 'panel_intro' && this.activePanelId !== 'outro' && this.activePanelId !== 'gameover') {
+                        e.preventDefault();
+                        e.returnValue = '';
+                    }
+                });
+            },
+
+            submitUserInfo: function() {
+                const sNumInput = document.getElementById('studentNum');
+                const sNameInput = document.getElementById('studentName');
+                const errorEl = document.getElementById('intro-error');
+                
+                const sNum = sNumInput ? sNumInput.value.trim() : '';
+                const sName = sNameInput ? sNameInput.value.trim() : '';
+                
+                if (!sNum || !sName) {
+                    if (errorEl) {
+                        errorEl.textContent = "학번과 이름을 모두 입력해주세요.";
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+                
+                if (sNum.length !== 4 || isNaN(sNum)) {
+                    if (errorEl) {
+                        errorEl.textContent = "학번은 4자리 숫자여야 합니다 (예: 1101).";
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+                
+                window.playerFirstName = sName.substring(1); // 성 제외 이름만 추출 (예: '홍길동' -> '길동')
+                
+                // 브라우저 오디오 가동 시도 (뮤트 아닌 경우)
+                try {
+                    if (!isMuted) {
+                        initAudio();
+                        startBGM();
+                    }
+                } catch(e) {}
+
+                const proceedLogin = (rowNum) => {
+                    if (rowNum) window.userRecordRow = rowNum;
+                    
+                    // 1. 입력 폼 숨기기
+                    const infoSec = document.querySelector('.user-info-section');
+                    if (infoSec) infoSec.style.display = 'none';
+                    
+                    // 2. 미션 개시 버튼 숨기기
+                    const btnGroup = document.querySelector('#panel_intro .btn-group');
+                    if (btnGroup) btnGroup.style.display = 'none';
+                    
+                    // 3. story-box 표시 및 타이핑 효과 시작
+                    const introPanel = document.getElementById('panel_intro');
+                    const storyBox = introPanel.querySelector('.story-box');
+                    if (storyBox) {
+                        storyBox.style.display = 'block';
+                        introPanel.classList.remove('solve-mode');
+                        introPanel.classList.add('read-mode');
+                        
+                        typeWriterHTML(storyBox, 15, () => {
+                            introPanel.classList.remove('read-mode');
+                            introPanel.classList.add('solve-mode');
+                            
+                            // 4. [잠항 시작] 버튼 활성화 및 노출
+                            if (btnGroup) {
+                                const btnText = this.data.unit_code === 'm1_04' ? '잠항 시작' : '미션 시작';
+                                btnGroup.innerHTML = '<button class="btn" onclick="GameRuntime.showPanel(\'panel_q1\')">' + btnText + '</button>';
+                                btnGroup.style.display = 'block';
+                            }
+                        });
+                    } else {
+                        this.showPanel('panel_q1');
+                    }
+                };
+
+                // GAS 시트에 기록 저장 후 화면 이동 대신 대사 시퀀스 실행
+                if (typeof google !== 'undefined' && google.script && google.script.run) {
+                    google.script.run.withSuccessHandler((rowNum) => {
+                        proceedLogin(rowNum);
+                    }).recordStart(sNum, sName, this.data.unit_code);
+                } else {
+                    // 로컬 환경 폴백
+                    proceedLogin(null);
+                }
+            },
+
+            startTimer: function() {
+                if (this.timerId) return;
+                this.updateTimerDisplay();
+                this.timerId = setInterval(() => {
+                    this.timeLeft--;
+                    this.updateTimerDisplay();
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timerId);
+                        this.showPanel('gameover');
+                    }
+                }, 1000);
+            },
+
+            updateTimerDisplay: function() {
+                const minutes = Math.floor(this.timeLeft / 60);
+                const seconds = this.timeLeft % 60;
+                const timeStr = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+                
+                const timers = document.querySelectorAll('.game-timer');
+                timers.forEach(el => {
+                    el.innerText = timeStr;
+                    if (this.timeLeft <= 180) {
+                        el.classList.add('timer-warning');
+                    } else {
+                        el.classList.remove('timer-warning');
+                    }
+                });
+            },
+
+            submitAnswer: function(qnum) {
+                const q = this.data.questions[qnum - 1];
+                let userAns = '';
+                
+                if (q.choices && q.choices.length > 0) {
+                    const checked = document.querySelector(`input[name="ans_group${qnum}"]:checked`);
+                    userAns = checked ? checked.value : '';
+                } else {
+                    const inputEl = document.getElementById(`ans${qnum}`);
+                    userAns = inputEl ? inputEl.value.trim() : '';
+                }
+
+                const isCorrect = this.checkAnswer(q.answer, userAns);
+                
+                if (isCorrect) {
+                    this.currentWrongCount = 0;
+                    try { playSuccess(); } catch(e) {}
+                    
+                    const nextStage = qnum === 20 ? 'panel_event4' : 
+                                     (qnum === 5 ? 'panel_event1' : 
+                                      (qnum === 10 ? 'panel_event2' : 
+                                       (qnum === 15 ? 'panel_event3' : `panel_q${qnum + 1}`))
+                                     );
+                                     
+                    const nextProgress = qnum * 5;
+                    this.triggerStageTransition(`panel_q${qnum}`, nextStage, nextProgress);
+                } else {
+                    this.triggerLaserAndShake();
+                    try { playError(); } catch(e) {}
+                    this.currentWrongCount++;
+                    this.totalWrongCount++;
+                    this.timeLeft -= 60; // 오답시 60초 감소 페널티
+                    if (this.timeLeft < 0) this.timeLeft = 0;
+                    this.updateTimerDisplay();
+                    
+                    // 패널 흔들기 효과
+                    const panel = document.getElementById(`panel_q${qnum}`);
+                    if (panel) {
+                        panel.classList.remove('shake');
+                        void panel.offsetWidth;
+                        panel.classList.add('shake');
+                    }
+
+                    const errMsg = document.getElementById(`error${qnum}`);
+                    if (errMsg) {
+                        errMsg.style.display = 'block';
+                        setTimeout(() => errMsg.style.display = 'none', 3000);
+                    }
+
+                    // 3회 오답 시 구역 초기화
+                    if (this.currentWrongCount >= 3) {
+                        this.currentWrongCount = 0;
+                        document.getElementById('glitchOverlay').style.display = 'flex';
+                        setTimeout(() => document.getElementById('glitchOverlay').style.display = 'none', 1500);
+                        
+                        let resetQnum, resetProg, zoneName;
+                        if (qnum <= 5) {
+                            resetQnum = 1; resetProg = 0; zoneName = "1구역";
+                        } else if (qnum <= 10) {
+                            resetQnum = 6; resetProg = 25; zoneName = "2구역";
+                        } else if (qnum <= 15) {
+                            resetQnum = 11; resetProg = 50; zoneName = "3구역";
+                        } else {
+                            resetQnum = 16; resetProg = 75; zoneName = "4구역";
+                        }
+
+                        alert(`🚨 3회 오답! ${zoneName}의 처음인 제 ${resetQnum}구역으로 강제 이송됩니다.`);
+                        // 입력 초기화
+                        const resetInput = document.getElementById(`ans${resetQnum}`);
+                        if (resetInput) resetInput.value = '';
+                        document.querySelectorAll(`input[name="ans_group${resetQnum}"]`).forEach(el => el.checked = false);
+                        
+                        this.triggerStageTransition(`panel_q${qnum}`, `panel_q${resetQnum}`, resetProg);
+                    }
+                }
+            },
+
+            triggerLaserAndShake: function() {
+                const overlay = document.getElementById('laserOverlay');
+                if (overlay) {
+                    overlay.classList.add('laser-flash-active');
+                    setTimeout(() => overlay.classList.remove('laser-flash-active'), 150);
+                }
+                document.body.classList.add('shake-effect');
+                setTimeout(() => document.body.classList.remove('shake-effect'), 300);
+            },
+
+            checkAnswer: function(spec, ans) {
+                if (!spec || !spec.type || !spec.values) return false;
+                
+                const cleanAns = ans.replace(/\(/g, '').replace(/\)/g, '').trim();
+                
+                if (spec.type === 'exact') {
+                    return spec.values.includes(cleanAns);
+                } else if (spec.type === 'any_of') {
+                    return spec.values.includes(cleanAns);
+                } else if (spec.type === 'normalized_exact') {
+                    const normUser = cleanAns.replace(/\s+/g, '').toUpperCase();
+                    return spec.values.some(v => v.replace(/\s+/g, '').toUpperCase() === normUser);
+                }
+                
+                return false;
+            },
+
+            triggerStageTransition: function(currentId, nextId, progress) {
+                if (currentId === 'panel_intro') {
+                    const progContainer = document.getElementById('progressContainer');
+                    if (progContainer) progContainer.style.display = 'block';
+                }
+                
+                const progBar = document.getElementById('progressBar');
+                if (progBar) progBar.style.width = progress + '%';
+
+                // 최종 성공 도달 시
+                if (nextId === 'outro') {
+                    clearInterval(this.timerId);
+                    try { playVictory(); } catch(e) {}
+                    
+                    // 구글 앱스 스크립트 종료 처리 호출
+                    try {
+                        if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                            google.script.run.recordEnd(window.userRecordRow, this.data.unit_code);
+                        }
+                    } catch(e) {
+                        console.warn("GAS recordEnd failed:", e);
+                    }
+
+                    // 멀티엔딩 텍스트 분기
+                    const outroTextEl = document.getElementById('outro-dynamic-text');
+                    if (outroTextEl) {
+                        const firstName = window.playerFirstName || this.data.hero;
+                        if (this.totalWrongCount < 5) {
+                            outroTextEl.innerHTML = `정말 놀라운 수학적 능력이로군!<br><br><strong>[${this.data.helper}]</strong>: "${firstName}님! 완벽합니다. 오답이 5회 미만입니다. 고대의 유물을 완전히 정화하여 회수했습니다!"<br><br><b>[칭호 획득: 마스터 스페셜리스트]</b>`;
+                        } else {
+                            outroTextEl.innerHTML = `간신히 관문을 통과했습니다.<br><br><strong>[${this.data.helper}]</strong>: "휴, ${firstName}님, 간신히 보물을 챙겼습니다. 탈출 장치를 가동해 이곳을 떠납시다!"<br><br>미션 성공!`;
+                        }
+                    }
+                }
+                
+                this.showPanel(nextId);
+                
+                // GAS 진행도 리포트
+                try {
+                    if (window.userRecordRow && typeof google !== 'undefined' && google.script && google.script.run) {
+                        google.script.run.recordProgress(window.userRecordRow, progress);
+                    }
+                } catch(e) {
+                    console.warn("GAS progress report failed:", e);
+                }
+            },
+
+            skipStory: function() {
+                if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
+                const activePanel = document.getElementById(this.activePanelId);
+                if (!activePanel) return;
+                const storyBox = activePanel.querySelector('.story-box');
+                if (storyBox) {
+                    const textEl = storyBox.querySelector('.story-text') || storyBox;
+                    let rawHtml = textEl.dataset.rawHtml || textEl.innerHTML;
+                    rawHtml = rawHtml.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
+                    rawHtml = rawHtml.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
+                    rawHtml = rawHtml.replace(/<br><span style="font-size:0.8rem; color:var\(--accent\); font-weight:bold; animation: blink 1s infinite;">\(클릭하여 다음 대사 보기 ▼\)<\/span>/gi, '');
+                    textEl.innerHTML = rawHtml.trim();
+                    storyBox.style.cursor = 'default';
+                }
+                
+                // 숨김 패널들 즉시 표시
+                const toShow = activePanel.querySelectorAll('.question-box, .btn-group');
+                toShow.forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                    el.style.pointerEvents = 'auto';
+                });
+            }
+        };
+
+        // 간단한 Markdown -> HTML 변환 헬퍼 함수
+        function parseMarkdown(text) {
+            if (!text) return '';
+            
+            // 줄 단위로 분할하여 "일러스트 지시"가 포함된 모든 라인 원천 차단
+            let lines = text.split('\n');
+            let filteredLines = lines.filter(line => {
+                return !line.includes('일러스트 지시') && !line.includes('일러스트지시');
+            });
+            let html = filteredLines.join('\n').trim();
+
+            // **bold** -> <strong>bold</strong>
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // *italic* -> <em>italic</em>
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            // \n -> <br>
+            html = html.replace(/\n/g, '<br>');
+            return html;
+        }
+
+        // Web Audio API 기반 오디오 엔진 (기본 Muted)
+        let isMuted = true;
+        let audioCtx = null;
+        let bgmOsc = null;
+        let bgmGain = null;
+        let bgmLfo = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function playSynth(freq, type, duration, vol) {
+            if (isMuted) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e){}
+        }
+
+        function stopBGM() {
+            try {
+                if(bgmOsc) { bgmOsc.stop(); bgmOsc.disconnect(); bgmOsc = null; }
+                if(bgmLfo) { bgmLfo.stop(); bgmLfo.disconnect(); bgmLfo = null; }
+            } catch(e){}
+        }
+
+        function startBGM() {
+            // 저주파 우웅 거리는 BGM 사운드 완전 차단
+            return;
+        }
 
         function toggleSound() {
             isMuted = !isMuted;
-            document.querySelector('.sound-ctrl').innerText = isMuted ? "🔇 소리 꺼짐" : "🔊 소리 켜짐";
-        }
-
-        function playClick() {
-            if (isMuted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        }
-
-        function playTick() {
-            if (isMuted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.03);
-        }
-
-        function playSuccess() {
-            if (isMuted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-            osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.1); // E5
-            osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.2); // G5
-            
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 0.25);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.35);
-        }
-
-        function playError() {
-            if (isMuted) return;
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(180, audioCtx.currentTime);
-            osc.frequency.linearRampToValueAtTime(100, audioCtx.currentTime + 0.25);
-            
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.25);
-        }
-
-        let storyHistory = [];
-        
-        function openLog() {
-            const modal = document.getElementById('storyLogModal');
-            const container = document.getElementById('logContainer');
-            container.innerHTML = storyHistory.map(log => `<div class="log-item">${log}</div>`).join('') || '<div class="log-item">기록된 이전 대사가 없습니다.</div>';
-            modal.style.display = 'flex';
-        }
-        
-        function closeLog() {
-            document.getElementById('storyLogModal').style.display = 'none';
-        }
-
-        // Q1
-
-
-        let timeLeft = 40 * 60;
-        let timerId = null;
-
-        function updateTimerDisplay() {
-            let m = Math.floor(timeLeft / 60);
-            let s = timeLeft % 60;
-            let timeStr = (m < 10 ? '0'+m : m) + ':' + (s < 10 ? '0'+s : s);
-            document.querySelectorAll('.game-timer').forEach(el => el.innerText = timeStr);
-        }
-
-        function startTimer() {
-            if (timerId) return;
-            updateTimerDisplay();
-            timerId = setInterval(() => {
-                timeLeft--;
-                if (timeLeft <= 0) {
-                    clearInterval(timerId);
-                    updateTimerDisplay();
-                    alert("⏰ 제한 시간 40분이 초과되었습니다! 미궁에 영원히 갇혔습니다...");
-                    location.reload();
-                } else {
-                    updateTimerDisplay();
-                }
-            }, 1000);
-        }
-        let wrongCount = 0;
-function cleanString(str) {
-            return str.replace(/\s+/g, '').toUpperCase();
-        }
-
-                function showError(panelId, errorId, currentWrongCount) {
-            try { playError(); } catch(e) {}
-            const panel = document.getElementById(panelId);
-            const err = document.getElementById(errorId);
-            err.style.display = 'block';
-            if (currentWrongCount !== undefined) {
-                if (!err.dataset.origText) {
-                    err.dataset.origText = err.innerText;
-                }
-                err.innerText = err.dataset.origText + " (오답 횟수: " + currentWrongCount + "/3)";
+            const btn = document.getElementById('soundToggle');
+            if (isMuted) {
+                if(btn) btn.innerText = '🔇 소리 꺼짐';
+                stopBGM();
+            } else {
+                if(btn) btn.innerText = '🔊 소리 켜짐';
+                startBGM();
             }
-            err.classList.remove('shake');
-            void err.offsetWidth;
-            err.classList.add('shake');
-            setTimeout(() => {
-                err.style.display = 'none';
-            }, 3000);
         }
-        
-        // Chunk typewriter definition
-        let typeWriterTimeout = null;
-        
+
+        function playClick() { playSynth(800, 'sine', 0.1, 0.5); }
+        function playTick() { playSynth(1500, 'square', 0.04, 0.15); }
+        function playSuccess() { 
+            playSynth(523.25, 'sine', 0.15, 0.7); 
+            setTimeout(()=>playSynth(659.25, 'sine', 0.15, 0.7), 150); 
+            setTimeout(()=>playSynth(783.99, 'sine', 0.3, 0.7), 300); 
+        }
+        function playError() {
+            playSynth(150, 'sawtooth', 0.3, 0.6);
+            setTimeout(()=>playSynth(100, 'sawtooth', 0.4, 0.6), 200);
+        }
+        function playVictory() {
+            stopBGM();
+            [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+                setTimeout(()=>playSynth(f, 'square', 0.2, 0.6), i*150);
+            });
+        }
+
+        // 문장 마침표/느낌표/물음표 분할 및 초과 길이 정밀 분할 헬퍼
+        let typeWriterTimeout;
         function splitSentences(text) {
-            let chunks = [];
-            let current = "";
-            let i = 0;
-            while(i < text.length) {
-                let char = text.charAt(i);
-                current += char;
+            let result = [];
+            let rawChunks = [];
+            let start = 0;
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
                 if (char === '.' || char === '!' || char === '?') {
-                    let nextChar = text.charAt(i+1);
+                    const nextChar = text.charAt(i + 1);
                     if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '<') {
-                        chunks.push(current.trim());
-                        current = "";
+                        rawChunks.push(text.substring(start, i + 1).trim());
+                        start = i + 1;
                     }
                 }
-                i++;
             }
-            if (current.trim()) {
-                chunks.push(current.trim());
-            }
-            return chunks;
+            const finalChunk = text.substring(start).trim();
+            if (finalChunk) rawChunks.push(finalChunk);
+
+            // 각 청크가 대사 박스 높이를 넘지 않도록 60자 기준으로 2차 안전 슬라이싱
+            const MAX_LEN = 60;
+            rawChunks.forEach(chunk => {
+                if (chunk.length <= MAX_LEN) {
+                    result.push(chunk);
+                } else {
+                    let temp = chunk;
+                    while (temp.length > MAX_LEN) {
+                        let splitIdx = -1;
+                        for (let j = MAX_LEN; j > 10; j--) {
+                            const c = temp.charAt(j);
+                            if (c === ',' || c === ' ') {
+                                splitIdx = j;
+                                break;
+                            }
+                        }
+                        if (splitIdx === -1) {
+                            splitIdx = MAX_LEN;
+                        }
+                        result.push(temp.substring(0, splitIdx + 1).trim());
+                        temp = temp.substring(splitIdx + 1).trim();
+                    }
+                    if (temp) result.push(temp);
+                }
+            });
+
+            return result;
         }
 
+        // 타이핑 효과 구현 함수 (HTML 태그 안전 파싱 및 지연 렌더링)
         function typeWriterHTML(element, speed = 25, onComplete = null) {
-            const textEl = element.querySelector('.story-text');
-            if(!textEl) return;
-            
-            let chunks = [];
-            let currentChunkIndex = 0;
-            let typingFinished = false;
             let isComplete = false;
-            
+            let currentChunkIndex = 0;
+            let chunks = [];
+            const textEl = element.querySelector('.story-text') || element;
+            if(!textEl) {
+                if(onComplete) onComplete();
+                return;
+            }
+
             function triggerComplete() {
                 if(!isComplete) {
                     isComplete = true;
+                    element.style.cursor = 'default';
                     if(onComplete) onComplete();
                 }
             }
+            if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
             
-            const htmlContent = textEl.getAttribute('data-raw-html') || textEl.innerHTML;
-            if (!textEl.hasAttribute('data-raw-html')) {
-                textEl.setAttribute('data-raw-html', htmlContent);
+            let htmlContent = textEl.dataset.rawHtml || textEl.innerHTML;
+            // 일러스트 지시 필터링
+            htmlContent = htmlContent.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
+            htmlContent = htmlContent.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
+            htmlContent = htmlContent.trim();
+
+            if (!textEl.dataset.rawHtml) {
+                textEl.dataset.rawHtml = htmlContent;
             }
             
             let rawLines = htmlContent.split(/<br\s*\/?>/i);
@@ -735,14 +1431,14 @@ function cleanString(str) {
                     if(s.trim()) chunks.push(s.trim());
                 }
             }
-            
+
             if(chunks.length === 0) {
                 triggerComplete();
                 return;
             }
-            
             let i = 0;
             let textStr = '';
+            let typingFinished = false;
             element.style.cursor = 'pointer';
             
             function renderChunk() {
@@ -750,18 +1446,17 @@ function cleanString(str) {
                 i = 0;
                 textStr = '';
                 typingFinished = false;
-                let chunkText = chunks[currentChunkIndex];
+                let chunkText = chunks[currentChunkIndex].trim();
                 
                 const currentPanel = element.closest('.glass-panel');
                 const panelTitle = currentPanel.querySelector('h2') ? currentPanel.querySelector('h2').innerText : '단서';
-                const logEntry = `<strong>[${panelTitle}]</strong> ${chunkText}`;
-                
-                if (!storyHistory.includes(logEntry)) {
-                    storyHistory.push(logEntry);
+                const logEntry = '<strong>[' + panelTitle + ']</strong> ' + chunkText;
+                if (!storyLogHistory.includes(logEntry)) {
+                    storyLogHistory.push(logEntry);
                 }
                 
                 if(currentChunkIndex < chunks.length - 1) {
-                    chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                    chunkText += '<br><span style="font-size:0.8rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭하여 다음 대사 보기 ▼)</span>';
                 }
                 textEl.innerHTML = '';
                 
@@ -780,7 +1475,8 @@ function cleanString(str) {
                             textStr += chunkText.charAt(i);
                             i++;
                         }
-                        textEl.innerHTML = textStr;
+                        // 깜빡이 커서 효과 적용
+                        textEl.innerHTML = textStr + (i % 2 === 0 ? '█' : '');
                         if (chunkText.charAt(i-1) !== ' ' && chunkText.charAt(i-1) !== '\n') {
                             try { playTick(); } catch(e) {}
                         }
@@ -795,19 +1491,17 @@ function cleanString(str) {
                 }
                 type();
             }
-            
-            element.onclick = () => {
+            element.onclick = (e) => {
+                // 스킵 버튼을 직접 클릭한 경우는 이벤트 전파 방지로 여기서 걸러짐
                 if (!typingFinished) {
                     clearTimeout(typeWriterTimeout);
-                    let chunkText = chunks[currentChunkIndex];
+                    let chunkText = chunks[currentChunkIndex].trim();
                     if(currentChunkIndex < chunks.length - 1) {
-                        chunkText += ' <span style="font-size:0.75rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭 ▼)</span>';
+                        chunkText += '<br><span style="font-size:0.8rem; color:var(--accent); font-weight:bold; animation: blink 1s infinite;">(클릭하여 다음 대사 보기 ▼)</span>';
                     }
                     textEl.innerHTML = chunkText;
                     typingFinished = true;
-                    if(currentChunkIndex === chunks.length - 1) {
-                        triggerComplete();
-                    }
+                    if(currentChunkIndex === chunks.length - 1) triggerComplete();
                 } else {
                     if (currentChunkIndex < chunks.length - 1) {
                         currentChunkIndex++;
@@ -815,575 +1509,62 @@ function cleanString(str) {
                     }
                 }
             };
-            
             renderChunk();
         }
 
-        
-        function tryStartGame(unitId) {
-            const sid = document.getElementById('studentId');
-            const sname = document.getElementById('studentName');
-            if(sid && sname) {
-                if(!sid.value.trim() || !sname.value.trim()) {
-                    alert('학번과 이름을 모두 입력해주세요!');
-                    return;
-                }
-
-            // 이름 동적 개인화 처리 (복성 예외 처리 반영 및 전역 변수 바인딩)
-            try {
-                let rawName = "";
-                if (typeof sname !== 'undefined' && sname) {
-                    rawName = (typeof sname.value !== 'undefined') ? sname.value.trim() : (typeof sname === 'string' ? sname.trim() : "");
-                } else if (typeof studentName !== 'undefined') {
-                    rawName = (typeof studentName.value !== 'undefined') ? studentName.value.trim() : (typeof studentName === 'string' ? studentName.trim() : "");
-                }
-                if (!rawName) {
-                    const nameInput = document.getElementById('studentName');
-                    if (nameInput) rawName = nameInput.value.trim();
-                }
-                if (rawName) {
-                    const doubleLastNames = ["제갈", "황보", "사공", "남궁", "서문", "독고", "선우"];
-                    let firstName = rawName;
-                    if (rawName.length > 2) {
-                        let prefix2 = rawName.substring(0, 2);
-                        if (doubleLastNames.includes(prefix2)) {
-                            firstName = rawName.substring(2);
-                        } else {
-                            firstName = rawName.substring(1);
-                        }
-                    }
-                    window.playerFirstName = firstName;
-                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
-                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
-                        if (!el.hasAttribute("data-original-role")) {
-                            el.setAttribute("data-original-role", originalRole);
-                        }
-                        el.innerHTML = firstName + " " + originalRole;
-                    });
-                    // 아웃트로 동적 텍스트 내 개인화 처리
-                    let outroTextEl = document.getElementById("outro-dynamic-text");
-                    if (outroTextEl) {
-                        outroTextEl.querySelectorAll(".dynamic-captain-name").forEach(el => {
-                            let originalRole = el.getAttribute("data-original-role") || el.innerText;
-                            if (!el.hasAttribute("data-original-role")) {
-                                el.setAttribute("data-original-role", originalRole);
-                            }
-                            el.innerHTML = firstName + " " + originalRole;
-                        });
-                    }
-                }
-            } catch(e) { console.error("이름 개인화 에러:", e); }
-
-                try {
-                    if(typeof google !== 'undefined' && google.script && google.script.run) {
-                        google.script.run
-                            .withSuccessHandler(function(row) { window.userRecordRow = row; })
-                            .recordStart(sid.value.trim(), sname.value.trim(), unitId);
-                    }
-                } catch(e) { console.warn('GAS 연동 안됨:', e); }
-            }
-            
-            // 이름 동적 개인화 처리
-            try {
-                let rawName = sname.value.trim();
-                if (rawName) {
-                    let firstName = rawName.length > 2 ? rawName.substring(1) : rawName;
-                    document.querySelectorAll(".dynamic-captain-name").forEach(el => {
-                        let originalRole = el.getAttribute("data-original-role") || el.innerText;
-                        if (!el.hasAttribute("data-original-role")) {
-                            el.setAttribute("data-original-role", originalRole);
-                        }
-                        el.innerHTML = firstName + " " + originalRole;
-                    });
-                }
-            } catch(e) { console.error("이름 개인화 에러:", e); }
-            
-            nextStage('intro', 'panel_q1', 0);
-        }
-
-        function nextStage(currentId, nextId, progressPercent) {
-            if (currentId === 'intro') startTimer();
-            if (nextId === 'outro') clearInterval(timerId);
-            try { playClick(); } catch(e) {}
-            if(currentId === 'intro') {
-                try { startBGM(); } catch(e) {}
-            }
-
-            const currentEl = document.getElementById(currentId);
-            const nextEl = document.getElementById(nextId);
-            const progContainer = document.getElementById('progressContainer');
-            const progBar = document.getElementById('progressBar');
-
-            if (currentEl) currentEl.classList.remove('active');
-    
-            setTimeout(() => {
-                if(nextId !== 'intro' && progContainer) progContainer.style.display = 'block';
-                if(progBar) progBar.style.width = progressPercent + '%';
-                if(nextEl) {
-                    nextEl.classList.add('active');
-            
-                    const toHide = nextEl.querySelectorAll('.question-box, .btn-group');
-                    toHide.forEach(el => {
-                        el.style.opacity = '0';
-                        el.style.transform = 'translateY(10px)';
-                        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                        el.style.pointerEvents = 'none';
-                    });
-            
-                    const storyBox = nextEl.querySelector('.story-box');
-                    if(storyBox) {
-                        typeWriterHTML(storyBox, 25, () => {
-                            toHide.forEach(el => {
-                                el.style.opacity = '1';
-                                el.style.transform = 'translateY(0)';
-                                el.style.pointerEvents = 'auto';
-                            });
-                        });
-                    } else {
-                        toHide.forEach(el => {
-                            el.style.opacity = '1';
-                            el.style.transform = 'translateY(0)';
-                            el.style.pointerEvents = 'auto';
-                        });
-                    }
-                }
-            }, 300);
-        }
-let totalWrongCount = 0;
-
-        function checkQ1() {
-            const ans = cleanString(document.getElementById('ans1').value);
-            if (ans === 'X>=3' || ans === 'X\GE3') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q1', 'panel_q2', 5);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q1', 'panel_q1', 0);
+        // 모달 이전 대사 다이얼로그 열기
+        function openLog() {
+            const modal = document.getElementById('storyLogModal');
+            const container = document.getElementById('logContainer');
+            if (modal && container) {
+                if (storyLogHistory.length === 0) {
+                    container.innerHTML = '기록이 없습니다.';
                 } else {
-                    showError('panel_q1', 'error1', wrongCount);
+                    container.innerHTML = storyLogHistory.map(line => '<p>' + line + '</p>').join('<hr>');
                 }
+                modal.classList.add('active');
             }
         }
 
-        function checkQ2() {
-            const ans = cleanString(document.getElementById('ans2').value);
-            if (ans === '(2)' || ans === '2' || ans === '②') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q2', 'panel_q3', 10);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q2', 'panel_q1', 0);
-                } else {
-                    showError('panel_q2', 'error2', wrongCount);
-                }
+        function closeLog() {
+            const modal = document.getElementById('storyLogModal');
+            if (modal) {
+                modal.classList.remove('active');
             }
         }
-
-        function checkQ3() {
-            const ans = cleanString(document.getElementById('ans3').value);
-            if (ans === 'X<5') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q3', 'panel_q4', 15);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q3', 'panel_q1', 0);
-                } else {
-                    showError('panel_q3', 'error3', wrongCount);
-                }
-            }
-        }
-
-        function checkQ4() {
-            const ans = cleanString(document.getElementById('ans4').value);
-            if (ans === '1,2' || ans === '1,2개' || ans === '1과2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q4', 'panel_q5', 20);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q4', 'panel_q1', 0);
-                } else {
-                    showError('panel_q4', 'error4', wrongCount);
-                }
-            }
-        }
-
-        function checkQ5() {
-            const ans = cleanString(document.getElementById('ans5').value);
-            if (ans === '4' || ans === '4개') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q5', 'panel_q6', 25);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q5', 'panel_q1', 0);
-                } else {
-                    showError('panel_q5', 'error5', wrongCount);
-                }
-            }
-        }
-
-        function checkQ6() {
-            const ans = cleanString(document.getElementById('ans6').value);
-            if (ans === 'A+2<B+2' || ans === 'B+2>A+2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q6', 'panel_q7', 30);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q6', 'panel_q1', 0);
-                } else {
-                    showError('panel_q6', 'error6', wrongCount);
-                }
-            }
-        }
-
-        function checkQ7() {
-            const ans = cleanString(document.getElementById('ans7').value);
-            if (ans === '3A<3B' || ans === '3B>3A') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q7', 'panel_q8', 35);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q7', 'panel_q1', 0);
-                } else {
-                    showError('panel_q7', 'error7', wrongCount);
-                }
-            }
-        }
-
-        function checkQ8() {
-            const ans = cleanString(document.getElementById('ans8').value);
-            if (ans === '-2A>-2B' || ans === '-2B<-2A') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q8', 'panel_q9', 40);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q8', 'panel_q1', 0);
-                } else {
-                    showError('panel_q8', 'error8', wrongCount);
-                }
-            }
-        }
-
-        function checkQ9() {
-            const ans = cleanString(document.getElementById('ans9').value);
-            if (ans === '바뀐다' || ans === '변한다' || ans === '바뀜') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q9', 'panel_q10', 45);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q9', 'panel_q1', 0);
-                } else {
-                    showError('panel_q9', 'error9', wrongCount);
-                }
-            }
-        }
-
-        function checkQ10() {
-            const ans = cleanString(document.getElementById('ans10').value);
-            if (ans === 'X<-3') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q10', 'panel_q11', 50);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q10', 'panel_q1', 0);
-                } else {
-                    showError('panel_q10', 'error10', wrongCount);
-                }
-            }
-        }
-
-        function checkQ11() {
-            const ans = cleanString(document.getElementById('ans11').value);
-            if (ans === 'X>2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q11', 'panel_q12', 55);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q11', 'panel_q1', 0);
-                } else {
-                    showError('panel_q11', 'error11', wrongCount);
-                }
-            }
-        }
-
-        function checkQ12() {
-            const ans = cleanString(document.getElementById('ans12').value);
-            if (ans === 'X<=2' || ans === 'X\LE2') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q12', 'panel_q13', 60);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q12', 'panel_q1', 0);
-                } else {
-                    showError('panel_q12', 'error12', wrongCount);
-                }
-            }
-        }
-
-        function checkQ13() {
-            const ans = cleanString(document.getElementById('ans13').value);
-            if (ans === 'X<5') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q13', 'panel_q14', 65);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q13', 'panel_q1', 0);
-                } else {
-                    showError('panel_q13', 'error13', wrongCount);
-                }
-            }
-        }
-
-        function checkQ14() {
-            const ans = cleanString(document.getElementById('ans14').value);
-            if (ans === 'X<=3' || ans === 'X\LE3') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q14', 'panel_q15', 70);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q14', 'panel_q1', 0);
-                } else {
-                    showError('panel_q14', 'error14', wrongCount);
-                }
-            }
-        }
-
-        function checkQ15() {
-            const ans = cleanString(document.getElementById('ans15').value);
-            if (ans === 'X>3') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q15', 'panel_q16', 75);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q15', 'panel_q1', 0);
-                } else {
-                    showError('panel_q15', 'error15', wrongCount);
-                }
-            }
-        }
-
-        function checkQ16() {
-            const ans = cleanString(document.getElementById('ans16').value);
-            if (ans === '8,9' || ans === '8과9') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q16', 'panel_q17', 80);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q16', 'panel_q1', 0);
-                } else {
-                    showError('panel_q16', 'error16', wrongCount);
-                }
-            }
-        }
-
-        function checkQ17() {
-            const ans = cleanString(document.getElementById('ans17').value);
-            if (ans === '800X+1000<=6000' || ans === '800X+1000\LE6000') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q17', 'panel_q18', 85);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q17', 'panel_q1', 0);
-                } else {
-                    showError('panel_q17', 'error17', wrongCount);
-                }
-            }
-        }
-
-        function checkQ18() {
-            const ans = cleanString(document.getElementById('ans18').value);
-            if (ans === '6' || ans === '6송이') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q18', 'panel_q19', 90);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q18', 'panel_q1', 0);
-                } else {
-                    showError('panel_q18', 'error18', wrongCount);
-                }
-            }
-        }
-
-        function checkQ19() {
-            const ans = cleanString(document.getElementById('ans19').value);
-            if (ans === '11' || ans === '11개월' || ans === '11개월후') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q19', 'panel_q20', 95);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q19', 'panel_q1', 0);
-                } else {
-                    showError('panel_q19', 'error19', wrongCount);
-                }
-            }
-        }
-
-        function checkQ20() {
-            const ans = cleanString(document.getElementById('ans20').value);
-            if (ans === '30' || ans === '30초과') {
-                try { playSuccess(); } catch(e) {}
-                wrongCount = 0;
-                nextStage('panel_q20', 'outro', 100);
-            } else {
-                wrongCount++;
-                totalWrongCount++;
-                if (wrongCount >= 3) {
-                    showGlitchOverlay();
-                    alert("🚨 3회 오답 패널티! 1구역으로 강제 이동됩니다.");
-                    wrongCount = 0;
-                    document.getElementById('ans1').value = '';
-                    nextStage('panel_q20', 'panel_q1', 0);
-                } else {
-                    showError('panel_q20', 'error20', wrongCount);
-                }
-            }
-        }
-
-        window.onload = () => {
-            const introPanel = document.getElementById('intro');
-            const introStoryBox = introPanel.querySelector('.story-box');
-            if (introStoryBox) typeWriterHTML(introStoryBox, 25);
-        };
     </script>
 
-    <div id="storyLogModal" class="log-modal">
-        <div class="log-content">
-            <button class="close-log" onclick="closeLog()">닫기 ✕</button>
-            <h2>📜 지나온 스토리 기록</h2>
-            <div id="logContainer" class="log-list">기록이 없습니다.</div>
-        </div>
-    </div>
+    <!-- ─── GAME_DATA_INJECTION ─── -->
+    <script>
+        const GAME_DATA_BASE64 = "ewogICJ1bml0X2NvZGUiOiAibTJfMDMiLAogICJncmFkZSI6ICJncmFkZTIiLAogICJ0aXRsZSI6ICLsnbzssKjrtoDrk7Hsi50gLSDtmanslbzsnZgg66y067KV7J6QIOy2lOyggSDrp4jssKgiLAogICJ0ZW1wbGF0ZSI6ICJlc2NhcGVfcm9vbSIsCiAgImhlcm8iOiAi7KGw7IKs6rSAIiwKICAiaGVscGVyIjogIuyLpO2UhC1GIiwKICAidmlsbGFpbiI6ICLri6Ttgawt7JeY7ZSEIiwKICAidGltZXJfbGltaXRfc2VjIjogMjQwMCwKICAiaW50cm8iOiB7CiAgICAiaW1hZ2UiOiAiaW50cm8ucG5nIiwKICAgICJzdG9yeSI6ICItICoq6riw7KeAIOyDge2DnDoqKiBgW+uwsOyghOuwmCDsmKjrj4Q6IDQywrBDXSBb7ISk6rOEIOq4sOuhnSDrs7Xsm5DsnKg6IDE1JV0gW+q4sO2VmO2VmSDrnb0g6rCV64+EOiA5NSVdYFxuLSAqKuyKpO2GoOumrCDsoITqsJw6Kipcbu2ZqeyVvOydmCDrrLTrspXsnpAg7LaU7KCBIOuniOywqOyXkCDslYjssKntlZwg7KGw7IKs6rSA64qUIOuztOyViOq0gOydmCDtmanquIgg67Cw7KeAIOqysOqzhOydhCDtmozsiJjtlZjquLAg7JyE7ZW0IOq4sOuPmSDsnqXsuZjrpbwg64+M66C47Iq164uI64ukLiDqt7gg7Iic6rCEIOq4sOyngOydmCDrqqjrk6Ag6rKp67K9IOu5l+yepeydtCDrgrTroKTslYnsnLzrqbAg67mE7IOBIOu0ieyduCDrqqjrk5zqsIAg6riw64+Z65Cp64uI64ukLiDqtazssrQg7Jik7Yag66eI7YOA7J24IOuLpO2BrC3sl5jtlITsnZgg67aJ7J2AIOq0keyEoOydtCDsgqzrsKnsnYQg65Kk642u7Iq164uI64ukLlxuLSAqKuuLpO2BrC3sl5jtlIQ6KiogXCLsgpAtIOy5qOyeheyekOulvCDshozqsbDtlZzri6QuIDQw67aEIOuSpCDsnbQg6riw7KeA7J2YIOuqqOuToCDsoJzslrQg7J6l7LmY66W8IOqwleygnCDsl63tmozsoITtlZjsl6wg7J6Q7Y+tIOqyqeumrO2VmOqyoOuLpCEg7IK07JWE64Ko6rOgIOyLtuuLpOuptCDsiJjtlZnsnZgg6rec7LmZ7J2EIOymneuqhe2VmOudvCFcIlxuLSAqKuyLpO2UhC1GOioqIFwi7LmY7KeA7KeBLi4uIOyhsOyCrOq0gOuLmCwg7KCcIOydjOyEseydtCDsoITshLHqtIDqtIDsnLzroZwg7KCE7Iah65CY6ri4IOuwlOuejeuLiOuLpC4g64uk7YGsLeyXmO2UhOydtCDrp4jrgpgg7Y6E7IqkIOuFuOydtOymiOyXkCDspJHrj4XrkJjslrQg7Y+t7KO87ZWY6rOgIOyeiOyKteuLiOuLpC4gMjDqsJzsnZgg7IiY7IiY6ruY64G866W8IO2VtOuPhe2VtCDrtInsnbjsnYQg7ZKA7Ja07KO87IS47JqUIVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSAwLiBpbnRyb106Kiog7Ja065GQ7Jq0IOyEneyhsCDquLDquLDsi6Qg64K067aA7JeQIOyViOywqeuQnCDrs7XsnqHtlZwg7Zmp64+ZIOuPmeugpSDquLDslrTrsJjqs7wg7KCB7IOJIOqyveuztCDroIzspojqsIAg7ZWY6rCV7ZWY64qUIOyduO2KuOuhnCDsoITqsr0uIgogIH0sCiAgIm91dHJvIjogewogICAgImltYWdlIjogIm91dHJvLnBuZyIsCiAgICAic3Rvcnlfc3VjY2VzcyI6ICLstpXtlZjtlanri4jri6QhIOuq" +
+        "qOuToCDsi6TtlIQtRiDrtInsnbjsnYQg7ZW07KCc7ZWY6rOgIOyImO2VmSDtg4jstpwg7KKM7ZGc66W8IOuzteybkO2WiOyKteuLiOuLpC4iLAogICAgInN0b3J5X2ZhaWx1cmUiOiAi7Iuc6rCE7J20IOuqqOuRkCDqs6DqsIjrkJjsl4jsirXri4jri6QhIO2DiOy2nOyXkCDsi6TtjKjtlojsirXri4jri6QuIgogIH0sCiAgInF1ZXN0aW9ucyI6IFsKICAgIHsKICAgICAgInFudW0iOiAxLAogICAgICAidGl0bGUiOiAi66eI67KVIOyggOyauOydmCDriIjquIgiLAogICAgICAiaW1hZ2UiOiAicTEucG5nIiwKICAgICAgInF0ZXh0IjogIjxzdHJvbmc+UTEuIFvrtoDrk7Hsi53snZgg7ZGc7IucXTwvc3Ryb25nPjxicj4keCTripQgM+uztOuLpCDtgazqsbDrgpgg6rCZ64uk66W8IOu2gOuTse2YuOuhnCDrgpjtg4DrgrTsi5zsmKQuIiwKICAgICAgImNob2ljZXMiOiBbCiAgICAgICAgIlg+PTMiLAogICAgICAgICJYPj0zIOyVhOuLmCIsCiAgICAgICAgIuyVjCDsiJgg7JeG7J2MIiwKICAgICAgICAi7ZW0IOyXhuydjCIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJhbnlfb2YiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiWD49MyIsCiAgICAgICAgICAiWFxcR0UzIgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyYiDogeD49MyIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuyggOyauCDsuKHsoJUg7Iuk7YyoISDrsJTripjsnbQg6rKp66Cs7ZWY6rKMIO2dlOuTpOumveuLiOuLpC4iLAogICAgICAiaGludCI6ICLwn5KhIO2ejO2KuOqwgCDsoJzqs7XrkJjsp4Ag7JWK64qUIOq1rOyXreyeheuLiOuLpC4g7Jew7IKw7J2EIOyLoOykke2eiCDsoITqsJztlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb64uk7YGsLeyXmO2UhF06IFwi7ZWY7LCu7J2AIOy5qOyeheyekOyXrCEg7JqU7KCVIOyIsuydmCDrp4jroKUg7KCA7Jq47JeQIOy5oO2dkeydmCDrtojqt6DtmJUg67SJ7J247J2EIOqxuOyXiOuLpC4g64SI7Z2s6rCAIOydtCDrtoDrk7Hsi53snZgg6rK96rOE66W8IOyYrOuwlOultOqyjCDtjJDsoJXtlbQg64K8IOqygyDqsJnsnLzrg5A/XCJcblxu7L+g6rWs6rWs6raBLSDsnbTrgbwg64KAIOqzoOuMgCDrj4ztg4HsnpAg7JyE7JeQIOqxsOuMgO2VnCDsspzsua0g66eI67KVIOyggOyauOydtCDshp/slYTsmKTrpbTrqbAg7ZWc7Kq97Jy866GcIOyalOuegO2VmOqyjCDquLDsm4Hri4jri6QuIOyggOyauOydmCDqsr3qs4TshKDsnYQg66ee7LaU7Ja0IOygnOyWtCDtlYDsnYQg67Cw7LmY7ZW07JW8IO2VqeuLiOuLpC5cblxuW+yLpO2UhC1GXTogXCLsmpTsoJUg7Iiy7J2YIOyXkOuEiOyngCDrsLjrn7DsiqTrpbwg7J6h6riwIOychO2VtCwgJ3jripQgM+uztOuLpCDtgazqsbDrgpgg6rCZ64ukJ+ydmCDquLDtlZjtlZkg67aA65Ox7Zi4IOyImOyLneydhCDsvZjshpTsl5Ag7J6F66Cl7ZWY7Iut7Iuc7JikISDssqsg7J6l67K97J2EIOustOuEiOucqOugpOyV" +
+        "vCDtlanri4jri6QhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDEuIHExXToqKiDrp4jrspUg7KCA7Jq47J2YIOuIiOq4iCDquLDtlZgg7IiY7LmY6rCAIOyDiOqyqOynhCDqs6DrjIAg7KCc64uoIO2MqOuEkOydmCDsg4HshLgg67ewLiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDIsCiAgICAgICJ0aXRsZSI6ICLsoIDsmrjsnZgg7ZW0IOywvuq4sCIsCiAgICAgICJpbWFnZSI6ICJxMi5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMi4gW+u2gOuTseyLneydmCDtlbRdPC9zdHJvbmc+PGJyPuuLpOydjCDspJEgJHg9MiTqsIAg7ZW07J24IOu2gOuTseyLneydgD88YnI+KDEpICQyeCAtIDEgJmx0OyAwJDxicj4oMikgJDN4IFxcZ2UgNiQ8YnI+KDMpICQteCAmZ3Q7IDAkIiwKICAgICAgImNob2ljZXMiOiBbCiAgICAgICAgIiQyeCIsCiAgICAgICAgIiQzeCIsCiAgICAgICAgIiQteCIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJhbnlfb2YiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiKDIpIiwKICAgICAgICAgICIyIiwKICAgICAgICAgICLikaEiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7JiIOiAoMikg65iQ64qUIDIiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsmKTri7Ug7J6F66ClISDsoIDsmrjsnbQg7ZWc7Kq97Jy866GcIOyalOuPmey5qeuLiOuLpC4iLAogICAgICAiaGludCI6ICLwn5KhIO2ejO2KuOqwgCDsoJzqs7XrkJjsp4Ag7JWK64qUIOq1rOyXreyeheuLiOuLpC4g7Jew7IKw7J2EIOyLoOykke2eiCDsoITqsJztlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb64uk7YGsLeyXmO2UhF06IFwi7Jqw7Jew7Z6IIOyggOyauOydhCDqtbTroLjqtbAuIO2VmOyngOunjCDsp4Tsp5wg66eI66ClIO2VtOulvCDsp4DrqqntlZjsp4Ag66q77ZWc64uk66m0LCDsmKTsl7zrkJwg7Jew7IeEIOyghOulmOqwgCDrhKTrhojrk6TsnYQg7Iic7Iud6rCE7JeQIO2cmOqwkOyVhCDrsoTrprQg6rKD7J2064ukIVwiXG5cbuyggOyauCDrsJTri6XsnZgg7J2064G865Ok7J20IOqygOqyjCDtg4Drk6TslrTqsIDrqbAg67O065287IOJIOuFuOydtOymiCDsiqTtjIztgazqsIAg7IKs67Cp7Jy866GcIO2KkeuLiOuLpC4g67O06riwIOykkSB4PTLqsIAg7LC47J20IOuQmOuKlCDsmYTrsr3tlZwg7ZW066W8IOqzqOudvCDri6TsnbTslrzsnYQg7KCV66Cs7ZW0IOyjvOyLreyLnOyYpC5cblxuW+yLpO2UhC1GXTogXCLsobDsgqzqtIDri5ghICR4PTIk6rCAIOyEseumve2VmOuKlCDsoJXtlakg67aA65Ox7IudIOuyiO2YuOulvCDsp5rslrQg7JeQ64SI7KeAIO2PreyjvOulvCDsg4Hsh4TtlZjsi63si5zsmKQhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDIuIHEyXToqKiDsoIDsmrjsnZgg7ZW0IOywvuq4sCDquLDtlZgg7IiY7LmY6rCAIOyDiOqyqOynhCDqs6DrjIAg7KCc64uo" +
+        "IO2MqOuEkOydmCDsg4HshLgg67ewLiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDMsCiAgICAgICJ0aXRsZSI6ICLrr7jrp4zsnZgg64iI6riIIOyhsOycqCIsCiAgICAgICJpbWFnZSI6ICJxMy5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMy4gW+uvuOunjOydmCDsoJXsnZhdPC9zdHJvbmc+PGJyPiR4JOuKlCA1IOuvuOunjOydtOuLpOulvCDrtoDrk7HtmLjroZwg64KY7YOA64K07Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICJYPDUiLAogICAgICAgICJYPDUg7JWE64uYIiwKICAgICAgICAi7JWMIOyImCDsl4bsnYwiLAogICAgICAgICLtlbQg7JeG7J2MIgogICAgICBdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImV4YWN0IiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIlg8NSIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IHg8NSIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuu2gOuTse2YuCDrsKntlqUg7Jik66WYISDquLDrpZjqsIAg7Z2Q7Yq465+s7KeR64uI64ukLiIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIlvri6Ttgawt7JeY7ZSEXTogXCLrp4jrspUg7KCA7Jq47J2YIOyngOyngCDtlZzrj4Trpbwg67mE7YuA7Ja0IOuRkOyXiOuLpC4gNeyXkCDssYQg66+47LmY7KeAIOuqu+2VmOqzoCDrtoDsiqTrn6zsp4gg7ZWE66m47J6QIOuFgOyEneuTpCFcIlxuXG7sspzsnqXsl5DshJwg6rKA7J2AIOuniOugpSDslYjqsJzqsIAg7J6Q7Jqx7ZWY6rKMIOu/nOyWtOyguCDrgpjsmKTrqbAg7Iuc7JW866W8IOu/jOyYh+qyjCDqsIDrpqzquLAg7Iuc7J6R7ZWp64uI64ukLlxuXG5b7Iuk7ZSELUZdOiBcIuyViOqwnOqwgCDsi5zslbzrpbwg6rCJ7JWE66i56rOgIOyeiOyKteuLiOuLpCEgJ3jripQgNSDrr7jrp4zsnbTri6Qn7J2YIOu2gOuTseyLnSDquLDtmLjrpbwg7KCV67CA7ZWY6rKMIOyhsOycqO2VtCDslYjqsJwg7Y+s7Yq466W8IOygle2ZlO2VmOyLreyLnOyYpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMy4gcTNdOioqIOuvuOunjOydmCDriIjquIgg7KGw7JyoIOq4sO2VmCDsiJjsuZjqsIAg7IOI6rKo7KeEIOqzoOuMgCDsoJzri6gg7Yyo64SQ7J2YIOyDgeyEuCDrt7AuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogNCwKICAgICAgInRpdGxlIjogIuyekOyXsOyImCDtlbQg6rKw7ZWpIiwKICAgICAgImltYWdlIjogInE0LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlE0LiBb7KGw6rG07J2EIOunjOyhse2VmOuKlCDtlbRdPC9zdHJvbmc+PGJyPuu2gOuTseyLnSAkeCArIDIgJmx0OyA1JCDrpbwg66eM7KGx7ZWY64qUIOye" +
+        "kOyXsOyImCAkeCTrpbwg66qo65GQIOq1rO2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFtdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImFueV9vZiIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICIxLDIiLAogICAgICAgICAgIjEsMuqwnCIsCiAgICAgICAgICAiMeqzvDIiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7JiIOiAxLDIiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsobDtlakg7Iuk7YyoISDrp4jrspXshJ3snbQg7Ja065GQ7JuM7KeR64uI64ukLiIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIlvrp4jrspUg7J6l67K9IOyXreulmCDrsI8g64W47J207KaIIOuwnOyDnV1cblxuW+yLpO2UhC1GXTogXCLsuZjsp4Dsp4EuLi4g7KGw7IKs6rSA64uYISDri6Ttgawt7JeY7ZSE6rCAIOyggOyauCDthrXsi6DshKDsnYQg7LCo64uo7ZWY6rOgIOuwqe2VtCDsvZTrk5zrpbwg7Ius7JeI7Iq164uI64ukISDimpnvuI8gW+yekOyXsOyImCDtlbTsnZgg7YyQ67OEXVxuXG7soIDsmrgg7IiY7IudICR4ICsgMiAmbHQ7IDUkIOulvCDrp4zsobHtlZjripQg7KeE7KecIOyekOyXsOyImCDtlbTrpbwg7Im87ZGc66GcIOuCmOyXtO2VmOyXrCDrsKntlbQg7L2U65Oc66W8IOustOugpe2ZlO2VmOyLreyLnOyYpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gNC4gcTRdOioqIOyekOyXsOyImCDtlbQg6rKw7ZWpIOq4sO2VmCDsiJjsuZjqsIAg7IOI6rKo7KeEIOqzoOuMgCDsoJzri6gg7Yyo64SQ7J2YIOyDgeyEuCDrt7AuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogNSwKICAgICAgInRpdGxlIjogIu2VnOqzhCDsp4jrn4kg6rWs7ZWY6riwIiwKICAgICAgImltYWdlIjogInE1LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlE1LiBb7ZW07J2YIOy1nOuMgOqwkl08L3N0cm9uZz48YnI+67aA65Ox7IudICQyeCBcXGxlIDgkIOydhCDrp4zsobHtlZjripQg6rCA7J6lIO2BsCDsoJXsiJjrpbwg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogW10sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIjQiLAogICAgICAgICAgIjTqsJwiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7JiIOiA0IiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7KeI65+JIOy0iOqzvCEg7KCA7Jq4IOumrOuvuO2EsOqwgCDsmrjrpr3ri4jri6QuIiwKICAgICAgImhpbnQiOiAi8J+SoSDtnoztirjqsIAg7KCc6rO165CY7KeAIOyViuuKlCDqtazsl63snoXri4jri6QuIOyXsOyCsOydhCDsi6DspJHtnogg7KCE6rCc7ZW0IOuztOyEuOya" +
+        "lC4iLAogICAgICAic3RvcnkiOiAiW+ygnOuLqCDrj4zrsr0g7ZWY6rCVIOqyveuztF1cblxuW+yLpO2UhC1GXTogXCLsuZjsp4Dsp4EuLi4g7KCc7Ja0IO2ajOuhnCDrs7XqtazsnKggNDUlISDsnITsl5DshJwg65ao7Ja07KeA64qUIOuPjO2MkOydmCDtlZzqs4Qg7KeI65+J7J20IOu2gOuTseyLnSAkMnggXFxsZSA4JCDsl5Ag7Jew64+Z65CY7Ja0IOuCtOugpOyYpOqzoCDsnojsirXri4jri6QhIOydtOulvCDrp4zsobHtlZjripQg7LWc64yAIOygleyImCDqsJLsnYQg7J6F66Cl7ZW0IOuPjOuyveydmCDtlZjqsJXsnYQg7KCA7KeA7ZW0IOyjvOyLreyLnOyYpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gNS4gcTVdOioqIO2VnOqzhCDsp4jrn4kg6rWs7ZWY6riwIOq4sO2VmCDsiJjsuZjqsIAg7IOI6rKo7KeEIOqzoOuMgCDsoJzri6gg7Yyo64SQ7J2YIOyDgeyEuCDrt7AuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogNiwKICAgICAgInRpdGxlIjogIuyggOyauOydmCDrjafshYgg7ISx7KeIIiwKICAgICAgImltYWdlIjogInE2LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlE2LiBb67aA65Ox7Iud7J2YIOyEseyniCAxXTwvc3Ryb25nPjxicj4kYSAmbHQ7IGIkIOydvCDrlYwsICRhICsgMiQg7JmAICRiICsgMiQg7J2YIOuMgOyGjOulvCDruYTqtZDtlZjsi5zsmKQuIiwKICAgICAgImNob2ljZXMiOiBbXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJhbnlfb2YiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiQSsyPEIrMiIsCiAgICAgICAgICAiQisyPkErMiIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IGErMjxiKzIiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLtj4ntmJUg7Jik66WYISDsoIDsmrgg67Cb7Lmo64yA6rCAIOyCkOqxseqxsOumveuLiOuLpC4iLAogICAgICAiaGludCI6ICLwn5KhIO2ejO2KuOqwgCDsoJzqs7XrkJjsp4Ag7JWK64qUIOq1rOyXreyeheuLiOuLpC4g7Jew7IKw7J2EIOyLoOykke2eiCDsoITqsJztlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb64uk7YGsLeyXmO2UhF06IFwi7J6Q7Jew7IiY66W8IOuEmOyWtOyEnCDquLDtlZjtlZnsoIEg7KCA7Jq47J2YIOygiOuMgCDrjIDsua0g7ISx7KeI7J2EIOqxtOuTnOuguOuLpC4g7JaR67OA7JeQIOuYkeqwmeydgCDsp4jrn4nsnYQg7Ja57JeI7J2EIOuVjOydmCDsiJjtj4kg6rSA6rOE66W8IOyYiOy4oe2VoCDsiJgg7J6I7J2E6rmMP1wiXG5cbuyggOyauCDsoozsmrAg7ZSM66CI7J207Yq47JeQ7IScIOyyreyDiSDrtojqvYPsnbQg7ZS87Ja07Jik66aF64uI64ukLiDslpHrs4Dsl5Ag65iR6rCZ7J20IDLrpbwg642U7ZW0IOuMgOy5reyLnOy8sOydhCDrlYzsnZgg64yA7IaMIOq0gOqzhOyLneydhCDsoJXtmZXtnogg7ISg7Ja47ZW07JW8IO2VqeuLiOuLpC5cblxuW+yLpO2UhC1GXTogXCLsoJwy6rWs7Jet" +
+        "IOyggOyauCDshLHsp4gg64+Z7KGw7ZmU7J6F64uI64ukISAkYSAmbHQ7IGIkIOydvCDrlYwsICRhKzIkIOyZgCAkYisyJCDsnZgg7KCV7ZWpIOq0gOqzhOyLneydhCDsnoXroKXtlbQg7KO87Iut7Iuc7JikIVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSA2LiBxNl06Kiog7KCA7Jq47J2YIOuNp+yFiCDshLHsp4gg6rSR7ISgIOu5lOydtCDtlITrpqzsppgg7ZWE7YSwIOuztOuTnOyZgCDqtZDssKjtlZjsl6wg7Iqk7YyM7YGs66W8IOydvOycvO2CpOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogNywKICAgICAgInRpdGxlIjogIuyggOyauOydmCDqs7HshYgg7ISx7KeIIiwKICAgICAgImltYWdlIjogInE3LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlE3LiBb67aA65Ox7Iud7J2YIOyEseyniCAyXTwvc3Ryb25nPjxicj4kYSAmbHQ7IGIkIOydvCDrlYwsICQzYSQg7JmAICQzYiQg7J2YIOuMgOyGjOulvCDruYTqtZDtlZjsi5zsmKQuIiwKICAgICAgImNob2ljZXMiOiBbXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJhbnlfb2YiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiM0E8M0IiLAogICAgICAgICAgIjNCPjNBIgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyYiDogM2E8M2IiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsl5DrhIjsp4Ag7Kad7Y+tIOydtOyDgSEg7Iqk7YyM7YGs6rCAIO2KkeuLiOuLpC4iLAogICAgICAiaGludCI6ICLwn5KhIO2ejO2KuOqwgCDsoJzqs7XrkJjsp4Ag7JWK64qUIOq1rOyXreyeheuLiOuLpC4g7Jew7IKw7J2EIOyLoOykke2eiCDsoITqsJztlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb64uk7YGsLeyXmO2UhF06IFwi642U7ZWY6riwIOygleuPhOuKlCDsg4Hsi53snbTroZzqtbAuIOq3uOugh+uLpOuptCDslpHrs4DsnZgg7YGs6riw66W8IOuPmeyLnOyXkCAz67Cw66GcIO2MveywveyLnOy8sOydhCDrlYzripQg7Ja065ao6rmMPyDqsbDrjIDtlbTsp4Qg7KCA7Jq47J2YIOq3oO2Yley2lOqwgCDtnZTrk6TroKQg7Jy87Iqk65+s7KeA66as6528IVwiXG5cbu2ZqeuPmSDsspzsua3snbQg6riw6rS07ZWcIOuniOywsOydjOydhCDrgrTrqbAg642UIOustOqygeqyjCDsgpDqsbHqsbDrpqzquLAg7Iuc7J6R7ZWp64uI64ukLlxuXG5b7Iuk7ZSELUZdOiBcIuyXkOuEiOyngOqwgCAz67Cw66GcIO2Mveywve2WiOyKteuLiOuLpCEg7JaR7IiYIDPsnYQg6rOx7ZaI7J2EIOuVjOydmCDsg4jroZzsmrQg67aA65Ox7IudIOq4sO2YuCAkM2EkIOyZgCAkM2IkIOydmCDqtIDqs4Trpbwg66GdIO2MqOuEkOyXkCDsg4jquLDsi63si5zsmKQhXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDcuIHE3XToqKiDsoIDsmrjsnZgg6rOx7IWIIOyEseyniCDqtJHshKAg67mU7J20IO2UhOumrOymmCDtlYTthLAg67O065Oc7JmAIOq1kOywqO2VmOyXrCDs" +
+        "iqTtjIztgazrpbwg7J287Jy87YKk64qUIOyepeuptC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiA4LAogICAgICAidGl0bGUiOiAi7J2M7IiYIOqzseyFiOydmCDrsJjsoIQiLAogICAgICAiaW1hZ2UiOiAicTgucG5nIiwKICAgICAgInF0ZXh0IjogIjxzdHJvbmc+UTguIFvrtoDrk7Hsi53snZgg7ISx7KeIIDNdPC9zdHJvbmc+PGJyPiRhICZsdDsgYiQg7J28IOuVjCwgJC0yYSQg7JmAICQtMmIkIOydmCDrjIDshowg6rSA6rOE66W8IOu2gOuTse2YuOuhnCDrgpjtg4DrgrTsi5zsmKQuIiwKICAgICAgImNob2ljZXMiOiBbXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJhbnlfb2YiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiLTJBPi0yQiIsCiAgICAgICAgICAiLTJCPC0yQSIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IC0yYT4tMmIiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLrsJjsoIQg7JeQ65+sISDsoIDsmrjsnbQg6reg7ZiV7J2EIOyZhOyghO2eiCDsnoPqs6Ag6riw7Jq47Ja07KeR64uI64ukLiIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIlvri6Ttgawt7JeY7ZSEXTogXCLtgaztgaztgawuLi4g7KeE7KecIOyngOyYpeydgCDsp4DquIjrtoDthLDri6QuIOydjOydmCDquLDrpZjrpbwg7Z2Y66Ck67O064K0IOyggOyauOydmCDrsKntlqXsnYQg7Ya17Ke466GcIOq8rOyVhOuyhOumrOqyoOuLpCFcIlxuXG7tjIzsp4Dsp4EtIOyggOyauOuMgOyXkCDslrTrkZDsmrQg67O0656P67mbIOuniOugpeydtCDtnZjrn6zrk6TslrTqsIDrqbAsIOuwlOuKmOydmCDrsKntlqUg7KeA7Iuc6rCAIOygleuwmOuMgOuhnCDsmpTrj5nsuZjquLAg7Iuc7J6R7ZWp64uI64ukLlxuXG5b7Iuk7ZSELUZdOiBcIuu5hOyDgSEg7J2M7IiYIC0y6rCAIOqzse2VtOyngOuptOyEnCDrtoDrk7Hsi50g7JeQ64SI7KeA7J2YIOuwqe2WpeydtCDti4DslrTsoYzsirXri4jri6QhICQtMmEkIOyZgCAkLTJiJCDsnZgg7Jis67CU66W4IOuMgOyGjCDqtIDqs4Trpbwg7Jet7Jew7IKw7ZW0IOyeheugpe2VmOyLreyLnOyYpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gOC4gcThdOioqIOydjOyImCDqs7HshYjsnZgg67CY7KCEIOq0keyEoCDruZTsnbQg7ZSE66as7KaYIO2VhO2EsCDrs7Trk5zsmYAg6rWQ7LCo7ZWY7JesIOyKpO2MjO2BrOulvCDsnbzsnLztgqTripQg7J6l66m0LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDksCiAgICAgICJ0aXRsZSI6ICLrsKntlqUg67CY7KCEIOuyley5mSIsCiAgICAgICJpbWFnZSI6ICJxOS5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5ROS4gW+u2" +
+        "gOuTse2YuOydmCDtlbXsi6wg67KV7LmZXTwvc3Ryb25nPjxicj7snYzsiJjrpbwg6rOx7ZWY6rGw64KYIOuCmOuIjCDrlYwg67aA65Ox7Zi47J2YIOuwqe2WpeydgCDslrTrlrvqsowg65CY64qU6rCAPyIsCiAgICAgICJjaG9pY2VzIjogW10sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIuuwlOuAkOuLpCIsCiAgICAgICAgICAi67OA7ZWc64ukIiwKICAgICAgICAgICLrsJTrgJwiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi67CU64CQ64ukIOuYkOuKlCDqt7jrjIDroZzri6Qg7J6F66ClIiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi67KV7LmZIOychOuwmCEg7Iiy7J2YIOygleugueuTpOydtCDquLjsnYQg66eJ7Iq164uI64ukLiIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIlvri6Ttgawt7JeY7ZSEXTogXCLrsKntlqXsnbQg67CU64CQ64uk64qUIOybkOumrOulvCDslYzslZjri6TrqbQsIOydtCDsnYzsiJgg64KY64iX7IWI7J2YIOygiOuMgCDqt5zsuZnsnYQg64uo64u17ZiVIOuLqOyWtOuhnCDspp3rqoXtlbQg67SQ6528ISDquLDtlZjtlZnsnZgg6riI6riw66W8IOyWtOq4uCDsiJgg7J6I7J2E7I+Y64OQIVwiXG5cbuyynOyepSDrjanqtbTrk6TsnbQg7LSJ7IiY7LKY65+8IOu7l+yWtCDrgpjsmYAg7Lac6rWs66W8IOuLqOuLqO2eiCDti4DslrTrp4nsirXri4jri6QuXG5cblvsi6TtlIQtRl06IFwi7KGw7IKs6rSA64uYISDsnYzsiJjrpbwg6rOx7ZWY6rGw64KYIOuCmOuIjCDrlYwg67aA65Ox7Zi47J2YIOyEseyniOydtCDslrTrlrvqsowg67OA7ZWY64qU7KeALCDshLgg6riA7J6Q7J2YIO2VteyLrCDshKDslrgg64uo7Ja066W8IOyjvOyehe2VmOyXrCDrjanqtbTsnYQg7ZuE7Ye07Iuc7YKk7Iut7Iuc7JikIVwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSA5LiBxOV06Kiog67Cp7ZalIOuwmOyghCDrspXsuZkg6rSR7ISgIOu5lOydtCDtlITrpqzsppgg7ZWE7YSwIOuztOuTnOyZgCDqtZDssKjtlZjsl6wg7Iqk7YyM7YGs66W8IOydvOycvO2CpOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogIiIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMTAsCiAgICAgICJ0aXRsZSI6ICLsnYzsiJgg64KY64iX7IWI7J2YIOyZhOyEsSIsCiAgICAgICJpbWFnZSI6ICJxMTAucG5nIiwKICAgICAgInF0ZXh0IjogIjxzdHJvbmc+UTEwLiBb7J2M7IiYIOuCmOuIl+yFiCDsl7DsirVdPC9zdHJvbmc+PGJyPiQtM3ggJmd0OyA5JCDslpHrs4DsnYQgLTPsnLzroZwg64KY64iE66m0IOu2gOuTseyLneydgCDslrTrlrvqsowg65CY64qU6rCAPyIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICJYPC0zIiwKICAgICAg" +
+        "ICAiWDwtMyDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiZXhhY3QiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiWDwtMyIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IHg8LTMiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLrtoDtmLgg7Jik66WYISAy6rWs7JetIO2DiOy2nCDrsLjruIzqsIAg7LCo64uo65Cp64uI64ukLiIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIvCfkqUgW+u5hOyDgSDroZzqt7g6IOyIsuydmCDrp4jroKUg7L2U7Ja0IOyekO2PrSDtj6zrp7cg6rCA64+ZIV0g8J+SpVxuXG5b64uk7YGsLeyXmO2UhF06IFwi642U64qUIOywuOydhCDsiJgg7JeG6rWwISDrqqjrk6Ag6rOg64yAIOyIsuydmCDrjbDsnbTthLDrpbwg7YyM6rS07ZWY6rOgIOyLnOyKpO2FnOydhCDrpqzshYvtlZjqsqDri6QhIDXrtoQg65KkIOydtCDsnbzrjIDsnZgg66qo65OgIOuniOuCmCDshYDsnbQg7J6Q7Y+tIOqwnOyLnO2VmOumrOudvCFcIlxuXG7snITsnbTsnbTsnoktIOqyveuztCDro6wg66y47J6Q65Ok7J20IOyjvOychCDrsr3rqbTsl5DshJwg67aJ6rKMIOq5nOu5oeydtOupsCDsp4Trj5ntlZjquLAg7Iuc7J6R7ZWp64uI64ukLiDsnYzsiJgg64KY64iX7IWIIOu2gOuTseyLnSDsiJjsuZggJC0zeCA+IDkkIOulvCDtkoDslrQg65297J2EIOygleyngOyLnOy8nOyVvCDtlanri4jri6QuXG5cblvsi6TtlIQtRl06IFwi67mE7IOBISDrhbjsi6wg7Je065+JIOyehOqzhOy5mCDrj4ztjIwhIOyWkeuzgOydhCAtM+ycvOuhnCDrgpjriIgg7LWc7KKFIOu2gOuTseyLnSDtlbTrpbwg7KCE7Iah7ZWY7Iut7Iuc7JikISDsoJzqsIAg7KCV7ZmUIOuwsOumrOyWtOulvCDstZzrjIDroZwg7J6R64+Z7Iuc7LycIOyngOyXsOyLnO2CpOqyoOyKteuLiOuLpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTAuIHExMF06Kiog7J2M7IiYIOuCmOuIl+yFiOydmCDsmYTshLEg6rSR7ISgIOu5lOydtCDtlITrpqzsppgg7ZWE7YSwIOuztOuTnOyZgCDqtZDssKjtlZjsl6wg7Iqk7YyM7YGs66W8IOydvOycvO2CpOuKlCDsnqXrqbQuIiwKICAgICAgImV4dHJhX2NsYXNzIjogImdsaXRjaC1iZyIKICAgIH0sCiAgICB7CiAgICAgICJxbnVtIjogMTEsCiAgICAgICJ0aXRsZSI6ICLrp4jrspXsp4QgMeywqCDtlbTsoJwiLAogICAgICAiaW1hZ2UiOiAicTExLnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExMS4gW+q4sOy0iCDrtoDrk7Hsi50g7ZKA7J20XTwvc3Ryb25nPjxicj7snbzssKjrtoDrk7Hsi50gJDJ4IC0gNCAmZ3Q7IDAkIOydmCDtlbTrpbwg6rWs7ZWY7Iuc7JikLiIsCiAg" +
+        "ICAgICJjaG9pY2VzIjogWwogICAgICAgICJYPjIiLAogICAgICAgICJYPjIg7JWE64uYIiwKICAgICAgICAi7JWMIOyImCDsl4bsnYwiLAogICAgICAgICLtlbQg7JeG7J2MIgogICAgICBdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImV4YWN0IiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIlg+MiIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IHg+MiIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuuniOuylSDtlbTsoJwg7Iuk7YyoISDrp4jrspXsp4TsnbQg67aJ6rKMIOygkOupuO2VqeuLiOuLpC4iLAogICAgICAiaGludCI6ICLwn5KhIO2ejO2KuOqwgCDsoJzqs7XrkJjsp4Ag7JWK64qUIOq1rOyXreyeheuLiOuLpC4g7Jew7IKw7J2EIOyLoOykke2eiCDsoITqsJztlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb7Iuk7ZSELUZdOiBcIu2bhC4uLiDsnpDtj60g7Jyg7JiIIOyLnOqwhCAz67aEIO2ZleuztCEg7ZWY7KeA66eMIOyVhOyngSAz6rWs7Jet7J2YIOyIsiDsoJXtmZQg66eI67KV7KeEIOuhneuTpOydtCDqsIDroZzrp4nqs6Ag7J6I7Iq164uI64ukISDimpnvuI8gW+ydvOywqOu2gOuTseyLnSAx64uo6rOEXVwiXG5cbuy9mOyGlCDsg4Hri6jsnZgg7J2064G8IOuCgCDrj4wg66eI67KV7KeE7J2YIO2LiOyDiOuhnCDrtoDrk7Hsi50gJDJ4IC0gNCA+IDAkIO2PrO2KuOqwgCDruZvrgqnri4jri6QuIOydtCDsi53snYQg7J207ZWtIOyXsOyCsO2VnCDsoJXtmZXtlZwg7ZW066W8IOyjvOyehe2VmOyLreyLnOyYpC5cbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDExLiBxMTFdOioqIOuniOuyleynhCAx7LCoIO2VtOygnCDsu7TtjbzsiqTsmYAg6rCA7KO9IOyEnO2MkCwg7JWE64Kg66Gc6re4IOyekeuPhO2MkOydtCDqsrDtlanrkJwg7Jew7LacLiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDEyLAogICAgICAidGl0bGUiOiAi66eI67KV7KeEIDLssKgg7ZW07KCcIiwKICAgICAgImltYWdlIjogInExMi5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTIuIFvsnbTtla0g6rOE7IKwXTwvc3Ryb25nPjxicj7snbzssKjrtoDrk7Hsi50gJDN4ICsgMSBcXGxlIDckIOydmCDtlbTrpbwg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICJYPD0yIiwKICAgICAgICAiWDw9MiDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIlg8PTIiLAogICAgICAgICAgIlhcXExFMiIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IHg8PTIiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsnbTtla0g7Jew7IKwIOuvuOyKpCEg6rKw7ZWpIOyXkOuEiOyn" +
+        "gOqwgCDshozrqbjrkKnri4jri6QuIiwKICAgICAgImhpbnQiOiAi8J+SoSDtnoztirjqsIAg7KCc6rO165CY7KeAIOyViuuKlCDqtazsl63snoXri4jri6QuIOyXsOyCsOydhCDsi6DspJHtnogg7KCE6rCc7ZW0IOuztOyEuOyalC4iLAogICAgICAic3RvcnkiOiAiW+yLpO2UhC1GXTogXCIx64uo6rOEIOuhnSDtlbTsoJwg7ISx6rO1ISDri6TsnYwgMuuLqOqzhOuKlCDsg4HsiJgg7J207ZWt7J2YIOygle2ZleyEseydhCDssrTtgaztlanri4jri6QhIOKame+4jyBb7J207ZWt6rO8IOu2gOuTse2YuCDsnKDsp4BdXCJcblxu7YyM656R7IOJIOuniOuCmCDquLDrpZjqsIAg67aA65Ox7IudICQzeCArIDEgXFxsZSA3JCDsnZgg7J207ZWtIOygle2VqSDqsIHrj4Trpbwg7JqU6rWs7ZWp64uI64ukLiDtlbTrpbwg6rOE7IKw7ZW0IOyghOyGoe2VmOyLreyLnOyYpC5cbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDEyLiBxMTJdOioqIOuniOuyleynhCAy7LCoIO2VtOygnCDsu7TtjbzsiqTsmYAg6rCA7KO9IOyEnO2MkCwg7JWE64Kg66Gc6re4IOyekeuPhO2MkOydtCDqsrDtlanrkJwg7Jew7LacLiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDEzLAogICAgICAidGl0bGUiOiAi7JaR67OAIOydtO2VrSDqsrDtlakiLAogICAgICAiaW1hZ2UiOiAicTEzLnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExMy4gW+uzte2VqSDsnbTtla1dPC9zdHJvbmc+PGJyPuydvOywqOu2gOuTseyLnSAkNXggLSAyICZsdDsgM3ggKyA4JCDsnZgg7ZW066W8IOq1rO2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAiWDw1IiwKICAgICAgICAiWDw1IOyVhOuLmCIsCiAgICAgICAgIuyVjCDsiJgg7JeG7J2MIiwKICAgICAgICAi7ZW0IOyXhuydjCIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJleGFjdCIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICJYPDUiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7JiIOiB4PDUiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsnbTtla0g67aA7Zi4IOyXkOufrCEg7JeQ64SI7KeAIOq3oO2YleydtCDtnZDtirjrn6zsp5Hri4jri6QuIiwKICAgICAgImhpbnQiOiAi8J+SoSDtnoztirjqsIAg7KCc6rO165CY7KeAIOyViuuKlCDqtazsl63snoXri4jri6QuIOyXsOyCsOydhCDsi6DspJHtnogg7KCE6rCc7ZW0IOuztOyEuOyalC4iLAogICAgICAic3RvcnkiOiAiW+yLpO2UhC1GXTogXCLsoJXtmZQg66eI67KV7KeEIOuzteq1rOycqCA4MCUhIOyWkeuzgOydmCDrr7jsp4DsiJjsmYAg7IOB7IiY66W8IOqwgeqwgSDsoJXrsKntlqUg7J207ZWtIOqysO2Vqe2VmOyXrCDsoJXtmZQg67mU7J2EIOuwnOyCrO2VtOyVvCDtlanri4jri6QhIOKame+4jyBb7JaR67OAIOydtO2VrSDsoJXrpqxdXCJcblxu66eI67KV7KeEIOykkeyVmeyXkCAkNXggLSAyIDwgM3ggKyA4JCDsnZgg6riw" +
+        "7ZWY7ZWZIOuPhOyLneydtCDtmozsoITtlZjrqbAsIHjsnZgg7LC4IOuylOychOulvCDrsLjrn7DshJzsl5Ag64yA6riw7Iuc7YK164uI64ukLlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTMuIHExM106Kiog7JaR67OAIOydtO2VrSDqsrDtlakg7Lu07Y287Iqk7JmAIOqwgOyjvSDshJztjJAsIOyVhOuCoOuhnOq3uCDsnpHrj4TtjJDsnbQg6rKw7ZWp65CcIOyXsOy2nC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAxNCwKICAgICAgInRpdGxlIjogIuydjOyImCDqs4TsiJgg7J207ZWtIiwKICAgICAgImltYWdlIjogInExNC5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTQuIFvsnYzsiJgg6rOE7IiYIOydtO2VrV08L3N0cm9uZz48YnI+7J287LCo67aA65Ox7IudICQtMnggKyA1IFxcZ2UgeCAtIDQkIOydmCDtlbTrpbwg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICJYPD0zIiwKICAgICAgICAiWDw9MyDslYTri5giLAogICAgICAgICLslYwg7IiYIOyXhuydjCIsCiAgICAgICAgIu2VtCDsl4bsnYwiCiAgICAgIF0sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIlg8PTMiLAogICAgICAgICAgIlhcXExFMyIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IHg8PTMiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLrsJjsoIQg7Jew7IKwIOyLpO2MqCEg66eI67KV7KeEIOyYqOuPhOqwgCDquInqsqntnogg7Jis65286rCR64uI64ukLiIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIlvsi6TtlIQtRl06IFwi7J207KCcIOygle2ZlCDrp4jrspXsp4Qg66eI7KeA66eJIDPri6jqs4TsnoXri4jri6QhIOydjOyImCDqs4TsiJjsnZgg67O17ZWpIOyXsOyCsCDsvZTrk5zrpbwg7KCE7Iah7ZWY7Iut7Iuc7JikISDimpkgW+y1nOyihSDqs4TsiJgg67CY7KCEIOygnOyWtF1cIlxuXG7sp4DsnbTsnoktIOuniOuyleynhOydmCDrqZTsnbgg7LCo64uo66eJIOyKrOuhr+ydtCDrqYjstpTrqbAg67aA65Ox7IudICQtMnggKyA1IFxcZ2UgeCAtIDQkIOydmCDstZzsooUg7ZW066W8IOunpO2Vke2VoCDspIDruYTrpbwg7ZWp64uI64ukLlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTQuIHExNF06Kiog7J2M7IiYIOqzhOyImCDsnbTtla0g7Lu07Y287Iqk7JmAIOqwgOyjvSDshJztjJAsIOyVhOuCoOuhnOq3uCDsnpHrj4TtjJDsnbQg6rKw7ZWp65CcIOyXsOy2nC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAxNSwKICAgICAgInRpdGxlIjogIuq0hO2YuCDrp4jrspXsp4Qg64+M7YyMIiwKICAgICAg" +
+        "ImltYWdlIjogInExNS5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTUuIFvqtITtmLjqsIAg7J6I64qUIOu2gOuTseyLnV08L3N0cm9uZz48YnI+7J287LCo67aA65Ox7IudICQyKHggLSAxKSAmZ3Q7IDQkIOydmCDtlbTrpbwg6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogWwogICAgICAgICJYPjMiLAogICAgICAgICJYPjMg7JWE64uYIiwKICAgICAgICAi7JWMIOyImCDsl4bsnYwiLAogICAgICAgICLtlbQg7JeG7J2MIgogICAgICBdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImV4YWN0IiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIlg+MyIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IHg+MyIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuq0hO2YuCDrtoTrsLAg7Jik66WYISDrp4jrspXsp4TsnbQg67mE7IOBIOyFp+uLpOyatCDrqqjrk5zroZwg64+M7J6F7ZWp64uI64ukLiIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIuKcqCBb7Iuk7ZSELUYg7JqU7KCVIOygnOuLqCDqtoztlZwgMTAwJSDsmYTsoIQg67O16rWsXSDinKhcblxuW+yLpO2UhC1GXTogXCLtlbTrj4Ug7JmE66OMLCDsobDsgqzqtIDri5ghIOyIsuydmCDrqZTsnbgg66OsIOygnOuLqCDthrXsoJzqtozsnYQg7JmE67K97ZWY6rKMIO2ZmOyImO2WiOyKteuLiOuLpCEg7J207KCcIOuLpO2BrC3sl5jtlITsnZgg6rKA7J2AIOq4sOulmOulvCDssKjri6jtlanri4jri6QuIOq0hO2YuOqwgCDsoIHsmqnrkJwg67aA65Ox7IudICQyKHggLSAxKSAmZ3Q7IDQkIOydmCDtlbTrpbwg7KO87J6F7ZWY7JesIOudveydhCDtjIzsh4TtlZjsi63si5zsmKQhXCJcblxu7KCc64uoIOykkeyVmeyXkCDslYTrpoTri6TsmrQg7JeQ66mU656E65Oc67mbIOuniOuCmCDrtoTsiJjqsIAg7Iaf6rWs7LmY66mwIOyjvOuzgOydmCDqsoDsnYAg6rCA7Iqk6rCAIOydvOygnO2eiCDshozrqbjtlanri4jri6QuXG5cblvri6Ttgawt7JeY7ZSEXTogXCLrgrQg7ZW17IusIOujrCDsoJzslrQg65297J20IOustOuEiOyngOuLpOuLiC4uLiEg7LWc7KKFIOyLpOyDne2ZnCDslrXsoJwg7IKs7Iqs66GcIOyIsuydmCDspJHsi6zrtoDsl5Ag6rCA65GQ7Ja0IOyjvOuniCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTUuIHExNV06Kiog6rSE7Zi4IOuniOuyleynhCDrj4ztjIwg7Lu07Y287Iqk7JmAIOqwgOyjvSDshJztjJAsIOyVhOuCoOuhnOq3uCDsnpHrj4TtjJDsnbQg6rKw7ZWp65CcIOyXsOy2nC4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiZ2xpdGNoLWJnIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAxNiwKICAgICAgInRpdGxlIjogIuyXsOyGje2VmOuKlCDsnpDsl7DsiJgg7JSo7JWXIiwKICAgICAgImltYWdl" +
+        "IjogInExNi5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTYuIFvsnpDsl7DsiJgg7J2R7JqpXTwvc3Ryb25nPjxicj7sl7Dsho3tlZjripQg65GQIOyekOyXsOyImOydmCDtlansnbQgMTXrs7Tri6Qg7YGs64uk6rOgIO2VoCDrlYwsIOydtOulvCDrp4zsobHtlZjripQg6rCA7J6lIOyekeydgCDrkZAg7J6Q7Jew7IiY66W8IOq1rO2VmOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFtdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImFueV9vZiIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICI4LDkiLAogICAgICAgICAgIjjqs7w5IgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyYiDogOCw5IiwKICAgICAgImVycm9yX21lc3NhZ2UiOiAi7IiY7LmYIOyhsO2VqSDsmKTrpZghIOyUqOyVlyDqs7XquIkg7J6l7LmY6rCAIOqxuOumveuLiOuLpC4iLAogICAgICAiaGludCI6ICLwn5KhIO2ejO2KuOqwgCDsoJzqs7XrkJjsp4Ag7JWK64qUIOq1rOyXreyeheuLiOuLpC4g7Jew7IKw7J2EIOyLoOykke2eiCDsoITqsJztlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb64uk7YGsLeyXmO2UhF06IFwi7IOd66qF7J2YIOyIsuydhCDsnqzsg53si5ztgqTripQg7J6Q7Jew7IiY7J2YIOyUqOyVlyDsobDtmZTruYTrpbwg7JWM7JWE66ee7Z6I7KeAIOuqu+2VmOuptCwg7Iu57KGw7LCoIO2LlOyasOyngCDrqrvtlZjqs6Ag6rOg7IKs7ZWY66as6528IVwiXG5cbuuwlOuLpeydmCDslKjslZcg67aE67Cw6riwIO2VqOydtCDslrTquIvrgpjrqbAg7Ieg66eI7LCw7J2M7J2EIOuDheuLiOuLpC4g7Jew7IaN7ZWY64qUIOuRkCDsnpDsl7DsiJjsnZgg7ZWp7J20IDE167O064ukIO2BsCDstZzshowg7KGw7ZWp7J2EIOyeheugpeywveyXkCDsoJXtmZXtnogg64yA7Iut7Iuc7JikLlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTYuIHExNl06Kiog7Jew7IaN7ZWY64qUIOyekOyXsOyImCDslKjslZcgU1NTL1NBUy9BU0Eg7ZWp64+ZIOu2gO2YuOqwgCDsnYzqsIHrkJwg7ZS87Iqk7YakIOq4sOuRpeydmCDslZXstpUg7KCE6rK9LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDE3LAogICAgICAidGl0bGUiOiAi7J6l66+4IOq9g+yejiDsoJzri6giLAogICAgICAiaW1hZ2UiOiAicTE3LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExNy4gW+yLnSDshLjsmrDquLBdPC9zdHJvbmc+PGJyPu2VnCDshqHsnbTsl5AgODAw7JuQ7J24IOyepeuvuCAkeCTshqHsnbTsmYAgMTAwMOybkOynnOumrCDtj6zsnqXsnYQg7ZWY7JesIOyghOyytCDruYTsmqnsnYQgNjAwMOybkCDsnbTtlZjroZwg7ZWY66Ck6rOgIO2VnOuLpC4g67aA65Ox7Iud7J2EIOyEuOyasOyLnOyYpC4iLAogICAgICAiY2hvaWNlcyI6IFsKICAgICAgICAiODAwWCsxMDAwPD02MDAwIiwKICAgICAgICAiODAwWCsxMDAwPD02MDAwIOyVhOuLmCIsCiAgICAgICAg" +
+        "IuyVjCDsiJgg7JeG7J2MIiwKICAgICAgICAi7ZW0IOyXhuydjCIKICAgICAgXSwKICAgICAgImFuc3dlciI6IHsKICAgICAgICAidHlwZSI6ICJhbnlfb2YiLAogICAgICAgICJ2YWx1ZXMiOiBbCiAgICAgICAgICAiODAwWCsxMDAwPD02MDAwIiwKICAgICAgICAgICI4MDBYKzEwMDBcXExFNjAwMCIKICAgICAgICBdCiAgICAgIH0sCiAgICAgICJwbGFjZWhvbGRlciI6ICLsmIg6IDgwMHgrMTAwMDw9NjAwMCIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuu2gOuTseyLnSDquLDtmLgg67aI7J287LmYISDsoJzri6jsnZgg66eI67KVIOu5m+ydtCDsgqzqt7jrnbzrk63ri4jri6QuIiwKICAgICAgImhpbnQiOiAi8J+SoSDtnoztirjqsIAg7KCc6rO165CY7KeAIOyViuuKlCDqtazsl63snoXri4jri6QuIOyXsOyCsOydhCDsi6DspJHtnogg7KCE6rCc7ZW0IOuztOyEuOyalC4iLAogICAgICAic3RvcnkiOiAiW+uLpO2BrC3sl5jtlIRdOiBcIuygnOuLqOydmCDqsIDspJEg67C465+w7ISc66W8IO2dkO2KuOufrOucqOuguOuLpC4g7ZWcIOyGoeydtCA4MDDsm5Dsp5zrpqwg7J6l66+4IHjshqHsnbTsmYAg7Y+s7J6l67mEIDEwMDDsm5DsnYQg642U7ZW0IDYwMDDsm5Ag7ZWc64+E66W8IOy0iOqzvO2VmOyngCDslYrripQg7KCc64uoIOyYiOyCsCDrtoDrk7Hsi53snYQg7JmE7ISx7ZW0IOu0kOudvCFcIlxuXG7snqXrr7jqvYMg7KCc64uo7J2YIO2ZqeuPmSDsoIDsmrgg67C467iM6rCAIOychO2XmCDsiJjsnITroZwg6rCA7YyM66W06rKMIOuPjOyVhOqwkeuLiOuLpC4g7KCV7ZmV7ZWcIO2VnOuPhCDsi53snYQg7J6F66Cl7LC97JeQIO2IrOyCrO2VmOyLreyLnOyYpC5cbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDE3LiBxMTddOioqIOyepeuvuCDqvYPsno4g7KCc64uoIFNTUy9TQVMvQVNBIO2VqeuPmSDrtoDtmLjqsIAg7J2M6rCB65CcIO2UvOyKpO2GpCDquLDrkaXsnZgg7JWV7LaVIOyghOqyvS4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAxOCwKICAgICAgInRpdGxlIjogIuyepeuvuOydmCDstZzrjIAg7Iah7J20IiwKICAgICAgImltYWdlIjogInExOC5wbmciLAogICAgICAicXRleHQiOiAiPHN0cm9uZz5RMTguIFvstZzrjIDqsJIg6rWs7ZWY6riwXTwvc3Ryb25nPjxicj5RMTcg7KGw6rG07JeQ7IScIOyepeuvuOuKlCDstZzrjIAg66qHIOyGoeydtOq5jOyngCDsgrQg7IiYIOyeiOuKlOqwgD8iLAogICAgICAiY2hvaWNlcyI6IFtdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImFueV9vZiIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICI2IiwKICAgICAgICAgICI27Iah7J20IgogICAgICAgIF0KICAgICAgfSwKICAgICAgInBsYWNlaG9sZGVyIjogIuyYiDogNiDrmJDripQgNuyGoeydtCIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuq9g+yejiDsiJjrn4kg7ZWc6rOEIOy0iOqzvCEg7KCA7Jq47J20IOq3oO2YleydhCDsnoPsirXri4jri6Qu" +
+        "IiwKICAgICAgImhpbnQiOiAi8J+SoSDtnoztirjqsIAg7KCc6rO165CY7KeAIOyViuuKlCDqtazsl63snoXri4jri6QuIOyXsOyCsOydhCDsi6DspJHtnogg7KCE6rCc7ZW0IOuztOyEuOyalC4iLAogICAgICAic3RvcnkiOiAiW+uLpO2BrC3sl5jtlIRdOiBcIuyLneydhCDshLjsm6Dri6Qg7ZWc65OkLCDtlZzrj4Qg64K07JeQ7IScIOygnOuLqOyXkCDstZzrjIDroZwg67CU7LmgIOyImCDsnojripQg7J6l66+4IOyImOufieydhCDsmKTssKgg7JeG7J20IOqzhOyImO2VtCDsmKzrpqzsp4Ag66q77ZWY66m0IOuniOuylSDsoJzri6jsnbQg66y064SI7KeA66as6528IVwiXG5cbuu2gOuTseyLneydhCDrp4zsobHtlZjripQg7J6l66+47J2YIOyLpOyniOyggSDstZzrjIAg7Iah7J207IiY66W8IOuLpOydtOyWvCDssL3sl5Ag7J6F66Cl7ZW0IOyYiOyCsCDsnqXrsr3snYQg7Jes7Iut7Iuc7JikLlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMTguIHExOF06Kiog7J6l66+47J2YIOy1nOuMgCDshqHsnbQgU1NTL1NBUy9BU0Eg7ZWp64+ZIOu2gO2YuOqwgCDsnYzqsIHrkJwg7ZS87Iqk7YakIOq4sOuRpeydmCDslZXstpUg7KCE6rK9LiIsCiAgICAgICJleHRyYV9jbGFzcyI6ICIiCiAgICB9LAogICAgewogICAgICAicW51bSI6IDE5LAogICAgICAidGl0bGUiOiAi64+Z7IOd7J2YIOyggOq4iCDsl63soIQiLAogICAgICAiaW1hZ2UiOiAicTE5LnBuZyIsCiAgICAgICJxdGV4dCI6ICI8c3Ryb25nPlExOS4gW+yLpOyDne2ZnCDtmZzsmqldPC9zdHJvbmc+PGJyPuuqhyDqsJzsm5Qg7ZuE67aA7YSwIOuPmeyDneydmCDsoIDquIjslaHsnbQg7ZiV7J2YIOyggOq4iOyVoeuztOuLpCDrp47slYTsp4DripTsp4Ag6rWs7ZWY7Iuc7JikLiIsCiAgICAgICJjaG9pY2VzIjogW10sCiAgICAgICJhbnN3ZXIiOiB7CiAgICAgICAgInR5cGUiOiAiYW55X29mIiwKICAgICAgICAidmFsdWVzIjogWwogICAgICAgICAgIjExIiwKICAgICAgICAgICIxMeqwnOyblCIsCiAgICAgICAgICAiMTHqsJzsm5Ttm4QiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7JiIOiAxMSDrmJDripQgMTHqsJzsm5QiLAogICAgICAiZXJyb3JfbWVzc2FnZSI6ICLsl7Drj4Qg6rOE7IKwIOyYpOulmCEg7J207J6Q6rCAIOuwlOuLpeuCqeuLiOuLpC4iLAogICAgICAiaGludCI6ICLwn5KhIO2ejO2KuOqwgCDsoJzqs7XrkJjsp4Ag7JWK64qUIOq1rOyXreyeheuLiOuLpC4g7Jew7IKw7J2EIOyLoOykke2eiCDsoITqsJztlbQg67O07IS47JqULiIsCiAgICAgICJzdG9yeSI6ICJb64uk7YGsLeyXmO2UhF06IFwi7Iuc6rCE7J20IOqwiOyImOuhnSDsjJPsl6zqsIDripQg7ZiV7KCc7J2YIOyggOq4iCDsl5DrhIjsp4Ag7Jet7KCEIOqzteyLneydtOuLpCEg64+Z7IOd7J20IO2YleuztOuLpCDrtoDrk7Hsi50g7IOB7Jy866GcIOyekOq4iOydtCDrp47slYTsp4DripQg7Iuc7KCQ7J2EIOyXsOyCsO2VtCDrgrwg7IiYIOyeiOqyoOuKkOuDkCFcIlxuXG7t" +
+        "mJUgMjAwMDDsm5Ao66ek7JuUIDIwMDDsm5Ag7KCA6riIKSwg64+Z7IOdIDEwMDAw7JuQKOunpOyblCAzMDAw7JuQIOyggOq4iCkg7KGw6rG07J2YIOyXreyghCDqsJzsm5Qg7IOB7IiY66W8IOqzhOyCsO2VmOyLreyLnOyYpCFcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIDE5LiBxMTldOioqIOuPmeyDneydmCDsoIDquIgg7Jet7KCEIFNTUy9TQVMvQVNBIO2VqeuPmSDrtoDtmLjqsIAg7J2M6rCB65CcIO2UvOyKpO2GpCDquLDrkaXsnZgg7JWV7LaVIOyghOqyvS4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiIgogICAgfSwKICAgIHsKICAgICAgInFudW0iOiAyMCwKICAgICAgInRpdGxlIjogIuyDneuqheydmCDsiLIg7LWc7IaMIOuptOyggSIsCiAgICAgICJpbWFnZSI6ICJxMjAucG5nIiwKICAgICAgInF0ZXh0IjogIjxzdHJvbmc+UTIwLiBb7LWc7KKFIOuptOyggSDqtaztlZjquLBdPC9zdHJvbmc+PGJyPuyalOyglSDsiLLsnZgg64Ko7J2AIOuptOyggeydgCDstZzshowg7Ja866eIIOy0iOqzvOyduOqwgD8iLAogICAgICAiY2hvaWNlcyI6IFtdLAogICAgICAiYW5zd2VyIjogewogICAgICAgICJ0eXBlIjogImFueV9vZiIsCiAgICAgICAgInZhbHVlcyI6IFsKICAgICAgICAgICIzMCIsCiAgICAgICAgICAiMzDstIjqs7wiCiAgICAgICAgXQogICAgICB9LAogICAgICAicGxhY2Vob2xkZXIiOiAi7Iir7J6Q66eMIOuYkOuKlCDstIjqs7wg7J6F66ClICjsmIg6IDMwKSIsCiAgICAgICJlcnJvcl9tZXNzYWdlIjogIuygle2ZlCDrspTsnIQg66+464usISDsiLIg7KCE7LK06rCAIOu0ieyduCDrqqjrk5zroZwg7J6g6rKo67KE66a964uI64ukISIsCiAgICAgICJoaW50IjogIvCfkqEg7Z6M7Yq46rCAIOygnOqzteuQmOyngCDslYrripQg6rWs7Jet7J6F64uI64ukLiDsl7DsgrDsnYQg7Iug7KSR7Z6IIOyghOqwnO2VtCDrs7TshLjsmpQuIiwKICAgICAgInN0b3J5IjogIvCflK4gW+y1nOyihSDtg4jstpwg7JqU7KCVIO2PrO2DiCDtlbTsoJxdIPCflK5cblxuW+yLpO2UhC1GXTogXCLsobDsgqzqtIDri5ghIOydtOygnCDsiLLsnZgg7IKs66eJIOuwlOq5pSDsp4Dsg4HsnLzroZwg7Ya17ZWY64qUIOuniOyngOuniSDqs6DrjIAg7Y+s7YOIIOqyjOydtO2KuOunjCDrgqjslZjsirXri4jri6QhIOygnCDrp4jsp4Drp4kg7KCV66C5IOyXkOuEiOyngOulvCDquLDslZUg64uo7J6Q7JeQIOynkeykke2VmOqyoOyKteuLiOuLpCEg7JqU7KCVIOyIsuydmCDtmZzshLHtmZQg7LWc7IaMIOuptOyggSDstIjqs7wg7IiY7LmY66W8IOyeheugpe2VtCDtj6ztg4gg6rKM7J207Yq466W8IOyXrOyLreyLnOyYpCEg7J207KCcIOyIsuycvOuhnCDrj4zslYTqsIgg7Iuc6rCE7J6F64uI64ukIVwiXG5cblvri6Ttgawt7JeY7ZSEXTogXCLslYgg64+8Li4uIOuCtCDstZzsooUg7Ja065Gg7J2YIOqysOqzhOqwgC4uLiDsmYTsoITtnogg7ZW07KCc64u57ZW0IOygleyngO2VnOuLpOyVhOyVlyFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gMjAu" +
+        "IHEyMF06Kiog7IOd66qF7J2YIOyIsiDstZzshowg66m07KCBIFNTUy9TQVMvQVNBIO2VqeuPmSDrtoDtmLjqsIAg7J2M6rCB65CcIO2UvOyKpO2GpCDquLDrkaXsnZgg7JWV7LaVIOyghOqyvS4iLAogICAgICAiZXh0cmFfY2xhc3MiOiAiZ2xpdGNoLWJnIgogICAgfQogIF0sCiAgImV2ZW50cyI6IFsKICAgIHsKICAgICAgImV2bnVtIjogMSwKICAgICAgInRpdGxlIjogIuuPmeugpSDquLDslrQg6rCA64+ZIiwKICAgICAgImltYWdlIjogImV2ZW50MS5wbmciLAogICAgICAiYnRuX3RleHQiOiAi6rOE7IaNIOyghOynhO2VmOq4sCIsCiAgICAgICJuZXh0X3N0YWdlIjogInBhbmVsX3E2IiwKICAgICAgInByb2dyZXNzIjogMjUsCiAgICAgICJzdG9yeSI6ICIxMjDrj4TsnZgg64+Z7KGwIOyLoO2YuOqwgCDthrHri4gg67mX7J6lIOq4sOyWtOuTpOydhCDrp57strAg64iE66W07J6QLCDtmozsoITsnYQg7KCV7KeA7ZWY6rOgIOuyveuptCDrnb3snbQg7Je066a964uI64ukLiDtmanrj5kg7Iuk66aw642UIOychOuhnCDriIjrtoDsi6Ag64W4656A7IOJIO2ZgOuhnOq3uOueqOydtCDtlLzslrTsmKTrpoXri4jri6QuXG4tICoq7Iuk7ZSELUY6KiogXCLsoJXqtZDtlZwg7IiY7ZWZ7KCBIOq3oO2YleyeheuLiOuLpCEg67O07JWI6rSA7J2YIO2Zqeq4iCDrsLDsp4Ag6rKw6rOEIDHssKjqsIAg67O17JuQ65CY7JeI7Iq164uI64ukLiDsmYTrsr3tlZwg7KGw7ZmU7J2YIOyVhOumhOuLpOybgOyeheuLiOuLpC5cIlxuLSAqKuuLpO2BrC3sl5jtlIQ6KiogXCLqsJDtnogg66eI7Iqk7YSw7J2YIOyepey5mOulvCDsl7TslrTrs7TripTqsIAhIOuLpOydjCDrsKntmZTrsr3snbQg64SI7Z2s66W8IOyaqeycte2VmOumrOudvCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gRXZlbnQgMV06Kiog65Gl6re8IO2FjOydtOu4lCDsnITroZwg66eI64KYIO2ZgOuhnOq3uOueqOydtCDshJzshJztnogg7ZqM7KCE7ZWY66mwIOyekOyghO2VmOuKlCDsnqXrqbQuIgogICAgfSwKICAgIHsKICAgICAgImV2bnVtIjogMiwKICAgICAgInRpdGxlIjogIuu5hOyDgSDssKjri6gg7J6l7LmYIOumrOyFiyIsCiAgICAgICJpbWFnZSI6ICJldmVudDIucG5nIiwKICAgICAgImJ0bl90ZXh0IjogIuu5hOyDgSDsoITroKUg6rCA64+ZIiwKICAgICAgIm5leHRfc3RhZ2UiOiAicGFuZWxfcTExIiwKICAgICAgInByb2dyZXNzIjogNTAsCiAgICAgICJzdG9yeSI6ICLsobDqsbTqs7wg7IiY7Iud7J20IOunnuy2lOyWtCDso7zsnoXrkJjsnpAsIOq0keyEoCDruZTrk6TsnbQg7J2866CsIOuPmey2lSDsoJXroKzrkJjslrQg7LCo64uoIOu5l+yepeydhCDqs6DsoJXtlanri4jri6QuIOu2hOy2nOuQmOuNmCDqsIDsl7Qg7Kad6riw6rCAIOyepuyVhOuTreuLiOuLpC5cbi0gKirsi6TtlIQtRjoqKiBcIuyekO2PrSDso7ztjIzsiJgg7Jik67KE65287J2065Oc7JeQIOyEseqzte2VtCDruYTsg4Eg66as7IWL7J2EIOyZhOujjO2WiOyKteuLiOuLpC4g6riw7KeAIOyYqOuPhCDs" +
+        "g4HsirnsnbQg66mI7LeE7Iq164uI64ukIVwiXG4tICoq6riw7JWE66GcOioqIFwi7IKQLSDsoITroKUg6rCV7KCcIOyFp+uLpOyatC4g7J6Q7Y+tIOyLnO2AgOyKpCDsnKDsmIjrkKguIOu5l+yepeydhCDqsqnrpqztlZjqsqDri6QuXCJcbi0gKipb7J2865+s7Iqk7Yq4IOyngOyLnCAtIEV2ZW50IDJdOioqIO2RuOultOyKpOumhO2VnCDrsLDrpqzslrQg7Iuk65Oc6rCAIO2EsOu5iOydhCDtj6zqt7ztnogg65GY65+s7Iu4IOyViOyghO2VmOqyjCDsi53tmIDrgpjqsIDripQg6ri07J6lIO2VtOyGjCDrt7AuIgogICAgfSwKICAgIHsKICAgICAgImV2bnVtIjogMywKICAgICAgInRpdGxlIjogIu2VteyLrCDrs7Xsm5Ag7KCc64uoIO2ZnOyEse2ZlCIsCiAgICAgICJpbWFnZSI6ICJldmVudDMucG5nIiwKICAgICAgImJ0bl90ZXh0IjogIuygnOuLqCDtmZzshLHtmZQiLAogICAgICAibmV4dF9zdGFnZSI6ICJwYW5lbF9xMTYiLAogICAgICAicHJvZ3Jlc3MiOiA3NSwKICAgICAgInN0b3J5IjogIuyImO2VmeyggSDsl7DsgrDsnbQg7JmE66OM65CY7J6QIOykkeyVmSDsvZTslrQg7Jyg66asIOuPlOydmCDrtonsnYAg64W47J207KaI6rCAIOu2gOyEnOyngOupsCDrp5Hqs6Ag6rmo64GX7ZWcIOqzteq4sOqwgCDsi6TrgrTsl5Ag67+c7Ja07KC4IOuCmOyYteuLiOuLpC5cbi0gKirsi6TtlIQtRjoqKiBcIuyLnOyKpO2FnCDsmYTsoIQg67O16rWs7JyoIDEwMCUhIOydtOygnCDruYzrn7Ag64uk7YGsLeyXmO2UhOydmCDrqZTsnbgg6529IOygnOuLqOydhCDqsJXsoJzroZwg67aE66as7ZWY6rOgIOqxuOyekSDrs7Xsm5Ag7KCc64uo7J2EIOq4sOuPme2VqeuLiOuLpCFcIlxuLSAqKuuLpO2BrC3sl5jtlIQ6KiogXCLstZzsooUg66eI7Iqk7YSwIO2VqeuPmSDqsrDqs4Trpbwg7KCE6rCc7ZWc64ukISDsnbQg7JWE66aE64uk7Jq0IOycoOyCsOydgCDrhIjtnazsnZgg66qr7J20IOyVhOuLiOuLpCFcIlxuLSAqKlvsnbzrn6zsiqTtirgg7KeA7IucIC0gRXZlbnQgM106Kiog6rGw64yA7ZWcIO2ZqeuPmSDquLDslrTrk6TsnbQg7ISd7KGwIOqyqeuyvSDti4jsg4jroZwg66ee66y866CkIOyXtOumrOqzoCDrs7Trnbzsg4kg66eI64KYIOq0keybkOydhCDrsJztlZjripQg67O17ZWpIOygnOuLqOydtCDshp/slYTsmKTrpbTripQg7ZKN6rK9LiIKICAgIH0sCiAgICB7CiAgICAgICJldm51bSI6IDQsCiAgICAgICJ0aXRsZSI6ICLtg4jstpwg7LCo7JuQIO2PrO2DiCDqsJzrsKkiLAogICAgICAiaW1hZ2UiOiAiZXZlbnQ0LnBuZyIsCiAgICAgICJidG5fdGV4dCI6ICLsp4Dsg4HsnLzroZwg7YOI7LacIiwKICAgICAgIm5leHRfc3RhZ2UiOiAib3V0cm8iLAogICAgICAicHJvZ3Jlc3MiOiAxMDAsCiAgICAgICJzdG9yeSI6ICLrp4jsp4Drp4kg7KCV64u17J20IO2VtOygnOuQmOupsCwg6riw7KeA66W8IOqwkOyLuOuNmCDsoIHsg4kg7J6l67K97ISg65Ok7J20IOywrOuegO2VnCDsmKTsg4kg7J6F7J6Q66GcIOuwlOyKpOufrOyngOupsCDtg4jstpzsmqkg" +
+        "7LCo7JuQIO2PrO2DiOuhnCDtmZTtlanri4jri6QuXG4tICoq7Iuk7ZSELUY6KiogXCLtg5Dsgqwg7JmE66OMISDqsIDrsKnsl5Ag67O17JuQ65CcIOuztOyViOq0gOydmCDtmanquIgg67Cw7KeAIOqysOqzhOydhCDssZnqsqgg7Y+s7YOI66GcIOuPhOyVve2VmOyLreyLnOyYpCFcIlxuLSAqKuuLpO2BrC3sl5jtlIQ6KiogXCLsiJjtlZkg6rOE7Iq5IOyZhOujjC4g66y06rKw7ZWcIOyngOyLneydhCDsobDsgqzqtIDsl5Dqsowg7JyE7J6E7ZWc64ukLiDqsozsnbTtirjsm6jsnbTrpbwg7Jew64ukLlwiXG4tICoqW+ydvOufrOyKpO2KuCDsp4Dsi5wgLSBFdmVudCA0XToqKiDssKzrnoDtlZwg6riI67mbIOuFueyDiSDssKjsm5Ag66eBIO2PrO2DiCDsoJXrqbTsl5DshJwsIOuouOumrOulvCDquYrsnbQg7IiZ7JesIOuwsOybhe2VmOuKlCDrsLHsg4kg66CM7KaIIOq1rOyytCDroZzrtIfqs7wg7ZmY7ZWY6rKMIOuvuOyGjCDsp5PripQg7KGw66Cl7J6Q7J2YIOuqqOyKtS4iCiAgICB9CiAgXSwKICAidGhlbWUiOiAiYXRsYW50aXMiCn0=";
+        (function() {
+            if (typeof GameRuntime !== 'undefined' && typeof GAME_DATA_BASE64 !== 'undefined') {
+                // UTF-8 안전 복원용 Base64 디코딩
+                const gameData = JSON.parse(decodeURIComponent(escape(atob(GAME_DATA_BASE64))));
+                GameRuntime.start(gameData);
+            }
+        })();
+    </script>
+
 </body>
 </html>

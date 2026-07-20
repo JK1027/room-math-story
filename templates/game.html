@@ -708,6 +708,11 @@
                 // 스토리 타이머 구동 후 완료 콜백에서 보여줌
                 const storyBox = target.querySelector('.story-box');
                 if (storyBox) {
+                    if (panelId === 'panel_intro') {
+                        target.classList.remove('read-mode');
+                        target.classList.add('solve-mode');
+                        return;
+                    }
                     typeWriterHTML(storyBox, 15, () => {
                         // 대사 읽기 끝났으므로 문제 풀이 모드로 전환 (이미지 축소, 문제 서서히 표출)
                         target.classList.remove('read-mode');
@@ -752,8 +757,9 @@
                     '<div id="panel_intro" class="glass-panel active">\n' +
                     '    <h2>SYSTEM INITIATION</h2>\n' +
                     '    <img src="' + assetsBase + '/' + this.data.intro.image + '" class="panel-image" alt="Intro">\n' +
-                    '    <div class="story-box">\n' +
+                    '    <div class="story-box" style="display: none;">\n' +
                     '        <div class="story-text"></div>\n' +
+                    '        <button class="story-log-trigger" onclick="openLog()">📜 이전 대사</button>\n' +
                     '    </div>\n' +
                     '    <!-- 학번/이름 입력 및 사운드 조절 UI 영역 -->\n' +
                     '    <div class="user-info-section" style="margin-top: 15px; border-top: 1px solid var(--border-glass); padding-top: 15px;">\n' +
@@ -998,15 +1004,49 @@
                     }
                 } catch(e) {}
 
-                // GAS 시트에 기록 저장 후 화면 이동
+                const proceedLogin = (rowNum) => {
+                    if (rowNum) window.userRecordRow = rowNum;
+                    
+                    // 1. 입력 폼 숨기기
+                    const infoSec = document.querySelector('.user-info-section');
+                    if (infoSec) infoSec.style.display = 'none';
+                    
+                    // 2. 미션 개시 버튼 숨기기
+                    const btnGroup = document.querySelector('#panel_intro .btn-group');
+                    if (btnGroup) btnGroup.style.display = 'none';
+                    
+                    // 3. story-box 표시 및 타이핑 효과 시작
+                    const introPanel = document.getElementById('panel_intro');
+                    const storyBox = introPanel.querySelector('.story-box');
+                    if (storyBox) {
+                        storyBox.style.display = 'block';
+                        introPanel.classList.remove('solve-mode');
+                        introPanel.classList.add('read-mode');
+                        
+                        typeWriterHTML(storyBox, 15, () => {
+                            introPanel.classList.remove('read-mode');
+                            introPanel.classList.add('solve-mode');
+                            
+                            // 4. [잠항 시작] 버튼 활성화 및 노출
+                            if (btnGroup) {
+                                const btnText = this.data.unit_code === 'm1_04' ? '잠항 시작' : '미션 시작';
+                                btnGroup.innerHTML = '<button class="btn" onclick="GameRuntime.showPanel(\'panel_q1\')">' + btnText + '</button>';
+                                btnGroup.style.display = 'block';
+                            }
+                        });
+                    } else {
+                        this.showPanel('panel_q1');
+                    }
+                };
+
+                // GAS 시트에 기록 저장 후 화면 이동 대신 대사 시퀀스 실행
                 if (typeof google !== 'undefined' && google.script && google.script.run) {
                     google.script.run.withSuccessHandler((rowNum) => {
-                        window.userRecordRow = rowNum;
-                        this.showPanel('panel_q1');
+                        proceedLogin(rowNum);
                     }).recordStart(sNum, sName, this.data.unit_code);
                 } else {
                     // 로컬 환경 폴백
-                    this.showPanel('panel_q1');
+                    proceedLogin(null);
                 }
             },
 
