@@ -1011,7 +1011,12 @@
                     return;
                 }
                 
-                window.playerFirstName = sName.substring(1); // 성 제외 이름만 추출 (예: '홍길동' -> '길동')
+                // 입력한 이름 글자 수에 따른 분기 (2글자 이하인 경우 성을 살림)
+                if (sName.length <= 2) {
+                    window.playerFirstName = sName;
+                } else {
+                    window.playerFirstName = sName.substring(1); // 성 제외 이름만 추출 (예: '홍길동' -> '길동')
+                }
                 
                 // 브라우저 오디오 가동 시도 (뮤트 아닌 경우)
                 try {
@@ -1439,6 +1444,13 @@
             if (typeWriterTimeout) clearTimeout(typeWriterTimeout);
             
             let htmlContent = textEl.dataset.rawHtml || textEl.innerHTML;
+            
+            // 캡틴 호칭을 사용자 입력 이름 + 캡틴으로 동적 치환
+            const replacementName = (window.playerFirstName || '').trim();
+            if (replacementName) {
+                htmlContent = htmlContent.replace(/캡틴/g, replacementName + ' 캡틴');
+            }
+            
             // 일러스트 지시 필터링
             htmlContent = htmlContent.replace(/- \*\*\[일러스트 지시.*?\]\*\*[^\n]*/gi, '');
             htmlContent = htmlContent.replace(/- \[일러스트 지시.*?\][^\n]*/gi, '');
